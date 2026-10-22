@@ -129,5 +129,6 @@
     "spruce/scripts/runtime.sh": "48953144c9482bd398a0c487c78801777024c79f",
     "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76"
   },
-  "implementation_handover": "HANDOVER.md"
+  "implementation_handover": "HANDOVER.md",
+  "latest_research_parent_commit": "3832c662641fbff18ac3ddafef70a48db5981440"
 }

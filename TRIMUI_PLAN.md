@@ -1,6 +1,6 @@
 # TrimUI Smart Pro: spruceOS-based PSP-inspired project plan
 
-Updated 22 October 2026. **Active direction: build on spruceOS and its existing PyUI frontend for the original TrimUI Smart Pro (TG5040), not CrossMix.** This is a documentation update, not an installation, implementation or hardware-test report.
+Updated 22 October 2026. **Active direction: build on spruceOS and its existing PyUI frontend for the original TrimUI Smart Pro (TG5040), not CrossMix.** The current host implementation and next steps are recorded in HANDOVER.md; no physical-device release is qualified.
 
 The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
 
@@ -11,6 +11,16 @@ The active implementation is on `build/spruce-psp-experience` under [`project/`]
 The PPSSPP work uses upstream v1.20.3 (`d357e6a32934800d3d80b49f910a603e1b069751`), a source-tested SDL menu-control extension, and original themes using PPSSPP's native theme schema, wave animation and widgets. The existing emulator remains the initial device engine. Host C++ acceptance checks are not a complete emulator build, cross-build, or physical test.
 
 The full spruce v4.5.4 archive has been downloaded and independently hashed. Its bundled Smart Pro PPSSPP reports an embedded `v1.20.3` string; its SHA-256 is recorded in the source lock. The exact build correspondence and new extension are unqualified. Device/runtime/source-use flags remain false, and automatic activation is blocked. Continue work against this checkpoint; the historical CrossMix appendix remains reference material.
+
+## Codex research and reuse mandate
+
+The goal is the best practical PSP-inspired full-system experience on the **original TrimUI Smart Pro**, with maximum sensible reuse of maintained work. The repositories named here are starting points, not a closed shortlist. Independently search for stronger compatible libraries, frontend components, themes, hardware integrations, tooling, ports and emulator improvements. Do not wait for another link before investigating an obvious useful source.
+
+For each candidate, inspect actual source and maintenance history, original-device support, dependencies, licences, build reproducibility and integration cost. Compare it with the functionality spruce/PyUI/PPSSPP already provides. Prefer configuring or extending maintained existing code over rewriting it; avoid importing whole operating systems or frameworks merely to obtain one feature. Keep a decision register with source URL, exact revision, reusable files, required changes, evidence, rights obligations, test plan and rejected alternatives.
+
+Clearly label **verified source functionality**, **candidate reuse requiring investigation**, **proposed new work**, and **hardware-tested results**. Repository activity or claimed support is not proof of performance on this device. Licensing and dependency gates remain mandatory; discretion to research is not permission to ignore them, contact third parties, flash firmware or make purchases.
+
+Current base remains spruceOS/PyUI with PPSSPP reused extensively at the appropriate boundary. If evidence shows a materially better base or architecture, write an explicit architecture decision record comparing alternatives and present the proposed change before rebasing. Do not silently restore the historical CrossMix/C++ default. Broader research may refine this plan, but must preserve saves, recovery, reversible changes and the full-system objective.
 
 ## 1. Decision and evidence
 
@@ -115,6 +125,152 @@ Freeze the baseline emulator binaries for the first PyUI/theme prototype so a UI
 PPSSPP upgrade candidate: [spruceUI/PPSSPP-spruce build-pvr.sh](https://github.com/spruceUI/PPSSPP-spruce/blob/main/build-pvr.sh). Pin source and toolchain, preserve the working PowerVR graphics setup, test in a separate directory with copied config/saves, and compare identical scenes/settings. Upgrading the shell is not an emulator speed optimization. PS1/core changes receive separate compatibility tests and rollback manifests.
 
 Port showcase candidates: GTA III, Vice City, Sonic Mania, Super Mario 64/Render96ex and Celeste. Use the actual PortMaster/TrimUI-supported runtime for the original device and the specific port's source licence. Supply import instructions for legally owned game files; never bundle commercial game data. San Andreas is experimental, not a promised supported port. Per-title acceptance includes launch/exit, audio, controller layout, sustained frame pacing, sleep behavior, save location and clean uninstall without deleting saves. A directory in a catalogue is not proof of acceptable performance.
+
+
+## 7A. PPSSPP is a major reuse source, not merely an optional emulator update
+
+**Use both projects deliberately:** spruceOS/PyUI remains the operating frontend and device integration base; [official hrydgard/PPSSPP](https://github.com/hrydgard/ppsspp) supplies the maintained PSP emulator, its extensive native interface, settings, controls, game metadata and save-state functionality. Reuse as much existing functionality as the device, architecture and licences permit. Do not rebuild those systems simply because the outer frontend is Python.
+
+Inspected official upstream revision on 22 October 2026: [`4b71f833d0d59065ab672f88bc1583b249c3efe0`](https://github.com/hrydgard/ppsspp/tree/4b71f833d0d59065ab672f88bc1583b249c3efe0), commit timestamp 09:00:16 UTC. This is a source-research pin, **not the version already shipped by spruce or a hardware-approved update**. Record separately the existing `PPSSPPSDL_TrimUI` binary hash/version, the device fork revision and its patch delta against upstream.
+
+### Four reuse categories
+
+- **A: reuse directly inside PPSSPP.** Keep or extend its own maintained implementation rather than clone it into PyUI. Includes native settings, controller mapping, save states and PSP game metadata.
+- **B: integrate through a verified external boundary.** Existing launcher arguments, configuration files and exported metadata can coordinate the two applications. Validate the shipped binary's capabilities first. New exporter or IPC support is proposed work, not a claimed existing API.
+- **C: selectively adapt or use as design reference.** Small, independently understood pieces may be reusable after dependency and file-level licence review. A Python translation of copied C++ is still potentially derived code; changing language is not a licensing solution.
+- **D: tightly coupled code, not a drop-in component.** Whole screens, renderer contexts, emulator state machinery and global application startup should normally stay in PPSSPP. Extraction requires a justified dependency/ownership/licence plan.
+
+### Exact source inventory and intended use
+
+Every PPSSPP path below is at the inspected revision. File existence was checked in its source tree; the key theme, config, mapping, browser/cache, pause/save, widget, build and command-line sources were read.
+
+| Feature | Exact upstream files/modules | Reuse decision |
+|---|---|---|
+| Theme palette and style | `UI/Theme.cpp`, `UI/Theme.h`, `assets/themes/defaultthemes.ini`, other `assets/themes/*.ini` | **A/B.** Create a matching original PPSSPP palette using its supported INI theme loader. Its existing `ReloadAllThemeInfo()`, `UpdateTheme()`, `GetThemeInfoNames()` and `GetTheme()` belong inside PPSSPP, not Python APIs. Match focus, disabled, popup, tooltip and scrollbar colors to the spruce theme. |
+| Backgrounds and animation | `UI/Background.cpp/.h`, `UI/BackgroundAudio.cpp/.h`, `Common/UI/Tween.cpp/.h` | **A/C.** Reuse PPSSPP's own background/transition facilities there. Use behavior as inspiration for the outer interface; selectively port only after dependency/rights review. Do not copy Sony artwork/audio or assume theme colors alone implement a PSP crossbar. |
+| Widgets, layout and focus | `Common/UI/View.cpp/.h`, `ViewGroup.cpp/.h`, `ScrollView.cpp/.h`, `TabHolder.cpp/.h`, `PopupScreens.cpp/.h` | **A/C/D.** Existing controls, measure/layout, directional focus, scrolling, tabs and popups are valuable within PPSSPP. First reuse their maintained screens. Compare specific behavior with PyUI's existing views before introducing any new widget. Wholesale C++ widget import into Python is not a small copy operation. |
+| Screen navigation and rendering context | `Common/UI/Screen.cpp/.h`, `ScreenManager.cpp/.h`, `UIScreen.cpp/.h`, `Context.cpp/.h`, `UI/BaseScreens.cpp/.h` | **A/D.** Preserve PPSSPP ownership of screen stack and rendering. These depend on PPSSPP/Common input, graphics and application facilities, not merely SDL. No second rendering loop embedded in PyUI by default. |
+| Main browser and PSP library | `UI/MainScreen.cpp/.h`, `UI/GameBrowser.cpp/.h`, `UI/GameScreen.cpp/.h` | **A/B.** Keep the full PSP browser available as an app/advanced route. Outer spruce game lists still own cross-system navigation. Integrate metadata rather than rebuilding PPSSPP's browser internals or replacing spruce's all-system scanner. |
+| Title, ID, game art and preview information | `UI/GameInfoCache.cpp/.h`, `Core/ELF/ParamSFO.h`, `Core/ELF/PBPReader.h`, `Core/FileSystems/ISOFileSystem.h` | **A/B/D.** The cache already resolves PARAM.SFO, ICON0, PIC0/PIC1, sound and other PSP information across supported formats. Preserve parsing in PPSSPP; investigate a narrow read-only exporter only if needed for spruce artwork. Do not import its thread/cache/GPU objects into Python. |
+| Graphics/audio/system/game settings | `UI/GameSettingsScreen.cpp/.h`, `UI/DisplayLayoutScreen.cpp/.h`, `Core/Config.cpp/.h`, `Core/ConfigSettings.cpp/.h`, `Core/ConfigValues.h` | **A/B.** Retain real PPSSPP controls and validation; expose a small safe subset in spruce only through a versioned adapter. Avoid maintaining a second complete settings editor with drifting defaults. |
+| Per-game profiles | `Core/Config.cpp/.h`, `UI/GameSettingsScreen.cpp/.h` | **A/B.** Reuse `HasGameConfig`, `CreateGameConfig`, `LoadGameConfig`, `SaveGameConfig`, `UnloadGameConfig` within PPSSPP. Their existence does not expose them to a separate process. Preserve game-ID-based profiles and global-versus-game override semantics; do not invent filename conventions before inspecting the selected build. |
+| Controller remapping and defaults | `UI/ControlMappingScreen.cpp/.h`, `UI/CustomButtonMappingScreen.cpp/.h`, `Core/KeyMap.cpp/.h`, `Core/KeyMapDefaults.cpp/.h`, `Common/Input/InputState.h` | **A/B.** Keep combo/axis mapping, device defaults and existing UI. Inspected APIs include `KeyMap::SetInputMapping`, `ReplaceSingleKeyMapping`, `LoadFromIni`, `SaveToIni`, `RestoreDefault` and `UpdateNativeMenuKeys`. Use native screens or verified INI adaptation, not direct Python calls to C++ symbols. |
+| Pause, Resume and in-game actions | `UI/PauseScreen.cpp/.h`, `UI/EmuScreen.cpp/.h`, `UI/LoadStateConfirmScreen.cpp/.h` | **A/B.** Reuse the actual PPSSPP pause/menu/confirmation flow and match its style where possible. Outer Continue Playing coordinates launch and validated state selection; it must not simulate a successful in-emulator save. |
+| Save states, slots, undo and names | `Core/SaveState.cpp/.h`, `Core/SaveStateRewind.cpp/.h`, `UI/PauseScreen.cpp` | **A/D.** Reuse emulator-owned state creation/loading/verification. Inspected interfaces include `SaveState::Save`, `Load`, `Verify`, `IsBusy`, `Process`, `WaitForWorker`, and pause-screen calls to `SaveSlot`, `UndoSaveSlot`, `GetSlotCustomName` and `SetSlotCustomName`. These are coupled to emulation state and threading, not a universal checkpoint library for other emulators. |
+| In-game savedata browser | `UI/SavedataScreen.cpp/.h`, `UI/MemStickScreen.cpp/.h`, `UI/GameInfoCache.cpp/.h` | **A/B.** Keep native PSP savedata handling separate from save-state files. Any outer backup/restore remains explicit, non-destructive and works on copies. Never expose deletion methods as implicit cleanup. |
+| Recents/play time | `Core/Util/RecentFiles.h`, `Core/Config.h` (`PlayTimeTracker`), `UI/GameBrowser.cpp` | **A/B.** Reuse PSP's own history while spruce remains the cross-emulator history authority. If synchronization is needed, specify identity, timestamps, deduplication and import direction rather than overwrite both stores. |
+| Images, text and artwork primitives | `Common/UI/AsyncImageFileView.cpp/.h`, `Common/UI/IconCache.cpp/.h`, `UI/UIAtlas.cpp/.h`, `Common/Render/TextureAtlas.h` | **A/C/D.** Reuse internally. Cached GPU textures/atlas IDs are not portable image files. Outside PPSSPP, use verified original/exportable assets and existing PyUI image loaders. Audit fonts, artwork and third-party data independently. |
+| External launch boundary | `Core/CmdLine.cpp/.h`, `SDL/SDLMain.cpp`, spruce `spruce/scripts/emu/lib/ppsspp_functions.sh` | **B.** Inspected upstream supports `--state=FILE`, `--config=`, `--controlconfig=` and `--pause-menu-exit`; test each against the actual device binary before exposing it. `--save-state` is marked headless in this source: it is not evidence of a general live-save command for the graphical process. |
+
+### Concrete integration architecture
+
+1. **Keep PPSSPP intact as the PSP engine and native advanced UI.** Reuse its settings, mappings, pause/save and game browser first. The spruce launcher already invokes PPSSPP and manages return-to-menu. Coordinate that flow rather than embed the emulator into PyUI.
+2. **One visual language, two existing renderers.** Use original shared design tokens and independently appropriate theme assets/configuration for spruce and PPSSPP. A theme translator can map our own palette values to each format; do not copy GPL implementation into the non-commercial frontend merely to share colors. PPSSPP theme INIs are not a full PSP XMB layout engine. Any altered native layout is a small maintained PPSSPP patch, not a promise that INI editing changes every layout.
+3. **A thin, versioned launch/config adapter.** Record binary capabilities and available command flags. Work through spruce's authoritative `controls-SmartPro.ini` / `ppsspp-SmartPro.ini` copy-in/copy-back lifecycle. Do not overwrite files while PPSSPP is running; it may later save stale values over edits. Preserve comments/unknown keys where possible, backup first, and test per-game overrides.
+4. **Reuse existing metadata extraction before writing parsers.** If spruce needs PSP title/ID/art beyond current artwork, evaluate a read-only exporter inside a separately maintained PPSSPP-side tool/patch. A proposed output manifest would contain game identity, source fingerprint, title and paths to locally extracted images. No such ready-made exporter or stable RPC API was verified in this inspection. Keep cache building asynchronous and bounded. Copyrighted art extracted from the owner's games stays local, not bundled in releases.
+5. **Reuse state operations, don't fake them.** Upstream `SaveState::Save/Load` queue operations; completion is reported later through callbacks processed by the emulation lifecycle. A mere queue return is not successful completion. Any new resume-status bridge must report the completed write and state compatibility before spruce updates its manifest. The known `--state=FILE` option can be a launch route only after testing the device fork. No guessed socket commands or imaginary Python bindings.
+6. **Limit integration surface and follow upstream.** Maintain an inventory of every copied file or patch, original commit/licence, why a supported config or existing UI could not suffice, dependencies, tests and update cost. Prefer small upstreamable patches to a wholesale fork. Do not duplicate maintained remapping, profile, browser or serialization engines.
+
+### Python/C++ and device compatibility costs
+
+PPSSPP `UI/CMakeLists.txt` builds `ppsspp_ui` and links `Common` and `Core`. It is not an independent Python widget package. The inspected UI depends on drawing contexts, texture atlases, screen managers, input abstractions, configuration globals, file/VFS layers and emulator functions. A Python binding would require an explicitly designed ABI, object lifetimes, callbacks/thread ownership, error propagation, build/distribution support and graphics-context coordination. It is a high-cost optional architecture experiment, not the default route.
+
+The inspected current upstream `SDL/SDLMain.cpp` includes **SDL3**. The selected spruce SmartPro frontend/device integration uses **SDL2**. Do not replace working device libraries or build upstream master with desktop defaults and assume PowerVR compatibility. First map the shipped `PPSSPPSDL_TrimUI` to its source and compare the [spruce PPSSPP fork's PowerVR build](https://github.com/spruceUI/PPSSPP-spruce/blob/main/build-pvr.sh). Pin its toolchain/dependencies/patches; selectively backport worthwhile upstream improvements if that is safer than a full version jump. No claim is made that the inspected newest code compiles or runs on the original SmartPro.
+
+### GPL and third-party licence boundary: unresolved before combining code
+
+The inspected `UI/Theme.*`, `UI/GameSettingsScreen.cpp`, `UI/ControlMappingScreen.cpp`, `UI/GameBrowser.cpp`, `UI/GameInfoCache.*`, `UI/PauseScreen.cpp`, `Core/Config.*` and `Core/KeyMap.h` explicitly carry **GPL version 2 or later** notices. [PPSSPP LICENSE.TXT](https://github.com/hrydgard/ppsspp/blob/4b71f833d0d59065ab672f88bc1583b249c3efe0/LICENSE.TXT) also contains a PSPSDK BSD-compatible notice and the GPL text. Not every file repeats a header: absence of a header in a utility/widget file is not permission to treat it as public domain or permissive.
+
+The spruce/PyUI non-commercial terms must **not** be assumed compatible with incorporating GPL code into the same derivative program. Therefore:
+- Keep GPL PPSSPP modifications and their required source/notices under the applicable GPL terms; do not apply spruce's non-commercial restriction to PPSSPP code.
+- Before copying, translating, statically/dynamically linking, binding or otherwise combining PPSSPP code with PyUI, resolve the exact file/dependency licences and whether additional compatible permissions are required. This is a blocking design/release gate, not something to defer until publication.
+- Separate-process launching is the preferred engineering boundary, but is not asserted to automatically settle all legal questions. Review the actual interaction and distribution, including whether it is mere aggregation or a combined derivative.
+- Inspect all `ext/` dependencies, submodules, graphics/image/audio libraries, fonts, themes and asset provenance. Preserve corresponding source/build information and notices where required. Do not infer a single root licence covers every dependency.
+- No author contact, permission request or licence agreement was made by this documentation update.
+
+### PPSSPP work order and pass criteria
+
+Add these steps to the main build sequence without replacing spruce as the base:
+1. Inventory the shipped PPSSPP version/source and available capabilities. Capture known-good profiles, controls, games and saves on the original SmartPro.
+2. Exercise its existing native theme, control editor, per-game settings, browser and pause/state features before implementing substitutes. Mark each desired feature as already present, configurable, a narrow native patch, an adapter, or genuinely missing.
+3. Match visual tokens and prove spruce → PPSSPP game → pause/settings → game → quit → original spruce selection. Separately verify opening the full native PSP browser through the existing app route.
+4. Add supported state-launch and configuration adapters with strict version gates, copy-on-test saves, completion semantics and rollback. Test different game IDs/regions, Unicode paths, missing state, corrupted state and cancelled actions.
+5. Only then evaluate metadata export or limited native UI patches. No C++/Python binding or wholesale UI extraction without a measured benefit and cleared licensing/dependency design.
+6. Compare same scenes/settings before and after emulator changes: frame pacing, audio, input, peak memory, thermal behavior, sleep/wake, save persistence and shutdown. Test all old per-game configs and retain the prior binary/config pair. Release requires a clear licence/source manifest and no unverified claims of performance improvement.
+
+
+## 7B. Researched reuse shortlist beyond spruce and PPSSPP
+
+Research checked **22 October 2026**. These are current source-backed recommendations, not original-device performance results or permission to install anything. Inspect the **existing pinned spruce v4.5.4 bundle first** and import only a justified missing piece. Effort labels below are relative engineering estimates: S = small, M = moderate, H = high; they are not delivery promises. Links to moving upstream branches identify the inspected source locations, not immutable dependency pins. Before implementation, record exact commits/releases, bundled versions, source provenance and file-level licences in the dependency register.
+
+### 7B.1 PortMaster: reuse the existing integration
+
+**Decision: reuse spruce's bundled PortMaster launch/runtime/metadata conventions. Do not add a second frontend or wholesale vendor fork.** PortMaster's Python/SDL2 GUI, Harbourmaster CLI, per-port metadata, runtime checks and TrimUI platform adapter already cover much of discovery, installation, required-game-data instructions, controller setup and cleanup.
+
+Concrete sources:
+- [Harbourmaster CLI](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/pylibs/harbourmaster/cli.py): commands include list, ports, portsjson, install and runtime_check. This is a source inventory, not a claim that every current command exists in spruce's bundled version.
+- [TrimUI platform adapter](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/pylibs/harbourmaster/platform/trimui.py) and [TrimUI control integration](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/trimui/control.txt).
+- [Packaging specification](https://portmaster.games/packaging.html): architecture, runtime, requirements and minimum glibc metadata; save/config redirection using XDG or bind_directories; separate source/library/asset licensing.
+- [Device metadata](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/device_info.txt): current main contains a new spruce metadata path introduced in nightlies from 13 October 2026. **Do not assume it exists in the 10 October v4.5.4 base.**
+- [GUI/adapter MIT licence](https://github.com/PortsMaster/PortMaster-GUI/blob/main/LICENSE). This does not license each game, bundled runtime, asset or required commercial game data.
+
+Integration: reuse the installed version first, expose its existing results through a thin PyUI presentation adapter, then justify any upgrade separately. Original Smart Pro firmware, graphics driver, libc and individual runtime must all match; a shared CPU instruction set is not compatibility proof. Keep downloads/installations opt-in and preserve existing launch behavior. **Estimated effort M**, driven by per-title verification rather than inventing another ports manager.
+
+### 7B.2 RetroArch/libretro: reuse save, remap and configuration primitives
+
+**Decision: use spruce's existing RetroArch binary, cores and launch/exit pathway, not a second emulation layer.** The upstream [retroarch.cfg](https://github.com/libretro/RetroArch/blob/master/retroarch.cfg) documents autosave_interval for SRAM, savestate_auto_save and savestate_auto_load, separate savefile/state paths, hotkey gating and remap directories. Use per-core/content configuration and launcher snapshot bookkeeping for Continue Playing.
+
+Advertise state Resume only when that selected core supports a tested state and the stored ROM/core/version identity matches. SRAM autosave is not a save state. **Never treat SIGKILL as a save operation**: upstream configuration warns it bypasses saving RAM. Current options and command acknowledgements must be feature-tested against the pinned shipped binary; do not assume current master features or invent a universal success acknowledgement.
+
+[RetroArch](https://github.com/libretro/RetroArch) is GPL-3.0; cores and assets have their own licences. Retain the separate-process integration and apply the licence gate before copying code into PyUI. **Estimated effort M** for capability-aware history, successful-save bookkeeping and real-device fault/exit tests.
+
+### 7B.3 SDL_GameControllerDB: reuse selected data, not a new input daemon
+
+**Decision: use mapping data and SDL2 conventions for supported external controllers while preserving spruce's measured built-in mapping.** The [README](https://github.com/mdqinc/SDL_GameControllerDB/blob/master/README.md) documents GUID/platform/button/axis mappings and SDL_GameControllerAddMappingsFromFile. The [zlib licence](https://github.com/mdqinc/SDL_GameControllerDB/blob/master/LICENSE) requires retained notice and appropriate marking of changes.
+
+The inspected current database contained no case-insensitive TrimUI or Deeplay entry. **It is not evidence that the original Smart Pro's built-in mapping is supplied.** Capture and validate the actual device GUID and axes/buttons. Select compatible external-pad records rather than assuming the entire newest file is necessary.
+
+This database alone does not unify PyUI, RetroArch, PPSSPP, shell actions and keyboard-only games. Keep one logical action contract with per-backend adapters. PortMaster's existing [gptokeyb mappings](https://portmaster.games/gptokeyb-documentation.html) handle per-port keyboard/mouse translation; its kill switch is not a save protocol. **Estimated effort S** for mapping-data use, with physical-controller testing still required.
+
+### 7B.4 CrossMix: same-device evidence and selective reference, not the base
+
+**Decision: inspect same-original-Smart-Pro solutions, but do not restore CrossMix as the operating base or overwrite spruce's runtime libraries/governors.** The inspected [ports launcher](https://github.com/cizia64/CrossMix-OS/blob/main/Emus/PORTS/launch.sh) selects performance/battery modes and inserts a Smart-Pro-specific 0.6-second delay after gptokeyb into scripts. The [common launcher](https://github.com/cizia64/CrossMix-OS/blob/main/System/usr/trimui/scripts/common_launcher.sh) is another useful reference for device launch conditions.
+
+These are **test hypotheses**, not universal fixes. Compare the actual spruce behavior, establish the failure being addressed and implement only a minimal justified adaptation. Do not mutate upstream port scripts on every launch or transplant binaries because the hardware name matches. Same hardware does not imply interchangeable runtime libraries.
+
+[CrossMix-OS](https://github.com/cizia64/CrossMix-OS) has a GPL-3.0 top-level licence; bundled binaries/assets require separate provenance review and any copied code must pass the active licensing gate. **Estimated effort S for inspection, M/H for transplantation**. Configuration or independently implemented behavior may be preferable to copied code.
+
+### 7B.5 Onion GameSwitcher: UX reference, reject a direct port
+
+**Decision: borrow interaction ideas, not Onion's implementation as a new subsystem.** Useful patterns are thumbnail/history browsing, playtime, quick resume, and clearly different Resume and Remove actions. The [official GameSwitcher documentation](https://onionui.github.io/docs/apps/game-switcher) expressly describes reliance on RetroArch save states and says standalone emulators are not compatible.
+
+The [implementation](https://github.com/OnionUI/Onion/blob/main/src/gameSwitcher/gameSwitcher.c) is C using SDL/SDL.h with SDL1-style surface APIs, framebuffer/system hooks, Onion paths/settings and Miyoo integration. It is not a Python/SDL2/PyUI drop-in, and it cannot supply a universal PPSSPP/native-port resume engine. The [GPL-3.0 licence](https://github.com/OnionUI/Onion/blob/main/LICENSE) adds another copying gate.
+
+Build the desired experience in existing PyUI using the already specified capability-aware adapters. **Estimated effort S as a design reference, H as a direct port; direct port rejected.** Preserve source attribution for design research without implying that attribution alone permits source copying.
+
+### 7B.6 Syncthing: optional later sync, not the backup engine
+
+**Decision: defer opt-in cross-device syncing until local save recovery works; reject Syncthing as the sole backup/recovery mechanism.** CrossMix has an original-Smart-Pro integration, making this a plausible candidate, not proof that current binaries work on pinned spruce.
+
+Its [FAQ](https://docs.syncthing.net/users/faq.html#is-syncthing-my-ideal-backup-application) explains that modifications/deletions propagate and it is not an ideal backup. [File versioning](https://docs.syncthing.net/users/versioning.html) is disabled by default and preserves qualifying changes received from other devices, not local edits. [Low-resource tuning](https://docs.syncthing.net/users/tuning.html#tuning-for-low-resources) is available, but CPU/RAM/battery costs must be measured on the original device. [Upstream licensing](https://github.com/syncthing/syncthing/blob/main/README.md) is MPL-2.0; verify the selected distribution and dependencies.
+
+Ship local rotating snapshots first, with a manifest, checksums, verified completed writes and a tested restore. Any later sync requires explicit paired-device setup, conflict/clock/suspend tests and conservative networking. **Do not copy CrossMix's broad-listening network defaults.** Do not enable persistent networking or pairing during documentation/prototyping without the necessary authorization. **Estimated effort M/H**; not a first-vertical-slice dependency.
+
+### 7B.7 Selection gates and the per-port capability contract
+
+Observed repository metadata showed all six projects non-archived; last pushes at the research snapshot were PortMaster 21 October 2026, RetroArch 22 October, SDL_GameControllerDB 19 October, CrossMix 20 August, Onion 7 February, and Syncthing 21 October. These dates are activity evidence, **not a maintenance or support guarantee**. Recheck before selection and pin actual commits/releases. The exact selected dependency versions remain an implementation gate, not a fabricated outcome of this comparison.
+
+For every native port, keep a manifest containing:
+1. Source/provenance, exact game/runtime versions and all relevant licences.
+2. Architecture, libc/GPU/driver/runtime requirements and original-device test status.
+3. Instructions for any required user-owned game data, without bundling unlicensed assets.
+4. Logical controls and actual per-port backend mapping.
+5. Save/config paths, completed-write detection, backup and restore mapping.
+6. Clean exit behavior and error recovery.
+7. Measured performance, with firmware, settings and test scene recorded.
+8. One honest resume capability: **state-resume**, **in-game-save**, or **launch-only**.
+
+Do not fabricate save-state support for native ports or standalone emulators. Keep the initial vertical slice on the existing frontend and integrations. It needs neither a replacement frontend framework nor a background sync service. A candidate only becomes an accepted dependency after it solves a demonstrated gap more cheaply and reliably than extending the maintained component already present.
 
 ## 8. Licensing gate before implementation or distribution
 
