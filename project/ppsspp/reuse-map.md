@@ -35,7 +35,20 @@ whose compiled ELF failed that inventory.
 
 ## Continue Playing evidence
 
-Native PPSSPP slots and screenshots are already implemented in the engine. The source APIs above can supply exact state metadata from inside a source-built PPSSPP; their existence does not mean stable Spruce exposes an external metadata interface. No such external interface is fabricated here. Until the exact engine integration exists and reports a successful state operation, the offshoot's backend offers recently played entries and normal launch. Resume additionally requires matching game, engine fingerprint, state format, state hash, slot and clean lifecycle evidence.
+The separate [optional state-evidence patch](state-evidence.md) adds an in-process
+qualification API around the real Save/SaveSlot/Process lifecycle. It checks the
+final slot rename, reports rejected operations, invalidates changed sessions,
+and fingerprints the exact active ROM, running executable and completed state.
+Compiled source acceptance includes the real upstream SHA-256 implementation.
+The optional patch has its own lock and has not been included in the complete
+PowerVR candidate described above.
+
+Stable spruce exposes no verified external metadata interface, and this patch
+adds no caller, exporter, command or Resume action. Full ROM hashing is opt-in
+qualification work and can pause emulation. Callback completion does not prove
+durability or clean shutdown. The frontend continues to offer recents and normal
+launch until a reviewed owner integration supplies exact request/game/engine/
+format/state identity, writer evidence and a qualified state-load lifecycle.
 
 Spruce's `SIGUSR1` save-and-quit extension and shutdown hotkey sequence need their own completion/error proof. A screenshot, a process exit, or a callback that ignores save status must not be labeled a successful state save.
 

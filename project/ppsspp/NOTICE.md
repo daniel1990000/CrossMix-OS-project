@@ -14,8 +14,15 @@ the external source, recipe or SDK inputs they process.
 `d357e6a32934800d3d80b49f910a603e1b069751`, including its PSPSDK BSD-compatible
 copyright notice and GNU GPL version 2 text. PPSSPP source is available from
 https://github.com/hrydgard/ppsspp/tree/d357e6a32934800d3d80b49f910a603e1b069751 .
-Project modifications are the adjacent version-pinned patch, with before/after
-hashes recorded in `source-lock.json`. No compiled PPSSPP binary is distributed
+Project modifications are the adjacent version-pinned patches, with before/after
+hashes recorded in `source-lock.json` and, separately, `state-evidence.lock.json`.
+The optional completed-state API patch and its C++ acceptance fixture are also
+GPL-2.0-or-later. Its Python test driver is original MIT code. The acceptance
+build uses the locked upstream SHA-256 implementation, Copyright (C) 2001-2003
+Christophe Devine, under its retained GPL-2.0-or-later header. The optional patch
+is not included in the existing complete candidate build or its saved executable
+hash; it has host acceptance only and no installed caller or external exporter.
+No compiled PPSSPP binary is distributed
 here. A future binary distribution must provide the corresponding source and
 applicable upstream and third-party notices for its exact build.
 

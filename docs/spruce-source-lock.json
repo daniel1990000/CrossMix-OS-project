@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "plan_revision": "2026-10-22-qualified-binding-controls-usb-source-build",
-  "status": "host-tested initialized-owner binding, common PPSSPP controls/appearance and four pinned spruce patches; separate PPSSPP/FFmpeg source build passes SDK dependency inventory; physical integration unqualified",
+  "plan_revision": "2026-10-22-retained-lifecycle-state-completion-evidence",
+  "status": "host-tested retained startup/audio lifecycle and exact-source caller staging, installed-runtime ELF probe, optional PPSSPP state-completion source patch; device activation unqualified",
   "base": {
     "repository": "https://github.com/spruceUI/spruceOS",
     "release_tag": "v4.5.4",
@@ -131,9 +131,26 @@
     "spruce/scripts/power_button_watchdog.sh": "158ea7f8a3f2586308d5fc370c91ad2b5bf25545",
     "spruce/scripts/principal.sh": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
     "spruce/scripts/runtime.sh": "48953144c9482bd398a0c487c78801777024c79f",
-    "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76"
+    "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76",
+    "App/PyUI/main-ui/mainui.py": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+    "App/PyUI/main-ui/devices/device_common.py": "2a557b1637370ae8da2d78551ffd7a96e9c118d6",
+    "App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py": "deadf503c2f73188d47b18d790d57821169ce101",
+    "App/PyUI/main-ui/controller/key_watcher.py": "b1003dfa4b576f185a2310c5ac85ca753f2e499b",
+    "App/PyUI/main-ui/controller/key_watcher_controller.py": "57066c5026bc07b84f755389bf3aed7264b364a5",
+    "App/PyUI/main-ui/devices/utils/file_watcher.py": "1073ae55b4032e6db7cdebd8a0c0e663c3b94685",
+    "App/PyUI/main-ui/utils/throttle.py": "18ef83d2601877f1fbeb98e99d30f7040cd24b19",
+    "App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py": "605ed8ef84df0ffd8d7da9866cdcdfc1f48d1a77",
+    "App/PyUI/main-ui/audio/sdl2_audio_player.py": "12b526326c197db36d0e495608f901e7b5313d22"
   },
   "implementation_handover": "HANDOVER.md",
   "latest_research_parent_commit": "3832c662641fbff18ac3ddafef70a48db5981440",
-  "coverage_register": "project/docs/feature-coverage.md"
+  "coverage_register": "project/docs/feature-coverage.md",
+  "implementation_evidence": {
+    "lifecycle_source_audit": "project/evidence/pyui-lifecycle-source-audit.json",
+    "installed_runtime_probe": "project/docs/installed-runtime-evidence.md",
+    "optional_ppsspp_state_patch_lock": "project/ppsspp/state-evidence.lock.json",
+    "optional_state_patch_in_existing_full_candidate": false,
+    "installed_runtime_observed": false,
+    "actual_principal_return_qualified": false
+  }
 }

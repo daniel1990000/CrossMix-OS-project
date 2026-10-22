@@ -5,7 +5,7 @@ This deliverable is a **host preview of the original Smart Pro presentation**. I
 From the repository, using a Python environment with the documented desktop dependencies:
 
 ```sh
-python3 project/packaging/dev_release.py --output /tmp/smartpro-development --release smartpro-psp-0.1.0-dev1 --include-source --smoke-python /path/to/preview-venv/bin/python
+python3 project/packaging/dev_release.py --output /tmp/smartpro-development --release smartpro-psp-0.1.0-dev3 --include-source --smoke-python /path/to/preview-venv/bin/python
 ```
 
 The output path must be new and outside `project/`. Python 3 and system libsodium are required to build/sign/verify. The `--smoke-python` environment additionally needs system SDL2, `PySDL2==0.9.17` and `Pillow==11.1.0`. No dependencies are downloaded or installed automatically by the builder.
@@ -33,7 +33,7 @@ To verify the final artifacts and package:
 ```sh
 cd /tmp/smartpro-development
 sha256sum -c SHA256SUMS
-python3 /path/to/repository/project/packaging/overlay.py verify smartpro-psp-0.1.0-dev1.tar --public-key development-verification.pub
+python3 /path/to/repository/project/packaging/overlay.py verify smartpro-psp-0.1.0-dev3.tar --public-key development-verification.pub
 ```
 
 After extracting `*-host-preview.zip`, run from its `smartpro-host-preview` folder:

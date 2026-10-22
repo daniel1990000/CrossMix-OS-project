@@ -38,10 +38,20 @@ jobs:
           path: upstream-reference
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            App/PyUI/main-ui/mainui.py
+            App/PyUI/main-ui/devices/device_common.py
+            App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py
+            App/PyUI/main-ui/controller/key_watcher.py
+            App/PyUI/main-ui/controller/key_watcher_controller.py
+            App/PyUI/main-ui/devices/utils/file_watcher.py
+            App/PyUI/main-ui/utils/throttle.py
+            App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py
+            App/PyUI/main-ui/audio/sdl2_audio_player.py
             App/PyUI/main-ui/devices/miyoo_trim_common.py
             App/-OTA/downloader.sh
             App/USBStorageMode/launch.sh
             spruce/scripts/helperFunctions.sh
+            spruce/scripts/principal.sh
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: hrydgard/ppsspp
@@ -57,10 +67,15 @@ jobs:
             Core/KeyMap.cpp
             Core/KeyMap.h
             Core/System.h
+            Core/SaveState.h
+            Core/SaveState.cpp
             Core/HLE/sceCtrl.h
             Core/HLE/sceUtility.h
             Common/Input/InputState.h
             Common/Input/KeyCodes.h
+            Common/Crypto/sha256.h
+            Common/Crypto/sha256.cpp
+            Common/Serialize/Serializer.h
             Common/UI/PopupScreens.h
             Common/Data/Text/I18n.h
             Common/Data/Format/IniFile.cpp
@@ -72,7 +87,7 @@ jobs:
             UI/Theme.cpp
             LICENSE.TXT
             assets/themes
-      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsodium23
+      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsodium23 binutils
       - run: python -m pip install -r project/requirements-dev.txt
       - run: sh project/dev/check.sh
         env:

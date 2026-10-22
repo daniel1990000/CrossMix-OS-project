@@ -1,0 +1,71 @@
+{
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "date": "2026-10-22",
+  "evidence": "untouched-pinned-source-inspection",
+  "hardware_qualified": false,
+  "principal_return_authority_qualified": false,
+  "schema": 1,
+  "source_caller_installed": false,
+  "source_use_obligations_complete": false,
+  "sources": [
+    {
+      "git_blob": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+      "path": "App/PyUI/main-ui/mainui.py",
+      "sha256": "4d41c6e448dae7006ece6f81a0265bea6939052eb85daf05538b3ee6d58aaa2f"
+    },
+    {
+      "git_blob": "2a557b1637370ae8da2d78551ffd7a96e9c118d6",
+      "path": "App/PyUI/main-ui/devices/device_common.py",
+      "sha256": "2c6bbdc424123e3e517ee7a1f5267935dadf3fa5e37fd9f901fcacbf7fda8790"
+    },
+    {
+      "git_blob": "deadf503c2f73188d47b18d790d57821169ce101",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py",
+      "sha256": "b133cc3a898243163371f3a07a047ee317d96b68d41309514a78082c3e600a47"
+    },
+    {
+      "git_blob": "b1003dfa4b576f185a2310c5ac85ca753f2e499b",
+      "path": "App/PyUI/main-ui/controller/key_watcher.py",
+      "sha256": "bb7e7d44f0e6199f9045c1ab1b19cf0acfd27019707004ba26d66f420884f346"
+    },
+    {
+      "git_blob": "57066c5026bc07b84f755389bf3aed7264b364a5",
+      "path": "App/PyUI/main-ui/controller/key_watcher_controller.py",
+      "sha256": "f86a38fb62fa3a4ff69d4cdc7d55273ddcafdd61edc8426d937e06d381f7d72b"
+    },
+    {
+      "git_blob": "1073ae55b4032e6db7cdebd8a0c0e663c3b94685",
+      "path": "App/PyUI/main-ui/devices/utils/file_watcher.py",
+      "sha256": "93bfb660676b79e567c9b8bb4ab297ad513c4f0018668826bd365fd30fbb3148"
+    },
+    {
+      "git_blob": "18ef83d2601877f1fbeb98e99d30f7040cd24b19",
+      "path": "App/PyUI/main-ui/utils/throttle.py",
+      "sha256": "8e388096bf8c40b6d1d33cdacd8a725de1546ec20e940802e63b388f6e90a847"
+    },
+    {
+      "git_blob": "605ed8ef84df0ffd8d7da9866cdcdfc1f48d1a77",
+      "path": "App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py",
+      "sha256": "bfa5b0b151b643fc4bad26ace2e93f19eda4e267de407badbd9f406a4613e16d"
+    },
+    {
+      "git_blob": "12b526326c197db36d0e495608f901e7b5313d22",
+      "path": "App/PyUI/main-ui/audio/sdl2_audio_player.py",
+      "sha256": "5b07a9aa98cd34d66ecd4fd22cb9a9f3ecbbc2c54327d44b8e4ef1962f6da15a"
+    },
+    {
+      "git_blob": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+      "path": "spruce/scripts/principal.sh",
+      "sha256": "f45b37592708c6c6d9a47c6d8f2b94b23d7387233c566d445df78637e11fb953"
+    }
+  ],
+  "unaccounted_owners": [
+    "SmartPro constructor startup/config/key watchers",
+    "controller polling thread and input descriptors",
+    "nested startup audio-route refresh and Bluetooth workers",
+    "timezone file watcher and throttle background refreshes",
+    "Cheevos cache startup child and optional library/network workers",
+    "SDL audio worker and source display/input release",
+    "principal staged command, surviving descendants and display/input ownership"
+  ]
+}

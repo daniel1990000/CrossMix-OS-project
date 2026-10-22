@@ -252,7 +252,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, default=PROJECT)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--release", default="smartpro-psp-0.1.0-dev1")
+    parser.add_argument("--release", default="smartpro-psp-0.1.0-dev3")
     parser.add_argument("--source-date-epoch", type=int,
                         default=int(os.environ.get("SOURCE_DATE_EPOCH", overlay.PLAN_SOURCE_DATE_EPOCH)))
     embedded_lock = PROJECT / "metadata/spruce-source-lock.json"

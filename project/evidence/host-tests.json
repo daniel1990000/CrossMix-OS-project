@@ -11,24 +11,24 @@
   "suites": [
     {
       "suite": "host",
-      "tests": 277,
+      "tests": 306,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 7.674
+      "seconds": 2.89
     },
     {
       "suite": "ppsspp_source_cpp_and_build_tools",
-      "tests": 29,
+      "tests": 43,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 11.617
+      "seconds": 6.951
     }
   ],
-  "total_tests": 306,
+  "total_tests": 349,
   "all_passed_without_skips": true,
   "device_tested": false,
   "checks": [
@@ -50,9 +50,25 @@
     "Isolated candidate build input rejection and read-only ABI path handling",
     "Checked recipe script selection, nonzero/no-op refusal, pinned-source resume and actual SDL compile definitions",
     "Opt-in SDK search correction, quoted CMake argument execution and rejection of stale or ambiguous recipe options",
-    "Pinned FFmpeg codec argument preservation, refusal before unlocked shell expansion and private log/archive retention boundaries"
+    "Pinned FFmpeg codec argument preservation, refusal before unlocked shell expansion and private log/archive retention boundaries",
+    "Retained actual startup callbacks and cooperative audio stop/join/restore, including successful watcher disappearance",
+    "Ten-file pinned lifecycle audit and actual source caller/audio seam isolated execution",
+    "Installed-runtime exact ELF/interpreter inspection, PID/starttime/maps correlation and unknown snapshot inode evidence",
+    "Installed-tree absolute symlinks, ancestor-swap containment, changing files, streamed subprocess output/deadline budgets and private mapping exclusion",
+    "Optional PPSSPP SaveSlot completion with actual Enqueue/Save/Process/Init/Shutdown functions and real upstream SHA256",
+    "Ignored final rename refusal, networking/hardcore rejection, replaced ROM/session, missing/empty/nonregular/oversize files and unsupported builds",
+    "Independent game/state/executable SHA256 validation, actual serializer-format constants and native-menu/state patch composition"
   ],
   "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> sh project/dev/check.sh",
   "source_checkouts_pristine": true,
-  "complete_ppsspp_engine_built_by_this_check": false
+  "complete_ppsspp_engine_built_by_this_check": false,
+  "validation_log_sha256": "67bf35ba83cfb8b4ecc459660c4d40c9198e54540993aaf0f871adec45354eec",
+  "optional_ppsspp_state_patch": {
+    "source_lock": "project/ppsspp/state-evidence.lock.json",
+    "host_tests": 14,
+    "full_engine_build": false,
+    "external_exporter": false,
+    "device_tested": false,
+    "resume_enabled": false
+  }
 }
