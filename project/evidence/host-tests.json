@@ -11,27 +11,26 @@
   "suites": [
     {
       "suite": "host",
-      "tests": 229,
+      "tests": 277,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 2.688
+      "seconds": 4.807
     },
     {
-      "suite": "ppsspp_source_cpp",
-      "tests": 10,
+      "suite": "ppsspp_source_cpp_and_build_tools",
+      "tests": 20,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 4.222
+      "seconds": 8.084
     }
   ],
-  "total_tests": 239,
+  "total_tests": 297,
   "all_passed_without_skips": true,
   "device_tested": false,
-  "complete_ppsspp_engine_built": false,
   "checks": [
     "Original SDL input/rendering and injected ownership",
     "PyUI snapshot/live-model boundaries and guarded launch",
@@ -39,8 +38,18 @@
     "Runtime handoff and classic fallback",
     "Signed overlay verification, staging, rollback and deterministic rebuild",
     "Offline migration, port owner-data and read-only tooling",
-    "Three actual pinned spruce source regressions and patches",
+    "Four actual pinned spruce source regressions and patches",
     "PPSSPP theme schema versus actual pinned parser",
-    "Compiled patched PPSSPP KeyMap, SDL translation, ConfigSetting serialization and native widget fragments"
-  ]
+    "Compiled patched PPSSPP KeyMap, SDL translation, ConfigSetting serialization and native widget fragments",
+    "Initialized PyUI authority binding and live independent evidence refresh",
+    "Correlated same-boot return receipts and partial lifecycle restoration faults",
+    "PPSSPP opt-in plus Confirm/Back transactions and real INI parser semantics",
+    "Common PPSSPP appearance preview/apply/Undo with copied host configurations",
+    "Actual pinned USB launcher refusal after failed staging with mocked device commands",
+    "PPSSPP native info/tab/direction and Pause-to-exit remap collisions",
+    "Isolated candidate build input rejection and read-only ABI path handling"
+  ],
+  "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> sh project/dev/check.sh",
+  "source_checkouts_pristine": true,
+  "complete_ppsspp_engine_built_by_this_check": false
 }

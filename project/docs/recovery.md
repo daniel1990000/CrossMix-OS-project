@@ -32,6 +32,8 @@ If `.package-lock` remains after interruption, ensure no package process is acti
 
 Upstream spruce v4.5.4 runs SmartPro directly through `runtime.sh`; its optional `boot/session.sh` crash guard is only enabled for opted-in Flip by the inspected updater. Do not assume `boot_to_stock.lock` provides TG5040 recovery. Upstream updates replace files in place, with MD5 feed checks and selected configuration backup/restore; this is distinct from project signed-overlay rollback. Do not run upstream OTA and project activation concurrently. Recheck locked source contracts after any update.
 
+The [fourth source patch](../patches/README.md) refuses USB export if the existing RAM staging fails, returning an error to principal instead of exporting a mounted card. Actual-source mocked tests cover that branch and preserve the successful shutdown handoff. The patch remains a reviewable artifact; applying it to a release, clean unmount, interrupted storage operations and physical UI return still need qualification.
+
 For original-device firmware recovery, obtain the manufacturer's **TG5040** recovery image and instructions from <https://github.com/trimui/firmware_smartpro/releases/tag/v1.1.1>. The 20251128 recovery ZIP's published SHA256 is `b1278652eddfd0adcf7fe6733ca3ee5ddf319ee11eae77c9a8ced99d0f64b059`. Firmware restoration is a separate operation from UI recovery and may reset internal settings; no tool here flashes it. A30, Brick, Smart Pro S and Flip recovery images/instructions are not substitutes.
 
 ## CrossMix → spruce migration on offline copies

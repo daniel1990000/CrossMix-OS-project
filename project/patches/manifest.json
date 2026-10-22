@@ -21,6 +21,12 @@
       "path": "spruce/scripts/helperFunctions.sh",
       "base_sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
       "patched_sha256": "b97805f2f98c0110817c80a2f3a2051c0d7611e6f51cbbe447d8e120c17d642d"
+    },
+    {
+      "patch": "0004-usb-refuse-unstaged-export.patch",
+      "path": "App/USBStorageMode/launch.sh",
+      "base_sha256": "c28b684665a51d5b9208d6b4042538190e07f1f093f34b5dc212e856841dc849",
+      "patched_sha256": "1bb86c230524d91ce96c2fd195a4c479b8f634ee12f64db047e327af175e99a6"
     }
   ]
 }

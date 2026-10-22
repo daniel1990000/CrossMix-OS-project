@@ -296,18 +296,23 @@ def run_preview(args, backend=None):
                 receive(command, error=exc)
 
     synchronous(model.initial_commands())
+    def select_category(index):
+        for _ in range((index - model.category) % 4):
+            synchronous(model.handle("right"))
     if args.screen == "continue":
-        synchronous(model.handle("right"))
+        select_category(1)
     elif args.screen == "tools":
-        for _ in range(2):
-            synchronous(model.handle("right"))
+        select_category(2)
     elif args.screen in ("settings", "controls", "appearance"):
-        for _ in range(3):
-            synchronous(model.handle("right"))
+        select_category(3)
         if args.screen in ("controls", "appearance"):
             target = "controls" if args.screen == "controls" else "appearance"
-            while model.snapshot().selected_item.id != target:
+            for _ in range(len(model.snapshot().items)):
+                if model.snapshot().selected_item.id == target:
+                    break
                 synchronous(model.handle("down"))
+            else:
+                raise AppError("SCREEN_UNAVAILABLE", "This preview screen is unavailable.")
             synchronous(model.handle("confirm"))
     elif args.screen == "search":
         for _ in range(2):
@@ -316,6 +321,7 @@ def run_preview(args, backend=None):
     elif args.screen == "error":
         model.error(None, "SAMPLE_FAILURE", "The launcher was unavailable. Your saves remain in place.")
     elif args.screen == "library":
+        select_category(0)
         synchronous(model.handle("confirm"))
     for action in filter(None, (args.actions or "").split(",")):
         if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search"):

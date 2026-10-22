@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "plan_revision": "2026-10-22-implementation-handover-v2",
-  "status": "implemented host-tested development source; device integration and release qualification pending",
+  "plan_revision": "2026-10-22-qualified-binding-controls-usb",
+  "status": "host-tested initialized-owner binding, common PPSSPP controls/appearance and four pinned spruce patches; physical integration unqualified",
   "base": {
     "repository": "https://github.com/spruceUI/spruceOS",
     "release_tag": "v4.5.4",
@@ -130,5 +130,6 @@
     "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76"
   },
   "implementation_handover": "HANDOVER.md",
-  "latest_research_parent_commit": "3832c662641fbff18ac3ddafef70a48db5981440"
+  "latest_research_parent_commit": "3832c662641fbff18ac3ddafef70a48db5981440",
+  "coverage_register": "project/docs/feature-coverage.md"
 }

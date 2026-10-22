@@ -31,12 +31,15 @@ instead of being emitted as a per-game setting. Upstream manually authored
 appended/per-game INI overlays can still contain arbitrary global section keys;
 this patch does not change PPSSPP's general overlay semantics.
 
-The patch changes native Confirm/Back bindings only. It does not modify
+The patch reserves the selected physical pair for native Confirm/Back. It does not modify
 `g_controllerMap`, `controls.ini`, PSP `ButtonPreference`, or emulated system
 parameters. Keyboard Enter/Space, Escape, mouse Back, other native navigation,
-and analog inversion retain upstream behavior. Because other navigation still
-follows existing mappings, unusual gameplay mappings that place another native
-action on south/east require collision testing during device qualification.
+and analog inversion retain upstream behavior. When the extension is enabled,
+south/east are removed from other native information, tab and directional
+bindings so an unusual gameplay remap cannot trigger two menu actions. The
+desktop `PauseExitsEmulator` shortcut also yields to this pair in native menu and
+pause-menu states. Its gameplay behavior remains unchanged. Invalid, disabled
+and non-SDL configurations retain the upstream policy.
 
 No emulator binary is shipped or replaced. Existing installed profiles remain
 unqualified. The Python adapter cannot activate this patch in the stock binary;
@@ -59,13 +62,19 @@ PPSSPP_SOURCE_ROOT=/path/to/pinned-ppsspp python -m unittest discover -s project
 ```
 
 Tests verify exact source preimages, apply the patch only in a temporary tree,
-and compile and execute the actual patched `UpdateNativeMenuKeys`, actual SDL
+and compile and execute the actual patched `UpdateNativeMenuKeys` and `NativeKey`, actual SDL
 translator, actual ConfigSetting constructors/read/write methods, and the native
 widget fragment using its actual upstream constructor signature. Explicit narrow
 stubs supply unrelated controller storage, platform callbacks, in-memory Section,
-and widgets. These tests do not establish a full engine build, target ABI,
+and widgets. A separate fixture executes the real INI value and boolean parsers
+for quoted values, comments and literal escapes. These tests do not establish a full engine build, target ABI,
 rendered widget behavior, physical input correctness, or device performance.
 CI must provide `PPSSPP_SOURCE_ROOT`; absent source skips source-dependent tests.
+
+The isolated [PowerVR candidate builder](build-candidate.md) verifies full source,
+submodules, recipe and SDK inputs before copying them into a new work directory.
+Its output stays separate from the project overlay and installed engine. Build
+results, SDK dependency inventory and distribution clearance are separate claims.
 
 The PPSSPP patch and C++ acceptance fixtures are GPL-2.0-or-later. The exact
 upstream license and PSPSDK notice are retained in

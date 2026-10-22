@@ -27,12 +27,12 @@ The second command inspects a card without launching its scripts or modifying it
 
 | Area | Current behavior |
 |---|---|
-| Interface | Games, Continue Playing, Tools, Settings; browse/search/favorites; dialogs and original waves; text scaling, contrast, motion/sound preferences; controls capability list and credits. |
+| Interface | Games, Continue Playing, Tools, Settings; browse/search/favorites; dialogs and original waves; text scaling, contrast, motion/sound preferences; controls and PPSSPP appearance preview/apply/Undo; credits. |
 | Library | Read-only source/card inspection and injected existing PyUI models. Existing platform filtering, ROM identity and launch paths are preserved. |
-| Runtime | Fixed action registry, once-only handoffs, foreground uncertainty records, classic fallback and shared-renderer ownership. The real qualified bootstrap/return binding is outstanding. |
+| Runtime | Fixed action registry, once-only handoffs, foreground uncertainty records, classic fallback and shared-renderer ownership. A trusted initialized-owner binding refreshes live evidence and correlates return receipts; the actual qualified source caller/thread lifecycle and principal return authority remain outstanding. |
 | Settings | Preview, journaled apply, conflict detection, crash recovery and targeted undo. Emulator changes require a qualified executable/profile and stopped writers. |
 | PPSSPP | Actual v1.20.3 source patch for independent SDL native-menu Confirm/Back, executable source acceptance harness, matching original themes and transactional adoption helper. See [PPSSPP integration](ppsspp/README.md) and [reuse map](ppsspp/reuse-map.md). |
-| Reliability | Three exact-source spruce patches: launcher path quoting, verified TLS download failure handling, and extractor exit status. They are not silently applied to an installed OS. |
+| Reliability | Four exact-source spruce patches: launcher path quoting, verified TLS download failure handling, extractor exit status, and refusal of mounted-card USB export after staging failure. They remain separate reviewable patches. |
 | Data and recovery | Read-only inventory and redacted support bundles; offline CrossMix favorites/recents and approved battery-save migration; signed scoped overlays with rollback; port owner-data staging and undo; read-only process benchmarks. |
 
 Continue Playing displays existing recents. Real Resume requires verified game/engine/state identity and a successful state lifecycle; a recent entry alone does not qualify. Existing power, sleep, USB, networking and advanced menus remain owned by spruce. Native emulator screens retain their engine behavior; full visual/control parity still needs work.
@@ -48,7 +48,7 @@ python3 project/packaging/dev_release.py --output /tmp/smartpro-development --in
 
 The PPSSPP checks also need `git` and `g++` with C++17 support. They compile selected real patched functions with narrow fixtures; they do not build the complete emulator. [Development release instructions](docs/development-release.md) explain signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs checks and uploads the development artifacts.
 
-See [recovery](docs/recovery.md), [packaging](packaging/README.md), and the saved [evidence](evidence/) for scope and remaining qualification. There is no measured hardware speed or battery improvement at this checkpoint.
+See [full-system coverage](docs/feature-coverage.md), [qualified binding](bridge/README.md), [recovery](docs/recovery.md), [packaging](packaging/README.md), and the saved [evidence](evidence/) for scope and remaining qualification. There is no measured hardware speed or battery improvement at this checkpoint.
 
 ## Licences
 

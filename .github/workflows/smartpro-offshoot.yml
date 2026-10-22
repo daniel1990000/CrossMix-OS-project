@@ -40,6 +40,7 @@ jobs:
           sparse-checkout: |
             App/PyUI/main-ui/devices/miyoo_trim_common.py
             App/-OTA/downloader.sh
+            App/USBStorageMode/launch.sh
             spruce/scripts/helperFunctions.sh
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:

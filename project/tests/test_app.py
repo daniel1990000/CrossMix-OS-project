@@ -1,6 +1,9 @@
 """Integration checks for UI operations and the snapshot boundary."""
 import json
+import os
 from pathlib import Path
+import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -92,6 +95,16 @@ class ApplicationTests(unittest.TestCase):
             self.assertEqual(caught.exception.code, "READ_ONLY_SNAPSHOT")
         guard_snapshot_outputs(card, [self.root / "report.json"])
         self.assertEqual(list(card.iterdir()), [])
+
+    def test_appearance_preview_reopens_with_saved_settings_category(self):
+        state = self.root / "preview-state"
+        command = [sys.executable, "-m", "psp_shell", "--demo", "--headless", "--frames", "1",
+                   "--screen", "appearance", "--state-dir", str(state)]
+        environment = {**os.environ, "SDL_VIDEODRIVER": "dummy", "SDL_AUDIODRIVER": "dummy"}
+        for _ in range(2):
+            result = subprocess.run(command, env=environment, capture_output=True, text=True, timeout=15)
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(json.loads((state / "navigation.json").read_text())["category"], 3)
 
 
 if __name__ == "__main__":

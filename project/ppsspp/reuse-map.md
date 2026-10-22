@@ -24,7 +24,7 @@ The shell delegates launch through Spruce's existing wrapper and principal loop,
 
 `theme/spruce-midnight.ini` provides the original normal/high-contrast palettes. `psp_shell.ppsspp` validates the actual source-supported schema and provides preview, exact-profile gates, a journaled theme/config installation and targeted undo. Tests cover source parser keys, original colors, preserving unrelated settings, source/profile/config staleness, running writers, overwrite confirmation, external edit conflicts and interrupted multi-file recovery. The supplied compatibility example refuses writes until qualified.
 
-The independent native-menu patch is maintained separately from this original adapter and theme data. It must retain the existing PSP/gameplay mappings and the old behavior by default. Each candidate binary needs its corresponding source, source/patch identities, build recipe and notices before redistribution.
+The independent native-menu patch is maintained separately from this original adapter and theme data. It retains the existing PSP/gameplay mappings and the old behavior by default. Enabled Confirm/Back keys are reserved against colliding native information, tab, directional and menu-exit actions. Each candidate binary needs its corresponding source, source/patch identities, build recipe and notices before redistribution. The [isolated candidate builder](build-candidate.md) records these inputs without changing the installed emulator.
 
 ## Continue Playing evidence
 
