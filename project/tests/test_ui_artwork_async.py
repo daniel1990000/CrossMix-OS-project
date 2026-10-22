@@ -109,7 +109,7 @@ class ArtworkRepaintTests(unittest.TestCase):
                 def neighbors_loaded():
                     if renderer.needs_frame(snapshot, 10):
                         renderer.render(snapshot, 10)
-                    return {"cover0", "cover1", "cover2", "cover3"} <= set(renderer._art)
+                    return {"cover0", "cover1", "cover2"} <= set(renderer._art)
                 self.assertTrue(wait_until(neighbors_loaded))
                 # More rows than both queue and texture cache exercise misses
                 # after scrolling, rather than one permanent requested marker.

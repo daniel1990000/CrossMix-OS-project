@@ -90,6 +90,8 @@ REQUIRED_PROJECT_MODULES = [
     'app/psp_shell/ui/artwork.py',
     'app/psp_shell/ui/input.py',
     'app/psp_shell/ui/model.py',
+    'app/psp_shell/ui/motion.py',
+    'app/psp_shell/ui/pictograms.py',
     'app/psp_shell/ui/renderer.py',
     'app/psp_shell/ui/text.py',
 ]

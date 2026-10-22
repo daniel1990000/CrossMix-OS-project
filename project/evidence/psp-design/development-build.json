@@ -2,7 +2,7 @@
   "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
   "byte_identical_overlay_rebuild_with_same_key": true,
   "byte_identical_unsigned_zip_rebuild": true,
-  "development_key_id": "b64befb3aaacf6c099c7c045d072f76b85271f28bf5dfe38d9427492b7bf5655",
+  "development_key_id": "e200a4d33b26dcaccf7c5fd361cd14d060ff1d66785c2188893acf2ce5603561",
   "device_activation_qualified": false,
   "device_gates": {
     "hardware_qualified": false,

@@ -263,6 +263,17 @@ class ReleaseIntegrationTests(unittest.TestCase):
         self.assertIn("from bridge.process_source import stage_existing_command", miyoo)
         self.assertTrue((output / "tree" / integration.PAYLOAD_ROOT / "app/bridge/principal.py").is_file())
         self.assertTrue((output / "tree" / integration.PAYLOAD_ROOT / "assets/fonts/NotoSans.ttf").is_file())
+        ui_modules = {"app/psp_shell/ui/" + path.name for path in (PROJECT / "psp_shell/ui").glob("*.py")}
+        required = set(record["bridge_review"]["required_project_modules"])
+        self.assertTrue(ui_modules <= required, ui_modules - required)
+        with integration.overlay.VerifiedArchive(archive, integration.overlay.load_key(key, 32)) as verified:
+            signed = {item["path"]: item["sha256"] for item in verified.manifest["files"]}
+        retained = {item["path"]: item["sha256"] for item in record["artifact_files"]}
+        for module in ("motion.py", "pictograms.py"):
+            relative = "app/psp_shell/ui/" + module
+            expected = hashlib.sha256((PROJECT / "psp_shell/ui" / module).read_bytes()).hexdigest()
+            self.assertEqual(signed[relative], expected)
+            self.assertEqual(retained["tree/" + integration.PAYLOAD_ROOT + "/" + relative], expected)
         self.assertIn("TRIMUI_PROJECT_STATE_REQUEST", (output / "tree/spruce/scripts/emu/lib/ppsspp_functions.sh").read_text())
         restored = self.root / "process-restored"
         restore = integration.restore_private_candidate(output, restored, public_key=key)
@@ -285,11 +296,15 @@ class ReleaseIntegrationTests(unittest.TestCase):
         output = self.root / "changed-original-module"
         integration.assemble_private_candidate(self.source, output, source_review=self.review,
             overlay_archive=archive, public_key=key)
-        module = output / "tree" / integration.PAYLOAD_ROOT / "app/bridge/principal.py"
-        module.write_bytes(b"raise RuntimeError('modified outside the verified original payload')\n")
-        self.rewrite_manifest(output, lambda value: value.update(artifact_files=integration._artifact_inventory(output)))
-        with self.assertRaisesRegex(integration.IntegrationError, "differs from its signed payload"):
-            integration.verify_candidate(output, public_key=key)
+        for name in ("app/bridge/principal.py", "app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py"):
+            with self.subTest(module=name):
+                module = output / "tree" / integration.PAYLOAD_ROOT / name
+                original = module.read_bytes()
+                module.write_bytes(b"raise RuntimeError('modified outside the verified original payload')\n")
+                self.rewrite_manifest(output, lambda value: value.update(artifact_files=integration._artifact_inventory(output)))
+                with self.assertRaisesRegex(integration.IntegrationError, "differs from its signed payload"):
+                    integration.verify_candidate(output, public_key=key)
+                module.write_bytes(original)
 
     def test_optional_state_session_is_retained_only_when_explicitly_selected(self):
         default = integration.prepare_review_kit(self.source, self.root / "default-state-off")

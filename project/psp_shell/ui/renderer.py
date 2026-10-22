@@ -499,11 +499,11 @@ class Renderer:
             center_x = anchor + delta * spacing
             selected = index == snapshot.category
             proximity = max(0.0, 1 - abs(delta))
-            size = round(72 + proximity * 16)
+            size = round(128 + proximity * 16)
             alpha = 255 if selected or snapshot.preferences.high_contrast else 148
             self._icon(title, center_x - size / 2, center_y - size / 2, size, (255, 255, 255, alpha))
             if selected:
-                size_text = 21
+                size_text = 23
                 scale = min(snapshot.preferences.text_scale, 1.25)
                 width = min(270, self.text.measure(title, round(size_text * scale)))
                 self._text(title, center_x - width / 2, 243, size_text, (255, 255, 255), 270, scale)
@@ -515,8 +515,8 @@ class Renderer:
         if distance < 0:
             return 368 + distance * gap
         if distance < 1:
-            return 368 + distance * (gap + 30)
-        return 398 + distance * gap
+            return 368 + distance * (gap + 80)
+        return 448 + distance * gap
 
     @staticmethod
     def _item_icon(item: UIItem) -> str:
@@ -531,7 +531,7 @@ class Renderer:
         scale = prefs.text_scale
         identity = (snapshot.category, snapshot.title, snapshot.breadcrumb)
         position = self._item_glide.position(snapshot.selected, now, identity, prefs.motion)
-        gap = max(66, round(62 * min(scale, 1.65)))
+        gap = max(74, round(70 * min(scale, 1.65)))
         clip = sdl2.SDL_Rect(172, 280, 1035, 348)
         sdl2.SDL_RenderSetClipRect(self.renderer, ctypes.byref(clip))
         try:
@@ -550,26 +550,27 @@ class Renderer:
                 color = primary if selected else (*primary[:3], alpha)
                 # Scale makes focus readable without an opaque tile or bar.
                 if item.kind == "game":
-                    width, height = round(76 + 56 * emphasis), round(43 + 31 * emphasis)
+                    width, height = round(90 + 70 * emphasis), round(51 + 39 * emphasis)
                     self._artwork(item, round(292 - width / 2), round(y - height / 2), width, height, prefs)
                 else:
-                    size = round(36 + 34 * emphasis)
+                    size = round(60 + 60 * emphasis)
                     self._icon(self._item_icon(item), 292 - size / 2, y - size / 2, size, color)
-                title_size = 28 if selected else 20
+                title_size = 31 if selected else 22
                 title_scale = scale if selected else min(scale, 1.35)
                 title_y = y - (24 if selected else 10)
-                self._text(item.title, 391, title_y, title_size, color, 780, title_scale)
+                title_width, _ = self._text(item.title, 391, title_y, title_size, color,
+                                            740 if item.favorite else 780, title_scale)
                 if selected:
                     subtitle = item.subtitle
                     if item.kind == "game":
                         subtitle = (item.system_id + "   /   " + subtitle).strip(" / ")
                     if subtitle:
-                        self._text(subtitle, 393, y + max(18, round(17 * scale)), 16, muted, 763, min(scale, 1.35))
+                        self._text(subtitle, 393, y + max(23, round(20 * scale)), 17, muted, 763, min(scale, 1.35))
                     if item.favorite:
-                        self._icon("favorites", 354, title_y + 2, 22, primary)
+                        self._icon("favorites", 405 + title_width, title_y + 2, 22, primary)
             if position > .05:
                 self._polyline([(286, 283), (292, 279), (298, 283)], (*primary[:3], 130))
-            if position + 3 < len(snapshot.items):
+            if self._row_y(len(snapshot.items) - 1 - position, gap) > 620:
                 self._polyline([(286, 622), (292, 626), (298, 622)], (*primary[:3], 130))
         finally:
             sdl2.SDL_RenderSetClipRect(self.renderer, None)

@@ -331,14 +331,21 @@ finally:
         self.run_code(r"""
 import threading
 from bridge.resident import PrincipalLease
+from psp_shell.health import FrontendHealth
 health,expected=fixture_pending_command(config,('printf once >> '+str(ROOT/'launch-count')+'\n').encode())
 barrier=threading.Barrier(2);consume=PrincipalLease.consume_source;results=[]
+# Exercise closure consumption after both real health reads complete. The
+# health lock intentionally rejects concurrent readers before this seam.
+foreground_lock=threading.Lock();read_foreground=FrontendHealth.foreground_identity
+def serialized_foreground(self):
+    with foreground_lock:return read_foreground(self)
 def synchronized(self,*args): barrier.wait(timeout=3);return consume(self,*args)
-def command():
-    try: PrincipalBoundary(config).run_command();results.append('complete')
+def command(boundary):
+    try: boundary.run_command();results.append('complete')
     except ContractError as error: results.append(error.code)
-with patch.object(PrincipalLease,'consume_source',synchronized):
-    threads=[threading.Thread(target=command) for _ in range(2)]
+boundaries=[PrincipalBoundary(config) for _ in range(2)]
+with patch.object(FrontendHealth,'foreground_identity',serialized_foreground),patch.object(PrincipalLease,'consume_source',synchronized):
+    threads=[threading.Thread(target=command,args=(boundary,)) for boundary in boundaries]
     for thread in threads:thread.start()
     for thread in threads:thread.join(timeout=5)
 assert sorted(results)==['SOURCE_CLOSURE_UNVERIFIED','complete'],results
