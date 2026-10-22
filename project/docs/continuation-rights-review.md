@@ -71,3 +71,5 @@ private merely because the ZIP omits them.
 Continue original host tooling and acceptance preparation. Keep the draft PR
 unmerged and all runtime, source-use, hardware and combined-distribution gates
 disabled until their corresponding evidence is independently reviewed.
+
+The continuation subsequently regenerated original-only development artifacts and a verified private review kit at the new paths in [HANDOVER.md](../../HANDOVER.md). It did not recover or rebuild the native candidates or matching native source archives. The historical paths above remain absent.

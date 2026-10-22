@@ -16,9 +16,18 @@ Support export now redacts whole strings containing ROM/save paths and path-keye
 
 The [continuation rights review](project/docs/continuation-rights-review.md) records exact outstanding evidence and absent historical private artifacts. No device was attached or tested, no notification was sent, and no gate, installed emulator or owner save changed. Private native binaries/source archives must be recovered and hash-verified or rebuilt before use; historical SDK audit results have not been rerun here.
 
-Local validation: 21 acceptance tests and 13 inventory/support tests pass. The full host run attempted all 473 tests, with 14 failures and 22 errors in process-identity/lifecycle tests in this sandbox: Python's PID differs from `/proc/self` and `/proc/<pid>/stat` is absent. This is not a full passing run. Do not weaken identity checks or count those failures as skips. CI validation of the continuation is pending. Original-only development packaging passed signature/inventory, deterministic rebuild, installed-payload smoke and fixture rollback at `/workspace/scratch/08e013647ad3/development-continuation`.
+Local validation: 21 acceptance tests and 13 inventory/support tests pass. The full host run attempted all 473 tests, with 14 failures and 22 errors in process-identity/lifecycle tests in this sandbox: Python's PID differs from `/proc/self` and `/proc/<pid>/stat` is absent. This is not a full passing run. Do not weaken identity checks or count those failures as skips. The continuation passes all **534 checks in GitHub CI** (473 host/source and 61 PPSSPP), with zero skips/failures/errors; see the exact commit and run below. Original-only development packaging passed signature/inventory, deterministic rebuild, installed-payload smoke and fixture rollback at `/workspace/scratch/08e013647ad3/development-continuation`.
+
+The recreated private source-review kit is `/workspace/scratch/08e013647ad3/source-review-continuation`; verification with the external development public key passed. The fresh `/workspace/scratch/08e013647ad3/device-acceptance-ready` session has all 13 areas `not_run`. These paths are temporary workspace outputs, not a claim that previous private native archives survived. See [continuation evidence](project/evidence/continuation-acceptance-hardening.json).
 
 ## Latest verified GitHub checkpoint
+
+- Implementation commit: [`37c330c6ebf8dd2e846003ee072eb2e0cf7f1bb1`](https://github.com/daniel1990000/CrossMix-OS-project/commit/37c330c6ebf8dd2e846003ee072eb2e0cf7f1bb1).
+- [GitHub Actions run 39812635602](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39812635602): **success**, all **534 checks**, zero skips/failures/errors, development packaging and artifact upload. Host job `119942691297` reports 473 and 61 tests.
+- [Updated original-only development artifact](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39812635602/artifacts/12441400284): ID `12441400284`, SHA256 `4fa98d8ec5d17850e885122adaf851e31a675cc574666d25a75b3ab5ddcfbc91`. No native engine/SDK binary is included. Later evidence/handover-only commits do not change the tested implementation.
+- PR #1 remains draft and unmerged. Next milestone: original-device acceptance and actual source-use/distribution evidence, not additional host tests as a proxy.
+
+## Inherited build checkpoint
 
 - Software/build commit: [`42c83f699225a57251e9322f351fbda72c053830`](https://github.com/daniel1990000/CrossMix-OS-project/commit/42c83f699225a57251e9322f351fbda72c053830).
 - [GitHub Actions run 39810880610](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39810880610): **success**, including all 527 checks, development packaging and artifact upload. Host job `119936465324` reports 466 and 61 tests, with zero skips.
