@@ -1,8 +1,45 @@
 # TrimUI Smart Pro implementation handover
 
-Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
+Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`; [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Active code is `project/` for the original TG5040 on pinned spruceOS v4.5.4/PyUI. The CrossMix/C++ material and prior checkpoint next-work suggestions are historical.
 
 ## Start the next chat here
+
+Read [LATEST.json](project/handover/LATEST.json), [the continuation prompt](NEXT_CHAT_PROMPT.txt), [README](project/README.md) and [master plan](project/docs/master-plan-2026-10-22.md). **12 of 25 tasks are complete as host engineering:** R01–R04, U01–U04, D04, P01–P03. **Zero of 13 physical areas have run.** R04 is newly complete; do not repeat the prior five-task batch or native rebuilds as new work.
+
+**R04:** both native replacements were completely cross-built, paired with actual matching source/build archives, independently reviewed, privately retained and freshly retrieved. All seven native/compiler artifacts, 18 owner-only Drive parts and full reassembled hashes pass. The original dev9 and handover host artifacts are also retained and retrieved; the new dev10 CI archive has its own receipt. See [custody/recovery](project/docs/artifact-custody.md), [native rebuild](project/evidence/artifact-custody/native-rebuild.json), [independent source review](project/evidence/artifact-custody/native-source-review.json) and [private retrieval index](project/evidence/artifact-custody/native-retention.json).
+
+| Current dev10 item | Exact identity/evidence |
+|---|---|
+| Clean local source/build | `a0e6f8af7fe3354c1c82a662b3969e2824717bf3` |
+| Source head certified by CI | `a0e6f8af7fe3354c1c82a662b3969e2824717bf3` |
+| Clean PR merge actually built by CI | `1609c5358ee04010f8e5e873064d53e5fc03eccc` |
+| Strict host/source checks | **710 passed**, 649 host/source + 61 PPSSPP; zero skips/failures/errors/expected failures/unexpected successes |
+| CI | [Run 39871706495](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495), success; [download/readback receipt](project/evidence/device-preparation/ci-readback.json) |
+| Deliverable | `smartpro-psp-0.1.0-dev10`, original-only host preview; selected patches/native binaries empty |
+| Original-source inventory | 158 files, SHA-256 `f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d`; signed payload 57 files |
+
+[Dev10 CI artifact](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495/artifacts/12466212738) ID `12466212738` is 4,882,634 bytes, outer SHA-256 `9a6c7650bd49bfa2ed868ac57e656d7224968de98c438b5be2f60cc752d91305`; expiry **20 January 2027, 23:25:44 UTC**. The complete artifact and all eight inner checksums, development signature/payload and actual exported source bytes were verified. It was privately retained in Drive and freshly retrieved with the same hash. The source-inventory digest above is a different digest. Local packaging passes same-key rebuilds, installed-payload SDL/navigation/settings smoke and fixture rollback; its no-Git export reproduces both ZIPs byte for byte. The generated signer was deleted. A new signer changes signed bytes. See [verification](project/evidence/device-preparation/verification.json).
+
+New private binaries: PPSSPP **19,934,560 bytes**, SHA-256 `f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773` (16-object SDK audit); RetroArch/IGM **15,182,848 bytes**, SHA-256 `26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349` (23-object SDK audit). They were never executed. Historical `a93f7d…`/`118146…` binaries were not recovered. Both new builds use image `sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b`. The repository RA lock keeps the old image; a separately retained build context changes only its image pin. Recover the new context/image from the native receipt instead of silently changing the historical lock. The private SDK image's saved blobs/config are verified; Docker-save outer bytes were not deterministic and restore into an empty daemon was not exercised.
+
+**D01 design is prepared, not implemented:** [trusted route](project/docs/experimental-device-route.md) identifies exact candidate/owner admission, bounded observation/stop requests and recovery. The current shipped entry returns unavailable, and existing descendant wait is unbounded. No card JSON/flag or report grants production qualification. **D02/D03 preparation is ready:** [read-only verifier and operator procedure](project/docs/device-recovery-preflight.md), 20 focused tests and [independent review](project/evidence/device-preparation/review.json). Review found and fixed internal-root metadata, interscan rename and failed-fsync publication gaps. This tool does not copy/restore files or prove physical backup coverage. **R06** now has a [16-scope component ledger](project/docs/native-component-ledger.json); actual FFmpeg IJG link membership/credit is retained, but exact recipe/IGM/SDK grants and remaining source/notices remain open.
+
+Next work:
+
+1. **D02 physical recovery:** complete actual card/save/necessary internal-file payloads, retained readback and restoration rehearsal on expendable media. Overlay rollback, card restoration and internal launcher/FN scene recovery stay separate.
+2. **D03 actual inventory after D02:** observed original TG5040 firmware/filesystem/runtime/loader/writers, kernel APIs, process identity and trusted tools. Firmware 1.1.1/FAT32 remains proposed, not observed or permission to flash.
+3. **D01 implementation/pilot:** implement and review the designed admission/stop behavior without weakening shipped gates. Activation needs actual R05 evidence and D02/D03 readiness; native admissions bind the exact retained R04 artifacts.
+4. **R05/R06 external/component evidence:** the PyUI notice is UNSENT; no send instruction exists. Do not contact anyone. Notification and commercial permission are separate. Continue independent engineering/review meanwhile.
+
+No device was connected or probed. All production/profile/runtime/source-use gates remain false; optional Celeste remains unselected, installed engines and owner data unchanged. No device-ready image, performance/battery benefit, real recovery, physical save paths or same-boot Resume durability is established. PR #1 stays draft/unmerged.
+
+## Current workspace and continuity
+
+The clean source checkout is `/workspace/CrossMix-OS-project`. The five pinned reference roots, isolated Python/SDL dependencies and strict command under [verification and workspace continuity](#verification-and-workspace-continuity) below remain current; native/scratch paths in older snapshots are historical. Current local dev10 output is `/workspace/scratch/trimui-dev10-clean-development`, no-Git export/rebuild under `/workspace/scratch/trimui-dev10-source-export` and `/workspace/scratch/trimui-dev10-source-rebuild`. New native scratch is `/workspace/scratch/trimui-native-r04`. All are ephemeral. Recover durable host/native bytes using their private file IDs, part order and exact hashes in the versioned receipts. Never copy full native/source/SDK archives, owner data or private keys into Git or host preview artifacts.
+
+This continuation's later handover/evidence commits do not inherit the exact CI identity above. The historical snapshots below retain their own counts, release IDs, hashes, temporary paths and next-work suggestions; use the current section and LATEST.json first.
+
+## Historical dev9 handover snapshot
 
 The handover records the completed host work and the remaining device and release work. Read the [current status record](project/handover/LATEST.json), [continuation prompt](NEXT_CHAT_PROMPT.txt), [project README](project/README.md) and [master-plan register](project/docs/master-plan-2026-10-22.md). Resume from the register; do not repeat completed batches or restart the historical CrossMix/C++ plan.
 

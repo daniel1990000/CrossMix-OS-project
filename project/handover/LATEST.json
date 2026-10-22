@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "host development preview; device qualification and release work remain open",
+  "project_stage": "original-only host preview; private replacement native artifacts retained; device qualification and source-use/distribution work remain open",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -23,12 +23,13 @@
   ],
   "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
   "master_plan": "project/docs/master-plan-2026-10-22.md",
-  "completed_task_count": 11,
+  "completed_task_count": 12,
   "total_task_count": 25,
   "completed_host_tasks": [
     "R01",
     "R02",
     "R03",
+    "R04",
     "U01",
     "U02",
     "U03",
@@ -39,7 +40,6 @@
     "P03"
   ],
   "pending_tasks": [
-    "R04",
     "R05",
     "R06",
     "D01",
@@ -55,13 +55,13 @@
     "O03"
   ],
   "latest_five_completed_host_tasks": [
-    "U04",
     "D04",
     "P01",
     "P02",
-    "P03"
+    "P03",
+    "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev9",
+  "release_id": "smartpro-psp-0.1.0-dev10",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -70,7 +70,7 @@
     "local_clean_build_commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
     "ci_source_head": "e030677199884441096d90382121b86cfef81796",
     "ci_clean_merge_checkout": "6b4b59cfbdb0597c0dd2c23dea5d904256eeda70",
-    "later_handover_changes": "Documentation and evidence only; inspect git HEAD for the handover commit. Historical CI identities remain fixed.",
+    "later_handover_changes": "The bc80ff2 dev9 handover added documentation/evidence only. This later continuation adds original host tools and dev10; it does not acquire the historical dev9 CI identity.",
     "strict_tests": {
       "tests_run": 690,
       "passed": 690,
@@ -132,33 +132,31 @@
     "actual_filesystem": null,
     "actual_installed_runtime_identities": null,
     "proposed_qualification_matrix": "firmware 1.1.1 / FAT32; inventory actual device first",
-    "automatic_firmware_flash_authorized": false
+    "automatic_firmware_flash_authorized": false,
+    "connected_or_probed_in_this_continuation": false
   },
   "next_work": [
     {
-      "id": "R04",
-      "next_action": "Recover/hash-check or rebuild exact private native outputs plus matching source/build archives; prove retained-storage retrieval and retain host preview before expiry.",
-      "completion_not_established_by_host_artifact": true
-    },
-    {
-      "id": "D01",
-      "next_action": "Design a trusted private experimental route, exact candidate identity, bounded exit and recovery without weakening shipped gates.",
-      "design_can_proceed_now": true,
-      "activation_prerequisites": [
-        "R05",
-        "R04 if native candidates are used",
-        "D02/D03 physical readiness"
-      ]
-    },
-    {
       "id": "D02",
-      "next_action": "Prepare card/save/necessary internal-file backups and separate recovery procedures; perform verified restore rehearsal on expendable media when the device/operator is available.",
+      "next_action": "When actual device/operator is available, prepare complete card/save/necessary internal backups, retrieve/read them back and rehearse restoration to expendable media. Use the new verifier without treating it as physical proof.",
       "physical_completion_pending": true
     },
     {
       "id": "D03",
-      "next_action": "After D02, inventory actual TG5040 firmware/filesystem/runtime, kernel APIs, process identities and probe tooling.",
+      "next_action": "After D02, observe actual TG5040 firmware/filesystem/runtime/loader/writers, kernel APIs/process identities and trusted Python/readelf/probe tooling. No assumed connection or firmware flash.",
       "physical_completion_pending": true
+    },
+    {
+      "id": "D01",
+      "next_action": "Implement/review trusted experimental admission and bounded stop at the existing owner boundaries from the prepared design. Activation requires actual R05 and D02/D03 readiness; native use must bind the newly retained exact R04 set.",
+      "design_prepared": true,
+      "experimental_entry_implemented": false,
+      "activation_prerequisites": [
+        "R05 actual delivery/scope evidence",
+        "D02 verified physical backups/recovery",
+        "D03 observed runtime/process readiness",
+        "R04 exact retained artifacts if native candidates selected"
+      ]
     }
   ],
   "external_work": [
@@ -170,7 +168,7 @@
     },
     {
       "id": "R06",
-      "status": "exact native component/recipe/IGM/SDK terms and corresponding-source review open",
+      "status": "16-scope ledger and actual linked IJG credit review prepared; exact recipe/IGM/SDK grants and remaining component/source-notice review remain open",
       "next_action": "Review exact selected inputs and component scopes; do not infer binary redistribution permission from root licences or successful builds."
     }
   ],
@@ -233,8 +231,95 @@
     "All proposed port save paths remain device-unverified; no port deletion/uninstall tool exists.",
     "The optional Celeste source patch is tested with synthetic helpers and remains unselected.",
     "Development package signatures are not an operational production trust root.",
-    "Prior native build logs/hashes do not prove the binaries or complete archives survived workspace replacement."
+    "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; an empty-daemon compiler restore and all target execution remain untested."
   ],
-  "handover_only": "This checkpoint finishes documentation/evidence custody, not the remaining master-plan tasks. Preserve historical receipts and use actual future evidence to change status.",
-  "handover_validation": "project/handover/validation.json"
+  "handover_validation": "project/handover/final-audit.json",
+  "latest_completed_host_task": "R04",
+  "previous_five_task_batch": [
+    "U04",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "latest_preparation_tasks": [
+    "D01",
+    "D02",
+    "D03",
+    "R06"
+  ],
+  "current_snapshot": {
+    "release_id": "smartpro-psp-0.1.0-dev10",
+    "implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+    "local_clean_build_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+    "ci_source_head": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+    "ci_clean_merge_checkout": "1609c5358ee04010f8e5e873064d53e5fc03eccc",
+    "strict_tests": {
+      "tests_run": 710,
+      "passed": 710,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "evidence": "project/evidence/device-preparation/verification.json",
+    "local_certification": "project/evidence/device-preparation/certification.json",
+    "ci_receipt": "project/evidence/device-preparation/ci-readback.json",
+    "ci_certification": "project/evidence/device-preparation/ci-certification.json",
+    "ci_build_report": "project/evidence/device-preparation/ci-build-report.json",
+    "ci_release_source": "project/evidence/device-preparation/ci-release-source.json",
+    "ci_run_id": 39871706495,
+    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495",
+    "ci_artifact_id": 12466212738,
+    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495/artifacts/12466212738",
+    "ci_artifact_sha256": "9a6c7650bd49bfa2ed868ac57e656d7224968de98c438b5be2f60cc752d91305",
+    "ci_artifact_size_bytes": 4882634,
+    "ci_artifact_expires_at_utc": "2027-01-20T23:25:44Z",
+    "original_source_inventory_files": 158,
+    "original_source_inventory_sha256": "f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d",
+    "packaged_payload_files": 57,
+    "host_preview_private_retention_verified": true,
+    "later_handover_changes": "Documentation/evidence only; retain these exact clean local and CI identities."
+  },
+  "artifact_custody": {
+    "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
+    "historical_host_receipt": "project/evidence/artifact-custody/host-retention.json",
+    "current_host_receipt": "project/evidence/device-preparation/ci-readback.json",
+    "native_build_report": "project/evidence/artifact-custody/native-rebuild.json",
+    "native_source_review": "project/evidence/artifact-custody/native-source-review.json",
+    "native_retention_receipt": "project/evidence/artifact-custody/native-retention.json",
+    "native_artifacts_retrieved": 7,
+    "native_parts_retrieved": 18,
+    "old_native_binary_hashes_recovered": false,
+    "replacement_native_outputs_retrieved": true,
+    "new_compiler_image_retrieved": true,
+    "new_compiler_image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "ppsspp_replacement_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+    "retroarch_replacement_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+    "storage_sharing": "owner-only Drive; no permissions added",
+    "compiler_empty_daemon_restore_tested": false,
+    "native_target_executed": false
+  },
+  "preparation": {
+    "D01": {
+      "status": "design prepared; trusted experimental entry/admission and bounded stop still unimplemented",
+      "design": "project/docs/experimental-device-route.md",
+      "evidence": "project/evidence/device-preparation/d01-design.json"
+    },
+    "D02_D03": {
+      "status": "offline verifier and operator procedure prepared; real backups/restoration/device inventory unrun",
+      "tool": "project/tools/recovery_preflight.py",
+      "documentation": "project/docs/device-recovery-preflight.md",
+      "focused_checks": 20,
+      "independent_review": "project/evidence/device-preparation/review.json"
+    },
+    "R06": {
+      "status": "partial review only; 16 component scopes, actual IJG link membership/credit retained; exact grants and remaining source/notice mapping open",
+      "ledger": "project/docs/native-component-ledger.json"
+    }
+  },
+  "continuation_scope": "R04 completed through real private rebuild/retrieval. New original offline recovery tooling and D01/D02/D03/R06 preparation do not complete physical or source-use qualification.",
+  "historical_handover_validation": "project/handover/validation.json",
+  "current_consistency_record": "project/handover/current-validation.json"
 }

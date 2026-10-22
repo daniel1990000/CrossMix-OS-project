@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "checked_at_utc": "2026-10-22T23:26:55.707940+00:00",
+  "scope": "R04 completed as private custody; D01/D02/D03/R06 engineering preparation, no hardware",
+  "implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+  "release_id": "smartpro-psp-0.1.0-dev10",
+  "delivery": "original-only-host-preview",
+  "completed_host_tasks": 12,
+  "total_master_plan_tasks": 25,
+  "physical_areas_run": 0,
+  "physical_areas_total": 13,
+  "strict_certification": "project/evidence/device-preparation/certification.json",
+  "totals": {
+    "tests_run": 710,
+    "passed": 710,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "new_recovery_checks": 20,
+  "independent_recovery_review": "project/evidence/device-preparation/review.json",
+  "native_builds": "project/evidence/artifact-custody/native-rebuild.json",
+  "native_independent_review": "project/evidence/artifact-custody/native-source-review.json",
+  "native_storage_retrieval": "project/evidence/artifact-custody/native-retention.json",
+  "host_preview_retrieval": "project/evidence/artifact-custody/host-retention.json",
+  "local_clean_build": {
+    "frontend": {
+      "commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+      "working_tree_modified": false
+    },
+    "source_inventory_files": 158,
+    "source_inventory_sha256": "f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d",
+    "payload_files": 57,
+    "same_key_overlay_and_unsigned_zip_rebuilds": true,
+    "signature_and_payload_inventory_verified": true,
+    "fixture_activation_rollback": true,
+    "installed_payload_smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "all_eight_checksums_verified": true,
+    "artifact_sha256": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "d56dd3b3325f79855e2ffe34a52f168f8448da4e0c77cc2b4b218d4fa39487c0",
+      "development-verification.pub": "c27c40255678591bf755237368694066a0f001d38f106406698a7d4b0888c8a4",
+      "host-preview.png": "9b6822df9d7e42b5dc445255585a124e60849d1d73277c6cf9b73f6cba9fb4d6",
+      "release-source.json": "0b60b7fd83add4b65005e4211457b03f5571b9308112bf44547008983690ffcd",
+      "smartpro-psp-0.1.0-dev10-host-preview.zip": "cded13b8439479c7ce2576a6f235bb6a1cc3359fead5da444a486c20a628fbf0",
+      "smartpro-psp-0.1.0-dev10-original-source.zip": "47157760df9b296cbd1f038bd5e09c0e8c1ab57cd59fd742ac39aedc2293a60b",
+      "smartpro-psp-0.1.0-dev10.tar": "8ad8c4ba9838c07c3f90d805167f9208dfa090d8464eea4e184560895eb6aa33"
+    },
+    "no_git_source_export_preview_and_source_zips_byte_identical": true,
+    "generated_private_key_deleted": true,
+    "private_key_packaged": false
+  },
+  "qualification": {
+    "hardware_qualified": false,
+    "runtime_verified": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "native_binaries_selected": false,
+    "optional_celeste_patch_selected": false
+  },
+  "host_certification_timing": "Full710-check run includes final executable/test code. Later documentation and unselected descriptor-reference additions passed all6 descriptor tests, then clean packaging. Current GitHub CI separately certifies the exact pushed revision.",
+  "ci_receipt": "project/evidence/device-preparation/ci-readback.json"
+}
