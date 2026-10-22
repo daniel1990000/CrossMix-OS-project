@@ -1,3 +1,11 @@
+LATEST VISUAL CHECKPOINT — 22 OCTOBER 2026
+Classic PSP XMB overhaul and icon/spacing correction are complete. Tested code: 86509e12ccccc3df4d69c95257efabb294752f03.
+GitHub CI: https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902 — 542 checks pass, zero skips/failures/errors; dev5 packaging/upload pass.
+New screenshots and actual Sony comparison: project/evidence/psp-design/.
+Read the new visual section in HANDOVER.md and project/docs/psp-visual-design.md before the inherited context below.
+The design uses PlayFieldPortal layout/motion policies, EmuCoreA cover presentation and supported PPSSPP native theme fields; originals and exact source identities are documented.
+Physical TG5040 acceptance remains pending; installed engines and activation gates stay unchanged.
+
 Continue the TrimUI Smart Pro project from the latest GitHub handover. Do the work autonomously; do not restart planning or ask me to repeat the project.
 
 Repository: https://github.com/daniel1990000/CrossMix-OS-project

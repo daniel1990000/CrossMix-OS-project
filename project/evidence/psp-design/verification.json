@@ -127,7 +127,27 @@
     }
   },
   "validation": {
-    "final_ci": "pending",
+    "final_ci": {
+      "artifact": {
+        "bytes": 4701605,
+        "id": 12443392152,
+        "sha256": "0da80fe550c8ab7829952798a88f9c766a42757e60303b67b807be0e1acb0b32",
+        "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902/artifacts/12443392152"
+      },
+      "artifact_upload": "passed",
+      "development_packaging": "passed",
+      "errors": 0,
+      "failures": 0,
+      "host_source_checks": 481,
+      "implementation_commit": "86509e12ccccc3df4d69c95257efabb294752f03",
+      "job_id": 119964782008,
+      "ppsspp_checks": 61,
+      "run_id": 39818966902,
+      "skips": 0,
+      "status": "success",
+      "total_checks": 542,
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902"
+    },
     "final_integration_suite": {
       "coverage": [
         "all UI modules mandatory",
