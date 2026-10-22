@@ -1,3 +1,155 @@
+# TrimUI Smart Pro: spruceOS-based PSP-inspired project plan
+
+Updated 22 October 2026. **Active direction: build on spruceOS and its existing PyUI frontend for the original TrimUI Smart Pro (TG5040), not CrossMix.** This is a documentation update, not an installation, implementation or hardware-test report.
+
+The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
+
+## 1. Decision and evidence
+
+Use spruceOS's existing Python/SDL2 UI, launch flow, emulator integration, settings and hardware adapters. Add a PSP-inspired presentation mode and the missing functionality within those seams. **Do not start by writing a replacement C++ shell, importing EmulationStation, or extracting RetroArch XMB code.** A native renderer is a contingency only if a measured PyUI limitation cannot be solved with a bounded change.
+
+This is a better-aligned architecture for reuse and editability, not proof of higher FPS, lower battery use or fewer bugs. Those claims require testing on the actual original Smart Pro. Smart Pro S, Brick and Miyoo results are not substitutes.
+
+### Baseline and reproducibility
+
+- Upstream: [spruceUI/spruceOS](https://github.com/spruceUI/spruceOS).
+- Baseline candidate: [stable v4.5.4](https://github.com/spruceUI/spruceOS/releases/tag/v4.5.4), released 10 October 2026 and listing original Smart Pro as Stable. Pinned commit: `d45ff8dfe5756147522b04ae5863d17a90e88b54`. Record the exact release asset name and SHA-256 before building. No release asset has been installed or benchmarked here.
+- Inspected Development snapshot: `cb6210aa19c5cb61e404d4029444972448cac9f9`. Development observations are research, not instructions to mix newer files into stable. Several runtime/main-menu files differ from v4.5.4. Pin and test any later cherry-pick independently.
+- Target configuration is [SmartPro.cfg](https://github.com/spruceUI/spruceOS/blob/v4.5.4/spruce/scripts/platform/SmartPro.cfg): aarch64, 1280×720 UI coordinates, two sticks, platform-specific event discovery and emulator binaries. These UI coordinates do not assert the physical panel resolution. It declares firmware target `1.1.1`; the owner's installed firmware is unknown, and this does not authorize flashing it.
+- Record OS release, firmware, board identity, SD filesystem, free space, runtime libraries, emulator hashes, original settings and save checksums before the first experiment. Start with a spare card/full restorable backup.
+
+## 2. Exact reuse map: keep the machinery, change the experience
+
+All relative paths in this table refer to the pinned spruceOS source. The stable paths were checked against its recursive tree; source inspection also compared relevant Development files. Recheck contents at the locked implementation commit.
+
+| Area | Existing source to reuse | Planned change or boundary |
+|---|---|---|
+| Frontend launch | `App/PyUI/launch.sh`, `App/PyUI/main-ui/mainui.py` | Preserve SmartPro device selection, Python runtime, device initialization and existing SDL library choice; no global SDL/libc upgrade. |
+| Home and navigation | `App/PyUI/main-ui/menus/main_menu.py`, `views/view_creator.py`, `views/grid_view.py`, `views/carousel_view.py`, `views/view_type.py` | Add a feature-flagged PSP-style view/navigation mode using existing menu actions and selection models. Existing modes remain selectable. |
+| Theme system | `App/PyUI/main-ui/themes/theme.py`, `theme_patcher.py`, `Themes/SPRUCE/`, `menus/settings/theme/` | New original assets and theme configuration; reuse font/image/audio loading, fallback assets and resolution conversion. A theme alone may not supply true crossbar navigation: add the smallest view/layout code needed. |
+| Settings and dialogs | `App/PyUI/main-ui/menus/settings/`, `utils/cfw_system_config.py`, `App/PyUI/spruce-tasks.json` | Reuse action handlers and persistence. Restyle lists, popups, keyboard, progress, errors and confirmations instead of creating a second independent settings database. |
+| Hardware abstraction | `devices/trimui/trim_ui_smart_pro.py`, `trim_ui_device.py`, `spruce/scripts/platform/SmartPro.cfg`, `device_functions/SmartPro.sh`, `device_functions/trimui_a133p.sh` | Preserve hardware functions, input discovery and platform boundaries. Investigate existing Brick-default config reuse before changing it; a filename alone is not a proven defect. |
+| Runtime lifecycle | `spruce/scripts/runtime.sh`, `runtimeHelper.sh`, `principal.sh`, `helperFunctions.sh` | Preserve foreground ownership, staged launch command, cleanup and return-to-menu. Do not run a parallel supervisor/game launcher by default. |
+| Emulator selection and launch | `Emu/<system>/config.json`, `spruce/scripts/emu/standard_launch.sh`, `emu/lib/general_functions.sh`, `core_mappings.sh` | Keep per-system/per-game choices, CPU mode, network preparation and launch wrappers; add capability validation/error UX where genuinely missing. |
+| RetroArch | `spruce/scripts/emu/lib/ra_functions.sh`, `RetroArch/platform/retroarch-SmartPro.cfg.bak` | Keep core/state/config handling and existing in-game integration. Theme supported in-game surfaces separately; do not assume a PyUI theme changes emulator internals. |
+| PPSSPP | `spruce/scripts/emu/lib/ppsspp_functions.sh`, `Emu/PSP/`, `App/PPSSPP/launch.sh` | Keep the original SmartPro PowerVR-specific path and platform INIs. Optional binary upgrades are a later isolated project. |
+| Recent games/switcher | `menus/games/recents_menu.py`, `recents_menu_gs.py`, `menus/games/utils/recents_manager.py`, `menus/settings/game_switcher_settings_menu.py` | Build Continue Playing on existing history and switching; add accurate state-validity metadata rather than pretending every recent entry has a resumable state. |
+| Controls | `controller/`, `devices/miyoo_trim_mapping_provider.py`, `menus/settings/button_remapper.py`, `spruce/scripts/button_actions.sh`, `FN_Button/` | Extend existing mappings with separated UI/gameplay/hotkey policies and safe undo. |
+| Power/network/services | `spruce/scripts/save_poweroff.sh`, watchdog scripts, `networkservices.sh`, platform device functions | Reuse service ownership and hardware calls. Verify supported settings and sleep semantics on TG5040, not by copying another platform. |
+| Port integration | `App/PortMaster/launch.sh`, `spruce/scripts/emu/lib/ports_functions.sh` | Preserve supported installation/runtime conventions; add tested game profiles and clear owner-data requirements. |
+| Recovery candidate | `spruce/scripts/boot/session.sh`, `.tmp_update/updater`, `trimui/app/runtrimui.sh` | Existing supervisor is not automatically active on SmartPro. See recovery requirements below. |
+
+The `App/PyUI/launch.sh` SmartPro path uses `TRIMUI_SMART_PRO`, `spruce/flip/bin/MainUI` and `spruce/brick/sdl2`. Those shared directory names do not mean the wrong device binary should be substituted. Validate ABI and dependency provenance before changing them.
+
+## 3. PSP-inspired full-system interface, not just wallpaper
+
+### Reuse-first implementation
+
+1. Prototype original PSP-inspired icons, fonts, spacing, backgrounds and subtle animation in a separate theme folder. Preserve the stock SPRUCE theme unchanged.
+2. Add a crossbar-style view through PyUI's `ViewCreator`/view types and `MainMenu` integration only if existing carousel/grid options cannot express the intended behavior. Reuse existing `GridOrListEntry`, selections, actions and localized strings.
+3. Connect categories to existing Games, Favorites, Collections, Recents, Apps and Settings handlers. Do not build a second ROM scanner or duplicate launch logic.
+4. Extend the common view layer so settings, game options, dialogs, error messages, keyboard, progress and theme selector share the design. Maintain readable text, long filenames, missing-art fallbacks and reduced-motion mode.
+5. Provide an Appearance choice between normal spruce and PSP-inspired spruce. Persist the choice using the existing configuration system with a versioned extension, validation and last-known-good fallback. It must not modify game data or emulator choice.
+6. Do not call this a CrossMix/spruce toggle. CrossMix is an independently backed-up distribution, not another theme. A migration/export tool would be separate future work.
+
+PyUI already uses SDL2 rendering: `display/display.py` imports SDL2 and creates an accelerated renderer. Python versus C++ is not a valid shortcut for predicting frame rate. Keep the existing device-tested library path and profile the actual bottleneck.
+
+### Coverage and honest limits
+
+Create a screen/action checklist with original spruce path, corresponding new view, enabled hardware capability, test and result. Cover Wi-Fi, sound, brightness, power, controllers, emulator choice, per-game options, artwork, collections, updates, file tools, PortMaster and all installed apps actually supported on the device. Every retained function must remain reachable even when it cannot yet be restyled.
+
+Third-party tools, PPSSPP menus, RetroArch menus and game-native interfaces may not use PyUI. Reuse supported theming or small separately licensed patches; label remaining visual exceptions. No promise of changing every application's screen merely by selecting a theme. Do not copy Sony assets, firmware, logos or sounds without appropriate rights.
+
+Reference candidate: [PyUI PS-modern-dark-cold theme](https://github.com/spruceUI/PyUI-Themes/blob/main/Themes/PS-modern-dark-cold/README.md). Its README says it was designed for Smart Pro S and should work on other TrimUI devices: that is not original-SmartPro validation. Inspect that theme's specific licence and assets before reuse; it is a reference, not an automatically approved asset bundle.
+
+## 4. Unified controls without breaking games
+
+Keep three independent layers: (1) frontend Confirm/Back/navigation; (2) emulator gameplay controls; (3) system/menu hotkeys. Menu confirm preference must not silently swap the game's A/B or PSP Cross/Circle.
+
+- Reuse PyUI's remapper and required-button coverage. Add visible physical-button labels, preview, reset and revert. Test swaps and duplicate mappings, not only identity maps.
+- Read original SmartPro input discovery and mapping rather than hard-coding `/dev/input/event3`. Test USB controllers/DACs attached before boot, both sticks, shoulder triggers, Menu, volume, power and physical switch.
+- Integrate RetroArch, PPSSPP and ports through their own adapters. Unsupported apps get an explicit exception rather than a global injected key hack.
+- PPSSPP's wrapper copies `controls-SmartPro.ini`/`ppsspp-SmartPro.ini` to working INIs and copies them back after exit. A control editor must update the authoritative files and respect that lifecycle, or changes will be overwritten.
+- Reserve an escape/recovery chord independent of user remaps. Validate no stuck keys after sleep, launch, quit or controller disconnect.
+
+## 5. Continue Playing and save compatibility
+
+Reuse spruce history, game switcher, auto-save/auto-load settings and canonical launch flow. Offer Resume only when an existing state is compatible; otherwise offer Launch or Fresh Start with an explanation. Fresh Start must mean bypass a state, not erase SRAM, memory cards or PSP save data.
+
+Track ROM identity/path, emulator/core version and hash, architecture, state path, timestamp and last clean completion. Distinguish in-game saves from emulator states. Preserve original files and check checksums after migration. Do not promise state interchange between CrossMix and spruce, between cores, or between PPSSPP versions.
+
+Relevant existing locations include `Saves/gameswitcher.json`, `Saves/ra-configs/retroarch-SmartPro.cfg`, `Saves/saves/`, `Saves/states/`, and `Saves/.config/ppsspp/PSP/`. Exact per-core paths must be confirmed from the selected build before importing. Work on copies, never move the only save.
+
+RetroArch's wrapper already handles differing core/architecture state paths and transfer choices. Extend this cautiously with a manifest and undo, not blanket file renaming. Hardcore achievement modes and emulators without reliable state support must disable incompatible resume features. Later named checkpoints, guest saves and Play Next are optional after the base flow is proven.
+
+## 6. Reliability, rollback and recovery
+
+A major inspected limitation: `.tmp_update/updater` in v4.5.4 and inspected Development enables `spruce/scripts/boot/session.sh` only for Flip behind a flag. SmartPro runs `runtime.sh` directly. The presence of `session.sh` is therefore **not proof of working SmartPro crash-loop recovery**. `principal.sh` also conditions exit-to-stock behavior on an active supervisor. Port/test a SmartPro-specific recovery path before relying on it.
+
+The existing `trimui/app/runtrimui.sh` is designed to become a rootfs launcher and falls back to `runtrimui-original.sh` when its updater is absent. The inspected `trimui/app/MainUI` installer renames the internal `/usr/trimui/bin/runtrimui.sh` to `runtrimui-original.sh`, installs its wrapper and reboots. That fallback is for a missing SD updater, not a Python UI crash. The FN switch action can also persist internally. First installation affects rootfs behavior; do not describe spruce installation as guaranteed SD-only. Inspect exact installer changes, stock backup and restore procedure for the owner's firmware before any install. An untouched backup card alone may not undo rootfs changes.
+
+Required recovery design:
+- Keep known-good spruce theme/config/payload and verified stock-launcher backup. Do not modify firmware or enable overclocking as part of a visual prototype.
+- Add validated staged configuration writes, versioned migrations, manifest checks and undo for our changes. Never delete unknown config keys.
+- On malformed theme, missing asset, UI exception or failed initialization, recover to normal spruce without needing the broken UI. Prove an offline recovery procedure using a card reader.
+- Before extending the existing session supervisor to SmartPro, verify its stock handoff hook, cleanup, crash counters, readonly-card behavior and poweroff signals. Do not merely flip a flag and claim recovery.
+- Isolate update download, checksum, extraction, validation and activation. Report failure at the actual failed phase; no success banner after failed extraction. Preserve current installation until replacement validation succeeds.
+- Validate emulator/core identifiers and missing binaries before launch; make defaults/fallbacks explicit. Reset actions first back up, then preview scope, then allow undo.
+- Diagnostics stay local and redact credentials, tokens, network secrets and sensitive paths before sharing. Do not upload logs automatically.
+
+Known issue reports are test leads, not proof a bug still exists in the selected build. The [battery-drain issue #1551](https://github.com/spruceUI/spruceOS/issues/1551) is open as checked on 22 October, but is a report rather than a controlled benchmark. [Volume issue #1443](https://github.com/spruceUI/spruceOS/issues/1443) was closed on 19 October; its reporter says upgrading firmware 1.0.4 to 1.1.1 resolved it. Treat that as a historical regression test, not a current open defect or automatic instruction to flash firmware.
+
+## 7. Emulator and ports work, after the interface proof
+
+Freeze the baseline emulator binaries for the first PyUI/theme prototype so a UI change can be evaluated independently.
+
+PPSSPP upgrade candidate: [spruceUI/PPSSPP-spruce build-pvr.sh](https://github.com/spruceUI/PPSSPP-spruce/blob/main/build-pvr.sh). Pin source and toolchain, preserve the working PowerVR graphics setup, test in a separate directory with copied config/saves, and compare identical scenes/settings. Upgrading the shell is not an emulator speed optimization. PS1/core changes receive separate compatibility tests and rollback manifests.
+
+Port showcase candidates: GTA III, Vice City, Sonic Mania, Super Mario 64/Render96ex and Celeste. Use the actual PortMaster/TrimUI-supported runtime for the original device and the specific port's source licence. Supply import instructions for legally owned game files; never bundle commercial game data. San Andreas is experimental, not a promised supported port. Per-title acceptance includes launch/exit, audio, controller layout, sustained frame pacing, sleep behavior, save location and clean uninstall without deleting saves. A directory in a catalogue is not proof of acceptable performance.
+
+## 8. Licensing gate before implementation or distribution
+
+Read and preserve each component's actual terms, not a generic label:
+- [spruce root LICENSE](https://github.com/spruceUI/spruceOS/blob/v4.5.4/LICENSE) specifies non-commercial terms, attribution and commercial permission requirements.
+- [App/PyUI/LICENSE.md](https://github.com/spruceUI/spruceOS/blob/v4.5.4/App/PyUI/LICENSE.md) and [main-ui/LICENSE.md](https://github.com/spruceUI/spruceOS/blob/v4.5.4/App/PyUI/main-ui/LICENSE.md) contain additional non-commercial terms, attribution/credits and notification obligations. The main-ui text applies notification to non-commercial use including creating derivatives, not only publishing them. This is not ordinary unrestricted BSD-3-Clause despite the title.
+- Before creating/distributing the derivative, resolve required author notification with explicit authorization to communicate. The two PyUI files give differing notification contact details; resolve the applicable recipient and scope before sending. No author has been contacted by this documentation task. Obtain commercial permission if monetization is intended; do not infer permission from a public repository.
+- Inventory emulators, libraries, themes, fonts, binaries and port assets individually. Retain notices, corresponding-source obligations where applicable and required About credits. The root licence does not replace third-party licences. Ambiguous combinations require clarification rather than assumptions.
+
+## 9. Implementation order and acceptance gates
+
+1. **Evidence and rights:** lock upstream commit and release hashes; licence inventory/notification gate; inventory original hardware/firmware and current data. Produce backup and recovery instructions before installing anything.
+2. **Unmodified baseline:** boot selected spruce release on the original SmartPro with an authorized test setup. Verify every critical function and capture timings, memory, temperatures and battery conditions. Reproduce relevant battery/volume issues. Stop for data-loss, boot or power regressions.
+3. **Small presentation proof:** one PSP-style home view → game list → existing game launch → quit → exact previous selection; one settings screen; return to normal spruce. Same emulator binaries and settings. No whole-system rewrite.
+4. **Recovery first:** malformed-theme fallback, corrupted-config rollback, missing file, read-only/full card and interrupted activation. Verify SmartPro-specific supervisor/handoff rather than borrowing Flip assumptions.
+5. **Complete frontend:** all menu/dialog/settings coverage, controls and independent hotkey adapters; whole-system functional parity register; documented third-party visual exceptions.
+6. **Continue Playing and fixes:** validated state metadata, resume/fresh-start semantics, settings backup/undo and reproduced update/launch failure fixes. Add tests to prevent regression.
+7. **Optional emulators and ports:** separate changes and rollback packages, identical-content comparisons, licences and owner-data flow.
+8. **Release:** reproducible source/build manifest, credits, installation/uninstallation/recovery instructions, exact supported device/firmware, known limitations and test evidence. Do not inherit the old C++ effort estimate as a spruce delivery promise.
+
+### Minimum test matrix (targets, not completed results)
+
+- Host tests: Python syntax/import and existing tests, shell syntax/ShellCheck where applicable; JSON/schema validation; migration/rollback fixtures; path quoting with spaces/Unicode; deterministic launch adapter tests. Use the pinned project's supported test tools, not guessed commands.
+- Original-device tests: at least 10 cold boots, 20 normal/PSP appearance switches and 20 launch/quit cycles across RetroArch, PPSSPP and a supported port. No stranded display/input/audio, duplicate games or lost selection.
+- Sleep/power: at least 10 sleep/wake cycles in UI and each tested emulator; short/long power action, low-battery warning and clean shutdown. Test battery reporting and volume independently. No save corruption or stuck input.
+- Recovery: malformed JSON, missing theme/font/image, failed launcher, unavailable core, read-only/full card and interrupted staged update using disposable test data. Demonstrate offline rollback without the custom UI.
+- Save checks: known SRAM/memory card/PSP save fixtures survive menu/theme changes and clean shutdown; compatible states resume correctly; incompatible states are rejected without overwriting originals.
+- Hardware: built-in and supported external controls; USB insertion/removal; speaker/headphone volume; Wi-Fi on/off; brightness; sticks/calibration; switch; thermal behavior. Do not claim features the original hardware lacks.
+- Performance: record median and worst/95th-percentile cold UI startup, menu navigation response, frame pacing, peak RSS and CPU usage against unmodified spruce. Require no material regression in representative games with identical emulator builds/settings. Set numerical budgets after measuring the baseline, then document them before optimization.
+
+## 10. What is decided and what remains unknown
+
+Decided: spruceOS is the base; extend existing PyUI and services; full-system PSP-inspired presentation; preserve original spruce mode; preserve games/saves; reuse before rewriting; keep emulator/ports work separate; document and test rollback.
+
+Unknown: actual installed firmware, SD layout/data, physical-device performance, whether all visual goals fit current views, exact licence permissions/notification completion, and tested SmartPro recovery behavior. Source inspection is not a hardware pass. No installation, author outreach, emulator update, firmware flash or software implementation was performed while preparing this document.
+
+
+## Historical appendix: superseded CrossMix research and first save
+
+The following is preserved verbatim from the first saved document. It is historical research, **not the active implementation specification**. In particular its CrossMix foundation, custom C++ shell default, EmulationStation comparison, SDK assumptions and estimates do not override the spruce/PyUI plan above. Useful general safety ideas require translation to the pinned spruce paths. All original tables and references are retained.
+
+<details>
+<summary>Show archived October 14 blueprint and superseded initial October 22 synthesis</summary>
+
 # TrimUI Smart Pro project plan
 
 Saved to the project on 22 October 2026. Documentation only: this file does not mean the design is implemented, hardware-tested or approved for release.
@@ -1125,3 +1277,5 @@ Sources checked during research on 14 October 2026. Moving branches require repi
 
 **S46 libsodium ISC licence**  
 <https://github.com/jedisct1/libsodium/blob/master/LICENSE>
+
+</details>
