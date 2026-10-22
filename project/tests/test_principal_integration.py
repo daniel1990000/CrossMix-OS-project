@@ -428,9 +428,28 @@ log_activity_event() { :; }
             modules = root / "modules/bridge"
             modules.mkdir(parents=True)
             (modules / "principal.py").write_text("# fixture module-presence check only\n")
-            guard = root / "guard.sh"
-            guard.write_text('#!/bin/sh\nprintf "%s\\n" "$1" >> "' + str(root / "calls") + '"\n'
-                             'case "$1" in status|resident|resident-ready) exit 0 ;; pyui) exit 125 ;; *) exit 99 ;; esac\n')
+            guard = root / "guard.py"
+            guard.write_text("#!" + sys.executable + "\n" + textwrap.dedent('''
+                import sys, time
+                from pathlib import Path
+                root = Path(__file__).parent
+                operation = sys.argv[1]
+                with (root / "calls").open("a") as calls:
+                    calls.write(operation + "\\n")
+                started = root / "resident-started"
+                if operation == "resident":
+                    started.touch()
+                elif operation == "resident-ready":
+                    # A real startup observation, not an immediate fake success:
+                    # pyui must not run until the background fixture has logged.
+                    deadline = time.monotonic() + 2
+                    while not started.exists():
+                        if time.monotonic() >= deadline:
+                            raise SystemExit("Fixture resident did not start before readiness deadline")
+                        time.sleep(0.005)
+                raise SystemExit(0 if operation in {"status", "resident", "resident-ready"}
+                                 else 125 if operation == "pyui" else 99)
+            '''))
             guard.chmod(0o700)
             text = (self.patched / "spruce/scripts/principal.sh").read_text()
             text = text.replace(". /mnt/SDCARD/spruce/scripts/helperFunctions.sh", ". " + str(helpers))

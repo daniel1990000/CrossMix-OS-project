@@ -22,6 +22,37 @@ from psp_shell.ui.model import NavigationModel, UIItem
 
 @unittest.skipUnless(HOST_UI, "Install the optional host PySDL2/Pillow dependencies")
 class RenderTests(unittest.TestCase):
+    def test_text_reuses_glyph_texture_across_tints_shadows_and_alpha(self):
+        from PIL import Image
+        import sdl2
+        from psp_shell.ui.renderer import Renderer
+        with tempfile.TemporaryDirectory() as directory, Renderer(software=True) as renderer:
+            with mock.patch.object(renderer.text, "raster", wraps=renderer.text.raster) as raster, \
+                    mock.patch.object(renderer, "_texture", wraps=renderer._texture) as upload:
+                for alpha in range(100, 200):
+                    renderer._text("Cache reuse", 100, 100, 28, (230, 245, 255, alpha), 600)
+                self.assertEqual(raster.call_count, 1)
+                self.assertEqual(upload.call_count, 1)
+                self.assertEqual(len(renderer._text_cache), 1)
+                channels = []
+                for name, color in (("red", (255, 0, 0, 255)), ("green", (0, 255, 0, 128))):
+                    with renderer._state():
+                        sdl2.SDL_SetRenderTarget(renderer.renderer, renderer._frame)
+                        sdl2.SDL_SetRenderDrawColor(renderer.renderer, 0, 0, 0, 255)
+                        sdl2.SDL_RenderClear(renderer.renderer)
+                        renderer._label("Cache reuse", 100, 100, 28, color, 600)
+                    screenshot = Path(directory) / (name + ".png")
+                    renderer.save_screenshot(screenshot)
+                    with Image.open(screenshot) as image:
+                        channels.append(tuple(channel.getextrema()[1] for channel in image.convert("RGB").split()))
+                self.assertEqual(raster.call_count, 1)
+                self.assertEqual(upload.call_count, 1)
+                self.assertGreater(channels[0][0], 240)
+                self.assertEqual(channels[0][1:], (0, 0))
+                self.assertEqual(channels[1][0], 0)
+                self.assertTrue(120 <= channels[1][1] <= 130, channels[1])
+                self.assertEqual(channels[1][2], 0)
+
     def test_keyboard_workspace_hides_the_underlying_menu(self):
         from dataclasses import replace
         from psp_shell.ui.renderer import Renderer

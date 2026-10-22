@@ -1,0 +1,139 @@
+{
+  "repository": "https://github.com/JohnnyCollado/PlayFieldPortal",
+  "revision": "5ee271ea9545685417aecdd13b5ace033cdb7806",
+  "branch": "main",
+  "scope": "Targeted source tracing of the active base-XMB presentation/input path and its settings/modal/artwork boundaries. This is not a claim that all 12,050 lines of XMBViewModel or every application feature were read.",
+  "active_path": [
+    {
+      "area": "Entry/state binding",
+      "path": "app/src/release/kotlin/com/playfieldportal/launcher/AppXmbHost.kt",
+      "evidence": "Release host calls XMBShellContainer. XMBShell.kt:140-222 collects lifecycle-aware uiState and supplies explicit callbacks into stateless XMBShell."
+    },
+    {
+      "area": "Theme, layout and motion budget",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XMBShell.kt",
+      "lines": "650-781",
+      "evidence": "Theme/icons shared through composition locals; scale bounded by smaller screen-axis ratio; base fontScale preserved; covered/non-visible/power-throttled backgrounds freeze; original two-fold fallback lives in XmbBackground.kt:237-345."
+    },
+    {
+      "area": "Category filmstrip",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XMBCategoryBar.kt",
+      "lines": "34-282",
+      "evidence": "Fixed anchor and indexed unbounded row under clip; geometry snap separate from animated category slide; selected label only, scale/alpha focus. Drilled mode removes categories to the right."
+    },
+    {
+      "area": "Item-list composition",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XMBShell.kt",
+      "lines": "960-1072",
+      "evidence": "Category transition composes outgoing/incoming layers; only current category can show focus. Parent passes columnKey, landingToken, scrollToTopToken into item list. Drilled game list uses XmbDrillFlyout instead."
+    },
+    {
+      "area": "Positioned rows, clipping, focus",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XMBItemList.kt",
+      "lines": "479-637,782-916",
+      "evidence": "Whole rows below fixed anchor; separate half-row above category bar; each row keyed by item identity and composed once; explicit transit-band/window/bottom clipping; selected/inactive scale and label shadow."
+    },
+    {
+      "area": "Step/reset policy",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XmbStepMotion.kt",
+      "lines": "1-178",
+      "evidence": "New view/landing/move snaps; >3-row jump snaps one row short; glide100ms/row capped200ms. Separate Rewind handoff constants80/30/40/200ms were inspected but not recommended for wholesale import."
+    },
+    {
+      "area": "Navigation/state mutation",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/viewmodel/XMBViewModel.kt",
+      "lines": "1363-1373,2720-2745,3619-3645,6040-6059,6141-6155,6576-6650,9077-9165,9257-9265",
+      "evidence": "ID-based refresh focus with nearest-index fallback; per-view remembered cursor; shared touch/controller item movement; overlays consume input first; category bounds clamp, left backs out of drill and right stays within drill."
+    },
+    {
+      "area": "Held controller input",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/gamepad/GamepadInputHandler.kt",
+      "lines": "1-210,221-381",
+      "evidence": "Press/release handling,80ms duplicate suppression,analog hysteresis,newest-axis direction,repeat ramp/full-tilt fast path,cancel-repeat preserving held-edge state. Current SDL already has release gates/hysteresis; no new process/input owner warranted."
+    },
+    {
+      "area": "Pure navigation dependency",
+      "path": "core/core-navigation/src/main/kotlin/com/playfieldportal/core/navigation/NavigationEngine.kt",
+      "lines": "1-267",
+      "evidence": "Readiness/lock/modal stack and stable-key focus engine inspected. Base XMB movement itself remains in XMBViewModel; do not claim this engine alone is its crossbar implementation."
+    },
+    {
+      "area": "Artwork dispatch and loading",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/GameIconView.kt",
+      "lines": "60-145,232-321",
+      "evidence": "Display mode resolves actual art type; natural aspect ratio from decoded intrinsic size; explicit load size avoids async constraint deadlock; error and loading remain distinct. ArtworkImage delegates to Coil3."
+    },
+    {
+      "area": "Artwork motion and revision",
+      "path": "core/core-ui/src/main/kotlin/com/playfieldportal/core/ui/motion/ArtworkMotion.kt",
+      "lines": "1-110",
+      "evidence": "Per-image focus/on-screen/allowed motion gate. MotionGate.kt was read; keeps animation control separate from image reloading. image/ArtworkRevisions.kt was read and supplies URI revision/cache-key invalidation for writes at the same path."
+    },
+    {
+      "area": "Settings boundary",
+      "path": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/ui/XMBShell.kt",
+      "lines": "1170-1210",
+      "evidence": "Resets XMB-only density before SettingsNavHost. SettingsNavHost.kt:1-90 routes allowlisted screens; SettingsScaffold.kt:530-640 measures full focused-row bounds and restores focus after modal close;1180-1238 uses naturally wrapping label/helper text."
+    },
+    {
+      "area": "Options and modal presentation",
+      "path": "core/core-ui/src/main/kotlin/com/playfieldportal/core/ui/components/PspContextMenu.kt",
+      "lines": "65-236",
+      "evidence": "Two-line measured title precedes underline; selected row follows viewport; text values ellipsize separately. PspMenuNav.kt was read: clamp,no wrap,Back climbs/close,shared cues. PfpModalHost.kt:186-257 binds long-message scroll and modal action ownership."
+    },
+    {
+      "area": "Prompt and keyboard boundary",
+      "path": "core/core-ui/src/main/kotlin/com/playfieldportal/core/ui/components/ControllerPrompt.kt",
+      "lines": "52-144",
+      "evidence": "Prompts resolve actual action mappings,drop unbound actions,and support paired inputs. ControllerHintBar.kt read in full: consistent small shadowed hints,200ms idle fade-in and immediate dismissal. XMBShell.kt:1680-1703 places keyboard above modal layers."
+    }
+  ],
+  "bounded_findings": [
+    {
+      "priority": 1,
+      "finding": "Snap when pagination replaces the row coordinate space; same offset reorders/replacements also change geometry.",
+      "comparison": "SDL _items identity originally omitted offset and row IDs. Root now adds both, preserving ordinary subtitle/favorite changes.",
+      "verification": "project/tests/test_ui_motion.py adds draw-call tests for nextpage39->0,previouspage0->39,same-offset replacement/reorder,and field-only changes. Four failures reproduced before fix; all7 tests pass after fix."
+    },
+    {
+      "priority": 2,
+      "finding": "Use bounded multiline options headers so a long game title remains identifiable.",
+      "source": "core/core-ui/src/main/kotlin/com/playfieldportal/core/ui/components/PspContextMenu.kt:135-151",
+      "comparison": "Implemented measured two-line SDL side-sheet header and full overflow title in paged body. Two real-renderer layout tests cover complete two-line titles and all message pages at text_scale=1.75 with four choices. Active base-XMB list labels retain ellipsis; no marquee reuse claim.",
+      "status": "implemented"
+    },
+    {
+      "priority": 3,
+      "finding": "When focused item disappears, retain nearest remaining row instead of jumping to top.",
+      "source": "feature/feature-xmb/src/main/kotlin/com/playfieldportal/feature/xmb/viewmodel/XMBViewModel.kt:1363-1373",
+      "comparison": "SDL _Page.replace keeps selected ID or nearest remaining row for same-view refreshes. Settings response handlers compare prior view to response context before assignment: entering hardware/control/appearance/combined matching starts at0; same-screen refresh keeps focus. Root/back restores the explicit parent ID. Empty lists and explicit fresh queries/pages select0.",
+      "status": "implemented",
+      "implementation": "project/psp_shell/ui/model.py:_Page.replace",
+      "verification": {
+        "command": "PYTHONPATH=project /workspace/scratch/trimui-venv/bin/python -m unittest project/tests/test_ui_model.py -v",
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0,
+        "added_tests": [
+          "RefreshFocusTests.test_favorite_refresh_after_removing_middle_keeps_next_neighbor",
+          "RefreshFocusTests.test_favorite_refresh_after_removing_last_keeps_previous_neighbor",
+          "RefreshFocusTests.test_empty_category_refresh_keeps_focus_zero",
+          "RefreshFocusTests.test_reordered_category_refresh_preserves_selected_game_identity",
+          "RefreshFocusTests.test_fresh_game_query_resets_focus_even_when_previous_game_remains",
+          "RefreshFocusTests.test_common_settings_open_at_first_control_and_restore_parent_focus",
+          "RefreshFocusTests.test_common_settings_refresh_preserves_the_same_view_focus",
+          "RefreshFocusTests.test_control_profiles_open_at_first_and_refresh_keeps_selected_profile",
+          "RefreshFocusTests.test_reentering_appearance_starts_at_match_instead_of_existing_undo"
+        ]
+      },
+      "regression_correction": "Full-host run found shared Settings page entry inheriting parent index. Corrected all four settings-subview transition handlers with explicit same-view focus preservation; CommonSettingsFlowTests regression passes."
+    }
+  ],
+  "followups_not_implemented": [
+    "ArtworkRevisions has an explicit per-path cache revision. SDL caches positive/negative artwork by path; external scraper replacement at same path needs a coordinator-driven invalidation signal, not stat/file I/O inside render.",
+    "PFP global fontScale survives XMB scale resets. SDL fixed-grid keyboard currently uses fixed font sizes independently of text_scale. Any larger-key-label change should validate special labels and all forty key cells at largest supported scale.",
+    "Original vectors and existing isolated runtime authorities remain preferred; no Compose framework or third-party artwork imported."
+  ],
+  "licensing_observation": "Pinned PFP README links LICENSE but no root license file was found. User-supplied permission is recorded by parent; controller/category asset provenance is separate. This report does not assert a permissive source license."
+}

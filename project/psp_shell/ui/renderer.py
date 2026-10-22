@@ -227,10 +227,12 @@ class Renderer:
                scale: float = 1.0) -> tuple[int, int]:
         rgba = tuple(color[:3]) + (color[3] if len(color) == 4 else 255,)
         pixels = max(10, min(92, round(size * scale)))
-        key = (str(text)[:2048], pixels, rgba, int(max_width))
+        # Cache glyph coverage independently of tint, as PPSSPP's TextDrawer
+        # does. Shadow, focus and dimming then reuse the same bounded texture.
+        key = (str(text)[:2048], pixels, int(max_width))
         cached = self._text_cache.get(key)
         if cached is None:
-            raster = self.text.raster(key[0], pixels, rgba, max(1, int(max_width)))
+            raster = self.text.raster(key[0], pixels, (255, 255, 255, 255), max(1, int(max_width)))
             texture = self._texture(raster)
             cost = raster.width * raster.height * 4
             cached = (texture, raster.width, raster.height, cost)
@@ -243,6 +245,8 @@ class Renderer:
         else:
             self._text_cache.move_to_end(key)
         texture, width, height, _ = cached
+        sdl2.SDL_SetTextureColorMod(texture, *rgba[:3])
+        sdl2.SDL_SetTextureAlphaMod(texture, rgba[3])
         destination = sdl2.SDL_Rect(round(x), round(y), width, height)
         sdl2.SDL_RenderCopy(self.renderer, texture, None, ctypes.byref(destination))
         return width, height
@@ -529,7 +533,10 @@ class Renderer:
     def _items(self, snapshot: UISnapshot, now: float, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
         prefs = snapshot.preferences
         scale = prefs.text_scale
-        identity = (snapshot.category, snapshot.title, snapshot.breadcrumb)
+        # A replaced page/column is new geometry. Carrying the prior row index
+        # through pagination or a reordered result set makes it glide backward.
+        identity = (snapshot.category, snapshot.title, snapshot.breadcrumb,
+                    snapshot.offset, tuple(item.id for item in snapshot.items))
         position = self._item_glide.position(snapshot.selected, now, identity, prefs.motion)
         gap = max(74, round(70 * min(scale, 1.65)))
         clip = sdl2.SDL_Rect(172, 280, 1035, 348)
@@ -664,13 +671,23 @@ class Renderer:
         bottom = 626
         first_y = bottom - rows * (row_height + 8)
         top = 61 if expanded else 92
-        self._label(dialog.title, content_x, top, 28, primary, width, scale)
-        self._line(content_x, top + max(50, round(45 * scale)), 1214, top + max(50, round(45 * scale)),
+        # Like PFP's measured context-menu header, reserve space for two title
+        # lines before the divider. Longer names stay available in paged text.
+        title_pixels = round(28 * scale)
+        title_lines = self.text.wrap(dialog.title, title_pixels, width, 2)
+        for index, line in enumerate(title_lines):
+            self._label(line, content_x, top + index * (title_pixels + 7), 28, primary, width, scale)
+        title_height = max(1, len(title_lines)) * (title_pixels + 7)
+        divider_y = top + title_height + 20
+        self._line(content_x, divider_y, 1214, divider_y,
                    (244, 181, 165, 140) if dialog.error else (255, 255, 255, 60))
-        body_y = top + max(75, round(63 * scale))
+        body_y = divider_y + 24
         body_size = round(18 * scale)
         max_lines = max(1, int((first_y - 22 - body_y) // (body_size + 7)))
-        lines = self.text.wrap(dialog.message, body_size, width, 128)
+        message = dialog.message
+        if len(self.text.wrap(dialog.title, title_pixels, width, 128)) > 2:
+            message = dialog.title + "\n\n" + message
+        lines = self.text.wrap(message, body_size, width, 128)
         page_count = max(1, math.ceil(len(lines) / max_lines))
         page = dialog.message_page % page_count
         for index, line in enumerate(lines[page * max_lines:(page + 1) * max_lines]):

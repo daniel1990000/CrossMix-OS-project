@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "scope": "Host test fixture synchronization only",
+  "test": "test_principal_integration.ProcessSourceAcceptance.test_actual_transformed_principal_blocks_before_a_second_owner_on_uncertain_source",
+  "reason": "The former fake resident-ready returned success immediately; a background resident could log after pyui and invalidate call ordering. Readiness now waits for the actual fake resident-start marker written after its log, using a monotonic two-second deadline and explicit failure.",
+  "assertions_relaxed": false,
+  "production_principal_changed_by_this_fix": false,
+  "earlier_closure_race_fixture_changed_by_this_fix": false,
+  "test_file_sha256": "e76efc34d6564795d7cecc793098c5e65426df0a95872ca55cdc7a8a3f4a402c",
+  "checks": [
+    {
+      "command": "PYTHONPATH=project:project/tests SPRUCE_SOURCE_ROOT=/workspace/scratch/trimui-sources/spruce PPSSPP_SOURCE_ROOT=/workspace/scratch/trimui-sources/ppsspp SPRUCE_RA_SOURCE_ROOT=/workspace/scratch/trimui-sources/spruce-ra SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy /workspace/scratch/trimui-venv/bin/python (unittest.TestSuite of the affected ProcessSourceAcceptance test repeated 20 times)",
+      "tests": 20,
+      "elapsed_seconds": 13.672,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "log": "/workspace/scratch/trimui-principal-readiness-repeat.log"
+    },
+    {
+      "command": "PYTHONPATH=project:project/tests SPRUCE_SOURCE_ROOT=/workspace/scratch/trimui-sources/spruce PPSSPP_SOURCE_ROOT=/workspace/scratch/trimui-sources/ppsspp SPRUCE_RA_SOURCE_ROOT=/workspace/scratch/trimui-sources/spruce-ra SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy /workspace/scratch/trimui-venv/bin/python -m unittest test_principal_integration -v",
+      "tests": 21,
+      "elapsed_seconds": 20.506,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "log": "/workspace/scratch/trimui-principal-readiness-file.log"
+    }
+  ],
+  "physical_device_tested": false
+}

@@ -165,11 +165,17 @@ class _Page:
 
     def replace(self, items: Iterable[UIItem], *, offset: int = 0,
                 total: int | None = None, keep_focus: bool = True) -> None:
+        previous_index = self.selected if keep_focus else 0
         previous = self.items[self.selected].id if keep_focus and 0 <= self.selected < len(self.items) else None
         self.items = tuple(items)
         self.offset = max(0, offset)
         self.total = len(self.items) if total is None else max(0, total)
-        self.selected = next((i for i, item in enumerate(self.items) if item.id == previous), 0)
+        # Keep the same game through reordering. If it disappeared during a
+        # refresh, its nearest surviving neighbor keeps the list in place.
+        # A fresh page/query explicitly starts at zero via keep_focus=False.
+        fallback = max(0, min(previous_index, len(self.items) - 1))
+        self.selected = next((i for i, item in enumerate(self.items)
+                              if keep_focus and item.id == previous), fallback)
 
 
 def _menu(identifier: str, title: str, subtitle: str = "") -> UIItem:
@@ -350,8 +356,9 @@ class NavigationModel:
             generation = self._hardware_status.get("generation", 0)
             self._hardware_generation = generation if type(generation) is int and generation >= 0 else 0
             if context.startswith("hardware:"):
+                keep_focus = self._settings_view == context
                 self._settings_view = context
-                self._rebuild_hardware()
+                self._rebuild_hardware(keep_focus=keep_focus)
             elif self._settings_view == "root":
                 self._rebuild_settings()
         elif context == "hardware_preview":
@@ -379,6 +386,7 @@ class NavigationModel:
             else:
                 self.notice("The game-options screen has not been accepted.")
         elif context == "experience":
+            keep_focus = self._settings_view == context
             self._settings_view = "experience"
             generation = result.get("generation", 0)
             self._experience_generation = generation if type(generation) is int and generation >= 0 else 0
@@ -392,7 +400,7 @@ class NavigationModel:
                             "experience_profile", available=available, reason=reason)]
             if self._experience_transaction:
                 items.append(_menu("experience_undo", "Undo last matching change", "Restore only this combined menu transaction"))
-            self._pages[3].replace(items)
+            self._pages[3].replace(items, keep_focus=keep_focus)
         elif context == "experience_preview":
             if result.get("adoption_available") is not True:
                 self._dialog = Dialog("PPSSPP matching unavailable", "This PPSSPP version is not ready for shared menu changes. Continue using its current menus.")
@@ -483,6 +491,7 @@ class NavigationModel:
             location = _text(result.get("path", result.get("output", ""))) if isinstance(result, Mapping) else ""
             self._dialog = Dialog("Diagnostic report saved", location or "The redacted report is ready.", (DialogChoice("Done"),))
         elif context == "controls":
+            keep_focus = self._settings_view == context
             self._settings_view = "controls"
             generation = result.get("generation", 0)
             self._controls_generation = generation if isinstance(generation, int) and generation >= 0 else 0
@@ -509,7 +518,7 @@ class NavigationModel:
                 items.append(_menu("controls_info", "No qualified menu profiles", _text(result.get("reason")) or "Your existing emulator mappings remain unchanged"))
             if self._controls_transaction:
                 items.append(_menu("controls_undo", "Undo last menu change", "Restore only the menu keys changed by this interface"))
-            self._pages[3].replace(items)
+            self._pages[3].replace(items, keep_focus=keep_focus)
         elif context == "controls_preview":
             diff = result.get("diff", [])
             lines = [_text(result.get("profile_id"), 256)]
@@ -532,6 +541,7 @@ class NavigationModel:
             self.notice("Emulator menu controls updated. Gameplay mappings were preserved." if context == "controls_apply" else "The previous emulator menu controls were restored.")
             return [self._request("controls.capabilities", context="controls")]
         elif context == "appearance":
+            keep_focus = self._settings_view == context
             self._settings_view = "appearance"
             generation = result.get("generation", 0)
             self._appearance_generation = generation if type(generation) is int and generation >= 0 else 0
@@ -542,7 +552,7 @@ class NavigationModel:
                             "appearance_profile", available=preview_available, reason=reason)]
             if self._appearance_transaction:
                 items.append(_menu("appearance_undo", "Undo last PPSSPP appearance change", "Restore the previous theme and background motion"))
-            self._pages[3].replace(items)
+            self._pages[3].replace(items, keep_focus=keep_focus)
         elif context == "appearance_preview":
             if result.get("adoption_available") is not True:
                 self._dialog = Dialog("PPSSPP appearance unavailable", "The installed emulator and its configuration writers must be verified and stopped before applying appearance changes.")
@@ -616,7 +626,7 @@ class NavigationModel:
         self._pages[3].replace(items)
         self._restore_focus(self._pages[3], "3")
 
-    def _rebuild_hardware(self) -> None:
+    def _rebuild_hardware(self, *, keep_focus: bool = True) -> None:
         group = self._settings_view.split(":", 1)[1]
         items = []
         for row in self._hardware_status.get("controls", []):
@@ -635,7 +645,7 @@ class NavigationModel:
                 _text(row.get("description")), "hardware_route", available=row.get("available") is True,
                 reason=_text(row.get("reason"))))
         items.append(_menu("hardware_refresh", "Refresh status", "Read current values from the existing authority"))
-        self._pages[3].replace(items)
+        self._pages[3].replace(items, keep_focus=keep_focus)
 
     def _launch_dialog(self, item: UIItem) -> None:
         if not item.available:

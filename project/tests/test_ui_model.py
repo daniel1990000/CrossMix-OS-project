@@ -345,5 +345,156 @@ class NavigationTests(unittest.TestCase):
         self.assertEqual(model.handle("confirm"), [])
 
 
+class RefreshFocusTests(unittest.TestCase):
+    def _open_settings_entry(self, model, identifier):
+        while model.snapshot().category != 3:
+            model.handle("right")
+        for _ in range(len(model.snapshot().items)):
+            if model.snapshot().selected_item.id == identifier:
+                return model.handle("confirm")[0]
+            model.handle("down")
+        self.fail("Missing settings entry " + identifier)
+
+    @staticmethod
+    def _hardware_rows(group, count=2):
+        return {"generation": 0, "controls": [
+            {"control_id": f"{group}:{i}", "group": group, "label": f"Setting {i}",
+             "writable": False, "value_text": "Unavailable", "reason": "Unavailable on this fixture"}
+            for i in range(count)], "routes": []}
+
+    def _open_favorites(self, selected):
+        records = [game(f"psp:{i}") for i in range(4)]
+        model = NavigationModel()
+        model.handle("down")
+        request = model.handle("confirm")[0]
+        self.assertEqual(request.method, "library.favorites")
+        model.receive(request, records)
+        for _ in range(selected):
+            model.handle("down")
+        return model, records
+
+    def _remove_focused_favorite(self, model, remaining):
+        removal = model.handle("favorite")[0]
+        self.assertEqual(removal.method, "library.favorite.set")
+        self.assertFalse(removal.params["enabled"])
+        refresh = model.receive(removal, {})[0]
+        self.assertEqual(refresh.method, "library.favorites")
+        model.receive(refresh, remaining)
+
+    def test_favorite_refresh_after_removing_middle_keeps_next_neighbor(self):
+        model, records = self._open_favorites(2)
+        self._remove_focused_favorite(model, records[:2] + records[3:])
+        self.assertEqual(model.snapshot().selected, 2)
+        self.assertEqual(model.snapshot().selected_item.id, "psp:3")
+
+    def test_favorite_refresh_after_removing_last_keeps_previous_neighbor(self):
+        model, records = self._open_favorites(3)
+        self._remove_focused_favorite(model, records[:-1])
+        self.assertEqual(model.snapshot().selected, 2)
+        self.assertEqual(model.snapshot().selected_item.id, "psp:2")
+
+    def test_empty_category_refresh_keeps_focus_zero(self):
+        model = NavigationModel()
+        model.set_category_items(1, [game("psp:0"), game("psp:1")])
+        model.handle("right")
+        model.handle("down")
+        model.set_category_items(1, [])
+        self.assertEqual(model.snapshot().selected, 0)
+        self.assertIsNone(model.snapshot().selected_item)
+        model.set_category_items(1, [game("psp:new")])
+        self.assertEqual(model.snapshot().selected, 0)
+        self.assertEqual(model.snapshot().selected_item.id, "psp:new")
+
+    def test_reordered_category_refresh_preserves_selected_game_identity(self):
+        model = NavigationModel()
+        records = [game(f"psp:{i}") for i in range(4)]
+        model.set_category_items(0, records)
+        model.handle("down")
+        model.handle("down")
+        model.set_category_items(0, [records[2], records[3], records[0], records[1]])
+        self.assertEqual(model.snapshot().selected, 0)
+        self.assertEqual(model.snapshot().selected_item.id, "psp:2")
+
+    def test_fresh_game_query_resets_focus_even_when_previous_game_remains(self):
+        model = NavigationModel()
+        records = [game(f"psp:{i}") for i in range(4)]
+        model.set_category_items(0, records)
+        model.handle("down")
+        model.handle("down")
+        model.handle("search")
+        model.handle("text", "A game")
+        request = model.handle("submit_text")[0]
+        self.assertEqual(request.method, "library.query")
+        model.receive(request, {"items": records, "offset": 0, "total": len(records)})
+        self.assertEqual(model.snapshot().selected, 0)
+        self.assertEqual(model.snapshot().selected_item.id, "psp:0")
+
+    def test_common_settings_open_at_first_control_and_restore_parent_focus(self):
+        for group in ("display", "sound", "network", "controllers", "power"):
+            with self.subTest(group=group):
+                model = NavigationModel()
+                request = self._open_settings_entry(model, "hardware_" + group)
+                model.receive(request, self._hardware_rows(group))
+                self.assertEqual(model.snapshot().selected, 0)
+                self.assertEqual(model.snapshot().selected_item.id, group + ":0")
+                self.assertEqual(model.handle("confirm"), [])
+                self.assertEqual(model.snapshot().dialog.selected, 1)
+                model.handle("back")  # close the unavailable-control dialog
+                model.handle("back")  # return to the selected Settings group
+                self.assertEqual(model.snapshot().selected_item.id, "hardware_" + group)
+
+    def test_common_settings_refresh_preserves_the_same_view_focus(self):
+        model = NavigationModel()
+        request = self._open_settings_entry(model, "hardware_network")
+        model.receive(request, self._hardware_rows("network"))
+        model.handle("down")
+        model.handle("down")
+        self.assertEqual(model.snapshot().selected_item.id, "hardware_refresh")
+        refresh = model.handle("confirm")[0]
+        model.receive(refresh, self._hardware_rows("network", count=3))
+        self.assertEqual(model.snapshot().selected, 3)
+        self.assertEqual(model.snapshot().selected_item.id, "hardware_refresh")
+
+    def test_control_profiles_open_at_first_and_refresh_keeps_selected_profile(self):
+        model = NavigationModel()
+        status = {"generation": 0, "profiles": [
+            {"profile_id": f"profile:{i}", "label": f"Profile {i}", "writable": True}
+            for i in range(3)]}
+        request = self._open_settings_entry(model, "controls")
+        model.receive(request, status)
+        self.assertEqual(model.snapshot().selected_item.id, "profile:0")
+        model.handle("down")
+        model.handle("confirm")
+        preview = model.handle("confirm")[0]
+        model.receive(preview, {"profile_id": "profile:1", "preview_id": "preview", "diff": []})
+        apply = model.handle("confirm")[0]
+        refresh = model.receive(apply, {"generation": 1, "transaction_id": "controls:1"})[0]
+        model.receive(refresh, {**status, "generation": 1})
+        self.assertEqual(model.snapshot().selected_item.id, "profile:1")
+        model.handle("back")
+        request = self._open_settings_entry(model, "controls")
+        model.receive(request, {**status, "generation": 1})
+        self.assertEqual(model.snapshot().selected_item.id, "profile:0")
+
+    def test_reentering_appearance_starts_at_match_instead_of_existing_undo(self):
+        model = NavigationModel()
+        status = {"generation": 0, "theme": "Original", "preview_available": True}
+        request = self._open_settings_entry(model, "appearance")
+        model.receive(request, status)
+        preview = model.handle("confirm")[0]
+        model.receive(preview, {"adoption_available": True, "preview_id": "appearance"})
+        apply = model.handle("confirm")[0]
+        refresh = model.receive(apply, {"applied": True, "generation": 1,
+                                        "transaction_id": "appearance:1"})[0]
+        model.receive(refresh, {**status, "generation": 1})
+        model.handle("down")
+        self.assertEqual(model.snapshot().selected_item.id, "appearance_undo")
+        model.handle("back")
+        request = self._open_settings_entry(model, "appearance")
+        model.receive(request, {**status, "generation": 1})
+        self.assertEqual(model.snapshot().selected, 0)
+        self.assertEqual(model.snapshot().selected_item.id, "appearance_match")
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -83,7 +83,10 @@ class TextRasterizer:
         lines: list[str] = []
         paragraphs = str(text)[:self.MAX_TEXT_CHARS].split("\n")
         overflow = False
-        for paragraph in paragraphs:
+        for paragraph_index, paragraph in enumerate(paragraphs):
+            if len(lines) >= max_lines:
+                overflow = True
+                break
             words = paragraph.split(" ")
             current = ""
             for word in words:
@@ -114,7 +117,7 @@ class TextRasterizer:
             elif current:
                 overflow = True
             if len(lines) >= max_lines:
-                overflow = overflow or paragraph != paragraphs[-1]
+                overflow = overflow or paragraph_index < len(paragraphs) - 1
                 break
             if not paragraph:
                 lines.append("")

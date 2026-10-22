@@ -31,4 +31,6 @@ PlayFieldPortal's pinned README links to a root LICENSE, but that file is absent
 
 ## Validation boundary
 
+The subsequent [source study](psp-source-study.md) traces the active paths more deeply and records the resulting pagination, focus, text-cache and long-title fixes, with fresh SDL screenshots.
+
 Check the current visual evidence record for the exact test and packaging receipts. Host screenshots demonstrate this SDL implementation, including settings, game lists, side-sheet options and search. The PPSSPP SVG is a palette illustration, not an emulator screenshot. These design changes do not activate a device profile, replace an emulator binary, or establish physical TG5040 performance/readability.

@@ -1,0 +1,149 @@
+{
+  "base_commit": "ccab4475fba6fbd321dd4c590f5f59c469b44769",
+  "capture": {
+    "backend": "actual SDL2 software renderer, dummy video/audio",
+    "clock": "actual host local time",
+    "composited_or_edited": false,
+    "data": "original synthetic collection; no game launch",
+    "home_and_library": "standard application preview, three frames with fresh state",
+    "large_text_options": "same path at text_scale=1.75",
+    "options": "real NavigationModel and Renderer with supplied synthetic long title; motion off",
+    "size": [
+      1280,
+      720
+    ],
+    "source": "capture.py in this directory"
+  },
+  "changes": [
+    "snap row motion when pages or row identities change",
+    "retain nearest remaining focus within a refreshed view",
+    "explicitly reset focus on entering another settings view",
+    "measured two-line options headers with full overflow title in message pages",
+    "color-independent glyph textures via SDL draw modulation",
+    "position-based paragraph truncation"
+  ],
+  "date": "2026-10-22",
+  "development_build": {
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "byte_identical_overlay_rebuild_with_same_key": true,
+    "byte_identical_unsigned_zip_rebuild": true,
+    "development_key_id": "e2206b9739cb9c7e575739452b0bee04293bf9c85cb8c576375d5b2b44c6e5dd",
+    "device_activation_qualified": false,
+    "device_gates": {
+      "hardware_qualified": false,
+      "runtime_verified": false,
+      "source_use_verified": false
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "payload_files": 55,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "release_id": "smartpro-psp-0.1.0-dev6",
+    "schema": 1,
+    "signature_hash_inventory_verified": true,
+    "signer": "ephemeral development",
+    "smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "source_date_epoch": 1792659237,
+    "status": "host-development-preview"
+  },
+  "device_or_emulator_binary_changed": false,
+  "device_performance_claim": false,
+  "final_package": {
+    "all_published_checksums_read_back": true,
+    "current_payload_modules_read_back": {
+      "psp_shell/ui/model.py": "e0347f42da755d3db4447444930f1948d2759729e4903bf883ce4cdd3d937bf6",
+      "psp_shell/ui/renderer.py": "6457383e6233ceb03a7886c9f8069fd7f923e85201d509002d70056babca6c8f",
+      "psp_shell/ui/text.py": "dfa8dcaaa87833f9c57b099c9865d1fd00693b8c14efefea33aef1a0610e2471"
+    },
+    "overlay_sha256": "11e97ec0b974707e782d518dfd1542a841c9f02680a3e4fac48f6d63deab52e4",
+    "path": "/workspace/scratch/trimui-deep-study-development-final",
+    "release_id": "smartpro-psp-0.1.0-dev6",
+    "report": "development-build.json",
+    "supersedes_initial_development_package": true
+  },
+  "first_full_run": {
+    "errors": 0,
+    "failures": 2,
+    "host_source_tests": 496,
+    "issues": [
+      "nearest-focus fallback crossed shared settings view boundaries; explicit fresh-view resets required",
+      "preexisting fake resident-ready did not wait for background resident start; fixture ordering nondeterministic"
+    ],
+    "log": "/workspace/scratch/trimui-deep-study-check.log",
+    "result": "failed; excluded from passing validation",
+    "skips": 0
+  },
+  "focused_validation": {
+    "model_and_hardware": {
+      "errors": 0,
+      "failures": 0,
+      "skips": 0,
+      "tests": 50
+    },
+    "principal_integration": {
+      "errors": 0,
+      "failures": 0,
+      "skips": 0,
+      "tests": 21
+    },
+    "readiness_fixture_repetitions": 20
+  },
+  "full_host_source_run": {
+    "errors": 0,
+    "failures": 0,
+    "log": "/workspace/scratch/trimui-deep-study-final-check.log",
+    "seconds": 66.517,
+    "skips": 0,
+    "tests": 500
+  },
+  "full_ppsspp_run": {
+    "errors": 0,
+    "failures": 0,
+    "log": "/workspace/scratch/trimui-deep-study-final-check.log",
+    "seconds": 34.329,
+    "skips": 0,
+    "tests": 61
+  },
+  "kind": "targeted-psp-source-study-and-host-menu-polish",
+  "physical_device_verified": false,
+  "readiness_fixture": "readiness-fixture.json",
+  "references": {
+    "emucorea": "16c1bfb244e9359b242e410e468032cae0c111ef",
+    "playfieldportal": "5ee271ea9545685417aecdd13b5ace033cdb7806",
+    "ppsspp": "d357e6a32934800d3d80b49f910a603e1b069751"
+  },
+  "runtime_gates_changed": false,
+  "schema": 1,
+  "scope": "Selected active menu/navigation/text/artwork paths in three source repositories; not a whole-repository audit or binary decompilation.",
+  "screenshots": {
+    "home.png": {
+      "bytes": 146437,
+      "sha256": "cd2c0950f724e77ec8fa2ef4df17f2a13603518c6f2e09dedcaa1c26f88594ae"
+    },
+    "large-text-options.png": {
+      "bytes": 158594,
+      "sha256": "eaea6d495522ab9bbf8f3f21e9f95c0f0b5f72dcc9c6f3945e955c7aeb7c1e56"
+    },
+    "library.png": {
+      "bytes": 154806,
+      "sha256": "918deb91e2884e5ac7a8ee282eba77959cfe3c1270764009dd3d081ee0938fb1"
+    },
+    "options.png": {
+      "bytes": 159509,
+      "sha256": "20b67f6939ce9a4c7f9046b02b6350a0b8e7319fa8e2ac253bef88e26b302951"
+    }
+  },
+  "total_local_checks": 561,
+  "validation_status": "passed local complete pinned-source checks and final development packaging; exact-commit CI receipt follows separately"
+}
