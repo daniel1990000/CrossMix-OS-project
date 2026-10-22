@@ -4,6 +4,8 @@
 
 This is a researched execution plan, not a claim that its tasks have been implemented. Research covers the repository, pinned upstream source, current upstream changes, manufacturer firmware documentation, port launchers and licences. No physical device was tested, software installed, upstream notification sent or release published during this review.
 
+Execution update, 22 October 2026: **R01–R03 are complete** in the first engineering batch. The strict host run passes **581 checks** with zero skips, failures or errors. See [batch evidence](../evidence/release-tooling-batch1.json). The remaining 22 tasks are queued; all 13 physical acceptance areas remain untested. The research observations and 561-check baseline below retain their original scope.
+
 Reviewed checkpoint: `a7a735726b8635fb606e38e079d11ae8f0cdaa41`, branch `build/spruce-psp-experience`. This plan supplements the active [TRIMUI_PLAN.md](../../TRIMUI_PLAN.md); the collapsed historical CrossMix/C++ plan remains historical. Source observations are distinguished below from proposed work and hardware hypotheses.
 
 ## 1. Where we actually are
@@ -62,7 +64,7 @@ Sources: [legacy workflow](https://github.com/daniel1990000/CrossMix-OS-project/
 
 ## 4. Prioritized execution register
 
-All rows are **proposed / not completed by this research**. P0 means a prerequisite for the named activity, not that every optional feature blocks the core release. Owners: **engineering** = assistant/developer work; **operator** = owner with physical device; **maintainer** = release owner/source-use correspondence. Effort bands are rough engineering sizing: S up to a focused day, M several focused days, L multiple iterations. They exclude external response time and hardware debugging; they are not delivery dates.
+**R01–R03 are complete; all other rows remain proposed.** P0 means a prerequisite for the named activity, not that every optional feature blocks the core release. Owners: **engineering** = assistant/developer work; **operator** = owner with physical device; **maintainer** = release owner/source-use correspondence. Effort bands are rough engineering sizing: S up to a focused day, M several focused days, L multiple iterations. They exclude external response time and hardware debugging; they are not delivery dates.
 
 | ID | Priority / owner / size | Deliverable and completion criteria | Depends on |
 |---|---|---|---|
@@ -222,7 +224,9 @@ Optional UI refinements: measured two-line focused titles before animated marque
 
 ## 11. Immediate handoff and release pack evolution
 
-**Next engineering batch:** R01 release isolation; R02 strict certification; R03 release descriptor; R04 artifact custody; U01–U03 artwork and keyboard fixes; D01 experimental-route design; D04 measurement contract. Each change should include focused verification, then the complete pinned-source check where relevant. Keep runtime gates false.
+**Completed first batch:** R01 archives the inherited release workflow outside Actions discovery while retaining its exact bytes and reviewing notice allowlists. R02 requires the three untouched pinned source checkouts, rejects skips and incomplete suites, and records actual identities/counts. R03 makes the current dev7 descriptor the CLI/CI authority and binds signed metadata to the frontend revision and actual original-source inventory. Historical source locks and build evidence are preserved.
+
+**Suggested next small batch:** U01–U03 artwork formats, artwork refresh and controller keyboard accessibility. R04 artifact custody remains required before native use; D01 experimental-route design and D04 measurement work remain queued. Each change should include focused verification, then the complete pinned-source check where relevant. Keep runtime gates false.
 
 **Next operator preparation:** exact device/firmware/card inventory, expendable card and verified original saves, recovery payloads, representative owner content and a way to retain logs/video. Prepare scripts and casebook before consuming device time.
 

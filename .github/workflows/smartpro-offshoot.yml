@@ -3,9 +3,9 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths: ['project/**', '.github/workflows/smartpro-offshoot.yml']
+    paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
   pull_request:
-    paths: ['project/**', '.github/workflows/smartpro-offshoot.yml']
+    paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
 permissions:
   contents: read
 concurrency:
@@ -82,8 +82,9 @@ jobs:
           SPRUCE_SOURCE_ROOT: ${{ github.workspace }}/upstream-reference
           PPSSPP_SOURCE_ROOT: ${{ github.workspace }}/ppsspp-reference
           SPRUCE_RA_SOURCE_ROOT: ${{ github.workspace }}/spruce-ra-reference
-      - run: python project/packaging/dev_release.py --release smartpro-psp-0.1.0-dev6 --output dist/development --include-source --smoke-python "$(command -v python)"
+      - run: python project/packaging/dev_release.py --output dist/development --include-source --smoke-python "$(command -v python)"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
         with:
           name: host-preview-evidence
           path: dist/

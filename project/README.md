@@ -42,12 +42,14 @@ Continue Playing displays existing recents. Resume requires authenticated engine
 
 ## Check and package
 
-Provide untouched source checkouts at the exact pins in [the spruce lock](../docs/spruce-source-lock.json), [PPSSPP lock](ppsspp/source-lock.json) and [spruce RetroArch recipe lock](retroarch/source-lock.json). Source-dependent checks otherwise skip and cannot count as a complete pass.
+Provide untouched source checkouts at the exact pins in [the spruce lock](../docs/spruce-source-lock.json), [PPSSPP lock](ppsspp/source-lock.json) and [spruce RetroArch recipe lock](retroarch/source-lock.json). The certification command rejects missing or changed pinned references and any skipped test. Individual unittest invocations can still skip source-dependent cases and cannot count as a complete certification.
 
 ```sh
 PYTHON=/tmp/smartpro-venv/bin/python SPRUCE_SOURCE_ROOT=/path/to/spruce-v4.5.4 PPSSPP_SOURCE_ROOT=/path/to/ppsspp-v1.20.3 SPRUCE_RA_SOURCE_ROOT=/path/to/spruce-ra-recipe sh project/dev/check.sh
 python3 project/packaging/dev_release.py --output /tmp/smartpro-development --include-source --smoke-python /tmp/smartpro-venv/bin/python
 ```
+
+The packaging command and CI use [the current release descriptor](packaging/current-release.json) for the release ID, source timestamp and selected scope. Generated signed metadata records the exact frontend commit, modified-checkout status and actual source inventory. Historical native hashes remain unselected references and do not enable device profiles.
 
 Source checks need `git`, host C/C++ compilers with C++17 support, and `readelf` from binutils. They compile selected real patched functions with explicit fixtures. The separate [complete PPSSPP state-session build](evidence/ppsspp-complete-state-build.json) compiles the full native engine and pinned FFmpeg; it passes the 16-object SDK audit. The [complete RetroArch/IGM build](evidence/retroarch-igm-build.json) passes its 23-object SDK audit. Cross-compilation and host acceptance supply separate evidence. Actual device compatibility remains unqualified. Engine binaries and complete recipe/source archives stay private. [Development release instructions](docs/development-release.md) explain original-only signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs host checks and uploads the original development artifacts.
 

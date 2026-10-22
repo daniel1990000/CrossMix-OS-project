@@ -1,5 +1,7 @@
 # Original spruce PSP presentation overlays
 
+For the current host deliverable, use [dev_release.py](dev_release.py) and [the development instructions](../docs/development-release.md). [current-release.json](current-release.json) is its single release selection: the builder records resolved frontend commit, actual source inventory, base/PyUI identity and explicitly unselected native references in signed metadata. Generic `overlay.py` commands below remain explicit fixture/tooling examples; their example IDs do not select the current development release.
+
 `overlay.py` is host tooling using Python 3 and the installed libsodium Ed25519 implementation. The payload contains only original Python presentation/extensions, assets, metadata and notices. It installs under `App/PSPMode/releases/<id>`. Mutable package records live in `App/PSPMode/state`. It never replaces spruce, PyUI, emulator files, firmware, ROMs or saves; archive contents never execute during verification or installation.
 
 The checked-in TG5040 profile identifies spruceOS v4.5.4 commit `d45ff8dfe5756147522b04ae5863d17a90e88b54` and its embedded PyUI tree. Its device/runtime/source-use gates remain **false**. Device activation refuses this profile. Matching contract hashes is not a hardware test or proof of every file in a release archive. Host fixtures are explicitly synthetic and require both a fixture profile and `--fixture`; this option cannot bypass a device profile.

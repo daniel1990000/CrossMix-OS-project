@@ -2,6 +2,20 @@
 
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
 
+## Release tooling batch R01–R03 — 22 October 2026
+
+The first three tasks in the [master plan](project/docs/master-plan-2026-10-22.md) are complete. The inherited CrossMix release workflow is archived byte for byte in `docs/historical/`, outside Actions discovery. The remaining host workflow has read-only repository permissions and no tag/release trigger; release tags must use a revision containing this isolation change.
+
+`project/dev/check.sh` now requires all three explicit pinned source roots. Certification checks their commits and materialized bytes before and after testing, rejects skipped/empty/incomplete suites and expected failures, and writes actual counts/identities to `dist/certification.json`. CI watches `docs/spruce-source-lock.json` and uploads failure records.
+
+`project/packaging/current-release.json` is the current **dev7** selection. CLI and CI use it by default. Signed metadata and the build report record the exact frontend commit, modified-source status and a SHA-256 inventory. Exported original source retains that provenance and rejects changed bytes when rebuilding. Native binary hashes are historical references only; no upstream patch or native binary is selected.
+
+The complete local certification passes **581 checks**: 520 host/source and 61 PPSSPP, with zero skips, failures, errors or expected failures. The unchanged baseline also passed all 561 checks in this workspace. See [batch evidence](project/evidence/release-tooling-batch1.json) for the actual certification and development package results. This session validates host behavior; all 13 physical acceptance areas remain unrun.
+
+Next suggested batch: **U01–U03**, covering artwork formats, same-path artwork refresh and controller keyboard accessibility. R04 artifact custody, device preparation and external source-use/distribution evidence remain open. Keep PR #1 draft and unmerged. Current private artifacts are under `/workspace/scratch/trimui-release-tooling-dev7`; they may need rebuilding after environment replacement.
+
+## Inherited integration checkpoint
+
 The current checkpoint completes the host software integration, common settings, PPSSPP state protocol/Resume route, native menu extensions, source composition/restoration tools and private source builds. Read the final records in [project/evidence](project/evidence/) for actual host counts, build fingerprints and development packaging results. Host fixtures, complete native cross-builds and physical qualification remain separate claims.
 
 The inherited software checkpoint passed **527 host checks with zero skips or failures**: 466 Python/SDL/source-integration checks and 61 PPSSPP C++/build-tool checks. The **dev4** original-only development artifacts pass signature/inventory verification, deterministic rebuilds, installed-payload rendering and fixture activation/rollback.
@@ -117,10 +131,10 @@ sh project/dev/check.sh
 
 The preview environment uses PySDL2 0.9.17 and Pillow 11.1.0 with system SDL2/libsodium. Source tests need Git, host C/C++ compilers and binutils. CI checks out all three exact sources and uploads original-only development artifacts; it does not publish native emulator/SDK outputs.
 
-Rebuild **dev4** with a new output directory:
+Build the current original-only preview from its descriptor with a new output directory:
 
 ```sh
-python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-development-20261022-dev4-ready --include-source --smoke-python /workspace/scratch/trimui-buildenv/bin/python
+python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-release-tooling-dev7 --include-source --smoke-python /workspace/trimui-venv/bin/python
 ```
 
 Private PPSSPP output lives under `/workspace/scratch/ppsspp-complete-checkpoint-final`: `output/PPSSPPSDL_TrimUI` and `candidate-corresponding-source.tar.gz`. The exact final source archive size and SHA256 are recorded in `project/evidence/ppsspp-complete-state-build.json`. The earlier 640ce8 binary and its matching archive remain under `/workspace/scratch/ppsspp-complete-state-final` as historical evidence. Source/recipe/SDK inputs are untouched in sibling scratch directories. Private workspace files may be absent after environment replacement; rebuild from locks and never imply that an absent archive is still available. Keep engine binaries, complete upstream source distributions, SDK blobs, owner data and private keys out of Git/public preview artifacts.

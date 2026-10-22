@@ -28,8 +28,9 @@ sys.path.insert(0, str(PROJECT / "tools"))
 import overlay
 from build_payload import build_payload
 from fixture_card import create_fixture
+from release_descriptor import resolve as resolve_descriptor
 
-SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "ppsspp"}
+SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp"}
 SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
 SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
 
@@ -115,7 +116,7 @@ def host_smoke(python, release, scratch):
 
 
 def build(project, output, release, epoch, *, source_lock=None, include_source=False,
-          smoke_python=None, private_key=None, public_key=None):
+          smoke_python=None, private_key=None, public_key=None, release_descriptor=None):
     project = overlay.ensure_no_links(Path(project))
     output = overlay.ensure_no_links(Path(output))
     overlay.identifier(release, "development release id")
@@ -125,6 +126,15 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
                     "artifact output must be outside project source")
     overlay.require(not output.exists(), "artifact output already exists")
     overlay.require(bool(private_key) == bool(public_key), "provide both external signing-key paths or neither")
+    source_entries = original_source_entries(project)
+    if source_lock:
+        source_entries.append(("smartpro-original-source/metadata/spruce-source-lock.json",
+                               Path(source_lock).read_bytes()))
+    selection = snapshot = None
+    if release_descriptor is not None:
+        selection, snapshot = resolve_descriptor(project, release_descriptor, source_entries, source_lock)
+        overlay.require(release == selection["descriptor"]["release_id"],
+                        "--release differs from the current release descriptor")
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary_output = Path(tempfile.mkdtemp(prefix=".development-release-", dir=output.parent))
     try:
@@ -150,7 +160,8 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
                 "schema": 1, "release_id": release, "status": "host-preview-only",
                 "source_date_epoch": epoch, "base_commit": overlay.SPRUCE_COMMIT,
                 "pyui_git_tree": overlay.PYUI_TREE, "device_activation_qualified": False,
-                "trust": "development test signature; not upstream identity or production authorization"})
+                "trust": "development test signature; not upstream identity or production authorization",
+                "release_selection": selection})
             # A single signing identity is used for both clean archive creations.
             archive_name = release + ".tar"
             archive = scratch / archive_name
@@ -201,10 +212,9 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
                             "standalone ZIP rebuild differs")
             if include_source:
                 source_name = release + "-original-source.zip"
-                source_entries = original_source_entries(project)
-                if source_lock:
-                    source_entries.append(("smartpro-original-source/metadata/spruce-source-lock.json",
-                                           Path(source_lock).read_bytes()))
+                if snapshot is not None:
+                    source_entries.append(("smartpro-original-source/metadata/release-source.json",
+                                           overlay.canonical(snapshot) + b"\n"))
                 zip_files(temporary_output / source_name, source_entries, epoch)
                 zip_files(scratch / "source-rebuild.zip", source_entries, epoch)
                 overlay.require((temporary_output / source_name).read_bytes() == (scratch / "source-rebuild.zip").read_bytes(),
@@ -224,7 +234,10 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
                 "device_activation_qualified": False,
                 "device_gates": {"hardware_qualified": False, "runtime_verified": False, "source_use_verified": False},
                 "base_commit": overlay.SPRUCE_COMMIT, "pyui_git_tree": overlay.PYUI_TREE,
+                "release_selection": selection,
             }
+            if snapshot is not None:
+                put_json(temporary_output / "release-source.json", snapshot)
             put_json(temporary_output / "build-report.json", report)
             if generated_key:
                 # Delete before publishing, in addition to TemporaryDirectory cleanup.
@@ -252,25 +265,34 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, default=PROJECT)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--release", default="smartpro-psp-0.1.0-dev4")
+    parser.add_argument("--release", help="must match the selected descriptor; omission uses its release_id")
+    parser.add_argument("--release-descriptor", type=Path,
+                        help="current selection JSON; defaults to <project>/packaging/current-release.json")
     parser.add_argument("--source-date-epoch", type=int,
-                        default=int(os.environ.get("SOURCE_DATE_EPOCH", overlay.PLAN_SOURCE_DATE_EPOCH)))
-    embedded_lock = PROJECT / "metadata/spruce-source-lock.json"
-    repository_lock = PROJECT.parent / "docs/spruce-source-lock.json"
-    default_lock = embedded_lock if embedded_lock.is_file() else repository_lock if repository_lock.is_file() else None
-    parser.add_argument("--source-lock", type=Path, default=default_lock)
+                        help="normalized timestamp; defaults to SOURCE_DATE_EPOCH or descriptor timestamp")
+    parser.add_argument("--source-lock", type=Path)
     parser.add_argument("--include-source", action="store_true")
     parser.add_argument("--smoke-python", type=Path, help="installed preview Python; exercises dummy-SDL rendering and installed contracts")
     parser.add_argument("--private-key", type=Path)
     parser.add_argument("--public-key", type=Path)
     args = parser.parse_args(argv)
     try:
-        print(json.dumps(build(args.project, args.output, args.release, args.source_date_epoch,
+        if args.source_lock is None:
+            embedded_lock = args.project / "metadata/spruce-source-lock.json"
+            repository_lock = args.project.parent / "docs/spruce-source-lock.json"
+            args.source_lock = (embedded_lock if embedded_lock.is_file() else
+                                repository_lock if repository_lock.is_file() else None)
+        descriptor_path = args.release_descriptor or args.project / "packaging/current-release.json"
+        descriptor = overlay.read_json(descriptor_path)
+        release = args.release or descriptor["release_id"]
+        epoch = (args.source_date_epoch if args.source_date_epoch is not None else
+                 int(os.environ.get("SOURCE_DATE_EPOCH", descriptor["source_date_epoch"])))
+        print(json.dumps(build(args.project, args.output, release, epoch,
                                source_lock=args.source_lock, include_source=args.include_source,
                                smoke_python=args.smoke_python, private_key=args.private_key,
-                               public_key=args.public_key), indent=2, sort_keys=True))
+                               public_key=args.public_key, release_descriptor=descriptor_path), indent=2, sort_keys=True))
         return 0
-    except (OSError, ValueError, overlay.OverlayError, subprocess.SubprocessError) as exc:
+    except (OSError, ValueError, KeyError, TypeError, overlay.OverlayError, subprocess.SubprocessError) as exc:
         print("development-release: " + str(exc), file=sys.stderr)
         return 2
 
