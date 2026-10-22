@@ -190,6 +190,79 @@ Add these steps to the main build sequence without replacing spruce as the base:
 6. Compare same scenes/settings before and after emulator changes: frame pacing, audio, input, peak memory, thermal behavior, sleep/wake, save persistence and shutdown. Test all old per-game configs and retain the prior binary/config pair. Release requires a clear licence/source manifest and no unverified claims of performance improvement.
 
 
+## 7B. Researched reuse shortlist beyond spruce and PPSSPP
+
+Research checked **22 October 2026**. These are current source-backed recommendations, not original-device performance results or permission to install anything. Inspect the **existing pinned spruce v4.5.4 bundle first** and import only a justified missing piece. Effort labels below are relative engineering estimates: S = small, M = moderate, H = high; they are not delivery promises. Links to moving upstream branches identify the inspected source locations, not immutable dependency pins. Before implementation, record exact commits/releases, bundled versions, source provenance and file-level licences in the dependency register.
+
+### 7B.1 PortMaster: reuse the existing integration
+
+**Decision: reuse spruce's bundled PortMaster launch/runtime/metadata conventions. Do not add a second frontend or wholesale vendor fork.** PortMaster's Python/SDL2 GUI, Harbourmaster CLI, per-port metadata, runtime checks and TrimUI platform adapter already cover much of discovery, installation, required-game-data instructions, controller setup and cleanup.
+
+Concrete sources:
+- [Harbourmaster CLI](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/pylibs/harbourmaster/cli.py): commands include list, ports, portsjson, install and runtime_check. This is a source inventory, not a claim that every current command exists in spruce's bundled version.
+- [TrimUI platform adapter](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/pylibs/harbourmaster/platform/trimui.py) and [TrimUI control integration](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/trimui/control.txt).
+- [Packaging specification](https://portmaster.games/packaging.html): architecture, runtime, requirements and minimum glibc metadata; save/config redirection using XDG or bind_directories; separate source/library/asset licensing.
+- [Device metadata](https://github.com/PortsMaster/PortMaster-GUI/blob/main/PortMaster/device_info.txt): current main contains a new spruce metadata path introduced in nightlies from 13 October 2026. **Do not assume it exists in the 10 October v4.5.4 base.**
+- [GUI/adapter MIT licence](https://github.com/PortsMaster/PortMaster-GUI/blob/main/LICENSE). This does not license each game, bundled runtime, asset or required commercial game data.
+
+Integration: reuse the installed version first, expose its existing results through a thin PyUI presentation adapter, then justify any upgrade separately. Original Smart Pro firmware, graphics driver, libc and individual runtime must all match; a shared CPU instruction set is not compatibility proof. Keep downloads/installations opt-in and preserve existing launch behavior. **Estimated effort M**, driven by per-title verification rather than inventing another ports manager.
+
+### 7B.2 RetroArch/libretro: reuse save, remap and configuration primitives
+
+**Decision: use spruce's existing RetroArch binary, cores and launch/exit pathway, not a second emulation layer.** The upstream [retroarch.cfg](https://github.com/libretro/RetroArch/blob/master/retroarch.cfg) documents autosave_interval for SRAM, savestate_auto_save and savestate_auto_load, separate savefile/state paths, hotkey gating and remap directories. Use per-core/content configuration and launcher snapshot bookkeeping for Continue Playing.
+
+Advertise state Resume only when that selected core supports a tested state and the stored ROM/core/version identity matches. SRAM autosave is not a save state. **Never treat SIGKILL as a save operation**: upstream configuration warns it bypasses saving RAM. Current options and command acknowledgements must be feature-tested against the pinned shipped binary; do not assume current master features or invent a universal success acknowledgement.
+
+[RetroArch](https://github.com/libretro/RetroArch) is GPL-3.0; cores and assets have their own licences. Retain the separate-process integration and apply the licence gate before copying code into PyUI. **Estimated effort M** for capability-aware history, successful-save bookkeeping and real-device fault/exit tests.
+
+### 7B.3 SDL_GameControllerDB: reuse selected data, not a new input daemon
+
+**Decision: use mapping data and SDL2 conventions for supported external controllers while preserving spruce's measured built-in mapping.** The [README](https://github.com/mdqinc/SDL_GameControllerDB/blob/master/README.md) documents GUID/platform/button/axis mappings and SDL_GameControllerAddMappingsFromFile. The [zlib licence](https://github.com/mdqinc/SDL_GameControllerDB/blob/master/LICENSE) requires retained notice and appropriate marking of changes.
+
+The inspected current database contained no case-insensitive TrimUI or Deeplay entry. **It is not evidence that the original Smart Pro's built-in mapping is supplied.** Capture and validate the actual device GUID and axes/buttons. Select compatible external-pad records rather than assuming the entire newest file is necessary.
+
+This database alone does not unify PyUI, RetroArch, PPSSPP, shell actions and keyboard-only games. Keep one logical action contract with per-backend adapters. PortMaster's existing [gptokeyb mappings](https://portmaster.games/gptokeyb-documentation.html) handle per-port keyboard/mouse translation; its kill switch is not a save protocol. **Estimated effort S** for mapping-data use, with physical-controller testing still required.
+
+### 7B.4 CrossMix: same-device evidence and selective reference, not the base
+
+**Decision: inspect same-original-Smart-Pro solutions, but do not restore CrossMix as the operating base or overwrite spruce's runtime libraries/governors.** The inspected [ports launcher](https://github.com/cizia64/CrossMix-OS/blob/main/Emus/PORTS/launch.sh) selects performance/battery modes and inserts a Smart-Pro-specific 0.6-second delay after gptokeyb into scripts. The [common launcher](https://github.com/cizia64/CrossMix-OS/blob/main/System/usr/trimui/scripts/common_launcher.sh) is another useful reference for device launch conditions.
+
+These are **test hypotheses**, not universal fixes. Compare the actual spruce behavior, establish the failure being addressed and implement only a minimal justified adaptation. Do not mutate upstream port scripts on every launch or transplant binaries because the hardware name matches. Same hardware does not imply interchangeable runtime libraries.
+
+[CrossMix-OS](https://github.com/cizia64/CrossMix-OS) has a GPL-3.0 top-level licence; bundled binaries/assets require separate provenance review and any copied code must pass the active licensing gate. **Estimated effort S for inspection, M/H for transplantation**. Configuration or independently implemented behavior may be preferable to copied code.
+
+### 7B.5 Onion GameSwitcher: UX reference, reject a direct port
+
+**Decision: borrow interaction ideas, not Onion's implementation as a new subsystem.** Useful patterns are thumbnail/history browsing, playtime, quick resume, and clearly different Resume and Remove actions. The [official GameSwitcher documentation](https://onionui.github.io/docs/apps/game-switcher) expressly describes reliance on RetroArch save states and says standalone emulators are not compatible.
+
+The [implementation](https://github.com/OnionUI/Onion/blob/main/src/gameSwitcher/gameSwitcher.c) is C using SDL/SDL.h with SDL1-style surface APIs, framebuffer/system hooks, Onion paths/settings and Miyoo integration. It is not a Python/SDL2/PyUI drop-in, and it cannot supply a universal PPSSPP/native-port resume engine. The [GPL-3.0 licence](https://github.com/OnionUI/Onion/blob/main/LICENSE) adds another copying gate.
+
+Build the desired experience in existing PyUI using the already specified capability-aware adapters. **Estimated effort S as a design reference, H as a direct port; direct port rejected.** Preserve source attribution for design research without implying that attribution alone permits source copying.
+
+### 7B.6 Syncthing: optional later sync, not the backup engine
+
+**Decision: defer opt-in cross-device syncing until local save recovery works; reject Syncthing as the sole backup/recovery mechanism.** CrossMix has an original-Smart-Pro integration, making this a plausible candidate, not proof that current binaries work on pinned spruce.
+
+Its [FAQ](https://docs.syncthing.net/users/faq.html#is-syncthing-my-ideal-backup-application) explains that modifications/deletions propagate and it is not an ideal backup. [File versioning](https://docs.syncthing.net/users/versioning.html) is disabled by default and preserves qualifying changes received from other devices, not local edits. [Low-resource tuning](https://docs.syncthing.net/users/tuning.html#tuning-for-low-resources) is available, but CPU/RAM/battery costs must be measured on the original device. [Upstream licensing](https://github.com/syncthing/syncthing/blob/main/README.md) is MPL-2.0; verify the selected distribution and dependencies.
+
+Ship local rotating snapshots first, with a manifest, checksums, verified completed writes and a tested restore. Any later sync requires explicit paired-device setup, conflict/clock/suspend tests and conservative networking. **Do not copy CrossMix's broad-listening network defaults.** Do not enable persistent networking or pairing during documentation/prototyping without the necessary authorization. **Estimated effort M/H**; not a first-vertical-slice dependency.
+
+### 7B.7 Selection gates and the per-port capability contract
+
+Observed repository metadata showed all six projects non-archived; last pushes at the research snapshot were PortMaster 21 October 2026, RetroArch 22 October, SDL_GameControllerDB 19 October, CrossMix 20 August, Onion 7 February, and Syncthing 21 October. These dates are activity evidence, **not a maintenance or support guarantee**. Recheck before selection and pin actual commits/releases. The exact selected dependency versions remain an implementation gate, not a fabricated outcome of this comparison.
+
+For every native port, keep a manifest containing:
+1. Source/provenance, exact game/runtime versions and all relevant licences.
+2. Architecture, libc/GPU/driver/runtime requirements and original-device test status.
+3. Instructions for any required user-owned game data, without bundling unlicensed assets.
+4. Logical controls and actual per-port backend mapping.
+5. Save/config paths, completed-write detection, backup and restore mapping.
+6. Clean exit behavior and error recovery.
+7. Measured performance, with firmware, settings and test scene recorded.
+8. One honest resume capability: **state-resume**, **in-game-save**, or **launch-only**.
+
+Do not fabricate save-state support for native ports or standalone emulators. Keep the initial vertical slice on the existing frontend and integrations. It needs neither a replacement frontend framework nor a background sync service. A candidate only becomes an accepted dependency after it solves a demonstrated gap more cheaply and reliably than extending the maintained component already present.
+
 ## 8. Licensing gate before implementation or distribution
 
 Read and preserve each component's actual terms, not a generic label:
