@@ -22,6 +22,39 @@ from psp_shell.ui.model import NavigationModel, UIItem
 
 @unittest.skipUnless(HOST_UI, "Install the optional host PySDL2/Pillow dependencies")
 class RenderTests(unittest.TestCase):
+    def test_keyboard_workspace_hides_the_underlying_menu(self):
+        from dataclasses import replace
+        from psp_shell.ui.renderer import Renderer
+        from psp_shell.ui.model import Keyboard
+        model = NavigationModel(demo=True, preferences={"motion": False})
+        snapshot = replace(model.snapshot(), keyboard=Keyboard("Rally", 0))
+        with tempfile.TemporaryDirectory() as directory, Renderer(software=True) as renderer:
+            renderer.render(snapshot, 0)
+            first = Path(directory) / "first.png"
+            renderer.save_screenshot(first)
+            changed = replace(snapshot, category=3, title="Different page",
+                              items=(UIItem("other", "A title that must stay hidden"),), selected=0)
+            renderer.render(changed, 0)
+            second = Path(directory) / "second.png"
+            renderer.save_screenshot(second)
+            self.assertEqual(first.read_bytes(), second.read_bytes())
+
+    def test_older_sdl_wave_fallback_does_not_call_newer_runtime_symbols(self):
+        from psp_shell.ui.renderer import Renderer
+        model = NavigationModel(preferences={"motion": False})
+        with Renderer(software=True) as renderer:
+            renderer._sdl_version = (2, 0, 10)
+            renderer._geometry_supported = False
+            with mock.patch("sdl2.SDL_RenderGeometry", side_effect=AssertionError("SDL too old")), \
+                 mock.patch("sdl2.SDL_SetTextureScaleMode", side_effect=AssertionError("SDL too old")):
+                renderer.render(model.snapshot(), 0)
+                renderer.present()
+            renderer._geometry_supported = True
+            with mock.patch("sdl2.SDL_RenderGeometry", return_value=-1) as unsupported:
+                renderer.render(model.snapshot(), 0)
+                self.assertFalse(renderer._geometry_supported)
+                self.assertEqual(unsupported.call_count, 1)
+
     def test_deterministic_static_frame_and_no_render_tick_file_reads(self):
         from PIL import Image, ImageChops
         from psp_shell.ui.renderer import Renderer
@@ -39,8 +72,11 @@ class RenderTests(unittest.TestCase):
             self.assertEqual(first.read_bytes(), second.read_bytes())
             with Image.open(first) as image:
                 self.assertEqual(image.size, (1280, 720))
-                # The highlighted row and text must survive the software path.
-                self.assertGreater(image.getpixel((90, 325))[1], 180)
+                # The focused pictogram and title remain bright in software
+                # rendering; focus no longer depends on a coloured row tile.
+                focus = image.convert("RGB").crop((240, 330, 730, 416))
+                white_pixels = sum(min(pixel) > 225 for pixel in focus.getdata())
+                self.assertGreater(white_pixels, 350)
             model.handle("right")
             renderer.render(model.snapshot(), 901.0)
             changed = Path(directory) / "changed.png"

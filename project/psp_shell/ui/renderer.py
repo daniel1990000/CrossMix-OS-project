@@ -7,7 +7,6 @@ from __future__ import annotations
 from collections import OrderedDict
 from contextlib import contextmanager
 import ctypes
-import hashlib
 import math
 from pathlib import Path
 from typing import Any, Iterator
@@ -16,6 +15,8 @@ import sdl2
 
 from .artwork import ArtworkDecoder, SDLArtworkDecoder
 from .model import Dialog, Preferences, UIItem, UISnapshot
+from .pictograms import ALIASES, DRAWINGS
+from .motion import StepGlide
 from .text import Raster, TextRasterizer
 
 
@@ -49,7 +50,7 @@ class Renderer:
 
     TEXT_CACHE_BYTES = 12 * 1024 * 1024
     TEXT_CACHE_ENTRIES = 256
-    ART_CACHE_ENTRIES = 3
+    ART_CACHE_ENTRIES = 6
 
     def __init__(self, width: int = 1280, height: int = 720,
                  font_path: str | Path | None = None, software: bool = False,
@@ -70,20 +71,30 @@ class Renderer:
         self._external_target = external_target
         self._frame = None
         self._gradient = None
+        self._icons: dict[str, Any] = {}
         self._decoder = None
         self._text_cache: OrderedDict[tuple[Any, ...], tuple[Any, int, int, int]] = OrderedDict()
         self._text_bytes = 0
         self._art: OrderedDict[str, tuple[Any, int, int]] = OrderedDict()
         self._art_requested: OrderedDict[str, None] = OrderedDict()
+        self._art_retry: OrderedDict[str, None] = OrderedDict()
+        self._art_failed: OrderedDict[str, None] = OrderedDict()
+        self._art_dirty = False
         self._last_selected_art = ""
         self._fingerprint = None
         self._last_change = 0.0
         self._last_now = 0.0
-        self._selected_y = None
+        self._category_glide = StepGlide()
+        self._item_glide = StepGlide()
+        self._category_target = 0.0
         self._closed = False
         self._audio_device = 0
         self._click_buffer = None
         self._last_target = None
+        version = sdl2.SDL_version()
+        sdl2.SDL_GetVersion(ctypes.byref(version))
+        self._sdl_version = (version.major, version.minor, version.patch)
+        self._geometry_supported = self._sdl_version >= (2, 0, 18) and hasattr(sdl2, "SDL_RenderGeometry")
         try:
             if not self._external:
                 if sdl2.SDL_InitSubSystem(sdl2.SDL_INIT_VIDEO | sdl2.SDL_INIT_GAMECONTROLLER | sdl2.SDL_INIT_EVENTS) != 0:
@@ -136,16 +147,23 @@ class Renderer:
             sdl2.SDL_DestroyTexture(texture)
             raise _error("Upload interface texture")
         sdl2.SDL_SetTextureBlendMode(texture, sdl2.SDL_BLENDMODE_BLEND)
+        if self._sdl_version >= (2, 0, 12) and hasattr(sdl2, "SDL_SetTextureScaleMode"):
+            sdl2.SDL_SetTextureScaleMode(texture, sdl2.SDL_ScaleModeLinear)
         return texture
 
     def _make_gradient(self) -> Any:
-        top, bottom = (13, 18, 38), (12, 45, 55)
+        # A small, smoothly sampled original colour field. Upload once; no
+        # full-screen Python pixel generation or file reads in a render tick.
+        width, height = 160, 90
         pixels = bytearray()
-        for y in range(LOGICAL_HEIGHT):
-            amount = y / (LOGICAL_HEIGHT - 1)
-            color = tuple(round(a + (b - a) * amount) for a, b in zip(top, bottom)) + (255,)
-            pixels.extend(bytes(color) * 32)
-        return self._texture(Raster(32, LOGICAL_HEIGHT, bytes(pixels)))
+        for y in range(height):
+            vertical = (y / (height - 1)) ** 1.45
+            for x in range(width):
+                horizontal = x / (width - 1)
+                top = (2 + 4 * horizontal, 2 + 84 * horizontal, 75 + 109 * horizontal)
+                bottom = (78 - 26 * horizontal, 226 + 26 * horizontal, 247 + 8 * horizontal)
+                pixels.extend(bytes(round(a + (b - a) * vertical) for a, b in zip(top, bottom)) + b"\xff")
+        return self._texture(Raster(width, height, bytes(pixels)))
 
     @contextmanager
     def _state(self) -> Iterator[None]:
@@ -238,68 +256,99 @@ class Renderer:
             self._label(line, x, y + index * line_height, size, color, width, scale)
         return len(lines) * line_height
 
+    def _polygon(self, points: list[tuple[float, float]], color: tuple[int, ...]) -> None:
+        """Small convex/concave pictogram fills, supported by every SDL backend."""
+        if len(points) < 3:
+            return
+        for y in range(math.floor(min(p[1] for p in points)), math.ceil(max(p[1] for p in points))):
+            crossings = []
+            scan = y + .5
+            for index, (ax, ay) in enumerate(points):
+                bx, by = points[(index + 1) % len(points)]
+                if (ay <= scan < by) or (by <= scan < ay):
+                    crossings.append(ax + (scan - ay) * (bx - ax) / (by - ay))
+            crossings.sort()
+            for left, right in zip(crossings[::2], crossings[1::2]):
+                self._rect(left, y, max(1, right - left), 1, color)
+
+    def _icon_texture(self, kind: str) -> Any:
+        kind = ALIASES.get(kind, kind)
+        if kind not in DRAWINGS:
+            kind = "settings"
+        if kind in self._icons:
+            return self._icons[kind]
+        # Oversample project-drawn geometry, then use SDL's linear sampler.
+        # This path needs neither Pillow nor additional embedded dependencies.
+        texture = sdl2.SDL_CreateTexture(self.renderer, sdl2.SDL_PIXELFORMAT_RGBA8888,
+                                        sdl2.SDL_TEXTUREACCESS_TARGET, 192, 192)
+        if not texture:
+            raise _error("Create pictogram")
+        try:
+            with self._state():
+                sdl2.SDL_SetRenderTarget(self.renderer, texture)
+                sdl2.SDL_RenderSetLogicalSize(self.renderer, 192, 192)
+                sdl2.SDL_RenderSetViewport(self.renderer, None)
+                sdl2.SDL_RenderSetClipRect(self.renderer, None)
+                sdl2.SDL_SetRenderDrawColor(self.renderer, 0, 0, 0, 0)
+                sdl2.SDL_RenderClear(self.renderer)
+                sdl2.SDL_SetRenderDrawBlendMode(self.renderer, sdl2.SDL_BLENDMODE_BLEND)
+                for operation, data in DRAWINGS[kind]:
+                    shade = operation.startswith("shade_")
+                    operation = operation.removeprefix("shade_")
+                    color = (126, 150, 170, 255) if shade else (255, 255, 255, 255)
+                    if operation == "polygon":
+                        self._polygon([(a * 3, b * 3) for a, b in data], color)
+                    elif operation == "rect":
+                        self._rect(*(value * 3 for value in data), color)
+                    elif operation == "circle":
+                        self._circle(data[0] * 3, data[1] * 3, round(data[2] * 3), color)
+                    elif operation in ("ring", "arc"):
+                        cx, cy, radius = data[:3]
+                        if operation == "ring":
+                            self._circle(cx * 3, cy * 3, round(radius * 3), color)
+                            sdl2.SDL_SetRenderDrawBlendMode(self.renderer, sdl2.SDL_BLENDMODE_NONE)
+                            self._circle(cx * 3, cy * 3, round((radius - data[3]) * 3), (0, 0, 0, 0))
+                            sdl2.SDL_SetRenderDrawBlendMode(self.renderer, sdl2.SDL_BLENDMODE_BLEND)
+                        else:
+                            points = [(3 * (cx + math.cos(math.pi * (data[3] + (data[4] - data[3]) * i / 64)) * radius),
+                                       3 * (cy + math.sin(math.pi * (data[3] + (data[4] - data[3]) * i / 64)) * radius)) for i in range(65)]
+                            for x, y in points:
+                                self._circle(x, y, 4, color)
+                    elif operation == "path":
+                        points = [(a * 3, b * 3) for a, b in data]
+                        for (ax, ay), (bx, by) in zip(points, points[1:]):
+                            distance = max(1, math.hypot(bx - ax, by - ay))
+                            dx, dy = -(by - ay) * 4 / distance, (bx - ax) * 4 / distance
+                            self._polygon([(ax + dx, ay + dy), (bx + dx, by + dy),
+                                           (bx - dx, by - dy), (ax - dx, ay - dy)], color)
+                        for x, y in points:
+                            self._circle(x, y, 4, color)
+            sdl2.SDL_SetTextureBlendMode(texture, sdl2.SDL_BLENDMODE_BLEND)
+            if self._sdl_version >= (2, 0, 12) and hasattr(sdl2, "SDL_SetTextureScaleMode"):
+                sdl2.SDL_SetTextureScaleMode(texture, sdl2.SDL_ScaleModeLinear)
+            self._icons[kind] = texture
+            return texture
+        except BaseException:
+            sdl2.SDL_DestroyTexture(texture)
+            raise
+
     def _icon(self, kind: str, x: float, y: float, size: int, color: tuple[int, ...]) -> None:
-        unit = size / 32
-        def line(a: float, b: float, c: float, d: float) -> None:
-            self._line(x + a * unit, y + b * unit, x + c * unit, y + d * unit, color, max(1, round(2 * unit)))
-        if kind in ("Games", "game", "system", "all", "hardware_controllers", "controllers"):
-            for a, b, c, d in ((7, 9, 25, 9), (7, 9, 3, 24), (25, 9, 29, 24), (3, 24, 10, 24), (10, 24, 13, 20), (13, 20, 19, 20), (19, 20, 22, 24), (22, 24, 29, 24), (7, 15, 15, 15), (11, 11, 11, 19)):
-                line(a, b, c, d)
-            self._circle(x + 23 * unit, y + 14 * unit, max(1, round(1.7 * unit)), color)
-            self._circle(x + 20 * unit, y + 17 * unit, max(1, round(1.7 * unit)), color)
-        elif kind in ("Continue Playing", "recent", "random"):
-            points = [(x + 16 * unit + math.cos(t * math.tau / 28) * 12 * unit,
-                       y + 16 * unit + math.sin(t * math.tau / 28) * 12 * unit) for t in range(29)]
-            self._polyline(points, color)
-            line(16, 8, 16, 17)
-            line(16, 17, 23, 20)
-        elif kind in ("Tools", "tool"):
-            for a, b, c, d in ((5, 5, 13, 13), (13, 13, 24, 26), (24, 26, 28, 22), (28, 22, 16, 11), (16, 11, 8, 3), (4, 26, 11, 19), (22, 11, 28, 5)):
-                line(a, b, c, d)
-        elif kind == "favorites":
-            points = [(16, 27), (4, 16), (4, 10), (8, 6), (12, 6), (16, 10), (20, 6), (24, 6), (28, 10), (28, 16), (16, 27)]
-            self._polyline([(x + a * unit, y + b * unit) for a, b in points], color)
-        elif kind == "search":
-            points = [(x + 13 * unit + math.cos(t * math.tau / 24) * 8 * unit,
-                       y + 13 * unit + math.sin(t * math.tau / 24) * 8 * unit) for t in range(25)]
-            self._polyline(points, color)
-            line(19, 19, 28, 28)
-        elif kind in ("backlight", "hardware_display"):
-            points = [(x + 16 * unit + math.cos(t * math.tau / 24) * 6 * unit,
-                       y + 16 * unit + math.sin(t * math.tau / 24) * 6 * unit) for t in range(25)]
-            self._polyline(points, color)
-            for index in range(8):
-                angle = index * math.tau / 8
-                line(16 + math.cos(angle) * 10, 16 + math.sin(angle) * 10,
-                     16 + math.cos(angle) * 14, 16 + math.sin(angle) * 14)
-        elif kind in ("volume", "hardware_sound"):
-            for a, b, c, d in ((4, 12, 10, 12), (10, 12, 18, 6), (18, 6, 18, 26),
-                               (18, 26, 10, 20), (10, 20, 4, 20), (4, 20, 4, 12),
-                               (23, 11, 26, 15), (26, 15, 23, 21), (28, 7, 31, 15), (31, 15, 28, 25)):
-                line(a, b, c, d)
-        elif kind in ("wifi", "hardware_network"):
-            for radius in (7, 13, 19):
-                self._polyline([(x + (16 + math.cos(angle) * radius) * unit,
-                                 y + (27 + math.sin(angle) * radius) * unit)
-                                for angle in [math.pi * (1.22 + n * .056) for n in range(11)]], color)
-            self._circle(x + 16 * unit, y + 27 * unit, max(1, round(2 * unit)), color)
-        elif kind == "bluetooth":
-            for a, b, c, d in ((15, 3, 15, 29), (15, 3, 25, 11), (25, 11, 8, 24),
-                               (8, 8, 25, 21), (25, 21, 15, 29)):
-                line(a, b, c, d)
-        elif kind in ("power", "hardware_power"):
-            self._polyline([(x + (16 + math.cos(angle) * 12) * unit,
-                             y + (17 + math.sin(angle) * 12) * unit)
-                            for angle in [math.pi * (-.3 + n * 1.6 / 24) for n in range(25)]], color)
-            line(16, 2, 16, 17)
-        else:
-            for index in range(8):
-                angle = index * math.tau / 8
-                line(16 + math.cos(angle) * 9, 16 + math.sin(angle) * 9,
-                     16 + math.cos(angle) * 14, 16 + math.sin(angle) * 14)
-            points = [(x + 16 * unit + math.cos(t * math.tau / 24) * 8 * unit,
-                       y + 16 * unit + math.sin(t * math.tau / 24) * 8 * unit) for t in range(25)]
-            self._polyline(points, color)
+        texture = self._icon_texture(kind)
+        alpha = color[3] if len(color) == 4 else 255
+        destination = sdl2.SDL_Rect(round(x + 1), round(y + 2), size, size)
+        sdl2.SDL_SetTextureColorMod(texture, 0, 16, 48)
+        sdl2.SDL_SetTextureAlphaMod(texture, round(alpha * .25))
+        sdl2.SDL_RenderCopy(self.renderer, texture, None, ctypes.byref(destination))
+        destination.x, destination.y = round(x), round(y)
+        sdl2.SDL_SetTextureColorMod(texture, *color[:3])
+        sdl2.SDL_SetTextureAlphaMod(texture, alpha)
+        sdl2.SDL_RenderCopy(self.renderer, texture, None, ctypes.byref(destination))
+
+    def _text(self, text: str, x: float, y: float, size: int, color: tuple[int, ...], width: int,
+              scale: float = 1.0) -> tuple[int, int]:
+        alpha = color[3] if len(color) == 4 else 255
+        self._label(text, x + 1, y + 2, size, (0, 12, 44, round(alpha * .65)), width, scale)
+        return self._label(text, x, y, size, color, width, scale)
 
     def _polyline(self, coordinates: list[tuple[float, float]], color: tuple[int, ...]) -> None:
         if len(coordinates) < 2:
@@ -314,72 +363,241 @@ class Renderer:
             return
         destination = sdl2.SDL_Rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT)
         sdl2.SDL_RenderCopy(self.renderer, self._gradient, None, ctypes.byref(destination))
-        phase = now * 0.16 if preferences.motion else 0.0
-        # Original geometry: six sparse flowing ribbons; no firmware art/shaders.
-        for ribbon in range(6):
+        phase = now * .18 if preferences.motion else 0.0
+        # Two broad translucent folds, with a soft edge and continuous fill.
+        # Original geometry, independently drawn against official PSP references.
+        for ribbon in range(2):
             points = []
-            for index in range(97):
-                x = index * LOGICAL_WIDTH / 96
-                fraction = x / LOGICAL_WIDTH
-                y = 505 + ribbon * 14 + math.sin(fraction * 5.2 + phase + ribbon * 0.23) * (44 + ribbon * 2)
-                y += math.sin(fraction * 2.7 - phase * 0.6 + ribbon * 0.4) * 22
+            for index in range(129):
+                fraction = index / 128
+                x = fraction * LOGICAL_WIDTH
+                center = .80 + .035 * math.sin(phase * .7 + ribbon)
+                y = 542 + ribbon * 52 - (190 + ribbon * 8) * math.exp(-((fraction - center) / .53) ** 2)
+                y += math.sin(fraction * 5.4 + phase + ribbon * .9) * 15
                 points.append((x, y))
-            self._polyline(points, (98, 219, 203, 23 + ribbon * 6))
-            self._polyline([(x, y + 1) for x, y in points], (98, 219, 203, 12 + ribbon * 4))
+            if self._geometry_supported:
+                vertices = []
+                indices = []
+                for index, (x, y) in enumerate(points):
+                    vertices.extend((sdl2.SDL_Vertex(sdl2.SDL_FPoint(x, y),
+                                     sdl2.SDL_Color(108, 221, 255, 48 - ribbon * 10), sdl2.SDL_FPoint()),
+                                     sdl2.SDL_Vertex(sdl2.SDL_FPoint(x, LOGICAL_HEIGHT),
+                                     sdl2.SDL_Color(80, 253, 255, 64 - ribbon * 14), sdl2.SDL_FPoint())))
+                    if index:
+                        k = index * 2
+                        indices.extend((k - 2, k - 1, k, k, k - 1, k + 1))
+                raw_vertices = (sdl2.SDL_Vertex * len(vertices))(*vertices)
+                raw_indices = (ctypes.c_int * len(indices))(*indices)
+                if sdl2.SDL_RenderGeometry(self.renderer, None, raw_vertices, len(vertices), raw_indices, len(indices)) != 0:
+                    # Some older renderer drivers reject geometry even with a
+                    # recent SDL library. Decorative waves must stay optional.
+                    self._geometry_supported = False
+            if not self._geometry_supported:
+                for x, y in points:
+                    self._rect(x, y, 11, LOGICAL_HEIGHT - y, (94, 220, 251, 38))
+            self._polyline(points, (176, 236, 255, 35 - ribbon * 10))
+            self._polyline([(x, y + 2) for x, y in points], (176, 236, 255, 13))
 
-    def _poll_artwork(self) -> None:
+    def _poll_artwork(self, snapshot: UISnapshot | None = None) -> bool:
         if not self._decoder:
-            return
+            return False
+        changed = False
+        if snapshot is not None:
+            selected = snapshot.selected_item
+            self._last_selected_art = selected.artwork if selected is not None and selected.kind == "game" else ""
+            path = self._last_selected_art
+            if path and path not in self._art and path not in self._art_failed:
+                self._art_retry[path] = None
+                while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
+                    self._art_retry.popitem(last=False)
         for image in self._decoder.poll():
+            self._art_requested.pop(image.path, None)
             if image.error or not image.pixels:
+                self._art_retry.pop(image.path, None)
+                self._art_failed[image.path] = None
+                while len(self._art_failed) > 128:
+                    self._art_failed.popitem(last=False)
                 continue
             texture = self._texture(Raster(image.width, image.height, image.pixels))
             previous = self._art.pop(image.path, None)
             if previous:
                 sdl2.SDL_DestroyTexture(previous[0])
             self._art[image.path] = (texture, image.width, image.height)
+            changed = True
+            self._art_dirty = True
             while len(self._art) > self.ART_CACHE_ENTRIES:
-                _, removed = self._art.popitem(last=False)
+                # Late neighboring results must not evict the focused cover.
+                oldest = next(path for path in self._art if path != self._last_selected_art)
+                removed = self._art.pop(oldest)
                 sdl2.SDL_DestroyTexture(removed[0])
+        # The focused row is drawn last, so submit it here before neighbors.
+        # Rejected admissions remain bounded and are retried without file I/O.
+        paths = list(self._art_retry)
+        if self._last_selected_art in self._art_retry:
+            paths.remove(self._last_selected_art)
+            paths.insert(0, self._last_selected_art)
+        for path in paths:
+            if path in self._art or path in self._art_failed or path in self._art_requested:
+                self._art_retry.pop(path, None)
+            elif self._decoder.request(path):
+                self._art_requested[path] = None
+                self._art_retry.pop(path, None)
+            else:
+                break
+        return changed
 
     def _artwork(self, item: UIItem, x: int, y: int, width: int, height: int,
                   preferences: Preferences) -> None:
-        if item.artwork and item.artwork not in self._art_requested:
-            self._art_requested[item.artwork] = None
-            if self._decoder:
-                self._decoder.request(item.artwork)
-            while len(self._art_requested) > 128:
-                self._art_requested.popitem(last=False)
         image = self._art.get(item.artwork)
         if image:
+            self._art.move_to_end(item.artwork)
+            # EmuCoreA's flat-cover treatment: retain the real aspect ratio and
+            # transparent surround, without a fabricated box or drop shadow.
             texture, image_width, image_height = image
             factor = min(width / image_width, height / image_height)
             dw, dh = round(image_width * factor), round(image_height * factor)
             destination = sdl2.SDL_Rect(x + (width - dw) // 2, y + (height - dh) // 2, dw, dh)
             sdl2.SDL_RenderCopy(self.renderer, texture, None, ctypes.byref(destination))
             return
-        seed = hashlib.sha256(item.id.encode("utf-8", "replace")).digest()
-        accent = (190 + seed[0] % 50, 158 + seed[1] % 60, 100 + seed[2] % 60)
-        self._round_rect(x, y, width, height, (21, 42, 62) if not preferences.high_contrast else (18, 18, 18), 12)
-        self._circle(x + width * 0.72, y + height * 0.32, 24, accent + (200,))
-        for layer in range(5):
-            points = [(x + width * index / 32,
-                       y + height * (0.58 + layer * 0.06) + math.sin(index / 32 * 5 + layer + seed[3]) * 15)
-                      for index in range(33)]
-            self._polyline(points, (110, 211, 193, 65 + layer * 27))
-        for index in range(7):
-            sx = x + 15 + seed[index + 4] % max(1, width - 30)
-            sy = y + 13 + seed[index + 11] % max(1, height // 2)
-            self._rect(sx, sy, 2, 2, (224, 239, 246, 130))
+        if item.artwork and item.artwork not in self._art_requested and item.artwork not in self._art_failed:
+            if self._decoder and self._decoder.request(item.artwork):
+                self._art_requested[item.artwork] = None
+                self._art_retry.pop(item.artwork, None)
+            else:
+                self._art_retry[item.artwork] = None
+                self._art_retry.move_to_end(item.artwork)
+                while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
+                    self._art_retry.popitem(last=False)
+        # A quiet original placeholder is visibly a missing cover, not invented
+        # game artwork. Text stays alongside the icon in the normal list.
+        color = (255, 255, 255, 34) if not preferences.high_contrast else (255, 255, 255, 46)
+        self._rect(x, y, width, height, color)
+        self._line(x, y, x + width, y, (255, 255, 255, 105))
+        self._line(x, y + height, x + width, y + height, (255, 255, 255, 58))
+        size = min(height - 8, width - 8)
+        self._icon("game", x + (width - size) / 2, y + (height - size) / 2, size, (255, 255, 255, 225))
 
     @staticmethod
     def _frame_key(snapshot: UISnapshot) -> tuple[Any, ...]:
-        return (snapshot.category, snapshot.title, snapshot.items, snapshot.selected,
-                snapshot.dialog, snapshot.keyboard, snapshot.preferences, snapshot.status, snapshot.loading)
+        return (snapshot,)
 
     def needs_frame(self, snapshot: UISnapshot, now: float) -> bool:
+        self._poll_artwork(snapshot)
         key = self._frame_key(snapshot)
-        return key != self._fingerprint or bool(snapshot.preferences.motion and now - self._last_change < 8)
+        return self._art_dirty or key != self._fingerprint or bool(snapshot.preferences.motion and now - self._last_change < 8)
+
+    def _crossbar(self, snapshot: UISnapshot, now: float) -> None:
+        # Fixed filmstrip arithmetic and the .58 inactive treatment follow
+        # PlayFieldPortal XMBCategoryBar.kt (5ee271e); see visual-design notes.
+        count = len(snapshot.categories)
+        change = (snapshot.category - self._category_target + count / 2) % count - count / 2
+        self._category_target += change
+        position = self._category_glide.position(self._category_target, now, "categories", snapshot.preferences.motion)
+        anchor, spacing, center_y = 292, 224, 186
+        for index, title in enumerate(snapshot.categories):
+            delta = (index - position + 1.4) % count - 1.4
+            center_x = anchor + delta * spacing
+            selected = index == snapshot.category
+            proximity = max(0.0, 1 - abs(delta))
+            size = round(72 + proximity * 16)
+            alpha = 255 if selected or snapshot.preferences.high_contrast else 148
+            self._icon(title, center_x - size / 2, center_y - size / 2, size, (255, 255, 255, alpha))
+            if selected:
+                size_text = 21
+                scale = min(snapshot.preferences.text_scale, 1.25)
+                width = min(270, self.text.measure(title, round(size_text * scale)))
+                self._text(title, center_x - width / 2, 243, size_text, (255, 255, 255), 270, scale)
+
+    @staticmethod
+    def _row_y(distance: float, gap: float) -> float:
+        # The selected row breathes below the category icon. Its nearest
+        # neighbors sit above/below it; farther rows have a compact stride.
+        if distance < 0:
+            return 368 + distance * gap
+        if distance < 1:
+            return 368 + distance * (gap + 30)
+        return 398 + distance * gap
+
+    @staticmethod
+    def _item_icon(item: UIItem) -> str:
+        if item.kind in ("menu", "setting", "experience_profile", "hardware_control", "hardware_route"):
+            return item.id
+        if item.kind == "system":
+            return "system" if item.system_id in ("PSP", "GBA") else "folder"
+        return item.kind
+
+    def _items(self, snapshot: UISnapshot, now: float, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
+        prefs = snapshot.preferences
+        scale = prefs.text_scale
+        identity = (snapshot.category, snapshot.title, snapshot.breadcrumb)
+        position = self._item_glide.position(snapshot.selected, now, identity, prefs.motion)
+        gap = max(66, round(62 * min(scale, 1.65)))
+        clip = sdl2.SDL_Rect(172, 280, 1035, 348)
+        sdl2.SDL_RenderSetClipRect(self.renderer, ctypes.byref(clip))
+        try:
+            # Farther rows first; the selected row is drawn last and stays clear
+            # throughout short transitions and fast held-button repeats.
+            indices = sorted(range(len(snapshot.items)), key=lambda i: -abs(i - position))
+            for index in indices:
+                item = snapshot.items[index]
+                distance = index - position
+                y = self._row_y(distance, gap)
+                if y < 270 or y > 637:
+                    continue
+                selected = index == snapshot.selected
+                emphasis = max(0.0, 1.0 - abs(distance))
+                alpha = 255 if selected or prefs.high_contrast else max(124, round(218 - abs(distance) * 12))
+                color = primary if selected else (*primary[:3], alpha)
+                # Scale makes focus readable without an opaque tile or bar.
+                if item.kind == "game":
+                    width, height = round(76 + 56 * emphasis), round(43 + 31 * emphasis)
+                    self._artwork(item, round(292 - width / 2), round(y - height / 2), width, height, prefs)
+                else:
+                    size = round(36 + 34 * emphasis)
+                    self._icon(self._item_icon(item), 292 - size / 2, y - size / 2, size, color)
+                title_size = 28 if selected else 20
+                title_scale = scale if selected else min(scale, 1.35)
+                title_y = y - (24 if selected else 10)
+                self._text(item.title, 391, title_y, title_size, color, 780, title_scale)
+                if selected:
+                    subtitle = item.subtitle
+                    if item.kind == "game":
+                        subtitle = (item.system_id + "   /   " + subtitle).strip(" / ")
+                    if subtitle:
+                        self._text(subtitle, 393, y + max(18, round(17 * scale)), 16, muted, 763, min(scale, 1.35))
+                    if item.favorite:
+                        self._icon("favorites", 354, title_y + 2, 22, primary)
+            if position > .05:
+                self._polyline([(286, 283), (292, 279), (298, 283)], (*primary[:3], 130))
+            if position + 3 < len(snapshot.items):
+                self._polyline([(286, 622), (292, 626), (298, 622)], (*primary[:3], 130))
+        finally:
+            sdl2.SDL_RenderSetClipRect(self.renderer, None)
+
+    def _button(self, position: str, x: float, y: float, color: tuple[int, ...]) -> None:
+        # Physical positions match the existing input policy. The small diamond
+        # makes South/East legible without pretending TrimUI has Sony buttons.
+        for key, dx, dy in (("north", 0, -6), ("east", 6, 0), ("south", 0, 6), ("west", -6, 0)):
+            self._circle(x + dx, y + dy, 3, color if position == key else (*color[:3], 52))
+
+    def _footer(self, snapshot: UISnapshot, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
+        prefs = snapshot.preferences
+        confirm = prefs.confirm
+        back = "east" if confirm == "south" else "south"
+        self._button(confirm, 268, 681, primary)
+        self._text("Enter", 287, 674, 15, primary, 100)
+        self._button(back, 402, 681, primary)
+        self._text("Back", 421, 674, 15, primary, 100)
+        self._button("west", 531, 681, muted)
+        self._text("Search", 550, 674, 15, muted, 110)
+        if snapshot.selected_item and snapshot.selected_item.kind == "game":
+            self._button("north", 680, 681, muted)
+            self._text("Favorite", 699, 674, 15, muted, 140)
+        number = snapshot.offset + snapshot.selected + 1 if snapshot.items else 0
+        text = f"{number} / {snapshot.total}"
+        self._text(text, 1157 - self.text.measure(text, 14), 675, 14, muted, 110)
+        if snapshot.demo:
+            self._text("Desktop preview", 54, 677, 12, (*muted[:3], 160), 170)
 
     def render(self, snapshot: UISnapshot, now: float = 0.0) -> None:
         if self._closed:
@@ -389,16 +607,13 @@ class Renderer:
             self._last_change = now
             self._fingerprint = key
         wave_time = min(now, self._last_change + 8)
-        elapsed = max(0.0, min(0.1, now - self._last_now))
         self._last_now = now
         prefs = snapshot.preferences
-        scale = prefs.text_scale
-        high = prefs.high_contrast
-        primary = (255, 255, 255) if high else (238, 247, 249)
-        muted = (207, 207, 207) if high else (147, 173, 188)
-        accent = (255, 229, 110) if high else (111, 232, 211)
-        panel = (20, 20, 20, 255) if high else (14, 28, 47, 223)
-        self._poll_artwork()
+        primary = (255, 255, 255)
+        muted = (222, 238, 251) if not prefs.high_contrast else (235, 235, 235)
+        accent = (255, 255, 255)
+        self._poll_artwork(snapshot)
+        self._art_dirty = False
         with self._state():
             target = self._external_target if self._external_target is not None else sdl2.SDL_GetRenderTarget(self.renderer) if self._external else self._frame
             self._last_target = target
@@ -407,169 +622,104 @@ class Renderer:
             sdl2.SDL_RenderSetClipRect(self.renderer, None)
             sdl2.SDL_SetRenderDrawBlendMode(self.renderer, sdl2.SDL_BLENDMODE_BLEND)
             self._background(wave_time, prefs)
-            self._label("spruce", 64, 36, 29, primary, 250)
-            self._label("PERSONAL INTERFACE", 179, 44, 13, muted, 350)
-            badge = "SAMPLE COLLECTION" if snapshot.demo else "YOUR COLLECTION"
-            self._label(badge, 984, 45, 13, accent, 232)
-            self._line(64, 91, 1216, 91, (151, 185, 194, 36))
-            for index, title in enumerate(snapshot.categories):
-                x = 64 + index * 292
-                selected = index == snapshot.category
-                self._icon(title, x + 4, 117, 31, accent if selected else muted)
-                self._label(title, x + 51, 121, 20, primary if selected else muted, 217, min(scale, 1.3))
-                if selected:
-                    self._round_rect(x, 166, 245, 3, accent, 1)
-            self._label(snapshot.breadcrumb.upper(), 64, 195, 12, accent, 1100)
-            self._label(snapshot.title, 64, 220, 32, primary, 1100, scale)
-            list_y, list_height = 291, 301
-            self._round_rect(64, list_y, 730, list_height, panel, 16)
-            self._round_rect(822, list_y, 394, list_height, panel, 16)
-            row_height = max(62, round(58 * scale))
-            visible = max(2, int((list_height - 20) // row_height))
-            top = max(0, snapshot.selected - visible + 1)
-            top = min(top, max(0, len(snapshot.items) - visible))
+            if snapshot.display_clock:
+                width = self.text.measure(snapshot.display_clock, 19)
+                self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
+            self._crossbar(snapshot, now)
+            # A small location cue for drilled-in lists, absent on root pages.
+            root_titles = ("Your games", "Pick up where you left off", "Tools", "Settings")
+            if snapshot.title not in root_titles and snapshot.breadcrumb != snapshot.categories[snapshot.category]:
+                self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 392, 253, 14, (*muted[:3], 190), 786)
             if snapshot.items:
-                selected_y = list_y + 10 + (snapshot.selected - top) * row_height
-                if self._selected_y is None or not prefs.motion or snapshot.category != getattr(self, "_last_category", snapshot.category):
-                    self._selected_y = float(selected_y)
-                else:
-                    self._selected_y += (selected_y - self._selected_y) * (1 - math.exp(-elapsed * 24))
-                self._last_category = snapshot.category
-                self._round_rect(75, self._selected_y, 708, row_height - 5, accent, 10)
-                for row, item in enumerate(snapshot.items[top:top + visible]):
-                    index = top + row
-                    selected = index == snapshot.selected
-                    y = list_y + 10 + row * row_height
-                    foreground = (8, 29, 36) if selected else primary
-                    secondary = (34, 80, 85) if selected else muted
-                    icon = item.id if item.kind in ("menu", "hardware_control", "hardware_route") else item.kind
-                    self._icon(icon, 93, y + (row_height - 32) / 2 - 2, 28, foreground)
-                    title_size = round(23 * scale)
-                    self._label(item.title, 143, y + 6, title_size, foreground, 583)
-                    self._label(item.subtitle, 143, y + 9 + title_size, 13, secondary, 584, scale)
-                    if item.favorite:
-                        self._circle(755, y + row_height / 2 - 3, 3, foreground)
-                if snapshot.total > visible:
-                    track_height = list_height - 32
-                    self._round_rect(786, list_y + 16, 2, track_height, (255, 255, 255, 25), 1)
-                    thumb = max(15, track_height * min(1, visible / max(1, snapshot.total)))
-                    position = (snapshot.offset + snapshot.selected) / max(1, snapshot.total - 1)
-                    self._round_rect(786, list_y + 16 + (track_height - thumb) * position, 2, thumb, accent, 1)
-                self._details(snapshot.selected_item, snapshot, primary, muted, accent)
+                self._items(snapshot, now, primary, muted)
             else:
-                self._icon(snapshot.categories[snapshot.category], 112, 326, 42, accent)
-                self._paragraph(snapshot.empty_message, 112, 392, 21, primary, 624, 5, min(scale, 1.35))
-                self._label("A quieter space", 854, 325, 24, primary, 325, min(scale, 1.3))
-                self._paragraph("Your collection stays in its existing folders. Nothing needs to be moved for this interface.",
-                                854, 379, 18, muted, 324, 6, min(scale, 1.3))
-            if snapshot.status:
-                self._label(snapshot.status, 67, 613, 16, accent, 1148)
-            elif snapshot.loading:
-                self._label("Loading…", 67, 613, 16, accent, 1148)
-            else:
-                number = snapshot.offset + snapshot.selected + 1 if snapshot.items else 0
-                self._label(f"{number:02d} / {snapshot.total:02d}", 67, 613, 14, muted, 300)
-                if snapshot.demo:
-                    self._label("Desktop preview · Device controls unavailable" if snapshot.category == 3 else
-                                "Original sample titles · No game launches", 819, 613, 14, muted, 397)
-            self._line(64, 652, 1216, 652, (151, 185, 194, 36))
-            confirm = "South" if prefs.confirm == "south" else "East"
-            back = "East" if prefs.confirm == "south" else "South"
-            self._label(f"Enter / {confirm}   Open", 66, 675, 15, primary, 320)
-            self._label(f"Esc / {back}   Back", 372, 675, 15, muted, 300)
-            self._label("X   Find a game", 700, 675, 15, muted, 250)
-            if snapshot.selected_item and snapshot.selected_item.kind == "game":
-                self._label("Y   Favorite", 1022, 675, 15, muted, 193)
+                self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
+                self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))
+            if snapshot.status or snapshot.loading:
+                self._text(snapshot.status or "Loading…", 391, 633, 15, primary, 780)
+            self._footer(snapshot, primary, muted)
             if snapshot.dialog:
                 self._draw_dialog(snapshot.dialog, prefs, primary, muted, accent)
             if snapshot.keyboard:
                 self._draw_keyboard(snapshot, primary, muted, accent)
 
-    def _details(self, item: UIItem | None, snapshot: UISnapshot, primary: tuple[int, ...],
-                 muted: tuple[int, ...], accent: tuple[int, ...]) -> None:
-        if item is None:
-            return
-        scale = min(snapshot.preferences.text_scale, 1.35)
-        if item.kind in ("game", "system"):
-            self._artwork(item, 846, 313, 346, 124, snapshot.preferences)
-            caption = item.system_id or ("GAME" if item.kind == "game" else "SYSTEM")
-            self._label(caption.upper(), 850, 454, 12, accent, 332)
-            height = self._paragraph(item.title, 850, 478, 22, primary, 333, 2, scale)
-            if item.kind == "game":
-                detail = ("Sample resume card · demonstration" if snapshot.demo else "Verified state available") if item.resume_available else "Normal launch · in-game saves retained"
-                if not item.available:
-                    detail = "Review required before launch"
-                self._label(detail, 850, min(563, 486 + height), 12, muted, 332)
-        else:
-            self._icon("Tools" if item.kind == "tool" else "Settings" if item.kind in ("setting", "experience_profile") else item.id,
-                       850, 321, 46, accent)
-            self._paragraph(item.title, 850, 392, 25, primary, 333, 2, scale)
-            description = item.subtitle or "Select an entry to continue."
-            if item.id == "all":
-                description = "Browse your collection across systems. Game files and saves stay in their existing spruce folders."
-            elif item.id == "favorites":
-                description = "Keep your favorites inside Games. Add or remove one with the Favorite button."
-            elif item.id == "random":
-                description = "Choose from available games using the same validated launcher as the rest of your collection."
-            elif item.kind == "tool":
-                description = "This installed app keeps its own interface. Its launch and return must use the existing spruce contract."
-            elif item.kind == "hardware_control":
-                description = (item.subtitle + ".\nChange one setting through its existing spruce owner."
-                               if item.available else item.reason or "This reading or device authority is unavailable.")
-            elif item.kind == "hardware_route":
-                description = item.subtitle + "." if item.available else item.reason or "Use this screen from classic spruce."
-            elif item.kind == "experience_profile":
-                description = ("Review Confirm, original PPSSPP theme and background motion in one transaction. Gameplay mappings stay separate."
-                               if item.available else item.reason)
-            self._paragraph(description, 850, 468, 17, muted, 332, 4, min(scale, 1.15))
-
     def _draw_dialog(self, dialog: Dialog, preferences: Preferences, primary: tuple[int, ...],
                       muted: tuple[int, ...], accent: tuple[int, ...]) -> None:
-        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 0, 0, 192))
+        scale = preferences.text_scale
+        expanded = scale > 1.2
+        left = 288 if expanded else 610
+        content_x = left + 58
+        width = LOGICAL_WIDTH - content_x - 66
+        # Console-style options sheet. The underlying selection stays visible;
+        # flat translucent layers replace the old rounded modal/card stack.
+        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 6, 27, 62))
+        for index in range(20):
+            self._rect(left - 60 + index * 3, 0, 3, LOGICAL_HEIGHT, (3, 23, 63, round(index * 9.5)))
+        self._rect(left, 0, LOGICAL_WIDTH - left, LOGICAL_HEIGHT,
+                   (2, 20, 54, 242) if preferences.high_contrast else (3, 26, 65, 222))
+        self._line(left, 0, left, LOGICAL_HEIGHT, (230, 245, 255, 40))
         rows = min(4, len(dialog.choices))
-        row_height = max(48, round(38 * preferences.text_scale))
-        expanded = (preferences.text_scale > 1.2 and rows >= 4) or (preferences.text_scale > 1.5 and rows >= 3)
-        top, bottom = (76, 638) if expanded else (137, 595)
-        self._round_rect(270, top, 740, bottom - top, (18, 33, 50) if not preferences.high_contrast else (8, 8, 8), 20)
-        self._round_rect(270, top, 740, 4, (248, 156, 136) if dialog.error else accent, 2)
-        first_y = bottom - 24 - rows * (row_height + 8)
-        body_y = top + 102
-        self._label(dialog.title, 307, top + 36, 29, primary, 666, preferences.text_scale)
-        body_size = round(18 * preferences.text_scale)
-        max_lines = max(1, 1 + int((first_y - 10 - body_y - body_size) // (body_size + 7)))
-        lines = self.text.wrap(dialog.message, body_size, 662, 128)
+        row_height = max(48, round(38 * scale))
+        bottom = 626
+        first_y = bottom - rows * (row_height + 8)
+        top = 61 if expanded else 92
+        self._label(dialog.title, content_x, top, 28, primary, width, scale)
+        self._line(content_x, top + max(50, round(45 * scale)), 1214, top + max(50, round(45 * scale)),
+                   (244, 181, 165, 140) if dialog.error else (255, 255, 255, 60))
+        body_y = top + max(75, round(63 * scale))
+        body_size = round(18 * scale)
+        max_lines = max(1, int((first_y - 22 - body_y) // (body_size + 7)))
+        lines = self.text.wrap(dialog.message, body_size, width, 128)
         page_count = max(1, math.ceil(len(lines) / max_lines))
-        current_page = dialog.message_page % page_count
-        first_line = current_page * max_lines
-        for index, line in enumerate(lines[first_line:first_line + max_lines]):
-            self._label(line, 308, body_y + index * (body_size + 7), 18, muted, 662, preferences.text_scale)
-        if page_count > 1:
-            self._label(f"X  More text     {current_page + 1} / {page_count}", 305, bottom + 10, 15, primary, 670)
+        page = dialog.message_page % page_count
+        for index, line in enumerate(lines[page * max_lines:(page + 1) * max_lines]):
+            self._label(line, content_x, body_y + index * (body_size + 7), 18, muted, width, scale)
         for index, choice in enumerate(dialog.choices[:4]):
             y = first_y + index * (row_height + 8)
             selected = index == dialog.selected
-            self._round_rect(305, y, 670, row_height, accent if selected else (255, 255, 255, 10), 9)
-            self._label(choice.title, 323, y + 11, 20, (7, 27, 33) if selected else primary, 630, preferences.text_scale)
+            if selected:
+                self._rect(content_x - 18, y - 1, width + 30, row_height + 2, (255, 255, 255, 18))
+                self._line(content_x - 18, y - 1, 1226, y - 1, (255, 255, 255, 105))
+                self._line(content_x - 18, y + row_height, 1226, y + row_height, (255, 255, 255, 105))
+                self._polygon([(content_x - 34, y + row_height / 2 - 5),
+                               (content_x - 28, y + row_height / 2),
+                               (content_x - 34, y + row_height / 2 + 5)], primary)
+            self._label(choice.title, content_x, y + 12, 21, primary if selected else (*muted[:3], 180), width, scale)
+        if page_count > 1:
+            self._label(f"X  More text     {page + 1} / {page_count}", content_x, 646, 15, primary, width)
+        self._button(preferences.confirm, content_x + 4, 686, primary)
+        self._label("Enter", content_x + 23, 679, 15, primary, 100)
+        self._button("east" if preferences.confirm == "south" else "south", content_x + 143, 686, primary)
+        self._label("Back", content_x + 162, 679, 15, primary, 100)
 
     def _draw_keyboard(self, snapshot: UISnapshot, primary: tuple[int, ...], muted: tuple[int, ...],
                         accent: tuple[int, ...]) -> None:
         keyboard = snapshot.keyboard
         if keyboard is None:
             return
-        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 0, 0, 205))
-        self._round_rect(165, 113, 950, 492, (18, 33, 50) if not snapshot.preferences.high_contrast else (0, 0, 0), 20)
-        self._label("Find a game", 199, 143, 30, primary, 876)
-        self._round_rect(198, 202, 884, 59, (0, 0, 0, 90), 10)
-        self._label(keyboard.text or "Type a title, or use the keys below", 216, 219, 23, primary if keyboard.text else muted, 847)
+        # Give text entry its own clean workspace. Translucent keys should show
+        # only the wave field, never a second title or icon behind their labels.
+        self._background(min(self._last_now, self._last_change + 8), snapshot.preferences)
+        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (1, 14, 48, 105))
+        if snapshot.display_clock:
+            width = self.text.measure(snapshot.display_clock, 19)
+            self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
+        self._text("Find a game", 199, 120, 27, primary, 876)
+        self._rect(198, 184, 884, 65, (255, 255, 255, 12))
+        self._line(198, 249, 1082, 249, (255, 255, 255, 165))
+        self._text(keyboard.text or "Type a title", 216, 207, 24, primary if keyboard.text else muted, 847)
         for index, key in enumerate(keyboard.keys):
             column, row = index % 10, index // 10
-            x, y = 198 + column * 89, 288 + row * 63
+            x, y = 198 + column * 89, 286 + row * 63
             selected = index == keyboard.selected
-            self._round_rect(x, y, 80, 52, accent if selected else (255, 255, 255, 10), 8)
-            label_width = self.text.measure(key, 17 if len(key) > 1 else 22)
-            self._label(key, x + max(7, (80 - label_width) / 2), y + 15, 17 if len(key) > 1 else 22,
-                        (7, 27, 33) if selected else primary, 67)
-        self._label("Enter / Y  Find     Backspace / X  Delete     Esc  Cancel", 201, 558, 15, muted, 876)
+            self._rect(x, y, 80, 52, (255, 255, 255, 235) if selected else (255, 255, 255, 12))
+            if not selected:
+                self._line(x, y + 51, x + 80, y + 51, (255, 255, 255, 40))
+            size = 17 if len(key) > 1 else 22
+            label_width = self.text.measure(key, size)
+            self._label(key, x + max(7, (80 - label_width) / 2), y + 15, size,
+                        (5, 39, 86) if selected else primary, 67)
+        self._text("Enter / Y  Find     Backspace / X  Delete     Esc  Cancel", 201, 570, 15, muted, 876)
 
     def present(self) -> None:
         if self._external or self._closed:
@@ -659,6 +809,9 @@ class Renderer:
         for texture, *_ in self._art.values():
             sdl2.SDL_DestroyTexture(texture)
         self._art.clear()
+        for texture in self._icons.values():
+            sdl2.SDL_DestroyTexture(texture)
+        self._icons.clear()
         if self._gradient:
             sdl2.SDL_DestroyTexture(self._gradient)
             self._gradient = None

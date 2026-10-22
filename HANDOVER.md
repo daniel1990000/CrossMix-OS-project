@@ -8,6 +8,16 @@ The inherited software checkpoint passed **527 host checks with zero skips or fa
 
 **On 22 October 2026, the owner confirmed an original Smart Pro is available, but not for testing that day.** Physical acceptance has not been performed. PyUI notification delivery and exact recipe/SDK redistribution review remain open. Installed emulators are unchanged; runtime/profile activation stays disabled, and engine binaries/full recipe archives stay private.
 
+## Classic PSP visual overhaul — 22 October 2026
+
+The frontend now follows the original PSP XMB composition: anchored horizontal categories, a vertical item column, selected-only category labels, original white pictograms, a brighter blue color field, two broad wave surfaces, flat options and a clean keyboard workspace. The actual coordinator clock appears at top right. Cover loading now handles queue pressure, cache eviction and reduced-motion completion reliably. SDL version/backend fallbacks retain the existing graphics runtime.
+
+The owner explicitly requested use of PPSSPP, JohnnyCollado/PlayFieldPortal and sashkinbro/EmuCoreA. Their exact revisions and applied layout/motion/cover/native-theme decisions are in [visual design notes](project/docs/psp-visual-design.md). The PPSSPP palette matches the azure frontend through supported native fields; gameplay/config authority and native layouts remain with their existing owners.
+
+Review the [new screens](project/evidence/psp-design/gallery.png), [actual Sony PSP comparison](project/evidence/psp-design/comparison.png), [individual home capture](project/evidence/psp-design/home.png) and [verification record](project/evidence/psp-design/verification.json). Captures are SDL host renders, not physical-device photos. The Sony reference is comparison evidence outside the development payload.
+
+Local validation passed all 479 host/source and 61 PPSSPP checks with zero skips/failures/errors, followed by all 8 final rendering checks including two later keyboard/SDL regressions. The dev5 original-only package passes signature/inventory, deterministic rebuilds, installed-payload smoke and fixture rollback. Current code therefore has 542 checks for final CI discovery. Physical TG5040 acceptance and previously recorded external release evidence remain open; no installed emulator or activation gate changed.
+
 ## Continuation — 22 October 2026
 
 The acceptance recorder now retains a selected save that disappears after the baseline as explicit `missing=true`, `unchanged=false` evidence, including a missing save directory. It never recreates or restores that save. Reports expose the comparison; baseline saves remain mandatory, and symlinks/special files/inconsistent observations still fail collection. Five regression tests cover these cases.

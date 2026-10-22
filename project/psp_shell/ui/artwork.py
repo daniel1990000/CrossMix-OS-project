@@ -40,20 +40,15 @@ class ArtworkDecoder:
         self._thread = threading.Thread(target=self._run, name="psp-artwork", daemon=True)
         self._thread.start()
 
-    def request(self, path: str) -> None:
+    def request(self, path: str) -> bool:
+        """Acknowledge admission; callers can retry a full queue later."""
         if not self._root or not path or self._stop.is_set():
-            return
+            return False
         try:
             self._requests.put_nowait(path)
         except queue.Full:
-            try:
-                self._requests.get_nowait()
-            except queue.Empty:
-                pass
-            try:
-                self._requests.put_nowait(path)
-            except queue.Full:
-                pass
+            return False
+        return True
 
     def poll(self) -> list[ArtworkResult]:
         result = []
@@ -124,17 +119,14 @@ class ArtworkDecoder:
                 result = ArtworkResult(path, error="Artwork could not be decoded safely")
             if self._stop.is_set():
                 return
-            try:
-                self._results.put_nowait(result)
-            except queue.Full:
+            # Every admitted request receives an acknowledgement, including
+            # failures. Backpressure stays on this worker, never the UI thread.
+            while not self._stop.is_set():
                 try:
-                    self._results.get_nowait()
-                except queue.Empty:
-                    pass
-                try:
-                    self._results.put_nowait(result)
+                    self._results.put(result, timeout=0.1)
+                    break
                 except queue.Full:
-                    pass
+                    continue
 
     def close(self) -> None:
         self._stop.set()

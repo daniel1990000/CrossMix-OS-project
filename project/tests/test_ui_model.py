@@ -218,6 +218,19 @@ class NavigationTests(unittest.TestCase):
         with self.assertRaises(TypeError):
             model.snapshot().dialog.choices[0].params["game_id"] = "other"
 
+    def test_clock_is_explicit_frame_data_and_does_not_change_navigation(self):
+        model = NavigationModel()
+        before = model.export_state()
+        self.assertEqual(model.snapshot().display_clock, "")
+        first = model.snapshot(10.0, display_clock="10/22  16:45")
+        self.assertEqual(first, model.snapshot(900.0, display_clock="10/22  16:45"))
+        second = model.snapshot(901.0, display_clock="10/22  16:46")
+        self.assertEqual(first.display_clock, "10/22  16:45")
+        self.assertNotEqual(first, second)
+        self.assertEqual(before, model.export_state())
+        with self.assertRaises(dataclasses.FrozenInstanceError):
+            first.display_clock = "10/22  16:46"
+
     def test_separate_ui_sessions_do_not_collide_in_persistent_settings(self):
         from psp_shell.settings import SettingsStore
         with tempfile.TemporaryDirectory() as directory:

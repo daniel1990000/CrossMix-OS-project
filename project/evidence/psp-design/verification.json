@@ -1,0 +1,162 @@
+{
+  "base_implementation_commit": "0dedeb8fb75a316cb4bccc6b5d055c0730f43afc",
+  "date": "2026-10-22",
+  "development_build": {
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "byte_identical_overlay_rebuild_with_same_key": true,
+    "byte_identical_unsigned_zip_rebuild": true,
+    "development_key_id": "b64befb3aaacf6c099c7c045d072f76b85271f28bf5dfe38d9427492b7bf5655",
+    "device_activation_qualified": false,
+    "device_gates": {
+      "hardware_qualified": false,
+      "runtime_verified": false,
+      "source_use_verified": false
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "payload_files": 55,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "release_id": "smartpro-psp-0.1.0-dev5",
+    "schema": 1,
+    "signature_hash_inventory_verified": true,
+    "signer": "ephemeral development",
+    "smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "source_date_epoch": 1792659237,
+    "status": "host-development-preview"
+  },
+  "emulator_binaries_replaced": false,
+  "implementation": [
+    "classic azure crossbar and vertical selection",
+    "original cached SDL pictograms",
+    "two broad translucent wave folds",
+    "short bounded category/item glides",
+    "flat options sheet and clean search workspace",
+    "real coordinator clock and physical-position hints",
+    "matching supported PPSSPP azure palette",
+    "bounded asynchronous cover loading with reduced-motion repaint"
+  ],
+  "kind": "psp-visual-overhaul-host-evidence",
+  "physical_device_verified": false,
+  "references": {
+    "emucorea": {
+      "applied": "flat, aspect-fit artwork and quiet missing-cover treatment",
+      "revision": "16c1bfb244e9359b242e410e468032cae0c111ef"
+    },
+    "playfieldportal": {
+      "applied": "anchored filmstrip, selected label, inactive alpha and bounded row motion policies; original Python implementation",
+      "revision": "5ee271ea9545685417aecdd13b5ace033cdb7806"
+    },
+    "ppsspp": {
+      "applied": "supported native theme schema and existing native wave/fonts/menu machinery",
+      "revision": "d357e6a32934800d3d80b49f910a603e1b069751"
+    },
+    "sony_psp_game": {
+      "dimensions": [
+        240,
+        136
+      ],
+      "sha256": "315185765485ccc49d1e8b0929942b5fe8d20efde9bd320411377d3d89888163",
+      "source_page": "https://manuals.playstation.net/document/en/psp/current/game/game.html",
+      "url": "https://manuals.playstation.net/document/en/psp/current/img/game001.jpg",
+      "use": "comparison evidence only; excluded from runtime/source development payload"
+    }
+  },
+  "runtime_gates_changed": false,
+  "schema": 1,
+  "screenshot_capture": {
+    "backend": "SDL2 software, dummy video/audio",
+    "comparison_and_gallery": "SVG documentation compositions using the exact source images, rasterized with CairoSVG; not replacement app renders",
+    "frames": 3,
+    "screens": {
+      "continue": "--screen continue",
+      "home": "default",
+      "library": "--actions down,down,down,down,confirm",
+      "options": "--screen library --actions confirm",
+      "search": "--screen search",
+      "settings": "--screen settings --actions down,down,down,down,down,down,down,down"
+    },
+    "size": [
+      1280,
+      720
+    ],
+    "source": "PYTHONPATH=project python -m psp_shell --demo --headless --frames 3 --screenshot <path> --state-dir <outside-source>"
+  },
+  "screenshots": {
+    "comparison.png": {
+      "bytes": 210439,
+      "sha256": "975d648821dfcd913ef526513b6b708184df3ac9d68bc15fea799835f749294b"
+    },
+    "continue.png": {
+      "bytes": 151804,
+      "sha256": "3213211efead6bf6c09b4dd490b874f3bebb0ead02ce8374d326d844ded9cc7c"
+    },
+    "gallery.png": {
+      "bytes": 216506,
+      "sha256": "61d11d888fd6582cccae6d01bbd56b2366a4f5656db02905789c52415c7c90d0"
+    },
+    "home.png": {
+      "bytes": 142270,
+      "sha256": "f20c9a1f45fd9a5e9efeacdd99f5b0dc4f21d32f4808798d46e79756a1687897"
+    },
+    "library.png": {
+      "bytes": 152711,
+      "sha256": "a980f51ec3f2e37c9a53fce6428ec76da7fabf84d137d0b8ec28ef75eb2387be"
+    },
+    "options.png": {
+      "bytes": 129916,
+      "sha256": "20937198ff47a78b210a79f9a1e42bdd88fcbafeb3113eb766968de6c351099f"
+    },
+    "search.png": {
+      "bytes": 127505,
+      "sha256": "616363c2c14bac907489b73b58766f8794e0ca39c7ea8257e5ae6a4514777f51"
+    },
+    "settings.png": {
+      "bytes": 152925,
+      "sha256": "3118cfa921d8f0bfea5ef36879788956c8bbd49a2eec802b17f7fda7b44547bf"
+    }
+  },
+  "validation": {
+    "final_ci": "pending",
+    "final_renderer_suite": {
+      "covers": [
+        "clean keyboard workspace",
+        "old SDL version guards",
+        "unsupported renderer geometry fallback",
+        "deterministic software frame",
+        "bounded text",
+        "large dialog choices",
+        "embedded state restoration without Pillow"
+      ],
+      "errors": 0,
+      "failures": 0,
+      "includes_two_cases_added_after_full_run": true,
+      "skips": 0,
+      "tests": 8
+    },
+    "full_host_source_run": {
+      "errors": 0,
+      "failures": 0,
+      "log": "/workspace/scratch/trimui-overhaul-check.log",
+      "skips": 0,
+      "tests": 479
+    },
+    "full_ppsspp_run": {
+      "errors": 0,
+      "failures": 0,
+      "skips": 0,
+      "tests": 61
+    },
+    "git_diff_check": "pass"
+  }
+}

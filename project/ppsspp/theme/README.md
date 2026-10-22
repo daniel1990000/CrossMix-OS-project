@@ -1,8 +1,8 @@
 # Spruce Midnight for PPSSPP
 
-This original palette matches the offshoot's dark blue and mint `#64ffdf` interface. The same INI contains a high contrast variant with a black background and yellow focus. It uses PPSSPP's existing fonts, glyph atlas, icons, controls, dialogs and renderer. No fonts, Sony artwork, firmware, shaders or executable assets are included.
+This original palette matches the offshoot's classic PSP azure interface: a blue background, white text and a translucent white focus with navy labels. The same INI retains the high contrast variant with a black background and yellow focus. PPSSPP supplies its existing fonts, glyph atlas, icons, controls, dialogs and renderer.
 
-The data format was checked against upstream PPSSPP **v1.20.3**, commit `d357e6a32934800d3d80b49f910a603e1b069751`. `UI/Theme.cpp` accepts `Name` and 24 color properties. Quoted colors use `#RRGGBBAA`; packed integer colors instead use ABGR. The supplied INI uses the quoted form throughout.
+The data format was checked against the official [PPSSPP v1.20.3 theme parser](https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/UI/Theme.cpp) and [default theme data](https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/assets/themes/defaultthemes.ini), commit `d357e6a32934800d3d80b49f910a603e1b069751`. `UI/Theme.cpp` accepts `Name` and 24 color properties. Quoted colors use `#RRGGBBAA`; packed integer colors instead use ABGR. The supplied INI uses the quoted form throughout. The 22 October palette revision uses those supported fields for focused, pressed, disabled, popup, tooltip, slider and scrollbar colors. Theme names remain unchanged so existing selection and Undo records still refer to the same variants.
 
 The adoption helper sets only:
 
@@ -33,6 +33,6 @@ Host tests:
 PYTHONPATH=project python3 -m unittest discover -s project/tests -p 'test_ppsspp_theme*.py' -v
 ```
 
-The SVG is a palette illustration, not a screenshot or evidence of device rendering. Color contrast checks cover opaque palette endpoints. PPSSPP rendering, font coverage, PowerVR behavior and FAT/exFAT recovery still require the relevant physical tests.
+The SVG illustrates the palette; it is not a PPSSPP screenshot or device evidence. Host contrast checks composite focus and popup fills over the configured background. The native emulator keeps its own menu layout. This theme contains no Sony assets or fonts. PPSSPP rendering, font coverage, PowerVR behavior and FAT/exFAT recovery still require the relevant physical tests.
 
 The palette and original illustration are MIT-licensed under `LICENSE` in this directory. Existing PPSSPP code/assets retain their own licenses and are not redistributed by this theme data.

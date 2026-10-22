@@ -3,10 +3,10 @@
   "device_rendering_evidence": "not_run",
   "files": {
     "LICENSE": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
-    "preview.svg": "9c2cab065b95b167c1e55d08d3280bf6edd95ff00cca919513473b59ced1c8c1",
-    "spruce-midnight.ini": "67f8613d320bdf705eea490072d180277659fe30f33c720cfa27aa0832b0bc59"
+    "preview.svg": "d13004446a32d72e9a652718bb7a820fc9dadbc13f2a88c5fd1726801c4db6a8",
+    "spruce-midnight.ini": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a"
   },
-  "implementation": "original palette data; existing PPSSPP native UI and renderer",
+  "implementation": "original classic azure palette data; existing PPSSPP native UI and renderer",
   "license": "MIT",
   "name": "Spruce Midnight",
   "schema": 1,

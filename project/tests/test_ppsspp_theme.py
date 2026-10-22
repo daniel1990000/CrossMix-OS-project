@@ -29,9 +29,15 @@ class ThemeDataTests(unittest.TestCase):
         self.assertFalse(result["custom_fonts_or_icons"])
         for colors in result["colors"].values():
             self.assertEqual(set(colors), COLOR_KEYS)
-            self.assertGreater(palette_contrast(colors["ItemFocusedStyleFg"], colors["ItemFocusedStyleBg"]), 7)
-            self.assertGreater(palette_contrast(colors["PopupStyleFg"], colors["PopupStyleBg"]), 7)
-        self.assertEqual(result["colors"]["Spruce Midnight"]["ItemFocusedStyleBg"], "#64FFDFFF")
+            def composite(fill):
+                alpha = int(fill[7:9], 16) / 255
+                base = colors["BackgroundColor"]
+                channels = (round(int(fill[n:n + 2], 16) * alpha + int(base[n:n + 2], 16) * (1 - alpha))
+                            for n in (1, 3, 5))
+                return "#" + "".join(f"{channel:02X}" for channel in channels) + "FF"
+            self.assertGreater(palette_contrast(colors["ItemFocusedStyleFg"], composite(colors["ItemFocusedStyleBg"])), 7)
+            self.assertGreater(palette_contrast(colors["PopupStyleFg"], composite(colors["PopupStyleBg"])), 7)
+        self.assertEqual(result["colors"]["Spruce Midnight"]["ItemFocusedStyleBg"], "#FFFFFFE6")
 
     def test_theme_keys_match_pinned_actual_parser_when_source_available(self):
         source = Path(os.environ.get("PPSSPP_SOURCE_ROOT", "/workspace/ppsspp-source")) / "UI/Theme.cpp"
@@ -46,7 +52,7 @@ class ThemeDataTests(unittest.TestCase):
         data = THEME_SOURCE.read_bytes()
         candidates = [data + b'\nFont = "ripped-font.ttf"\n',
                       data.replace(b'Name = "Spruce Midnight"', b'Name = "Wrong"', 1),
-                      data.replace(b'"#64FFDFFF"', b'0xFFDDFF64', 1),
+                      data.replace(b'"#FFFFFFE6"', b'0xFFDDFF64', 1),
                       data.replace(b'ItemStyleFg =', b'ItemStyleFg = "#FFFFFFFF"\nItemStyleFg =', 1)]
         for candidate in candidates:
             with self.subTest(candidate=candidate[-40:]), self.assertRaises(SettingsError):

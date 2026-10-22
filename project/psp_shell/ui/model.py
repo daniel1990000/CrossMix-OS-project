@@ -149,6 +149,7 @@ class UISnapshot:
     loading: bool
     demo: bool
     exit_request: str | None
+    display_clock: str = ""
 
     @property
     def selected_item(self) -> UIItem | None:
@@ -901,7 +902,8 @@ class NavigationModel:
             return self.initial_commands()
         return []
 
-    def snapshot(self, now: float = 0.0) -> UISnapshot:
+    def snapshot(self, now: float = 0.0, *, display_clock: str = "") -> UISnapshot:
+        """Accept the coordinator's clock text without reading wall time here."""
         del now  # Presentation alone owns animation time.
         page = self._page()
         if self.category == 1:
@@ -930,4 +932,4 @@ class NavigationModel:
         return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
                           self._status, "Loading your collection…" if self._pending and not items else empty,
-                          bool(self._pending), self.demo, self.exit_request)
+                          bool(self._pending), self.demo, self.exit_request, _text(display_clock, 32))

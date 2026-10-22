@@ -404,7 +404,8 @@ class EmbeddedRunner:
         try:
             while max_frames == 0 or self.frames < max_frames:
                 now = time.monotonic()
-                self.renderer.render(self.model.snapshot(now), now)
+                snapshot = self.model.snapshot(now, display_clock=time.strftime("%m/%d  %H:%M"))
+                self.renderer.render(snapshot, now)
                 self.context.display.present()
                 self.frames += 1
                 # Readiness includes a successful service poll of the existing

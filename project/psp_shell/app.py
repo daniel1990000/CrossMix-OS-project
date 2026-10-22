@@ -431,7 +431,7 @@ def run_preview(args, backend=None):
                 except Exception as exc:
                     receive(command, error=exc)
                 mapper.block_held()
-            snapshot = model.snapshot(start)
+            snapshot = model.snapshot(start, display_clock=time.strftime("%m/%d  %H:%M"))
             renderer.render(snapshot, start if not args.headless else args.frame_time)
             renderer.present()
             frames += 1

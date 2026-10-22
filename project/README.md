@@ -1,6 +1,8 @@
 # Smart Pro PSP experience
 
-Development source for an original TrimUI Smart Pro **TG5040** offshoot of spruceOS v4.5.4 and its shipped PyUI. The interface uses original graphics, a four-category layout, and PPSSPP's native UI features where appropriate. Read [the handover](../HANDOVER.md) and [complete plan](../TRIMUI_PLAN.md) before continuing.
+Development source for an original TrimUI Smart Pro **TG5040** offshoot of spruceOS v4.5.4 and its shipped PyUI. The interface now follows the classic PSP crossbar: anchored horizontal categories, a vertical selection column, white pictograms, broad blue waves and translucent options. It uses original graphics and PPSSPP's supported native UI features. Read [the handover](../HANDOVER.md) and [complete plan](../TRIMUI_PLAN.md) before continuing.
+
+See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparison](evidence/psp-design/comparison.png), and [visual design/source notes](docs/psp-visual-design.md). All new captures are actual SDL host renders. PlayFieldPortal informed category positioning and bounded row motion; EmuCoreA informed cover presentation. The matching PPSSPP palette uses its pinned official theme parser.
 
 This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
 
