@@ -4,6 +4,16 @@ Updated 22 October 2026. **Active direction: build on spruceOS and its existing 
 
 The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
 
+## Codex research and reuse mandate
+
+The goal is the best practical PSP-inspired full-system experience on the **original TrimUI Smart Pro**, with maximum sensible reuse of maintained work. The repositories named here are starting points, not a closed shortlist. Independently search for stronger compatible libraries, frontend components, themes, hardware integrations, tooling, ports and emulator improvements. Do not wait for another link before investigating an obvious useful source.
+
+For each candidate, inspect actual source and maintenance history, original-device support, dependencies, licences, build reproducibility and integration cost. Compare it with the functionality spruce/PyUI/PPSSPP already provides. Prefer configuring or extending maintained existing code over rewriting it; avoid importing whole operating systems or frameworks merely to obtain one feature. Keep a decision register with source URL, exact revision, reusable files, required changes, evidence, rights obligations, test plan and rejected alternatives.
+
+Clearly label **verified source functionality**, **candidate reuse requiring investigation**, **proposed new work**, and **hardware-tested results**. Repository activity or claimed support is not proof of performance on this device. Licensing and dependency gates remain mandatory; discretion to research is not permission to ignore them, contact third parties, flash firmware or make purchases.
+
+Current base remains spruceOS/PyUI with PPSSPP reused extensively at the appropriate boundary. If evidence shows a materially better base or architecture, write an explicit architecture decision record comparing alternatives and present the proposed change before rebasing. Do not silently restore the historical CrossMix/C++ default. Broader research may refine this plan, but must preserve saves, recovery, reversible changes and the full-system objective.
+
 ## 1. Decision and evidence
 
 Use spruceOS's existing Python/SDL2 UI, launch flow, emulator integration, settings and hardware adapters. Add a PSP-inspired presentation mode and the missing functionality within those seams. **Do not start by writing a replacement C++ shell, importing EmulationStation, or extracting RetroArch XMB code.** A native renderer is a contingency only if a measured PyUI limitation cannot be solved with a bounded change.
