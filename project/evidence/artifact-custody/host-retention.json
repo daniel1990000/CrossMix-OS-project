@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "kind": "host-preview-retained-storage-retrieval",
+  "recorded_at_utc": "2026-10-22T23:07:08.845095+00:00",
+  "records": [
+    {
+      "id": "historical-dev9",
+      "release_id": "smartpro-psp-0.1.0-dev9",
+      "origin": {
+        "provider": "GitHub Actions",
+        "run_id": 39864873828,
+        "artifact_id": 12463233054,
+        "source_head": "e030677199884441096d90382121b86cfef81796",
+        "clean_merge_checkout": "6b4b59cfbdb0597c0dd2c23dea5d904256eeda70",
+        "conclusion": "success",
+        "expires_at_utc": "2027-01-20T22:25:40Z"
+      },
+      "sha256": "a8cfc638853f2030fc5e6561a74bdd80ba9e44c1ab47c8085bc5272e8d29b03e",
+      "size_bytes": 4836083,
+      "retained_storage": {
+        "provider": "Google Drive",
+        "file_id": "1DRUG1BG788VZ-nHou8moGDqhQcbG2UHI",
+        "url": "https://drive.google.com/file/d/1DRUG1BG788VZ-nHou8moGDqhQcbG2UHI/view?usp=drivesdk",
+        "created_at_utc": "2026-10-22T23:04:04.982Z",
+        "mime_type": "application/zip",
+        "shared": false,
+        "observed_permission_roles": [
+          "owner"
+        ],
+        "metadata_readback": true,
+        "fresh_download_readback": true,
+        "download_sha256": "a8cfc638853f2030fc5e6561a74bdd80ba9e44c1ab47c8085bc5272e8d29b03e",
+        "download_size_bytes": 4836083
+      },
+      "verified_contents": "host-historical-readback.json"
+    },
+    {
+      "id": "handover-dev9",
+      "release_id": "smartpro-psp-0.1.0-dev9",
+      "origin": {
+        "provider": "GitHub Actions",
+        "run_id": 39866632052,
+        "artifact_id": 12464795694,
+        "source_head": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+        "clean_merge_checkout": "9b4dbf050cfd1820e95a57d46131d9538e7fdfcb",
+        "conclusion": "success",
+        "expires_at_utc": "2027-01-20T22:40:20Z"
+      },
+      "sha256": "bf9c5d0bbd1a97d4485b8f937735a17e403257e189530eb62ac67654e7b3a43d",
+      "size_bytes": 4835487,
+      "retained_storage": {
+        "provider": "Google Drive",
+        "file_id": "1Aj6Ydvk-Hr31YGo_mNJ8yVTy_26PjJUh",
+        "url": "https://drive.google.com/file/d/1Aj6Ydvk-Hr31YGo_mNJ8yVTy_26PjJUh/view?usp=drivesdk",
+        "created_at_utc": "2026-10-22T23:03:23.675Z",
+        "mime_type": "application/zip",
+        "shared": false,
+        "observed_permission_roles": [
+          "owner"
+        ],
+        "metadata_readback": true,
+        "fresh_download_readback": true,
+        "download_sha256": "bf9c5d0bbd1a97d4485b8f937735a17e403257e189530eb62ac67654e7b3a43d",
+        "download_size_bytes": 4835487
+      },
+      "verified_contents": "host-handover-readback.json"
+    }
+  ],
+  "source_inventory_sha256": "627251e9c22a6b37740b8d3bfd223540969806c4add1deaf33ba6e19402385eb",
+  "source_inventory_is_outer_archive_sha256": false,
+  "original_source_inventory_files": 150,
+  "all_eight_inner_checksums_verified": true,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "private_native_outputs_recovered": false,
+  "hardware_qualified": false,
+  "source_use_verified": false,
+  "distribution_cleared": false,
+  "scope": "Original-only host previews retained before Actions expiry, independently fetched from private Drive and hash-checked. Does not recover native executables, matching native archives, SDK/toolchain image or production trust. Drive custody is not an irrevocable permanence guarantee."
+}

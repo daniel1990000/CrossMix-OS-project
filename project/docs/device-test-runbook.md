@@ -5,6 +5,11 @@ today. These steps prepare the later TG5040 session. No hardware result has been
 recorded. Use a spare/restorable card and retain the existing firmware, internal
 launcher/scene and battery saves. Package rollback alone cannot restore rootfs.
 
+Prepare [backup verification and actual-device inventory](device-recovery-preflight.md)
+first. The [experimental-route design](experimental-device-route.md) records the
+execution/admission gap and proposed bounded pilot. The current shipped runtime
+still refuses device admission; these procedures do not activate it.
+
 `tools/device_acceptance.py` prepares a private session, captures read-only
 inventory and selected save hashes, and records operator observations. It never
 starts games, restores data, sends signals, changes clocks/settings, exports

@@ -1,0 +1,1020 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-22",
+  "reviewed_repository_head": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+  "scope": "R06 engineering preparation and exact pinned primary-source review; partial component ledger, not clearance or a full SBOM",
+  "status": "open",
+  "native_binary_distribution_cleared": false,
+  "source_use_verified": false,
+  "hardware_qualified": false,
+  "runtime_gates_enabled": false,
+  "author_contact_sent": false,
+  "historical_candidates": {
+    "ppsspp": {
+      "name": "PPSSPPSDL_TrimUI",
+      "size": 19934560,
+      "sha256": "a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d",
+      "needed": [
+        "libz.so.1",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6",
+        "ld-linux-aarch64.so.1",
+        "libpthread.so.0",
+        "librt.so.1",
+        "libSDL2-2.0.so.0",
+        "libGLESv2.so.2",
+        "libEGL.so.1",
+        "libdl.so.2"
+      ],
+      "target_architecture": "AArch64",
+      "required_glibc_versions": [
+        "GLIBC_2.17"
+      ],
+      "known_extension_markers": {
+        "--project-state-session=": true,
+        "trimui-slot-evidence-v1": true,
+        "ProjectNativeMenu": true,
+        "save-completed": true,
+        "load-completed": true
+      }
+    },
+    "retroarch": {
+      "name": "retroarch-igm-tg5040",
+      "sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+      "size": 15182848,
+      "private": true,
+      "published": false,
+      "installed": false,
+      "executed": false
+    }
+  },
+  "historical_archive_expectations": {
+    "ppsspp": {
+      "name": "candidate-corresponding-source.tar.gz",
+      "size": 177983212,
+      "sha256": "2b437d761edd97081e57d82792f45e3d154dc3380656bb0a126a90a28684c4ae",
+      "gzip_compression_level": 6,
+      "named_component_notices_verified_in_archive": 55,
+      "project_mit_and_ppsspp_notices_retained": true,
+      "git_metadata_sdk_archives_and_raw_environment_logs_excluded": true
+    },
+    "retroarch": {
+      "name": "source-inputs.tar.gz",
+      "size": 143630943,
+      "sha256": "ee37594defe5824e58c30fec6eb2f59db7d56c50a5f7875efc3c6ca4b336ae74"
+    },
+    "retroarch_build_records": {
+      "name": "build-records.tar.gz",
+      "size": 552133,
+      "sha256": "b4c2c640abf5b18ec7c934a85a548598aa95a09e6388591cda17941cf1d074b3"
+    }
+  },
+  "custody_note": "Historical archive identities remain fixed. R04 retrieval/rebuild proceeds separately; this ledger does not attest to retrieval or a new native output.",
+  "components": [
+    {
+      "id": "original-build-helpers",
+      "role": "build-only tools; source included in retained build instructions",
+      "identity": {
+        "paths": [
+          "project/ppsspp/build_candidate.py",
+          "project/ppsspp/sdk_search.py",
+          "project/ppsspp/ffmpeg_build.py",
+          "project/retroarch/build_candidate.py"
+        ],
+        "licence_scope": "project/LICENSE"
+      },
+      "terms_observed": "Original helpers use MIT. Running GCC, CMake, Git, Python or Docker does not make their complete source part of the emulator; runtime/header material incorporated by compilation needs its own row.",
+      "evidence": [
+        "project/LICENSE",
+        "project/ppsspp/build-candidate.md",
+        "project/retroarch/build-candidate.md"
+      ],
+      "remaining_evidence": [
+        "Retain helper revision, actual package/source versions and generated commands with each recovered or rebuilt candidate."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-engine-and-project-patches",
+      "role": "compiled engine and modifications",
+      "identity": {
+        "repository": "hrydgard/ppsspp",
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "project_patches": [
+          {
+            "path": "patches/0001-independent-native-menu-controls.patch",
+            "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a"
+          },
+          {
+            "path": "patches/0002-save-slot-completion-evidence.patch",
+            "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3"
+          },
+          {
+            "path": "patches/0003-project-state-session.patch",
+            "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e"
+          }
+        ],
+        "post_recipe_overrides": [
+          {
+            "path": "patches/0004-checked-spruce-save-and-quit.patch",
+            "sha256": "06f648921f13d57475a507cdbd6c082b31dc125e2f1f00ba6adf107b85f6c3ab",
+            "license": "GPL-2.0-or-later"
+          }
+        ]
+      },
+      "terms_observed": "GPL-2.0-or-later for the engine/project modification scope; LICENSE.TXT also carries a PSPSDK BSD notice. Linked components and adjacent assets retain separate terms.",
+      "evidence": [
+        "project/ppsspp/NOTICE.md",
+        "project/ppsspp/LICENSE.PPSSPP.txt",
+        "project/evidence/ppsspp-complete-state-build.json"
+      ],
+      "remaining_evidence": [
+        "R04 exact binary/source/build archive retrieval or new paired rebuild record.",
+        "Review GPL version selection and compatible terms for the actual combination; preserve notices, modification information and corresponding source."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-spruce-recipe",
+      "role": "build scripts plus source text inserted into compiled engine",
+      "identity": {
+        "repository": "spruceUI/PPSSPP-spruce",
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "selected_scripts": [
+          "patches/common/hide-cursor.py",
+          "patches/common/no-mute-secondary.py",
+          "patches/common/remap-pause-menu.py",
+          "patches/common/sigusr1-save-and-quit.py",
+          "patches/common/sigusr2-toggle-pause-menu.py",
+          "patches/pvr/fix-copy-image-crash.py",
+          "patches/pvr/fix-glgetstringi-crash.py",
+          "patches/pvr/gl3stub-use-sdl-proc.py",
+          "patches/pvr/no-alpha-channel.py",
+          "patches/pvr/vulkan-display-fallback.py"
+        ]
+      },
+      "terms_observed": "The untruncated pinned tree contains no licence-named files. The reviewed README, Dockerfile.pvr, build-pvr.sh and ten selected source-edit scripts provide no explicit grant. The generated source changes need scope review even when scripts execute only during a build.",
+      "evidence": [
+        "ppsspp-recipe-tree",
+        "recipe/spruceUI/PPSSPP-spruce/README.md",
+        "recipe/spruceUI/PPSSPP-spruce/Dockerfile.pvr",
+        "recipe/spruceUI/PPSSPP-spruce/build-pvr.sh",
+        "project/ppsspp/build-inputs.lock.json"
+      ],
+      "remaining_evidence": [
+        "Identify applicable grant for exact scripts and generated modifications.",
+        "Keep ten selected scripts and resulting source postimages paired with the engine."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ffmpeg-five-static-libraries",
+      "role": "statically linked codec libraries",
+      "identity": {
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "archives": [
+          {
+            "path": "lib/libavcodec.a",
+            "size": 40456168,
+            "sha256": "46326ab853d38ef62d933d69f05aab3c0a392b31be2fea78d96b7ed0a665c65a"
+          },
+          {
+            "path": "lib/libavformat.a",
+            "size": 4898370,
+            "sha256": "4732471416e773e7efe695fe1edb00db36f50c8a7d0c612ce634c46f0faaa04a"
+          },
+          {
+            "path": "lib/libavutil.a",
+            "size": 2844810,
+            "sha256": "885c9ba1a1f00778f518b97fe633a4752d35b3b282f0316217f123c9f85e2e92"
+          },
+          {
+            "path": "lib/libswresample.a",
+            "size": 657696,
+            "sha256": "a1ee44c6fcac102fe51e6a0b68c6c6a48c94dc72edb9f45bcf7b2d354e1a6cad"
+          },
+          {
+            "path": "lib/libswscale.a",
+            "size": 6540242,
+            "sha256": "7d3e046b818c058a17aed30dcb013eacbf9ad4907f48496547eb835202c0b1a7"
+          }
+        ],
+        "generated_configuration": {
+          "generated_FFMPEG_LICENSE": "LGPL version 2.1 or later",
+          "generated_config_macros": {
+            "CONFIG_GPL": 0,
+            "CONFIG_NONFREE": 0,
+            "CONFIG_VERSION3": 0
+          },
+          "explicit_license_configure_flags": [],
+          "config_h_sha256": "454ceac40c7b7c32002168b269770c6ca7b9ae18460a564a23bfd6ed746d5cdc",
+          "scope": "Observed configure result only; each selected source/dependency retains its own notices and obligations"
+        }
+      },
+      "terms_observed": "Pinned LICENSE.md identifies LGPL-2.1-or-later by default and other per-file terms. Historical generated configuration states LGPL version 2.1 or later, CONFIG_GPL=0, CONFIG_NONFREE=0, CONFIG_VERSION3=0. This statement applies to that configuration and the five recorded archives.",
+      "evidence": [
+        "ffmpeg-license",
+        "project/evidence/ppsspp-complete-state-build.json#/ffmpeg"
+      ],
+      "remaining_evidence": [
+        "Retrieve/rebuild exact FFmpeg sources, headers, five archives, generated configuration and build commands.",
+        "Review source/relink or other applicable GPL/LGPL distribution route for the actual combined executable.",
+        "Record per-file exceptions such as IJG credit; filename inventory alone does not resolve them."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ffmpeg-jpeg-code",
+      "role": "component notices inside enabled codec source",
+      "identity": {
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "source_paths": [
+          "libavcodec/jfdctfst.c",
+          "libavcodec/jfdctint_template.c",
+          "libavcodec/jrevdct.c"
+        ],
+        "historical_selection": [
+          "--enable-decoder=mjpeg",
+          "--enable-encoder=mjpeg"
+        ]
+      },
+      "terms_observed": "Pinned LICENSE.md calls for IJG credit in executable-only documentation and change disclosure for three named sources. The inspected jfdctfst.c header gives the required wording. Configure selects IDCTDSP for MJPEG decoding; Makefile includes jrevdct.o under IDCTDSP and jfdctfst.o/jfdctint.o under FDCTDSP.",
+      "evidence": [
+        "ffmpeg-license",
+        "ppsspp-ffmpeg-ijg",
+        "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/libavcodec/Makefile",
+        "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/configure"
+      ],
+      "remaining_evidence": [
+        "Map actual enabled configuration, object/archive members and retained final link to incorporated JPEG code.",
+        "Retain the applicable IJG notice and change record with the exact source/build package and future executable documentation."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "gcc9-static-cxx-runtime-and-headers",
+      "role": "statically incorporated runtime/header code",
+      "identity": {
+        "selected_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+        "archive_sha256": "c6e9d9e3a4965a811e3281aa593a14d3d6c56897ee2e62812eae9fb1ac2f1c4d",
+        "package": "9.4.0-1ubuntu1~20.04.2cross2",
+        "upstream_terms_reference_commit": "13c83c4cc679ad5383ed57f359e53e8d518b7842",
+        "upstream_tag_object": "92c26afa8173889aabf7adf9894bb3b1aee3360f"
+      },
+      "terms_observed": "Upstream GCC 9.4.0 COPYING.RUNTIME states GCC Runtime Library Exception 3.1 under GPLv3 section 7. The inspected eh_alloc.cc carries GPL-3.0-or-later plus that exception. The exception applies to covered files and eligible compilation processes; it does not grant the independent modules broader rights.",
+      "evidence": [
+        "gcc-runtime",
+        "gcc-cxx-source-header",
+        "project/evidence/ppsspp-complete-state-build.json#/sdk_preflight",
+        "project/evidence/retroarch-igm-build.json#/toolchain/static_cxx_runtime"
+      ],
+      "remaining_evidence": [
+        "Recover exact Ubuntu cross-package copyright/source notices and archive provenance for 9.4.0-1ubuntu1~20.04.2cross2, including Ubuntu changes.",
+        "Map incorporated runtime/header code and confirm applicable exception/compilation scope.",
+        "Retain necessary GPL/runtime exception texts; do not classify the static archive as a build-only compiler."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-glslang-and-spirv-cross",
+      "role": "third-party shader code linked by pinned source build",
+      "identity": {
+        "glslang_commit": "50e0708ec3a5c16020c4f845c654b80b8edb80bd",
+        "spirv_cross_commit": "4212eef67ed0ca048cb726a6767185504e7695e5"
+      },
+      "terms_observed": "glslang LICENSE.txt contains multiple BSD and other component notices; SPIRV-Cross LICENSE gives Apache-2.0. Pinned PPSSPP CMakeLists.txt adds glslang/SPIRV/spirv-cross-glsl targets. Recover final build records to bind that source selection to each executable.",
+      "evidence": [
+        "ppsspp-glslang-license",
+        "ppsspp-spv-license",
+        "ppsspp-cmake",
+        "ppsspp-gitmodules"
+      ],
+      "remaining_evidence": [
+        "Retain full relevant glslang component notices and SPIRV-Cross licence/NOTICE where applicable.",
+        "Review actual GPL version/combination obligations; do not label the whole dependency set GPL-2.0-only."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-zstd-and-libchdr",
+      "role": "third-party compression/disc code selected by source build",
+      "identity": {
+        "zstd_commit": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+        "libchdr_commit": "8bba7745d758627258b315997a860039244cedaf"
+      },
+      "terms_observed": "The checked Zstandard and libchdr licence texts impose BSD source/binary notice conditions. libchdr includes nested LZMA, zlib and zstd material with separate notices. Pinned PPSSPP CMakeLists.txt selects chdr and a static zstd target.",
+      "evidence": [
+        "ppsspp-zstd-license",
+        "ppsspp-libchdr-license",
+        "ppsspp-cmake",
+        "project/evidence/ppsspp-complete-state-build.json#/retained_named_component_notices"
+      ],
+      "remaining_evidence": [
+        "Map incorporated members and retain nested component notices in matching source and binary documentation."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-inline-licence-components",
+      "role": "source terms outside licence-named files",
+      "identity": {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "paths": [
+          "ext/libpng17/png.h",
+          "ext/xbrz/xbrz.h"
+        ]
+      },
+      "terms_observed": "libpng17 png.h contains its licence, including origin/change/source-notice restrictions. xbrz.h carries a GPL notice and a MAME linking exception. The historical list of 55 notice filenames omits these source headers.",
+      "evidence": [
+        "ppsspp-png-header",
+        "ppsspp-xbrz",
+        "ppsspp-cmake"
+      ],
+      "remaining_evidence": [
+        "Review compiled per-file licence/version scope and preserve inline notices with corresponding source.",
+        "Inspect the rest of ext/ and generated sources from actual compile/link records, including header-only code."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "ppsspp-other-embedded-components",
+      "role": "compiled-source review backlog",
+      "identity": {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "source_targets": [
+          "native",
+          "vma",
+          "gason",
+          "udis86",
+          "kirk",
+          "cityhash",
+          "sfmt19937",
+          "xbrz",
+          "xxhash",
+          "rcheevos",
+          "minimp3",
+          "at3_standalone",
+          "lua"
+        ],
+        "historical_notice_file_count": 55
+      },
+      "terms_observed": "Pinned CMake source names these targets. Final object/source membership and per-file terms need the recovered/rebuilt compile/link record. A 55-file notice list includes UI implementation files, test-only sources and empty nested build/LICENSE files; its count is not a reviewed component count.",
+      "evidence": [
+        "ppsspp-cmake",
+        "ppsspp-gitmodules",
+        "project/evidence/ppsspp-complete-state-build.json#/retained_named_component_notices"
+      ],
+      "remaining_evidence": [
+        "Create exact compiled-source/static-archive member map; classify disabled/test/host-only code separately.",
+        "Review applicable file terms and required credits; preserve complete submodule revisions and notices."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "retroarch-engine-and-project-patch",
+      "role": "compiled engine and modifications",
+      "identity": {
+        "repository": "libretro/RetroArch",
+        "commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+        "project_patch": {
+          "path": "patches/0001-independent-igm-menu-controls.patch",
+          "sha256": "39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6",
+          "modifications_license": "GPL-3.0-or-later; external recipe/source grants remain separately audited"
+        }
+      },
+      "terms_observed": "Retained RetroArch and project modification scope is GPL-3.0-or-later. The upstream COPYING file contains GPLv3; component file headers retain their own notices.",
+      "evidence": [
+        "ra-copying",
+        "project/retroarch/NOTICE.md",
+        "project/retroarch/COPYING",
+        "project/evidence/retroarch-igm-build.json"
+      ],
+      "remaining_evidence": [
+        "R04 exact binary, complete original/patched source and build-record retrieval or new paired rebuild.",
+        "Map compiled third-party code, assets and required notices from generated configuration and link trace."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "retroarch-spruce-igm-and-recipe",
+      "role": "compiled IGM/shared source and build scripts",
+      "identity": {
+        "repository": "spruceUI/RA",
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "inputs": [
+          {
+            "path": "Dockerfile",
+            "sha256": "09d43227c833185cc46b2dfff66041ff38e5f7b104355df2d7d82ee9b5a3eb8b"
+          },
+          {
+            "path": "build.sh",
+            "sha256": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50"
+          },
+          {
+            "path": "common_src/spruce_igm_platform.h",
+            "sha256": "05da6e4b74433ec69cbdaa57b7d115f3f7f6aa4e3bc5e2d68cfca8e19a3d671f"
+          },
+          {
+            "path": "common_src/spruce_igm_theme.c",
+            "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+          },
+          {
+            "path": "common_src/spruce_igm_theme.h",
+            "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+          },
+          {
+            "path": "patches/common/0001-spruce-igm.patch",
+            "sha256": "ae2ae6c567f15ba96a23d1ad62fe074f14e48aace71ed9c8e287b258f84b7479"
+          },
+          {
+            "path": "patches/common/0002-portrait-panel-landscape-rotation.patch",
+            "sha256": "7e34548a1a5e433811764152c80d3edbd5c2b456c98ddcc33e990ca8e1715541"
+          },
+          {
+            "path": "patches/common/0003-sysfs-rumble-fallback.patch",
+            "sha256": "31c1d098e20ee3718b9dd9fa0940e6ce48994345cd59a97476528cddaeaa36ff"
+          },
+          {
+            "path": "patches/common/0004-sdl-gl-reapply-es-profile.patch",
+            "sha256": "978eee8577d173725464666e4165ac0b73b16145501afee88d9e4f796a0d3dd5"
+          }
+        ]
+      },
+      "terms_observed": "The untruncated pinned tree contains no licence-named files. Reviewed README, Dockerfile, build.sh, four common patches and three shared IGM sources contain no explicit licence grant. Project GPL modification notices do not resolve the external shared-code/recipe scope.",
+      "evidence": [
+        "ra-recipe-tree",
+        "recipe/spruceUI/RA/README.md",
+        "recipe/spruceUI/RA/build.sh",
+        "recipe/spruceUI/RA/common_src/spruce_igm_theme.c",
+        "project/retroarch/build-inputs.lock.json"
+      ],
+      "remaining_evidence": [
+        "Identify applicable terms/grant for selected common IGM code, patches and recipe.",
+        "Retain exact source preimages/postimages with each binary; do not replace missing external grant with root project MIT or engine GPL labels."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "retroarch-static-filters-and-thirdparty",
+      "role": "statically incorporated third-party code",
+      "identity": {
+        "commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+        "selection": [
+          "HAVE_STATIC_VIDEO_FILTERS=1",
+          "HAVE_STATIC_AUDIO_FILTERS=1",
+          "--enable-builtinzlib",
+          "--enable-ssl"
+        ],
+        "generated_config": [
+          {
+            "path": "config.mk",
+            "sha256": "5231793f52f4d5b4cd263068a2a6c80a61e8e2f138080f9821f5b06e6fe137e8"
+          },
+          {
+            "path": "config.h",
+            "sha256": "fc53f8cacba6d8d9992e32f8ad515e758c5673a759ed6a37d240275eb5e924a0"
+          }
+        ]
+      },
+      "terms_observed": "The historical recipe builds static audio/video filters, and the build records report bundled SPIR-V/glslang ODR warnings. Disabling Vulkan for TG5040 does not establish that shader/compiler code disappears from this linked binary. The generated configuration and archive/link members define scope.",
+      "evidence": [
+        "project/evidence/retroarch-igm-build.json#/build",
+        "recipe/spruceUI/RA/build.sh"
+      ],
+      "remaining_evidence": [
+        "Recover config.h/config.mk and final compile/link records; inventory incorporated filter, TLS, compression, shader and other component sources.",
+        "Review per-file terms and notices from the exact engine tree; do not infer scope from one disabled driver flag."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "vendor-sdk-and-linaro-sysroot",
+      "role": "build input container; dynamic dependencies and possible incorporated headers/startup code",
+      "identity": {
+        "assets": [
+          {
+            "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+            "size": 213977008,
+            "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+            "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+          },
+          {
+            "name": "SDK_usr_tg5040_a133p.tgz",
+            "size": 185049621,
+            "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+            "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+          }
+        ],
+        "historical_sysroot_glibc_header_version": "2.25"
+      },
+      "terms_observed": "Pinned PPSSPP recipe README calls the PVR/TSPS SDKs proprietary. Release body says vendor SDK tarballs for per-device PPSSPP builds and supplies no additional terms. The Linaro archive supplies sysroot, not the compiler selected for historical builds. Each library/header/startup object needs its own scope.",
+      "evidence": [
+        "recipe/spruceUI/PPSSPP-spruce/README.md",
+        "recipe/spruceUI/PPSSPP-spruce/Dockerfile.pvr",
+        "https://github.com/spruceUI/PPSSPP-spruce/releases/tag/sdk-toolchains",
+        "project/ppsspp/build-inputs.lock.json"
+      ],
+      "remaining_evidence": [
+        "Inventory actual archives for per-component notices and exact SDK/PVR grants.",
+        "Separate build-only files, code incorporated into executable, libraries proposed for bundling, and dependencies expected on the device.",
+        "Review applicable linkage/system-library scope; an SDK hash, download permission or ABI audit does not establish redistribution permission."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "device-dynamic-libraries",
+      "role": "ELF dependencies expected on target; none selected for public bundling",
+      "identity": {
+        "historical_ppsspp_direct_needed": [
+          "libz.so.1",
+          "libm.so.6",
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-aarch64.so.1",
+          "libpthread.so.0",
+          "librt.so.1",
+          "libSDL2-2.0.so.0",
+          "libGLESv2.so.2",
+          "libEGL.so.1",
+          "libdl.so.2"
+        ],
+        "historical_retroarch_direct_needed": [
+          "libgcc_s.so.1",
+          "libc.so.6",
+          "ld-linux-aarch64.so.1",
+          "libasound.so.2",
+          "libfreetype.so.6",
+          "libfontconfig.so.1",
+          "libpthread.so.0",
+          "libudev.so.1",
+          "libGLESv2.so.2",
+          "libSDL2-2.0.so.0",
+          "libv4l2.so.0",
+          "libdl.so.2",
+          "libm.so.6"
+        ],
+        "sdk_objects_inspected": {
+          "ppsspp": 16,
+          "retroarch": 23
+        }
+      },
+      "terms_observed": "Historical readelf audits resolve dependency basenames/symbol versions against the SDK inventory. These reports identify dependency names only; they do not identify the actual installed loader choices or establish whether any library can be bundled.",
+      "evidence": [
+        "project/evidence/ppsspp-complete-state-build.json#/sdk_inventory",
+        "project/evidence/retroarch-igm-build.json#/sdk_inventory",
+        "project/docs/installed-runtime-evidence.md"
+      ],
+      "remaining_evidence": [
+        "After D02, D03 captures actual installed hashes, paths, mapped libraries, drivers and notices.",
+        "If a future package bundles any dynamic library, give that exact byte set a separate source/notice/permission review and retained artifact entry."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    },
+    {
+      "id": "native-assets-and-adjacent-data",
+      "role": "runtime assets outside executable",
+      "identity": {
+        "ppsspp_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "ppsspp_examples": [
+          "assets/Roboto_Condensed-Regular.ttf",
+          "assets/Inconsolata-Regular.ttf",
+          "assets/gamecontrollerdb.txt",
+          "assets/flash0/",
+          "assets/debugger/",
+          "assets/shaders/",
+          "assets/ui_images/"
+        ],
+        "ppsspp_debugger_gitlink": "9776332f720c854ef26f325a0cf9e32c02115a9c"
+      },
+      "terms_observed": "Pinned recipe copies the whole assets directory beside PPSSPP. Font/UI/shader/data terms need a separate inventory. The frontend original-only preview uses its own MIT graphics and retained Noto OFL font; that scope does not license native assets.",
+      "evidence": [
+        "recipe/spruceUI/PPSSPP-spruce/build-pvr.sh",
+        "https://github.com/hrydgard/ppsspp/tree/d357e6a32934800d3d80b49f910a603e1b069751/assets",
+        "project/docs/release-rights.md"
+      ],
+      "remaining_evidence": [
+        "Recover or rebuild complete native asset manifests and per-file terms, including recursive debugger gitlink.",
+        "Select only justified assets; retain attribution/licences and exclude owner game data, Sony references and unrelated SDK files."
+      ],
+      "review_status": "open",
+      "binary_distribution_cleared": false
+    }
+  ],
+  "fresh_primary_source_review": {
+    "method": "GitHub connected read-only fetches of exact pinned recipe trees/files and component terms; SHA-256 of returned UTF-8 bytes compared to checked-in recipe locks. Two FFmpeg dependency files also matched their Git blob IDs in the new pristine pinned recursive gitlink checkout.",
+    "recipe_trees": [
+      {
+        "id": "ppsspp-recipe-tree",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "recursive": true,
+        "truncated": false,
+        "blob_count": 53,
+        "licence_named_paths": []
+      },
+      {
+        "id": "ra-recipe-tree",
+        "repository": "spruceUI/RA",
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "recursive": true,
+        "truncated": false,
+        "blob_count": 89,
+        "licence_named_paths": []
+      }
+    ],
+    "locked_recipe_files_rechecked": 21,
+    "source_files": [
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/hide-cursor.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/common/hide-cursor.py",
+        "git_blob_sha": "4bbc873e7cff2b544687b69978bef129b65e3259",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/common/hide-cursor.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/no-mute-secondary.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/common/no-mute-secondary.py",
+        "git_blob_sha": "db10dd83c452f651c4d73e115069b80af234bb36",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/common/no-mute-secondary.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/remap-pause-menu.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/common/remap-pause-menu.py",
+        "git_blob_sha": "c54fc13db3738f93af1c05eb90ce2cf172f2f12a",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/common/remap-pause-menu.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/sigusr1-save-and-quit.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/common/sigusr1-save-and-quit.py",
+        "git_blob_sha": "a1c742a0b3d414709a7979a41834f8821bee7af2",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/common/sigusr1-save-and-quit.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/sigusr2-toggle-pause-menu.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/common/sigusr2-toggle-pause-menu.py",
+        "git_blob_sha": "7bd3bcb603950a91ceb36dfe5ce24799559de68d",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/common/sigusr2-toggle-pause-menu.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/fix-copy-image-crash.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/pvr/fix-copy-image-crash.py",
+        "git_blob_sha": "97617c1693d300b89a25c45dbc9ff4a906dd247b",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/pvr/fix-copy-image-crash.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/fix-glgetstringi-crash.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/pvr/fix-glgetstringi-crash.py",
+        "git_blob_sha": "f9e539c91d3a835e194ae322f5d4d2c3376e199c",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/pvr/fix-glgetstringi-crash.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/gl3stub-use-sdl-proc.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+        "git_blob_sha": "51fc7eeeedd077686d51c2e96d064a8dca4752f8",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/pvr/gl3stub-use-sdl-proc.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/no-alpha-channel.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/pvr/no-alpha-channel.py",
+        "git_blob_sha": "8961be6824524ac191d338e6d282fa41201637e9",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/pvr/no-alpha-channel.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/vulkan-display-fallback.py",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "patches/pvr/vulkan-display-fallback.py",
+        "git_blob_sha": "c92a25b4a6337ff4d41db5e267e6be7ad49cb07c",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/patches/pvr/vulkan-display-fallback.py",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0"
+      },
+      {
+        "id": "recipe/spruceUI/RA/Dockerfile",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "Dockerfile",
+        "git_blob_sha": "178d70b6efcf2f630974a5747b6c35f3ca363d08",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/Dockerfile",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "09d43227c833185cc46b2dfff66041ff38e5f7b104355df2d7d82ee9b5a3eb8b"
+      },
+      {
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_platform.h",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "common_src/spruce_igm_platform.h",
+        "git_blob_sha": "0f70f8fc97ef48df5c6c0bc7781e8d116dec943d",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/common_src/spruce_igm_platform.h",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "05da6e4b74433ec69cbdaa57b7d115f3f7f6aa4e3bc5e2d68cfca8e19a3d671f"
+      },
+      {
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_theme.h",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "common_src/spruce_igm_theme.h",
+        "git_blob_sha": "514398b12355ea01fa17e94f57f4a7a432853a56",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/common_src/spruce_igm_theme.h",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+      },
+      {
+        "id": "recipe/spruceUI/RA/patches/common/0001-spruce-igm.patch",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "patches/common/0001-spruce-igm.patch",
+        "git_blob_sha": "b969c2745ccd9f17f2ce9fee3f14d2dcd4788af8",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/patches/common/0001-spruce-igm.patch",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "ae2ae6c567f15ba96a23d1ad62fe074f14e48aace71ed9c8e287b258f84b7479"
+      },
+      {
+        "id": "recipe/spruceUI/RA/patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "git_blob_sha": "49c17bcb49a17909a4980a73fe03d35225d30c97",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "7e34548a1a5e433811764152c80d3edbd5c2b456c98ddcc33e990ca8e1715541"
+      },
+      {
+        "id": "recipe/spruceUI/RA/patches/common/0003-sysfs-rumble-fallback.patch",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "patches/common/0003-sysfs-rumble-fallback.patch",
+        "git_blob_sha": "2238a25543c64d8d8b4438d2a90e58cf23b19c7f",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/patches/common/0003-sysfs-rumble-fallback.patch",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "31c1d098e20ee3718b9dd9fa0940e6ce48994345cd59a97476528cddaeaa36ff"
+      },
+      {
+        "id": "recipe/spruceUI/RA/patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "git_blob_sha": "c5eaae86f08506af8498b7adce0a3cf7d82ea8c5",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "978eee8577d173725464666e4165ac0b73b16145501afee88d9e4f796a0d3dd5"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/README.md",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "README.md",
+        "git_blob_sha": "95d957eb9a034910aa3671f70e4a5b168227fb3d",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/README.md",
+        "scope": "whole file",
+        "sha256_of_returned_text": "86152c29a5b0eb19e163f70d71923a5ce8f22a986924106c7e9607b90ef7b9aa"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/Dockerfile.pvr",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "Dockerfile.pvr",
+        "git_blob_sha": "ad97c63c008515001d44bcfe40d23072386aba9f",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/Dockerfile.pvr",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "fd047c16737fb4d04185f51c4172811c261a8ccf4abcfcf38fa333bc07675781"
+      },
+      {
+        "id": "recipe/spruceUI/PPSSPP-spruce/build-pvr.sh",
+        "repository_full_name": "spruceUI/PPSSPP-spruce",
+        "ref": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "path": "build-pvr.sh",
+        "git_blob_sha": "81768526b3e4e53f4f20edb2bbab4c19b4710abc",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/build-pvr.sh",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "727936cddd205adf47abc4b3f41008e507d4a857c8d5e1e3e9938ea1ad3de9bd"
+      },
+      {
+        "id": "recipe/spruceUI/RA/README.md",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "README.md",
+        "git_blob_sha": "6a1e3a9d1019aee55cfccf6bb269b812b708061d",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/README.md",
+        "scope": "whole file",
+        "sha256_of_returned_text": "933b8a54aaadb372a4c5e342ca16628be0daf06e64ffacd9d821ecd6b7311da9"
+      },
+      {
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_theme.c",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "common_src/spruce_igm_theme.c",
+        "git_blob_sha": "fb44adbc7e97c7f922d75f3acea7712e2fb54671",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/common_src/spruce_igm_theme.c",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+      },
+      {
+        "id": "recipe/spruceUI/RA/build.sh",
+        "repository_full_name": "spruceUI/RA",
+        "ref": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "path": "build.sh",
+        "git_blob_sha": "ab82bc06a770217b9e15632a65f461ae25ec1fe0",
+        "url": "https://github.com/spruceUI/RA/blob/71d84da4dc88945177a3eb34268013355c705dbd/build.sh",
+        "scope": "whole file",
+        "matches_checked_in_input_lock": true,
+        "sha256_of_returned_text": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50"
+      },
+      {
+        "id": "ppsspp-gitmodules",
+        "git_blob_sha": "fb5d0def50941c57f9400e3f12ff2465b3de0e04",
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/.gitmodules",
+        "scope": "whole file",
+        "sha256_of_returned_text": "ccd56314b629de0909d53cb6f91b159d2f617cef3704298d719d25d34e30b666"
+      },
+      {
+        "id": "ppsspp-cmake",
+        "git_blob_sha": "070f49bd9e59389fc372c233de1633555cc8a4d4",
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/CMakeLists.txt",
+        "scope": "whole file",
+        "sha256_of_returned_text": "3897cbc3c4576e0a783e52039b9410c7684b4c76dcbc96d456f1423b8b2830ea"
+      },
+      {
+        "id": "ra-copying",
+        "git_blob_sha": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+        "url": "https://github.com/libretro/RetroArch/blob/69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576/COPYING",
+        "scope": "whole file",
+        "sha256_of_returned_text": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      },
+      {
+        "id": "gcc-runtime",
+        "git_blob_sha": "e1b3c69c179dfaff5744ea4bf853e6b0d90c9ef9",
+        "url": "https://github.com/gcc-mirror/gcc/blob/releases/gcc-9.4.0/COPYING.RUNTIME",
+        "scope": "whole file",
+        "sha256_of_returned_text": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+        "immutable_url": "https://github.com/gcc-mirror/gcc/blob/13c83c4cc679ad5383ed57f359e53e8d518b7842/COPYING.RUNTIME"
+      },
+      {
+        "id": "gcc-cxx-source-header",
+        "git_blob_sha": "005c28dbb1146c28715ac69f013ae41e3492f992",
+        "url": "https://github.com/gcc-mirror/gcc/blob/releases/gcc-9.4.0/libstdc%2B%2B-v3/libsupc%2B%2B/eh_alloc.cc",
+        "scope": "whole file",
+        "sha256_of_returned_text": "8ad9b29cc0c840e86cd6c3feeca2c67000b0740248d0b2e8db4a7e1ad70f3621",
+        "immutable_url": "https://github.com/gcc-mirror/gcc/blob/13c83c4cc679ad5383ed57f359e53e8d518b7842/libstdc%2B%2B-v3/libsupc%2B%2B/eh_alloc.cc"
+      },
+      {
+        "id": "ffmpeg-license",
+        "git_blob_sha": "0c53d0f5a9a71b0e85e5192bd6d6d513881455d5",
+        "url": "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/LICENSE.md",
+        "scope": "whole file",
+        "sha256_of_returned_text": "2e06d5375e3ec10363d38f4ba0680d311ff4f2024ee7f9ddb1c7a2e2bb8a5585"
+      },
+      {
+        "id": "ppsspp-glslang-license",
+        "git_blob_sha": "054e68a4614e3ee255f13730319b8c7a1fe10182",
+        "url": "https://github.com/hrydgard/glslang/blob/50e0708ec3a5c16020c4f845c654b80b8edb80bd/LICENSE.txt",
+        "scope": "whole file",
+        "sha256_of_returned_text": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4"
+      },
+      {
+        "id": "ppsspp-zstd-license",
+        "git_blob_sha": "75800288cc243f164b9d130f125e2ffae28f8e39",
+        "url": "https://github.com/facebook/zstd/blob/f8745da6ff1ad1e7bab384bd1f9d742439278e99/LICENSE",
+        "scope": "whole file",
+        "sha256_of_returned_text": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8"
+      },
+      {
+        "id": "ppsspp-libchdr-license",
+        "git_blob_sha": "1c36e5b593498866a8ea21aa968c180acac3b967",
+        "url": "https://github.com/rtissera/libchdr/blob/8bba7745d758627258b315997a860039244cedaf/LICENSE.txt",
+        "scope": "whole file",
+        "sha256_of_returned_text": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539"
+      },
+      {
+        "id": "ppsspp-spv-license",
+        "git_blob_sha": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+        "url": "https://github.com/KhronosGroup/SPIRV-Cross/blob/4212eef67ed0ca048cb726a6767185504e7695e5/LICENSE",
+        "scope": "whole file",
+        "sha256_of_returned_text": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "id": "ppsspp-png-header",
+        "git_blob_sha": "5a5dd576478b82e467302bd25b33935f522a32a8",
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/libpng17/png.h",
+        "scope": "lines 1-130",
+        "sha256_of_returned_text": "812d1a636fea3abc8e6520ce3ab88748913d1a6d4327396353827c0056af6326"
+      },
+      {
+        "id": "ppsspp-xbrz",
+        "git_blob_sha": "e1e57930bb9776e02d8f7724269608ec943cfe86",
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/xbrz/xbrz.h",
+        "scope": "lines 1-110",
+        "sha256_of_returned_text": "e1524ce3be4703778296772554dbc2f92d9cef0fe612cdc20bed78a60e5099f9"
+      },
+      {
+        "id": "ppsspp-ffmpeg-ijg",
+        "git_blob_sha": "bbcf5984901c89798e213eba631f16c11ed6d677",
+        "url": "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/libavcodec/jfdctfst.c",
+        "scope": "lines 1-80",
+        "sha256_of_returned_text": "3fcb76989e94a7d6b72fd9b6d2b350c1ebe495db45df0d7287ecb7c7b17a0102"
+      },
+      {
+        "id": "ffmpeg-makefile",
+        "git_blob_sha": "f6a4fbbdfcf93fe8059765b74f9a48c2607d6fb0",
+        "url": "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/libavcodec/Makefile",
+        "scope": "whole file",
+        "sha256_of_returned_text": "a28bfddf8f7943cd1430c26e1ddcb0c980de9ee6e2279f3a3ddf2cd913aae7fb",
+        "verification": "GitHub connected fetch and whole-file byte recheck in exact pinned recursive gitlink source"
+      },
+      {
+        "id": "ffmpeg-configure",
+        "git_blob_sha": "47a08ed7500b13f31c3ba2872535674448feb6a8",
+        "url": "https://github.com/hrydgard/ppsspp-ffmpeg/blob/1e3b4965632f60b1d85360261d1b9dd45444bc71/configure",
+        "scope": "whole file",
+        "sha256_of_returned_text": "1b63d74a8b3efa782cec00d57e693dd1ddf20ab31e461871d8177f584e3a9588",
+        "verification": "GitHub connected fetch and whole-file byte recheck in exact pinned recursive gitlink source"
+      }
+    ],
+    "limits": [
+      "No licence-named file in a tree does not prove absence of a grant elsewhere. The reviewed files identify unresolved exact scope.",
+      "Excerpt digests are SHA-256 of returned lines only; git_blob_sha identifies the complete upstream file.",
+      "GCC upstream terms reference is not proof of exact Ubuntu cross-package source correspondence.",
+      "A licence text/source build success is not combined-distribution clearance."
+    ]
+  },
+  "remaining_release_work": [
+    "R04 paired native binaries/source/build record retrieval or rebuild and private retained-storage retrieval proof.",
+    "Review exact external recipe/IGM/SDK grants and source/notices for incorporated components.",
+    "Confirm configured component membership and distribution method, including FFmpeg and GCC runtime scope.",
+    "Actual R05 notice delivery/scope evidence remains separate from commercial permission; no send instruction exists.",
+    "D02/D03 hardware recovery/inventory, physical acceptance and independent qualification remain open."
+  ]
+}

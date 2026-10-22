@@ -4,6 +4,11 @@ The [distribution register](distribution-register.json) records exact source
 identities, obligations and unresolved release evidence. It does not grant
 permission or claim that a notification was delivered.
 
+The [native component review](native-component-review.md) and its
+[ledger](native-component-ledger.json) distinguish build tools, incorporated
+recipe/IGM code, linked components, target dependencies and assets. R06 remains
+open; native custody and a successful build cannot settle those terms.
+
 Original Python, graphics and tools use the project MIT licence. Noto Sans uses
 its retained OFL notice. The public host preview contains those components and
 original theme data; it contains no spruce/PyUI runtime, PPSSPP executable, SDK

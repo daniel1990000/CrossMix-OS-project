@@ -6,6 +6,19 @@ The repository's existing name is retained only as the document's location. It d
 
 ## Current implementation checkpoint — 22 October 2026
 
+Current continuation: **R04 private artifact custody is complete**, bringing
+host completion to 12 of 25 tasks. Two new native builds, matching source/build
+archives and their compiler image were privately retained and freshly retrieved;
+historical binary hashes remain unchanged. The host suite passes 710 checks.
+[D01 design](project/docs/experimental-device-route.md),
+[D02/D03 preflight](project/docs/device-recovery-preflight.md) and
+[R06 review](project/docs/native-component-review.md) advance preparation; their
+remaining implementation, external and physical requirements stay open.
+The earlier complete-build receipts below retain their original identities;
+use [current native custody](project/docs/artifact-custody.md) for the replacements.
+All 13 physical areas remain unrun, and shipped runtime/source-use gates remain
+false. Dev10 is an original-only host preview; no native binary is selected.
+
 The active implementation is on `build/spruce-psp-experience` under [`project/`](project/). Read [`HANDOVER.md`](HANDOVER.md) before continuing. The software checkpoint now includes the common hardware settings UI, per-game/advanced source routes, one journaled PPSSPP controls/appearance transaction with verified per-game override preservation, separate spruce IGM controls/appearance adapters, pinned port/runtime inventory and existing source launch-token reuse.
 
 The exact-source frontend integration preserves initialized PyUI models and the original game/principal launch flow. A Linux child subreaper accounts for foreground descendants, sealed command bytes preserve lexical launch paths, and correlated completion governs frontend return. The fixed reviewed runtime configuration defaults to unavailable. The older retained-thread experiment is an alternative and must not be installed alongside the process-boundary integration. See [the binding contract](project/bridge/README.md) and [private source composition](project/docs/release-qualification.md).

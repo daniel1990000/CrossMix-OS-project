@@ -1,0 +1,430 @@
+{
+  "schema": 1,
+  "artifacts": [
+    {
+      "id": "ra-source",
+      "original_name": "corresponding-source-with-notices.tar.gz",
+      "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+      "size_bytes": 144576907,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "corresponding-source-with-notices.tar.gz.part000",
+          "size_bytes": 67108864,
+          "sha256": "b4f6511ad67b8c40fa2838f87b0c78b4ecd6035d47f8b8181ad4ece580e91a8c",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "11FP1LV_3ETKmcSSyQhHFRgFW32tmMmXB",
+            "url": "https://drive.google.com/file/d/11FP1LV_3ETKmcSSyQhHFRgFW32tmMmXB/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        },
+        {
+          "name": "corresponding-source-with-notices.tar.gz.part001",
+          "size_bytes": 67108864,
+          "sha256": "80c3e0d363f3d10f0369150d5231975a68804bd462c4d8236bc573e8391ac9fe",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1Zsz2wuTd5jFToiXtLQ3iJTCi9ZKqX2jN",
+            "url": "https://drive.google.com/file/d/1Zsz2wuTd5jFToiXtLQ3iJTCi9ZKqX2jN/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 1
+        },
+        {
+          "name": "corresponding-source-with-notices.tar.gz.part002",
+          "size_bytes": 10359179,
+          "sha256": "505953b8808bc58ac07fdbf3a3494abc6d5e347cf4483d4c3e11c9671a600872",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "13PA_ub8UtN2Y2MBLFcgzrbgRakcruWnr",
+            "url": "https://drive.google.com/file/d/13PA_ub8UtN2Y2MBLFcgzrbgRakcruWnr/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 2
+        }
+      ],
+      "full_reassembly_sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+      "full_reassembly_size_bytes": 144576907,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "ra-binary",
+      "original_name": "retroarch-igm-tg5040",
+      "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+      "size_bytes": 15182848,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "retroarch-igm-tg5040",
+          "size_bytes": 15182848,
+          "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1HB8fi6pvJz7o6YndxOHd8e2jTsNEqVv8",
+            "url": "https://drive.google.com/file/d/1HB8fi6pvJz7o6YndxOHd8e2jTsNEqVv8/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        }
+      ],
+      "full_reassembly_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+      "full_reassembly_size_bytes": 15182848,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "ra-build-records",
+      "original_name": "build-records-with-provenance.tar.gz",
+      "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+      "size_bytes": 595274,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "build-records-with-provenance.tar.gz",
+          "size_bytes": 595274,
+          "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1kXmpaxsImnwCcOlPN5hX-8MYfln3Bf52",
+            "url": "https://drive.google.com/file/d/1kXmpaxsImnwCcOlPN5hX-8MYfln3Bf52/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        }
+      ],
+      "full_reassembly_sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+      "full_reassembly_size_bytes": 595274,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "compiler-image",
+      "original_name": "compiler-image-15ef8c75094b.docker.tar.gz",
+      "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+      "size_bytes": 471632780,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part000",
+          "size_bytes": 67108864,
+          "sha256": "dc7117535fff036afca6d2e6d8733ce5c68f34d1d251e75da9c63fe85ebf85dc",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1no2SoOp33xNsZy0Ebt1S_GQoqconSZvi",
+            "url": "https://drive.google.com/file/d/1no2SoOp33xNsZy0Ebt1S_GQoqconSZvi/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part001",
+          "size_bytes": 67108864,
+          "sha256": "dedc677fde10e47e758e05853666f607f4b034877949be5d5bebf0df3352d542",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1qiP9cXbZPGJXydJJYzldslLO1cB9NsG6",
+            "url": "https://drive.google.com/file/d/1qiP9cXbZPGJXydJJYzldslLO1cB9NsG6/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 1
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part002",
+          "size_bytes": 67108864,
+          "sha256": "b48fb3f5155bd24c1e65359ad1c4bbe25a2fae859c148f5a600d92e20654e7f4",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1gbEqdVgANPiemrz0TBghh3BGbhDplEil",
+            "url": "https://drive.google.com/file/d/1gbEqdVgANPiemrz0TBghh3BGbhDplEil/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 2
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part003",
+          "size_bytes": 67108864,
+          "sha256": "fcd59ebe37ea7497ec69aa0fe61d6884e949a4a007570983e6951e4f671dd296",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "15NHxgQV35tb5_mJ0O6LzGcw8JeG5WUTz",
+            "url": "https://drive.google.com/file/d/15NHxgQV35tb5_mJ0O6LzGcw8JeG5WUTz/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 3
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part004",
+          "size_bytes": 67108864,
+          "sha256": "0984ff089fb14e327c730a407df02fccc22c4b9e1ae9197a44d028e52348ab82",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1lJnziUq1FCqk1kXN_F3hgGDwAj4-aMPW",
+            "url": "https://drive.google.com/file/d/1lJnziUq1FCqk1kXN_F3hgGDwAj4-aMPW/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 4
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part005",
+          "size_bytes": 67108864,
+          "sha256": "03bcd2b81f850e864d71422f0cd657d650d30373742286e25eaf9f52cc066199",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1_Hf5PtO4R02y_ofgVJrQ6SWN-uDzdgUl",
+            "url": "https://drive.google.com/file/d/1_Hf5PtO4R02y_ofgVJrQ6SWN-uDzdgUl/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 5
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part006",
+          "size_bytes": 67108864,
+          "sha256": "bca30a7c67c224ca1ff593d916f1b98eadf557962bb170ce92b8989ea11944fc",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "11Vv3h2KbYwbyoaBV4E0mFUODiZfEUuXB",
+            "url": "https://drive.google.com/file/d/11Vv3h2KbYwbyoaBV4E0mFUODiZfEUuXB/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 6
+        },
+        {
+          "name": "compiler-image-15ef8c75094b.docker.tar.gz.part007",
+          "size_bytes": 1870732,
+          "sha256": "9bf8d5842de221b016f9562aa39cfb9bc0f1bb4276bed10398c1793e97302b3e",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1flVg6vSa3n1nxo-5k9sLsRmvKrRouDWt",
+            "url": "https://drive.google.com/file/d/1flVg6vSa3n1nxo-5k9sLsRmvKrRouDWt/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 7
+        }
+      ],
+      "full_reassembly_sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+      "full_reassembly_size_bytes": 471632780,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "ppsspp-binary",
+      "original_name": "PPSSPPSDL_TrimUI",
+      "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+      "size_bytes": 19934560,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "PPSSPPSDL_TrimUI",
+          "size_bytes": 19934560,
+          "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "10-Ct70JSSnQsn6hFfkI1Z-2Fj2E_mAFG",
+            "url": "https://drive.google.com/file/d/10-Ct70JSSnQsn6hFfkI1Z-2Fj2E_mAFG/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        }
+      ],
+      "full_reassembly_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+      "full_reassembly_size_bytes": 19934560,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "ppsspp-source",
+      "original_name": "candidate-corresponding-source.tar.gz",
+      "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+      "size_bytes": 177963111,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "candidate-corresponding-source.tar.gz.part000",
+          "size_bytes": 67108864,
+          "sha256": "2f52ca079ff608a409de293c295ccdd38705f0eb490f7eaa999fc5026ce24fea",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1zxZZO0IUALKjERqfRSdcJxrZJiBxXtDL",
+            "url": "https://drive.google.com/file/d/1zxZZO0IUALKjERqfRSdcJxrZJiBxXtDL/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        },
+        {
+          "name": "candidate-corresponding-source.tar.gz.part001",
+          "size_bytes": 67108864,
+          "sha256": "d1616c6309f77d696c90eaf0c8ebe3b7e67590face51ce475f60b622ead95dc6",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1ERxh-y4nBjvRtcnqXPwRfRiK_ZMWNp6u",
+            "url": "https://drive.google.com/file/d/1ERxh-y4nBjvRtcnqXPwRfRiK_ZMWNp6u/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 1
+        },
+        {
+          "name": "candidate-corresponding-source.tar.gz.part002",
+          "size_bytes": 43745383,
+          "sha256": "423f4fc4894b017612c7b44510c8e1c1d09dc73a0eea0946a1a896712daff033",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "1olpjDWj-Gm3kqdU2vlPms-HyJ2ahZNvk",
+            "url": "https://drive.google.com/file/d/1olpjDWj-Gm3kqdU2vlPms-HyJ2ahZNvk/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 2
+        }
+      ],
+      "full_reassembly_sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+      "full_reassembly_size_bytes": 177963111,
+      "retained_storage_retrieval_verified": true
+    },
+    {
+      "id": "ppsspp-build-records",
+      "original_name": "candidate-build-records.tar.gz",
+      "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+      "size_bytes": 291510,
+      "part_size_bytes": 67108864,
+      "parts": [
+        {
+          "name": "candidate-build-records.tar.gz",
+          "size_bytes": 291510,
+          "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+          "retained_storage": {
+            "provider": "Google Drive",
+            "file_id": "14zwEH18mNclP1aJh4tpOIlWkLBJfgyMB",
+            "url": "https://drive.google.com/file/d/14zwEH18mNclP1aJh4tpOIlWkLBJfgyMB/view?usp=drivesdk",
+            "shared": false,
+            "observed_permission_roles": [
+              "owner"
+            ],
+            "metadata_readback": true,
+            "fresh_download_readback": true
+          },
+          "retrieval_verified": true,
+          "order": 0
+        }
+      ],
+      "full_reassembly_sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+      "full_reassembly_size_bytes": 291510,
+      "retained_storage_retrieval_verified": true
+    }
+  ],
+  "kind": "private-native-retained-storage-retrieval",
+  "verified_at_utc": "2026-10-22T23:22:38.717894+00:00",
+  "all_artifacts_retrieved": true,
+  "artifacts_total": 7,
+  "parts_total": 18,
+  "connector_upload_max_bytes": 104857600,
+  "transport_part_max_bytes": 67108864,
+  "old_native_binary_hashes_recovered": false,
+  "replacement_candidates_rebuilt_and_retrieved": true,
+  "compiler_image_retrieved": true,
+  "target_executed": false,
+  "hardware_qualified": false,
+  "runtime_verified": false,
+  "source_use_verified": false,
+  "distribution_cleared": false,
+  "native_binaries_selected": false,
+  "scope": "Private replacement outputs and exact matching source/build archives plus new immutable compiler image. All owner-only Drive parts freshly retrieved; ordered full streams match independent original digests. Does not recover historical binary hashes or qualify any installed device."
+}

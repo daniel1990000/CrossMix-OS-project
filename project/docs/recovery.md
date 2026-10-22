@@ -4,6 +4,12 @@ This offshoot targets **original TrimUI Smart Pro, TG5040**, with spruceOS v4.5.
 
 ## Preserve the working device first
 
+Use the [backup verification and device preflight](device-recovery-preflight.md)
+to compare independently copied backup payloads and manually restored trees.
+It adds byte/metadata readback without copying or restoring data. The
+[experimental-route design](experimental-device-route.md) describes the separate
+admission and bounded recovery work still required before a device pilot.
+
 Keep the working CrossMix card untouched. Use a separate branded spare card for spruce and another offline backup of all original ROMs, BIOS, battery saves, memory cards, states, screenshots, application data and configuration. Verify the copied files and a restoration before experimenting. A configuration archive is not a full-card backup. Stop emulators and synchronization before a save snapshot; never copy a live save and call it verified.
 
 spruce's first setup can change internal storage: `trimui/app/MainUI` preserves internal `runtrimui.sh` as `runtrimui-original.sh`, installs a replacement and reboots. SmartPro initialization can copy `/bin/bash` and apply FN switch actions in `/usr/trimui/scene`. Capture exact original files, hashes, ownership and firmware-specific restoration instructions before running that installer. An SD-card swap or package rollback does not reverse these internal modifications.

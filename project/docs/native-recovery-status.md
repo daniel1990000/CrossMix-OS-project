@@ -1,0 +1,24 @@
+# Native artifact recovery and replacement builds
+
+The 22 October 2026 continuation rebuilt both private native candidates from their locked engine, recipe, patch and SDK inputs. The replacement binaries have new digests. The historical binary/source receipts remain unchanged; neither old private output was recovered from its former workspace path.
+
+[The rebuild record](../evidence/artifact-custody/native-rebuild.json) records the actual complete builds, SDK audits and seven frozen private files. Its build-time snapshot does not certify remote retention. The later [private custody receipt](../evidence/artifact-custody/native-retention.json) verifies all seven files through 18 owner-only Drive parts, fresh downloads and full stream reassembly. The [independent source review](../evidence/artifact-custody/native-source-review.json) verifies the final source/build pairing. R04 is complete as private artifact custody; the historical binaries were not recovered.
+
+| Replacement candidate | Binary bytes | SHA-256 | Static SDK audit |
+|---|---:|---|---|
+| PPSSPP v1.20.3 with project patches 0001–0004 | 19,934,560 | `f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773` | 16 objects pass |
+| RetroArch v1.22.2 with pinned spruce IGM and project controls | 15,182,848 | `26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349` | 23 objects pass |
+
+Both builds use compiler image `sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b`, rendered from the pinned PPSSPP compiler/SDK procedure. This differs from historical image `sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c`.
+
+The original RetroArch lock correctly failed with Docker exit 125 because its historical image was absent. A separate private copy of the unchanged builder/helpers uses a new input lock whose only semantic change is `toolchain.image_id`. The repository lock is unchanged. The retained new-image provenance records that delta; it does not establish equivalence between the images.
+
+PPSSPP rebuilt exact FFmpeg source `1e3b4965632f60b1d85360261d1b9dd45444bc71` with the strict GCC9/old-SDK include and library policy. Generated configuration disables GPL, nonfree and version-3 options. The selected MJPEG/DCT archive members and final unstripped engine symbols confirm the IJG-derived routines are present. The source archive and build records retain the IJG credit, unchanged-source hashes, file-specific notices, generated headers and actual final link command. FFmpeg's configuration label does not replace those notices.
+
+Private retention consists of each binary, its matching complete source archive and build records, plus the compiler image archive. PPSSPP source is `candidate-corresponding-source.tar.gz` (177,963,111 bytes; `2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556`). RetroArch's final source is `corresponding-source-with-notices.tar.gz` (144,576,907 bytes; `61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36`). That archive preserves all 25,128 original prepare members byte for byte and adds project notices and new-image provenance. The original prepare archive and digest remain separately recorded. Its prepare digest must not be substituted for the supplemented archive digest.
+
+The compiler export is `compiler-image-15ef8c75094b.docker.tar.gz` (471,632,780 bytes; `a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2`). Its manifest binds the expected image configuration and all eight content-addressed blobs pass hash checks. Image configuration retains only PATH and DEBIAN_FRONTEND; the retained-history check found no credential markers beyond the expected public CA mount reference. The archive contains SDK files and must remain private while their rights are unresolved.
+
+Gzip metadata is fixed, but two independent Docker saves of the same image produced different outer TAR bytes. The report records both results. The frozen archive's exact hash and image/blob identities are the custody contract; byte-identical Docker exports or compiler-image rebuilds are not established. A later recovery must verify the frozen archive, load it into Docker and inspect the immutable image identity before use. No restore-to-an-empty-daemon exercise was performed in this continuation.
+
+No target executable was run. These are source cross-build and static dependency results. They do not prove installed loader resolution, PowerVR behavior, controls, saves, sleep, recovery or performance. The native files, complete upstream/recipe sources and SDK-containing image stay outside Git and the original-only host preview. Installed engines and all shipped profile/runtime/source-use gates remain unchanged. R05 notice evidence, R06 distribution review and the physical device programme remain open.

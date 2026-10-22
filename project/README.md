@@ -6,6 +6,14 @@ See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparis
 
 This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
 
+The current preparation work adds [verified host-artifact retention](evidence/artifact-custody/host-retention.json),
+a [private experimental-route design](docs/experimental-device-route.md),
+[offline backup/readback verification](docs/device-recovery-preflight.md) and a
+[native component review](docs/native-component-review.md). R04 is complete as
+[private native artifact custody](docs/artifact-custody.md); D01–D03 and R06 still
+need their remaining implementation, external or physical evidence. There are
+12 completed host tasks and zero completed physical acceptance areas.
+
 ## Run the preview
 
 Use Python 3.9 or later, system SDL2 and libsodium. On Debian/Ubuntu the runtime packages are `libsdl2-2.0-0` and `libsodium23`.

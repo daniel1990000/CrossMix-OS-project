@@ -4,6 +4,13 @@ These records distinguish host/source acceptance, complete native cross-builds
 and physical observations. Captured 22 October 2026. No original TrimUI Smart
 Pro was attached or tested, and target emulator executables were never run.
 
+- [Host artifact custody](artifact-custody/host-retention.json): original dev9 and later handover CI archives retained privately in Drive, freshly downloaded and hash-checked; distinct CI identities and historical receipts preserved.
+- [D01 design](device-preparation/d01-design.json): exact-source review and trusted experimental-route proposal; device admission/exit implementation and physical rehearsal remain open.
+- [D02/D03 preparation](device-preparation/d02-d03-preparation.json): bounded read-only backup/restore-tree comparisons and synthetic host validation; no owner backup, physical restoration or device inventory claimed.
+- [Native component ledger](../docs/native-component-ledger.json): pinned terms and remaining component/source correspondence work; no native distribution clearance.
+- [Native rebuild](artifact-custody/native-rebuild.json), [independent source review](artifact-custody/native-source-review.json) and [private retrieval](artifact-custody/native-retention.json): new PPSSPP/RetroArch candidates, matching source/build archives and compiler image; all seven files freshly retrieved through 18 private parts and reassembled hashes checked. Historical records are unchanged.
+- [Preparation certification](device-preparation/certification.json): 710 checks pass (649 host/source + 61 PPSSPP), zero skips/failures/errors. The intermediate 703-check run preceded the seven review regressions; the final run includes all 20 new recovery checks.
+
 - `host-tests.json`: all 527 checks pass without skips: 466 Python/SDL/source-integration and 61 PPSSPP C++/build-tool checks. The command, source pins and log hash are recorded. All three pinned references are required; source/serializer/platform fixtures remain explicit.
 - `development-build.json`: dev4 deterministic same-key overlay/ZIP rebuilds, signature/inventory verification, fixture staging/activation/rollback and installed-payload SDL smoke. The generated private key is deleted; its public development key does not establish production trust.
 - `device-acceptance-plan.json`: actual prepared private recorder session covering 13 areas, with every physical case `not_run`, no snapshots and qualification false. The owner can supply the original device on another day.

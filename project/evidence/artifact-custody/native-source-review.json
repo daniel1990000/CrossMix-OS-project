@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "captured_at_utc": "2026-10-22T23:22:10.965701+00:00",
+  "scope": "Independent static native source/archive, lock and completed-build pairing review; no storage retrieval, target execution or rights clearance",
+  "review_status": "passed_with_explicit_limits",
+  "project_runtime_configuration_changed": false,
+  "target_executed_by_reviewer": false,
+  "image_loaded_or_executed_by_reviewer": false,
+  "source_use_verified": false,
+  "native_distribution_cleared": false,
+  "hardware_qualified": false,
+  "ppsspp": {
+    "binary": {
+      "name": "PPSSPPSDL_TrimUI",
+      "size_bytes": 19934560,
+      "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773"
+    },
+    "corresponding_source": {
+      "name": "candidate-corresponding-source.tar.gz",
+      "size_bytes": 177963111,
+      "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556"
+    },
+    "build_records": {
+      "name": "candidate-build-records.tar.gz",
+      "size_bytes": 291510,
+      "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1"
+    },
+    "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "all_15_changed_or_new_source_postimages_matched": true,
+    "recursive_submodules_at_gitlinks": 29,
+    "complete_archived_engine_file_set_matches_built_source": true,
+    "excluded_unused_ffmpeg_prebuilt_archives": 116,
+    "source_scan": {
+      "member_count": 26937,
+      "regular_files": 24849,
+      "regular_file_bytes": 592106456,
+      "live_file_hash_comparisons": 24849,
+      "unsafe_paths_or_links_found": false,
+      "git_metadata_found": false,
+      "sdk_archive_files_found": false,
+      "unexplained_private_key_markers_found": false,
+      "private_key_markers_in_unchanged_upstream_files": [],
+      "environment_or_credential_named_upstream_fixtures": [],
+      "canonical_member_inventory_sha256": "7b5d3a25c272b92f267b55c5b851ce3a8bb5b964a28329bc622782bd148b1f10"
+    },
+    "build_records_scan": {
+      "member_count": 146,
+      "regular_files": 129,
+      "regular_file_bytes": 1234810,
+      "live_file_hash_comparisons": 129,
+      "unsafe_paths_or_links_found": false,
+      "git_metadata_found": false,
+      "sdk_archive_files_found": false,
+      "unexplained_private_key_markers_found": false,
+      "private_key_markers_in_unchanged_upstream_files": [],
+      "environment_or_credential_named_upstream_fixtures": [],
+      "canonical_member_inventory_sha256": "47d76b6664e51bcd3cfd63d465c38c7018d78411c20435770a6f4c822c27b4d8"
+    },
+    "sdk_objects_inspected": 16,
+    "sdk_inventory_pass": true,
+    "strip_pairing": {
+      "allocated_sections_matched": 26,
+      "text_sha256": "f60522be5d5a18bd98d2ca19cbf48af9ccbceb4bf0f848ce508a1dbf18b02781",
+      "unstripped_sha256": "e865e4166af883e7012c66282beff143657454484873f0d5e69b4062be992822",
+      "stripped_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773"
+    },
+    "retained_project_notices_include_ijg_credit": true
+  },
+  "retroarch": {
+    "binary": {
+      "name": "retroarch-igm-tg5040",
+      "size_bytes": 15182848,
+      "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+    },
+    "corresponding_source": {
+      "name": "corresponding-source-with-notices.tar.gz",
+      "size_bytes": 144576907,
+      "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+    },
+    "build_records": {
+      "name": "build-records-with-provenance.tar.gz",
+      "size_bytes": 595274,
+      "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446"
+    },
+    "historical_repository_lock_sha256": "689db77ed8a1a7ef17cebc910e409bc5dcf16b77d0a5a9239e74b801a32916a4",
+    "new_lock_sha256": "33ab6a3a1b2c5e31e6c192cf1630ef00a13d345d495345041b7ca65f362d1fad",
+    "only_semantic_lock_change": [
+      {
+        "path": "toolchain.image_id",
+        "before": "sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c",
+        "after": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b"
+      }
+    ],
+    "repository_historical_lock_preserved": true,
+    "builder_context_files_rechecked": 9,
+    "prepared_source_files_rechecked": 11152,
+    "prepared_source_inventory_sha256": "0bfd2986299de64673eb6903e9489923148103601d0efc66500826babae18c06",
+    "original_prepare_archive_members_preserved": 25128,
+    "supplemented_source_added_files": [
+      "build/compiler-image-provenance.json",
+      "build/ra-rebuild-input-provenance.json",
+      "project/retroarch/COPYING",
+      "project/retroarch/NOTICE.md"
+    ],
+    "source_scan": {
+      "member_count": 25132,
+      "regular_files": 22396,
+      "regular_file_bytes": 488181581,
+      "live_file_hash_comparisons": 22396,
+      "unsafe_paths_or_links_found": false,
+      "git_metadata_found": false,
+      "sdk_archive_files_found": false,
+      "unexplained_private_key_markers_found": false,
+      "private_key_markers_in_unchanged_upstream_files": [
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-ee-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-ee-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-ica-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-ica-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-root-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/bearssl-0.6/samples/key-root-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/mbedtls/certs.c",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/mbedtls/pkparse.c",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "upstream/deps/mbedtls/pkwrite.c",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-ee-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-ee-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-ica-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-ica-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-root-ec.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/bearssl-0.6/samples/key-root-rsa.pem",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/mbedtls/certs.c",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/mbedtls/pkparse.c",
+          "matches_pristine_upstream": true
+        },
+        {
+          "path": "modified/deps/mbedtls/pkwrite.c",
+          "matches_pristine_upstream": true
+        }
+      ],
+      "environment_or_credential_named_upstream_fixtures": [],
+      "canonical_member_inventory_sha256": "cdc9627d95657726a9eee2eae5952120fc198956c4d6bf23acab799238970e45"
+    },
+    "build_records_scan": {
+      "member_count": 20,
+      "regular_files": 20,
+      "regular_file_bytes": 2810715,
+      "live_file_hash_comparisons": 19,
+      "unsafe_paths_or_links_found": false,
+      "git_metadata_found": false,
+      "sdk_archive_files_found": false,
+      "unexplained_private_key_markers_found": false,
+      "private_key_markers_in_unchanged_upstream_files": [],
+      "environment_or_credential_named_upstream_fixtures": [],
+      "canonical_member_inventory_sha256": "b2fba03c533e3cc49d063a18cc02d440492daf5a3ac778e59acab9cf1218ad4a"
+    },
+    "sdk_objects_inspected": 23,
+    "sdk_inventory_pass": true,
+    "strip_pairing": {
+      "allocated_sections_matched": 26,
+      "text_sha256": "72ce0d166dc2934423ae2b6f781bebcab639e90f4baa06f05349592a4aed80d2",
+      "unstripped_sha256": "ae9384b5d9b81f056bddb9fb99ed641634069770d9c88db2988de6eadebbc952",
+      "stripped_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+    }
+  },
+  "ffmpeg_ijg": {
+    "archive_sha256": "46326ab853d38ef62d933d69f05aab3c0a392b31be2fea78d96b7ed0a665c65a",
+    "selected_object_hashes_rechecked": 7,
+    "actual_selected_flags": {
+      "CONFIG_MJPEG_ENCODER": true,
+      "CONFIG_MJPEG_DECODER": true,
+      "CONFIG_FDCTDSP": true,
+      "CONFIG_IDCTDSP": true,
+      "CONFIG_GPL": false,
+      "CONFIG_NONFREE": false,
+      "CONFIG_VERSION3": false
+    },
+    "final_link_selected_ffmpeg_archives": [
+      "/ffmpeg-sdk/lib/libavformat.a",
+      "/ffmpeg-sdk/lib/libavcodec.a",
+      "/ffmpeg-sdk/lib/libswresample.a",
+      "/ffmpeg-sdk/lib/libswscale.a",
+      "/ffmpeg-sdk/lib/libavutil.a"
+    ],
+    "retained_final_unstripped_symbols_rechecked": 30,
+    "three_ijg_sources_match_pristine_pin": true,
+    "credit_text_retained": true,
+    "scope": "Actual archive and completed final link membership; no component/combined distribution grant inferred."
+  },
+  "compiler_image": {
+    "image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "archive": {
+      "name": "compiler-image-15ef8c75094b.docker.tar.gz",
+      "size_bytes": 471632780,
+      "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2"
+    },
+    "independent_complete_gzip_and_raw_tar_hashes_verified": true,
+    "raw_docker_save_tar_size_bytes": 1516103168,
+    "raw_docker_save_tar_sha256": "53af6bbcce2b3ad494d51f02de98c5682b91c73b5725df101039d678e7255889",
+    "content_addressed_blobs_verified": 8,
+    "manifest_layer_count": 3,
+    "config_sha256": "15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "config_environment_names": [
+      "PATH",
+      "DEBIAN_FRONTEND"
+    ],
+    "known_credential_markers_in_history_found": false,
+    "equivalence_to_old_image_claimed": false,
+    "docker_save_archive_reproducibility_claimed": false,
+    "layer_contents_scope": "Private compiler image intentionally contains SDK/sysroot inputs; this review checks saved identity and config/history, not a full per-file layer licence or credential audit."
+  },
+  "issues": [],
+  "limits": [
+    "Readelf inventory compares SDK basenames and symbol versions. It does not establish actual installed loader, drivers, physical behavior, durability or performance.",
+    "Source/build archive scans compare all regular files to known built/input files, inspect paths/links and check key/environment markers; this is not a general proof that arbitrary upstream material cannot contain sensitive content.",
+    "Unchanged upstream test key fixtures remain source fixtures; no owner key or new private-key marker was found.",
+    "Original upstream source/asset/test fixtures may contain prebuilt data. SDK archives, Git metadata, actual raw config.log environment dumps and owner data were excluded from the reviewed source/build bundles.",
+    "Compiler image is private SDK-containing build infrastructure, distinct from source/build archives; no redistribution clearance follows from custody.",
+    "R04 retained-storage retrieval belongs to separate root receipts and was not performed by this review.",
+    "New binary/source/image/archive identities do not replace historical candidate records or imply image equivalence.",
+    "Recipe/IGM/SDK/component permissions, R05 notice delivery and physical qualification remain open."
+  ]
+}

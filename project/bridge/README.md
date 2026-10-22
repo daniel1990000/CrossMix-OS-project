@@ -19,10 +19,12 @@ requires separate source-use, runtime, hardware and process-boundary gates,
 positive live observations, exact installed source/payload hashes and the same
 fixed `module_root`. All those expected values must come from independent
 qualification.
-The required inventory covers all 32 original Python payload modules, including
-transitive frontend, UI, adapter and state imports, as well as the pinned source
-and shared-service scripts. A development archive signature does not supply
-independent runtime qualification.
+The required inventory follows `REQUIRED_PROJECT_MODULES` in
+`process_source.py`, including transitive frontend, UI, adapter and state
+imports, as well as the pinned source and shared-service scripts. A development
+archive signature does not supply independent runtime qualification. The
+[experimental-route design](../docs/experimental-device-route.md) records the
+separate admission and bounded-exit work still needed for a private pilot.
 
 When qualified, `process_source.py` wraps the actual current Device, Display,
 Controller, FavoritesManager, RecentsManager and source-initialized ROM builder.
