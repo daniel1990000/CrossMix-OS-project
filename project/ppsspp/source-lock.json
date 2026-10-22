@@ -43,10 +43,13 @@
   "qualification": {
     "source_patch_applies": true,
     "host_narrow_harness": "project/ppsspp/tests",
-    "full_emulator_build": false,
+    "full_emulator_build": true,
     "device_tested": false,
     "installed_executable_sha256": null,
-    "activation": "unsupported until rebuilt executable is hashed and qualified with exact writer/input inventory; no bundled binary replacement"
+    "activation": "unsupported: cross-built candidate fails SDK GLIBC symbol-version inventory; exact installed writer/input/ABI and physical qualification remain outstanding; no bundled binary replacement",
+    "full_build_evidence": "project/evidence/ppsspp-candidate-build.json",
+    "candidate_executable_sha256": "7d4c71a7f6d41b3e0507122bd8482d71f938832784f060f747314ba8031e78d4",
+    "candidate_sdk_dependency_inventory_pass": false
   },
   "patches": [
     {

@@ -16,19 +16,19 @@
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 4.807
+      "seconds": 7.626
     },
     {
       "suite": "ppsspp_source_cpp_and_build_tools",
-      "tests": 20,
+      "tests": 24,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 8.084
+      "seconds": 13.202
     }
   ],
-  "total_tests": 297,
+  "total_tests": 301,
   "all_passed_without_skips": true,
   "device_tested": false,
   "checks": [
@@ -47,7 +47,8 @@
     "Common PPSSPP appearance preview/apply/Undo with copied host configurations",
     "Actual pinned USB launcher refusal after failed staging with mocked device commands",
     "PPSSPP native info/tab/direction and Pause-to-exit remap collisions",
-    "Isolated candidate build input rejection and read-only ABI path handling"
+    "Isolated candidate build input rejection and read-only ABI path handling",
+    "Checked recipe script selection, nonzero/no-op refusal, pinned-source resume and actual SDL compile definitions"
   ],
   "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> sh project/dev/check.sh",
   "source_checkouts_pristine": true,

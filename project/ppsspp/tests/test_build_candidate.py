@@ -74,7 +74,7 @@ class CandidateInputTests(unittest.TestCase):
         }
         (self.here / "source-lock.json").write_text(json.dumps(self.lock))
         (self.here / "build-inputs.lock.json").write_text(json.dumps(self.inputs))
-        for name in ("build_candidate.py", "abi_audit.py"):
+        for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py"):
             (self.here / name).write_text("# Source-retention fixture\n")
         self.here_patch = patch.object(builder, "HERE", self.here)
         self.here_patch.start()
@@ -139,6 +139,21 @@ class CandidateInputTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must be new"):
             self.prepare(work)
         self.assertEqual((work / "owner-file").read_text(), "keep")
+
+    def test_actual_target_definitions_are_required_for_every_extension_translation_unit(self):
+        work = self.root / "flags-fixture"
+        target = work / "source/build/CMakeFiles/Core.dir"
+        target.mkdir(parents=True)
+        (target.parent.parent / "git-version.cpp").write_text('const char *PPSSPP_GIT_VERSION = "fixture";\n')
+        (target / "build.make").write_text("\n".join(unit + ".o: source" for unit in
+                    ("Core/KeyMap.cpp", "UI/NativeApp.cpp", "UI/GameSettingsScreen.cpp")))
+        (target / "flags.make").write_text("CXX_DEFINES = -DSDL -DRELEASE=1\nCXX_FLAGS = -O2 -std=c++17\n")
+        report = builder.retain_build_configuration(work)
+        self.assertEqual(len(report["translation_units"]), 3)
+        self.assertTrue(all(item["sdl_defined"] for item in report["translation_units"].values()))
+        (target / "flags.make").write_text("CXX_DEFINES = -DRELEASE=1\n")
+        with self.assertRaisesRegex(ValueError, "SDL definition is absent"):
+            builder.retain_build_configuration(work)
 
 
 if __name__ == "__main__":

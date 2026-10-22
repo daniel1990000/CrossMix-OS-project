@@ -75,6 +75,11 @@ The isolated [PowerVR candidate builder](build-candidate.md) verifies full sourc
 submodules, recipe and SDK inputs before copying them into a new work directory.
 Its output stays separate from the project overlay and installed engine. Build
 results, SDK dependency inventory and distribution clearance are separate claims.
+The 22 October 2026 full cross-build succeeded after all ten selected spruce
+patches were proved. Its ELF fails the pinned SDK inventory: libc requires
+`GLIBC_2.28`, and libm requires `GLIBC_2.27`/`GLIBC_2.29`, beyond that sysroot's
+glibc 2.25. The candidate, complete source archive and build inputs remain local.
+See the [sanitized build evidence](../evidence/ppsspp-candidate-build.json).
 
 The PPSSPP patch and C++ acceptance fixtures are GPL-2.0-or-later. The exact
 upstream license and PSPSDK notice are retained in

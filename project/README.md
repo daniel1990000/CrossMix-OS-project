@@ -31,7 +31,7 @@ The second command inspects a card without launching its scripts or modifying it
 | Library | Read-only source/card inspection and injected existing PyUI models. Existing platform filtering, ROM identity and launch paths are preserved. |
 | Runtime | Fixed action registry, once-only handoffs, foreground uncertainty records, classic fallback and shared-renderer ownership. A trusted initialized-owner binding refreshes live evidence and correlates return receipts; the actual qualified source caller/thread lifecycle and principal return authority remain outstanding. |
 | Settings | Preview, journaled apply, conflict detection, crash recovery and targeted undo. Emulator changes require a qualified executable/profile and stopped writers. |
-| PPSSPP | Actual v1.20.3 source patch for independent SDL native-menu Confirm/Back, executable source acceptance harness, matching original themes and transactional adoption helper. See [PPSSPP integration](ppsspp/README.md) and [reuse map](ppsspp/reuse-map.md). |
+| PPSSPP | Actual v1.20.3 source patch for independent SDL native-menu Confirm/Back, executable source acceptance harness, matching original themes and transactional adoption helper. The [separate candidate builder](ppsspp/build-candidate.md) checks pinned source/SDK inputs and every selected spruce patch before cross-compiling. See [PPSSPP integration](ppsspp/README.md) and [reuse map](ppsspp/reuse-map.md). |
 | Reliability | Four exact-source spruce patches: launcher path quoting, verified TLS download failure handling, extractor exit status, and refusal of mounted-card USB export after staging failure. They remain separate reviewable patches. |
 | Data and recovery | Read-only inventory and redacted support bundles; offline CrossMix favorites/recents and approved battery-save migration; signed scoped overlays with rollback; port owner-data staging and undo; read-only process benchmarks. |
 
@@ -46,7 +46,7 @@ PYTHON=/tmp/smartpro-venv/bin/python SPRUCE_SOURCE_ROOT=/path/to/spruce-v4.5.4 P
 python3 project/packaging/dev_release.py --output /tmp/smartpro-development --include-source --smoke-python /tmp/smartpro-venv/bin/python
 ```
 
-The PPSSPP checks also need `git` and `g++` with C++17 support. They compile selected real patched functions with narrow fixtures; they do not build the complete emulator. [Development release instructions](docs/development-release.md) explain signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs checks and uploads the development artifacts.
+The PPSSPP checks also need `git` and `g++` with C++17 support. They compile selected real patched functions with narrow fixtures. The complete PowerVR candidate uses the separate Docker build procedure; it stays outside the development overlay and public artifacts while its distribution rights remain unresolved. [Development release instructions](docs/development-release.md) explain signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs checks and uploads the development artifacts.
 
 See [full-system coverage](docs/feature-coverage.md), [qualified binding](bridge/README.md), [recovery](docs/recovery.md), [packaging](packaging/README.md), and the saved [evidence](evidence/) for scope and remaining qualification. There is no measured hardware speed or battery improvement at this checkpoint.
 

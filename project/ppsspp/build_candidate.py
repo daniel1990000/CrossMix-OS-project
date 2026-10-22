@@ -158,7 +158,8 @@ def prepare(source: Path, recipe: Path, sdk: Path, work: Path, lock: dict, input
     shutil.copy2(HERE / "source-lock.json", work / "source-lock.json")
     shutil.copy2(HERE / "build-inputs.lock.json", work / "build-inputs.lock.json")
     shutil.copy2(HERE / "build_candidate.py", work / "build_candidate.py")
-    shutil.copy2(HERE / "abi_audit.py", work / "abi_audit.py")
+    for name in ("abi_audit.py", "apply_recipe.py"):
+        shutil.copy2(HERE / name, work / name)
     for item in lock["patches"]:
         destination = work / item["path"]
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -186,9 +187,10 @@ def source_bundle(work: Path) -> dict:
         return item
     with tarfile.open(bundle, "w:gz", dereference=False) as archive:
         archive.add(source, arcname="ppsspp", filter=retained)
-        for name in ("build_candidate.py", "abi_audit.py", "build-candidate.sh", "rebuild-source.sh",
+        for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py", "build-candidate.sh", "rebuild-source.sh",
                      "source-lock.json", "build-inputs.lock.json", "upstream-submodules.txt",
-                     "toolchain-packages.txt", "patches"):
+                     "toolchain-packages.txt", "recipe-assembly.json", "recipe-application.log",
+                     "combined-tracked-source.patch", "build-configuration", "patches"):
             if (work / name).exists():
                 archive.add(work / name, arcname="build/" + name, filter=retained)
         inputs = json.loads((work / "build-inputs.lock.json").read_text())
@@ -196,6 +198,40 @@ def source_bundle(work: Path) -> dict:
             archive.add(work / "context" / item["path"], arcname="build/recipe/" + item["path"], filter=retained)
         archive.add(work / "context/Dockerfile", arcname="build/recipe/Dockerfile", filter=retained)
     return {"name": bundle.name, "size": bundle.stat().st_size, "sha256": digest(bundle)}
+
+
+def retain_build_configuration(work: Path) -> dict:
+    build_root = work / "source/build"
+    destination = work / "build-configuration"
+    destination.mkdir(exist_ok=True)
+    for name in ("git-version.cpp", "CMakeCache.txt", "ppsspp_config.h"):
+        if (build_root / name).is_file():
+            shutil.copy2(build_root / name, destination / name)
+    if not (destination / "git-version.cpp").is_file():
+        raise ValueError("Generated PPSSPP version source is missing")
+    result = {}
+    for unit in ("Core/KeyMap.cpp", "UI/NativeApp.cpp", "UI/GameSettingsScreen.cpp"):
+        matches = []
+        for makefile in build_root.rglob("build.make"):
+            if unit + ".o" in makefile.read_text():
+                flags = makefile.parent / "flags.make"
+                if flags.is_file():
+                    matches.append(flags)
+        if len(matches) != 1:
+            raise ValueError("Ambiguous or missing translation-unit flags: " + unit)
+        flags = matches[0]
+        content = flags.read_text()
+        if not re.search(r"(?:^|\s)-DSDL(?:=\S+)?(?:\s|$)", content):
+            raise ValueError("SDL definition is absent from translation unit: " + unit)
+        relative = flags.relative_to(build_root)
+        copied = destination / relative
+        copied.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(flags, copied)
+        result[unit] = {"sdl_defined": True, "flags_path": str(relative), "flags_sha256": digest(flags),
+                        "definitions": re.findall(r"^CXX_DEFINES = (.*)$", content, re.M),
+                        "compile_flags": re.findall(r"^CXX_FLAGS = (.*)$", content, re.M)}
+    return {"translation_units": result, "git_version_cpp_sha256": digest(destination / "git-version.cpp"),
+            "cmake_cache_sha256": digest(destination / "CMakeCache.txt") if (destination / "CMakeCache.txt").is_file() else None}
 
 
 def build(work: Path, report: dict, ca: Path) -> None:
@@ -208,13 +244,33 @@ def build(work: Path, report: dict, ca: Path) -> None:
     packages = docker(["run", "--rm", "--entrypoint", "/bin/sh", tag, "-c",
         "aarch64-linux-gnu-g++ --version; cmake --version; dpkg-query -W"])
     (work / "toolchain-packages.txt").write_text(packages + "\n")
+    report["stage"] = "recipe-assembly"
+    assembly_args = ["run", "--rm"]
+    for relative, target in (("source", "/build/ppsspp"), ("context", "/recipe"),
+                             ("apply_recipe.py", "/apply_recipe.py"),
+                             ("source-lock.json", "/source-lock.json"),
+                             ("build-inputs.lock.json", "/build-inputs.lock.json")):
+        readonly = "" if relative == "source" else ",readonly"
+        assembly_args += ["--mount", f"type=bind,src={work / relative},dst={target}{readonly}"]
+    assembly_args += ["--mount", f"type=bind,src={work},dst=/provenance",
+        "--entrypoint", "/bin/sh", tag, "-c",
+        "git config --global --add safe.directory /build/ppsspp && "
+        "exec python3 /apply_recipe.py /build/ppsspp /recipe /source-lock.json /build-inputs.lock.json /provenance"]
+    assembly_output = docker(assembly_args)
+    report["recipe_assembly"] = json.loads(assembly_output)
+    if report["recipe_assembly"].get("status") != "applied":
+        raise ValueError("Pinned recipe assembly was not proved")
     report["stage"] = "engine"
-    arguments = ["run", "--rm", "--user", f"{os.getuid()}:{os.getgid()}"]
+    arguments = ["run", "--rm"]
     for relative, target in (("source", "/build/ppsspp"), ("output", "/output"),
-                             ("ccache", "/ccache"), ("build-candidate.sh", "/build-candidate.sh")):
+                             ("ccache", "/ccache"), ("rebuild-source.sh", "/build-candidate.sh")):
         arguments += ["--mount", f"type=bind,src={work / relative},dst={target}"]
-    arguments += ["--entrypoint", "/bin/bash", tag, "/build-candidate.sh"]
+    arguments += ["--entrypoint", "/bin/sh", tag, "-c",
+                  "git config --global --add safe.directory /build/ppsspp && exec /bin/bash /build-candidate.sh"]
+    report["git_trust"] = "exact /build/ppsspp allowlist inside ephemeral build containers only"
+    report["compiled_build_script_sha256"] = digest(work / "rebuild-source.sh")
     docker(arguments, log=work / "engine-build.log")
+    report["build_configuration"] = retain_build_configuration(work)
     binary = work / "output/PPSSPPSDL_TrimUI"
     verify = docker(["run", "--rm", "--mount", f"type=bind,src={work / 'output'},dst=/candidate,readonly",
         "--entrypoint", "/bin/sh", tag, "-c",

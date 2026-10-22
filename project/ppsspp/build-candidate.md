@@ -45,7 +45,22 @@ directory for another complete run.
 The locked upstream recipe uses Ubuntu 20.04's GCC 9 cross compiler, a Linaro
 glibc 2.25 sysroot and the original TG5040 PowerVR/SDL SDK. Its common and PVR
 patch-selection rules are preserved. The builder applies the project extension
-first; the recipe's other source patches then run inside the candidate tree.
+first. `apply_recipe.py` then verifies the pinned source HEAD and selected
+script hashes, applies each selected common/PVR script explicitly, and requires
+both a zero exit status and changed source content. The ten applied scripts,
+five prescribed skips, per-script before/after hashes and final combined source
+hashes are recorded in `recipe-assembly.json`. A changed HEAD, changed input,
+failed script or stale assembly is rejected before compilation. The
+`combined-tracked-source.patch` supplements the full source snapshot; the new
+project header is retained by that snapshot and the project patch.
+
+Assembly and compilation use the recipe image's root user, with bind mounts
+limited to the prepared source, output, build helpers and cache. The disposable
+containers trust only `/build/ppsspp` for Git operations, including CMake's
+version-source generation. Host Git settings are unchanged. This avoids the
+upstream shell loops silently skipping unreadable patch directories under an
+unprivileged user. Such an earlier partial compile was stopped and rejected;
+the explicit assembly gate precedes the corrected compile.
 
 The generated Dockerfile pins the Ubuntu image digest, accepts a temporary CA
 secret for HTTPS package traffic and retries package downloads. It installs the
@@ -80,16 +95,44 @@ with actual device loader paths and driver behavior still untested.
 `candidate-corresponding-source.tar.gz` retains the complete modified PPSSPP
 source and initialized submodule sources with their notices. It also retains
 project patches and source locks, the exact recipe scripts and patches, generated
-Dockerfile, compiler package inventory and build helpers. Git metadata, compiled
-build output, SDK archives, session CA and credentials are excluded. The
+Dockerfile, compiler package inventory, assembly evidence and build helpers.
+`build-configuration/` retains CMake configuration, the generated
+`git-version.cpp`, and actual flags for `Core/KeyMap.cpp`, `UI/NativeApp.cpp` and
+`UI/GameSettingsScreen.cpp`; the builder requires `SDL` in all three units.
+The recorded local run also extracted `/tmp/pvr-toolchain.cmake` from its active
+build container into that directory before creating the source archive. The
+generated Dockerfile reconstructs this file with the original recipe's exact
+`printf` instruction.
+The upstream version generator uses `git describe --always` without `--dirty`,
+so its `v1.20.3` string does not identify the applied patches. The source
+manifests provide that evidence separately. Git metadata, compiled build output,
+SDK archives, session CA and credentials are excluded. The
 `rebuild-source.sh` helper skips patch application because that source snapshot
 already includes the modifications. SDK URLs/hashes remain in the input lock.
 The archive stays in scratch until distribution rights are resolved.
+
+When rebuilding from the archive without Git metadata, create `ppsspp/build/`
+and copy `build/build-configuration/git-version.cpp` there before invoking
+`build/rebuild-source.sh` in the recorded toolchain image. Set only its
+`PPSSPP_GIT_VERSION_NO_UPDATE` macro to `1`, keeping the recorded version string,
+so CMake preserves that generated source. Retain this explicit build-control
+change with the new result. Use the same source/output/cache mounts and working
+directory as the recorded compile command. The archive is a source-retention
+record, and the SDK inputs and generated image must be obtained separately.
 
 Keep `image-build.log`, `engine-build.log`, source archive and ABI evidence with
 the local candidate. No save-state, hardware input, PowerVR rendering,
 suspend/return or performance result follows from cross compilation. The
 installed engine fingerprint and all physical qualification fields stay unset.
+
+The recorded 22 October 2026 candidate completed the full engine build and
+produced a 19,881,280-byte AArch64 ELF. Its SDK inventory failed: libc lacks the
+required `GLIBC_2.28`, and libm lacks `GLIBC_2.27` and `GLIBC_2.29`. GCC 9's
+default cross include/library directories take precedence over the old sysroot;
+the independent header/link probes establish that mismatch. This first candidate
+and its source archive remain preserved separately from any corrected search
+policy. [The sanitized evidence](../evidence/ppsspp-candidate-build.json) records
+their exact hashes, assembly, compiler flags and failed ABI gate.
 
 ## Distribution status
 

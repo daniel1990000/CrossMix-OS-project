@@ -1,0 +1,767 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-22T11:08:56+00:00",
+  "kind": "private local source cross-build; unqualified candidate",
+  "outcome": {
+    "full_engine_cross_build": true,
+    "aarch64_elf_inspected": true,
+    "sdk_dependency_inventory_pass": false,
+    "device_tested": false,
+    "target_executed": false,
+    "installed_engine_changed": false,
+    "distribution_cleared": false
+  },
+  "source": {
+    "upstream": {
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "tag": "v1.20.3",
+      "tag_object": "a6c972d9dc2f31da29eab4d6b5c2f677891c956d",
+      "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "license": "GPL-2.0-or-later; retained LICENSE.TXT includes PSPSDK BSD notice",
+      "license_source": "LICENSE.TXT",
+      "license_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa"
+    },
+    "recipe_repository": "https://github.com/spruceUI/PPSSPP-spruce",
+    "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "project_patch_sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a",
+    "upstream_recursive_submodule_count": 29,
+    "upstream_submodule_manifest_sha256": "f75c6081848fac18b18b442a32a0b5708bc579c7350763e0e2865e8623970562",
+    "source_lock_input_sha256": "4a80abf51ccc828b01406259b4eda428ecc02366f5db8007206e9bfbc67997c2",
+    "build_input_lock_sha256": "49074fee98097b3b4bbacf13470edbb16611b63fcbe63e22e0a9f3e85ae2ea97",
+    "unchanged_input_checkouts": "revalidated after the build; only the isolated candidate source was modified"
+  },
+  "build": {
+    "target": "PPSSPPSDL for original TrimUI Smart Pro A133/PowerVR",
+    "base_image": "ubuntu:20.04@sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214",
+    "image_id": "sha256:65974d2b2981e6d2423d0e264d5d81981caab485b53ffe275c3ae07ff0a2e97a",
+    "storage_driver": "vfs",
+    "jobs": 4,
+    "sdk_assets": [
+      {
+        "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+        "size": 213977008,
+        "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+      },
+      {
+        "name": "SDK_usr_tg5040_a133p.tgz",
+        "size": 185049621,
+        "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+      }
+    ],
+    "generated_dockerfile_sha256": "39bc0d051e9e710f7dd32e0f51f15748f5a059e9214258792d4d7d3168ea49b4",
+    "generated_patch_build_script_sha256": "881e4aff74aa009b9e9d35be8c453b421e526c1dc6e6e3ab2491fdecf4d062ef",
+    "compiled_source_only_script_sha256": "c22e461a3a262c93469c4c38faeeb454136b17e02220e2976b836bd5cfb3e90f",
+    "executed_builder_sha256": "4790d08d0672bc56e9ab0f98eef6530f9b675f0348a8dda18dca1663c589bdc0",
+    "executed_abi_helper_sha256": "e555c50dede39755ec5cb66d9fee29f02bfdccfcaf45ee18cc8b6f5e6398cee3",
+    "executed_recipe_runner_sha256": "ed0532d53777b4fbd0d313bb49bea1054e493aa64db71f2cf68ea725f6d30442",
+    "toolchain_package_inventory_sha256": "7aa29188b880fcddebe8cabcdc9bf4cae820358ae4a46a01400261610097c834",
+    "installed_package_count": 214,
+    "cross_compiler_version": "aarch64-linux-gnu-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "cmake_version": "cmake version 3.16.3",
+    "generated_toolchain_sha256": "5afd500c3e2bb0a3cd0237b3bffa7bbb865dd3584c8b3e0615925293616b2ca8",
+    "generated_toolchain_bytes": 622,
+    "toolchain_retention": "exact /tmp/pvr-toolchain.cmake read from the active corrected engine container before source archiving; command retained locally",
+    "build_user": "root, matching the pinned recipe image",
+    "git_trust": "exact /build/ppsspp allowlist inside ephemeral build containers only",
+    "timing": {
+      "compact_compiler_sdk_run_seconds": 690.7,
+      "corrected_engine_started_at": "2026-10-22T10:47:32.473174+00:00",
+      "corrected_engine_log_completed_at": "2026-10-22T10:55:11.771390+00:00",
+      "corrected_engine_approx_wall_seconds": 459.298,
+      "mode": "source-aware incremental build with objects/ccache retained from a rejected partial attempt; not a clean-build benchmark"
+    },
+    "translation_units": {
+      "Core/KeyMap.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/Core.dir/flags.make",
+        "flags_sha256": "e970b4b70c89fc087dfcc19ac470bfd8007a40be17021f8b6e990e0b9aaa80e1",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHAVE_LIBAVCODEC_CONST_AVCODEC=1 -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSE_FFMPEG=1 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      },
+      "UI/NativeApp.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/PPSSPPSDL.dir/flags.make",
+        "flags_sha256": "3119e3c516b6f539fad49c32c0ed1701e2fadf893436cfd3b585c2297fef2f3f",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      },
+      "UI/GameSettingsScreen.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/PPSSPPSDL.dir/flags.make",
+        "flags_sha256": "3119e3c516b6f539fad49c32c0ed1701e2fadf893436cfd3b585c2297fef2f3f",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      }
+    },
+    "cmake_cache_sha256": "f8d07e812474bc3cd8e993065e1ec88f4977abae00071f113a0118cd363b2f56",
+    "git_version_cpp_sha256": "641bd191fa8f6962808a743e9b97967862673ffe13e1351108a4c83054414e8f",
+    "embedded_git_version": "v1.20.3",
+    "git_version_limit": "upstream generator runs git describe --always without --dirty; the tag string does not identify applied source patches",
+    "mutable_package_limit": "Ubuntu apt package versions retained; bit-identical binary rebuild not established"
+  },
+  "assembly": {
+    "status": "applied",
+    "python": "3.8.10",
+    "input_identity": {
+      "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+      "project_patch_sha256": [
+        "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a"
+      ],
+      "selected": [
+        {
+          "path": "patches/common/hide-cursor.py",
+          "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d"
+        },
+        {
+          "path": "patches/common/no-mute-secondary.py",
+          "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641"
+        },
+        {
+          "path": "patches/common/remap-pause-menu.py",
+          "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5"
+        },
+        {
+          "path": "patches/common/sigusr1-save-and-quit.py",
+          "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8"
+        },
+        {
+          "path": "patches/common/sigusr2-toggle-pause-menu.py",
+          "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c"
+        },
+        {
+          "path": "patches/pvr/fix-copy-image-crash.py",
+          "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556"
+        },
+        {
+          "path": "patches/pvr/fix-glgetstringi-crash.py",
+          "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5"
+        },
+        {
+          "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+          "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f"
+        },
+        {
+          "path": "patches/pvr/no-alpha-channel.py",
+          "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4"
+        },
+        {
+          "path": "patches/pvr/vulkan-display-fallback.py",
+          "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0"
+        }
+      ]
+    },
+    "applied_script_count": 10,
+    "skipped_by_pinned_recipe": [
+      "patches/common/fullscreen.py",
+      "patches/common/skip-vulkan-probe.py",
+      "patches/pvr/debug-gl-init.py",
+      "patches/pvr/glfinish-before-swap.py",
+      "patches/pvr/revert-fullscreen.py"
+    ],
+    "scripts": [
+      {
+        "path": "patches/common/hide-cursor.py",
+        "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "4e7553d480b93f7be5321de02d5074b08485005f8e3ff1f3786f9922445c144c",
+            "after_sha256": "8dbb510d30d7460c9fd7461cad5c9b9f328468d4dfc55886557116a10accdab6"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/no-mute-secondary.py",
+        "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Core/Config.cpp",
+            "before_sha256": "81e0aba0d29f01a33982a17687e1204dbd993eeefdbd457271d29234f074530b",
+            "after_sha256": "8d74015cf35cc9c29870fd65f30c67678d84c3b53e7b9fd55f9160119c504088"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/remap-pause-menu.py",
+        "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLJoystick.cpp",
+            "before_sha256": "fb1228ac734eca99d9873234274fa178a449854caea2694934cc2abbe6e44884",
+            "after_sha256": "cdcf5551648075f3d42e1d42276d5d22d5d255c8c949d061eace988df927c78d"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/sigusr1-save-and-quit.py",
+        "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "8dbb510d30d7460c9fd7461cad5c9b9f328468d4dfc55886557116a10accdab6",
+            "after_sha256": "6b60d2f44ffb0a8f9c373d1da88ce6ef3a990489738adac65d9b328730560531"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/sigusr2-toggle-pause-menu.py",
+        "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "6b60d2f44ffb0a8f9c373d1da88ce6ef3a990489738adac65d9b328730560531",
+            "after_sha256": "1984ce104abaabce5ab8dc45f3fb7a1d7b8716e63bdce7390190be7e41a1c7ce"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/fix-copy-image-crash.py",
+        "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/thin3d_gl.cpp",
+            "before_sha256": "1e2be089d47b897374aae6ace94a9fa0b2e992d1f2711a04fd1adcaf643d8613",
+            "after_sha256": "d76c136b1e70b2984b31590a08eb9d3fb94d857596611e82e8b17c5bd7a38ac8"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/fix-glgetstringi-crash.py",
+        "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/GLFeatures.cpp",
+            "before_sha256": "3b27ba5ab833aa6937a37b822892d630445b3e45d67bb6d518ad77dc5b9d1462",
+            "after_sha256": "f85f4dfc73ad2dfd4b0d3cee74578fdd9bb357982eaabd0bac6f6f703a0b2007"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+        "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/gl3stub.c",
+            "before_sha256": "a32a6d94753d19350f8cfe21fcf9e3def2e9df2d9293bac6e1a057536bdfc663",
+            "after_sha256": "17c85aff70dac00d1e91268e4745d9bf4e911759e93072968378d5942cc4901e"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/no-alpha-channel.py",
+        "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "1984ce104abaabce5ab8dc45f3fb7a1d7b8716e63bdce7390190be7e41a1c7ce",
+            "after_sha256": "37fac91d2e8ccab9b22122fee6333249899e2a7bc61873e3998b2a909df6693e"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/vulkan-display-fallback.py",
+        "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLVulkanGraphicsContext.cpp",
+            "before_sha256": "9e6392e81f693dcab8629c04d84ad952f17ec02b33f45a405db51248ef93808f",
+            "after_sha256": "b84cfcbf170afc2ce36bd8f26a1ed76ffc7d30ba5f3df4bc5998aeab620fa212"
+          }
+        ]
+      }
+    ],
+    "final_source_files": {
+      "Common/GPU/OpenGL/GLFeatures.cpp": "f85f4dfc73ad2dfd4b0d3cee74578fdd9bb357982eaabd0bac6f6f703a0b2007",
+      "Common/GPU/OpenGL/gl3stub.c": "17c85aff70dac00d1e91268e4745d9bf4e911759e93072968378d5942cc4901e",
+      "Common/GPU/OpenGL/thin3d_gl.cpp": "d76c136b1e70b2984b31590a08eb9d3fb94d857596611e82e8b17c5bd7a38ac8",
+      "Core/Config.cpp": "8d74015cf35cc9c29870fd65f30c67678d84c3b53e7b9fd55f9160119c504088",
+      "Core/Config.h": "a14626ea42d549f1a370a0c5878438f4da48abf219277e23f64025c5d84d774b",
+      "Core/KeyMap.cpp": "cd908573ddc65e710f61ae88ce1d897533e9040fa23e9aba6aa5a6b646fb982b",
+      "Core/ProjectNativeMenuControls.h": "007d472681cbb685fd4311f7c5f9773d67bf498288ffb8d3db956da439cd134c",
+      "SDL/SDLJoystick.cpp": "cdcf5551648075f3d42e1d42276d5d22d5d255c8c949d061eace988df927c78d",
+      "SDL/SDLMain.cpp": "37fac91d2e8ccab9b22122fee6333249899e2a7bc61873e3998b2a909df6693e",
+      "SDL/SDLVulkanGraphicsContext.cpp": "b84cfcbf170afc2ce36bd8f26a1ed76ffc7d30ba5f3df4bc5998aeab620fa212",
+      "UI/GameSettingsScreen.cpp": "683cf0247a11e0968fefef7a6af0d9968887699a1988973a78cdf523acf9d637",
+      "UI/NativeApp.cpp": "fb0c376f81319dac9893ae80f71efa81d1627101705da87959df1086896f28bb"
+    },
+    "assembly_manifest_sha256": "6426f2eb5158cb7525efc38759739de53765dd13e445b301f3fb621eaa733e5f",
+    "combined_tracked_source_patch_sha256": "7241f81185290ba486087af874209ba0bc4a6f3214479b424c4f170d3240c6ad",
+    "new_file_limit": "combined diff contains tracked files; the new project header is retained in full source, project patch and final source hashes"
+  },
+  "candidate_elf": {
+    "name": "PPSSPPSDL_TrimUI",
+    "size": 19881280,
+    "sha256": "7d4c71a7f6d41b3e0507122bd8482d71f938832784f060f747314ba8031e78d4",
+    "needed": [
+      "libz.so.1",
+      "libm.so.6",
+      "libgcc_s.so.1",
+      "libc.so.6",
+      "ld-linux-aarch64.so.1",
+      "libpthread.so.0",
+      "librt.so.1",
+      "libSDL2-2.0.so.0",
+      "libGLESv2.so.2",
+      "libEGL.so.1",
+      "libdl.so.2"
+    ],
+    "machine": "AArch64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "interpreter_present_in_sysroot": true,
+    "required_versions": {
+      "ld-linux-aarch64.so.1": [
+        "GLIBC_2.17"
+      ],
+      "libdl.so.2": [
+        "GLIBC_2.17"
+      ],
+      "librt.so.1": [
+        "GLIBC_2.17"
+      ],
+      "libgcc_s.so.1": [
+        "GCC_3.0",
+        "GCC_3.3",
+        "GCC_3.3.1",
+        "GCC_4.2.0"
+      ],
+      "libm.so.6": [
+        "GLIBC_2.17",
+        "GLIBC_2.27",
+        "GLIBC_2.29"
+      ],
+      "libpthread.so.0": [
+        "GLIBC_2.17"
+      ],
+      "libc.so.6": [
+        "GLIBC_2.17",
+        "GLIBC_2.28"
+      ]
+    }
+  },
+  "sdk_abi_inventory": {
+    "method": "readelf only; SDK basename inventory and symbol-version comparison",
+    "inventory_pass": false,
+    "inspected_object_count": 16,
+    "missing_libraries": [],
+    "missing_symbol_versions": [
+      {
+        "requester": "/candidate/PPSSPPSDL_TrimUI",
+        "library": "libc.so.6",
+        "missing_versions": [
+          "GLIBC_2.28"
+        ]
+      },
+      {
+        "requester": "/candidate/PPSSPPSDL_TrimUI",
+        "library": "libm.so.6",
+        "missing_versions": [
+          "GLIBC_2.27",
+          "GLIBC_2.29"
+        ]
+      }
+    ],
+    "recursive_required_versions": {
+      "PPSSPPSDL_TrimUI": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "librt.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.3",
+          "GCC_3.3.1",
+          "GCC_4.2.0"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_2.27",
+          "GLIBC_2.29"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_2.28"
+        ]
+      },
+      "ld-linux-aarch64.so.1": {},
+      "libEGL.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libGLESv2.so.2": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libSDL2-2.0.so.0": {
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libc.so.6": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libdl.so.2": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libgcc_s.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libm.so.6": {
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libpthread.so.0": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "librt.so.1": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_PRIVATE"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libz.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libIMGegl.so": {
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libglslcompiler.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libsrv_um.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libusc.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      }
+    },
+    "ambiguous_basename_count": 16,
+    "ambiguities": [
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libGLESv2.so.2",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libGLESv2.so.2",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "librt.so.1",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libIMGegl.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libIMGegl.so",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libglslcompiler.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libusc.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      }
+    ],
+    "raw_abi_report_sha256": "d3895cb82e9bc56c5622fcdd842adb5466de5bbb0f1660b32055c47fd93f5d72",
+    "limitations": [
+      "SDK basename selection is inventory only; actual device loader order is untested.",
+      "Runtime dlopen dependencies, PowerVR drivers, SDL input translation and rendering still require device evidence."
+    ]
+  },
+  "source_retention": {
+    "name": "candidate-corresponding-source.tar.gz",
+    "size": 560737414,
+    "sha256": "94c2e31c20b45254d40e81eac61d7b8cb983433622ce58899d4604e2d63c80a4",
+    "status": "pass",
+    "checked_input_members": 51,
+    "archive_member_count": 26931,
+    "notice_filename_match_count": 76,
+    "notice_count_is_not_a_licence_audit": true,
+    "git_build_sdk_archive_exclusions_pass": true,
+    "includes": [
+      "modified PPSSPP and every initialized submodule source with notices",
+      "project patches and exact input locks",
+      "pinned recipe scripts and selected/skipped patch scripts",
+      "generated Dockerfile, compile helpers and compiler package inventory",
+      "assembly per-script evidence and combined tracked diff",
+      "actual CMake flags, generated git-version.cpp and captured pvr-toolchain.cmake"
+    ],
+    "excludes": [
+      "Git metadata",
+      "root compiled build directory",
+      "SDK archives and extracted vendor sysroot",
+      "session CA and credentials"
+    ],
+    "version_rebuild_control": "restore retained git-version.cpp before CMake; set only PPSSPP_GIT_VERSION_NO_UPDATE to 1 and preserve the exact original separately",
+    "publication": "retained only in local scratch pending recipe/SDK rights review"
+  },
+  "rejected_attempts_and_recovery": {
+    "initial_package_download": "one upstream HTTP 503; retried with apt Acquire::Retries=3 and unchanged TLS verification",
+    "multi_layer_image_storage_failure": {
+      "reason": "vfs multi-layer image exhausted available workspace during first container creation; engine had not started",
+      "old_image_id": "sha256:66f3cd5e079a2863c38484ccbf88153ce26f00ec45de6741a4e0965bc4af39aa",
+      "old_generated_dockerfile_sha256": "67e20ff1facb09445a74d28358495fdd1927f2ad7ad7c729cdba96bd9ec2c5f8",
+      "pristine_inputs_retained": true,
+      "native_working_source_files_shared": false,
+      "immutable_git_objects_and_sdk_archives_deduplicated_bytes": 944879151,
+      "exact_task_cache_ids_pruned": 19,
+      "steps": [
+        "Preserved first successful image build log, image ID, multi-layer Dockerfile and original builder source snapshot.",
+        "Pruned only captured PPSSPP BuildKit cache IDs; removed only PPSSPP builder image. Repeated exact-ID cache cleanup after image removal reclaimed dependent vfs snapshots.",
+        "Generated compact Dockerfile with unchanged pinned base/GCC/sysroot inputs; read-only SDK mounts and one compiler/SDK RUN; removed unused Linaro compiler and SDK staging.",
+        "Revalidated pristine inputs and already-applied project postimages. Fresh Python import invokes build() on existing isolated work; source/patches are not recopied or reapplied.",
+        "Rejected and stopped first compact engine attempt because restrictive image patch modes plus non-root build user silently skipped upstream wildcard loops. Preserved partial log. Changed engine build user to upstream root default and added explicit pinned-script assembly with nonzero/no-op rejection and per-script source hashes before compile-only helper; retained existing ccache/build for source-aware incremental rebuild.",
+        "Root Git refused user-owned prepared checkout before any recipe script. Added exact /build/ppsspp safe.directory only within ephemeral assembly/build containers; host Git configuration and source ownership remain unchanged."
+      ]
+    },
+    "first_compact_engine_attempt": "stopped with exit 137 at about 51%; non-root user could not read recipe patch directories and upstream wildcard loops silently skipped all recipe patches; no candidate accepted",
+    "first_checked_assembly_attempt": "stopped before scripts because scoped Git trust was absent; exact /build/ppsspp trust added only inside disposable assembly/engine containers",
+    "corrected_attempt": "checked all ten pinned scripts and combined postimages before resumed complete engine compilation; required SDL definition in all three extension translation units"
+  },
+  "rights_and_qualification": {
+    "ppsspp_license": "GPL-2.0-or-later; upstream LICENSE.TXT and third-party notices retained",
+    "recipe_missing_root_license": "spruceUI/PPSSPP-spruce@9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/LICENSE",
+    "recipe_missing_explicit_header_grants": [
+      "build-pvr.sh",
+      "Dockerfile.pvr",
+      "patches/common/*.py",
+      "patches/pvr/*.py"
+    ],
+    "sdk_redistribution_rights": "not audited or cleared for vendor runtime libraries",
+    "binary_distribution": "not cleared; no executable, source archive or SDK blob published from this checkpoint",
+    "installed_executable_sha256": null,
+    "installed_profile_supported": false,
+    "outstanding": [
+      "exact installed writer/input inventory and device dependency resolution",
+      "physical controls and widget behavior",
+      "PowerVR rendering, save-state compatibility, suspend/return and measured performance",
+      "applicable recipe/SDK distribution rights and source/notice completeness review"
+    ],
+    "outreach_sent": false
+  },
+  "local_work_directory": "/workspace/scratch/ppsspp-build-final"
+}

@@ -26,6 +26,11 @@ The shell delegates launch through Spruce's existing wrapper and principal loop,
 
 The independent native-menu patch is maintained separately from this original adapter and theme data. It retains the existing PSP/gameplay mappings and the old behavior by default. Enabled Confirm/Back keys are reserved against colliding native information, tab, directional and menu-exit actions. Each candidate binary needs its corresponding source, source/patch identities, build recipe and notices before redistribution. The [isolated candidate builder](build-candidate.md) records these inputs without changing the installed emulator.
 
+The full source candidate compiled on 22 October 2026 with the proved selected
+spruce patches. Its ELF requires GLIBC symbol versions missing from the pinned
+glibc 2.25 SDK, so compilation does not qualify that candidate. The preserved
+source/build/ABI hashes are in the [build evidence](../evidence/ppsspp-candidate-build.json).
+
 ## Continue Playing evidence
 
 Native PPSSPP slots and screenshots are already implemented in the engine. The source APIs above can supply exact state metadata from inside a source-built PPSSPP; their existence does not mean stable Spruce exposes an external metadata interface. No such external interface is fabricated here. Until the exact engine integration exists and reports a successful state operation, the offshoot's backend offers recently played entries and normal launch. Resume additionally requires matching game, engine fingerprint, state format, state hash, slot and clean lifecycle evidence.
