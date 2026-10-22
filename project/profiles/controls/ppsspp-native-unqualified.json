@@ -18,6 +18,8 @@
     "Stock native Confirm/Back derives from Cross/Circle mappings and PSP button preference.",
     "Do not edit controls.ini, controls-SmartPro.ini or ButtonPreference to change the shell menu convention.",
     "An independent-menu extension requires a separately pinned, qualified build and explicit extension schema.",
+    "The reviewed transaction must enable [ProjectNativeMenu] IndependentMenuControls=true together with NativeMenuConfirm and NativeMenuBack; a matching pair alone is inactive.",
+    "Qualify the exact source-built extension and case-insensitive PPSSPP INI parser behavior without editing gameplay mappings.",
     "Preserve platform-to-active copy-in and active-to-platform copy-back on launch/exit."
   ],
   "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh#L154"

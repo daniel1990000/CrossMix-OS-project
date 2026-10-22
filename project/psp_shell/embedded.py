@@ -39,6 +39,14 @@ class EmbeddedContext:
     font_provider: Callable[[int], Any] | None = None
     report_error: Callable[[str], None] | None = None
     control_adapter: Any = None
+    theme_manager: Any = None
+    # Trusted source bootstrap supplies live observations separately from its
+    # independently qualified expected profile. Refresh before each handoff.
+    inventory_provider: Callable[[], Mapping[str, Any]] | None = None
+    preferences_provider: Callable[[], Mapping[str, Any]] | None = None
+    model_provider_factory: Callable[..., Any] | None = None
+    restore_background_tasks: Callable[[], None] | None = None
+    assert_owners: Callable[[], None] | None = None
 
 
 @dataclass
@@ -61,6 +69,14 @@ class EmbeddedResult:
 
 
 def qualification(context: EmbeddedContext) -> PreflightReport:
+    if context.assert_owners is not None:
+        context.assert_owners()
+    if context.inventory_provider is not None:
+        context.inventory = context.inventory_provider()
+    if context.preferences_provider is not None:
+        context.preferences = context.preferences_provider()
+    if not isinstance(context.inventory, Mapping) or not isinstance(context.preferences, Mapping):
+        raise ContractError("INVALID_EVIDENCE", "Live inventory and preferences must be mappings")
     if context.execution_environment == "host-fixture":
         root = Path(context.sd_root).resolve()
         if context.profile.get("execution_environment") != "host-fixture" or not str(context.profile.get("id", "")).startswith("host-fixture") or context.inventory.get("live") is not False or root == Path("/mnt/SDCARD") or Path("/mnt/SDCARD") in root.parents:
@@ -162,11 +178,15 @@ class EmbeddedRunner:
         self.frames = 0
         self.ready = False
         self._input_released = False
+        self._background_stopped = False
+        self._owner_restore_failed = False
         self._release_gate = True
         self._pending_advanced = None
         self._advanced_in_progress = False
 
     def _new_renderer(self):
+        if self.context.assert_owners is not None:
+            self.context.assert_owners()
         factory = self.dependencies.renderer_factory
         if factory is None:
             from .ui.renderer import Renderer
@@ -192,20 +212,51 @@ class EmbeddedRunner:
 
     def _close_project_renderer(self):
         if self.renderer is not None:
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
             self.renderer.close()
             self.renderer = None
 
     def _release_input(self):
+        if self.context.assert_owners is not None:
+            self.context.assert_owners()
         self.context.controller.clear_input_queue()
         self.context.controller.clear_last_input()
+        # A partially failing release still needs the paired restore callback.
+        self._input_released = True
         if self.context.release_input:
             self.context.release_input()
-        self._input_released = True
+        if self.context.assert_owners is not None:
+            self.context.assert_owners()
+
+    def _stop_background_tasks(self):
+        self._background_stopped = True
+        self.context.stop_background_tasks()
+        if self.context.assert_owners is not None:
+            self.context.assert_owners()
+
+    def _restore_owners(self):
+        try:
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
+            if self._input_released:
+                if self.context.restore_input:
+                    self.context.restore_input()
+                self._input_released = False
+            if self._background_stopped:
+                if self.context.restore_background_tasks:
+                    self.context.restore_background_tasks()
+                self._background_stopped = False
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
+        except BaseException:
+            # A second callback attempt is not independent proof that a
+            # partially restored input/background owner is safe for fallback.
+            self._owner_restore_failed = True
+            raise
 
     def _restore(self, _snapshot):
-        if self._input_released and self.context.restore_input:
-            self.context.restore_input()
-        self._input_released = False
+        self._restore_owners()
         self.context.controller.clear_input_queue()
         self._release_gate = True
         if self.renderer is None:
@@ -225,7 +276,7 @@ class EmbeddedRunner:
         from .settings import SettingsStore
         from .ui.model import NavigationModel
         deps = self.dependencies
-        provider = (deps.provider_factory or PyUIModelProvider.from_pyui)(
+        provider = (deps.provider_factory or self.context.model_provider_factory or PyUIModelProvider.from_pyui)(
             self.context.sd_root, device=self.context.device, release_resources=self._close_project_renderer,
             quiescent=self.context.quiescent, tool_list=self.context.tool_list,
             tool_actions=self.context.tool_actions, mode_actions=self.context.mode_actions)
@@ -234,7 +285,7 @@ class EmbeddedRunner:
         self.settings.recover()
         self.model = (deps.model_factory or NavigationModel)(demo=False, restored_state=_restore_navigation(self.context.state_dir))
         self.coordinator = LaunchCoordinator(self.registry, LaunchHooks(self._snapshot,
-            self.context.stop_background_tasks, self._close_project_renderer, self._release_input, self._restore),
+            self._stop_background_tasks, self._close_project_renderer, self._release_input, self._restore),
             preflight=lambda: qualification(self.context), exclusive=self.exclusive, health=self.health)
         runner = self
         class EmbeddedDispatcher(Dispatcher):
@@ -259,7 +310,8 @@ class EmbeddedRunner:
                 return super()._dispatch(method, params)
         self.dispatcher = EmbeddedDispatcher(self.backend, self.settings, self.context.state_dir,
                                              launch_bridge=_LaunchBridge(self),
-                                             control_adapter=self.context.control_adapter)
+                                             control_adapter=self.context.control_adapter,
+                                             theme_manager=self.context.theme_manager)
         self._commands(self.model.initial_commands())
         self.renderer = self._new_renderer()
 
@@ -274,12 +326,13 @@ class EmbeddedRunner:
                 self.model.error(command, *error_fields(exc))
 
     def open_advanced(self, route: str):
+        qualification(self.context).assert_safe()
         if route not in self.ADVANCED_ROUTES or not callable(getattr(self.context.main_menu, "launch_selection", None)):
             raise ContractError("UNKNOWN_ROUTE", "Existing spruce menu route is unavailable")
         if not self.context.quiescent():
             raise ContractError("BUSY_SESSION", "Finish the existing foreground operation before opening another menu")
         self._snapshot()
-        self.context.stop_background_tasks()
+        self._stop_background_tasks()
         self._close_project_renderer()
         self.context.controller.clear_input_queue()
         self.context.controller.clear_last_input()
@@ -352,14 +405,16 @@ class EmbeddedRunner:
             self._close_project_renderer()
 
     def release_for_fallback(self) -> bool:
-        if self._advanced_in_progress or (self.coordinator and self.coordinator.state in {LaunchState.DELEGATED, LaunchState.DELEGATING, LaunchState.BLOCKED}):
+        if self._owner_restore_failed or self._advanced_in_progress or (self.coordinator and self.coordinator.state in {LaunchState.DELEGATED, LaunchState.DELEGATING, LaunchState.BLOCKED}):
             return False
         try:
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
             self._close_project_renderer()
-            if self._input_released and self.context.restore_input:
-                self.context.restore_input()
-                self._input_released = False
+            self._restore_owners()
             self.context.controller.clear_input_queue()
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
             return self.context.quiescent() is True
         except Exception:
             return False

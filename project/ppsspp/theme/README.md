@@ -19,6 +19,10 @@ The custom directory follows upstream `GetSysDirectory(DIRECTORY_CUSTOM_THEMES)`
 
 The original Python helper is `psp_shell.ppsspp.PPSSPPThemeManager`. Its public methods are `status`, `preview`, `apply`, `undo` and `recover`. Preview reports the affected keys and any overwrite. Apply requires the expected generation, matching source/config/profile hashes, a qualified exact executable version/hash and a quiescent write window. It journals snapshots before replacing files. The existing settings transaction engine performs host-tested interrupted-write recovery.
 
+The common interface exposes this helper under **Settings → PPSSPP appearance → Match this interface**. It previews the current interface's contrast and motion choices, then requires an explicit apply. Replacing a customized palette defaults to Cancel and keeps a backup for Undo. The adapter's generation and Undo are separate from frontend preferences and menu controls; changing a frontend preference alone does not edit PPSSPP. A trusted embedded binding may inject `theme_manager`; the standalone preview has no emulator write adapter. Dispatcher operations are limited to `appearance.ppsspp.status`, `.preview`, `.apply` and `.undo`.
+
+Owned PPSSPP configuration names follow the pinned engine's case-insensitive INI rules. Hash comments are retained. Semicolons inside a value are data, and quoted values are not decoded as JSON. Duplicate owned sections or keys are refused. The caller must serialize theme and controls transactions in the same stopped-writer session because both adapters can edit the authoritative platform INI.
+
 Undo restores the owned preference keys when they still match the applied values, preserving unrelated settings edited afterward. A preexisting palette is restored from its snapshot. A newly added palette remains installed but unselected; the result explicitly reports `theme_file_retained_unselected`. This avoids deleting a file another theme or user may now reference. A conflicting external theme edit is presented as a conflict.
 
 Host tests:

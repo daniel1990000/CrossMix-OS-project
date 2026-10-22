@@ -38,7 +38,7 @@
     "backend": "defined(SDL) only",
     "south_native_key": "NKCODE_BUTTON_2",
     "east_native_key": "NKCODE_BUTTON_3",
-    "scope": "native Confirm/Back only; no PSP gameplay mapping or system preference mutation"
+    "scope": "native Confirm/Back with reserved-key collision suppression in other native actions; no PSP gameplay mapping or system preference mutation"
   },
   "qualification": {
     "source_patch_applies": true,
@@ -51,7 +51,7 @@
   "patches": [
     {
       "path": "patches/0001-independent-native-menu-controls.patch",
-      "sha256": "291ffdd241e27519a645f2c54d6b8a620b8b0b93005e70499274649d6d4c332c",
+      "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a",
       "license": "GPL-2.0-or-later"
     }
   ],
@@ -111,6 +111,30 @@
     {
       "path": "UI/GameSettingsScreen.cpp",
       "sha256": "20ea8f565adba1b15a80ff2a54d5ef4c0743f25314e26ed5ce599b8e48a441d2"
+    },
+    {
+      "path": "Core/KeyMap.h",
+      "sha256": "81f9bae79b6aa3b0ca5ca4b7aa75c253d4af92fae148a95055cadad15938f18f"
+    },
+    {
+      "path": "Core/System.h",
+      "sha256": "15709355708ca928f175b0ab391b93ef48b0c0b2841f3b8d553deb8a0698c33d"
+    },
+    {
+      "path": "UI/NativeApp.cpp",
+      "sha256": "dbd04cbf5679dce46ff6a931cfa3d460a4d77ea21b1e856fbf856a8970ea07d8"
+    },
+    {
+      "path": "Common/Data/Format/IniFile.cpp",
+      "sha256": "84173372878940fda46b8085ccb6971f338c9916f910b160f031073ceb3ecbde"
+    },
+    {
+      "path": "Common/Data/Text/Parsers.cpp",
+      "sha256": "b48d2b3b76052bc152d5c9d5f0fbdc73375f614b61ff7bf108ff8fd4252e3248"
+    },
+    {
+      "path": "Common/StringUtils.cpp",
+      "sha256": "b06404ad960eaa5df29653e59056c8aca9f4b469699294e6cba66ae81ef332b8"
     }
   ],
   "patched_files": [
@@ -124,7 +148,7 @@
     },
     {
       "path": "Core/KeyMap.cpp",
-      "sha256": "a70a8c637ad6d6ea4947c448b33d553fabaa7f035f28fbd6207bbf6d7ba3229c"
+      "sha256": "cd908573ddc65e710f61ae88ce1d897533e9040fa23e9aba6aa5a6b646fb982b"
     },
     {
       "path": "Core/ProjectNativeMenuControls.h",
@@ -133,6 +157,10 @@
     {
       "path": "UI/GameSettingsScreen.cpp",
       "sha256": "683cf0247a11e0968fefef7a6af0d9968887699a1988973a78cdf523acf9d637"
+    },
+    {
+      "path": "UI/NativeApp.cpp",
+      "sha256": "fb0c376f81319dac9893ae80f71efa81d1627101705da87959df1086896f28bb"
     }
   ]
 }

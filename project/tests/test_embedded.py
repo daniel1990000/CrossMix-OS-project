@@ -189,6 +189,63 @@ class EmbeddedTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             self.health.choose_interface()
 
+    def test_partially_failed_input_release_restores_both_existing_owners(self):
+        def release():
+            self.events.append("partial-input-release")
+            raise RuntimeError("injected partial release")
+        context = replace(self.context, release_input=release,
+            restore_background_tasks=lambda: self.events.append("restore-existing-background"))
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch(), self.assertRaises(ContractError) as caught:
+            runner.run(max_frames=6, scripted_actions=("confirm", "confirm", "confirm"))
+        self.assertEqual(caught.exception.code, "PREPARATION_FAILED")
+        self.assertIn("restore-project-input", self.events)
+        self.assertIn("restore-existing-background", self.events)
+        self.assertNotIn("existing-device-run-game", self.events)
+        self.assertEqual(runner.coordinator.state, LaunchState.IDLE)
+
+    def test_partially_failed_background_stop_runs_paired_restore(self):
+        def stop():
+            self.events.append("partial-background-stop")
+            raise RuntimeError("injected partial stop")
+        context = replace(self.context, stop_background_tasks=stop,
+            restore_background_tasks=lambda: self.events.append("restore-existing-background"))
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch(), self.assertRaises(ContractError) as caught:
+            runner.run(max_frames=6, scripted_actions=("confirm", "confirm", "confirm"))
+        self.assertEqual(caught.exception.code, "PREPARATION_FAILED")
+        self.assertIn("restore-existing-background", self.events)
+        self.assertNotIn("release-project-input", self.events)
+        self.assertNotIn("existing-device-run-game", self.events)
+        self.assertEqual(runner.coordinator.state, LaunchState.IDLE)
+
+    def test_owner_replacement_during_background_stop_blocks_launch_and_fallback(self):
+        valid = [True]
+        def owners():
+            if not valid[0]:
+                raise ContractError("OWNER_CHANGED", "injected owner replacement")
+        def stop():
+            valid[0] = False
+        context = replace(self.context, stop_background_tasks=stop, assert_owners=owners)
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch(), self.assertRaises(ContractError):
+            runner.run(max_frames=6, scripted_actions=("confirm", "confirm", "confirm"))
+        self.assertEqual(runner.coordinator.state, LaunchState.BLOCKED)
+        self.assertFalse(runner.release_for_fallback())
+        self.assertNotIn("existing-device-run-game", self.events)
+
+    def test_owner_replacement_after_frame_blocks_classic_fallback(self):
+        valid = [True]
+        def owners():
+            if not valid[0]:
+                raise ContractError("OWNER_CHANGED", "injected owner replacement")
+        context = replace(self.context, assert_owners=owners)
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch():
+            runner.run(max_frames=1)
+        valid[0] = False
+        self.assertFalse(runner.release_for_fallback())
+
     def test_renderer_has_no_unconditional_pillow_dependency(self):
         imported = builtins.__import__
         def no_pillow(name, *args, **kwargs):
@@ -260,6 +317,20 @@ class EmbeddedTests(unittest.TestCase):
             runner.release_for_fallback()
         self.assertIn("existing-menu:Setting", self.events)
         self.assertNotIn("existing-device-run-game", self.events)
+
+    def test_failed_advanced_owner_restore_blocks_retry_and_classic_fallback(self):
+        def restore():
+            self.events.append("failed-owner-restore")
+            raise RuntimeError("injected partial restore")
+        context = replace(self.context, restore_background_tasks=restore)
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch():
+            runner.run(max_frames=1)
+            with self.assertRaises(RuntimeError):
+                runner.open_advanced("settings")
+            self.assertFalse(runner.release_for_fallback())
+        self.assertEqual(self.events.count("failed-owner-restore"), 1)
+        self.assertIsNone(runner.renderer)
 
     def test_advanced_menu_game_exit_also_preserves_foreground_uncertainty(self):
         def existing_menu(_):

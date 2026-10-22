@@ -59,43 +59,90 @@ def _configuration_bytes(text: str) -> bytes:
     return data
 
 
-def _assignment(text: str, section: str, key: str) -> dict | None:
-    _require(len(_configuration_bytes(text)) <= MAX_FILE and "\0" not in text,
-             "INVALID_CONFIG", "Invalid configuration text")
-    active = ""
-    result = None
-    position = 0
-    for line in text.splitlines(keepends=True):
-        content = line.rstrip("\r\n")
+def _ppsspp_name(value: str) -> str:
+    # The pinned parser compares ASCII INI names; Unicode case folding could
+    # incorrectly equate another byte sequence with an owned ASCII key.
+    return value.translate(str.maketrans("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz"))
+
+
+def _configuration_lines(text: str, ppsspp_ini: bool) -> list[str]:
+    if not ppsspp_ini:
+        return text.splitlines(keepends=True)
+    # std::getline uses LF only; Python splitlines also treats Unicode and
+    # control characters as boundaries, which would invent engine settings.
+    parts = text.split("\n")
+    return [part + "\n" for part in parts[:-1]] + ([parts[-1]] if parts[-1] else [])
+
+
+def _visible_line(line: str, position: int, ppsspp_ini: bool) -> tuple[str, str, int]:
+    content = line.rstrip("\r\n")
+    if ppsspp_ini:
+        stripped = content.lstrip(" \t\r\n")
+        offset = len(content) - len(stripped)
+        if stripped.startswith("\ufeff"):
+            stripped, offset = stripped[1:], offset + 1
+    else:
         parse_offset = 1 if position == 0 and content.startswith("\ufeff") else 0
         stripped = content[parse_offset:].lstrip(" \t")
         offset = parse_offset + len(content[parse_offset:]) - len(stripped)
+    return content, stripped, offset
+
+
+def _assignment(text: str, section: str, key: str, *, ppsspp_ini: bool = False) -> dict | None:
+    _require(len(_configuration_bytes(text)) <= MAX_FILE and "\0" not in text,
+             "INVALID_CONFIG", "Invalid configuration text")
+    active = ""
+    owned_sections = 0
+    wanted_section = _ppsspp_name(section) if ppsspp_ini else section
+    wanted_key = _ppsspp_name(key) if ppsspp_ini else key
+    result = None
+    position = 0
+    for line in _configuration_lines(text, ppsspp_ini):
+        content, stripped, offset = _visible_line(line, position, ppsspp_ini)
         if stripped.startswith("["):
             closing = stripped.find("]")
             _require(closing > 0, "INVALID_CONFIG", "Malformed configuration section")
-            active = stripped[1:closing].strip()
-        elif active == section and stripped and not stripped.startswith(("#", ";")) and "=" in stripped:
+            # Pinned PPSSPP IniFile compares names without regard to case,
+            # and retains spaces inside section brackets.
+            active = stripped[1:closing]
+            active = _ppsspp_name(active) if ppsspp_ini else active.strip()
+            if ppsspp_ini and active == wanted_section:
+                owned_sections += 1
+                _require(owned_sections == 1, "AMBIGUOUS_CONFIG", "Duplicate owned configuration section")
+        elif active == wanted_section and stripped and not stripped.startswith(("#", ";")) and "=" in stripped:
             equals = content.find("=", offset)
-            if content[offset:equals].strip() == key:
+            actual_key = content[offset:equals].strip(" \t\r\n") if ppsspp_ini else content[offset:equals].strip()
+            if (_ppsspp_name(actual_key) if ppsspp_ini else actual_key) == wanted_key:
                 _require(result is None, "AMBIGUOUS_CONFIG", "Duplicate owned configuration key")
                 start = equals + 1
                 while start < len(content) and content[start] in " \t":
                     start += 1
                 end = len(content)
-                quote = None
-                escaped = False
-                for index in range(start, len(content)):
-                    character = content[index]
-                    if escaped:
-                        escaped = False
-                    elif quote and character == "\\":
-                        escaped = True
-                    elif character in {"\"", "'"} and (quote is None or quote == character):
-                        quote = None if quote else character
-                    elif quote is None and character in {"#", ";"}:
-                        end = index
-                        break
-                _require(quote is None, "INVALID_CONFIG", "Unterminated owned configuration value")
+                if ppsspp_ini:
+                    # IniFile::ParseLineValue strips double quotes only when
+                    # they surround the complete value, otherwise # starts a
+                    # comment unless immediately escaped. Semicolons are data.
+                    value = content[start:].strip(" \t\r\n")
+                    if not (len(value) >= 2 and value.startswith('"') and value.endswith('"')):
+                        for index in range(start, len(content)):
+                            if content[index] == "#" and (index == start or content[index - 1] != "\\"):
+                                end = index
+                                break
+                else:
+                    quote = None
+                    escaped = False
+                    for index in range(start, len(content)):
+                        character = content[index]
+                        if escaped:
+                            escaped = False
+                        elif quote and character == "\\":
+                            escaped = True
+                        elif character in {"\"", "'"} and (quote is None or quote == character):
+                            quote = None if quote else character
+                        elif quote is None and character in {"#", ";"}:
+                            end = index
+                            break
+                    _require(quote is None, "INVALID_CONFIG", "Unterminated owned configuration value")
                 while end > start and content[end - 1] in " \t":
                     end -= 1
                 result = {"line_start": position, "line_end": position + len(line),
@@ -112,28 +159,30 @@ def _valid_assignment(section: str, key: str, raw_token: str) -> None:
              "INVALID_ARGUMENT", "Invalid configuration assignment")
 
 
-def set_config_token(text: str, key: str, raw_token: str, *, section: str = "") -> str:
+def set_config_token(text: str, key: str, raw_token: str, *, section: str = "", ppsspp_ini: bool = False) -> str:
     """Change exactly one unique value token; retain comments/unknown bytes."""
     _valid_assignment(section, key, raw_token)
-    found = _assignment(text, section, key)
+    found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
     if found:
         return text[:found["value_start"]] + raw_token + text[found["value_end"]:]
     newline = "\r\n" if "\r\n" in text else "\n"
     addition = f"{key} = {raw_token}{newline}"
     position = 0
     active = ""
+    wanted_section = _ppsspp_name(section) if ppsspp_ini else section
     seen_section = not section
     insert_at = len(text)
-    for line in text.splitlines(keepends=True):
-        stripped = line.lstrip("\ufeff \t")
+    for line in _configuration_lines(text, ppsspp_ini):
+        _, stripped, _ = _visible_line(line, position, ppsspp_ini)
         if stripped.startswith("["):
             closing = stripped.find("]")
             _require(closing > 0, "INVALID_CONFIG", "Malformed configuration section")
-            if active == section and seen_section:
+            if active == wanted_section and seen_section:
                 insert_at = position
                 break
-            active = stripped[1:closing].strip()
-            seen_section |= active == section
+            active = stripped[1:closing]
+            active = _ppsspp_name(active) if ppsspp_ini else active.strip()
+            seen_section |= active == wanted_section
         position += len(line)
     if not seen_section:
         prefix = "" if not text or text.endswith(("\n", "\r")) else newline
@@ -142,8 +191,17 @@ def set_config_token(text: str, key: str, raw_token: str, *, section: str = "") 
     return text[:insert_at] + prefix + addition + text[insert_at:]
 
 
-def _semantic_token(token: str):
-    stripped = token.strip()
+def _semantic_token(token: str, *, ppsspp_ini: bool = False, boolean: bool = False):
+    stripped = token.strip(" \t\r\n") if ppsspp_ini else token.strip()
+    if ppsspp_ini:
+        # PPSSPP strips surrounding quotes; it does not JSON-decode INI values.
+        if len(stripped) >= 2 and stripped.startswith('"') and stripped.endswith('"'):
+            stripped = stripped[1:-1]
+        else:
+            stripped = stripped.replace("\\#", "#")
+        if boolean and _ppsspp_name(stripped) in {"true", "false", "1", "0"}:
+            return _ppsspp_name(stripped) in {"true", "1"}
+        return stripped
     if stripped.startswith('"'):
         try:
             stripped = json.loads(stripped)
@@ -153,6 +211,20 @@ def _semantic_token(token: str):
     if stripped in {"true", "false"}:
         return stripped == "true"
     return stripped
+
+
+def _ppsspp_assignment(text: str, section: str, key: str) -> dict | None:
+    """Find a unique owned token using the pinned PPSSPP INI conventions."""
+    return _assignment(text, section, key, ppsspp_ini=True)
+
+
+def set_ppsspp_config_token(text: str, key: str, raw_token: str, *, section: str = "") -> str:
+    """Retain PPSSPP spelling/comments while changing a unique owned token."""
+    return set_config_token(text, key, raw_token, section=section, ppsspp_ini=True)
+
+
+def _ppsspp_semantic_token(token: str, *, boolean: bool = False):
+    return _semantic_token(token, ppsspp_ini=True, boolean=boolean)
 
 
 def _encoded_token(value) -> str:
@@ -302,16 +374,56 @@ class EmulatorConfigAdapter:
                      "UNSUPPORTED_CAPABILITY", "Independent PPSSPP menu controls are not qualified; gameplay and PSP button preference stay unchanged")
             # These are project extension keys, never claims about stock PPSSPP.
             conventions = extension.get("conventions")
-            _require(isinstance(conventions, dict), "UNSUPPORTED_PROFILE", "Missing extension conventions")
-            values = conventions.get(confirm)
-            _require(extension.get("section") == "ProjectNativeMenu" and isinstance(values, dict) and
-                     set(values) == {"NativeMenuConfirm", "NativeMenuBack"},
+            _require(extension.get("section") == "ProjectNativeMenu" and isinstance(conventions, dict) and
+                     set(conventions) == {"south", "east"},
                      "UNSUPPORTED_PROFILE", "Unknown independent-menu extension schema")
-            _require(Path(profile["config"]).name.startswith("ppsspp") and
-                     all(isinstance(item, str) and len(item) <= 128 for item in values.values()),
+            for position, values in conventions.items():
+                _require(isinstance(values, dict) and
+                         set(values) == {"IndependentMenuControls", "NativeMenuConfirm", "NativeMenuBack"} and
+                         values["IndependentMenuControls"] is True and values["NativeMenuConfirm"] == position and
+                         values["NativeMenuBack"] == ("east" if position == "south" else "south"),
+                         "UNSUPPORTED_PROFILE", "Independent-menu conventions must enable the exact physical Confirm/Back pair")
+            _require(Path(profile["config"]).name.startswith("ppsspp"),
                      "UNSUPPORTED_PROFILE", "Menu extension cannot edit PSP gameplay controls")
-            return "ProjectNativeMenu", values
+            return "ProjectNativeMenu", {"IndependentMenuControls": True,
+                                         "NativeMenuConfirm": confirm,
+                                         "NativeMenuBack": "east" if confirm == "south" else "south"}
         raise SettingsError("UNSUPPORTED_CAPABILITY", "No qualified menu-control adapter exists for this surface")
+
+    @staticmethod
+    def _menu_change(profile: dict, text: str, section: str, values: dict) -> tuple[str, list]:
+        """Recompute the complete owned diff before approving any write."""
+        ppsspp_ini = profile.get("engine") == "ppsspp"
+        diff = []
+        for key, value in values.items():
+            found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
+            previous = _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
+                                       boolean=key == "IndependentMenuControls") if found else None
+            if previous == value:
+                continue
+            diff.append({"key": key, "section": section, "before_present": found is not None,
+                         "before_token": found["token"] if found else None,
+                         "before": previous, "after": value})
+            text = set_config_token(text, key, _encoded_token(value), section=section, ppsspp_ini=ppsspp_ini)
+        return text, diff
+
+    def _configured_controls(self, profile: dict, text: str, *, qualified: bool = False) -> dict:
+        """Describe persisted configuration, never an observed running engine."""
+        ppsspp_ini = profile.get("engine") == "ppsspp"
+        section, values = self._mapping(profile, "south")
+        observed = {}
+        for key in values:
+            found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
+            observed[key] = _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
+                                             boolean=key == "IndependentMenuControls") if found else None
+        configured_confirm = None
+        for confirm in ("south", "east"):
+            if observed == self._mapping(profile, confirm)[1]:
+                configured_confirm = confirm
+                break
+        return {"configured_confirm": configured_confirm,
+                "independent_menu_controls_enabled": observed.get("IndependentMenuControls") is True if ppsspp_ini else None,
+                "configuration_effective": qualified and configured_confirm is not None}
 
     def _validate_journal(self, journal: dict) -> None:
         profile = self._profile(journal.get("metadata", {}).get("profile_id"))
@@ -330,17 +442,31 @@ class EmulatorConfigAdapter:
         """Read only declared menu keys and digests, never rewrite a target."""
         profile = self._profile(profile_id)
         data = _read(profile["_config"])
+        configured = {"configured_confirm": None, "independent_menu_controls_enabled": False
+                      if profile.get("engine") == "ppsspp" else None, "configuration_effective": False}
         try:
             section, values = self._mapping(profile, "south")
             text = _configuration_text(data)
-            keys = {key: (_assignment(text, section, key) or {}).get("token") for key in values}
+            keys = {key: (_assignment(text, section, key, ppsspp_ini=profile.get("engine") == "ppsspp") or {}).get("token")
+                    for key in values}
+            configured = self._configured_controls(profile, text)
             capability = True
         except SettingsError:
             keys, capability = {}, False
+        if capability:
+            try:
+                current = self._profile(profile_id, writable=True)
+                _require(current["_profile_hash"] == profile["_profile_hash"] and
+                         _sha(_read(_under(self.profiles_dir, profile_id + ".json"))) == profile["_profile_hash"] and
+                         _read(current["_config"]) == data,
+                         "STALE_SNAPSHOT", "Menu configuration or profile changed during inspection")
+                configured["configuration_effective"] = configured["configured_confirm"] is not None
+            except SettingsError:
+                pass
         return {"profile_id": profile_id, "generation": self._state()["generation"],
                 "config_sha256": _sha(data), "qualified": profile.get("qualified") is True,
                 "surface": profile.get("surface"), "menu_adapter_implemented": capability,
-                "keys": keys, "gameplay_changed": False}
+                "keys": keys, **configured, "gameplay_changed": False}
 
     def capabilities(self) -> dict:
         results = []
@@ -349,7 +475,8 @@ class EmulatorConfigAdapter:
             try:
                 profile = self._profile(path.stem, writable=True)
                 self._mapping(profile, "south")
-                entry.update(writable=True, surface=profile["surface"])
+                configured = self._configured_controls(profile, _configuration_text(_read(profile["_config"])), qualified=True)
+                entry.update(writable=True, surface=profile["surface"], **configured)
             except SettingsError as error:
                 entry["error"] = error.as_dict()
             results.append(entry)
@@ -365,16 +492,7 @@ class EmulatorConfigAdapter:
             generation = _check_generation(params, self._state())
             data = _read(profile["_config"])
             text = _configuration_text(data)
-            diff = []
-            for key, value in values.items():
-                found = _assignment(text, section, key)
-                previous = _semantic_token(found["token"]) if found else None
-                if previous == value:
-                    continue
-                diff.append({"key": key, "section": section, "before_present": found is not None,
-                             "before_token": found["token"] if found else None,
-                             "before": previous, "after": value})
-                text = set_config_token(text, key, _encoded_token(value), section=section)
+            text, diff = self._menu_change(profile, text, section, values)
             _require(bool(diff), "NO_CHANGES", "Menu controls already match")
             preview_id = "preview-" + uuid.uuid4().hex
             record = {"schema": 1, "preview_id": preview_id, "profile_id": params["profile_id"],
@@ -383,7 +501,9 @@ class EmulatorConfigAdapter:
                       "confirm": params["confirm"], "diff": diff}
             _atomic_write(self.previews / (preview_id + ".json"), _encoded(record))
             return {"preview_id": preview_id, "generation": generation, "profile_id": params["profile_id"],
-                    "surface": profile["surface"], "diff": diff, "gameplay_changed": False}
+                    "surface": profile["surface"], "diff": diff,
+                    "after_configuration": self._configured_controls(profile, text, qualified=True),
+                    "gameplay_changed": False}
 
     def apply(self, params: dict) -> dict:
         _fields(params, {"preview_id", "request_id", "expected_generation"},
@@ -410,23 +530,17 @@ class EmulatorConfigAdapter:
                      "STALE_SNAPSHOT", "Emulator configuration or profile changed since preview")
             text = _configuration_text(data)
             changes = record.get("diff")
-            _require(isinstance(changes, list) and 0 < len(changes) <= 2,
+            _require(isinstance(changes, list) and 0 < len(changes) <= len(values),
                      "INVALID_PREVIEW", "Invalid emulator menu diff")
-            keys = set()
-            for item in changes:
-                key = item["key"]
-                found = _assignment(text, section, key)
-                _require(key in values and key not in keys and item["section"] == section and item["after"] == values[key] and
-                         item["before_present"] == (found is not None) and
-                         item["before_token"] == (found["token"] if found else None),
-                         "INVALID_PREVIEW", "Preview contains an unowned configuration edit")
-                keys.add(key)
-                text = set_config_token(text, key, _encoded_token(values[key]), section=section)
+            text, expected_changes = self._menu_change(profile, text, section, values)
+            _require(_encoded(changes) == _encoded(expected_changes),
+                     "INVALID_PREVIEW", "Preview must contain every required menu edit and no unowned edit")
             next_state = {**state, "generation": generation + 1}
             transaction_id = "tx-" + uuid.uuid4().hex
             result = {"transaction_id": transaction_id, "generation": generation + 1,
                       "profile_id": profile["id"], "surface": profile["surface"],
-                      "applied": True, "idempotent": False, "gameplay_changed": False}
+                      "applied": True, "idempotent": False,
+                      **self._configured_controls(profile, text, qualified=True), "gameplay_changed": False}
             transactions.commit(transaction_id, request_id, "apply", preview_id,
                                 [(profile["_config"], data, _configuration_bytes(text)),
                                  (self.meta, _read(self.meta), _encoded(next_state))],
@@ -450,6 +564,7 @@ class EmulatorConfigAdapter:
                      "INVALID_TRANSACTION", "Only committed emulator changes can be undone")
             profile = self._profile(journal["metadata"]["profile_id"], writable=True)
             section, allowed = self._mapping(profile, "south")
+            ppsspp_ini = profile.get("engine") == "ppsspp"
             state = self._state()
             generation = _check_generation(params, state)
             data = _read(profile["_config"])
@@ -457,23 +572,29 @@ class EmulatorConfigAdapter:
             after_snapshot = _configuration_text(transactions.snapshot(journal, 0, True))
             for item in journal["metadata"]["diff"]:
                 key = item["key"]
-                found = _assignment(text, section, key)
+                found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
                 _require(key in allowed and item["section"] == section and found is not None and
-                         _semantic_token(found["token"]) == item["after"],
+                         _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
+                                         boolean=key == "IndependentMenuControls") == item["after"],
                          "UNDO_CONFLICT", "A menu setting was edited outside this transaction")
                 if item["before_present"]:
-                    text = set_config_token(text, key, item["before_token"], section=section)
+                    text = set_config_token(text, key, item["before_token"], section=section, ppsspp_ini=ppsspp_ini)
                 else:
-                    original = _assignment(after_snapshot, section, key)
+                    original = _assignment(after_snapshot, section, key, ppsspp_ini=ppsspp_ini)
                     _require(original is not None and
                              text[found["line_start"]:found["line_end"]] ==
                              after_snapshot[original["line_start"]:original["line_end"]],
                              "UNDO_CONFLICT", "The inserted menu-setting line was edited externally")
                     text = text[:found["line_start"]] + text[found["line_end"]:]
+            if data == transactions.snapshot(journal, 0, True):
+                # With no external edit, restore exact pre-transaction bytes,
+                # including a section header/newline added with the three keys.
+                text = _configuration_text(transactions.snapshot(journal, 0))
             transaction_id = "tx-" + uuid.uuid4().hex
             result = {"transaction_id": transaction_id, "undone_transaction_id": original_id,
                       "generation": generation + 1, "profile_id": profile["id"],
-                      "applied": True, "idempotent": False, "gameplay_changed": False}
+                      "applied": True, "idempotent": False,
+                      **self._configured_controls(profile, text, qualified=True), "gameplay_changed": False}
             next_state = {**state, "generation": generation + 1}
             transactions.commit(transaction_id, request_id, "undo", original_id,
                                 [(profile["_config"], data, _configuration_bytes(text)),

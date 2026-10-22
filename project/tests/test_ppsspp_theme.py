@@ -17,8 +17,8 @@ from psp_shell.settings import SettingsError
 
 
 THEME_SOURCE = Path(__file__).resolve().parents[1] / "ppsspp/theme/spruce-midnight.ini"
-BASE_CONFIG = (b'; original config\r\n[General]\r\nBackgroundAnimation = 1 ; keep note\r\n'
-               b'Language = en_US\r\n[Theme]\r\nThemeName = "Default" ; keep theme note\r\n'
+BASE_CONFIG = (b'; original config\r\n[General]\r\nBackgroundAnimation = 1 # keep note\r\n'
+               b'Language = en_US\r\n[Theme]\r\nThemeName = "Default" # keep theme note\r\n'
                b'[SystemParam]\r\nButtonPreference = 1\r\n[Graphics]\r\nFrameSkip = 0\r\n')
 
 
@@ -112,8 +112,8 @@ class ThemeTransactionTests(unittest.TestCase):
         preview = self.preview()
         installed = self.apply(preview)
         data = self.config.read_bytes()
-        self.assertIn(b'ThemeName = "Spruce Midnight" ; keep theme note\r\n', data)
-        self.assertIn(b'BackgroundAnimation = 3 ; keep note\r\n', data)
+        self.assertIn(b'ThemeName = "Spruce Midnight" # keep theme note\r\n', data)
+        self.assertIn(b'BackgroundAnimation = 3 # keep note\r\n', data)
         self.assertIn(b'ButtonPreference = 1\r\n[Graphics]\r\nFrameSkip = 0\r\n', data)
         self.assertEqual((self.sd / THEME_DIRECTORY / THEME_FILENAME).read_bytes(), THEME_SOURCE.read_bytes())
         self.assertFalse(installed["gameplay_changed"])
@@ -125,6 +125,38 @@ class ThemeTransactionTests(unittest.TestCase):
         self.apply(self.preview(THEME_NAMES[1], False))
         self.assertIn(b'BackgroundAnimation = 0 ', self.config.read_bytes())
         self.assertIn(THEME_NAMES[1].encode(), self.config.read_bytes())
+        self.assertFalse(self.manager.status()["motion"])
+
+    def test_ppsspp_case_insensitive_names_and_hash_comments_are_preserved(self):
+        original = BASE_CONFIG.replace(b'[General]', b'[general]').replace(b'[Theme]', b'[THEME]').replace(b'ThemeName', b'themename')
+        self.config.write_bytes(original)
+        installed = self.apply()
+        data = self.config.read_bytes()
+        self.assertIn(b'[THEME]\r\nthemename = "Spruce Midnight" # keep theme note', data)
+        self.assertEqual(data.lower().count(b'[theme]'), 1)
+        self.assertEqual(self.manager.status()["theme"], THEME_NAMES[0])
+        self.assertTrue(self.manager.status()["motion"])
+        self.undo(installed)
+        self.assertEqual(self.config.read_bytes(), original)
+
+    def test_missing_background_setting_reports_pinned_engine_default(self):
+        self.config.write_bytes(b'[Theme]\nThemeName = "Default"\n')
+        self.assertTrue(self.manager.status()["motion"])
+
+    def test_duplicate_case_variant_theme_keys_are_rejected_before_preview(self):
+        for addition in (b'themename = "Other"\r\n', b'[theme]\r\nThemeName = "Other"\r\n'):
+            self.config.write_bytes(BASE_CONFIG + addition if addition.startswith(b'[') else BASE_CONFIG.replace(b'[SystemParam]', addition + b'[SystemParam]'))
+            with self.subTest(addition=addition), self.assertRaises(SettingsError):
+                self.preview()
+
+    def test_semicolon_is_owned_value_data_and_is_not_preserved_as_inline_comment(self):
+        original = BASE_CONFIG.replace(b' # keep note', b' ; not an engine comment').replace(b' # keep theme note', b' ; not an engine comment')
+        self.config.write_bytes(original)
+        installed = self.apply()
+        self.assertIn(b'BackgroundAnimation = 3\r\n', self.config.read_bytes())
+        self.assertIn(b'ThemeName = "Spruce Midnight"\r\n', self.config.read_bytes())
+        self.undo(installed)
+        self.assertEqual(self.config.read_bytes(), original)
 
     def test_undo_restores_owned_settings_and_keeps_later_unrelated_edits(self):
         installed = self.apply()

@@ -52,11 +52,20 @@ def maybe_run_main_menu(main_menu: Any, *, context: Any = None, health: Frontend
     if context is None:
         if _factory is None:
             return False
-        context = _factory(main_menu)
+        try:
+            context = _factory(main_menu)
+        except ContractError as exc:
+            # The trusted bootstrap only captures initialized references and
+            # reads evidence. A not-yet-ready model or changed owner leaves
+            # the current classic MainMenu available without loading views.
+            report = getattr(_factory, "report_error", None)
+            if callable(report):
+                report(exc.code)
+            return False
     # The recovery choice happened before this optional source adapter import.
     from psp_shell.embedded import EmbeddedRunner, qualification
     try:
-        if Path(context.state_dir).absolute() != health.directory:
+        if Path(context.state_dir).resolve() != health.directory.resolve():
             raise ContractError("INVALID_CONTEXT", "Bound frontend state does not match the recovery selector")
         qualification(context).assert_safe()
     except ContractError as exc:

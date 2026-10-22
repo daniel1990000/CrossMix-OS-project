@@ -16,8 +16,9 @@ from typing import Callable
 import uuid
 
 from .controls import (
-    _assignment, _configuration_bytes, _configuration_text, _file_digest,
-    _process_running, _semantic_token, _under, set_config_token,
+    _ppsspp_assignment as _assignment, _configuration_bytes, _configuration_text, _file_digest,
+    _process_running, _ppsspp_semantic_token as _semantic_token, _under,
+    set_ppsspp_config_token as set_config_token,
 )
 from .settings import (
     SettingsError, _Transactions, _atomic_write, _check_generation, _directory,
@@ -188,6 +189,8 @@ class PPSSPPThemeManager:
         profile = self._profile()
         data = _configuration_text(_read(profile["_config"]))
         selection = _assignment(data, "Theme", "ThemeName")
+        animation = _assignment(data, "General", "BackgroundAnimation")
+        animation = _semantic_token(animation["token"]) if animation else "1"
         available, gate = True, ""
         try:
             self._profile(writable=True)
@@ -195,6 +198,7 @@ class PPSSPPThemeManager:
             available, gate = False, error.code
         return {"profile_id": profile["id"], "generation": self._state()["generation"],
                 "theme": _semantic_token(selection["token"]) if selection else "Default",
+                "motion": {"0": False, "1": True, "2": True, "3": True}.get(animation),
                 "available_themes": list(THEME_NAMES), "adoption_available": available,
                 "gate_reason": gate, "emulator_binary_changed": False}
 

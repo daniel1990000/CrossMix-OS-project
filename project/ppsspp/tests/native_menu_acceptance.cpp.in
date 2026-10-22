@@ -3,6 +3,7 @@
 // Copyright (c) PPSSPP Project (inserted upstream code); project additions 2026.
 #include <algorithm>
 #include <cassert>
+#include <cstdint>
 #include <iostream>
 #include <map>
 #include <set>
@@ -20,6 +21,15 @@
 /*@@INPUT_DEVICE@@*/
 /*@@INPUT_MAPPING@@*/
 /*@@PSP_CONSTANTS@@*/
+using u32 = uint32_t;
+using s32 = int32_t;
+/*@@VIRTUAL_KEYS@@*/
+/*@@UI_STATE@@*/
+/*@@KEY_FLAGS@@*/
+constexpr bool operator&(KeyInputFlags a, KeyInputFlags b) {
+    return (static_cast<int>(a) & static_cast<int>(b)) != 0;
+}
+/*@@KEY_INPUT@@*/
 
 enum SDL_GameControllerButton {
     SDL_CONTROLLER_BUTTON_INVALID = -1,
@@ -41,6 +51,8 @@ public:
 struct Config {
 /*@@CONFIG_MEMBERS@@*/
     int iButtonPreference = PSP_SYSTEMPARAM_BUTTON_CROSS;
+    bool bForceVR = false;
+    bool bPauseExitsEmulator = false;
 } g_Config;
 
 namespace KeyMap {
@@ -71,11 +83,35 @@ void SetTabLeftRightKeys(const std::vector<InputMapping> &left, const std::vecto
 }
 void SetInfoKeys(const std::vector<InputMapping> &info) { capturedInfo = info; }
 void SetAnalogFlipY(const std::unordered_map<InputDeviceID, int> &flips) { capturedFlips = flips; }
+bool InputMappingToPspButton(const InputMapping &input, std::vector<int> *buttons) {
+    for (const auto &[button, mappings] : gameplay) {
+        if (std::find(mappings.begin(), mappings.end(), input) != mappings.end()) buttons->push_back(button);
+    }
+    return !buttons->empty();
+}
 
 /*@@INSERT_MAPPING@@*/
 /*@@HAS_MAIN_BUTTON@@*/
 /*@@UPDATE_MENU@@*/
 }  // namespace KeyMap
+
+// Narrow NativeKey platform stubs. The complete production event function is
+// inserted below, including the original PauseExitsEmulator shortcut.
+int exitRequests = 0;
+GlobalUIState currentUIState = UISTATE_MENU;
+GlobalUIState GetUIState() { return currentUIState; }
+double time_now_d() { return 0.0; }
+bool IsVREnabled() { return false; }
+bool UpdateVRKeys(const KeyInput &) { return true; }
+void System_ExitApp() { ++exitRequests; }
+void ProcessWheelRelease(int, double, bool) {}
+namespace HLEPlugins { void SetKey(int, bool) {} }
+struct StubScreenManager {
+    int calls = 0;
+    bool key(const KeyInput &) { ++calls; return true; }
+} screenManager;
+StubScreenManager *g_screenManager = &screenManager;
+/*@@NATIVE_KEY@@*/
 
 using namespace KeyMap;
 using ExactKeys = std::vector<std::pair<int, int>>;
@@ -109,6 +145,9 @@ void reset() {
         {CTRL_RIGHT, {{DEVICE_ID_PAD_0, NKCODE_DPAD_RIGHT}}},
     };
     g_seenDeviceIds = {DEVICE_ID_PAD_0, DEVICE_ID_PAD_1};
+    exitRequests = 0;
+    screenManager.calls = 0;
+    currentUIState = UISTATE_MENU;
 }
 void assertUnchanged(const std::map<int, ExactKeys> &saved, int preference) {
     assert(exactGameplay() == saved);
@@ -188,6 +227,68 @@ int main(int argc, char **argv) {
         assert(!ResolveProjectNativeMenuKeys(true, "south", "east", nullptr, &back));
         assert(!ResolveProjectNativeMenuKeys(true, "south", "east", &confirm, nullptr));
         assert(confirm == 123 && back == 456);
+    } else if (scenario == "navigation-collisions") {
+        for (int action : {CTRL_TRIANGLE, CTRL_LTRIGGER, CTRL_RTRIGGER, CTRL_UP, CTRL_DOWN, CTRL_LEFT, CTRL_RIGHT}) {
+            gameplay[action] = {{DEVICE_ID_PAD_0, south}, {DEVICE_ID_PAD_1, east},
+                                {DEVICE_ID_PAD_0, NKCODE_BUTTON_6}};
+        }
+        const auto remapped = exactGameplay();
+        UpdateNativeMenuKeys();
+        const auto originalInfo = exact(capturedInfo), originalLeft = exact(capturedLeftTab), originalRight = exact(capturedRightTab);
+        const auto originalDpad = capturedDpad;
+        for (bool southConfirm : {true, false}) {
+            g_Config.bProjectIndependentMenuControls = true;
+            g_Config.sProjectNativeMenuConfirm = southConfirm ? "south" : "east";
+            g_Config.sProjectNativeMenuBack = southConfirm ? "east" : "south";
+            UpdateNativeMenuKeys();
+            assert(contains(capturedConfirm, DEVICE_ID_ANY, southConfirm ? south : east));
+            assert(contains(capturedCancel, DEVICE_ID_ANY, southConfirm ? east : south));
+            std::vector<std::vector<InputMapping>> actions = capturedDpad;
+            actions.push_back(capturedInfo); actions.push_back(capturedLeftTab); actions.push_back(capturedRightTab);
+            for (const auto &keys : actions) {
+                assert(!contains(keys, DEVICE_ID_PAD_0, south));
+                assert(!contains(keys, DEVICE_ID_PAD_1, east));
+                assert(contains(keys, DEVICE_ID_PAD_0, NKCODE_BUTTON_6));
+            }
+            assertUnchanged(remapped, PSP_SYSTEMPARAM_BUTTON_CROSS);
+        }
+        for (bool invalid : {true, false}) {
+            g_Config.bProjectIndependentMenuControls = invalid;
+            g_Config.sProjectNativeMenuConfirm = "south";
+            g_Config.sProjectNativeMenuBack = invalid ? "south" : "east";
+            UpdateNativeMenuKeys();
+            assert(exact(capturedInfo) == originalInfo);
+            assert(exact(capturedLeftTab) == originalLeft && exact(capturedRightTab) == originalRight);
+            for (size_t i = 0; i < originalDpad.size(); ++i) assert(exact(capturedDpad[i]) == exact(originalDpad[i]));
+            assertUnchanged(remapped, PSP_SYSTEMPARAM_BUTTON_CROSS);
+        }
+    } else if (scenario == "exit-collision" || scenario == "exit-no-sdl") {
+        gameplay[VIRTKEY_PAUSE] = {{DEVICE_ID_PAD_0, south}, {DEVICE_ID_PAD_1, east},
+                                   {DEVICE_ID_PAD_0, NKCODE_BUTTON_6}};
+        const auto remapped = exactGameplay();
+        g_Config.bPauseExitsEmulator = true;
+        auto press = [](InputDeviceID device, int code) {
+            return NativeKey(KeyInput(device, static_cast<InputKeyCode>(code), KeyInputFlags::DOWN));
+        };
+        for (bool enabled : {true, false}) {
+            g_Config.bProjectIndependentMenuControls = enabled;
+            for (bool valid : {true, false}) {
+                g_Config.sProjectNativeMenuBack = valid ? "east" : "south";
+                for (GlobalUIState state : {UISTATE_MENU, UISTATE_PAUSEMENU, UISTATE_INGAME}) {
+                    currentUIState = state;
+                    exitRequests = 0; screenManager.calls = 0;
+                    assert(press(DEVICE_ID_PAD_0, south));
+                    assert(press(DEVICE_ID_PAD_1, east));
+                    bool reserved = scenario == "exit-collision" && enabled && valid && state != UISTATE_INGAME;
+                    assert(exitRequests == (reserved ? 0 : 2));
+                    assert(screenManager.calls == (reserved ? 2 : 0));
+                    // The unrelated gameplay Pause binding still works everywhere.
+                    assert(press(DEVICE_ID_PAD_0, NKCODE_BUTTON_6));
+                    assert(exitRequests == (reserved ? 1 : 3));
+                    assertUnchanged(remapped, PSP_SYSTEMPARAM_BUTTON_CROSS);
+                }
+            }
+        }
     } else if (scenario == "navigation") {
         UpdateNativeMenuKeys();
         const auto tabsLeft = exact(capturedLeftTab), tabsRight = exact(capturedRightTab), info = exact(capturedInfo);

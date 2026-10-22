@@ -55,14 +55,19 @@ jobs:
             Core/ConfigValues.h
             Core/KeyMap.cpp
             Core/KeyMap.h
+            Core/System.h
             Core/HLE/sceCtrl.h
             Core/HLE/sceUtility.h
             Common/Input/InputState.h
             Common/Input/KeyCodes.h
             Common/UI/PopupScreens.h
             Common/Data/Text/I18n.h
+            Common/Data/Format/IniFile.cpp
+            Common/Data/Text/Parsers.cpp
+            Common/StringUtils.cpp
             SDL/SDLJoystick.cpp
             UI/GameSettingsScreen.cpp
+            UI/NativeApp.cpp
             UI/Theme.cpp
             LICENSE.TXT
             assets/themes

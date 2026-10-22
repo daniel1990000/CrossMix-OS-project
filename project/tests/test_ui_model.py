@@ -268,6 +268,28 @@ class NavigationTests(unittest.TestCase):
         model.handle("favorite")
         self.assertEqual(model.snapshot().dialog.message_page, 0)
 
+    def test_ppsspp_menu_preview_includes_opt_in_and_both_physical_buttons(self):
+        model = NavigationModel()
+        self._settings_item(model, "controls")
+        command = model.handle("confirm")[0]
+        model.receive(command, {"generation": 0, "profiles": [{"profile_id": "ppsspp-test", "writable": True,
+                               "configuration_effective": False, "configured_confirm": None}]})
+        self.assertIn("Ready to configure", model.snapshot().selected_item.subtitle)
+        model.handle("confirm")
+        preview = model.handle("confirm")[0]
+        model.receive(preview, {"profile_id": "ppsspp-test", "preview_id": "p1", "diff": [
+            {"key": "IndependentMenuControls", "before": False, "after": True},
+            {"key": "NativeMenuConfirm", "before": "east", "after": "south"},
+            {"key": "NativeMenuBack", "before": "south", "after": "east"}]})
+        message = model.snapshot().dialog.message
+        self.assertIn("Independent menu controls: Off → On", message)
+        self.assertIn("Confirm button: east → south", message)
+        self.assertIn("Back button: south → east", message)
+        model.handle("back")
+        model.receive(command, {"generation": 1, "profiles": [{"profile_id": "ppsspp-test", "writable": True,
+                               "configuration_effective": True, "configured_confirm": "south"}]})
+        self.assertIn("Confirm: South button", model.snapshot().selected_item.subtitle)
+
     def test_invalid_preferences_are_bounded_and_empty_views_are_actionable(self):
         preferences = Preferences.from_mapping({"text_scale": 1e100, "confirm": "gameplay", "motion": False})
         self.assertEqual(preferences.text_scale, 1.75)

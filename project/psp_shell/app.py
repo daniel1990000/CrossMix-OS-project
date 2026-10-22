@@ -58,11 +58,13 @@ def guard_snapshot_outputs(sd_root, paths):
 
 class Dispatcher:
     """Fixed operation table. No shell endpoint or caller-supplied command."""
-    def __init__(self, backend, settings, state_dir, *, launch_bridge=None, control_adapter=None):
+    def __init__(self, backend, settings, state_dir, *, launch_bridge=None, control_adapter=None,
+                 theme_manager=None):
         self.backend, self.settings = backend, settings
         self.state_dir = Path(state_dir)
         self.launch_bridge = launch_bridge
         self.control_adapter = control_adapter
+        self.theme_manager = theme_manager
         self.pending_launch = None
         self.transitions = deque(maxlen=32)
         self.last_error_code = None
@@ -135,6 +137,22 @@ class Dispatcher:
             if self.control_adapter is None:
                 raise AppError("UNQUALIFIED_CONTROLS", "This preview has no qualified emulator configuration adapter.")
             return getattr(self.control_adapter, action)(params)
+        if method == "appearance.ppsspp.status":
+            self._fields(params, ())
+            if self.theme_manager is not None:
+                return {**self.theme_manager.status(), "preview_available": True}
+            from .ppsspp import THEME_NAMES
+            return {"generation": 0, "theme": None, "motion": None,
+                    "available_themes": list(THEME_NAMES), "preview_available": False,
+                    "adoption_available": False, "gate_reason": "UNQUALIFIED_THEME",
+                    "reason": "PPSSPP appearance needs a verified installed version and a stopped emulator."}
+        if method.startswith("appearance.ppsspp."):
+            action = method[len("appearance.ppsspp."):]
+            if action not in ("preview", "apply", "undo"):
+                raise AppError("UNKNOWN_METHOD", "This appearance action is not supported.")
+            if self.theme_manager is None:
+                raise AppError("UNQUALIFIED_THEME", "PPSSPP appearance is unavailable until the installed emulator is verified.")
+            return getattr(self.theme_manager, action)(params)
         if method == "library.systems":
             self._fields(params, ())
             return self.backend.systems()
@@ -283,11 +301,12 @@ def run_preview(args, backend=None):
     elif args.screen == "tools":
         for _ in range(2):
             synchronous(model.handle("right"))
-    elif args.screen in ("settings", "controls"):
+    elif args.screen in ("settings", "controls", "appearance"):
         for _ in range(3):
             synchronous(model.handle("right"))
-        if args.screen == "controls":
-            for _ in range(5):
+        if args.screen in ("controls", "appearance"):
+            target = "controls" if args.screen == "controls" else "appearance"
+            while model.snapshot().selected_item.id != target:
                 synchronous(model.handle("down"))
             synchronous(model.handle("confirm"))
     elif args.screen == "search":
@@ -406,7 +425,7 @@ def main(argv=None):
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--frames", type=int, default=0, help="Exit after N rendered frames; zero runs interactively")
     parser.add_argument("--frame-time", type=float, default=0.0, help="Fixed animation time for deterministic headless screenshots")
-    parser.add_argument("--screen", choices=("home", "library", "continue", "tools", "settings", "controls", "search", "error"), default="home")
+    parser.add_argument("--screen", choices=("home", "library", "continue", "tools", "settings", "controls", "appearance", "search", "error"), default="home")
     parser.add_argument("--actions", help="Comma-separated navigation actions for a recorded preview")
     parser.add_argument("--screenshot")
     parser.add_argument("--report")

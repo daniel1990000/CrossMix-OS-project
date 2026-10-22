@@ -127,6 +127,7 @@ class PatchedSourceTests(unittest.TestCase):
         cls._build_keymap()
         cls._build_settings()
         cls._build_ui()
+        cls._build_ini()
 
     @classmethod
     def _compile(cls, name: str, substitutions: dict[str, str], *, sdl: bool = True):
@@ -162,10 +163,17 @@ class PatchedSourceTests(unittest.TestCase):
         sdl = (cls.work / "SDL/SDLJoystick.cpp").read_text()
         ctrl = (cls.work / "Core/HLE/sceCtrl.h").read_text()
         utility = (cls.work / "Core/HLE/sceUtility.h").read_text()
+        keymap_header = (cls.work / "Core/KeyMap.h").read_text()
+        system = (cls.work / "Core/System.h").read_text()
+        native = (cls.work / "UI/NativeApp.cpp").read_text()
         substitutions = {
             "INPUT_DEVICE": block(state, "enum InputDeviceID", semicolon=True),
             "INPUT_MAPPING": state[state.index("static const int AXIS_BIND_NKCODE_START"):
                                    state.index("// Be careful about changing these values")],
+            "VIRTUAL_KEYS": block(keymap_header, "enum VirtKey", semicolon=True),
+            "UI_STATE": block(system, "enum GlobalUIState", semicolon=True),
+            "KEY_FLAGS": block(state, "enum class KeyInputFlags", semicolon=True),
+            "KEY_INPUT": block(state, "struct KeyInput", semicolon=True),
             "PSP_CONSTANTS": "\n".join(line for line in (ctrl + utility).splitlines()
                                           if re.match(r"#define (CTRL_|PSP_SYSTEMPARAM_BUTTON_)", line)),
             "CONFIG_MEMBERS": cls._config_members(),
@@ -173,6 +181,7 @@ class PatchedSourceTests(unittest.TestCase):
             "INSERT_MAPPING": block(source, "static void InsertIntoVector"),
             "HAS_MAIN_BUTTON": block(source, "bool HasMainButtonMapping"),
             "UPDATE_MENU": block(source, "void UpdateNativeMenuKeys()"),
+            "NATIVE_KEY": block(native, "bool NativeKey(const KeyInput &key)"),
         }
         cls.keymap = cls._compile("native_menu_acceptance", substitutions)
         cls.keymap_no_sdl = cls._compile("native_menu_acceptance", substitutions, sdl=False)
@@ -212,6 +221,18 @@ class PatchedSourceTests(unittest.TestCase):
             "PROJECT_UI": source[start:end],
         })
 
+    @classmethod
+    def _build_ini(cls):
+        ini = (cls.work / "Common/Data/Format/IniFile.cpp").read_text()
+        parsers = (cls.work / "Common/Data/Text/Parsers.cpp").read_text()
+        strings = (cls.work / "Common/StringUtils.cpp").read_text()
+        cls.ini_binary = cls._compile("ini_acceptance", {
+            "STRIP_SPACES": block(strings, "std::string_view StripSpaces"),
+            "STRIP_QUOTES": block(strings, "std::string_view StripQuotes"),
+            "PARSE_VALUE": block(ini, "static bool ParseLineValue"),
+            "PARSE_BOOL": block(parsers, "bool TryParse(const std::string &str, bool *const output)"),
+        })
+
     def _run(self, binary: Path, scenario: str):
         result = checked([str(binary), scenario], cwd=self.work)
         self.assertIn("PASS " + scenario, result.stdout)
@@ -231,11 +252,23 @@ class PatchedSourceTests(unittest.TestCase):
     def test_keyboard_mouse_and_other_navigation_preserved(self):
         self._run(self.keymap, "navigation")
 
+    def test_reserved_pair_cannot_also_trigger_info_tabs_or_direction(self):
+        self._run(self.keymap, "navigation-collisions")
+
+    def test_pause_remap_cannot_exit_from_native_confirm_or_back(self):
+        self._run(self.keymap, "exit-collision")
+
+    def test_non_sdl_pause_shortcut_retains_original_behavior(self):
+        self._run(self.keymap_no_sdl, "exit-no-sdl")
+
     def test_non_sdl_backend_keeps_original_policy(self):
         self._run(self.keymap_no_sdl, "no-sdl")
 
     def test_actual_config_setting_read_write_defaults_and_scoping(self):
         self._run(self.config_binary, "serialization")
+
+    def test_actual_ini_bool_comment_and_literal_quote_semantics(self):
+        self._run(self.ini_binary, "ini-values")
 
     def test_native_ui_actions_set_complementary_pair_and_refresh(self):
         self._run(self.ui_binary, "widgets")

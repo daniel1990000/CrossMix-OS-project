@@ -360,6 +360,18 @@ class FrontendHealth:
             self._own_attempt = None
             return self._save(value)
 
+    def foreground_identity(self) -> dict[str, Any] | None:
+        """Read the pending ownership identity without clearing or qualifying it.
+
+        A source-owner return adapter must match this entire identity. It is
+        only a correlation record, never evidence that a game actually ended.
+        """
+        with self._lock():
+            value = self._foreground_record()
+            if value is None or value["state"] != "delegating":
+                return None
+            return {key: value[key] for key in ("token", "request_id", "boot_id", "generation")}
+
     def begin_foreground(self, request_id: str) -> str:
         if not isinstance(request_id, str) or not request_id or len(request_id) > 192:
             raise ContractError("INVALID_REQUEST", "Invalid foreground handoff request")
@@ -404,13 +416,16 @@ class FrontendHealth:
             self._own_attempt = None
             return self._save(value)
 
-    def clear_foreground(self, token: str, *, verified: bool = False) -> None:
+    def clear_foreground(self, token: str, *, verified: bool = False,
+                         expected_generation: int | None = None) -> None:
         if verified is not True:
             raise ContractError("RETURN_UNVERIFIED", "A verified spruce return is required to clear foreground ownership")
         with self._lock():
             value = self._foreground_record()
             if value is None or value["token"] != token or value["state"] != "delegating" or value["boot_id"] != self.boot_id:
                 raise ContractError("STALE_HANDOFF", "Foreground completion does not match its saved ownership token")
+            if expected_generation is not None and (type(expected_generation) is not int or value["generation"] != expected_generation):
+                raise ContractError("STALE_HANDOFF", "Foreground generation changed while collecting its return")
             if value["generation"] >= _MAX_GENERATION:
                 raise ContractError("GENERATION_LIMIT", "Foreground generation limit reached")
             value.update(state="idle", generation=value["generation"] + 1)

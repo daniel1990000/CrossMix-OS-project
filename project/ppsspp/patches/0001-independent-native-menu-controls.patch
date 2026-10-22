@@ -47,7 +47,7 @@
  
  namespace KeyMap {
  
-@@ -128,8 +129,20 @@
+@@ -128,8 +129,21 @@
  	const int confirmKey = confirmWithCross ? CTRL_CROSS : CTRL_CIRCLE;
  	const int cancelKey = confirmWithCross ? CTRL_CIRCLE : CTRL_CROSS;
  
@@ -55,9 +55,10 @@
 -	SingleInputMappingFromPspButton(cancelKey, &cancelKeys, true);
 +	int physicalConfirmKey = 0;
 +	int physicalBackKey = 0;
-+	if (ResolveProjectNativeMenuKeys(g_Config.bProjectIndependentMenuControls,
++	const bool independentMenu = ResolveProjectNativeMenuKeys(g_Config.bProjectIndependentMenuControls,
 +		g_Config.sProjectNativeMenuConfirm, g_Config.sProjectNativeMenuBack,
-+		&physicalConfirmKey, &physicalBackKey)) {
++		&physicalConfirmKey, &physicalBackKey);
++	if (independentMenu) {
 +		// SDL's positional south/east buttons. Do not mutate g_controllerMap,
 +		// controls.ini, iButtonPreference, or the PSP system setting.
 +		confirmKeys.emplace_back(DEVICE_ID_ANY, physicalConfirmKey);
@@ -70,6 +71,26 @@
  	SingleInputMappingFromPspButton(CTRL_TRIANGLE, &infoKeys, true);
  	SingleInputMappingFromPspButton(CTRL_LTRIGGER, &tabLeft, true);
  	SingleInputMappingFromPspButton(CTRL_RTRIGGER, &tabRight, true);
+@@ -193,6 +207,19 @@
+ 		INFO_LOG(Log::System, "Cancel key: %s", MultiInputMapping(cancelKeys[i]).ToVisualString().c_str());
+ 	}
+ 	*/
++
++	if (independentMenu) {
++		// A gameplay remap may put Triangle, a shoulder or a direction on the
++		// physical Confirm/Back pair. Reserve those keys in native menus so a
++		// single press cannot also change focus, tabs or the information panel.
++		// This only filters the local native vectors, never gameplay mappings.
++		for (std::vector<InputMapping> *keys : {&infoKeys, &tabLeft, &tabRight,
++			&upKeys, &downKeys, &leftKeys, &rightKeys}) {
++			keys->erase(std::remove_if(keys->begin(), keys->end(), [&](const InputMapping &mapping) {
++				return mapping.keyCode == physicalConfirmKey || mapping.keyCode == physicalBackKey;
++			}), keys->end());
++		}
++	}
+ 
+ 	SetDPadKeys(upKeys, downKeys, leftKeys, rightKeys);
+ 	SetConfirmCancelKeys(confirmKeys, cancelKeys);
 --- /dev/null
 +++ b/Core/ProjectNativeMenuControls.h
 @@ -0,0 +1,39 @@
@@ -142,3 +163,32 @@
  	controlsSettings->Add(new Choice(co->T("Control mapping")))->OnClick.Add([this](UI::EventParams &e) {
  		screenManager()->push(new ControlMappingScreen(gamePath_));
  	});
+--- a/UI/NativeApp.cpp
++++ b/UI/NativeApp.cpp
+@@ -96,6 +96,7 @@
+ #include "Core/FileLoaders/DiskCachingFileLoader.h"
+ #include "Core/FrameTiming.h"
+ #include "Core/KeyMap.h"
++#include "Core/ProjectNativeMenuControls.h"
+ #include "Core/Reporting.h"
+ #include "Core/RetroAchievements.h"
+ #include "Core/SaveState.h"
+@@ -1296,7 +1297,17 @@
+ 
+ 	// INFO_LOG(Log::System, "Key code: %i flags: %i", key.keyCode, key.flags);
+ #if !defined(MOBILE_DEVICE)
+-	if (g_Config.bPauseExitsEmulator) {
++	int physicalConfirmKey = 0;
++	int physicalBackKey = 0;
++	const GlobalUIState menuState = GetUIState();
++	const bool independentMenuButton = (menuState == UISTATE_MENU || menuState == UISTATE_PAUSEMENU) &&
++		KeyMap::ResolveProjectNativeMenuKeys(g_Config.bProjectIndependentMenuControls,
++			g_Config.sProjectNativeMenuConfirm, g_Config.sProjectNativeMenuBack,
++			&physicalConfirmKey, &physicalBackKey) &&
++		(key.keyCode == physicalConfirmKey || key.keyCode == physicalBackKey);
++	// A gameplay Pause remap must not turn native Confirm/Back into Exit.
++	// Preserve that hotkey during gameplay and with the extension disabled.
++	if (g_Config.bPauseExitsEmulator && !independentMenuButton) {
+ 		std::vector<int> pspKeys;
+ 		pspKeys.clear();
+ 		if (KeyMap::InputMappingToPspButton(InputMapping(key.deviceId, key.keyCode), &pspKeys)) {

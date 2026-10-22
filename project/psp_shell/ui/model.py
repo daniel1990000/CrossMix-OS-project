@@ -198,6 +198,8 @@ class NavigationModel:
         self._settings_view = "root"
         self._controls_generation = 0
         self._controls_transaction = ""
+        self._appearance_generation = 0
+        self._appearance_transaction = ""
         self._capabilities: Mapping[str, Any] = {}
         self._snapshot: Mapping[str, Any] = {}
         self._status = ""
@@ -399,8 +401,12 @@ class NavigationModel:
                 error = entry.get("error", {})
                 reason = _text(error.get("message", ""), 2048) if isinstance(error, Mapping) else ""
                 surface = _text(entry.get("surface", ""), 128)
+                configured = entry.get("configured_confirm")
+                state = (("Confirm: " + self._format_preference(configured))
+                         if entry.get("configuration_effective") is True and configured in ("south", "east")
+                         else "Ready to configure" if writable else "Unavailable on this profile")
                 items.append(UIItem(identifier, _text(entry.get("label", identifier)),
-                                    (surface + " · " if surface else "") + ("Menu adapter ready" if writable else "Unavailable on this profile"),
+                                    (surface + " · " if surface else "") + state,
                                     "control_profile", available=writable, reason=reason))
             if not items:
                 items.append(_menu("controls_info", "No qualified menu profiles", _text(result.get("reason")) or "Your existing emulator mappings remain unchanged"))
@@ -410,11 +416,13 @@ class NavigationModel:
         elif context == "controls_preview":
             diff = result.get("diff", [])
             lines = [_text(result.get("profile_id"), 256)]
-            for entry in diff[:2]:
+            for entry in diff[:3]:
                 before = entry.get("before")
                 after = entry.get("after")
                 show = lambda value: "Unset" if value is None else "On" if value is True else "Off" if value is False else str(value)
-                lines.append(f"{_text(entry.get('key'))}: {show(before)} → {show(after)}")
+                label = {"IndependentMenuControls": "Independent menu controls",
+                         "NativeMenuConfirm": "Confirm button", "NativeMenuBack": "Back button"}.get(entry.get("key"), _text(entry.get("key")))
+                lines.append(f"{label}: {show(before)} → {show(after)}")
             lines.append("Gameplay mappings stay unchanged. Apply only while the emulator is stopped.")
             self._dialog = Dialog("Review emulator menu changes", "\n".join(lines),
                 (DialogChoice("Apply menu changes", "request", "controls.apply", {
@@ -426,6 +434,43 @@ class NavigationModel:
             self._controls_transaction = _text(result.get("transaction_id"), 256) if context == "controls_apply" else ""
             self.notice("Emulator menu controls updated. Gameplay mappings were preserved." if context == "controls_apply" else "The previous emulator menu controls were restored.")
             return [self._request("controls.capabilities", context="controls")]
+        elif context == "appearance":
+            self._settings_view = "appearance"
+            generation = result.get("generation", 0)
+            self._appearance_generation = generation if type(generation) is int and generation >= 0 else 0
+            current = _text(result.get("theme")) or "Unverified"
+            preview_available = result.get("preview_available") is True
+            reason = _text(result.get("reason")) or "The installed PPSSPP version, paths and configuration writers need verification."
+            items = [UIItem("appearance_match", "Match this interface", "Current PPSSPP theme: " + current,
+                            "appearance_profile", available=preview_available, reason=reason)]
+            if self._appearance_transaction:
+                items.append(_menu("appearance_undo", "Undo last PPSSPP appearance change", "Restore the previous theme and background motion"))
+            self._pages[3].replace(items)
+        elif context == "appearance_preview":
+            if result.get("adoption_available") is not True:
+                self._dialog = Dialog("PPSSPP appearance unavailable", "The installed emulator and its configuration writers must be verified and stopped before applying appearance changes.")
+                return []
+            theme = _text(command.params.get("theme"))
+            motion = command.params.get("motion") is True
+            message = theme + "\n" + ("Animated waves" if motion else "Still background")
+            overwrite = result.get("overwrites_existing_theme") is True
+            if overwrite:
+                message += "\nAn existing Spruce Midnight palette will be replaced. A backup will be kept for Undo."
+            message += "\nPPSSPP will use these choices next time it starts."
+            self._dialog = Dialog("Review PPSSPP appearance", message,
+                (DialogChoice("Replace palette and apply" if overwrite else "Apply appearance", "request", "appearance.ppsspp.apply", {
+                    "preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-appearance-apply-{command.serial}",
+                    "expected_generation": self._appearance_generation, "confirm_overwrite": overwrite}, "appearance_apply"),
+                 DialogChoice("Cancel")), selected=1 if overwrite else 0)
+        elif context in ("appearance_apply", "appearance_undo"):
+            if result.get("applied") is not True:
+                raise ValueError("The PPSSPP appearance change was not confirmed")
+            generation = result.get("generation", self._appearance_generation)
+            if type(generation) is int and generation >= 0:
+                self._appearance_generation = generation
+            self._appearance_transaction = _text(result.get("transaction_id"), 256) if context == "appearance_apply" else ""
+            self.notice("PPSSPP appearance updated for its next start." if context == "appearance_apply" else "The previous PPSSPP appearance was restored.")
+            return [self._request("appearance.ppsspp.status", context="appearance")]
         return []
 
     def error(self, command: UICommand | None, code: str, message: str) -> None:
@@ -453,6 +498,7 @@ class NavigationModel:
         items = [UIItem(key, self._preference_label(key), self._format_preference(getattr(self.preferences, key)), "setting")
                  for key in ("confirm", "motion", "sound", "text_scale", "high_contrast")]
         items.extend((_menu("controls", "Emulator menu controls", "Keep gameplay mappings separate"),
+                      _menu("appearance", "PPSSPP appearance", "Match the theme, contrast and background motion"),
                       _menu("device", "System status", "Capabilities and firmware availability"),
                       _menu("power_usb", "Power & USB", "Use the verified spruce handoff"),
                       _menu("support", "Save diagnostic report", "Redacted component and failure information"),
@@ -506,6 +552,15 @@ class NavigationModel:
                     DialogChoice("South Confirm", "request", "controls.preview", {"profile_id": item.id, "confirm": "south", "expected_generation": self._controls_generation}, "controls_preview"),
                     DialogChoice("East Confirm", "request", "controls.preview", {"profile_id": item.id, "confirm": "east", "expected_generation": self._controls_generation}, "controls_preview"),
                     DialogChoice("Cancel")))
+        elif item.kind == "appearance_profile":
+            if not item.available:
+                self._dialog = Dialog("PPSSPP appearance unavailable", item.reason)
+            else:
+                from ..ppsspp import THEME_NAMES
+                return [self._request("appearance.ppsspp.preview", {
+                    "theme": THEME_NAMES[1 if self.preferences.high_contrast else 0],
+                    "motion": self.preferences.motion,
+                    "expected_generation": self._appearance_generation}, "appearance_preview")]
         elif item.kind == "setting":
             value = getattr(self.preferences, item.id)
             if isinstance(value, bool):
@@ -532,6 +587,12 @@ class NavigationModel:
                         "request_id": f"ui-{self._session_id}-undo-{self._serial + 1}", "expected_generation": self.generation}, "undo")]
         elif item.id == "controls":
             return [self._request("controls.capabilities", context="controls")]
+        elif item.id == "appearance":
+            return [self._request("appearance.ppsspp.status", context="appearance")]
+        elif item.id == "appearance_undo":
+            return [self._request("appearance.ppsspp.undo", {"transaction_id": self._appearance_transaction,
+                        "request_id": f"ui-{self._session_id}-appearance-undo-{self._serial + 1}",
+                        "expected_generation": self._appearance_generation}, "appearance_undo")]
         elif item.id == "controls_info":
             self._dialog = Dialog("Menu controls keep games intact", "No installed emulator profile is qualified for this action. "
                                   "RetroArch can expose independent menu controls; PPSSPP needs a verified independent mapping. "
@@ -673,7 +734,8 @@ class NavigationModel:
             title, breadcrumb = "Your tools, together", "Tools"
             empty = "No app entries were found. Your installed tools remain available in classic spruce."
         elif self.category == 3:
-            title, breadcrumb = ("Emulator menu controls", "Settings  /  Controls") if self._settings_view == "controls" else ("Make it yours", "Settings")
+            title, breadcrumb = {"controls": ("Emulator menu controls", "Settings  /  Controls"),
+                                 "appearance": ("PPSSPP appearance", "Settings  /  Appearance")}.get(self._settings_view, ("Make it yours", "Settings"))
             empty = "No emulator menu profile is qualified." if self._settings_view == "controls" else "Settings are unavailable. Return to the classic interface to check your configuration."
         else:
             title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results"}.get(self._games_view, self._system_label)
