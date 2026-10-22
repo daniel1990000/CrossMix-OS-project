@@ -1,0 +1,16 @@
+Continue the TrimUI Smart Pro project from the latest GitHub handover. Do the work autonomously; do not restart planning or ask me to repeat the project.
+
+Repository: https://github.com/daniel1990000/CrossMix-OS-project
+Branch: build/spruce-psp-experience
+Draft PR: https://github.com/daniel1990000/CrossMix-OS-project/pull/1
+Handover: https://github.com/daniel1990000/CrossMix-OS-project/blob/build/spruce-psp-experience/HANDOVER.md
+
+Read AGENTS.md, HANDOVER.md, project/README.md and the active part of TRIMUI_PLAN.md first. The target is the ORIGINAL TrimUI Smart Pro TG5040, extending pinned spruceOS v4.5.4/PyUI. CrossMix is historical reference only. Follow the repository's parallel-agent instructions with explicit file ownership.
+
+Verified software commit: 42c83f699225a57251e9322f351fbda72c053830. All 527 checks pass with zero skips, and GitHub Actions run 39810880610 passes with uploaded host-preview-evidence. Later documentation-only commits may follow it. Full private PPSSPP/FFmpeg and RetroArch/IGM builds pass their 16-object and 23-object SDK audits. Read the evidence for exact binary/source hashes. Dev4 original-only artifacts, the verified source review kit and an empty 13-area device acceptance session are prepared; workspace paths may need rebuilding after environment replacement.
+
+The owner confirmed on 22 October that an original Smart Pro exists but was unavailable for tests that day. Do not assume it is connected now. The next milestone is original-device acceptance using project/docs/device-test-runbook.md: installed identities and writer inventory, spare-card/internal-launcher/scene restore, input/rendering, launch/return, successful and failed saves, Resume/load, power/sleep/USB, storage interruptions and selected ports. Keep host fixtures, cross-builds and physical observations distinct.
+
+Preserve existing initialized PyUI models, launcher paths and hardware authorities. Never clear uncertain ownership to start another UI, overwrite newer saves, replace installed engines or enable shipped qualification flags without the corresponding reviewed evidence. Native binaries/full recipe archives stay private. The author notification is prepared but UNSENT; source-use and recipe/SDK redistribution review remain open. Do not contact anyone without my explicit send instruction.
+
+Continue useful independent work if hardware is unavailable. Save changes, actual validation, blockers and the next concrete steps on GitHub, and refresh HANDOVER.md before stopping.

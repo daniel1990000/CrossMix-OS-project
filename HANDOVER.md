@@ -6,7 +6,15 @@ The current checkpoint completes the host software integration, common settings,
 
 All **527 host checks pass with zero skips or failures**: 466 Python/SDL/source-integration checks and 61 PPSSPP C++/build-tool checks. The **dev4** original-only development artifacts pass signature/inventory verification, deterministic rebuilds, installed-payload rendering and fixture activation/rollback.
 
-**The owner has an original Smart Pro, but it is unavailable for testing today.** Physical acceptance has not been performed. PyUI notification delivery and exact recipe/SDK redistribution review remain open. Installed emulators are unchanged; runtime/profile activation stays disabled, and engine binaries/full recipe archives stay private.
+**On 22 October 2026, the owner confirmed an original Smart Pro is available, but not for testing that day.** Physical acceptance has not been performed. PyUI notification delivery and exact recipe/SDK redistribution review remain open. Installed emulators are unchanged; runtime/profile activation stays disabled, and engine binaries/full recipe archives stay private.
+
+## Latest verified GitHub checkpoint
+
+- Software/build commit: [`42c83f699225a57251e9322f351fbda72c053830`](https://github.com/daniel1990000/CrossMix-OS-project/commit/42c83f699225a57251e9322f351fbda72c053830).
+- [GitHub Actions run 39810880610](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39810880610): **success**, including all 527 checks, development packaging and artifact upload. Host job `119936465324` reports 466 and 61 tests, with zero skips.
+- [Download `host-preview-evidence`](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39810880610/artifacts/12440875335), artifact ID `12440875335`, SHA256 `53f50c8691d8059baa5884b146f60a7fef41e0dccd31b1e09d55fafce29bf200`. It contains the original-only preview, scoped dev4 overlay, original source ZIP, checksums and build report. No native engine or SDK binary is included. GitHub currently lists expiry as 20 January 2027; rebuild from source if unavailable.
+- [Draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) records final scope, validation and remaining external evidence. It is open and unmerged.
+- [Next-chat prompt](NEXT_CHAT_PROMPT.txt) is ready to paste into a new chat. Documentation-only commits after the software SHA above do not change the tested code; run the checks again after implementation changes.
 
 ## User direction and start point
 
@@ -19,7 +27,7 @@ A lightweight checkout avoids the large historical payload:
 ```sh
 git clone --filter=blob:none --sparse --branch build/spruce-psp-experience https://github.com/daniel1990000/CrossMix-OS-project.git trimui
 cd trimui
-git sparse-checkout set --no-cone /project/ /.github/workflows/ /docs/ /HANDOVER.md /AGENTS.md /TRIMUI_PLAN.md /README.md /.gitignore /.gitattributes
+git sparse-checkout set --no-cone /project/ /.github/workflows/ /docs/ /HANDOVER.md /NEXT_CHAT_PROMPT.txt /AGENTS.md /TRIMUI_PLAN.md /README.md /.gitignore /.gitattributes
 ```
 
 ## Implemented source
