@@ -59,6 +59,27 @@
   },
   "device_or_emulator_binary_changed": false,
   "device_performance_claim": false,
+  "final_ci": {
+    "artifact": {
+      "bytes": 4710554,
+      "id": 12445751282,
+      "sha256": "764c8ed367185094a3c876a926c67869da4aa5eb80e4fc7fcac8f410265556ed",
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380/artifacts/12445751282"
+    },
+    "artifact_upload": "passed",
+    "development_packaging": "passed",
+    "errors": 0,
+    "failures": 0,
+    "host_source_checks": 500,
+    "implementation_commit": "8768ab042da2c89c0087d068453bfd58f68445f5",
+    "job_id": 119977942418,
+    "ppsspp_checks": 61,
+    "run_id": 39822730380,
+    "skips": 0,
+    "status": "success",
+    "total_checks": 561,
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380"
+  },
   "final_package": {
     "all_published_checksums_read_back": true,
     "current_payload_modules_read_back": {
@@ -115,6 +136,7 @@
     "skips": 0,
     "tests": 61
   },
+  "implementation_commit": "8768ab042da2c89c0087d068453bfd58f68445f5",
   "kind": "targeted-psp-source-study-and-host-menu-polish",
   "physical_device_verified": false,
   "readiness_fixture": "readiness-fixture.json",
@@ -145,5 +167,5 @@
     }
   },
   "total_local_checks": 561,
-  "validation_status": "passed local complete pinned-source checks and final development packaging; exact-commit CI receipt follows separately"
+  "validation_status": "passed complete local and exact-commit GitHub checks, development packaging and artifact upload"
 }

@@ -24,7 +24,7 @@ The cache probe draws the same text/font/width through 100 alpha changes, includ
 
 The [verification record](../evidence/source-study/verification.json) retains the complete source-backed test and development-package receipts, including the initial failed run and its corrections. Hardware qualification, installed emulator binaries and activation gates are unchanged.
 
-The complete local check passes **561 tests**: 500 host/source checks and 61 PPSSPP checks, with zero skips, failures or errors. The final dev6 development package passes signature/inventory verification, deterministic rebuilds, installed-payload smoke testing and fixture rollback. An existing shell-boundary test fixture now waits for its actual resident-start marker before reporting readiness; production behavior and its exact fail-closed assertions are unchanged.
+The complete local check passes **561 tests**: 500 host/source checks and 61 PPSSPP checks, with zero skips, failures or errors. The final dev6 development package passes signature/inventory verification, deterministic rebuilds, installed-payload smoke testing and fixture rollback. [Exact-commit GitHub CI](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380) also passes all 561 checks, dev6 packaging and artifact upload. An existing shell-boundary test fixture now waits for its actual resident-start marker before reporting readiness; production behavior and its exact fail-closed assertions are unchanged.
 
 ## Deliberate limits
 

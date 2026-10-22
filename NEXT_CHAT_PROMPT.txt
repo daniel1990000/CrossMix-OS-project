@@ -1,4 +1,12 @@
-LATEST VISUAL CHECKPOINT — 22 OCTOBER 2026
+LATEST SOURCE-STUDY CHECKPOINT — 22 OCTOBER 2026
+Implementation: 8768ab042da2c89c0087d068453bfd58f68445f5. Complete local check passes 561 tests (500 host/source + 61 PPSSPP), zero skips/failures/errors; final dev6 packaging, installed smoke and rollback pass.
+Exact-commit GitHub CI passes all 561 checks, zero skips/failures/errors, dev6 packaging and artifact upload: https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380
+Download host-preview-evidence: https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380/artifacts/12445751282 (SHA256 764c8ed367185094a3c876a926c67869da4aa5eb80e4fc7fcac8f410265556ed). Later handover/evidence-only commits do not change the tested implementation.
+Read the latest section in HANDOVER.md, project/docs/psp-source-study.md and project/evidence/source-study/verification.json first.
+The deeper targeted source trace produced pagination/reorder snapping, nearest focus after removal with explicit new-view resets, tint-independent glyph caching, reliable paragraph truncation and measured multiline options headers. Fresh SDL captures and capture script are in project/evidence/source-study/.
+No claim of reading every file or reverse engineering whole repositories. Physical TG5040 acceptance remains pending; activation gates/emulators unchanged; draft PR #1 is unmerged.
+
+PREVIOUS VISUAL CHECKPOINT — 22 OCTOBER 2026
 Classic PSP XMB overhaul and icon/spacing correction are complete. Tested code: 86509e12ccccc3df4d69c95257efabb294752f03.
 GitHub CI: https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902 — 542 checks pass, zero skips/failures/errors; dev5 packaging/upload pass.
 New screenshots and actual Sony comparison: project/evidence/psp-design/.
@@ -15,7 +23,7 @@ Handover: https://github.com/daniel1990000/CrossMix-OS-project/blob/build/spruce
 
 Read AGENTS.md, HANDOVER.md, project/README.md and the active part of TRIMUI_PLAN.md first. The target is the ORIGINAL TrimUI Smart Pro TG5040, extending pinned spruceOS v4.5.4/PyUI. CrossMix is historical reference only. Follow the repository's parallel-agent instructions with explicit file ownership.
 
-Latest verified implementation commit: 37c330c6ebf8dd2e846003ee072eb2e0cf7f1bb1. All 534 checks (473 host/source and 61 PPSSPP) pass with zero skips/failures/errors in GitHub Actions run 39812635602, with uploaded host-preview-evidence artifact 12441400284. The inherited native-build checkpoint remains 42c83f699225a57251e9322f351fbda72c053830. Later documentation-only commits may follow it. Full private PPSSPP/FFmpeg and RetroArch/IGM builds pass their 16-object and 23-object SDK audits. Read the evidence for exact binary/source hashes. Original-only development artifacts, the verified source review kit and an empty 13-area device acceptance session have been regenerated in the continuation workspace; see HANDOVER.md for paths. Native archives were not rebuilt. Workspace outputs may need rebuilding after environment replacement.
+Earlier acceptance-hardening implementation commit: 37c330c6ebf8dd2e846003ee072eb2e0cf7f1bb1. All 534 checks (473 host/source and 61 PPSSPP) pass with zero skips/failures/errors in GitHub Actions run 39812635602, with uploaded host-preview-evidence artifact 12441400284. The inherited native-build checkpoint remains 42c83f699225a57251e9322f351fbda72c053830. Later documentation-only commits may follow it. Full private PPSSPP/FFmpeg and RetroArch/IGM builds pass their 16-object and 23-object SDK audits. Read the evidence for exact binary/source hashes. Original-only development artifacts, the verified source review kit and an empty 13-area device acceptance session have been regenerated in the continuation workspace; see HANDOVER.md for paths. Native archives were not rebuilt. Workspace outputs may need rebuilding after environment replacement.
 
 The owner confirmed on 22 October that an original Smart Pro exists but was unavailable for tests that day. Do not assume it is connected now. The next milestone is original-device acceptance using project/docs/device-test-runbook.md: installed identities and writer inventory, spare-card/internal-launcher/scene restore, input/rendering, launch/return, successful and failed saves, Resume/load, power/sleep/USB, storage interruptions and selected ports. Keep host fixtures, cross-builds and physical observations distinct.
 
