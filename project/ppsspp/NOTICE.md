@@ -20,11 +20,21 @@ The optional completed-state API patch and its C++ acceptance fixture are also
 GPL-2.0-or-later. Its Python test driver is original MIT code. The acceptance
 build uses the locked upstream SHA-256 implementation, Copyright (C) 2001-2003
 Christophe Devine, under its retained GPL-2.0-or-later header. The optional patch
-is not included in the existing complete candidate build or its saved executable
-hash; it has host acceptance only and no installed caller or external exporter.
+is not included in the earlier native-menu-only candidate or its executable
+hash. Its isolated source acceptance does not establish an installed caller;
+the later optional state-enabled build has separate exact build evidence.
 No compiled PPSSPP binary is distributed
 here. A future binary distribution must provide the corresponding source and
 applicable upstream and third-party notices for its exact build.
+
+The later private-session caller/export patch, its independently retained
+completed-save/load records, its C++ source acceptance fixture,
+and the checked spruce save-and-quit adaptation are also GPL-2.0-or-later.
+Their locks are `state-session.lock.json` and `recipe-overrides.lock.json`.
+The optional full state-enabled candidate includes those exact patches and has
+separate build evidence; its binary/source archive remains private. Python
+private-session, authenticated capability-transfer and test drivers are original
+MIT code. The new extension does not exist in the installed stable emulator.
 
 The separate PowerVR recipe is pinned to
 `spruceUI/PPSSPP-spruce@9f770cb984fd8ffcc8f91d24fcbca859439c2e9b`.

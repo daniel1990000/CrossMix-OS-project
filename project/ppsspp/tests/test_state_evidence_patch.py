@@ -88,6 +88,7 @@ class StateEvidenceSourceTests(unittest.TestCase):
             "FINGERPRINT": block(source, "static bool ProjectFingerprintFile("),
             "VALIDATE_ID": block(source, "static bool ProjectEvidenceID("),
             "SAVE_EVIDENCE": block(source, "void SaveSlotWithEvidence("),
+            "SESSION_CODE": "",
             "FLUSH": block(source, "std::vector<Operation> Flush("),
             "PROCESS": block(source, "void Process("),
             "INIT": block(source, "void Init("),

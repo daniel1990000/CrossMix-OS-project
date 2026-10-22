@@ -57,8 +57,20 @@
     "ppsspp_extension_cross_build_completed": true,
     "ppsspp_extension_sdk_dependency_inventory_pass": true,
     "ppsspp_extension_device_qualified": false,
-    "ppsspp_candidate_build_evidence": "project/evidence/ppsspp-sdk-search-build.json",
-    "ppsspp_original_candidate_evidence": "project/evidence/ppsspp-candidate-build.json"
+    "ppsspp_candidate_build_evidence": "project/evidence/ppsspp-complete-state-build.json",
+    "ppsspp_original_candidate_evidence": "project/evidence/ppsspp-candidate-build.json",
+    "ppsspp_previous_corrected_candidate_evidence": "project/evidence/ppsspp-sdk-search-build.json",
+    "ppsspp_state_session_cross_build_completed": true,
+    "ppsspp_state_session_sdk_dependency_inventory_pass": true,
+    "ppsspp_state_session_executable_sha256": "a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d",
+    "retroarch_igm_recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "retroarch_igm_source_lock": "project/retroarch/source-lock.json",
+    "retroarch_igm_device_qualified": false,
+    "retroarch_igm_cross_build_completed": true,
+    "retroarch_igm_sdk_dependency_inventory_pass": true,
+    "retroarch_igm_candidate_evidence": "project/evidence/retroarch-igm-build.json",
+    "retroarch_igm_candidate_sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+    "ppsspp_retained_success_receipts_cross_built": true
   },
   "ports_research": {
     "catalogue_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",
@@ -149,8 +161,16 @@
     "lifecycle_source_audit": "project/evidence/pyui-lifecycle-source-audit.json",
     "installed_runtime_probe": "project/docs/installed-runtime-evidence.md",
     "optional_ppsspp_state_patch_lock": "project/ppsspp/state-evidence.lock.json",
-    "optional_state_patch_in_existing_full_candidate": false,
+    "optional_state_patch_in_existing_full_candidate": true,
     "installed_runtime_observed": false,
-    "actual_principal_return_qualified": false
+    "actual_principal_return_qualified": false,
+    "ppsspp_state_session_lock": "project/ppsspp/state-session.lock.json",
+    "ppsspp_complete_state_build": "project/evidence/ppsspp-complete-state-build.json",
+    "process_boundary_contract": "project/bridge/README.md",
+    "private_source_application": "project/docs/release-qualification.md",
+    "device_acceptance_runbook": "project/docs/device-test-runbook.md",
+    "distribution_register": "project/docs/distribution-register.json",
+    "state_resume_enabled_on_device": false,
+    "device_available_today": false
   }
 }

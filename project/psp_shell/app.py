@@ -59,12 +59,17 @@ def guard_snapshot_outputs(sd_root, paths):
 class Dispatcher:
     """Fixed operation table. No shell endpoint or caller-supplied command."""
     def __init__(self, backend, settings, state_dir, *, launch_bridge=None, control_adapter=None,
-                 theme_manager=None):
+                 theme_manager=None, hardware_adapter=None, experience_manager=None, game_options_handler=None):
         self.backend, self.settings = backend, settings
         self.state_dir = Path(state_dir)
         self.launch_bridge = launch_bridge
         self.control_adapter = control_adapter
         self.theme_manager = theme_manager
+        self.hardware_adapter = hardware_adapter
+        self.experience_manager = experience_manager
+        # Trusted source callback schedules the existing foreground menu. It
+        # must not be a raw popup callable executed on a data-worker thread.
+        self.game_options_handler = game_options_handler
         self.pending_launch = None
         self.transitions = deque(maxlen=32)
         self.last_error_code = None
@@ -101,6 +106,7 @@ class Dispatcher:
             return {"profile_id": "desktop-sample" if demo else "spruce-source-snapshot",
                     "physical_device_verified": False, "demo": demo,
                     "game_launch": self.launch_bridge is not None,
+                    "game_options": callable(self.game_options_handler),
                     "power": {"supported": False, "reason": "Use the verified spruce device backend"},
                     "usb": {"supported": False, "reason": "Requires the qualified staged export/reboot route"},
                     "menu_controls": {"gameplay_is_separate": True, "live_emulator_changes": False}}
@@ -110,6 +116,37 @@ class Dispatcher:
                     else "Read-only spruce snapshot", "firmware": None, "battery": None,
                     "temperature": None, "last_error_code": self.last_error_code,
                     "version": __version__, "hardware_readings": "unavailable"}
+        if method == "hardware.status":
+            self._fields(params, ())
+            if self.hardware_adapter is not None:
+                return self.hardware_adapter.status()
+            from .hardware_settings import unavailable_status
+            return unavailable_status()
+        if method.startswith("hardware."):
+            action = method.split(".", 1)[1]
+            if action not in ("preview", "apply", "route"):
+                raise AppError("UNKNOWN_METHOD", "This device setting action is not supported.")
+            if self.hardware_adapter is None:
+                raise AppError("UNQUALIFIED_HARDWARE", "This preview has no qualified existing device authority.")
+            result = getattr(self.hardware_adapter, action)(params)
+            if action == "route":
+                return self._dispatch("spruce.advanced", {"route": result["route"]})
+            return result
+        if method == "experience.ppsspp.status":
+            self._fields(params, ())
+            if self.experience_manager is not None:
+                return self.experience_manager.status()
+            return {"schema": 1, "generation": 0, "profile_id": "ppsspp-native-unqualified",
+                    "adoption_available": False, "gameplay_changed": False, "emulator_binary_changed": False,
+                    "gate_reason": "UNQUALIFIED_PPSSPP_EXPERIENCE",
+                    "reason": "PPSSPP menu matching is unavailable until this installed version is checked. Its current settings stay in place."}
+        if method.startswith("experience.ppsspp."):
+            action = method[len("experience.ppsspp."):]
+            if action not in ("preview", "apply", "undo"):
+                raise AppError("UNKNOWN_METHOD", "This PPSSPP settings action is not supported.")
+            if self.experience_manager is None:
+                raise AppError("UNQUALIFIED_PPSSPP_EXPERIENCE", "This preview has no qualified shared PPSSPP settings manager.")
+            return getattr(self.experience_manager, action)(params)
         if method == "settings.get":
             self._fields(params, ())
             return self.settings.get()
@@ -186,6 +223,15 @@ class Dispatcher:
             else:
                 result = self.backend.set_favorite(game_id, params["enabled"])
             return result if result is not None else {"game_id": game_id, "enabled": params["enabled"]}
+        if method == "game.options":
+            self._fields(params, ("game_id",), ("game_id",))
+            game_id = self._text(params, "game_id")
+            if not game_id or not callable(self.game_options_handler):
+                raise AppError("UNSUPPORTED_GAME_OPTIONS", "Open this game's options from the existing spruce interface.")
+            result = self.game_options_handler(game_id)
+            if not isinstance(result, dict) or result.get("state") != "releasing_ui":
+                raise AppError("UNVERIFIED_GAME_OPTIONS", "The existing game menu did not accept this handoff.")
+            return result
         if method in ("game.launch", "tool.launch"):
             game = method == "game.launch"
             self._fields(params, ("game_id", "preset_id", "mode") if game else ("tool_id",),
@@ -303,10 +349,10 @@ def run_preview(args, backend=None):
         select_category(1)
     elif args.screen == "tools":
         select_category(2)
-    elif args.screen in ("settings", "controls", "appearance"):
+    elif args.screen in ("settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power"):
         select_category(3)
-        if args.screen in ("controls", "appearance"):
-            target = "controls" if args.screen == "controls" else "appearance"
+        if args.screen != "settings":
+            target = args.screen if args.screen in ("controls", "appearance", "experience") else "hardware_" + args.screen
             for _ in range(len(model.snapshot().items)):
                 if model.snapshot().selected_item.id == target:
                     break
@@ -431,7 +477,7 @@ def main(argv=None):
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--frames", type=int, default=0, help="Exit after N rendered frames; zero runs interactively")
     parser.add_argument("--frame-time", type=float, default=0.0, help="Fixed animation time for deterministic headless screenshots")
-    parser.add_argument("--screen", choices=("home", "library", "continue", "tools", "settings", "controls", "appearance", "search", "error"), default="home")
+    parser.add_argument("--screen", choices=("home", "library", "continue", "tools", "settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power", "search", "error"), default="home")
     parser.add_argument("--actions", help="Comma-separated navigation actions for a recorded preview")
     parser.add_argument("--screenshot")
     parser.add_argument("--report")

@@ -242,7 +242,7 @@ class Renderer:
         unit = size / 32
         def line(a: float, b: float, c: float, d: float) -> None:
             self._line(x + a * unit, y + b * unit, x + c * unit, y + d * unit, color, max(1, round(2 * unit)))
-        if kind in ("Games", "game", "system", "all"):
+        if kind in ("Games", "game", "system", "all", "hardware_controllers", "controllers"):
             for a, b, c, d in ((7, 9, 25, 9), (7, 9, 3, 24), (25, 9, 29, 24), (3, 24, 10, 24), (10, 24, 13, 20), (13, 20, 19, 20), (19, 20, 22, 24), (22, 24, 29, 24), (7, 15, 15, 15), (11, 11, 11, 19)):
                 line(a, b, c, d)
             self._circle(x + 23 * unit, y + 14 * unit, max(1, round(1.7 * unit)), color)
@@ -264,6 +264,34 @@ class Renderer:
                        y + 13 * unit + math.sin(t * math.tau / 24) * 8 * unit) for t in range(25)]
             self._polyline(points, color)
             line(19, 19, 28, 28)
+        elif kind in ("backlight", "hardware_display"):
+            points = [(x + 16 * unit + math.cos(t * math.tau / 24) * 6 * unit,
+                       y + 16 * unit + math.sin(t * math.tau / 24) * 6 * unit) for t in range(25)]
+            self._polyline(points, color)
+            for index in range(8):
+                angle = index * math.tau / 8
+                line(16 + math.cos(angle) * 10, 16 + math.sin(angle) * 10,
+                     16 + math.cos(angle) * 14, 16 + math.sin(angle) * 14)
+        elif kind in ("volume", "hardware_sound"):
+            for a, b, c, d in ((4, 12, 10, 12), (10, 12, 18, 6), (18, 6, 18, 26),
+                               (18, 26, 10, 20), (10, 20, 4, 20), (4, 20, 4, 12),
+                               (23, 11, 26, 15), (26, 15, 23, 21), (28, 7, 31, 15), (31, 15, 28, 25)):
+                line(a, b, c, d)
+        elif kind in ("wifi", "hardware_network"):
+            for radius in (7, 13, 19):
+                self._polyline([(x + (16 + math.cos(angle) * radius) * unit,
+                                 y + (27 + math.sin(angle) * radius) * unit)
+                                for angle in [math.pi * (1.22 + n * .056) for n in range(11)]], color)
+            self._circle(x + 16 * unit, y + 27 * unit, max(1, round(2 * unit)), color)
+        elif kind == "bluetooth":
+            for a, b, c, d in ((15, 3, 15, 29), (15, 3, 25, 11), (25, 11, 8, 24),
+                               (8, 8, 25, 21), (25, 21, 15, 29)):
+                line(a, b, c, d)
+        elif kind in ("power", "hardware_power"):
+            self._polyline([(x + (16 + math.cos(angle) * 12) * unit,
+                             y + (17 + math.sin(angle) * 12) * unit)
+                            for angle in [math.pi * (-.3 + n * 1.6 / 24) for n in range(25)]], color)
+            line(16, 2, 16, 17)
         else:
             for index in range(8):
                 angle = index * math.tau / 8
@@ -414,7 +442,7 @@ class Renderer:
                     y = list_y + 10 + row * row_height
                     foreground = (8, 29, 36) if selected else primary
                     secondary = (34, 80, 85) if selected else muted
-                    icon = item.kind if item.kind != "menu" else item.id
+                    icon = item.id if item.kind in ("menu", "hardware_control", "hardware_route") else item.kind
                     self._icon(icon, 93, y + (row_height - 32) / 2 - 2, 28, foreground)
                     title_size = round(23 * scale)
                     self._label(item.title, 143, y + 6, title_size, foreground, 583)
@@ -442,14 +470,16 @@ class Renderer:
                 number = snapshot.offset + snapshot.selected + 1 if snapshot.items else 0
                 self._label(f"{number:02d} / {snapshot.total:02d}", 67, 613, 14, muted, 300)
                 if snapshot.demo:
-                    self._label("Original sample titles · No game launches", 819, 613, 14, muted, 397)
+                    self._label("Desktop preview · Device controls unavailable" if snapshot.category == 3 else
+                                "Original sample titles · No game launches", 819, 613, 14, muted, 397)
             self._line(64, 652, 1216, 652, (151, 185, 194, 36))
             confirm = "South" if prefs.confirm == "south" else "East"
             back = "East" if prefs.confirm == "south" else "South"
             self._label(f"Enter / {confirm}   Open", 66, 675, 15, primary, 320)
             self._label(f"Esc / {back}   Back", 372, 675, 15, muted, 300)
             self._label("X   Find a game", 700, 675, 15, muted, 250)
-            self._label("Y   Favorite", 1022, 675, 15, muted, 193)
+            if snapshot.selected_item and snapshot.selected_item.kind == "game":
+                self._label("Y   Favorite", 1022, 675, 15, muted, 193)
             if snapshot.dialog:
                 self._draw_dialog(snapshot.dialog, prefs, primary, muted, accent)
             if snapshot.keyboard:
@@ -471,7 +501,7 @@ class Renderer:
                     detail = "Review required before launch"
                 self._label(detail, 850, min(563, 486 + height), 12, muted, 332)
         else:
-            self._icon("Tools" if item.kind == "tool" else "Settings" if item.kind == "setting" else item.id,
+            self._icon("Tools" if item.kind == "tool" else "Settings" if item.kind in ("setting", "experience_profile") else item.id,
                        850, 321, 46, accent)
             self._paragraph(item.title, 850, 392, 25, primary, 333, 2, scale)
             description = item.subtitle or "Select an entry to continue."
@@ -483,27 +513,38 @@ class Renderer:
                 description = "Choose from available games using the same validated launcher as the rest of your collection."
             elif item.kind == "tool":
                 description = "This installed app keeps its own interface. Its launch and return must use the existing spruce contract."
+            elif item.kind == "hardware_control":
+                description = (item.subtitle + ".\nChange one setting through its existing spruce owner."
+                               if item.available else item.reason or "This reading or device authority is unavailable.")
+            elif item.kind == "hardware_route":
+                description = item.subtitle + "." if item.available else item.reason or "Use this screen from classic spruce."
+            elif item.kind == "experience_profile":
+                description = ("Review Confirm, original PPSSPP theme and background motion in one transaction. Gameplay mappings stay separate."
+                               if item.available else item.reason)
             self._paragraph(description, 850, 468, 17, muted, 332, 4, min(scale, 1.15))
 
     def _draw_dialog(self, dialog: Dialog, preferences: Preferences, primary: tuple[int, ...],
                       muted: tuple[int, ...], accent: tuple[int, ...]) -> None:
         self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 0, 0, 192))
-        self._round_rect(270, 137, 740, 458, (18, 33, 50) if not preferences.high_contrast else (8, 8, 8), 20)
-        self._round_rect(270, 137, 740, 4, (248, 156, 136) if dialog.error else accent, 2)
         rows = min(4, len(dialog.choices))
         row_height = max(48, round(38 * preferences.text_scale))
-        first_y = 571 - rows * (row_height + 8)
-        self._label(dialog.title, 307, 173, 29, primary, 666, preferences.text_scale)
-        max_lines = max(2, int((first_y - 245) // (18 * preferences.text_scale + 7)))
+        expanded = (preferences.text_scale > 1.2 and rows >= 4) or (preferences.text_scale > 1.5 and rows >= 3)
+        top, bottom = (76, 638) if expanded else (137, 595)
+        self._round_rect(270, top, 740, bottom - top, (18, 33, 50) if not preferences.high_contrast else (8, 8, 8), 20)
+        self._round_rect(270, top, 740, 4, (248, 156, 136) if dialog.error else accent, 2)
+        first_y = bottom - 24 - rows * (row_height + 8)
+        body_y = top + 102
+        self._label(dialog.title, 307, top + 36, 29, primary, 666, preferences.text_scale)
         body_size = round(18 * preferences.text_scale)
+        max_lines = max(1, 1 + int((first_y - 10 - body_y - body_size) // (body_size + 7)))
         lines = self.text.wrap(dialog.message, body_size, 662, 128)
         page_count = max(1, math.ceil(len(lines) / max_lines))
         current_page = dialog.message_page % page_count
         first_line = current_page * max_lines
         for index, line in enumerate(lines[first_line:first_line + max_lines]):
-            self._label(line, 308, 239 + index * (body_size + 7), 18, muted, 662, preferences.text_scale)
+            self._label(line, 308, body_y + index * (body_size + 7), 18, muted, 662, preferences.text_scale)
         if page_count > 1:
-            self._label(f"X  More text     {current_page + 1} / {page_count}", 305, 609, 15, primary, 670)
+            self._label(f"X  More text     {current_page + 1} / {page_count}", 305, bottom + 10, 15, primary, 670)
         for index, choice in enumerate(dialog.choices[:4]):
             y = first_y + index * (row_height + 8)
             selected = index == dialog.selected

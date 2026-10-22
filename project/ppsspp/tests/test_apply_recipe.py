@@ -104,6 +104,33 @@ mkdir -p build && cd build
             self.assemble()
         self.assertEqual((self.source / "source.txt").read_text(), "project\n")
 
+    def test_post_recipe_override_requires_exact_recipe_postimage_and_verified_patch(self):
+        patch_data=b"--- a/source.txt\n+++ b/source.txt\n@@ -1 +1 @@\n-pvr\n+checked-completion\n"
+        path=self.output/'completion.patch';path.write_bytes(patch_data)
+        override={"upstream_commit":self.lock["upstream"]["commit"],"recipe_commit":self.inputs["recipe_commit"],
+                  "source_files":[{"path":"source.txt","sha256":sha(b'pvr\n')}],
+                  "patches":[{"path":"completion.patch","sha256":sha(patch_data)}],
+                  "patched_files":[{"path":"source.txt","sha256":sha(b'checked-completion\n')}]}
+        result=recipe.assemble(self.source,self.context,self.lock,self.inputs,self.output,override,self.output)
+        self.assertEqual((self.source/'source.txt').read_text(),'checked-completion\n')
+        self.assertEqual(result['post_recipe_overrides'],override['patches'])
+        self.assertEqual(recipe.assemble(self.source,self.context,self.lock,self.inputs,self.output,override,self.output),result)
+        path.write_bytes(b'changed override')
+        with self.assertRaisesRegex(ValueError,'override patch changed'):
+            recipe.assemble(self.source,self.context,self.lock,self.inputs,self.output,override,self.output)
+
+    def test_post_recipe_mismatched_preimage_cannot_qualify_assembly(self):
+        patch_data=b"--- a/source.txt\n+++ b/source.txt\n@@ -1 +1 @@\n-pvr\n+checked\n"
+        (self.output/'completion.patch').write_bytes(patch_data)
+        override={"upstream_commit":self.lock['upstream']['commit'],"recipe_commit":self.inputs['recipe_commit'],
+                  "source_files":[{"path":"source.txt","sha256":sha(b'different recipe\n')}],
+                  "patches":[{"path":"completion.patch","sha256":sha(patch_data)}],
+                  "patched_files":[{"path":"source.txt","sha256":sha(b'checked\n')}]}
+        with self.assertRaisesRegex(ValueError,'override source preimage differs'):
+            recipe.assemble(self.source,self.context,self.lock,self.inputs,self.output,override,self.output)
+        report=json.loads((self.output/'recipe-assembly.json').read_text())
+        self.assertEqual(report['status'],'failed')
+
     def test_unlocked_script_or_different_skip_policy_refuses_before_changes(self):
         (self.context / "patches/common/selected.py").write_text("raise RuntimeError('unlocked')\n")
         with self.assertRaisesRegex(ValueError, "Pinned recipe content differs"):

@@ -781,6 +781,7 @@ class SpruceBackend:
         self.read_only = bool(read_only)
         self._actions: dict[str, _Action] = {}
         self._resume_records: dict[str, dict] = {}
+        self._verified_resume_records: dict[str, Any] = {}
         self._engine_profiles: dict[str, dict] = {}
 
     def systems(self) -> list[dict]:
@@ -825,6 +826,7 @@ class SpruceBackend:
             if len(encoded.encode("utf-8")) > 8 * MAX_JSON:
                 raise SpruceError("INVALID_RESUME_EVIDENCE", "Resume evidence exceeded its input budget")
             self._resume_records, self._engine_profiles = json.loads(encoded)
+            self._verified_resume_records = {}
         except (ValueError, TypeError, RecursionError, UnicodeError) as error:
             if isinstance(error, SpruceError):
                 raise
@@ -832,9 +834,37 @@ class SpruceBackend:
         # A previously minted resume action must not outlive its evidence generation.
         self._actions = {key: action for key, action in self._actions.items() if action.mode != "resume"}
 
+    def set_verified_resume_evidence(self, records: Mapping[str, Any]) -> None:
+        """Install sealed in-process PPSSPP completions, never a card manifest."""
+        from ..state_evidence import VerifiedState
+        if (not isinstance(records, Mapping) or len(records) > 10000 or
+                any(not isinstance(key, str) or type(value) is not VerifiedState or value.identity.game_id != key
+                    for key, value in records.items())):
+            raise SpruceError("INVALID_RESUME_EVIDENCE", "Verified Resume requires typed engine/foreground/writer capabilities")
+        self._verified_resume_records = dict(records)
+        self._resume_records, self._engine_profiles = {}, {}
+        self._actions = {key: action for key, action in self._actions.items() if action.mode != "resume"}
+
     def _resume_status(self, game: dict) -> dict:
         result = {"resume_available": False, "resume_eligible": False,
                   "resume_reason": "NO_VERIFIED_STATE", "continue_kind": "recently_played"}
+        verified = self._verified_resume_records.get(game["id"])
+        if verified is not None:
+            try:
+                verified.validate_game(game["id"], game.get("selected_preset"), self.provider.path(game["rom_path"]))
+                result.update(resume_eligible=True, resume_reason="VERIFIED_STATE_NO_ACTION")
+                result.update(state_recorded_at=verified.recorded_at_utc,
+                              state_recorded_at_kind="verification",
+                              state_recorded_monotonic_ns=verified.recorded_monotonic_ns,
+                              state_request_id=verified.identity.foreground.request_id,
+                              state_profile_sha256=verified.profile.fingerprint)
+                if isinstance(self.provider, PyUIModelProvider) and not self.read_only:
+                    handler = self.provider.mode_actions.get(game["selected_preset"], {}).get("resume")
+                    if callable(handler):
+                        result.update(resume_available=True, resume_reason="VERIFIED_STATE", continue_kind="resume")
+            except (ValueError, OSError, KeyError, TypeError) as error:
+                result["resume_reason"] = getattr(error, "code", "INVALID_RESUME_EVIDENCE")
+            return result
         record = self._resume_records.get(game["id"])
         if not record:
             return result
@@ -904,7 +934,7 @@ class SpruceBackend:
                 context["gate_reason"] = "RESUME_UNAVAILABLE"
                 return context
             if callable(handler):
-                evidence = self._resume_records.get(game_id)
+                evidence = self._verified_resume_records.get(game_id) or self._resume_records.get(game_id)
                 callback = lambda: handler(model, evidence)
         if not model or not callable(callback):
             context["gate_reason"] = "UNSUPPORTED_LAUNCH_MODE"

@@ -1,0 +1,73 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+int main(int argc, char **argv) {
+	assert(argc == 4);
+	std::string scenario(argv[1]);
+	std::filesystem::path work(argv[2]);
+	stateDirectory = Path((work / "states").string());
+	coreParameter.fileToStart = Path((work / "game ü.iso").string());
+	std::string option = "--project-state-session=" + std::string(argv[3]);
+	std::string loadOption = "--state=" + (work / "states/ULUS12345_1.00_2.ppst").string();
+	if (scenario == "wrong-state")
+		loadOption += ".wrong";
+	const char *arguments[] = {"PPSSPPSDL", option.c_str(), loadOption.c_str()};
+	std::string error;
+	bool resume = scenario.rfind("resume", 0) == 0 || scenario == "wrong-state";
+	using namespace SaveState;
+	bool configured = ConfigureProjectStateSessionArgs(resume ? 3 : 2, arguments, &error);
+	if (scenario == "reject-config" || scenario == "wrong-state") {
+		assert(!configured && !projectSession);
+		return 0;
+	}
+	assert(configured);
+	bool saveThenFailure = scenario == "save-then-write-failure";
+	bool resumeSaveThenFailure = scenario == "resume-save-then-write-failure";
+	assert(ProjectStateSessionHandlesLoad() == resume);
+	coreParameter.fileToStart = Path(projectSession->request[6]);
+	stateDirectory = Path(projectSession->request[9]);
+	Init();
+	int callbacks = 0;
+	Status last = Status::FAILURE;
+	auto callback = [&](Status status, std::string_view) { ++callbacks; last = status; };
+	if (!resume) {
+		SaveSlot(GetGamePrefix(g_paramSFO), 2, callback);
+		assert(g_pendingOperations.empty());  // Actual source caller defers work.
+		assert(callbacks == 0 && !File::Exists(Path(std::string(argv[3]).substr(0, std::string(argv[3]).size() - 8) + "/result")));
+	}
+	if (scenario == "rename-failure")
+		failFinalRename = true;
+	if (scenario == "rom-changed")
+		std::ofstream(coreParameter.fileToStart.value, std::ios::app) << "changed";
+	if (scenario == "resume-failure")
+		CChunkFileReader::result = CChunkFileReader::ERROR_OTHER;
+	if (scenario == "write-failure")
+		CChunkFileReader::result = CChunkFileReader::ERROR_OTHER;
+	if (scenario == "export-failure")
+		std::filesystem::create_directory(std::filesystem::path(argv[3]).parent_path() / "result");
+	Process();
+	assert(g_pendingOperations.empty());
+	if (!resume) {
+		assert(callbacks == 1);
+		assert((last == Status::SUCCESS) == (scenario == "save" || saveThenFailure));
+	}
+	assert(projectSession->sequence == 1);
+	if (resumeSaveThenFailure) {
+		serializedStateBytes = "new resumed state fixture\n";
+		SaveSlot(GetGamePrefix(g_paramSFO), 2, callback);
+		Process();
+		assert(callbacks == 1 && last == Status::SUCCESS && projectSession->sequence == 2);
+	}
+	if (saveThenFailure || resumeSaveThenFailure) {
+		Path saved = GenerateSaveSlotPath(GetGamePrefix(g_paramSFO), 2, STATE_EXTENSION);
+		ProjectFileFingerprint before, after;
+		assert(ProjectFingerprintFile(saved, 512ULL * 1024 * 1024, &before));
+		CChunkFileReader::result = CChunkFileReader::ERROR_OTHER;
+		SaveSlot(GetGamePrefix(g_paramSFO), 2, callback);
+		assert(callbacks == 1);
+		Process();
+		assert(callbacks == 2 && last == Status::FAILURE);
+		assert(projectSession->sequence == (resumeSaveThenFailure ? 3 : 2));
+		assert(ProjectFingerprintFile(saved, 512ULL * 1024 * 1024, &after) && before == after);
+	}
+	Process();
+	assert(projectSession->sequence == (resumeSaveThenFailure ? 3 : saveThenFailure ? 2 : 1)); // No repeated automatic load.
+}

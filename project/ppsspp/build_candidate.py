@@ -9,6 +9,7 @@ work directory. The source checkout supplied by the caller is read-only here.
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import importlib.util
 import json
@@ -54,6 +55,53 @@ def verify_file(path: Path, expected: str, size: int | None = None) -> None:
         raise ValueError("Input hash differs: " + str(path))
     if size is not None and path.stat().st_size != size:
         raise ValueError("Input size differs: " + str(path))
+
+
+def compose_extensions(lock: dict, extension_locks: list[tuple[str, dict]]) -> dict:
+    """Compose explicitly selected project patches without changing past evidence.
+
+    Every source preimage still identifies pristine upstream. Postimages are
+    applied in the stated extension order, allowing a later patch to extend a
+    previously modified translation unit while retaining its exact final hash.
+    """
+    result = copy.deepcopy(lock)
+    preimages = {item["path"]: item["sha256"] for item in result["source_files"]}
+    postimages = {item["path"]: item["sha256"] for item in result["patched_files"]}
+    patches = list(result["patches"])
+    units = []
+    extensions = []
+    for name, extension in extension_locks:
+        if extension.get("upstream_commit") != result["upstream"]["commit"]:
+            raise ValueError("Extension upstream commit differs: " + name)
+        prerequisites = extension.get("prerequisite_locks", [])
+        if not isinstance(prerequisites, list) or any(value not in ["source-lock.json", *extensions] for value in prerequisites):
+            raise ValueError("Extension prerequisite lock is missing or out of order: " + name)
+        additions = extension.get("patches") or ([extension["patch"]] if "patch" in extension else [])
+        if not additions or not extension.get("source_files") or not extension.get("patched_files"):
+            raise ValueError("Extension patch/source inventory is incomplete: " + name)
+        for item in extension["source_files"]:
+            if item["path"] in preimages and preimages[item["path"]] != item["sha256"]:
+                raise ValueError("Extension pristine source preimage conflicts: " + item["path"])
+            preimages[item["path"]] = item["sha256"]
+        postimages.update({item["path"]: item["sha256"] for item in extension["patched_files"]})
+        for item in additions:
+            if any(old["path"] == item["path"] for old in patches):
+                raise ValueError("Extension patch is repeated: " + item["path"])
+            patches.append(copy.deepcopy(item))
+        units.extend(extension.get("verification_translation_units", []))
+        extensions.append(name)
+    result["source_files"] = [{"path": name, "sha256": value} for name, value in sorted(preimages.items())]
+    result["patched_files"] = [{"path": name, "sha256": value} for name, value in sorted(postimages.items())]
+    result["patches"] = patches
+    result["enabled_project_extensions"] = extensions
+    if extensions:
+        result["verification_translation_units"] = sorted(set(units + ["Core/SaveState.cpp"]))
+        # The existing source lock belongs to a different completed candidate.
+        # Never carry its successful build/hash into this new assembly.
+        result["qualification"] = {"full_emulator_build": False, "device_tested": False,
+                                   "installed_executable_sha256": None,
+                                   "activation": "unqualified extension assembly; separate complete build and device evidence required"}
+    return result
 
 
 def validate(source: Path, recipe: Path, sdk: Path, lock: dict, inputs: dict) -> str:
@@ -141,12 +189,32 @@ def render_dockerfile(original: str, inputs: dict) -> str:
 
 
 def prepare(source: Path, recipe: Path, sdk: Path, work: Path, lock: dict, inputs: dict, jobs: int,
-            strict_sdk_search: bool = False, rebuild_ffmpeg: bool = False) -> dict:
+            strict_sdk_search: bool = False, rebuild_ffmpeg: bool = False,
+            with_state_evidence: bool = False) -> dict:
     if rebuild_ffmpeg and not strict_sdk_search:
         raise ValueError("FFmpeg rebuild requires strict SDK search")
     for root in (source, recipe, sdk, HERE.parents[1]):
         if work == root or root in work.parents:
             raise ValueError("Work directory must be outside all inputs and the project repository")
+    extension_locks = []
+    recipe_overrides = None
+    if with_state_evidence:
+        for name in ("state-evidence.lock.json", "state-session.lock.json"):
+            path = HERE / name
+            if path.is_symlink() or not path.is_file():
+                raise ValueError("Selected state extension lock is unavailable: " + name)
+            extension_locks.append((name, json.loads(path.read_text())))
+        lock = compose_extensions(lock, extension_locks)
+        overrides_path = HERE / "recipe-overrides.lock.json"
+        if overrides_path.is_symlink() or not overrides_path.is_file():
+            raise ValueError("Selected state completion recipe overrides are unavailable")
+        recipe_overrides = json.loads(overrides_path.read_text())
+        if (recipe_overrides.get("upstream_commit") != lock["upstream"]["commit"] or
+                recipe_overrides.get("recipe_commit") != inputs["recipe_commit"] or not recipe_overrides.get("patches")):
+            raise ValueError("Selected state completion recipe override prerequisites differ")
+        for item in recipe_overrides["patches"]:
+            verify_file(HERE / item["path"], item["sha256"])
+        lock["verification_translation_units"] = sorted(set(lock["verification_translation_units"] + ["SDL/SDLMain.cpp"]))
     modules = validate(source, recipe, sdk, lock, inputs)
     if work.exists():
         raise ValueError("Work directory must be new: " + str(work))
@@ -183,18 +251,43 @@ def prepare(source: Path, recipe: Path, sdk: Path, work: Path, lock: dict, input
     for directory in ("output", "ccache"):
         (work / directory).mkdir()
     (work / "upstream-submodules.txt").write_text(modules + "\n")
-    shutil.copy2(HERE / "source-lock.json", work / "source-lock.json")
+    if extension_locks:
+        shutil.copy2(HERE / "source-lock.json", work / "native-menu-source-lock.json")
+        retained_locks = work / "project-extension-locks"
+        retained_locks.mkdir()
+        for name, _ in extension_locks:
+            shutil.copy2(HERE / name, retained_locks / name)
+    (work / "source-lock.json").write_text(json.dumps(lock, indent=2) + "\n")
     shutil.copy2(HERE / "build-inputs.lock.json", work / "build-inputs.lock.json")
     shutil.copy2(HERE / "build_candidate.py", work / "build_candidate.py")
     for name in ("abi_audit.py", "apply_recipe.py", "sdk_search.py", "ffmpeg_build.py", "build-candidate.md"):
         shutil.copy2(HERE / name, work / name)
+    notices = work / "project-notices"
+    notices.mkdir()
+    for original, name in ((HERE.parent / "LICENSE", "ORIGINAL-PROJECT-MIT.txt"),
+                           (HERE / "NOTICE.md", "PPSSPP-PROJECT-NOTICE.md"),
+                           (HERE / "LICENSE.PPSSPP.txt", "PPSSPP-GPL-AND-PSPSDK.txt")):
+        if original.is_symlink() or not original.is_file():
+            raise ValueError("Required project notice is missing: " + str(original))
+        shutil.copy2(original, notices / name)
     for item in lock["patches"]:
         destination = work / item["path"]
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(HERE / item["path"], destination)
+    if recipe_overrides:
+        shutil.copy2(HERE / "recipe-overrides.lock.json", work / "recipe-overrides.lock.json")
+        for item in recipe_overrides["patches"]:
+            destination = work / item["path"]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(HERE / item["path"], destination)
     return {"schema_version": 1, "status": "prepared", "upstream_commit": lock["upstream"]["commit"],
             "recipe_commit": inputs["recipe_commit"], "base_image": inputs["base_image"],
             "project_patch_sha256": lock["patches"][0]["sha256"], "jobs": jobs,
+            "project_patches": [{"path": item["path"], "sha256": item["sha256"]} for item in lock["patches"]],
+            "enabled_project_extensions": lock.get("enabled_project_extensions", []),
+            "extension_locks": [{"name": name, "sha256": digest(HERE / name)} for name, _ in extension_locks],
+            "assembled_source_lock_sha256": digest(work / "source-lock.json"),
+            "post_recipe_overrides": recipe_overrides["patches"] if recipe_overrides else [],
             "generated_dockerfile_sha256": digest(context / "Dockerfile"),
             "generated_build_script_sha256": digest(work / "build-candidate.sh"),
             "storage_recipe": "one compiler/SDK RUN; read-only SDK mounts; unused SDK/compiler staging removed",
@@ -233,7 +326,8 @@ def source_bundle(work: Path) -> dict:
         for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py", "sdk_search.py", "ffmpeg_build.py", "build-candidate.md",
                      "sdk-search-preflight.json", "local-staged-build.py", "build-candidate.sh", "rebuild-source.sh",
                      "ffmpeg-build-inputs", "omitted-ffmpeg-prebuilt-archives.json",
-                     "source-lock.json", "build-inputs.lock.json", "upstream-submodules.txt",
+                     "source-lock.json", "native-menu-source-lock.json", "project-extension-locks", "recipe-overrides.lock.json", "project-notices",
+                     "build-inputs.lock.json", "upstream-submodules.txt",
                      "toolchain-packages.txt", "recipe-assembly.json", "recipe-application.log",
                      "combined-tracked-source.patch", "build-configuration", "patches"):
             if (work / name).exists():
@@ -258,7 +352,11 @@ def retain_build_configuration(work: Path) -> dict:
     if not (destination / "git-version.cpp").is_file():
         raise ValueError("Generated PPSSPP version source is missing")
     result = {}
-    for unit in ("Core/KeyMap.cpp", "UI/NativeApp.cpp", "UI/GameSettingsScreen.cpp"):
+    units = ["Core/KeyMap.cpp", "UI/NativeApp.cpp", "UI/GameSettingsScreen.cpp"]
+    lock_path = work / "source-lock.json"
+    if lock_path.is_file():
+        units.extend(json.loads(lock_path.read_text()).get("verification_translation_units", []))
+    for unit in dict.fromkeys(units):
         matches = []
         for makefile in build_root.rglob("build.make"):
             if unit + ".o" in makefile.read_text():
@@ -336,10 +434,12 @@ def build(work: Path, report: dict, ca: Path) -> None:
                              ("build-inputs.lock.json", "/build-inputs.lock.json")):
         readonly = "" if relative == "source" else ",readonly"
         assembly_args += ["--mount", f"type=bind,src={work / relative},dst={target}{readonly}"]
+    override_arguments = (" --override-lock /provenance/recipe-overrides.lock.json --override-root /provenance"
+                          if report.get("post_recipe_overrides") else "")
     assembly_args += ["--mount", f"type=bind,src={work},dst=/provenance",
         "--entrypoint", "/bin/sh", tag, "-c",
         "git config --global --add safe.directory /build/ppsspp && "
-        "exec python3 /apply_recipe.py /build/ppsspp /recipe /source-lock.json /build-inputs.lock.json /provenance"]
+        "exec python3 /apply_recipe.py /build/ppsspp /recipe /source-lock.json /build-inputs.lock.json /provenance" + override_arguments]
     assembly_output = docker(assembly_args)
     report["recipe_assembly"] = json.loads(assembly_output)
     if report["recipe_assembly"].get("status") != "applied":
@@ -397,13 +497,16 @@ def main() -> int:
                         help="Use proved GCC9/SDK include and library order; require cross-link preflight")
     parser.add_argument("--rebuild-ffmpeg", action="store_true",
                         help="Rebuild pinned FFmpeg out of tree; requires --strict-sdk-search")
+    parser.add_argument("--with-state-evidence", action="store_true",
+                        help="Compose locked state evidence and session patches; invalidates previous candidate build evidence")
     parser.add_argument("--ca-bundle", type=Path, default=Path("/etc/ssl/certs/ca-certificates.crt"))
     args = parser.parse_args()
     work = args.work_dir.resolve()
     lock = json.loads((HERE / "source-lock.json").read_text())
     inputs = json.loads((HERE / "build-inputs.lock.json").read_text())
     report = prepare(args.source_root.resolve(), args.recipe_root.resolve(), args.sdk_dir.resolve(),
-                     work, lock, inputs, args.jobs, args.strict_sdk_search, args.rebuild_ffmpeg)
+                     work, lock, inputs, args.jobs, args.strict_sdk_search, args.rebuild_ffmpeg,
+                     args.with_state_evidence)
     try:
         if not args.prepare_only:
             build(work, report, args.ca_bundle.resolve())

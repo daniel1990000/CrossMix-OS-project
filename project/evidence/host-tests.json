@@ -10,25 +10,25 @@
   "source_dependent_tests_enabled": true,
   "suites": [
     {
-      "suite": "host",
-      "tests": 306,
+      "suite": "host_python_sdl_and_source_integration",
+      "tests": 466,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 2.89
+      "seconds": 22.154
     },
     {
       "suite": "ppsspp_source_cpp_and_build_tools",
-      "tests": 43,
+      "tests": 61,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 6.951
+      "seconds": 17.252
     }
   ],
-  "total_tests": 349,
+  "total_tests": 527,
   "all_passed_without_skips": true,
   "device_tested": false,
   "checks": [
@@ -57,18 +57,43 @@
     "Installed-tree absolute symlinks, ancestor-swap containment, changing files, streamed subprocess output/deadline budgets and private mapping exclusion",
     "Optional PPSSPP SaveSlot completion with actual Enqueue/Save/Process/Init/Shutdown functions and real upstream SHA256",
     "Ignored final rename refusal, networking/hardcore rejection, replaced ROM/session, missing/empty/nonregular/oversize files and unsupported builds",
-    "Independent game/state/executable SHA256 validation, actual serializer-format constants and native-menu/state patch composition"
+    "Independent game/state/executable SHA256 validation, actual serializer-format constants and native-menu/state patch composition",
+    "Actual initialized source model/menu/game/principal seams and fixed original module layout",
+    "Linux child-subreaper ECHILD including setsid/double-fork descendants and killed-helper/new-principal refusal",
+    "Boot-global authenticated dirty lifetime, command-in-flight phase and missing-module/unbound fallback refusal",
+    "Sealed memfd script bytes with lexical launcher and original $0 preservation, older-libc syscall fallback and staged replacement races",
+    "Existing Bluetooth/Wi-Fi/inputd/network/task scripts delegated to a fixed authenticated principal sibling, with real pinned Bluetooth watcher surviving foreground ECHILD",
+    "Private native state request/export, separately retained successful save/load receipts, interrupted/future result refusal and final sequence bounds",
+    "Actual five-session source/principal/C++ save-failure/fresh Resume/load/new-save-failure/new-Resume roundtrip",
+    "Independent authenticated save/load transfer, boot/profile/engine/ROM/state/writer revalidation and first-use key race",
+    "Checkpoint verification time preserved across delayed consumption, authenticated reload and later failure; actual save time not claimed",
+    "One PPSSPP controls/appearance write window and five-file transaction, per-game inventory preservation, recovery and protected Undo",
+    "Actual spruce IGM parser/raw-input/action source extension; separate controls and appearance path precedence",
+    "Full RetroArch build input/recipe/SDK/header/static-C++ helper acceptance",
+    "Common source hardware settings, stale preview/owner rejection, configuration readback and advanced/per-game routes",
+    "Exact private source composition, signed expanded-module binding, pinned backup restoration and composed fresh-process Resume",
+    "Pinned per-title port/runtime inventory, bounded nofollow hashes and existing source game/tool token reuse",
+    "Private operator device recorder path/lock/FIFO/save-alias/race/filesystem identity and historical evidence integrity"
   ],
-  "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> sh project/dev/check.sh",
+  "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> SPRUCE_RA_SOURCE_ROOT=<untouched-spruce-ra-recipe> SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy sh project/dev/check.sh",
   "source_checkouts_pristine": true,
   "complete_ppsspp_engine_built_by_this_check": false,
-  "validation_log_sha256": "67bf35ba83cfb8b4ecc459660c4d40c9198e54540993aaf0f871adec45354eec",
+  "validation_log_sha256": "f820c5d1a83fa99a76b4d7f8cbbb6b5ac7c39e85311ce5e214e0d38228f50b2d",
   "optional_ppsspp_state_patch": {
     "source_lock": "project/ppsspp/state-evidence.lock.json",
-    "host_tests": 14,
-    "full_engine_build": false,
-    "external_exporter": false,
+    "session_lock": "project/ppsspp/state-session.lock.json",
+    "source_tests": 25,
+    "full_engine_build_evidence": "project/evidence/ppsspp-complete-state-build.json",
+    "full_build_is_separate_check": true,
+    "external_exporter": true,
     "device_tested": false,
-    "resume_enabled": false
-  }
+    "resume_enabled_on_device": false,
+    "save_completion_timestamp_available": false,
+    "timestamp_kind": "principal verification"
+  },
+  "spruce_ra_recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "native_builds_not_executed_by_this_host_check": [
+    "project/evidence/ppsspp-complete-state-build.json",
+    "project/evidence/retroarch-igm-build.json"
+  ]
 }

@@ -25,6 +25,21 @@ from .settings import (
 
 
 SMARTPRO_BUTTON_LABELS = {"south": "B", "east": "A", "north": "X", "west": "Y"}
+SPRUCE_COMMIT = "d45ff8dfe5756147522b04ae5863d17a90e88b54"
+IGM_SCHEMA_SHA256 = "b4f7cae205b360a7b73e63630697b2ffb14034f683cd9d369d5091dcbee2875e"
+IGM_RECIPE_COMMIT = "71d84da4dc88945177a3eb34268013355c705dbd"
+IGM_EXTENSION_ID = "trimui-igm-native-menu-v1"
+
+IGM_PALETTES = {
+    "midnight": {"dim_bg": "#020919E8", "panel_bg": "#09192AF5", "selection": "#64FFDF38",
+                 "accent": "#64FFDFFF", "title_line": "#64FFDF80", "text": "#B8CEDFFF",
+                 "text_selected": "#FFFFFFFF", "text_title": "#64FFDFFF", "text_shadow": "#000000C0",
+                 "battery": "#B8CEDFFF"},
+    "high_contrast": {"dim_bg": "#000000F0", "panel_bg": "#000000FF", "selection": "#FFFFFF30",
+                      "accent": "#FFFFFFFF", "title_line": "#FFFFFFFF", "text": "#FFFFFFFF",
+                      "text_selected": "#FFFFFFFF", "text_title": "#FFFFFFFF", "text_shadow": "#000000FF",
+                      "battery": "#FFFFFFFF"},
+}
 
 
 def ui_convention(confirm: str) -> dict:
@@ -258,20 +273,41 @@ def _file_digest(path: Path, limit: int = 268_435_456) -> str:
         info = path.lstat()
         _require(stat.S_ISREG(info.st_mode) and info.st_size <= limit,
                  "UNSUPPORTED_PROFILE", "Invalid emulator executable")
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW | os.O_CLOEXEC)
+        fd = _open_regular(path)
         digest = hashlib.sha256()
         size = 0
         with os.fdopen(fd, "rb") as stream:
-            while True:
-                data = stream.read(65_536)
-                if not data:
-                    break
+            before = os.fstat(stream.fileno())
+            _require(stat.S_ISREG(before.st_mode) and before.st_size <= limit,
+                     "UNSUPPORTED_PROFILE", "Invalid emulator executable")
+            while size < before.st_size:
+                data = stream.read(min(65_536, before.st_size - size))
+                _require(data, "STALE_SNAPSHOT", "Executable changed during fingerprinting")
                 size += len(data)
-                _require(size <= limit, "TOO_LARGE", "Executable exceeds its fingerprint budget")
                 digest.update(data)
+            _require(not stream.read(1), "STALE_SNAPSHOT", "Executable grew during fingerprinting")
+            after, named = os.fstat(stream.fileno()), path.lstat()
+            identity = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+            _require(identity(before) == identity(after) == identity(named),
+                     "STALE_SNAPSHOT", "Executable changed during fingerprinting")
         return digest.hexdigest()
     except OSError as error:
         raise SettingsError("UNSUPPORTED_PROFILE", "Cannot fingerprint the installed emulator") from error
+
+
+def _open_regular(path: Path) -> int:
+    """Open through nofollow directory descriptors; the caller checks type."""
+    path = Path(path).absolute()
+    parts = path.parts
+    fd = os.open(parts[0], os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC)
+    try:
+        for component in parts[1:-1]:
+            child = os.open(component, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=fd)
+            os.close(fd)
+            fd = child
+        return os.open(parts[-1], os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=fd)
+    finally:
+        os.close(fd)
 
 
 def _process_running(executable: Path) -> bool:
@@ -298,7 +334,7 @@ class EmulatorConfigAdapter:
     """Writes only a trusted, fingerprint-pinned menu surface while quiescent."""
 
     def __init__(self, sd_root, state_dir, profiles_dir, *, quiescent: Callable,
-                 process_probe: Callable | None = None, fault_hook=None):
+                 process_probe: Callable | None = None, active_theme_config: Callable | None = None, fault_hook=None):
         # The installed SD/profile roots must already exist. Constructing this
         # adapter is never allowed to seed an installed card or config tree.
         self.sd_root = Path(sd_root).resolve(strict=True)
@@ -310,6 +346,9 @@ class EmulatorConfigAdapter:
         self.previews = _directory(self.state_dir / "previews")
         self.quiescent = quiescent
         self.process_probe = process_probe or _process_running
+        _require(active_theme_config is None or callable(active_theme_config),
+                 "INVALID_ARGUMENT", "The active-theme observer must be a trusted callback")
+        self.active_theme_config = active_theme_config
         self.fault_hook = fault_hook
         with _locked(self.lock):
             self._transactions().recover()
@@ -347,6 +386,20 @@ class EmulatorConfigAdapter:
                      "UNSUPPORTED_PROFILE", "Missing configuration-writer inventory")
             for writer in {executable, *(_under(self.sd_root, item) for item in writers)}:
                 _require(self.process_probe(writer) is False, "BUSY_GAME", "An emulator or configuration writer is running")
+            if value.get("surface") == "spruce_igm" and getattr(self, "_requires_igm_controls", True):
+                self._mapping(value, "south")
+                _require(callable(self.active_theme_config) and value.get("path_contract_verified") is True and
+                         value.get("igm_schema_sha256") == IGM_SCHEMA_SHA256,
+                         "UNSUPPORTED_PROFILE", "The installed IGM path/parser authority is unqualified")
+                active = self.active_theme_config()
+                target = value.get("config")
+                _require(active is None or isinstance(active, str) and len(Path(active).parts) == 3 and
+                         Path(active).parts[0] == "Themes" and Path(active).parts[2] == "igm.json",
+                         "UNSUPPORTED_PROFILE", "The active IGM theme observation is invalid")
+                if active is not None:
+                    _under(self.sd_root, active)
+                _require((target == "RetroArch/igm.json" and active is None) or target == active,
+                         "IGM_THEME_OVERRIDE", "A different theme-local IGM file takes precedence")
         value["_config"] = _under(self.sd_root, value.get("config"))
         _read(value["_config"])
         return value
@@ -365,7 +418,19 @@ class EmulatorConfigAdapter:
                      "UNSUPPORTED_PROFILE", "Physical-to-RetroArch menu mapping is unverified")
             return "", {"menu_swap_ok_cancel_buttons": values[confirm]}
         if surface == "spruce_igm":
-            raise SettingsError("UNSUPPORTED_CAPABILITY", "spruce IGM controls are separate from the standard RetroArch menu and need their own qualified adapter")
+            extension = profile.get("igm_menu_extension")
+            _require(profile.get("engine") == "retroarch" and isinstance(extension, dict) and
+                     extension.get("qualified") is True and extension.get("source_commit") == IGM_RECIPE_COMMIT and
+                     extension.get("id") == IGM_EXTENSION_ID and extension.get("section") == "project_menu_controls" and
+                     extension.get("physical_buttons") == {"south": 0, "east": 8},
+                     "UNSUPPORTED_CAPABILITY", "Stock spruce IGM has fixed controls; its separate extension is unqualified")
+            _require(isinstance(profile.get("config"), str), "UNSUPPORTED_PROFILE", "IGM config path is invalid")
+            path = Path(profile["config"])
+            _require(path == Path("RetroArch/igm.json") or len(path.parts) == 3 and
+                     path.parts[0] == "Themes" and path.parts[2] == "igm.json",
+                     "UNSUPPORTED_PROFILE", "IGM controls must use its qualified active JSON file")
+            return "project_menu_controls", {"enabled": True, "confirm": confirm,
+                                              "back": "east" if confirm == "south" else "south"}
         if profile.get("engine") == "ppsspp":
             extension = profile.get("native_menu_extension", {})
             _require(surface == "native_menu" and isinstance(extension, dict) and extension.get("qualified") is True and
@@ -393,6 +458,19 @@ class EmulatorConfigAdapter:
     @staticmethod
     def _menu_change(profile: dict, text: str, section: str, values: dict) -> tuple[str, list]:
         """Recompute the complete owned diff before approving any write."""
+        if profile.get("surface") == "spruce_igm":
+            value = _json_bytes(_configuration_bytes(text))
+            _require(isinstance(value.get(section, {}), dict), "INVALID_CONFIG", "IGM controls must be a JSON object")
+            target = value.setdefault(section, {})
+            diff = []
+            for key, after in values.items():
+                if target.get(key) == after and type(target.get(key)) is type(after):
+                    continue
+                diff.append({"section": section, "key": key, "before_present": key in target,
+                             "before_token": json.dumps(target[key], ensure_ascii=False) if key in target else None,
+                             "before": copy.deepcopy(target.get(key)), "after": after})
+                target[key] = after
+            return _configuration_text(_encoded(value)), diff
         ppsspp_ini = profile.get("engine") == "ppsspp"
         diff = []
         for key, value in values.items():
@@ -412,18 +490,29 @@ class EmulatorConfigAdapter:
         ppsspp_ini = profile.get("engine") == "ppsspp"
         section, values = self._mapping(profile, "south")
         observed = {}
-        for key in values:
-            found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
-            observed[key] = _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
-                                             boolean=key == "IndependentMenuControls") if found else None
+        if profile.get("surface") == "spruce_igm":
+            value = _json_bytes(_configuration_bytes(text)).get(section, {})
+            _require(isinstance(value, dict), "INVALID_CONFIG", "IGM controls must be a JSON object")
+            observed = {key: value.get(key) for key in values}
+        else:
+            for key in values:
+                found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
+                observed[key] = _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
+                                                 boolean=key == "IndependentMenuControls") if found else None
         configured_confirm = None
         for confirm in ("south", "east"):
-            if observed == self._mapping(profile, confirm)[1]:
+            expected = self._mapping(profile, confirm)[1]
+            if observed == expected and all(type(observed[key]) is type(expected[key]) for key in expected):
                 configured_confirm = confirm
                 break
         return {"configured_confirm": configured_confirm,
-                "independent_menu_controls_enabled": observed.get("IndependentMenuControls") is True if ppsspp_ini else None,
-                "configuration_effective": qualified and configured_confirm is not None}
+                "independent_menu_controls_enabled": (observed.get("enabled") is True if profile.get("surface") == "spruce_igm"
+                    else observed.get("IndependentMenuControls") is True if ppsspp_ini else None),
+                "configuration_effective": qualified and configured_confirm is not None,
+                "configuration_scope": ("active theme-local IGM file" if str(profile.get("config", "")).startswith("Themes/")
+                    else "global IGM file") if profile.get("surface") == "spruce_igm" else "authoritative platform/global file",
+                **({"read_on_next_game_launch": True} if profile.get("surface") == "spruce_igm" else {}),
+                "runtime_observed": False, "per_game_overrides_evaluated": False}
 
     def _validate_journal(self, journal: dict) -> None:
         profile = self._profile(journal.get("metadata", {}).get("profile_id"))
@@ -447,8 +536,13 @@ class EmulatorConfigAdapter:
         try:
             section, values = self._mapping(profile, "south")
             text = _configuration_text(data)
-            keys = {key: (_assignment(text, section, key, ppsspp_ini=profile.get("engine") == "ppsspp") or {}).get("token")
-                    for key in values}
+            if profile.get("surface") == "spruce_igm":
+                json_values = _json_bytes(data).get(section, {})
+                _require(isinstance(json_values, dict), "INVALID_CONFIG", "IGM controls must be a JSON object")
+                keys = {key: json.dumps(json_values[key]) if key in json_values else None for key in values}
+            else:
+                keys = {key: (_assignment(text, section, key, ppsspp_ini=profile.get("engine") == "ppsspp") or {}).get("token")
+                        for key in values}
             configured = self._configured_controls(profile, text)
             capability = True
         except SettingsError:
@@ -570,25 +664,36 @@ class EmulatorConfigAdapter:
             data = _read(profile["_config"])
             text = _configuration_text(data)
             after_snapshot = _configuration_text(transactions.snapshot(journal, 0, True))
-            for item in journal["metadata"]["diff"]:
-                key = item["key"]
-                found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
-                _require(key in allowed and item["section"] == section and found is not None and
-                         _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
-                                         boolean=key == "IndependentMenuControls") == item["after"],
-                         "UNDO_CONFLICT", "A menu setting was edited outside this transaction")
-                if item["before_present"]:
-                    text = set_config_token(text, key, item["before_token"], section=section, ppsspp_ini=ppsspp_ini)
-                else:
-                    original = _assignment(after_snapshot, section, key, ppsspp_ini=ppsspp_ini)
-                    _require(original is not None and
-                             text[found["line_start"]:found["line_end"]] ==
-                             after_snapshot[original["line_start"]:original["line_end"]],
-                             "UNDO_CONFLICT", "The inserted menu-setting line was edited externally")
-                    text = text[:found["line_start"]] + text[found["line_end"]:]
+            before_snapshot = _configuration_text(transactions.snapshot(journal, 0))
+            applied_confirm = journal.get("result", {}).get("configured_confirm")
+            expected_section, expected_values = self._mapping(profile, applied_confirm)
+            expected_text, expected_diff = self._menu_change(profile, before_snapshot, expected_section, expected_values)
+            _require(_configuration_bytes(expected_text) == transactions.snapshot(journal, 0, True) and
+                     _encoded(expected_diff) == _encoded(journal["metadata"].get("diff")),
+                     "UNDO_CONFLICT", "The saved menu transaction differs from its owned edits")
+            if profile.get("surface") == "spruce_igm":
+                value = _json_bytes(data)
+                before_value = _json_bytes(transactions.snapshot(journal, 0))
+                applied_value = _json_bytes(transactions.snapshot(journal, 0, True))
+                target = value.get(section)
+                _require(isinstance(target, dict), "UNDO_CONFLICT", "IGM controls were replaced externally")
+                for item in journal["metadata"]["diff"]:
+                    key = item["key"]
+                    old = before_value.get(section, {})
+                    _require(key in allowed and item["section"] == section and target.get(key) == item["after"] and
+                             applied_value.get(section, {}).get(key) == item["after"] and
+                             item["before_present"] == (key in old) and item["before"] == old.get(key),
+                             "UNDO_CONFLICT", "An IGM setting or its journal changed externally")
+                    if item["before_present"]:
+                        target[key] = old[key]
+                    else:
+                        target.pop(key, None)
+                if not target and section not in before_value:
+                    value.pop(section, None)
+                text = _configuration_text(transactions.snapshot(journal, 0)) if data == transactions.snapshot(journal, 0, True) else _configuration_text(_encoded(value))
+            else:
+                text = self._undo_ini(text, after_snapshot, journal, section, allowed, ppsspp_ini)
             if data == transactions.snapshot(journal, 0, True):
-                # With no external edit, restore exact pre-transaction bytes,
-                # including a section header/newline added with the three keys.
                 text = _configuration_text(transactions.snapshot(journal, 0))
             transaction_id = "tx-" + uuid.uuid4().hex
             result = {"transaction_id": transaction_id, "undone_transaction_id": original_id,
@@ -602,6 +707,196 @@ class EmulatorConfigAdapter:
                                 {"profile_id": profile["id"], "undone_transaction_id": original_id}, result)
             return result
 
+    @staticmethod
+    def _undo_ini(text, after_snapshot, journal, section, allowed, ppsspp_ini):
+        for item in journal["metadata"]["diff"]:
+            key = item["key"]
+            found = _assignment(text, section, key, ppsspp_ini=ppsspp_ini)
+            _require(key in allowed and item["section"] == section and found is not None and
+                     _semantic_token(found["token"], ppsspp_ini=ppsspp_ini,
+                                     boolean=key == "IndependentMenuControls") == item["after"],
+                     "UNDO_CONFLICT", "A menu setting was edited outside this transaction")
+            if item["before_present"]:
+                text = set_config_token(text, key, item["before_token"], section=section, ppsspp_ini=ppsspp_ini)
+            else:
+                original = _assignment(after_snapshot, section, key, ppsspp_ini=ppsspp_ini)
+                _require(original is not None and
+                         text[found["line_start"]:found["line_end"]] ==
+                         after_snapshot[original["line_start"]:original["line_end"]],
+                         "UNDO_CONFLICT", "The inserted menu-setting line was edited externally")
+                text = text[:found["line_start"]] + text[found["line_end"]:]
+        return text
+
     def recover(self) -> None:
         with _locked(self.lock):
             self._transactions().recover()
+
+
+class SpruceIGMAppearanceAdapter(EmulatorConfigAdapter):
+    """Separate JSON palette surface; it supplies no IGM control remapping.
+
+    The pinned spruce schema supports appearance only. The existing engine
+    reads it at game launch and theme-local files take precedence. The caller
+    must observe the current theme through its existing initialized authority.
+    Strict JSON is supported; JSONC input is refused without rewriting it.
+    """
+
+    _requires_igm_controls = False
+
+    def __init__(self, *args, active_theme_config: Callable, **kwargs):
+        _require(callable(active_theme_config), "INVALID_ARGUMENT", "An independent active-theme observer is required")
+        super().__init__(*args, active_theme_config=active_theme_config, **kwargs)
+
+    def _profile(self, profile_id, *, writable=False):
+        profile = super()._profile(profile_id, writable=writable)
+        relative = profile.get("config")
+        parts = Path(relative).parts
+        theme_target = len(parts) == 3 and parts[0] == "Themes" and parts[2] == "igm.json"
+        _require(profile.get("engine") == "retroarch" and profile.get("surface") == "spruce_igm" and
+                 (relative == "RetroArch/igm.json" or theme_target) and
+                 profile.get("base_commit") == SPRUCE_COMMIT and profile.get("igm_schema_sha256") == IGM_SCHEMA_SHA256,
+                 "UNSUPPORTED_PROFILE", "Unknown spruce IGM appearance contract")
+        active = self.active_theme_config()
+        _require(active is None or isinstance(active, str) and len(Path(active).parts) == 3 and
+                 Path(active).parts[0] == "Themes" and Path(active).parts[2] == "igm.json",
+                 "UNSUPPORTED_PROFILE", "The active-theme observation is invalid")
+        if active is not None:
+            _under(self.sd_root, active)
+        profile["_active_theme_config"] = active
+        if writable:
+            _require(profile.get("appearance_qualified") is True and profile.get("path_contract_verified") is True,
+                     "UNSUPPORTED_PROFILE", "Installed IGM palette parser and path precedence are unqualified")
+            _require((theme_target and active == relative) or (not theme_target and active is None),
+                     "IGM_THEME_OVERRIDE", "A different theme-local IGM palette takes precedence")
+        return profile
+
+    @staticmethod
+    def _appearance_change(data, palette):
+        _require(isinstance(palette, str) and palette in IGM_PALETTES, "INVALID_ARGUMENT", "Unknown original IGM palette")
+        value = _json_bytes(data)
+        _require(isinstance(value.get("colors", {}), dict), "INVALID_CONFIG", "IGM colors must be a JSON object")
+        after = copy.deepcopy(value)
+        colors = after.setdefault("colors", {})
+        diff = []
+        for key, color in IGM_PALETTES[palette].items():
+            if colors.get(key) != color:
+                diff.append({"key": key, "before_present": key in colors, "before": colors.get(key), "after": color})
+                colors[key] = color
+        return _encoded(after), diff
+
+    def status(self, profile_id):
+        with _locked(self.lock):
+            self._transactions().recover()
+            profile = self._profile(profile_id)
+            value = _json_bytes(_read(profile["_config"]))
+            _require(isinstance(value.get("colors", {}), dict), "INVALID_CONFIG", "IGM colors must be an object")
+            available, reason = True, ""
+            try:
+                self._profile(profile_id, writable=True)
+            except SettingsError as error:
+                available, reason = False, error.code
+            selected = next((name for name, colors in IGM_PALETTES.items()
+                             if all(value.get("colors", {}).get(key) == color for key, color in colors.items())), None)
+            return {"profile_id": profile_id, "generation": self._state()["generation"],
+                    "palette": selected, "available_palettes": list(IGM_PALETTES), "adoption_available": available,
+                    "gate_reason": reason, "surface": "spruce_igm", "controls_adapter_implemented": False,
+                    "appearance_adapter_implemented": True, "active_theme_config": profile["_active_theme_config"],
+                    "read_on_next_game_launch": True, "runtime_observed": False, "gameplay_changed": False}
+
+    def preview(self, params):
+        _fields(params, {"profile_id", "palette", "expected_generation"}, {"profile_id", "palette", "expected_generation"})
+        with _locked(self.lock):
+            self._transactions().recover()
+            profile = self._profile(params["profile_id"])
+            generation = _check_generation(params, self._state())
+            before = _read(profile["_config"])
+            after, diff = self._appearance_change(before, params["palette"])
+            _require(diff, "NO_CHANGES", "IGM palette already matches")
+            preview_id = "igm-preview-" + uuid.uuid4().hex
+            record = {"schema": 1, "preview_id": preview_id, "profile_id": profile["id"], "generation": generation,
+                      "profile_sha256": profile["_profile_hash"], "config_sha256": _sha(before), "after_sha256": _sha(after),
+                      "active_theme_config": profile["_active_theme_config"], "meta_sha256": _sha(_read(self.meta)),
+                      "palette": params["palette"], "diff": diff}
+            _atomic_write(self.previews / (preview_id + ".json"), _encoded(record))
+            available, reason = True, ""
+            try:
+                self._profile(profile["id"], writable=True)
+            except SettingsError as error:
+                available, reason = False, error.code
+            return {"preview_id": preview_id, "profile_id": profile["id"], "generation": generation, "diff": diff,
+                    "adoption_available": available, "gate_reason": reason, "surface": "spruce_igm",
+                    "read_on_next_game_launch": True, "gameplay_changed": False}
+
+    def apply(self, params):
+        _fields(params, {"preview_id", "request_id", "expected_generation"}, {"preview_id", "request_id", "expected_generation"})
+        preview_id, request_id = (_identifier(params[name], name) for name in ("preview_id", "request_id"))
+        with _locked(self.lock):
+            transactions = self._transactions()
+            transactions.recover()
+            replay = transactions.replay(request_id, "apply", preview_id)
+            if replay is not None:
+                return replay
+            record = _json(self.previews / (preview_id + ".json"))
+            _schema(record)
+            profile = self._profile(record.get("profile_id"), writable=True)
+            state = self._state()
+            generation = _check_generation(params, state)
+            before = _read(profile["_config"])
+            after, diff = self._appearance_change(before, record.get("palette"))
+            _require(record.get("preview_id") == preview_id and record.get("generation") == generation and
+                     record.get("profile_sha256") == profile["_profile_hash"] and record.get("config_sha256") == _sha(before) and
+                     record.get("meta_sha256") == _sha(_read(self.meta)) and record.get("after_sha256") == _sha(after) and
+                     record.get("active_theme_config") == profile["_active_theme_config"] and record.get("diff") == diff,
+                     "STALE_SNAPSHOT", "IGM profile, active theme or palette changed after preview")
+            tx = "igm-tx-" + uuid.uuid4().hex
+            result = {"transaction_id": tx, "profile_id": profile["id"], "generation": generation + 1, "applied": True,
+                      "idempotent": False, "read_on_next_game_launch": True, "gameplay_changed": False}
+            transactions.commit(tx, request_id, "apply", preview_id,
+                [(profile["_config"], before, after), (self.meta, _read(self.meta), _encoded({**state, "generation": generation + 1}))],
+                {"profile_id": profile["id"], "diff": diff}, result)
+            return result
+
+    def undo(self, params):
+        _fields(params, {"transaction_id", "request_id", "expected_generation"},
+                {"transaction_id", "request_id", "expected_generation"})
+        original, request_id = (_identifier(params[name], name) for name in ("transaction_id", "request_id"))
+        with _locked(self.lock):
+            transactions = self._transactions()
+            transactions.recover()
+            replay = transactions.replay(request_id, "undo", original)
+            if replay is not None:
+                return replay
+            journal = transactions.journal(original)
+            _require(journal["status"] == "committed" and journal.get("operation") == "apply",
+                     "INVALID_TRANSACTION", "Only a committed IGM appearance change can be undone")
+            profile = self._profile(journal["metadata"]["profile_id"], writable=True)
+            state = self._state()
+            generation = _check_generation(params, state)
+            before = _read(profile["_config"])
+            value = _json_bytes(before)
+            colors = value.get("colors", {})
+            saved_after = transactions.snapshot(journal, 0, True)
+            saved_colors = _json_bytes(saved_after).get("colors", {})
+            palette = next((name for name, expected in IGM_PALETTES.items()
+                            if all(saved_colors.get(key) == color for key, color in expected.items())), None)
+            expected_after, expected_diff = self._appearance_change(transactions.snapshot(journal, 0), palette)
+            _require(expected_after == saved_after and _encoded(expected_diff) == _encoded(journal["metadata"].get("diff")),
+                     "UNDO_CONFLICT", "The saved IGM transaction differs from its owned edits")
+            _require(isinstance(colors, dict), "UNDO_CONFLICT", "IGM colors were replaced externally")
+            for item in journal["metadata"]["diff"]:
+                key = item["key"]
+                _require(key in IGM_PALETTES["midnight"] and colors.get(key) == item["after"],
+                         "UNDO_CONFLICT", "An owned IGM color changed externally")
+                if item["before_present"]:
+                    colors[key] = item["before"]
+                else:
+                    colors.pop(key, None)
+            after = transactions.snapshot(journal, 0) if before == transactions.snapshot(journal, 0, True) else _encoded(value)
+            tx = "igm-undo-" + uuid.uuid4().hex
+            result = {"transaction_id": tx, "undone_transaction_id": original, "profile_id": profile["id"],
+                      "generation": generation + 1, "applied": True, "idempotent": False,
+                      "read_on_next_game_launch": True, "gameplay_changed": False}
+            transactions.commit(tx, request_id, "undo", original,
+                [(profile["_config"], before, after), (self.meta, _read(self.meta), _encoded({**state, "generation": generation + 1}))],
+                {"profile_id": profile["id"], "undone_transaction_id": original}, result)
+            return result

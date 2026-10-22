@@ -104,7 +104,7 @@ static CoreParameter coreParameter;
 CoreParameter &PSP_CoreParameter() { return coreParameter; }
 enum class CoreState { CORE_RUNTIME_ERROR, RUNNING };
 static CoreState coreState = CoreState::RUNNING;
-enum class BreakReason { SavestateSave };
+enum class BreakReason { SavestateSave, SavestateLoad };
 void Core_Break(BreakReason, int) {}
 void Core_ResetException() {}
 void __DisplaySetWasPaused() {}
@@ -120,13 +120,14 @@ I18NCategory *GetI18NCategory(I18NCat) { static I18NCategory instance; return &i
 // These stubs replace the complete emulator and serializer. They never claim
 // that the fixture bytes are a real PSP save state or prove file-system durability.
 class PointerWrap;
+static std::string serializedStateBytes = "fixture state bytes\n";
 class CChunkFileReader {
 public:
 	enum Error { ERROR_NONE, ERROR_BROKEN_STATE, ERROR_OTHER };
 	static Error result;
 	template<class State> static Error Save(const Path &path, const std::string &, const char *, State &) {
 		if (result == ERROR_NONE)
-			std::ofstream(path.value, std::ios::binary | std::ios::trunc) << "fixture state bytes\n";
+			std::ofstream(path.value, std::ios::binary | std::ios::trunc) << serializedStateBytes;
 		return result;
 	}
 	template<class State> static Error Load(const Path &, std::string *, State &, std::string *) { return result; }
@@ -183,6 +184,7 @@ void Rescan(std::string_view) {}
 /*@@FINGERPRINT@@*/
 /*@@VALIDATE_ID@@*/
 /*@@SAVE_EVIDENCE@@*/
+/*@@SESSION_CODE@@*/
 /*@@FLUSH@@*/
 /*@@PROCESS@@*/
 /*@@INIT@@*/

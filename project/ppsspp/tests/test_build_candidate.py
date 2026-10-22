@@ -79,6 +79,9 @@ class CandidateInputTests(unittest.TestCase):
         (self.here / "build-inputs.lock.json").write_text(json.dumps(self.inputs))
         for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py", "sdk_search.py", "ffmpeg_build.py", "build-candidate.md"):
             (self.here / name).write_text("# Source-retention fixture\n")
+        (self.here.parent / "LICENSE").write_text("Original MIT notice fixture\n")
+        (self.here / "NOTICE.md").write_text("Separate PPSSPP scope notice fixture\n")
+        (self.here / "LICENSE.PPSSPP.txt").write_text("Retained GPL/PSPSDK notice fixture\n")
         self.here_patch = patch.object(builder, "HERE", self.here)
         self.here_patch.start()
         self.addCleanup(self.here_patch.stop)
@@ -108,7 +111,10 @@ class CandidateInputTests(unittest.TestCase):
             names = set(archive.getnames())
         self.assertTrue({"ppsspp/source.txt", "ppsspp/ext/module/notice.txt", "build/build_candidate.py",
                          "build/rebuild-source.sh", "build/patches/extension.patch", "build/source-lock.json",
-                         "build/recipe/Dockerfile", "build/recipe/build-pvr.sh", "build/toolchain-packages.txt"} <= names)
+                         "build/recipe/Dockerfile", "build/recipe/build-pvr.sh", "build/toolchain-packages.txt",
+                         "build/project-notices/ORIGINAL-PROJECT-MIT.txt",
+                         "build/project-notices/PPSSPP-PROJECT-NOTICE.md",
+                         "build/project-notices/PPSSPP-GPL-AND-PSPSDK.txt"} <= names)
         self.assertFalse(any(".git" in Path(name).parts for name in names))
         self.assertFalse(any(Path(name).name in self.sdk_names for name in names))
 
@@ -124,6 +130,81 @@ class CandidateInputTests(unittest.TestCase):
             self.prepare(work)
         self.assertFalse(work.exists())
 
+    def state_extensions(self):
+        self.lock["qualification"] = {"full_emulator_build": True, "candidate_executable_sha256": "b" * 64}
+        (self.here / "source-lock.json").write_text(json.dumps(self.lock))
+        for number, name, old, new in ((2, "state-evidence.lock.json", "after", "evidence"),
+                                       (3, "state-session.lock.json", "evidence", "session")):
+            relative = "patches/000%d-state.patch" % number
+            data = ("--- a/source.txt\n+++ b/source.txt\n@@ -1 +1 @@\n-" + old + "\n+" + new + "\n").encode()
+            (self.here / relative).write_bytes(data)
+            extension = {"upstream_commit": self.lock["upstream"]["commit"],
+                         "patch": {"path": relative, "sha256": sha(data), "license": "GPL-2.0-or-later"},
+                         "source_files": [{"path": "source.txt", "sha256": sha(b"before\n")}],
+                         "patched_files": [{"path": "source.txt", "sha256": sha((new + "\n").encode())}]}
+            if number == 3:
+                extension["prerequisite_locks"] = ["source-lock.json", "state-evidence.lock.json"]
+            (self.here / name).write_text(json.dumps(extension))
+        override_patch = b"--- a/source.txt\n+++ b/source.txt\n@@ -1 +1 @@\n-session\n+checked\n"
+        relative = "patches/0004-checked-status.patch"
+        (self.here / relative).write_bytes(override_patch)
+        (self.here / "recipe-overrides.lock.json").write_text(json.dumps({
+            "upstream_commit": self.lock["upstream"]["commit"], "recipe_commit": self.inputs["recipe_commit"],
+            "source_files": [{"path": "source.txt", "sha256": sha(b"session\n")}],
+            "patches": [{"path": relative, "sha256": sha(override_patch)}],
+            "patched_files": [{"path": "source.txt", "sha256": sha(b"checked\n")}]}))
+
+    def test_state_extension_is_explicit_composed_and_keeps_previous_build_identity_separate(self):
+        self.state_extensions()
+        baseline = self.root / "unchanged-default"
+        original = self.prepare(baseline)
+        self.assertEqual((baseline / "source/source.txt").read_text(), "after\n")
+        self.assertEqual(original["enabled_project_extensions"], [])
+        work = self.root / "state-enabled"
+        result = builder.prepare(self.source, self.recipe, self.sdk, work, self.lock, self.inputs, 2,
+                                 with_state_evidence=True)
+        self.assertEqual((self.source / "source.txt").read_text(), "before\n")
+        self.assertEqual((work / "source/source.txt").read_text(), "session\n")
+        self.assertEqual(result["enabled_project_extensions"], ["state-evidence.lock.json", "state-session.lock.json"])
+        self.assertEqual(len(result["project_patches"]), 3)
+        self.assertEqual(len(result["post_recipe_overrides"]), 1)
+        effective = json.loads((work / "source-lock.json").read_text())
+        self.assertFalse(effective["qualification"]["full_emulator_build"])
+        self.assertIsNone(effective["qualification"]["installed_executable_sha256"])
+        previous = json.loads((work / "native-menu-source-lock.json").read_text())
+        self.assertTrue(previous["qualification"]["full_emulator_build"])
+        self.assertEqual(previous["qualification"]["candidate_executable_sha256"], "b" * 64)
+        archive = builder.source_bundle(work)
+        with tarfile.open(work / archive["name"]) as retained:
+            names = set(retained.getnames())
+        self.assertTrue({"build/native-menu-source-lock.json", "build/project-extension-locks/state-evidence.lock.json",
+                         "build/project-extension-locks/state-session.lock.json", "build/patches/0003-state.patch",
+                         "build/recipe-overrides.lock.json", "build/patches/0004-checked-status.patch"} <= names)
+
+    def test_state_extension_missing_lock_hash_or_upstream_rejects_before_output(self):
+        for failure in ("missing", "patch", "commit", "source", "prerequisite"):
+            with self.subTest(failure=failure):
+                self.state_extensions()
+                path = self.here / "state-session.lock.json"
+                data = json.loads(path.read_text())
+                if failure == "missing":
+                    path.unlink()
+                elif failure == "patch":
+                    (self.here / data["patch"]["path"]).write_text("changed patch\n")
+                elif failure == "commit":
+                    data["upstream_commit"] = "f" * 40
+                    path.write_text(json.dumps(data))
+                elif failure == "source":
+                    data["source_files"][0]["sha256"] = "e" * 64
+                    path.write_text(json.dumps(data))
+                else:
+                    data["prerequisite_locks"] = ["unavailable-lock.json"]
+                    path.write_text(json.dumps(data))
+                work = self.root / ("bad-state-" + failure)
+                with self.assertRaises(ValueError):
+                    builder.prepare(self.source, self.recipe, self.sdk, work, self.lock, self.inputs, 2,
+                                    with_state_evidence=True)
+                self.assertFalse(work.exists())
     def test_submodule_untracked_files_are_rejected_even_if_parent_hides_them(self):
         git(self.source, "config", "submodule.ext/module.ignore", "all")
         (self.source / "ext/module/untracked-owner-data").write_text("keep private\n")

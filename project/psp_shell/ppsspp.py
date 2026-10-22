@@ -7,9 +7,11 @@ continues to own all UI, rendering, input, save-state and keyboard behavior.
 from __future__ import annotations
 
 import configparser
+from contextlib import contextmanager, ExitStack, nullcontext
 import copy
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 from typing import Callable
@@ -200,7 +202,9 @@ class PPSSPPThemeManager:
                 "theme": _semantic_token(selection["token"]) if selection else "Default",
                 "motion": {"0": False, "1": True, "2": True, "3": True}.get(animation),
                 "available_themes": list(THEME_NAMES), "adoption_available": available,
-                "gate_reason": gate, "emulator_binary_changed": False}
+                "gate_reason": gate, "configuration_scope": "authoritative platform/global file",
+                "runtime_observed": False, "per_game_overrides_evaluated": False,
+                "emulator_binary_changed": False}
 
     def preview(self, params: dict) -> dict:
         _fields(params, {"theme", "motion", "expected_generation"}, {"theme", "motion", "expected_generation"})
@@ -343,3 +347,329 @@ class PPSSPPThemeManager:
     def recover(self) -> None:
         with _locked(self.lock):
             self._transactions().recover()
+
+
+class PPSSPPExperienceManager:
+    """One stopped-writer transaction for native menu controls and appearance.
+
+    This coordinator locks both existing adapters, writes their common INI
+    once, and advances both generations in the same recovery journal. A
+    trusted runtime may supply ``write_window`` to retain its maintenance
+    lease for the complete operation. Exact profiles and stopped-writer
+    observations are rechecked before every replacement and recovery write.
+    Construct it before exposing either component adapter to a device UI.
+    """
+
+    def __init__(self, control_adapter, theme_manager, state_dir, *, profile_id,
+                 write_window=None, fault_hook=None):
+        from .controls import EmulatorConfigAdapter
+        _require(isinstance(control_adapter, EmulatorConfigAdapter) and
+                 isinstance(theme_manager, PPSSPPThemeManager),
+                 "INVALID_ARGUMENT", "Existing controls and theme adapters are required")
+        _require(control_adapter.sd_root == theme_manager.sd_root,
+                 "UNSUPPORTED_PROFILE", "Both adapters must own the same installed card")
+        _require(write_window is None or callable(write_window),
+                 "INVALID_ARGUMENT", "The write window must be a trusted context factory")
+        self.controls, self.appearance = control_adapter, theme_manager
+        self.profile_id = profile_id
+        self.state_dir = _directory(Path(state_dir))
+        self.previews = _directory(self.state_dir / "previews")
+        self.meta, self.lock = self.state_dir / "generation.json", self.state_dir / "experience.lock"
+        self.write_window, self.fault_hook = write_window or nullcontext, fault_hook
+        _require(len({self.meta, self.controls.meta, self.appearance.meta}) == 3,
+                 "UNSAFE_PATH", "The coordinator and component generations need separate state roots")
+        self._profiles()
+        with self._window():
+            self._recover()
+            if _read(self.meta, optional=True) is None:
+                _atomic_write(self.meta, _encoded({"schema": 1, "generation": 0}))
+
+    @contextmanager
+    def _window(self):
+        with ExitStack() as stack:
+            for path in sorted({self.lock, self.controls.lock, self.appearance.lock}, key=str):
+                stack.enter_context(_locked(path))
+            stack.enter_context(self.write_window())
+            yield
+
+    def _state(self):
+        value = _json(self.meta)
+        _schema(value)
+        _generation(value.get("generation"))
+        return value
+
+    def _profiles(self, writable=False):
+        control = self.controls._profile(self.profile_id, writable=writable)
+        theme = self.appearance._profile(writable=writable)
+        _require(control.get("engine") == "ppsspp" and control.get("surface") == "native_menu" and
+                 control["_config"] == theme["_config"] and
+                 control.get("executable") == theme.get("executable") and
+                 control.get("executable_sha256") == theme.get("executable_sha256"),
+                 "UNSUPPORTED_PROFILE", "Controls and appearance must identify the same engine and authoritative INI")
+        if writable:
+            _require(control.get("per_game_inventory_verified") is True and
+                     theme.get("per_game_inventory_verified") is True and
+                     control.get("per_game_configs") == theme.get("per_game_configs") and
+                     isinstance(control.get("per_game_configs"), list),
+                     "UNSUPPORTED_PROFILE", "The common write needs a qualified per-game config inventory")
+        return control, theme
+
+    def _overlays(self, control, theme):
+        paths = control.get("per_game_configs", [])
+        _require(isinstance(paths, list) and len(paths) <= 2048 and all(isinstance(path, str) for path in paths) and
+                 len(set(paths)) == len(paths) and paths == theme.get("per_game_configs", []),
+                 "UNSUPPORTED_PROFILE", "Component per-game inventories disagree or exceed their budget")
+        discovered = []
+        with os.scandir(control["_config"].parent) as entries:
+            for entry in entries:
+                if entry.name.casefold().endswith("_ppsspp.ini"):
+                    discovered.append((control["_config"].parent / entry.name).relative_to(self.controls.sd_root).as_posix())
+                    _require(len(discovered) <= 2048, "UNSUPPORTED_PROFILE", "Per-game inventory exceeds its budget")
+        _require(set(discovered) == set(paths), "PER_GAME_INVENTORY_CHANGED",
+                 "The existing config authority must refresh its complete per-game inventory")
+        result = []
+        owned = (("ProjectNativeMenu", "IndependentMenuControls"), ("ProjectNativeMenu", "NativeMenuConfirm"),
+                 ("ProjectNativeMenu", "NativeMenuBack"), ("Theme", "ThemeName"), ("General", "BackgroundAnimation"))
+        for relative in sorted(paths):
+            path = _under(self.controls.sd_root, relative)
+            _require(path.parent == control["_config"].parent and path.name.endswith("_ppsspp.ini"),
+                     "UNSUPPORTED_PROFILE", "Per-game inventory is outside the qualified engine config directory")
+            raw = _read(path)
+            text, keys = _configuration_text(raw), []
+            for section, key in owned:
+                found = _assignment(text, section, key)
+                if found is not None:
+                    keys.append({"section": section, "key": key,
+                                 "value": _semantic_token(found["token"], boolean=key == "IndependentMenuControls")})
+            result.append({"path": relative, "sha256": _sha(raw), "overrides": keys})
+        return result
+
+    def _qualified(self, metadata=None):
+        control, theme = self._profiles(writable=True)
+        self.controls._mapping(control, "south")
+        self._overlays(control, theme)
+        if metadata is not None:
+            _require(metadata.get("profile_id") == control["id"] and
+                     metadata.get("theme_profile_id") == theme["id"] and
+                     metadata.get("control_profile_sha256") == control["_profile_hash"] and
+                     metadata.get("theme_profile_sha256") == theme["_profile_hash"],
+                     "STALE_SNAPSHOT", "A component profile changed during the common transaction")
+        return control, theme
+
+    def _validate_journal(self, journal):
+        control, theme = self._profiles()
+        expected = [str(theme["_theme"]), str(control["_config"]), str(self.controls.meta),
+                    str(self.appearance.meta), str(self.meta)]
+        paths = [item["path"] for item in journal["files"]]
+        _require(paths == expected or journal.get("operation") == "undo" and paths == expected[1:],
+                 "UNSAFE_PATH", "Common transaction targets an unowned file")
+        metadata = journal.get("metadata", {})
+        _require(metadata.get("profile_id") == control["id"] and
+                 metadata.get("theme_profile_id") == theme["id"],
+                 "INVALID_TRANSACTION", "Common transaction belongs to another profile")
+
+    def _transactions(self):
+        return _Transactions(self.state_dir / "transactions", self._validate_journal, self.fault_hook,
+            lambda journal, _persist: self._qualified(journal["metadata"]),
+            lambda journal: self._qualified(journal["metadata"]))
+
+    def _recover(self):
+        self.controls._transactions().recover()
+        self.appearance._transactions().recover()
+        self._transactions().recover()
+
+    def _status(self):
+        control = self.controls.snapshot(self.profile_id)
+        appearance = self.appearance.status()
+        available, reason = True, ""
+        try:
+            self._qualified()
+            overrides = [item for item in self._overlays(*self._profiles()) if item["overrides"]]
+        except SettingsError as error:
+            available, reason = False, error.code
+            overrides = []
+        return {"schema": 1, "profile_id": self.profile_id, "generation": self._state()["generation"],
+                "controls_generation": control["generation"], "appearance_generation": appearance["generation"],
+                "configured_confirm": control["configured_confirm"], "theme": appearance["theme"],
+                "motion": appearance["motion"], "available_themes": appearance["available_themes"],
+                "adoption_available": available, "gate_reason": reason,
+                "per_game_overrides": overrides,
+                "scope": "global; existing per-game overrides are preserved",
+                "runtime_observed": False, "gameplay_changed": False, "emulator_binary_changed": False}
+
+    def status(self):
+        with self._window():
+            self._recover()
+            return self._status()
+
+    def _combined_change(self, control, before_config, params):
+        section, values = self.controls._mapping(control, params["confirm"])
+        text, diff = self.controls._menu_change(control, _configuration_text(before_config), section, values)
+        for section, key, after in (("Theme", "ThemeName", params["theme"]),
+                                    ("General", "BackgroundAnimation", "3" if params["motion"] else "0")):
+            found = _assignment(text, section, key)
+            before = _semantic_token(found["token"]) if found else None
+            if before == after:
+                continue
+            diff.append({"section": section, "key": key, "before_present": found is not None,
+                         "before_token": found["token"] if found else None, "before": before, "after": after})
+            text = set_config_token(text, key, json.dumps(after) if section == "Theme" else after, section=section)
+        return text, diff
+
+    def _plan(self, params):
+        _fields(params, {"profile_id", "confirm", "theme", "motion", "expected_generation"},
+                {"profile_id", "confirm", "theme", "motion", "expected_generation"})
+        _require(params["profile_id"] == self.profile_id and params["theme"] in THEME_NAMES and
+                 type(params["motion"]) is bool, "INVALID_ARGUMENT", "Unknown common PPSSPP selection")
+        generation = _check_generation(params, self._state())
+        control, theme = self._profiles()
+        before_config = _read(control["_config"])
+        text, diff = self._combined_change(control, before_config, params)
+        source = _read(self.appearance.theme_file)
+        validate_theme(source)
+        before_theme = _read(theme["_theme"], optional=True)
+        _require(diff or before_theme != source, "NO_CHANGES", "PPSSPP controls and appearance already match")
+        metadata = {"profile_id": control["id"], "theme_profile_id": theme["id"],
+                    "control_profile_sha256": control["_profile_hash"],
+                    "theme_profile_sha256": theme["_profile_hash"]}
+        record = {"schema": 1, **metadata, "generation": generation,
+                  "controls_generation": self.controls._state()["generation"],
+                  "appearance_generation": self.appearance._state()["generation"],
+                  "config_sha256": _sha(before_config), "after_config_sha256": _sha(_configuration_bytes(text)),
+                  "before_theme_present": before_theme is not None, "before_theme_sha256": _sha(before_theme or b""),
+                  "theme_sha256": _sha(source), "control_meta_sha256": _sha(_read(self.controls.meta)),
+                  "theme_meta_sha256": _sha(_read(self.appearance.meta)), "meta_sha256": _sha(_read(self.meta)),
+                  "per_game_configs": self._overlays(control, theme),
+                  "confirm": params["confirm"], "theme": params["theme"], "motion": params["motion"], "diff": diff}
+        return record, (control, theme, before_config, _configuration_bytes(text), before_theme, source)
+
+    def preview(self, params):
+        with self._window():
+            self._recover()
+            record, plan = self._plan(params)
+            preview_id = "experience-preview-" + uuid.uuid4().hex
+            record["preview_id"] = preview_id
+            _atomic_write(self.previews / (preview_id + ".json"), _encoded(record))
+            status = self._status()
+            return {"preview_id": preview_id, "generation": record["generation"], "profile_id": self.profile_id,
+                    "diff": record["diff"], "overwrites_existing_theme": plan[4] is not None and plan[4] != plan[5],
+                    "adoption_available": status["adoption_available"], "gate_reason": status["gate_reason"],
+                    "after_configuration": {"confirm": record["confirm"], "theme": record["theme"], "motion": record["motion"]},
+                    "per_game_overrides": [item for item in record["per_game_configs"] if item["overrides"]],
+                    "runtime_observed": False, "gameplay_changed": False, "emulator_binary_changed": False}
+
+    def apply(self, params):
+        _fields(params, {"preview_id", "request_id", "expected_generation", "confirm_overwrite"},
+                {"preview_id", "request_id", "expected_generation"})
+        preview_id, request_id = (_identifier(params[name], name) for name in ("preview_id", "request_id"))
+        _require(type(params.get("confirm_overwrite", False)) is bool,
+                 "INVALID_ARGUMENT", "Overwrite confirmation must be boolean")
+        with self._window():
+            self._recover()
+            transactions = self._transactions()
+            replay = transactions.replay(request_id, "apply", preview_id)
+            if replay is not None:
+                return replay
+            record = _json(self.previews / (preview_id + ".json"))
+            _schema(record)
+            self._qualified(record)
+            request = {key: record.get(key) for key in ("profile_id", "confirm", "theme", "motion")}
+            request["expected_generation"] = params["expected_generation"]
+            current, plan = self._plan(request)
+            _require(record.get("preview_id") == preview_id and
+                     _encoded({key: record.get(key) for key in current}) == _encoded(current),
+                     "STALE_SNAPSHOT", "A component, preview or configuration changed after common review")
+            control, theme, before_config, after_config, before_theme, source = plan
+            _require(before_theme is None or before_theme == source or params.get("confirm_overwrite") is True,
+                     "OVERWRITE_CONFIRMATION_REQUIRED", "An existing palette needs explicit overwrite confirmation")
+            generation = record["generation"]
+            cgen, tgen = record["controls_generation"], record["appearance_generation"]
+            _check_generation({"expected_generation": cgen}, self.controls._state())
+            _check_generation({"expected_generation": tgen}, self.appearance._state())
+            _directory(theme["_theme"].parent)
+            tx = "experience-tx-" + uuid.uuid4().hex
+            result = {"transaction_id": tx, "generation": generation + 1, "controls_generation": cgen + 1,
+                      "appearance_generation": tgen + 1, "profile_id": self.profile_id, "applied": True,
+                      "idempotent": False, "configured_confirm": record["confirm"], "theme": record["theme"],
+                      "motion": record["motion"], "gameplay_changed": False, "emulator_binary_changed": False}
+            result.update(runtime_observed=False, scope="global; existing per-game overrides are preserved")
+            transactions.commit(tx, request_id, "apply", preview_id,
+                [(theme["_theme"], before_theme, source), (control["_config"], before_config, after_config),
+                 (self.controls.meta, _read(self.controls.meta), _encoded({**self.controls._state(), "generation": cgen + 1})),
+                 (self.appearance.meta, _read(self.appearance.meta), _encoded({**self.appearance._state(), "generation": tgen + 1})),
+                 (self.meta, _read(self.meta), _encoded({**self._state(), "generation": generation + 1}))],
+                {key: record[key] for key in ("profile_id", "theme_profile_id", "control_profile_sha256",
+                                             "theme_profile_sha256", "diff")}, result)
+            return result
+
+    def undo(self, params):
+        _fields(params, {"transaction_id", "request_id", "expected_generation"},
+                {"transaction_id", "request_id", "expected_generation"})
+        original, request_id = (_identifier(params[name], name) for name in ("transaction_id", "request_id"))
+        with self._window():
+            self._recover()
+            transactions = self._transactions()
+            replay = transactions.replay(request_id, "undo", original)
+            if replay is not None:
+                return replay
+            journal = transactions.journal(original)
+            _require(journal["status"] == "committed" and journal.get("operation") == "apply",
+                     "INVALID_TRANSACTION", "Only a committed common transaction can be undone")
+            control, theme = self._qualified(journal["metadata"])
+            generation = _check_generation(params, self._state())
+            cstate, tstate = self.controls._state(), self.appearance._state()
+            _require(cstate["generation"] == journal["result"]["controls_generation"] and
+                     tstate["generation"] == journal["result"]["appearance_generation"],
+                     "UNDO_CONFLICT", "A component has another transaction after this common change")
+            _check_generation({"expected_generation": cstate["generation"]}, cstate)
+            _check_generation({"expected_generation": tstate["generation"]}, tstate)
+            config = _read(control["_config"])
+            text, applied = _configuration_text(config), _configuration_text(transactions.snapshot(journal, 1, True))
+            saved_selection = {"confirm": journal["result"].get("configured_confirm"),
+                               "theme": journal["result"].get("theme"), "motion": journal["result"].get("motion")}
+            _require(saved_selection["theme"] in THEME_NAMES and type(saved_selection["motion"]) is bool,
+                     "UNDO_CONFLICT", "The saved common selection is invalid")
+            expected_text, expected_diff = self._combined_change(control, transactions.snapshot(journal, 1), saved_selection)
+            _require(_configuration_bytes(expected_text) == transactions.snapshot(journal, 1, True) and
+                     _encoded(expected_diff) == _encoded(journal["metadata"].get("diff")),
+                     "UNDO_CONFLICT", "The saved common transaction differs from its owned edits")
+            allowed = {("ProjectNativeMenu", key) for key in ("IndependentMenuControls", "NativeMenuConfirm", "NativeMenuBack")}
+            allowed |= {("Theme", "ThemeName"), ("General", "BackgroundAnimation")}
+            for item in journal["metadata"]["diff"]:
+                section, key = item["section"], item["key"]
+                found = _assignment(text, section, key)
+                _require((section, key) in allowed and found is not None and
+                         _semantic_token(found["token"], boolean=key == "IndependentMenuControls") == item["after"],
+                         "UNDO_CONFLICT", "An owned common setting was edited externally")
+                if item["before_present"]:
+                    text = set_config_token(text, key, item["before_token"], section=section)
+                else:
+                    inserted = _assignment(applied, section, key)
+                    _require(inserted is not None and text[found["line_start"]:found["line_end"]] ==
+                             applied[inserted["line_start"]:inserted["line_end"]],
+                             "UNDO_CONFLICT", "An inserted common-setting line was edited externally")
+                    text = text[:found["line_start"]] + text[found["line_end"]:]
+            if config == transactions.snapshot(journal, 1, True):
+                text = _configuration_text(transactions.snapshot(journal, 1))
+            changes = [(control["_config"], config, _configuration_bytes(text)),
+                       (self.controls.meta, _read(self.controls.meta), _encoded({**cstate, "generation": cstate["generation"] + 1})),
+                       (self.appearance.meta, _read(self.appearance.meta), _encoded({**tstate, "generation": tstate["generation"] + 1})),
+                       (self.meta, _read(self.meta), _encoded({**self._state(), "generation": generation + 1}))]
+            retained = not journal["files"][0]["before_exists"]
+            if not retained:
+                palette = _read(theme["_theme"])
+                _require(_sha(palette) == journal["files"][0]["after_sha256"],
+                         "UNDO_CONFLICT", "The installed palette changed externally")
+                changes.insert(0, (theme["_theme"], palette, transactions.snapshot(journal, 0)))
+            tx = "experience-undo-" + uuid.uuid4().hex
+            result = {"transaction_id": tx, "undone_transaction_id": original, "generation": generation + 1,
+                      "controls_generation": cstate["generation"] + 1, "appearance_generation": tstate["generation"] + 1,
+                      "profile_id": self.profile_id, "applied": True, "idempotent": False,
+                      "theme_file_retained_unselected": retained, "gameplay_changed": False, "emulator_binary_changed": False}
+            result.update(runtime_observed=False, scope="global; existing per-game overrides are preserved")
+            transactions.commit(tx, request_id, "undo", original, changes, journal["metadata"], result)
+            return result
+
+    def recover(self):
+        with self._window():
+            self._recover()

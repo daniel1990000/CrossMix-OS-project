@@ -1,52 +1,50 @@
-DRAFT ONLY — NOT SENT. No author contact or permission is implied by this file.
+PREPARED DRAFT — NOT SENT. No delivery, author reply or permission is implied.
 
-Proposed recipient: Christopher Jacobs (@chrisbastion), subject to confirming
-the applicable address/scope. The stable tree names two different contacts:
-- App/PyUI/LICENSE.md: chrisj951@gmail.com (noncommercial redistribution notice).
-- App/PyUI/main-ui/LICENSE.md: mainpyui@gmail.com (noncommercial use, including
-  redistribution or creation of derivative works).
-
-Do not automatically send to either address or both. Resolve the intended
-recipient with the owner before any external message. Owner reply-to/contact
-for the required notification: [to be supplied by the owner].
+Proposed To: mainpyui@gmail.com
+Proposed Cc: chrisj951@gmail.com
+The nested main-ui licence names the To address for use/derivatives; the outer
+package licence names the Cc address for redistribution. Both identify
+Christopher Jacobs (@chrisbastion). These recipients and the public GitHub
+contact below are prepared for owner review; no external message is authorized
+or sent by this file.
 
 Subject: PyUI noncommercial TG5040 spruce presentation work — notification and scope clarification
 
 Hello Christopher,
 
-I am preparing an original TrimUI Smart Pro (TG5040) presentation offshoot
+I am preparing a noncommercial TrimUI Smart Pro (TG5040) presentation offshoot
 around spruceOS v4.5.4, pinned to commit
 d45ff8dfe5756147522b04ae5863d17a90e88b54 and its embedded PyUI tree
 4d0bdb3111d9226fbacbea6c89d65e540620e21e.
 
-The intended work is a PSP-inspired navigation/presentation option with
-original artwork, while retaining spruce's existing settings, launch flow,
-hardware adapters and classic appearance. The current desktop preview and
-host tools are independently written; no PyUI source is included in that
-preview package. Potential later integration would use or modify PyUI's
-view/menu seams and would retain your notices and user-facing credits.
-Commercial distribution or monetization is not covered by this notice.
+The work adds PSP-inspired navigation with original graphics while retaining
+spruce's settings, emulator launch flow, hardware adapters and classic interface.
+The public desktop preview and host tools are independently written and contain
+no PyUI runtime, emulator executable or SDK. Later integration uses reviewed
+source seams and retains your notices and user-facing credits. The separate
+PPSSPP engine changes retain their own GPL source and notices; they are not
+copied into PyUI.
 
-I am writing to describe the intended noncommercial use and provide contact
-details as required by the applicable PyUI terms. The outer and nested
-license files in this snapshot differ: the outer file describes notice for
-noncommercial redistribution, while the nested main-ui file describes notice
-for noncommercial use including creation of derivatives. They also give
-different email addresses. Please confirm the applicable scope and preferred
-contact address for this work, and whether any further notification details
-are required before source integration or redistribution.
+This notice describes the intended noncommercial use and provides a means of
+contact. The outer and nested licence files differ: the outer file requires
+notification for noncommercial redistribution, while the nested main-ui file
+also covers use and derivatives. They give the two email addresses above.
+Please confirm the applicable scope and preferred contact address, and identify
+any further notification details needed for this work.
 
-If the intended use later changes to commercial distribution or a paid
-service, I understand separate prior written permission is required. This
-notification does not claim such permission or endorsement.
+Project and contact:
+https://github.com/daniel1990000/CrossMix-OS-project
+https://github.com/daniel1990000/CrossMix-OS-project/issues
+GitHub account: https://github.com/daniel1990000
 
-Owner contact: [owner-provided reply-to or other means of contact]
-Project link, if the owner wishes to share one: [owner-provided link]
+This notice does not request or claim commercial permission or endorsement.
+If the intended use changes to a paid product or service, separate prior written
+permission will be needed under the pinned terms.
 
 Thank you,
-[owner-provided name]
+daniel1990000
 
-Pinned texts reviewed:
+Pinned source texts:
 https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/LICENSE.md
 https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/LICENSE.md
 https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/LICENSE

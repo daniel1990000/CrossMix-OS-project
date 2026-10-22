@@ -40,17 +40,23 @@ qualification API around the real Save/SaveSlot/Process lifecycle. It checks the
 final slot rename, reports rejected operations, invalidates changed sessions,
 and fingerprints the exact active ROM, running executable and completed state.
 Compiled source acceptance includes the real upstream SHA-256 implementation.
-The optional patch has its own lock and has not been included in the complete
-PowerVR candidate described above.
+The optional API and its separately locked [session extension](state-session.md)
+are now included in the [complete private PowerVR build](../evidence/ppsspp-complete-state-build.json).
+The extension adds a new opt-in private request/result protocol; it is not an
+existing stable-spruce API. Actual save/Process completion and native state-load
+acknowledgements bind request, game, engine, format and state fingerprints.
+`PrincipalStateSessionAuthority` supplies the fixed launcher environment,
+checks stopped writers after the real process boundary, and stores boot-bound
+authenticated capabilities for the next source process. Typed Resume retains
+the original `device.run_game` route. Signed checkpoint times survive a later
+failed save; an arbitrary card JSON record cannot authorize Resume.
 
-Stable spruce exposes no verified external metadata interface, and this patch
-adds no caller, exporter, command or Resume action. Full ROM hashing is opt-in
-qualification work and can pause emulation. Callback completion does not prove
-durability or clean shutdown. The frontend continues to offer recents and normal
-launch until a reviewed owner integration supplies exact request/game/engine/
-format/state identity, writer evidence and a qualified state-load lifecycle.
-
-Spruce's `SIGUSR1` save-and-quit extension and shutdown hotkey sequence need their own completion/error proof. A screenshot, a process exit, or a callback that ignores save status must not be labeled a successful state save.
+The checked spruce save-and-quit override exits only after successful completion.
+The real cross-process host fixture covers save, failed later save, fresh-process
+Resume and load acknowledgement. Its serializer/platform are fixtures. Full ROM
+hashing can pause emulation; no device timing is claimed. Callback completion
+does not establish durable storage or clean shutdown. Shipped profiles therefore
+keep ordinary launch until independent installed-profile and TG5040 tests pass.
 
 ## Source and asset separation
 

@@ -26,6 +26,22 @@ git -C /tmp/ppsspp-recipe checkout --detach 9f770cb984fd8ffcc8f91d24fcbca859439c
 python3 project/ppsspp/build_candidate.py --source-root /tmp/ppsspp-full --recipe-root /tmp/ppsspp-recipe --sdk-dir /tmp/ppsspp-sdk --work-dir /tmp/ppsspp-power-vr --jobs 4 --strict-sdk-search --rebuild-ffmpeg
 ```
 
+Add `--with-state-evidence` to build the explicit state-session candidate. This
+selects `state-evidence.lock.json` and `state-session.lock.json` in order after
+the native-menu patch. It also selects `recipe-overrides.lock.json` after the
+ten pinned spruce recipe scripts. The post-recipe patch changes both SIGUSR1
+save-and-quit callbacks to quit only on `SaveState::Status::SUCCESS`; failed
+serialization, final rename or opted-in export cannot request a successful quit.
+The signal handlers continue to set atomic requests without filesystem work.
+
+The default build retains the original native-menu-only composition. Selecting
+state evidence creates a new effective source lock and clears the inherited
+full-build and executable qualification from the older native-menu lock. The
+report lists every project patch, post-recipe patch and original extension-lock
+hash. The retained `native-menu-source-lock.json` and `project-extension-locks/`
+preserve those distinct input identities. A completed source build does not
+enable an installed caller, qualify a state-load lifecycle or prove poweroff.
+
 Place the downloaded archives in `/tmp/ppsspp-sdk` before running the builder.
 Host requirements are Python 3.9+, Git and a working local Docker daemon with
 BuildKit. The script explicitly selects `/var/run/docker.sock` and preserves
@@ -65,6 +81,10 @@ adds the proved sysroot/header/library policy and an absolute new install
 prefix. Configure and make run outside the read-only source tree. PPSSPP's
 FFmpeg include/library/API cache entries are invalidated, and all five selected
 libraries and header roots must resolve to the rebuilt prefix.
+Resuming a completed FFmpeg source build verifies the complete installed-header
+inventory as well as all five static archives, source identity and configure
+arguments. Changed, additional or symlinked headers and stale metadata are
+refused before engine compilation.
 
 The old bundled `libavutil.a(file_open.o)` imports `fcntl64`, which prevents a
 strict old-SDK link even after PPSSPP's own headers are corrected. Its prebuilt
@@ -88,6 +108,9 @@ hashes are recorded in `recipe-assembly.json`. A changed HEAD, changed input,
 failed script or stale assembly is rejected before compilation. The
 `combined-tracked-source.patch` supplements the full source snapshot; the new
 project header is retained by that snapshot and the project patch.
+For the state-session candidate, checked post-recipe overrides additionally
+require exact script-produced preimages, patch hashes and final postimages.
+They are retained separately and never silently mixed into the old candidate.
 
 Assembly and compilation use the recipe image's root user, with bind mounts
 limited to the prepared source, output, build helpers and cache. The disposable
@@ -212,6 +235,24 @@ records the separate executable/source identities and failed strict attempt
 that exposed the old FFmpeg object. This passes the SDK inventory only; actual
 device loader paths, PowerVR/SDL behavior and physical qualification remain
 untested.
+
+The initial state-session build produced a 19,926,336-byte AArch64 ELF. Its
+binary and matching source archive remain private historical inputs after the
+session patch was revised to retain completed save/load identities independently
+of later failed operations.
+
+The revised checkpoint-retention build produced a 19,934,560-byte AArch64 ELF
+from a clean engine build. It includes native-menu 0001, state API 0002, revised
+session caller 0003 and checked recipe callbacks 0004. The unchanged rebuilt
+FFmpeg archives and complete installed-header inventory were hash-verified before
+reuse. The engine requires only `GLIBC_2.17` and passes the recursive SDK
+inventory across sixteen objects.
+[Complete state-session build evidence](../evidence/ppsspp-complete-state-build.json)
+records the current executable, patch sequence, source archive, previous
+candidate identity and component notices. The observed FFmpeg configuration is LGPL 2.1 or later, with GPL,
+nonfree and version-3 options disabled. This configuration result does not
+replace the individual dependency notices. The candidate remains private, with
+physical integration and distribution clearance pending.
 
 ## Distribution status
 

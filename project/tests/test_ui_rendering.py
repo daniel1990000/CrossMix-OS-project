@@ -124,6 +124,29 @@ print("embedded state preserved; Pillow absent")
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("Pillow absent", result.stdout)
 
+    def test_four_large_dialog_choices_do_not_overlap_body_or_page_hint(self):
+        from psp_shell.ui.model import Dialog, DialogChoice
+        from psp_shell.ui.renderer import Renderer
+        model = NavigationModel(preferences={"text_scale": 1.75, "motion": False, "high_contrast": True})
+        model._dialog = Dialog("Large text", "\n".join("Body line " + str(index) for index in range(20)),
+            tuple(DialogChoice(title) for title in ("Resume", "Fresh start", "Game options", "Cancel")))
+        drawn = []
+        with Renderer(software=True) as renderer:
+            label = renderer._label
+            def record(text, x, y, size, color, max_width, scale=1.0):
+                result = label(text, x, y, size, color, max_width, scale)
+                drawn.append((text, y, result[1]))
+                return result
+            with mock.patch.object(renderer, "_label", side_effect=record):
+                renderer.render(model.snapshot(), 0)
+            body = [entry for entry in drawn if entry[0].startswith("Body line")]
+            choices = [entry for entry in drawn if entry[0] in {"Resume", "Fresh start", "Game options", "Cancel"}]
+            hint = next(entry for entry in drawn if entry[0].startswith("X  More text"))
+            self.assertTrue(body)
+            self.assertEqual(len(choices), 4)
+            self.assertLess(max(y + height for _, y, height in body), min(y for _, y, _ in choices))
+            self.assertLess(max(y + height for _, y, height in choices), hint[1])
+
 
 class ArtworkHeaderTests(unittest.TestCase):
     def test_png_and_jpeg_preflight_and_truncated_headers(self):

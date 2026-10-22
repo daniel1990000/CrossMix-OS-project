@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: MIT
 import hashlib
 import importlib.util
+import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+from types import SimpleNamespace
 
 ROOT=Path(__file__).resolve().parents[1]
 spec=importlib.util.spec_from_file_location('sdk_search',ROOT/'sdk_search.py')
@@ -55,5 +57,62 @@ exit 41
         with self.assertRaisesRegex(ValueError,'script changed'):
             ffmpeg.configuration(self.script,self.pin,self.root/'out')
         self.assertFalse(marker.exists())
+
+    def resume_fixture(self, name):
+        root=self.root/name;root.mkdir()
+        source=root/'source';source.mkdir()
+        (source/'linux_arm64.sh').write_bytes(self.script.read_bytes())
+        (source/'configure').write_bytes(b'configure identity fixture\n')
+        build=root/'build';build.mkdir()
+        prefix=root/'prefix';(prefix/'include/libavcodec').mkdir(parents=True)
+        (prefix/'include/libavcodec/avcodec.h').write_text('header fixture\n')
+        (prefix/'lib').mkdir()
+        archives=[]
+        for component in ffmpeg.COMPONENTS:
+            relative='lib/lib'+component+'.a';path=prefix/relative
+            path.write_bytes(('archive fixture '+component).encode())
+            archives.append({'path':relative,'sha256':ffmpeg.sha(path),'size':path.stat().st_size})
+        metadata=root/'metadata';metadata.mkdir()
+        commit='a'*40
+        inputs={'ffmpeg':{'commit':commit,'configure_sha256':ffmpeg.sha(source/'configure'),
+                         'script_path':'linux_arm64.sh','script_sha256':self.pin}}
+        _,configuration=ffmpeg.configuration(source/'linux_arm64.sh',self.pin,prefix)
+        report={'status':'complete','commit':commit,'configure_args':configuration,'archives':archives,
+                'header_inventory':ffmpeg.header_inventory(prefix)}
+        (metadata/'manifest.json').write_text(json.dumps(report))
+        return source,build,prefix,metadata,inputs,report
+
+    def resume(self, fixture):
+        source,build,prefix,metadata,inputs,report=fixture
+        original=ffmpeg.subprocess.run
+        def run(args, **kwargs):
+            if args[0]=='git':
+                return SimpleNamespace(stdout=inputs['ffmpeg']['commit']+'\n')
+            self.assertNotIn(args[0],('make',str(source/'configure')))
+            return original(args,**kwargs)
+        with patch.object(ffmpeg.subprocess,'run',side_effect=run):
+            return ffmpeg.build(source,build,prefix,metadata,inputs,2)
+
+    def test_completed_source_build_resume_verifies_installed_headers_and_archives(self):
+        fixture=self.resume_fixture('matching')
+        self.assertEqual(self.resume(fixture),fixture[-1])
+        for case in ('changed-header','extra-header','header-symlink','changed-archive','old-metadata'):
+            with self.subTest(case=case):
+                fixture=self.resume_fixture(case)
+                source,build,prefix,metadata,inputs,report=fixture
+                if case=='changed-header':
+                    (prefix/'include/libavcodec/avcodec.h').write_text('changed\n')
+                elif case=='extra-header':
+                    (prefix/'include/stale.h').write_text('unexpected\n')
+                elif case=='header-symlink':
+                    (prefix/'include/libavcodec/avcodec.h').unlink()
+                    (prefix/'include/libavcodec/avcodec.h').symlink_to(self.script)
+                elif case=='changed-archive':
+                    (prefix/'lib/libavutil.a').write_text('changed\n')
+                else:
+                    del report['header_inventory']
+                    (metadata/'manifest.json').write_text(json.dumps(report))
+                with self.assertRaises(ValueError):
+                    self.resume(fixture)
 
 if __name__=='__main__':unittest.main()

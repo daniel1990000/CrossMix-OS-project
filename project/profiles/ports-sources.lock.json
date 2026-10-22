@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "evidence": "Pinned text sources only; engine binary correspondence and distribution grants are not established.",
+  "sources": [
+    {
+      "port_id": "gta3",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gta3/Grand Theft Auto 3.sh",
+      "git_blob": "521568d5516198a7f3fd62c2d44e13eca0aa6b6d",
+      "sha256": "49fc8590edf6d3c2109b4a7f6a07714e1475da213b41908ea2e6c9b499f6df0f"
+    },
+    {
+      "port_id": "gta3",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gta3/port.json",
+      "git_blob": "439ba82d4563f153b4bbd71eb5bbc1e9a5f72eb5",
+      "sha256": "a140ca3a1d0fa358bf13ad2c9b8f290fdcb6ff416104be91e82c10ebf7d18a17"
+    },
+    {
+      "port_id": "gta3",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gta3/README.md",
+      "git_blob": "ee522616bc4d1e1264d3e93dde6d57906effb896",
+      "sha256": "21ac1fd838c8983f2483694ec475eac9d5a827712a0346736690dc528cedaa41"
+    },
+    {
+      "port_id": "gtavc",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gtavc/Grand Theft Auto Vice City.sh",
+      "git_blob": "804e8daae8d550cdc0eb061ee35f3b8dafbddaf3",
+      "sha256": "365a3ff50740fd0330089d6d50798a6b5349f17597927f6fd9f0cefd8fc06eca"
+    },
+    {
+      "port_id": "gtavc",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gtavc/port.json",
+      "git_blob": "69f484b68b8b72b2d1962a28223b3d2e8970ac2a",
+      "sha256": "cd90c31dd390226df45ba646bdf6f74396bc8cb33ecd7f827055983949f468ff"
+    },
+    {
+      "port_id": "gtavc",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/gtavc/README.md",
+      "git_blob": "e274663ec2bfb70b1d89905267379e9cca18f55b",
+      "sha256": "8785ea7ec1541ef711875eed4431daf6c5bab083931e9c39b2054bc138528614"
+    },
+    {
+      "port_id": "render96ex",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/render96ex/render96ex.sh",
+      "git_blob": "18227ae733c19fc9c1cac8eea50dacb61794d4c0",
+      "sha256": "905e230ac580d61166acc3cb92bd8f8c10f6f6678a57f8caf843fc4d9e482e6f"
+    },
+    {
+      "port_id": "render96ex",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/render96ex/port.json",
+      "git_blob": "57323b0cd3894020a2c6a9c26c23978ea50e1335",
+      "sha256": "c097ecf2af978c57a6ce24387938ed188b9ee9661e2b1d6fa3c9ef08e65eb1a8"
+    },
+    {
+      "port_id": "render96ex",
+      "repository": "PortsMaster-MV/PortMaster-MV-New",
+      "commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+      "path": "ports/render96ex/README.md",
+      "git_blob": "19c51ea219fd4b1afb3885a42cb56d8a68b6aa16",
+      "sha256": "622ad0141096c36f8f179975216389e021594c6ceaf1fdc3dbdc119c87c1e2ca"
+    },
+    {
+      "port_id": "sonic_mania",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/sonic.mania/Sonic Mania.sh",
+      "git_blob": "e3c56e87873d2413492b72e7fffd82c8cc400909",
+      "sha256": "d4aff70b119f6d612149964d5e9500d28f262845161e16881f7130b1579f7af9"
+    },
+    {
+      "port_id": "sonic_mania",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/sonic.mania/port.json",
+      "git_blob": "51f4955e0ed00d50074d9ea48fb512f3184d32b3",
+      "sha256": "335d6ba58a07286512427eeffb18f415575d60864077e84d297ecac1ffa8f0a0"
+    },
+    {
+      "port_id": "sonic_mania",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/sonic.mania/README.md",
+      "git_blob": "ccfcff4c725fd2dc1f4d6a0f8f00f0e41130da58",
+      "sha256": "a2579f3465dcc2bdcd246b7ccae62d86a62560bc2c4dec40868369924d22fdc6"
+    },
+    {
+      "port_id": "celeste",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/celeste/Celeste.sh",
+      "git_blob": "32620f2267a3ae7055820a07386ee21e40bc4f55",
+      "sha256": "aaa2e217d6dc8a2d67a60263de59e16b7cca822e7ecb38999fdeb1febacdd1d0"
+    },
+    {
+      "port_id": "celeste",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/celeste/port.json",
+      "git_blob": "2291d3b6a7168a367f5664433c97d7538a4024f2",
+      "sha256": "9227aa8ee901b4f2aa9add691fbad6067bd476fc3b40123e6e36361e464837b4"
+    },
+    {
+      "port_id": "celeste",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/celeste/README.md",
+      "git_blob": "9b73d6c81e2547cb335910a26dbe94e4e83074d4",
+      "sha256": "05bd8d7fedfd51cc5d8283478576d0d96610bb9125670f2036665e74a417db2b"
+    }
+  ],
+  "spruce_sources": [
+    {
+      "repository": "spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "path": "App/PortMaster/launch.sh",
+      "sha256": "793912a46ce5749996f5da3fc36ed5df5aa8813b1562a133c5314379413a7135"
+    },
+    {
+      "repository": "spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "path": "App/PortMaster/control.txt",
+      "sha256": "ac3083b4ce2237e628781436ec7307a22936c89b742da3143882b66446b1c836"
+    },
+    {
+      "repository": "spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "path": "spruce/portmaster/control.txt",
+      "sha256": "14c778e9368dca33c1a6c8baaa3b958a6b3213b22b6135660d9b229aa3849f93"
+    },
+    {
+      "repository": "spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "path": "spruce/scripts/emu/lib/ports_functions.sh",
+      "sha256": "5c3942e78cd81a168b28c893d12ca113a25b4f12b6e8308db43905d1c29a3404"
+    },
+    {
+      "repository": "spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "path": "Emu/PORTS/config.json",
+      "sha256": "c0c85233eec6ad8130aea521f5033125ad1a68ae1b4381d9c347dcbeb4f0ae25"
+    }
+  ]
+}

@@ -40,6 +40,10 @@ class EmbeddedContext:
     report_error: Callable[[str], None] | None = None
     control_adapter: Any = None
     theme_manager: Any = None
+    hardware_adapter: Any = None
+    experience_manager: Any = None
+    resume_evidence_provider: Callable | None = None
+    game_options_handler: Callable | None = None
     # Trusted source bootstrap supplies live observations separately from its
     # independently qualified expected profile. Refresh before each handoff.
     inventory_provider: Callable[[], Mapping[str, Any]] | None = None
@@ -164,6 +168,7 @@ class _LaunchBridge:
 
 class EmbeddedRunner:
     ADVANCED_ROUTES = {"settings": "Setting", "apps": "App", "collections": "Collection"}
+    SOURCE_ROUTES = {"wifi", "bluetooth", "game-options"}
 
     def __init__(self, context: EmbeddedContext, *, health: FrontendHealth | None = None,
                  attempt_id: str | None = None, dependencies: EmbeddedDependencies | None = None):
@@ -182,6 +187,7 @@ class EmbeddedRunner:
         self._owner_restore_failed = False
         self._release_gate = True
         self._pending_advanced = None
+        self._pending_game_options = None
         self._advanced_in_progress = False
 
     def _new_renderer(self):
@@ -281,6 +287,8 @@ class EmbeddedRunner:
             quiescent=self.context.quiescent, tool_list=self.context.tool_list,
             tool_actions=self.context.tool_actions, mode_actions=self.context.mode_actions)
         self.backend = (deps.backend_factory or SpruceBackend)(self.context.sd_root, read_only=False, managers=provider)
+        if self.context.resume_evidence_provider is not None:
+            self.backend.set_verified_resume_evidence(self.context.resume_evidence_provider())
         self.settings = (deps.settings_factory or SettingsStore)(str(self.context.state_dir))
         self.settings.recover()
         self.model = (deps.model_factory or NavigationModel)(demo=False, restored_state=_restore_navigation(self.context.state_dir))
@@ -293,7 +301,7 @@ class EmbeddedRunner:
                 if method == "spruce.advanced":
                     self._fields(params, ("route",), ("route",))
                     route = self._text(params, "route", limit=32)
-                    if route not in runner.ADVANCED_ROUTES:
+                    if route not in set(runner.ADVANCED_ROUTES) | (runner.SOURCE_ROUTES - {"game-options"}):
                         raise ContractError("UNKNOWN_ROUTE", "This is not a registered classic spruce menu route")
                     runner._pending_advanced = route
                     return {"state": "releasing_ui"}
@@ -311,7 +319,11 @@ class EmbeddedRunner:
         self.dispatcher = EmbeddedDispatcher(self.backend, self.settings, self.context.state_dir,
                                              launch_bridge=_LaunchBridge(self),
                                              control_adapter=self.context.control_adapter,
-                                             theme_manager=self.context.theme_manager)
+                                             theme_manager=self.context.theme_manager,
+                                             hardware_adapter=self.context.hardware_adapter,
+                                             experience_manager=self.context.experience_manager,
+                                             game_options_handler=self._schedule_game_options
+                                             if self.context.game_options_handler is not None else None)
         self._commands(self.model.initial_commands())
         self.renderer = self._new_renderer()
 
@@ -325,9 +337,30 @@ class EmbeddedRunner:
             except Exception as exc:
                 self.model.error(command, *error_fields(exc))
 
+    def _schedule_game_options(self, game_id):
+        self.backend._game(game_id)
+        if game_id not in getattr(self.backend.provider, "models", {}):
+            raise ContractError("MODEL_UNAVAILABLE", "The existing selected game model is unavailable")
+        self._pending_game_options = game_id
+        self._pending_advanced = "game-options"
+        return {"state": "releasing_ui"}
+
     def open_advanced(self, route: str):
         qualification(self.context).assert_safe()
-        if route not in self.ADVANCED_ROUTES or not callable(getattr(self.context.main_menu, "launch_selection", None)):
+        if route in self.ADVANCED_ROUTES and callable(getattr(self.context.main_menu, "launch_selection", None)):
+            callback = lambda: self.context.main_menu.launch_selection(self.ADVANCED_ROUTES[route])
+        elif route in {"wifi", "bluetooth"}:
+            menu = getattr(getattr(self.context.main_menu, "settings_menu", None),
+                           "wifi_menu" if route == "wifi" else "bt_menu", None)
+            callback = getattr(menu, "show_wifi_menu" if route == "wifi" else "show_bluetooth_menu", None)
+        elif route == "game-options" and callable(self.context.game_options_handler):
+            model = getattr(self.backend.provider, "models", {}).get(self._pending_game_options)
+            if model is None:
+                raise ContractError("MODEL_UNAVAILABLE", "The existing game menu lost its selected source model")
+            callback = lambda: self.context.game_options_handler(model)
+        else:
+            callback = None
+        if not callable(callback):
             raise ContractError("UNKNOWN_ROUTE", "Existing spruce menu route is unavailable")
         if not self.context.quiescent():
             raise ContractError("BUSY_SESSION", "Finish the existing foreground operation before opening another menu")
@@ -336,12 +369,13 @@ class EmbeddedRunner:
         self._close_project_renderer()
         self.context.controller.clear_input_queue()
         self.context.controller.clear_last_input()
+        self._release_input()
         # A fixed in-memory menu value, never a command string. The existing
         # menu may perform its normal game/app handoff and exit this process.
         token = self.health.begin_foreground("advanced:" + route)
         self._advanced_in_progress = True
         try:
-            self.context.main_menu.launch_selection(self.ADVANCED_ROUTES[route])
+            callback()
             if self.context.quiescent() is not True:
                 raise ContractError("BUSY_SESSION", "The existing menu returned without a verified idle session")
         except Exception as exc:
@@ -349,6 +383,7 @@ class EmbeddedRunner:
         self.health.clear_foreground(token, verified=True)
         self._advanced_in_progress = False
         self._pending_advanced = None
+        self._pending_game_options = None
         self.model.exit_request = None
         self._restore(None)
         self._commands(self.model.initial_commands())

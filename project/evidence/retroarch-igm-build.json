@@ -1,0 +1,359 @@
+{
+  "schema": 1,
+  "observed_at_utc": "2026-10-22T15:34:30.095856+00:00",
+  "scope": "Separate complete original-TG5040 RetroArch engine cross-build with opt-in spruce IGM extension; private candidate only",
+  "inputs": {
+    "lock": "project/retroarch/build-inputs.lock.json",
+    "lock_sha256": "689db77ed8a1a7ef17cebc910e409bc5dcf16b77d0a5a9239e74b801a32916a4",
+    "upstream": {
+      "repository": "https://github.com/libretro/RetroArch.git",
+      "tag": "v1.22.2",
+      "commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+      "tree": "33babf9eb7699b5d571a3063ea21c3e488c159fe"
+    },
+    "recipe": {
+      "repository": "https://github.com/spruceUI/RA",
+      "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "files": [
+        {
+          "path": "Dockerfile",
+          "sha256": "09d43227c833185cc46b2dfff66041ff38e5f7b104355df2d7d82ee9b5a3eb8b"
+        },
+        {
+          "path": "build.sh",
+          "sha256": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50"
+        },
+        {
+          "path": "common_src/spruce_igm_platform.h",
+          "sha256": "05da6e4b74433ec69cbdaa57b7d115f3f7f6aa4e3bc5e2d68cfca8e19a3d671f"
+        },
+        {
+          "path": "common_src/spruce_igm_theme.c",
+          "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+        },
+        {
+          "path": "common_src/spruce_igm_theme.h",
+          "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+        },
+        {
+          "path": "patches/common/0001-spruce-igm.patch",
+          "sha256": "ae2ae6c567f15ba96a23d1ad62fe074f14e48aace71ed9c8e287b258f84b7479"
+        },
+        {
+          "path": "patches/common/0002-portrait-panel-landscape-rotation.patch",
+          "sha256": "7e34548a1a5e433811764152c80d3edbd5c2b456c98ddcc33e990ca8e1715541"
+        },
+        {
+          "path": "patches/common/0003-sysfs-rumble-fallback.patch",
+          "sha256": "31c1d098e20ee3718b9dd9fa0940e6ce48994345cd59a97476528cddaeaa36ff"
+        },
+        {
+          "path": "patches/common/0004-sdl-gl-reapply-es-profile.patch",
+          "sha256": "978eee8577d173725464666e4165ac0b73b16145501afee88d9e4f796a0d3dd5"
+        }
+      ]
+    },
+    "extension": {
+      "path": "patches/0001-independent-igm-menu-controls.patch",
+      "sha256": "39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6",
+      "modifications_license": "GPL-3.0-or-later; external recipe/source grants remain separately audited"
+    },
+    "patched_source": [
+      {
+        "path": "spruce_igm.c",
+        "sha256": "ec05820e0b79c515e6b4379e88bb967127c0fa280c59420794f5c6d0b7a57eaf"
+      },
+      {
+        "path": "spruce_igm_theme.c",
+        "sha256": "a0fde89e9dd84572055e01a042615718407d743d63fbd8ebbd63df15c912efaa"
+      },
+      {
+        "path": "spruce_igm_theme.h",
+        "sha256": "593528da32d1ab1bbace0b6bbc35ce6c91a71ac9296631d4fca03cd9030e3ce1"
+      }
+    ]
+  },
+  "toolchain": {
+    "image_id": "sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c",
+    "compiler_version": "aarch64-linux-gnu-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "selected_package_versions": {
+      "binutils-aarch64-linux-gnu": "2.34-6ubuntu1.11",
+      "g++-9-aarch64-linux-gnu": "9.4.0-1ubuntu1~20.04.2cross2",
+      "gcc-9-aarch64-linux-gnu": "9.4.0-1ubuntu1~20.04.2cross2",
+      "gcc-9-aarch64-linux-gnu-base:amd64": "9.4.0-1ubuntu1~20.04.2cross2",
+      "libstdc++-9-dev-arm64-cross": "9.4.0-1ubuntu1~20.04.2cross2",
+      "pkg-config": "0.29.1-0ubuntu4"
+    },
+    "complete_package_inventory_sha256": "f82030da9518645daa0f5289691859753936711f6ea4331cc4ea16ae808413c8",
+    "sdk_assets": [
+      {
+        "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+        "size": 213977008,
+        "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+      },
+      {
+        "name": "SDK_usr_tg5040_a133p.tgz",
+        "size": 185049621,
+        "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+      }
+    ],
+    "sdk_preflight_status": "pass",
+    "sdk_preflight_sha256": "333f4bc09e855167a5a573c63a19b325ba5685518ce81986ce4d2f3bf31dbeef",
+    "static_cxx_runtime": {
+      "selected_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+      "sha256": "c6e9d9e3a4965a811e3281aa593a14d3d6c56897ee2e62812eae9fb1ac2f1c4d",
+      "actual_full_engine_link_trace_verified": true
+    }
+  },
+  "build": {
+    "complete_engine_linked": true,
+    "jobs": 4,
+    "compiled_translation_units": 513,
+    "prepared_source_file_count": 11152,
+    "prepared_source_inventory_sha256": "0bfd2986299de64673eb6903e9489923148103601d0efc66500826babae18c06",
+    "prepared_sources_rechecked_after_build": true,
+    "configure_args": [
+      "--host=aarch64-linux-gnu",
+      "--disable-x11",
+      "--disable-wayland",
+      "--disable-vulkan",
+      "--disable-opengl",
+      "--disable-qt",
+      "--disable-kms",
+      "--disable-pulse",
+      "--disable-jack",
+      "--disable-oss",
+      "--disable-discord",
+      "--enable-udev",
+      "--enable-opengles",
+      "--enable-opengles3",
+      "--enable-egl",
+      "--enable-sdl2",
+      "--enable-alsa",
+      "--enable-networking",
+      "--enable-ssl",
+      "--enable-command",
+      "--enable-freetype",
+      "--enable-builtinzlib",
+      "--enable-zlib"
+    ],
+    "adaptations": [
+      "Original TG5040: Vulkan disabled because the pinned SDK has no Vulkan loader",
+      "Explicit GCC9/SDK headers, libraries and SDK-only pkg-config search",
+      "SDK C headers use -isystem after engine-local -I compatibility headers, with -nostdinc retained",
+      "Build-only Make overlay replaces explicit -lstdc++ with GCC9 static C++ runtime; final link trace retained"
+    ],
+    "compiler_environment": {
+      "AR": "aarch64-linux-gnu-ar",
+      "CC": "aarch64-linux-gnu-gcc --sysroot=/opt/sysroot",
+      "CFLAGS": "-nostdinc -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -isystem /opt/sysroot/usr/include -O3 -flto -ffunction-sections -fdata-sections -flto=auto -DHAVE_SCREEN_ORIENTATION -DGEOMETRY_MENU_ROTATION -D_GNU_SOURCE -DHAVE_FILTERS_BUILTIN",
+      "CXX": "aarch64-linux-gnu-g++ --sysroot=/opt/sysroot",
+      "CXXFLAGS": "-nostdinc -I/usr/aarch64-linux-gnu/include/c++/9 -I/usr/aarch64-linux-gnu/include/c++/9/aarch64-linux-gnu -I/usr/aarch64-linux-gnu/include/c++/9/backward -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -isystem /opt/sysroot/usr/include -O3 -ffunction-sections -fdata-sections -flto=auto -DHAVE_SCREEN_ORIENTATION -DGEOMETRY_MENU_ROTATION -D_GNU_SOURCE -DHAVE_FILTERS_BUILTIN",
+      "LDFLAGS": "-L/usr/lib/gcc-cross/aarch64-linux-gnu/9 -L/opt/sysroot/lib -L/opt/sysroot/usr/lib -Wl,--gc-sections -flto=auto",
+      "PKG_CONFIG_LIBDIR": "/opt/sysroot/usr/lib/pkgconfig:/opt/sysroot/usr/share/pkgconfig",
+      "PKG_CONFIG_PATH": "",
+      "PKG_CONFIG_SYSROOT_DIR": "/opt/sysroot",
+      "PKG_CONF_PATH": "/usr/bin/pkg-config",
+      "STRIP": "aarch64-linux-gnu-strip"
+    },
+    "generated_config": [
+      {
+        "path": "config.mk",
+        "sha256": "5231793f52f4d5b4cd263068a2a6c80a61e8e2f138080f9821f5b06e6fe137e8"
+      },
+      {
+        "path": "config.h",
+        "sha256": "fc53f8cacba6d8d9992e32f8ad515e758c5673a759ed6a37d240275eb5e924a0"
+      }
+    ],
+    "sdk_link_overlay_sha256": "53df0fc3cef65b2c8a67da64b59a564279ef06de1400960dce7d64e96c7c1754",
+    "actual_vendor_header_probe_sha256": "fd198784b673f5a1f1b4ab9a131c569793e755d357f8ed0b5fbc419289dff030",
+    "igm_sources_compiled": true,
+    "extension_section_present_in_linked_elf": true,
+    "extension_enabled_by_default": false,
+    "compiler_warnings_present": true,
+    "compiler_warning_categories": [
+      "-Walloc-size-larger-than=",
+      "-Wmissing-braces",
+      "-Wodr",
+      "-Wsign-compare",
+      "-Wstrict-aliasing",
+      "-Wswitch",
+      "-Wuninitialized"
+    ],
+    "warnings_scope": "Inherited engine/dependency/intrinsic code; including bundled SPIR-V/glslang ODR warnings under recipe LTO. No warning-free or hardware-behavior claim.",
+    "builder_sha256": "e9cd2751c400fc4ce5740887895190de08a6c7a6695649ecb986633ee8ae197e"
+  },
+  "candidate": {
+    "name": "retroarch-igm-tg5040",
+    "sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+    "size": 15182848,
+    "private": true,
+    "published": false,
+    "installed": false,
+    "executed": false
+  },
+  "sdk_inventory": {
+    "pass": true,
+    "method": "readelf only; SDK basename inventory and symbol-version comparison",
+    "object_count": 23,
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "interpreter_present_in_sysroot": true,
+    "missing_libraries": [],
+    "missing_symbol_versions": [],
+    "direct_needed": [
+      "libgcc_s.so.1",
+      "libc.so.6",
+      "ld-linux-aarch64.so.1",
+      "libasound.so.2",
+      "libfreetype.so.6",
+      "libfontconfig.so.1",
+      "libpthread.so.0",
+      "libudev.so.1",
+      "libGLESv2.so.2",
+      "libSDL2-2.0.so.0",
+      "libv4l2.so.0",
+      "libdl.so.2",
+      "libm.so.6"
+    ],
+    "executable_required_versions": {
+      "libdl.so.2": [
+        "GLIBC_2.17"
+      ],
+      "ld-linux-aarch64.so.1": [
+        "GLIBC_2.17"
+      ],
+      "libpthread.so.0": [
+        "GLIBC_2.17"
+      ],
+      "libudev.so.1": [
+        "LIBUDEV_183"
+      ],
+      "libm.so.6": [
+        "GLIBC_2.17"
+      ],
+      "libc.so.6": [
+        "GLIBC_2.17"
+      ],
+      "libgcc_s.so.1": [
+        "GCC_3.0",
+        "GCC_3.3",
+        "GCC_3.3.1",
+        "GCC_4.2.0"
+      ]
+    },
+    "sha256": "f0666b5dd4e66e1bce5e6f242c6ac0672d14afeb72abbebcb6770415ec0ea3e4",
+    "elf_inventory_sha256": "24d34918e06df188047dad6306582f7b2432b1393d00596edfc3c9d396ae3abd",
+    "installed_loader_resolution_proved": false,
+    "runtime_dlopen_or_device_drivers_proved": false
+  },
+  "retention": {
+    "source_inputs": {
+      "name": "source-inputs.tar.gz",
+      "size": 143630943,
+      "sha256": "ee37594defe5824e58c30fec6eb2f59db7d56c50a5f7875efc3c6ca4b336ae74"
+    },
+    "build_records": {
+      "name": "build-records.tar.gz",
+      "size": 552133,
+      "sha256": "b4c2c640abf5b18ec7c934a85a548598aa95a09e6388591cda17941cf1d074b3"
+    },
+    "archives_private": true,
+    "contents": "Complete original and patched engine trees, complete pinned recipe, notices, optional patch, builder/helpers/lock, generated configuration, package versions, ELF inventory and source manifest; no SDK blobs, Git internals, raw environment or credentials.",
+    "raw_logs_private": true,
+    "sdk_or_driver_replacements_distributed": false,
+    "verified_checks": [
+      "source-inputs.tar.gz digest/size",
+      "build-records.tar.gz digest/size",
+      "complete source archive locked inputs, final builder, patch results and original licence",
+      "build records actual generated config, matching candidate and SDK pass"
+    ],
+    "successful_build_log": {
+      "name": "build-output.log",
+      "size": 1296389,
+      "sha256": "eafd66535ee6ea2c1d8e8345f4a8faf91fd98b9cd0d130af75a9842871db250f",
+      "private": true
+    },
+    "successful_configure_log": {
+      "name": "configure-output.log",
+      "size": 5235,
+      "sha256": "7a0388f822949841f46682009cecfb39213cbf7a26b003c567f3ff2e7273e5f8",
+      "private": true
+    },
+    "source_notices": [
+      {
+        "path": "project/retroarch/NOTICE.md",
+        "sha256": "e0ff59a664ad3923312567a6438f9c58f3b314e7d8f7fb6cf3c058eea5f9b672"
+      },
+      {
+        "path": "project/retroarch/COPYING",
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+      }
+    ],
+    "notices_added_after_build": "Explicit project GNU GPL modification notice and unmodified upstream licence text added to private source retention after notice files were finalized. Engine sources, generated configuration, native build commands and candidate binary are unchanged."
+  },
+  "intermediate_failures_retained": [
+    {
+      "stage": "sdk_configure_without_pkg_config_selector",
+      "reason": "RetroArch cross-configure did not find its prefixed pkg-config; explicit PKG_CONF_PATH=/usr/bin/pkg-config required.",
+      "record_name": "configure-output.log",
+      "size": 1948,
+      "sha256": "5e77be8a5ee4736740ba4841ce069230b6428ad9667b2f950c785e972fde7fc0",
+      "retained_privately": true
+    },
+    {
+      "stage": "universal_recipe_configure",
+      "reason": "Original SDK has no Vulkan loader. Target-specific renderer override required.",
+      "record_name": "configure-output-v2.log",
+      "size": 4880,
+      "sha256": "125347a2e524b11e328351f8cd6b377553ea3e65fbc8832f9faca3ef12a9d22e",
+      "retained_privately": true
+    },
+    {
+      "stage": "full_compile_sdk_header_precedence",
+      "reason": "SDK zlib.h displaced engine bundled zlib compatibility header; corrected explicit SDK C header path to -isystem with -nostdinc retained.",
+      "record_name": "build-output.log",
+      "size": 1220357,
+      "sha256": "06c7cd65d87b53094174e5d4a1792125a3092b7f2cb97c40b924558b753ea4a1",
+      "retained_privately": true
+    },
+    {
+      "stage": "full_link_dynamic_cxx_runtime",
+      "reason": "Complete engine linked; SDK inventory rejected GLIBCXX_3.4.26 imported by explicit dynamic -lstdc++. Final build selects proved GCC9 static runtime via separate Make overlay.",
+      "record_name": "sdk-abi-inventory.json",
+      "size": 68677,
+      "sha256": "38d7f7eeb2cbb0196645828beb674aa41429cc0a30842c9f864f85dac7a5834f",
+      "retained_privately": true
+    }
+  ],
+  "host_build_tool_acceptance": {
+    "tests": 9,
+    "passed": 9,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "command": "PYTHONPATH=project python3 -m unittest discover -s project/tests -p test_retroarch_build_candidate.py -v"
+  },
+  "qualification": {
+    "full_engine_candidate_cross_build": true,
+    "sdk_dependency_inventory": true,
+    "existing_bundled_binary_exact_source_correspondence": false,
+    "target_executed": false,
+    "device_compatibility_proved": false,
+    "physical_menu_controls_verified": false,
+    "installed_runtime_or_profile_gates_enabled": false,
+    "installed_emulators_changed": false,
+    "emulator_save_compatibility_proved": false,
+    "recipe_grant_resolved": false,
+    "sdk_redistribution_cleared": false,
+    "distribution_cleared": false
+  },
+  "limitations": [
+    "The SDK audit inventories basenames and symbol versions; shortest/lexical SDK path selection does not establish an installed loader path or already-running mapped object.",
+    "No emulator/core/game was executed, installed or replaced, and no hardware/input/rendering/save behavior was observed.",
+    "The existing bundled spruce RetroArch executable remains a separate unmodified reference with unproved exact source correspondence.",
+    "External recipe/shared-source licence grant and SDK/runtime redistribution remain unresolved; keep candidate and full source archives private."
+  ]
+}

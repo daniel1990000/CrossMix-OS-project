@@ -5,12 +5,18 @@ This separate GPL-2.0-or-later patch adds an **in-process, qualification-only**
 caller, external command, socket, manifest exporter or automatic save-and-quit
 behavior. Resume remains unavailable on the shipped profiles.
 
+The additional [private session extension](state-session.md) now supplies a
+reviewable native caller/export and authenticated source/principal/Resume route.
+It is a separate opt-in patch with its own lock and acceptance evidence. The
+API-only scope described here remains useful when reviewing patch 0002 alone.
+
 [state-evidence.lock.json](state-evidence.lock.json) pins the untouched source,
 patch and resulting files. This patch composes with the native-menu patch but
 is deliberately excluded from the default candidate's `source-lock.json`.
-The existing complete PowerVR build and its executable hash do **not** contain
-this API. Neither a complete engine build nor a device test of this optional
-patch has been performed.
+The earlier complete PowerVR build and its executable hash do **not** contain
+this API. A later [complete state-enabled build](../evidence/ppsspp-complete-state-build.json)
+includes this API, private-session patch and checked save-and-quit adaptation.
+Its evidence and executable identity remain separate. No device test is claimed.
 
 ## Completed operation and identity
 

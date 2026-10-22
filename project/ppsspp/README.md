@@ -89,6 +89,18 @@ source correspondence. Both candidates and source archives remain local;
 installed-device input, loader, driver and performance qualification and
 recipe/SDK distribution clearance remain outstanding.
 
+The later [complete state-session build](../evidence/ppsspp-complete-state-build.json)
+also compiles the completion API, scoped session protocol and checked spruce
+save-and-quit override, including retained successful save/load exports after later failures. Its 19,934,560-byte AArch64 executable has SHA256
+`a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d`.
+All 16 recursive SDK objects pass the dependency audit. The pinned FFmpeg
+configuration is LGPL-2.1-or-later with GPL, nonfree and version-3 options
+disabled; its component notices are retained with the private corresponding
+source archive. [State-session documentation](state-session.md) explains the
+new opt-in protocol, actual save/load acknowledgement and authenticated
+cross-process Resume integration. The installed engine and profiles remain
+unchanged pending original-device qualification.
+
 The PPSSPP patch and C++ acceptance fixtures are GPL-2.0-or-later. The exact
 upstream license and PSPSDK notice are retained in
 [LICENSE.PPSSPP.txt](LICENSE.PPSSPP.txt). See [NOTICE.md](NOTICE.md) for boundaries

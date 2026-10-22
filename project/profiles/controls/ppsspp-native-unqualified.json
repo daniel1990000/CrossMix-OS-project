@@ -12,7 +12,9 @@
   "executable_sha256": null,
   "config": "Saves/.config/ppsspp/PSP/SYSTEM/ppsspp-SmartPro.ini",
   "writer_inventory_verified": false,
-  "writer_executables": ["Emu/PSP/PPSSPPSDL_TrimUI"],
+  "writer_executables": [
+    "Emu/PSP/PPSSPPSDL_TrimUI"
+  ],
   "native_menu_extension": null,
   "qualification_gaps": [
     "Stock native Confirm/Back derives from Cross/Circle mappings and PSP button preference.",
@@ -20,7 +22,10 @@
     "An independent-menu extension requires a separately pinned, qualified build and explicit extension schema.",
     "The reviewed transaction must enable [ProjectNativeMenu] IndependentMenuControls=true together with NativeMenuConfirm and NativeMenuBack; a matching pair alone is inactive.",
     "Qualify the exact source-built extension and case-insensitive PPSSPP INI parser behavior without editing gameplay mappings.",
-    "Preserve platform-to-active copy-in and active-to-platform copy-back on launch/exit."
+    "Preserve platform-to-active copy-in and active-to-platform copy-back on launch/exit.",
+    "Inventory every <game-id>_ppsspp.ini through the existing config authority. Config::LoadGameConfig can read manually present Theme, General and ProjectNativeMenu keys; global edits preserve those overrides."
   ],
-  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh#L154"
+  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh#L154",
+  "per_game_inventory_verified": false,
+  "per_game_configs": []
 }

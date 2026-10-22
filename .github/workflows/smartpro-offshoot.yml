@@ -38,20 +38,17 @@ jobs:
           path: upstream-reference
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            App/PyUI/main-ui/mainui.py
-            App/PyUI/main-ui/devices/device_common.py
-            App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py
-            App/PyUI/main-ui/controller/key_watcher.py
-            App/PyUI/main-ui/controller/key_watcher_controller.py
-            App/PyUI/main-ui/devices/utils/file_watcher.py
-            App/PyUI/main-ui/utils/throttle.py
-            App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py
-            App/PyUI/main-ui/audio/sdl2_audio_player.py
-            App/PyUI/main-ui/devices/miyoo_trim_common.py
+            App/PyUI/main-ui/**/*.py
+            App/PyUI/main-ui/LICENSE.md
+            App/PyUI/LICENSE.md
+            App/PyUI/launch.sh
+            App/PyUI/py-ui-config.json
             App/-OTA/downloader.sh
             App/USBStorageMode/launch.sh
-            spruce/scripts/helperFunctions.sh
-            spruce/scripts/principal.sh
+            RetroArch/igm/README.md
+            RetroArch/igm/spruce.json
+            spruce/scripts/
+            LICENSE
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: hrydgard/ppsspp
@@ -59,34 +56,23 @@ jobs:
           path: ppsspp-reference
           sparse-checkout-cone-mode: false
           sparse-checkout: |
-            Core/Config.cpp
-            Core/Config.h
-            Core/ConfigSettings.h
-            Core/ConfigSettings.cpp
-            Core/ConfigValues.h
-            Core/KeyMap.cpp
-            Core/KeyMap.h
-            Core/System.h
-            Core/SaveState.h
-            Core/SaveState.cpp
-            Core/HLE/sceCtrl.h
-            Core/HLE/sceUtility.h
-            Common/Input/InputState.h
-            Common/Input/KeyCodes.h
-            Common/Crypto/sha256.h
-            Common/Crypto/sha256.cpp
-            Common/Serialize/Serializer.h
-            Common/UI/PopupScreens.h
-            Common/Data/Text/I18n.h
-            Common/Data/Format/IniFile.cpp
-            Common/Data/Text/Parsers.cpp
-            Common/StringUtils.cpp
-            SDL/SDLJoystick.cpp
-            UI/GameSettingsScreen.cpp
-            UI/NativeApp.cpp
-            UI/Theme.cpp
+            Core/
+            Common/
+            SDL/
+            UI/
             LICENSE.TXT
             assets/themes
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: spruceUI/RA
+          ref: 71d84da4dc88945177a3eb34268013355c705dbd
+          path: spruce-ra-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            patches/common/0001-spruce-igm.patch
+            common_src/spruce_igm_theme.c
+            common_src/spruce_igm_theme.h
+            build.sh
       - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsodium23 binutils
       - run: python -m pip install -r project/requirements-dev.txt
       - run: sh project/dev/check.sh
@@ -95,6 +81,7 @@ jobs:
           SDL_AUDIODRIVER: dummy
           SPRUCE_SOURCE_ROOT: ${{ github.workspace }}/upstream-reference
           PPSSPP_SOURCE_ROOT: ${{ github.workspace }}/ppsspp-reference
+          SPRUCE_RA_SOURCE_ROOT: ${{ github.workspace }}/spruce-ra-reference
       - run: python project/packaging/dev_release.py --output dist/development --include-source --smoke-python "$(command -v python)"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

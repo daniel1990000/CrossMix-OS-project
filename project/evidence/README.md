@@ -1,18 +1,39 @@
 # Saved development evidence
 
-All results in this directory are **host evidence**, captured 22 October 2026. No original TrimUI Smart Pro was attached.
+These records distinguish host/source acceptance, complete native cross-builds
+and physical observations. Captured 22 October 2026. No original TrimUI Smart
+Pro was attached or tested, and target emulator executables were never run.
 
-- `host-tests.json`: 306 Python/SDL/integration checks plus 43 PPSSPP source/build-tool checks; all 349 passed, with zero skips, failures or errors. Both untouched pinned source checkouts were available. New acceptance covers retained startup/audio ownership and actual source seams, installed-runtime containment/PID/maps/budget failures, and the optional PPSSPP state-completion patch with real queue/Process/finalization and SHA-256 functions.
-- `pyui-lifecycle-source-audit.json`: ten exact pinned lifecycle sources, their SHA-256/Git blobs and seven remaining owner groups. This is source inspection; no installed caller or principal return is qualified.
-- `source-contract-audit.json`: all 34 selected spruce source contracts match. This is not a complete release inventory or a device test.
-- `release-source-audit.json`: complete downloaded archive SHA-256, ten selected integration/licence comparisons and bundled PPSSPP fingerprint/version hint. Reproduce with `project/dev/audit_release.py` and host-only `py7zr==0.22.0`.
-- `development-build.json`: actual deterministic same-key overlay/ZIP rebuilds, signature and payload inventory verification, fixture staging/activation/rollback, installed-payload dummy-SDL rendering and original settings/navigation/classic-delegation checks. The generated private key was deleted. Device qualification remains false.
-- `ppsspp-candidate-build.json`: complete AArch64 engine cross-build after checked project/recipe assembly, executable fingerprint, recursive SDK dependency inventory and private pinned-source/input retention. Compilation succeeds, but required GLIBC versions exceed the recipe's sysroot. The bundled FFmpeg archives have not been matched to the pinned source. The candidate is unqualified and neither it nor its full recipe/source archive is published.
-- `ppsspp-sdk-search-build.json`: corrected complete PPSSPP/FFmpeg source cross-build, explicit SDK header/library selection, preserved failed strict link, rebuilt dependency identities and private source retention. The final executable requires only GLIBC 2.17 and passes the 16-object SDK inventory. Actual device compatibility and distribution clearance remain unproved.
-- The optional state-completion patch has a separate `project/ppsspp/state-evidence.lock.json` and host acceptance. Neither saved target cross-build includes that patch. No new complete target build or installed-runtime/device evidence was collected in this continuation.
-- `preview-library.png`, `preview-controls.png`: actual dummy-SDL screenshots of the development UI and fictional sample collection. No games or working-device state are shown.
-- `preview-appearance.png`: actual dummy-SDL rendering of the common PPSSPP appearance review using copied host configuration and an explicitly synthetic profile. This is the outer frontend, not PPSSPP running on a device.
+- `host-tests.json`: all 527 checks pass without skips: 466 Python/SDL/source-integration and 61 PPSSPP C++/build-tool checks. The command, source pins and log hash are recorded. All three pinned references are required; source/serializer/platform fixtures remain explicit.
+- `development-build.json`: dev4 deterministic same-key overlay/ZIP rebuilds, signature/inventory verification, fixture staging/activation/rollback and installed-payload SDL smoke. The generated private key is deleted; its public development key does not establish production trust.
+- `device-acceptance-plan.json`: actual prepared private recorder session covering 13 areas, with every physical case `not_run`, no snapshots and qualification false. The owner can supply the original device on another day.
+- `source-integration-review.json`: prepared and externally key-verified final review kit with 50 exact source/licence observations, five selected patches and the signed dev4 overlay. It contains no derived base tree and grants no source use or device qualification.
+- `ppsspp-complete-state-build.json`: full AArch64 PPSSPP build including native controls, completed-state API, private session protocol and checked spruce save-and-quit override; exact pinned FFmpeg source/configuration; 16-object recursive SDK audit; private source archive/hash and 55 retained component notices. Target compatibility and distribution remain unqualified.
+- `ppsspp-state-session-initial-build.json`: first state-session cross-build, retained before the last-success export correction. Its SDK pass remains valid for that older binary; the known same-session export limitation is recorded.
+- `retroarch-igm-build.json`: complete original-TG5040 RetroArch/IGM source build and 23-object recursive SDK pass, exact recipe/extension/configuration, GCC9 static C++ runtime proof and private source/build archives. Earlier Vulkan, header-order and dynamic-C++ failures are retained; no target executable ran.
+- `ppsspp-sdk-search-build.json`: earlier corrected menu-only PPSSPP/FFmpeg source build, explicit GCC9/SDK header/library selection and recursive ABI pass. This older binary lacks the later state/session patches.
+- `ppsspp-candidate-build.json`: preserved first complete build, which compiled but failed the SDK GLIBC inventory and used FFmpeg prebuilt objects without established source correspondence. This failed candidate is not the current build.
+- `source-contract-audit.json`: 34 selected spruce source contracts. `release-source-audit.json`: independently hashed complete stable archive, ten named integration/licence comparisons and bundled PPSSPP observation. Neither is a full installed-device inventory.
+- `pyui-lifecycle-source-audit.json`: the earlier ten-source retained-thread experiment and its then-unaccounted owner groups. The current alternative process-boundary integration is documented/tested separately in `bridge/`; never combine the two source patches.
+- `preview-library.png`, `preview-controls.png`, `preview-appearance.png`: earlier actual dummy-SDL frontend screenshots and copied host configuration, with fictional collection/synthetic profiles.
+- `preview-network.png`, `preview-common-emulator.png`: final common settings/PPSSPP review screens. Unavailable desktop hardware and emulator controls are shown honestly.
+- `preview-checkpoint-host-fixture.png`: actual rendering of the verified-checkpoint dialog using an explicitly synthetic host state/time. No emulator ran and no device save is depicted.
 
-Build artifacts are reproducible from the committed source using the development builder; GitHub Actions uploads fresh artifacts after a successful run. Adjacent development verification keys do not establish production publisher trust. New ephemeral signer invocations intentionally produce different signatures; unsigned ZIPs and same-key archive rebuilds are deterministic under the same inputs/toolchain.
+The actual source/principal/wrapper/capability-store acceptance runs in separate
+host processes. Linux child adoption and completion are real kernel events;
+engine serialization, owner data and platform hardware in that composed fixture
+are synthetic. A separate PPSSPP source harness executes real patched
+SaveSlot/Process/export and native load processing with narrow platform fixtures.
+Neither constitutes a physical save/load or durable-storage result.
 
-Still unqualified: actual installed-device loader/driver compatibility, physical controls/rendering/performance, launch/save/return behavior, suspend/power/USB, installed-path/writer inventory, FAT/exFAT interruption and internal boot/scene restoration. These results must not be represented as a device release pass.
+Build public preview artifacts from committed source using the development
+builder or the PR's exact-SHA successful GitHub Actions run. They contain
+original Python/theme data and licensed font assets, with no emulator binary,
+SDK/vendor library, firmware, game or owner save. Native binaries and complete
+upstream recipe/source archives stay private while redistribution is unresolved.
+
+Still required: original TG5040 installed libraries/drivers/input/writers,
+rendering and timing, saves and state compatibility, foreground lifecycle,
+power/sleep/USB, FAT/exFAT interruption, original-card/internal-launcher/scene
+restore, per-port acceptance and source-use/distribution evidence. Operator
+acceptance notes and checksums cannot turn those gates true automatically.

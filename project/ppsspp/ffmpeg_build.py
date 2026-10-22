@@ -18,6 +18,21 @@ def sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def header_inventory(prefix: Path) -> list[dict]:
+    include = prefix / 'include'
+    if not include.is_dir() or include.is_symlink():
+        raise ValueError('Rebuilt FFmpeg headers are missing')
+    result = []
+    for path in sorted(include.rglob('*')):
+        if path.is_symlink():
+            raise ValueError('Rebuilt FFmpeg headers cannot contain symlinks')
+        if path.is_file():
+            result.append({'path': str(path.relative_to(prefix)), 'size': path.stat().st_size, 'sha256': sha(path)})
+    if not result:
+        raise ValueError('Rebuilt FFmpeg headers are empty')
+    return result
+
+
 def configuration(script: Path, expected_sha256: str, prefix: Path) -> tuple[list[str], list[str]]:
     if sha(script) != expected_sha256:
         raise ValueError('Pinned FFmpeg build script changed')
@@ -56,6 +71,13 @@ def build(source: Path, build_dir: Path, prefix: Path, metadata: Path, inputs: d
         old = json.loads(manifest.read_text())
         if old.get('status') != 'complete' or old.get('configure_args') != changed or old.get('commit') != head:
             raise ValueError('FFmpeg rebuild metadata is failed or stale')
+        if not old.get('header_inventory') or old['header_inventory'] != header_inventory(prefix):
+            raise ValueError('Rebuilt FFmpeg headers changed or were not inventoried')
+        expected_archives = {'lib/lib' + component + '.a' for component in COMPONENTS}
+        if {item['path'] for item in old.get('archives', [])} != expected_archives:
+            raise ValueError('Rebuilt FFmpeg archive inventory differs')
+        if any((prefix / item['path']).is_symlink() for item in old['archives']):
+            raise ValueError('Rebuilt FFmpeg archives cannot be symlinks')
         if any(sha(prefix / item['path']) != item['sha256'] for item in old['archives']):
             raise ValueError('Rebuilt FFmpeg archive changed')
         return old
@@ -93,7 +115,8 @@ def build(source: Path, build_dir: Path, prefix: Path, metadata: Path, inputs: d
         generated_version = (build_dir / 'libavutil/ffversion.h').read_text()
         git_description = subprocess.run(['git', '-c', 'safe.directory=' + str(source),
             'describe', '--tags', '--always'], cwd=source, check=True, capture_output=True, text=True).stdout.strip()
-        report.update({'status': 'complete', 'archives': archives, 'libavutil_fcntl_refs': fcntl,
+        report.update({'status': 'complete', 'archives': archives, 'header_inventory': header_inventory(prefix),
+                       'libavutil_fcntl_refs': fcntl,
                        'generated_ffversion_header': generated_version, 'source_git_description': git_description,
                        'raw_config_log_sha256': sha(build_dir / 'config.log') if (build_dir / 'config.log').is_file() else None})
     except Exception as error:

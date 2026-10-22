@@ -1,0 +1,124 @@
+{
+  "schema": 1,
+  "upstream": {
+    "repository": "https://github.com/libretro/RetroArch.git",
+    "tag": "v1.22.2",
+    "commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+    "tree": "33babf9eb7699b5d571a3063ea21c3e488c159fe"
+  },
+  "recipe": {
+    "repository": "https://github.com/spruceUI/RA",
+    "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "files": [
+      {
+        "path": "Dockerfile",
+        "sha256": "09d43227c833185cc46b2dfff66041ff38e5f7b104355df2d7d82ee9b5a3eb8b"
+      },
+      {
+        "path": "build.sh",
+        "sha256": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50"
+      },
+      {
+        "path": "common_src/spruce_igm_platform.h",
+        "sha256": "05da6e4b74433ec69cbdaa57b7d115f3f7f6aa4e3bc5e2d68cfca8e19a3d671f"
+      },
+      {
+        "path": "common_src/spruce_igm_theme.c",
+        "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+      },
+      {
+        "path": "common_src/spruce_igm_theme.h",
+        "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+      },
+      {
+        "path": "patches/common/0001-spruce-igm.patch",
+        "sha256": "ae2ae6c567f15ba96a23d1ad62fe074f14e48aace71ed9c8e287b258f84b7479"
+      },
+      {
+        "path": "patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "sha256": "7e34548a1a5e433811764152c80d3edbd5c2b456c98ddcc33e990ca8e1715541"
+      },
+      {
+        "path": "patches/common/0003-sysfs-rumble-fallback.patch",
+        "sha256": "31c1d098e20ee3718b9dd9fa0940e6ce48994345cd59a97476528cddaeaa36ff"
+      },
+      {
+        "path": "patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "sha256": "978eee8577d173725464666e4165ac0b73b16145501afee88d9e4f796a0d3dd5"
+      }
+    ]
+  },
+  "extension": {
+    "path": "patches/0001-independent-igm-menu-controls.patch",
+    "sha256": "39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6",
+    "modifications_license": "GPL-3.0-or-later; external recipe/source grants remain separately audited"
+  },
+  "patched_source": [
+    {
+      "path": "spruce_igm.c",
+      "sha256": "ec05820e0b79c515e6b4379e88bb967127c0fa280c59420794f5c6d0b7a57eaf"
+    },
+    {
+      "path": "spruce_igm_theme.c",
+      "sha256": "a0fde89e9dd84572055e01a042615718407d743d63fbd8ebbd63df15c912efaa"
+    },
+    {
+      "path": "spruce_igm_theme.h",
+      "sha256": "593528da32d1ab1bbace0b6bbc35ce6c91a71ac9296631d4fca03cd9030e3ce1"
+    }
+  ],
+  "toolchain": {
+    "image_id": "sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c",
+    "base_image": "ubuntu:20.04@sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214",
+    "gcc_major": "9",
+    "target": "aarch64-linux-gnu",
+    "sysroot": "/opt/sysroot",
+    "sdk_assets": [
+      {
+        "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+        "size": 213977008,
+        "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+      },
+      {
+        "name": "SDK_usr_tg5040_a133p.tgz",
+        "size": 185049621,
+        "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+      }
+    ]
+  },
+  "helpers": [
+    {
+      "path": "ppsspp/sdk_search.py",
+      "sha256": "378593402bddc0d141a620db57260cc0b782c033ed6183f7f25173ed5552f129"
+    },
+    {
+      "path": "ppsspp/abi_audit.py",
+      "sha256": "e555c50dede39755ec5cb66d9fee29f02bfdccfcaf45ee18cc8b6f5e6398cee3"
+    }
+  ],
+  "limits": {
+    "max_jobs": 4,
+    "memory": "8g"
+  },
+  "rights": {
+    "upstream_engine": "GPL-3.0-or-later; preserve its complete retained notices",
+    "original_builder": "MIT",
+    "extension_modifications": "GPL-3.0-or-later",
+    "recipe_grant_resolved": false,
+    "sdk_redistribution_cleared": false,
+    "private_only": true
+  },
+  "notes": [
+    "The full pinned recipe source patches and shared sources precede the opt-in project IGM extension.",
+    "GCC9 C++/intrinsic headers and runtimes are explicit; C headers/libraries and pkg-config inputs come only from the pinned original TG5040 SDK.",
+    "This immutable existing compiler image replaces the recipe unpinned Ubuntu multiarch image; it is not a bit-identical rebuild of the bundled binary.",
+    "No target program is executed. SDK basename/symbol-version inventory does not prove installed loader, device drivers or physical compatibility."
+  ],
+  "target_adaptations": [
+    "Replace universal --enable-vulkan with --disable-vulkan; original TG5040 SDK has no Vulkan loader.",
+    "Use -nostdinc with GCC9 intrinsic/C++ includes, SDK C headers via -isystem after engine-local -I paths, GCC9/SDK library order, and SDK-only pkg-config.",
+    "A separate generated Make overlay replaces recipe explicit -lstdc++ with the proved GCC9 static archive, adds -static-libstdc++ and preserves actual link trace. No engine source edit or installed runtime change."
+  ]
+}

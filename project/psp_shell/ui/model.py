@@ -5,6 +5,7 @@ SPDX-License-Identifier: MIT
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from datetime import datetime, timedelta
 from types import MappingProxyType
 from typing import Any, Iterable, Mapping
 import uuid
@@ -21,6 +22,17 @@ def _text(value: Any, limit: int = 512) -> str:
     if not isinstance(value, str):
         return ""
     return "".join(c if c >= " " or c == "\n" else "�" for c in value)[:limit]
+
+
+def _checkpoint_utc(value: str) -> str:
+    """Format the backend's original signed observation; never invent an age."""
+    try:
+        recorded = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if recorded.utcoffset() != timedelta(0):
+            return ""
+        return recorded.strftime("%Y-%m-%d %H:%M:%S UTC")
+    except (ValueError, TypeError, OverflowError):
+        return ""
 
 
 @dataclass(frozen=True)
@@ -60,6 +72,7 @@ class UIItem:
     resume_available: bool = False
     reason: str = ""
     favorite: bool = False
+    state_recorded_at: str = ""
 
     @classmethod
     def from_record(cls, value: Mapping[str, Any], kind: str = "game") -> "UIItem":
@@ -77,6 +90,7 @@ class UIItem:
             resume_available=value.get("resume_available", False) is True,
             reason=_text(value.get("resume_reason", value.get("reason", "")), 2048),
             favorite=value.get("favorite", False) is True,
+            state_recorded_at=_text(value.get("state_recorded_at", ""), 64),
         )
 
 
@@ -196,10 +210,16 @@ class NavigationModel:
         self._favorites: set[str] = set()
         self._last_transaction = ""
         self._settings_view = "root"
+        self._settings_parent_focus = ""
         self._controls_generation = 0
         self._controls_transaction = ""
         self._appearance_generation = 0
         self._appearance_transaction = ""
+        self._hardware_generation = 0
+        self._hardware_status: Mapping[str, Any] = {}
+        self._experience_generation = 0
+        self._experience_profile = ""
+        self._experience_transaction = ""
         self._capabilities: Mapping[str, Any] = {}
         self._snapshot: Mapping[str, Any] = {}
         self._status = ""
@@ -233,7 +253,7 @@ class NavigationModel:
             ("settings.get", "settings"), ("system.capabilities", "capabilities"),
             ("system.snapshot", "snapshot"), ("library.systems", "systems"),
             ("library.recent", "recent"), ("library.favorites", "favorites_cache"),
-            ("tools.list", "tools"))]
+            ("tools.list", "tools"), ("hardware.status", "hardware_cache"))]
         if self._games_view == "favorites":
             commands.append(self._request("library.favorites", context="favorites"))
         elif self._games_view != "systems":
@@ -324,6 +344,82 @@ class NavigationModel:
             self._capabilities = result if isinstance(result, Mapping) else {}
         elif context == "snapshot":
             self._snapshot = result if isinstance(result, Mapping) else {}
+        elif context == "hardware_cache" or context.startswith("hardware:"):
+            self._hardware_status = result if isinstance(result, Mapping) else {}
+            generation = self._hardware_status.get("generation", 0)
+            self._hardware_generation = generation if type(generation) is int and generation >= 0 else 0
+            if context.startswith("hardware:"):
+                self._settings_view = context
+                self._rebuild_hardware()
+            elif self._settings_view == "root":
+                self._rebuild_settings()
+        elif context == "hardware_preview":
+            before = result.get("before")
+            operation = result.get("operation")
+            change = (("On" if result.get("after") else "Off") if operation == "toggle"
+                      else "one level lower" if operation == "lower" else "one level higher")
+            value = "On" if before is True else "Off" if before is False else str(before)
+            message = "Current setting: " + value + "\nChange to " + change + ".\n" + _text(result.get("scope"))
+            self._dialog = Dialog("Change " + _text(result.get("label", "device setting")).lower(), message,
+                (DialogChoice("Apply through spruce", "request", "hardware.apply", {
+                    "preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-hardware-{command.serial}",
+                    "expected_generation": self._hardware_generation}, "hardware_apply"), DialogChoice("Cancel")), selected=1)
+        elif context == "hardware_apply":
+            generation = result.get("generation", self._hardware_generation)
+            self._hardware_generation = generation if type(generation) is int and generation >= 0 else self._hardware_generation
+            self.notice("Sent to spruce. Refresh status to see the current setting.")
+            return [self._request("hardware.status", context=self._settings_view)]
+        elif context == "hardware_route":
+            if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
+                self.notice("Opening the existing spruce screen…")
+        elif context == "game_options":
+            if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
+                self.notice("Opening this game's existing spruce options…")
+            else:
+                self.notice("The game-options screen has not been accepted.")
+        elif context == "experience":
+            self._settings_view = "experience"
+            generation = result.get("generation", 0)
+            self._experience_generation = generation if type(generation) is int and generation >= 0 else 0
+            self._experience_profile = _text(result.get("profile_id"), 256)
+            available = result.get("adoption_available") is True
+            reason = _text(result.get("reason")) or "PPSSPP menu matching is unavailable for this installed version. Its current settings stay in place."
+            confirm = result.get("configured_confirm")
+            theme = _text(result.get("theme"), 128)
+            current = ("Confirm: " + self._format_preference(confirm) + (" · " + theme if theme else "")) if confirm in ("south", "east") else "One review for Confirm, theme and background motion"
+            items = [UIItem("experience_match", "Match controls & appearance", current,
+                            "experience_profile", available=available, reason=reason)]
+            if self._experience_transaction:
+                items.append(_menu("experience_undo", "Undo last matching change", "Restore only this combined menu transaction"))
+            self._pages[3].replace(items)
+        elif context == "experience_preview":
+            if result.get("adoption_available") is not True:
+                self._dialog = Dialog("PPSSPP matching unavailable", "This PPSSPP version is not ready for shared menu changes. Continue using its current menus.")
+                return []
+            rows = []
+            for entry in result.get("diff", [])[:8]:
+                if isinstance(entry, Mapping):
+                    label = _text(entry.get("key", entry.get("field", "Setting")), 128)
+                    rows.append(label + ": " + _text(str(entry.get("before")), 128) + " → " + _text(str(entry.get("after")), 128))
+            message = "\n".join(rows) or "Match the current interface's Confirm button, original theme and background motion."
+            message += "\nGameplay controls stay separate. Apply while PPSSPP is stopped."
+            overrides = result.get("per_game_overrides", [])
+            if isinstance(overrides, (list, dict)) and overrides:
+                message += f"\n{len(overrides)} per-game profile(s) keep their existing overrides; those may take precedence."
+            params = {"preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-experience-{command.serial}",
+                      "expected_generation": self._experience_generation}
+            if result.get("overwrites_existing_theme") is True:
+                message += "\nThis replaces an existing theme file; a backup is retained."
+                params["confirm_overwrite"] = True
+            self._dialog = Dialog("Review PPSSPP matching", message,
+                (DialogChoice("Apply combined changes", "request", "experience.ppsspp.apply", params, "experience_apply"),
+                 DialogChoice("Cancel")), selected=1)
+        elif context in ("experience_apply", "experience_undo"):
+            generation = result.get("generation", self._experience_generation)
+            self._experience_generation = generation if type(generation) is int and generation >= 0 else self._experience_generation
+            self._experience_transaction = _text(result.get("transaction_id"), 256) if context == "experience_apply" else ""
+            self.notice("PPSSPP menu controls and appearance updated together." if context == "experience_apply" else "The previous PPSSPP menu settings were restored together.")
+            return [self._request("experience.ppsspp.status", context="experience")]
         elif context == "systems":
             self._set_systems(value for value in result if isinstance(value, Mapping))
         elif context == "games":
@@ -499,15 +595,46 @@ class NavigationModel:
                  for key in ("confirm", "motion", "sound", "text_scale", "high_contrast")]
         items.extend((_menu("controls", "Emulator menu controls", "Keep gameplay mappings separate"),
                       _menu("appearance", "PPSSPP appearance", "Match the theme, contrast and background motion"),
+                      _menu("experience", "Match PPSSPP menus", "Review controls and appearance together"),
+                      _menu("hardware_display", "Display", "Screen brightness and existing display settings"),
+                      _menu("hardware_sound", "Sound", "System volume and audio-device settings"),
+                      _menu("hardware_network", "Network", "Wi-Fi, Bluetooth and existing pairing screens"),
+                      _menu("hardware_controllers", "Controllers", "Existing input and calibration authorities"),
+                      _menu("hardware_power", "Power & USB", "Save-aware power and clean-unmount storage routes"),
                       _menu("device", "System status", "Capabilities and firmware availability"),
-                      _menu("power_usb", "Power & USB", "Use the verified spruce handoff"),
                       _menu("support", "Save diagnostic report", "Redacted component and failure information"),
                       _menu("about", "About & credits", "Version, source credits and license information")))
+        advanced = next((row for row in self._hardware_status.get("routes", [])
+                         if isinstance(row, Mapping) and row.get("route_id") == "advanced"), {})
+        items.append(UIItem("advanced", "All spruce settings", "Keep advanced settings in their existing authority",
+                            "hardware_route", available=advanced.get("available") is True,
+                            reason=_text(advanced.get("reason")) or "Open the existing full settings screen from classic spruce."))
         if self._last_transaction:
             items.append(_menu("undo", "Undo last preference change", "Restore only the setting this interface changed"))
         items.append(_menu("classic", "Return to spruce", "Use the existing interface"))
         self._pages[3].replace(items)
         self._restore_focus(self._pages[3], "3")
+
+    def _rebuild_hardware(self) -> None:
+        group = self._settings_view.split(":", 1)[1]
+        items = []
+        for row in self._hardware_status.get("controls", []):
+            if not isinstance(row, Mapping) or row.get("group") != group:
+                continue
+            items.append(UIItem(_text(row.get("control_id"), 64), _text(row.get("label")),
+                _text(row.get("value_text", "Unavailable")), "hardware_control",
+                available=row.get("writable") is True, reason=_text(row.get("reason"))))
+        route_groups = {"display": ("advanced",), "sound": ("bluetooth", "advanced"),
+                        "network": ("wifi", "bluetooth"), "controllers": ("controllers",),
+                        "power": ("power", "usb")}
+        for row in self._hardware_status.get("routes", []):
+            if not isinstance(row, Mapping) or row.get("route_id") not in route_groups.get(group, ()):
+                continue
+            items.append(UIItem(_text(row.get("route_id"), 64), _text(row.get("label")),
+                _text(row.get("description")), "hardware_route", available=row.get("available") is True,
+                reason=_text(row.get("reason"))))
+        items.append(_menu("hardware_refresh", "Refresh status", "Read current values from the existing authority"))
+        self._pages[3].replace(items)
 
     def _launch_dialog(self, item: UIItem) -> None:
         if not item.available:
@@ -520,15 +647,23 @@ class NavigationModel:
                                          {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
             message += ("\nSample resume card. This demonstration is not an emulator state." if self.demo else
                         "\nA compatible, verified state is available.")
+            recorded = _checkpoint_utc(item.state_recorded_at) if not self.demo else ""
+            if recorded:
+                message += "\nCheckpoint verified " + recorded
         elif self.category == 1:
             message += "\nNo verified resume state is available. Start normally to use your in-game saves."
         fresh = self.category == 1 or item.resume_available
         choices.append(DialogChoice("Fresh start" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
                                      {"game_id": item.id, "preset_id": "", "mode": "fresh" if fresh else "normal"}, "launch"))
+        if self._capabilities.get("game_options") is True:
+            choices.append(DialogChoice("Game options", "demo_launch" if self.demo else "request", "game.options",
+                                        {"game_id": item.id}, "game_options"))
         choices.append(DialogChoice("Cancel"))
         self._dialog = Dialog(item.title, message, tuple(choices))
 
     def _activate(self, item: UIItem) -> list[UICommand]:
+        if self.category == 3 and self._settings_view == "root":
+            self._settings_parent_focus = item.id
         if item.kind == "game":
             self._launch_dialog(item)
         elif item.kind == "system":
@@ -561,6 +696,35 @@ class NavigationModel:
                     "theme": THEME_NAMES[1 if self.preferences.high_contrast else 0],
                     "motion": self.preferences.motion,
                     "expected_generation": self._appearance_generation}, "appearance_preview")]
+        elif item.kind == "hardware_control":
+            if not item.available:
+                self._dialog = Dialog(item.title + " unavailable", item.reason or "Use the existing spruce controls for this setting.",
+                                      (DialogChoice("Return to spruce", "classic"), DialogChoice("Back")), selected=1)
+            else:
+                row = next((row for row in self._hardware_status.get("controls", []) if row.get("control_id") == item.id), {})
+                if row.get("kind") == "toggle":
+                    return [self._request("hardware.preview", {"control_id": item.id, "operation": "toggle",
+                        "expected_generation": self._hardware_generation}, "hardware_preview")]
+                self._dialog = Dialog(item.title, "Current setting: " + item.subtitle + "\nEach change uses one step of the existing spruce control.", (
+                    DialogChoice("Lower one step", "request", "hardware.preview", {"control_id": item.id, "operation": "lower", "expected_generation": self._hardware_generation}, "hardware_preview"),
+                    DialogChoice("Raise one step", "request", "hardware.preview", {"control_id": item.id, "operation": "raise", "expected_generation": self._hardware_generation}, "hardware_preview"),
+                    DialogChoice("Cancel")), selected=2)
+        elif item.kind == "hardware_route":
+            if not item.available:
+                self._dialog = Dialog(item.title, item.reason or "Open this screen from classic spruce.",
+                    (DialogChoice("Return to spruce", "classic"), DialogChoice("Back")), selected=1)
+            else:
+                self._dialog = Dialog(item.title, item.subtitle + ".\nThis screen retains its existing spruce controls.",
+                    (DialogChoice("Open spruce screen", "request", "hardware.route", {"route_id": item.id}, "hardware_route"),
+                     DialogChoice("Cancel")), selected=1)
+        elif item.kind == "experience_profile":
+            if not item.available:
+                self._dialog = Dialog("PPSSPP matching unavailable", item.reason)
+            else:
+                from ..ppsspp import THEME_NAMES
+                return [self._request("experience.ppsspp.preview", {"profile_id": self._experience_profile,
+                    "confirm": self.preferences.confirm, "theme": THEME_NAMES[1 if self.preferences.high_contrast else 0],
+                    "motion": self.preferences.motion, "expected_generation": self._experience_generation}, "experience_preview")]
         elif item.kind == "setting":
             value = getattr(self.preferences, item.id)
             if isinstance(value, bool):
@@ -589,6 +753,16 @@ class NavigationModel:
             return [self._request("controls.capabilities", context="controls")]
         elif item.id == "appearance":
             return [self._request("appearance.ppsspp.status", context="appearance")]
+        elif item.id == "experience":
+            return [self._request("experience.ppsspp.status", context="experience")]
+        elif item.id == "experience_undo":
+            return [self._request("experience.ppsspp.undo", {"transaction_id": self._experience_transaction,
+                "request_id": f"ui-{self._session_id}-experience-undo-{self._serial + 1}",
+                "expected_generation": self._experience_generation}, "experience_undo")]
+        elif item.id.startswith("hardware_") and item.id != "hardware_refresh":
+            return [self._request("hardware.status", context="hardware:" + item.id[len("hardware_"):])]
+        elif item.id == "hardware_refresh":
+            return [self._request("hardware.status", context=self._settings_view)]
         elif item.id == "appearance_undo":
             return [self._request("appearance.ppsspp.undo", {"transaction_id": self._appearance_transaction,
                         "request_id": f"ui-{self._session_id}-appearance-undo-{self._serial + 1}",
@@ -699,6 +873,9 @@ class NavigationModel:
             elif self.category == 3 and self._settings_view != "root":
                 self._settings_view = "root"
                 self._rebuild_settings()
+                page = self._pages[3]
+                page.selected = next((i for i, item in enumerate(page.items)
+                                      if item.id == self._settings_parent_focus), page.selected)
             else:
                 return self._activate(_menu("classic", "Return to spruce"))
             return []
@@ -735,7 +912,11 @@ class NavigationModel:
             empty = "No app entries were found. Your installed tools remain available in classic spruce."
         elif self.category == 3:
             title, breadcrumb = {"controls": ("Emulator menu controls", "Settings  /  Controls"),
-                                 "appearance": ("PPSSPP appearance", "Settings  /  Appearance")}.get(self._settings_view, ("Make it yours", "Settings"))
+                                 "appearance": ("PPSSPP appearance", "Settings  /  Appearance"),
+                                 "experience": ("Match PPSSPP menus", "Settings  /  PPSSPP")}.get(self._settings_view, ("Make it yours", "Settings"))
+            if self._settings_view.startswith("hardware:"):
+                label = {"display": "Display", "sound": "Sound", "network": "Network", "controllers": "Controllers", "power": "Power & USB"}.get(self._settings_view.split(":", 1)[1], "Device")
+                title, breadcrumb = label, "Settings  /  " + label
             empty = "No emulator menu profile is qualified." if self._settings_view == "controls" else "Settings are unavailable. Return to the classic interface to check your configuration."
         else:
             title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results"}.get(self._games_view, self._system_label)
@@ -743,7 +924,8 @@ class NavigationModel:
             empty = {"favorites": "Save a game with Favorite to keep it here.", "search": "No games match this search. Try another title."}.get(self._games_view,
                      "No available games were found. Keep ROMs in their existing spruce folders and refresh the library.")
         items = tuple(UIItem(item.id, item.title, item.subtitle, item.kind, item.system_id, item.artwork,
-                             item.available, item.resume_available, item.reason, item.id in self._favorites or item.favorite)
+                             item.available, item.resume_available, item.reason, item.id in self._favorites or item.favorite,
+                             item.state_recorded_at)
                       for item in page.items)
         return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,

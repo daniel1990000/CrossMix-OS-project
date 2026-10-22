@@ -95,6 +95,37 @@ class NavigationTests(unittest.TestCase):
         command = model.handle("confirm")[0]
         self.assertEqual(command.params["mode"], "fresh")
 
+    def test_resume_dialog_keeps_original_checkpoint_verification_time(self):
+        model = NavigationModel()
+        record = game(resume_available=True, state_recorded_at="2026-10-20T12:34:56.123456+00:00")
+        model.set_category_items(1, [record])
+        model.handle("right")
+        self.assertEqual(model.snapshot().selected_item.state_recorded_at, record["state_recorded_at"])
+        model.handle("confirm")
+        self.assertIn("Checkpoint verified 2026-10-20 12:34:56 UTC", model.snapshot().dialog.message)
+        self.assertNotIn("Checkpoint saved", model.snapshot().dialog.message)
+        model.handle("back")
+        model.set_category_items(1, [{**record, "last_save_attempt": "failed", "last_session_at": "2026-10-22T15:00:00+00:00"}])
+        model.handle("confirm")
+        self.assertIn("Checkpoint verified 2026-10-20 12:34:56 UTC", model.snapshot().dialog.message)
+        self.assertNotIn("2026-10-22", model.snapshot().dialog.message)
+
+    def test_checkpoint_time_requires_real_utc_and_is_never_fabricated_in_demo(self):
+        for value in ("", "not a timestamp", "2026-10-20T12:34:56", "2026-10-20T12:34:56+03:00", 123):
+            with self.subTest(value=value):
+                model = NavigationModel()
+                model.set_category_items(0, [game(resume_available=True, state_recorded_at=value)])
+                model.handle("confirm")
+                self.assertNotIn("Checkpoint verified", model.snapshot().dialog.message)
+        model = NavigationModel(demo=True)
+        model.set_category_items(0, [game(resume_available=True, state_recorded_at="2026-10-20T12:34:56Z")])
+        model.handle("confirm")
+        self.assertNotIn("Checkpoint verified", model.snapshot().dialog.message)
+        model = NavigationModel()
+        model.set_category_items(0, [game(resume_available=False, state_recorded_at="2026-10-20T12:34:56Z")])
+        model.handle("confirm")
+        self.assertNotIn("Checkpoint verified", model.snapshot().dialog.message)
+
     def test_demo_launch_is_a_notice_and_never_a_backend_command(self):
         model = NavigationModel(demo=True)
         model.set_category_items(0, [game(resume_available=True)])

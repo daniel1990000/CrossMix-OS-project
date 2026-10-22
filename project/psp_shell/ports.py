@@ -15,13 +15,17 @@ import os
 from pathlib import Path
 import shutil
 import stat
+import struct
 import tempfile
 import time
 import uuid
 
+from .controls import _open_regular
+
 DEFAULT_PROFILES = Path(__file__).resolve().parents[1] / 'profiles/ports.json'
 CHUNK = 1024 * 1024
 MAX_FILES = 10000
+MAX_OWNER_FILE = 0xffffffff
 
 
 class PortError(RuntimeError):
@@ -52,37 +56,55 @@ def _safe(root: Path, relative: str) -> Path:
     return target
 
 
-def _fingerprint(path: Path):
+def _fingerprint(path: Path, *, read_header=False):
     try:
-        fd = os.open(path, os.O_RDONLY | os.O_NOFOLLOW)
+        fd = _open_regular(path)
     except FileNotFoundError:
-        return None, 0
+        return (None, 0, b'') if read_header else (None, 0)
     except OSError as error:
         raise PortError('UNSAFE_PATH', 'A port file cannot be opened safely') from error
     with os.fdopen(fd, 'rb') as stream:
         before = os.fstat(stream.fileno())
-        _require(stat.S_ISREG(before.st_mode), 'UNSAFE_PATH', 'Only regular port files are supported')
+        _require(stat.S_ISREG(before.st_mode) and before.st_size <= MAX_OWNER_FILE,
+                 'UNSAFE_PATH', 'Only bounded regular port files are supported')
         digest = hashlib.sha256()
         size = 0
-        while chunk := stream.read(CHUNK):
+        header = b''
+        while size < before.st_size:
+            chunk = stream.read(min(CHUNK, before.st_size - size))
+            _require(chunk, 'CONFLICT', 'A port file shrank while it was read')
             size += len(chunk)
+            if not header:
+                header = chunk[:64]
             digest.update(chunk)
+        _require(not stream.read(1), 'CONFLICT', 'A port file grew while it was read')
         after = os.fstat(stream.fileno())
-    _require((before.st_size, before.st_mtime_ns) == (after.st_size, after.st_mtime_ns),
+        named = path.lstat()
+    identity = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+    _require(identity(before) == identity(after) == identity(named),
              'CONFLICT', 'A port file changed while it was read')
-    return digest.hexdigest(), size
+    return (digest.hexdigest(), size, header) if read_header else (digest.hexdigest(), size)
 
 
 def _copy_checked(source: Path, destination: Path, expected: str):
     destination.parent.mkdir(parents=True, exist_ok=True)
-    fd = os.open(source, os.O_RDONLY | os.O_NOFOLLOW)
+    fd = _open_regular(source)
     digest = hashlib.sha256()
     with os.fdopen(fd, 'rb') as incoming, destination.open('xb') as outgoing:
-        _require(stat.S_ISREG(os.fstat(incoming.fileno()).st_mode),
-                 'UNSAFE_PATH', 'Only regular owner files are supported')
-        while chunk := incoming.read(CHUNK):
+        before = os.fstat(incoming.fileno())
+        _require(stat.S_ISREG(before.st_mode) and before.st_size <= MAX_OWNER_FILE,
+                 'UNSAFE_PATH', 'Only bounded regular owner files are supported')
+        size = 0
+        while size < before.st_size:
+            chunk = incoming.read(min(CHUNK, before.st_size - size))
+            _require(chunk, 'CONFLICT', 'An owner file shrank while it was copied')
+            size += len(chunk)
             digest.update(chunk)
             outgoing.write(chunk)
+        _require(not incoming.read(1), 'CONFLICT', 'An owner file grew while it was copied')
+        after, named = os.fstat(incoming.fileno()), source.lstat()
+        identity = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+        _require(identity(before) == identity(after) == identity(named), 'CONFLICT', 'An owner file changed during copying')
         outgoing.flush()
         os.fsync(outgoing.fileno())
     _require(digest.hexdigest() == expected, 'CONFLICT', 'A port file changed after preview')
@@ -168,10 +190,111 @@ class PortsManager:
         payload = json.loads(Path(profiles_file or DEFAULT_PROFILES).read_text())
         _require(payload.get('schema') == 1, 'UNSUPPORTED_SCHEMA', 'Unsupported port-profile schema')
         self._profiles = {p['id']: p for p in payload['ports']}
+        self._source_contract = payload.get('portmaster_surface', {})
         self._previews = {}
 
     def profiles(self):
         return json.loads(json.dumps(list(self._profiles.values())))
+
+    def _installed_file(self, relative, kind='file', source_sha256=None):
+        """Observe a named file without sourcing scripts, mounting or executing."""
+        result = {'path': relative, 'present': False, 'kind': kind}
+        try:
+            digest, size, header = _fingerprint(_safe(self.root, relative), read_header=True)
+            result.update(present=digest is not None and size > 0, sha256=digest, size=size)
+            if source_sha256:
+                result['pinned_text_matches'] = digest == source_sha256
+            if kind == 'aarch64_elf':
+                elf = len(header) >= 20 and header[:6] == b'\x7fELF\x02\x01'
+                result['aarch64_elf'] = bool(elf and struct.unpack_from('<H', header, 18)[0] == 183)
+            elif kind == 'squashfs':
+                result['squashfs_magic'] = header[:4] in (b'hsqs', b'sqsh')
+        except (PortError, OSError) as error:
+            result['error'] = {'code': getattr(error, 'code', 'STORAGE_ERROR'), 'message': str(error)}
+        return result
+
+    def portmaster_status(self):
+        """Card-local inputs of the existing spruce PortMaster authority."""
+        contract = self._source_contract
+        observations = [self._installed_file(item['path'], source_sha256=item.get('source_sha256'))
+                        for item in contract.get('files', [])]
+        return {'schema': 1, 'authority': 'existing spruce App/PortMaster and initialized PyUI tool callback',
+                'files': observations, 'native_platform_support_observed': False,
+                'runtime_qualified': False, 'executed': False,
+                'notes': ['Presence and text hashes do not evaluate control.txt or PlatformSpruce.',
+                          'Existing PortMaster chooses and prepares its control/GUI route at launch.']}
+
+    def installed_status(self, port_id):
+        """Read-only owner-data, installed launcher, engine and runtime inventory.
+
+        File names and engine alternatives come from exact pinned text sources.
+        An AArch64 ELF header or squashfs magic establishes file form only; it
+        does not prove the loader, graphics driver, libraries or game behavior.
+        """
+        profile = self._profile(port_id)
+        installation = profile.get('installation', {})
+        _require(isinstance(installation, dict), 'UNSUPPORTED_SCHEMA', 'Port installation contract is invalid')
+        owner = [self._installed_file(profile['directory'] + '/' + name)
+                 for name in profile.get('required_files', [])]
+        directories = []
+        for name in profile.get('required_directories', []):
+            relative = profile['directory'] + '/' + name
+            entry = {'path': relative, 'nonempty_directory': False}
+            try:
+                path = _safe(self.root, relative)
+                if path.is_dir():
+                    with os.scandir(path) as children:
+                        entry['nonempty_directory'] = next(children, None) is not None
+            except (PortError, OSError) as error:
+                entry['error'] = {'code': getattr(error, 'code', 'STORAGE_ERROR'), 'message': str(error)}
+            directories.append(entry)
+        launcher = self._installed_file(installation['launcher'], source_sha256=installation.get('launcher_source_sha256')) \
+            if installation.get('launcher') else None
+        engines = [self._installed_file(path, 'aarch64_elf') for path in installation.get('engine_alternatives', [])]
+        support = [self._installed_file(path) for path in installation.get('support_files', [])]
+        runtimes = [self._installed_file(path, 'squashfs') for path in installation.get('runtime_files', [])]
+        return {'schema': 1, 'port_id': port_id, 'title': profile['title'], 'owner_files': owner,
+                'owner_directories': directories, 'owner_input_structure_present':
+                    all(item['present'] for item in owner) and all(item['nonempty_directory'] for item in directories),
+                'launcher': launcher, 'engine_alternatives': engines,
+                'native_engine_header_present': any(item.get('aarch64_elf') is True for item in engines),
+                'support_files': support, 'runtime_files': runtimes,
+                'portmaster': self.portmaster_status(), 'runtime_qualified': False, 'measured_fps': None,
+                'source_binary_correspondence_verified': False, 'distribution_cleared': False,
+                'executed': False, 'inventory_scope': 'named source inputs only; no library or mount qualification',
+                'existing_launch_surface': {'system_id': 'PORTS', 'launcher': installation.get('launcher'),
+                    'tool_id': 'app:PortMaster', 'authority': 'existing initialized SpruceBackend callbacks'}}
+
+    def resolve_existing_port(self, port_id, backend):
+        """Resolve the installed library item through the existing token owner.
+
+        Returns its original context unchanged. Inventory never creates a
+        launch permission or substitutes a shell command/process authority.
+        The caller hands that context to its existing Coordinator as usual.
+        """
+        from .adapters.spruce import SpruceBackend
+        _require(isinstance(backend, SpruceBackend) and backend.provider.root == self.root,
+                 'INVALID_BACKEND', 'Use the existing backend for this exact card')
+        profile = self._profile(port_id)
+        relative = profile.get('installation', {}).get('launcher')
+        _require(isinstance(relative, str), 'UNSUPPORTED_SCHEMA', 'No source-backed installed launcher is declared')
+        matches = []
+        for offset in range(0, MAX_FILES, 200):
+            page = backend.games('PORTS', offset=offset, limit=200)
+            matches.extend(item for item in page['items'] if item.get('relative_path') == relative)
+            if offset + 200 >= page['total']:
+                break
+        else:
+            raise PortError('TOO_MANY_FILES', 'The existing ports collection exceeds its lookup budget')
+        _require(len(matches) == 1, 'EXISTING_PORT_UNAVAILABLE', 'Install and refresh this port through existing PortMaster first')
+        return backend.resolve_game(matches[0]['id'], mode='normal')
+
+    def resolve_existing_portmaster(self, backend):
+        """Reuse the existing app tool token; never execute its script here."""
+        from .adapters.spruce import SpruceBackend
+        _require(isinstance(backend, SpruceBackend) and backend.provider.root == self.root,
+                 'INVALID_BACKEND', 'Use the existing backend for this exact card')
+        return backend.resolve_tool('app:PortMaster')
 
     def _profile(self, port_id):
         _require(port_id in self._profiles, 'UNKNOWN_PORT', 'Unknown port profile')

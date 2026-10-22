@@ -1,11 +1,13 @@
 # SPDX-License-Identifier: MIT
 import hashlib
 import json
+import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 PROJECT = Path(__file__).absolute().parents[1]
 sys.path.insert(0, str(PROJECT / "tools"))
@@ -74,6 +76,23 @@ class InventoryTest(unittest.TestCase):
         self.assertIsNone(inventory.read_at(self.device, "etc/version"))
         huge = self.put(self.device, "proc/version", b"x" * (inventory.MAX_TEXT + 1))
         self.assertIsNone(inventory.bounded_read(huge))
+
+    def test_fifo_metadata_is_refused_without_waiting_for_a_writer(self):
+        path = self.device / "named-pipe"
+        os.mkfifo(path)
+        self.assertIsNone(inventory.bounded_read(path))
+        self.assertIsNone(inventory.hash_at(self.device, "named-pipe"))
+
+    def test_file_growth_during_hashing_is_rejected_with_a_finite_read(self):
+        path = self.put(self.device, "growing", b"original bytes")
+        actual = hashlib.sha256()
+        class GrowingHash:
+            def update(self, block):
+                actual.update(block)
+                with path.open("ab") as stream:
+                    stream.write(b"new bytes")
+        with patch.object(inventory.hashlib, "sha256", return_value=GrowingHash()):
+            self.assertIsNone(inventory.hash_at(self.device, "growing"))
 
     def test_mount_credentials_and_process_arguments_absent(self):
         self.put(self.device, "proc/mounts", "//user:password@192.168.0.1/share /mnt/share cifs rw,password=hunter2,username=foo 0 0\n")

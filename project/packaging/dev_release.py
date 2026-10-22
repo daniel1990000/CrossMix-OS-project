@@ -29,7 +29,7 @@ import overlay
 from build_payload import build_payload
 from fixture_card import create_fixture
 
-SOURCE_FOLDERS = {"psp_shell", "bridge", "profiles", "assets", "packaging", "tools", "tests", "docs", "ppsspp"}
+SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "ppsspp"}
 SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
 SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
 
@@ -252,7 +252,7 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", type=Path, default=PROJECT)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--release", default="smartpro-psp-0.1.0-dev3")
+    parser.add_argument("--release", default="smartpro-psp-0.1.0-dev4")
     parser.add_argument("--source-date-epoch", type=int,
                         default=int(os.environ.get("SOURCE_DATE_EPOCH", overlay.PLAN_SOURCE_DATE_EPOCH)))
     embedded_lock = PROJECT / "metadata/spruce-source-lock.json"

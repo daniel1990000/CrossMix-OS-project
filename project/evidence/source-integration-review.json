@@ -1,0 +1,459 @@
+{
+  "bridge_derivative_produced": false,
+  "bridge_recipe": "Original bridge/principal_integration.py retained in the externally verified overlay; application requires a separately reviewed source-use decision.",
+  "date_utc": "2026-10-22",
+  "external_blockers": [
+    {
+      "code": "SOURCE_USE",
+      "requirement": "Retain actual author-notification delivery or applicable permission and review its scope."
+    },
+    {
+      "code": "RUNTIME_OWNERSHIP",
+      "requirement": "Qualify the actual source caller, child ownership, display/input release and correlated principal return."
+    },
+    {
+      "code": "INSTALLED_INVENTORY",
+      "requirement": "Capture original TG5040 firmware, loader/libraries, input and complete config-writer identities."
+    },
+    {
+      "code": "SAVE_LOAD",
+      "requirement": "Prove exact engine/game/state identity, successful save/load and clean foreground return on the target."
+    },
+    {
+      "code": "RECOVERY",
+      "requirement": "Prove original-card and internal startup/scene restoration plus FAT/exFAT interruption recovery."
+    },
+    {
+      "code": "POWER_USB",
+      "requirement": "Measure suspend/wake, poweroff/save completion and staged clean-unmount USB behavior."
+    },
+    {
+      "code": "DISTRIBUTION",
+      "requirement": "Resolve exact source, recipe, SDK/runtime and per-port redistribution terms before publishing a device build."
+    }
+  ],
+  "external_key_required_for_reverification": true,
+  "fixed_original_module_requirements": [
+    "app/bridge/__init__.py",
+    "app/bridge/bootstrap.py",
+    "app/bridge/frontend.py",
+    "app/bridge/lifecycle.py",
+    "app/bridge/principal.py",
+    "app/bridge/principal_integration.py",
+    "app/bridge/process_source.py",
+    "app/bridge/pyui_entry.py",
+    "app/bridge/qualified_runtime.py",
+    "app/bridge/resident.py",
+    "app/bridge/source_integration.py",
+    "app/psp_shell/__init__.py",
+    "app/psp_shell/__main__.py",
+    "app/psp_shell/adapters/spruce.py",
+    "app/psp_shell/app.py",
+    "app/psp_shell/controls.py",
+    "app/psp_shell/demo.py",
+    "app/psp_shell/embedded.py",
+    "app/psp_shell/hardware_settings.py",
+    "app/psp_shell/health.py",
+    "app/psp_shell/library.py",
+    "app/psp_shell/ports.py",
+    "app/psp_shell/ppsspp.py",
+    "app/psp_shell/runtime.py",
+    "app/psp_shell/settings.py",
+    "app/psp_shell/state_evidence.py",
+    "app/psp_shell/ui/__init__.py",
+    "app/psp_shell/ui/artwork.py",
+    "app/psp_shell/ui/input.py",
+    "app/psp_shell/ui/model.py",
+    "app/psp_shell/ui/renderer.py",
+    "app/psp_shell/ui/text.py"
+  ],
+  "host_acceptance": {
+    "composed_flow": "Fixed candidate imports, exact transformed source handoff, authenticated closure and global lifetime, real Linux ECHILD, sibling resident delegation/drain, completed state receipt and final result, authenticated store and fresh typed Resume.",
+    "explicit_fixtures": [
+      "native emulator/serializer",
+      "ROM bytes",
+      "platform services",
+      "display/input owners"
+    ],
+    "module": "project/tests/test_release_integration.py",
+    "passed": 19,
+    "physical_device_evidence": false,
+    "skipped": 0
+  },
+  "include_state_session": true,
+  "kind": "private-read-only-source-integration-review",
+  "original_overlay": {
+    "grants_source_or_hardware_qualification": false,
+    "key_id": "a7f3ff3704863b176f59d48334398240ea1348c2676f4d1ff04130ee64c5b629",
+    "module_root": null,
+    "payload_expanded_in_private_tree": false,
+    "release_id": "smartpro-psp-0.1.0-dev4",
+    "sha256": "011a63a248a39b327a3ff02d72061fc64349bde99f37b06756aab64c33c06e04",
+    "signature_inventory_verified": true
+  },
+  "patched_tree_produced": false,
+  "planned_fixed_module_root": "/mnt/SDCARD/App/PSPMode/integration/app",
+  "process_source_contract_count": 44,
+  "qualification_flags": {
+    "device_activation": false,
+    "distribution_cleared": false,
+    "hardware_qualified": false,
+    "installed_emulator_modified": false,
+    "production_authenticity_claim": false,
+    "rootfs_or_boot_modified": false,
+    "runtime_verified": false,
+    "saves_or_roms_included": false,
+    "source_review_is_physical_qualification": false
+  },
+  "retained_overlay_name": "smartpro-psp-0.1.0-dev4.tar",
+  "review_kit_command_did_not_install_activate_or_publish": true,
+  "review_kit_manifest_sha256": "cfcdd78a3115ebc10c00cea65ddba7586c30e05cc4b602510cfad29454fbf20c",
+  "review_kit_name": "trimui-source-review-20261022-dev4-ready",
+  "schema_version": 1,
+  "selected_patches": [
+    {
+      "base_sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "patch": "0001-pyui-quote-game-launch.patch",
+      "patch_sha256": "adb0029f7a2a3ba344968dc3e5233cd39df96a1f2fedccdbdccbc00a0fd2a9fd",
+      "patched_sha256": "1e5576544bec71821fea17861b5bf2de032060ca2250bcc8d1a15378e68f619a",
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py"
+    },
+    {
+      "base_sha256": "934632845d6f6f9ba64fe071231bde345f2f5fe39c0acfb86fcdaaaac3c88268",
+      "patch": "0002-ota-require-verified-tls.patch",
+      "patch_sha256": "156752e703cacee8b1ce8dc07f095e5a126d8c76e202293ca1e9a1f7337590ca",
+      "patched_sha256": "df2e831c8ef9e6c4742d9c38385ad1f05f93a30201e09a91cfd528e83f2e6436",
+      "path": "App/-OTA/downloader.sh"
+    },
+    {
+      "base_sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
+      "patch": "0003-preserve-archive-extraction-status.patch",
+      "patch_sha256": "95d17c7798709558f817c98b71836fa1462b199c69782146d78163b6045c776b",
+      "patched_sha256": "b97805f2f98c0110817c80a2f3a2051c0d7611e6f51cbbe447d8e120c17d642d",
+      "path": "spruce/scripts/helperFunctions.sh"
+    },
+    {
+      "base_sha256": "c28b684665a51d5b9208d6b4042538190e07f1f093f34b5dc212e856841dc849",
+      "patch": "0004-usb-refuse-unstaged-export.patch",
+      "patch_sha256": "94be55538918e12048c0e0a7c3991458730d9db0f4f934d299d182465851ff7b",
+      "patched_sha256": "1bb86c230524d91ce96c2fd195a4c479b8f634ee12f64db047e327af175e99a6",
+      "path": "App/USBStorageMode/launch.sh"
+    },
+    {
+      "base_sha256": "f7d85b270a74d9f3da49a573e4419ca3bf7710b5579794b93b4cd3a19acdea8c",
+      "patch": "0005-ppsspp-private-state-session.patch",
+      "patch_sha256": "9974950d8b93ab9098f82823cd9f29739ccc4c2f11c1a684f3ddcc16a30f37e8",
+      "patched_sha256": "9095dc1e606928c7873f2345b0c5795c0c2017fc40578fa7f0bf97434fc0446d",
+      "path": "spruce/scripts/emu/lib/ppsspp_functions.sh"
+    }
+  ],
+  "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "source_derived": false,
+  "source_inventory": [
+    {
+      "git_blob": "3f73b06416333c9423220d8e5a76671bc3350b47",
+      "path": "App/-OTA/downloader.sh",
+      "sha256": "934632845d6f6f9ba64fe071231bde345f2f5fe39c0acfb86fcdaaaac3c88268",
+      "size": 31242
+    },
+    {
+      "git_blob": "3e98034103df4771210012e478d792b2a361d856",
+      "path": "App/PyUI/LICENSE.md",
+      "sha256": "7ff719dcc48ccef9e70b3674803e1e7b5d2dd1095706a8fc50cc06a69d4999bb",
+      "size": 3398
+    },
+    {
+      "git_blob": "8e23351cdfbf28069b30bc3a3e58c2badb7bfcce",
+      "path": "App/PyUI/launch.sh",
+      "sha256": "f5bbef6490abffce7e6cdf260d1107dfbe4a15eb5a9f11890f5b3aefddbf16b6",
+      "size": 14471
+    },
+    {
+      "git_blob": "9c91591999e6049bb99dc191ffebc0608e28fa85",
+      "path": "App/PyUI/main-ui/LICENSE.md",
+      "sha256": "750e5328faa651a9b63ae079586a58a347cd6889de31455f7f0735a149c3caae",
+      "size": 3098
+    },
+    {
+      "git_blob": "12b526326c197db36d0e495608f901e7b5313d22",
+      "path": "App/PyUI/main-ui/audio/sdl2_audio_player.py",
+      "sha256": "5b07a9aa98cd34d66ecd4fd22cb9a9f3ecbbc2c54327d44b8e4ef1962f6da15a",
+      "size": 22937
+    },
+    {
+      "git_blob": "b1003dfa4b576f185a2310c5ac85ca753f2e499b",
+      "path": "App/PyUI/main-ui/controller/key_watcher.py",
+      "sha256": "bb7e7d44f0e6199f9045c1ab1b19cf0acfd27019707004ba26d66f420884f346",
+      "size": 2736
+    },
+    {
+      "git_blob": "57066c5026bc07b84f755389bf3aed7264b364a5",
+      "path": "App/PyUI/main-ui/controller/key_watcher_controller.py",
+      "sha256": "f86a38fb62fa3a4ff69d4cdc7d55273ddcafdd61edc8426d937e06d381f7d72b",
+      "size": 10340
+    },
+    {
+      "git_blob": "2a557b1637370ae8da2d78551ffd7a96e9c118d6",
+      "path": "App/PyUI/main-ui/devices/device_common.py",
+      "sha256": "2c6bbdc424123e3e517ee7a1f5267935dadf3fa5e37fd9f901fcacbf7fda8790",
+      "size": 44498
+    },
+    {
+      "git_blob": "63467b26b5b8e1cb7b5508f448be8f200311fbce",
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py",
+      "sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "size": 10140
+    },
+    {
+      "git_blob": "deadf503c2f73188d47b18d790d57821169ce101",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py",
+      "sha256": "b133cc3a898243163371f3a07a047ee317d96b68d41309514a78082c3e600a47",
+      "size": 6008
+    },
+    {
+      "git_blob": "1073ae55b4032e6db7cdebd8a0c0e663c3b94685",
+      "path": "App/PyUI/main-ui/devices/utils/file_watcher.py",
+      "sha256": "93bfb660676b79e567c9b8bb4ab297ad513c4f0018668826bd365fd30fbb3148",
+      "size": 2051
+    },
+    {
+      "git_blob": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+      "path": "App/PyUI/main-ui/mainui.py",
+      "sha256": "4d41c6e448dae7006ece6f81a0265bea6939052eb85daf05538b3ee6d58aaa2f",
+      "size": 14960
+    },
+    {
+      "git_blob": "605ed8ef84df0ffd8d7da9866cdcdfc1f48d1a77",
+      "path": "App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py",
+      "sha256": "bfa5b0b151b643fc4bad26ace2e93f19eda4e267de407badbd9f406a4613e16d",
+      "size": 1401
+    },
+    {
+      "git_blob": "46bb73956ed4e975a7f008bef4ae61ebe45bd181",
+      "path": "App/PyUI/main-ui/menus/games/utils/favorites_manager.py",
+      "sha256": "834c1883db80d7ff0e6105114fb161617941fc99fcdcbd082b3b2809a4b42e60",
+      "size": 1444
+    },
+    {
+      "git_blob": "e37d8eec5a2f29ed017eefdfc8b87136edbc865e",
+      "path": "App/PyUI/main-ui/menus/games/utils/recents_manager.py",
+      "sha256": "ab6cb559726d633360f57014dad39c831f5fd88bc3b146fe343c96be0e6f2bae",
+      "size": 1404
+    },
+    {
+      "git_blob": "a989d731efb60d5c239cd7b173aa47b346ad46e7",
+      "path": "App/PyUI/main-ui/menus/games/utils/rom_info.py",
+      "sha256": "fb8c00ddd5a89dad9ae0455b00aa49e45d6ddf2b417096b2c56f71f884914114",
+      "size": 754
+    },
+    {
+      "git_blob": "b8a4fbeba67f8d5479a33670dd09d9cb7a6d2fa9",
+      "path": "App/PyUI/main-ui/menus/games/utils/rom_select_options_builder.py",
+      "sha256": "7d7f9589fb59e1637dc36063a3e86c3ac84bbea89124bdb5839137f36bbba138",
+      "size": 18513
+    },
+    {
+      "git_blob": "86ba5ccdba0be3453b6bddf1c24e9e91cec5c706",
+      "path": "App/PyUI/main-ui/menus/main_menu.py",
+      "sha256": "c01560eec190bd9d2668533955453446d52e3cc3c08e53cd1606f04fc81cc8ad",
+      "size": 11396
+    },
+    {
+      "git_blob": "d137e34a82f75133c83a437b173230d6377982e1",
+      "path": "App/PyUI/main-ui/option_select_ui.py",
+      "sha256": "7c0de0185d58de5269f10d7b198ab69cc36ded0c0feed5fe6f21403b21f6e0af",
+      "size": 12296
+    },
+    {
+      "git_blob": "bc65758da4dad522f95700843475fe073f0c0940",
+      "path": "App/PyUI/main-ui/utils/cfw_system_config.py",
+      "sha256": "a4cee14984e3c9304bdc4871f1155b218f7c13bb922f594d5c90f8cd16e57a05",
+      "size": 2688
+    },
+    {
+      "git_blob": "9de7d3859064e8eee22f71f7b6ee65ec0cc2a9c6",
+      "path": "App/PyUI/main-ui/utils/py_ui_config.py",
+      "sha256": "f3ee1564cf95c18fc26ef67856e5a0ebcc27432cf775fd7b0867f94c64ce8fa2",
+      "size": 8082
+    },
+    {
+      "git_blob": "18ef83d2601877f1fbeb98e99d30f7040cd24b19",
+      "path": "App/PyUI/main-ui/utils/throttle.py",
+      "sha256": "8e388096bf8c40b6d1d33cdacd8a725de1546ec20e940802e63b388f6e90a847",
+      "size": 3498
+    },
+    {
+      "git_blob": "85329dc12b4d69bbda10ded7725343fadde47a7f",
+      "path": "App/USBStorageMode/launch.sh",
+      "sha256": "c28b684665a51d5b9208d6b4042538190e07f1f093f34b5dc212e856841dc849",
+      "size": 4045
+    },
+    {
+      "git_blob": "7d82903f223c62b411247115f1b577c44e2e6bc2",
+      "path": "LICENSE",
+      "sha256": "a01c51912b88f08db800c9600fcab358da621a7cf177a6f3adc8882a588522c5",
+      "size": 2674
+    },
+    {
+      "git_blob": "cadc981b76be81506ff20faaf571a97f515ef4aa",
+      "path": "spruce/scripts/applySetting/networkServiceToggle.sh",
+      "sha256": "c96f828a4d48c6b1ad6474f6f2bfe054728c72fe049ac1fad338f1f23a3618c0",
+      "size": 6357
+    },
+    {
+      "git_blob": "81a28c190efd2c56ae58d5be7a7e5359bfe1340d",
+      "path": "spruce/scripts/asound-setup.sh",
+      "sha256": "542a8bf04dae15f5d0794ca11dad35fbac81c76bb0918e6b84cb5722a98b1a5b",
+      "size": 2686
+    },
+    {
+      "git_blob": "bae56f4f8b1330bf2b6edc71df0904b4b9b0740a",
+      "path": "spruce/scripts/bin/spruce_bluetooth",
+      "sha256": "73e453c3d6cdc997709ef4e31bf0fa91141e5b2588358d87b337c5ef63cef02a",
+      "size": 63
+    },
+    {
+      "git_blob": "2b388ad9e29a05486ec15d836620e255e8a1cbf5",
+      "path": "spruce/scripts/bin/spruce_wifi",
+      "sha256": "9eaa1f4ee9a168489d1067db4805d6d85b7228d843d991c325c81a037c233af7",
+      "size": 58
+    },
+    {
+      "git_blob": "5e7cc94e4e51dfd72a6bc83c31e47c5dc1ae031e",
+      "path": "spruce/scripts/bluetooth.sh",
+      "sha256": "bc1bb1bf526a1de66a44e35684a1bac38d7ac16dfd09e8d814c22d756af3abc7",
+      "size": 12137
+    },
+    {
+      "git_blob": "0f9e28f698b6baa94b25f1acc9d3dff5f2388c31",
+      "path": "spruce/scripts/device_functions.sh",
+      "sha256": "2ad8cb1d3f3bd660bdc38e0dacc5eeafd28836a890212339d3628b96fca8d25f",
+      "size": 691
+    },
+    {
+      "git_blob": "88569b5c41dd109633650835c18f2a037b4162e5",
+      "path": "spruce/scripts/emu/lib/ppsspp_functions.sh",
+      "sha256": "f7d85b270a74d9f3da49a573e4419ca3bf7710b5579794b93b4cd3a19acdea8c",
+      "size": 5303
+    },
+    {
+      "git_blob": "a415b749900c4a936093985639347ac1674d042d",
+      "path": "spruce/scripts/helperFunctions.sh",
+      "sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
+      "size": 71157
+    },
+    {
+      "git_blob": "65a1a281c01cfdc5787f45ced21f2bf12a5cab07",
+      "path": "spruce/scripts/network/darkhttpdFunctions.sh",
+      "sha256": "658e3daeca4dd984c81e34137c37baac0017628a37adb618550cb5c43c898373",
+      "size": 2158
+    },
+    {
+      "git_blob": "7213c5f3b8e6d718f80d6ad52c2ee90479de0a9e",
+      "path": "spruce/scripts/network/raproxyFunctions.sh",
+      "sha256": "bdfa983134fc93f5413f5090eed4c358c18b26b6df3db10360786b50af54960b",
+      "size": 2772
+    },
+    {
+      "git_blob": "c5ab3e4c641e1dc03c90183fdf5bc1e103cf8f06",
+      "path": "spruce/scripts/network/sambaFunctions.sh",
+      "sha256": "f18ebe90822924accedd3f955cc173d506da6e9f4ac4ef57b3ff549a7b27b299",
+      "size": 845
+    },
+    {
+      "git_blob": "d326c7094047b22c62a1efb1e4c1b7dc9b6dfd85",
+      "path": "spruce/scripts/network/sftpgoFunctions.sh",
+      "sha256": "6b0f5860c4c51f3422fdd5d11f4076d20dcb7efe19b55a8b9dff3c17fdae1d91",
+      "size": 502
+    },
+    {
+      "git_blob": "2893e7f83202ef78b589da60930672ceb16e3e8b",
+      "path": "spruce/scripts/network/sshFunctions.sh",
+      "sha256": "14d91f88965a583deb0b88e0ed285cc0d67366c7f3e4de3067dbf751f4808bd1",
+      "size": 5922
+    },
+    {
+      "git_blob": "17153236f9dd368117285ed87d885e13b5194c7f",
+      "path": "spruce/scripts/network/syncthingFunctions.sh",
+      "sha256": "5cc14e214f4cbabf3a8ffece6a062019bdeda84fc32eaf3c3ecf5d47b493acb0",
+      "size": 2029
+    },
+    {
+      "git_blob": "af9892bce2a70caedfb59871530dcc4b09314b38",
+      "path": "spruce/scripts/network/timeFunctions.sh",
+      "sha256": "f08b90baa06382a0b8b916778b1b117c2a2d54df5fe12ce5fe24a620327a8666",
+      "size": 614
+    },
+    {
+      "git_blob": "3cb3eb01cecd1f06e57a8805bc67486e51fd7c1b",
+      "path": "spruce/scripts/networkservices.sh",
+      "sha256": "0a1cc98acd6c96ac07cd51075d954c46be290ff3b4b412e510142324db65217d",
+      "size": 6307
+    },
+    {
+      "git_blob": "3d271678195b5fb547db1a0d31e11afe3086cce9",
+      "path": "spruce/scripts/platform/SmartPro.cfg",
+      "sha256": "196fbbaf9c8ea7478771543c6f4b3cde53df2858f44acc0255ada6e3ae5304d2",
+      "size": 6797
+    },
+    {
+      "git_blob": "0a82270e323672cd598a4db9dba14311b92ca919",
+      "path": "spruce/scripts/platform/device.sh",
+      "sha256": "9a79a1e3e29810376280625b20e32d9769b83933939a3c415cc038058baad898",
+      "size": 29172
+    },
+    {
+      "git_blob": "5ed8fd031247840cf7c14585b934b9c1de192723",
+      "path": "spruce/scripts/platform/device_functions/SmartPro.sh",
+      "sha256": "75984365c8cc0369bfd5c30af64b008cb0340159abc090c7c171a77ba85cbe75",
+      "size": 4319
+    },
+    {
+      "git_blob": "de6b074edfb2f5bc4315a3a7cdabb85dc4bb1b7f",
+      "path": "spruce/scripts/platform/device_functions/a133p.sh",
+      "sha256": "0234ed7335add45c85cfe09bc8bbeab81c13d0341e0297379c7b162cdcee22a3",
+      "size": 12789
+    },
+    {
+      "git_blob": "c295050b419776df00b737858bdd214bd43f9e6c",
+      "path": "spruce/scripts/platform/device_functions/trimui_a133p.sh",
+      "sha256": "37af2c6c094e977fd2eb3191e402a1bd9c5ac44223c81755ea12805386b42372",
+      "size": 8290
+    },
+    {
+      "git_blob": "235739974fa302f1fbddf9c82edae4914e1447f1",
+      "path": "spruce/scripts/platform/device_functions/trimui_delegate.sh",
+      "sha256": "33d2774d282fbab5369ce5a5d76444bf0f3b3dbdf41c45b1a154c1206f832be8",
+      "size": 12732
+    },
+    {
+      "git_blob": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+      "path": "spruce/scripts/principal.sh",
+      "sha256": "f45b37592708c6c6d9a47c6d8f2b94b23d7387233c566d445df78637e11fb953",
+      "size": 5418
+    },
+    {
+      "git_blob": "9f82ff813b005b0f661e13238e912b533d4bd893",
+      "path": "spruce/scripts/tasks/clearwifi.sh",
+      "sha256": "8301264c75806ad39e3c3e7d9db5f2809adae49c8c51db87031830bbc18fdff4",
+      "size": 157
+    },
+    {
+      "git_blob": "1568d2f1b7cc55647947c5cfddf78e4d5204abae",
+      "path": "spruce/scripts/tasks/updateRAOfflineProxy.sh",
+      "sha256": "19b2efead9ca3e40775fce45e584e457702909ca858ce782a92160825855f23a",
+      "size": 1253
+    },
+    {
+      "git_blob": "a8d337e08f25c6c44bbcce53833b6a49f280f958",
+      "path": "spruce/scripts/wifi.sh",
+      "sha256": "4530726285531d975294d1ad8c58c252355b410201a08d71abd52f365e251afd",
+      "size": 13869
+    }
+  ],
+  "source_inventory_count": 50,
+  "source_inventory_sha256": "463ba119ea70ad1733b656e9c6911df6e45a7f6f8412dda5a0a21e5537f78437",
+  "source_review_reference": null,
+  "source_use_reviewed": false,
+  "verification": "Passed existing external-key Ed25519 archive inventory verification and complete private review-kit verification."
+}

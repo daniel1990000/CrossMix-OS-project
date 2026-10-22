@@ -42,9 +42,12 @@ def redact(text):
 def bounded_read(path, limit=MAX_TEXT):
     try:
         # /proc and sysfs often report size zero, so bound the actual read too.
-        with open(path, "rb") as handle:
+        descriptor = os.open(path, os.O_RDONLY | os.O_NONBLOCK)
+        with os.fdopen(descriptor, "rb") as handle:
+            if not stat.S_ISREG(os.fstat(handle.fileno()).st_mode):
+                return None
             data = handle.read(limit + 1)
-        if len(data) > limit:
+        if data is None or len(data) > limit:
             return None
         return data.decode("utf-8", errors="replace").replace("\x00", " ").strip()
     except (OSError, ValueError):
@@ -75,10 +78,22 @@ def hash_at(root, relative):
         if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_ELF:
             return None
         h = hashlib.sha256()
-        with open(path, "rb") as handle:
-            for block in iter(lambda: handle.read(1024 * 1024), b""):
+        with os.fdopen(os.open(path, os.O_RDONLY | os.O_NONBLOCK), "rb") as handle:
+            before = os.fstat(handle.fileno())
+            if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_ELF:
+                return None
+            remaining = before.st_size
+            while remaining:
+                block = handle.read(min(1024 * 1024, remaining))
+                if not block:
+                    return None
                 h.update(block)
-        return {"path": relative, "size": info.st_size, "sha256": h.hexdigest()}
+                remaining -= len(block)
+            after = os.fstat(handle.fileno())
+            if handle.read(1) or any(getattr(before, key) != getattr(after, key) for key in
+                                      ("st_dev", "st_ino", "st_size", "st_mtime_ns", "st_ctime_ns")):
+                return None
+        return {"path": relative, "size": before.st_size, "sha256": h.hexdigest()}
     except OSError:
         return None
 

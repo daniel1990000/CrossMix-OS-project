@@ -1,120 +1,98 @@
 # TrimUI Smart Pro implementation handover
 
-Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`.
+Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
 
-Saved for review in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The branch contains all implementation source, tests, notices, screenshots and this handover. Read the PR's latest Actions run for remote CI/artifacts; locally saved evidence remains separately identified.
+The current checkpoint completes the host software integration, common settings, PPSSPP state protocol/Resume route, native menu extensions, source composition/restoration tools and private source builds. Read the final records in [project/evidence](project/evidence/) for actual host counts, build fingerprints and development packaging results. Host fixtures, complete native cross-builds and physical qualification remain separate claims.
 
-Latest continuation: retained PyUI startup/audio task ownership and exact-source
-caller staging, an installed loader/mapped-library evidence probe, and a separate
-optional PPSSPP save-slot completion patch. That patch checks finalization and
-binds exact game/engine/state fingerprints after the real asynchronous save.
-It is outside the previously cross-built candidate and enables no Resume action.
-The actual principal return authority and physical qualification remain open.
-All **349 host checks** pass with zero skips, failures or errors. The **dev3**
-development artifacts pass deterministic rebuild, signature/inventory,
-installed-payload rendering and fixture activation/rollback checks.
+All **527 host checks pass with zero skips or failures**: 466 Python/SDL/source-integration checks and 61 PPSSPP C++/build-tool checks. The **dev4** original-only development artifacts pass signature/inventory verification, deterministic rebuilds, installed-payload rendering and fixture activation/rollback.
 
-## User direction
+**The owner has an original Smart Pro, but it is unavailable for testing today.** Physical acceptance has not been performed. PyUI notification delivery and exact recipe/SDK redistribution review remain open. Installed emulators are unchanged; runtime/profile activation stays disabled, and engine binaries/full recipe archives stay private.
 
-Build a polished PSP-inspired whole-system experience for the **original TrimUI Smart Pro TG5040**. Improve and specialize spruceOS, retaining its working device support, emulators, existing features and saves. Reuse existing projects extensively, including [PPSSPP](https://github.com/hrydgard/PPSSPP), and research other useful sources. The user has authorized autonomous implementation and parallel agents. Keep progress, decisions, evidence and future-chat handovers in GitHub.
+## User direction and start point
 
-The repository name and inherited tree still say CrossMix. That tree and the collapsed appendix in [TRIMUI_PLAN.md](TRIMUI_PLAN.md) are historical reference and an offline migration source. **Do not resume the superseded CrossMix runtime architecture.** The latest comprehensive plan and this implementation checkpoint govern current work.
+Build a polished PSP-inspired whole-system experience for the **original TrimUI Smart Pro TG5040**, extending spruceOS v4.5.4 and its shipped PyUI. Retain existing device support, emulators, settings, games and saves. Reuse maintained projects, research beyond supplied links, work autonomously with parallel agents, and retain implementation/evidence/handovers in GitHub. Do not resume the superseded CrossMix/C++ runtime architecture.
 
-## Start here
+Read [project/README.md](project/README.md), the active part of [TRIMUI_PLAN.md](TRIMUI_PLAN.md), [coverage](project/docs/feature-coverage.md), [binding](project/bridge/README.md), [state integration](project/ppsspp/state-session.md) and [release qualification](project/docs/release-qualification.md). Review PR checks at the exact branch SHA; a previous green run does not cover later edits. Keep the PR draft until the device and release evidence is available.
 
-1. Read this file, [project/README.md](project/README.md), the active portion of [TRIMUI_PLAN.md](TRIMUI_PLAN.md), [spruce source lock](docs/spruce-source-lock.json), and [PPSSPP reuse map](project/ppsspp/reuse-map.md).
-2. Check out `build/spruce-psp-experience`. Work is saved on this branch; do not assume `main` contains the implementation until its draft PR is merged.
-3. Run the documented host checks with both untouched pinned upstream checkouts. Review the saved evidence and distinguish fixtures from physical observations.
-4. Continue the next concrete work below. Avoid another planning-only cycle or asking the user to repeat the plan.
-
-A lightweight clone avoids the large historical CrossMix payload:
+A lightweight checkout avoids the large historical payload:
 
 ```sh
 git clone --filter=blob:none --sparse --branch build/spruce-psp-experience https://github.com/daniel1990000/CrossMix-OS-project.git trimui
 cd trimui
-git sparse-checkout set --no-cone /project/ /.github/workflows/ /docs/ /HANDOVER.md /AGENTS.md /TRIMUI_PLAN.md /README.md /.gitignore
+git sparse-checkout set --no-cone /project/ /.github/workflows/ /docs/ /HANDOVER.md /AGENTS.md /TRIMUI_PLAN.md /README.md /.gitignore /.gitattributes
 ```
 
-## Saved implementation
+## Implemented source
 
-| Path | Ownership and behavior |
+| Path | Current behavior |
 |---|---|
-| `project/psp_shell/ui/` | Original Python SDL navigation, renderer, input, text/artwork caches, waves and accessibility. Shared-renderer embedding preserves existing PyUI SDL ownership. |
-| `project/psp_shell/app.py` | Runnable desktop/demo and read-only card browser; fixed Dispatcher operations; optional injected launch/control adapters. Standalone mode never starts games or device commands. |
-| `project/psp_shell/adapters/spruce.py`, `library.py` | Source snapshot and injected existing PyUI models, platform filtering, exact ROM/preset identity, token-validated existing callbacks. |
-| `project/psp_shell/runtime.py`, `health.py`, `embedded.py` | Launch coordination, shared input/display runner, foreground handoff records, checksummed health/selector state and classic fallback. |
-| `project/bridge/` | Lazy frontend seam, trusted initialized-owner/model binding, refreshed independent evidence and strict correlated returns. Retained startup/audio tasks have paired stop/restore; a ten-file source audit and source-use-gated staging add the actual startup caller/cooperative watcher seam. Default unbound/unqualified execution stays classic. No installed registration or hook is enabled. |
-| `project/psp_shell/settings.py`, `controls.py` | Format-preserving transactions, previews, generations, writer/hash gates, compensating backends, recovery and targeted undo. PPSSPP changes require the opt-in flag and exact Confirm/Back pair under the engine's INI semantics. Three shipped emulator profiles remain unqualified. |
-| `project/ppsspp/` | Upstream v1.20.3 native-menu source patch, exact hashes/notices, C++ acceptance, original themes and isolated full-build tooling. A separate optional save-slot evidence patch has its own lock and compiled source acceptance; it is not part of the previous complete candidate build. See [the build procedure](project/ppsspp/build-candidate.md). |
-| `project/psp_shell/ppsspp.py` | Original theme adoption helper, preview, backup, qualified stopped-writer gates, multi-file recovery and undo. Settings → PPSSPP appearance previews the frontend's contrast/motion choices before applying them through an injected manager. Standalone mode has no emulator write adapter. |
-| `project/patches/` | Four pinned spruce fixes: quote the launcher directory, refuse insecure TLS retry, preserve actual archive extraction exit status, and refuse mounted-card USB export after staging failure. Stored as reviewable patches only. |
-| `project/packaging/`, `project/tools/build_payload.py` | Deterministic signed scoped overlays, strict archive verification, fixture staging/activation/health/rollback and development artifact builder. |
-| `project/tools/` | Read-only inventory/support, offline migration, benchmarks and fixture creation. The [installed-runtime probe](project/docs/installed-runtime-evidence.md) inspects exact ELF/interpreter paths and optionally correlates an already-running process's mapped library inodes without executing the emulator. |
-| `project/psp_shell/ports.py`, `project/profiles/ports.json` | Owner-data import preview, staging, backups, rollback and configuration undo. GTA III/VC, Sonic Mania, Celeste and Render96 candidates; San Andreas stays disabled/experimental. |
-| `.github/workflows/smartpro-offshoot.yml` | Pinned source checkouts, host tests, preview and verified development artifacts. Workflow execution status is separate from locally saved test evidence. |
+| `project/psp_shell/ui/`, `app.py` | Original SDL interface, four categories, library/search/favorites, dialogs, accessibility, waves, original assets and headless/desktop preview. Checkpoint verification times appear only from authenticated backend records. |
+| `project/psp_shell/adapters/spruce.py`, `library.py` | Read-only source snapshots or already initialized PyUI models, existing platform/preset filtering, exact ROM identity and token-bound original callbacks. |
+| `project/bridge/process_source.py`, `principal.py`, `principal_integration.py` | Exact-source initialized model/menu/game/principal seams; Linux child-subreaper ownership including double-fork/setsid descendants; sealed staged commands preserving `$0`; correlated foreground completion. Fixed `qualified_runtime.py` defaults to `None`. |
+| `project/psp_shell/hardware_settings.py`, `embedded.py` | Common brightness/volume/radio controls through existing initialized authorities, shared writer window, stale previews and configuration readback; fixed Wi-Fi/Bluetooth/controller/power/USB/apps/collections/advanced/per-game routes. Source menus retain their own layouts and hardware behavior. |
+| `project/psp_shell/controls.py`, `ppsspp.py` | Separate frontend/game/menu policies, standard RetroArch and spruce IGM adapters; one PPSSPP controls/appearance transaction with five-file journal, stopped-writer checks, verified per-game override inventory, recovery and protected Undo. |
+| `project/psp_shell/state_evidence.py` | Private session creation by the principal owner, exact native save/load validation, independently stopped writers and boot-bound authenticated capability transfer to fresh UI processes. Typed Resume uses the original game callback; arbitrary card JSON cannot grant it. |
+| `project/ppsspp/` | Pinned native controls, completion API, private session protocol and checked save-and-quit patches; real C++ source acceptance; full PPSSPP/FFmpeg candidate build, ABI audit and retained corresponding-source tooling. Separate GPL scope. |
+| `project/retroarch/` | Actual spruce IGM independent raw Confirm/Back extension, source parser/action acceptance, source locks/notices and full original-TG5040 candidate builder. Separate GPL scope. |
+| `project/patches/`, `integration/` | Four reliability fixes plus separately selected PPSSPP wrapper forwarding; exact source inventory, original overlay verification, all-or-none private composition, signed expanded-module binding and exact-preimage restoration to a new output. No live installation command. |
+| `project/psp_shell/ports.py`, `profiles/ports*` | Pinned launch-script/metadata contracts, owner-data import/staging/backup/Undo, read-only installed engine/Mono/support inventory and original spruce launch-token reuse. GTA III/VC, Sonic Mania, Celeste and Render96 remain candidates; San Andreas is disabled/experimental. |
+| `project/tools/`, `packaging/` | Read-only installed-runtime probe, migration/support/benchmark tools, signed scoped original-only overlays, deterministic rebuild/smoke/fixture rollback, and private operator device acceptance recording. |
 
-The first implementation uses original Python modules around **existing PyUI**, not a replacement native C++ supervisor. Early incomplete CrossMix prototypes were archived locally and excluded from this active branch. This checkpoint contains no modified base emulator or firmware.
+The legacy retained-thread/cooperative-audio source experiment remains available for comparison. **Select one integration mode; never apply it together with the process-boundary patch.** Process exit preserves all existing PyUI threads and releases their descriptors as one owned process subtree. No helper may kill or ignore an unknown child to announce successful return. A shell exit, missing command or arbitrary serialized receipt is insufficient.
 
-## Exact pins and evidence
+## Exact source and build identities
 
-- Spruce stable **v4.5.4**, commit `d45ff8dfe5756147522b04ae5863d17a90e88b54`; shipped PyUI tree `4d0bdb3111d9226fbacbea6c89d65e540620e21e`.
-- Full `spruceV4.5.4.7z` was downloaded (1,652,634,074 bytes) and independently SHA-256 checked: `4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd`. Ten named integration/licence files match the pinned Git source. See [release-source-audit.json](project/evidence/release-source-audit.json) and its reproducible audit script.
-- Bundled `Emu/PSP/PPSSPPSDL_TrimUI`: 19,885,376 bytes, SHA-256 `d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7`, Git blob `509ffbd9ba3874c05ae3b470d77cab5299d85c4e`, embedded `v1.20.3` string. This does not establish its complete build source, installed-device identity or the new extension.
-- PPSSPP upstream **v1.20.3**, commit `d357e6a32934800d3d80b49f910a603e1b069751`. Optional spruce PowerVR build recipe pinned at `9f770cb984fd8ffcc8f91d24fcbca859439c2e9b`.
-- The latest GitHub planning/research commits through `3832c662641fbff18ac3ddafef70a48db5981440` were merged and preserved, including the broad research mandate and sections 7A/7B. The newer upstream PPSSPP research pin is separate from the SDL2-compatible v1.20.3 implementation pin.
-- Host checks and development packaging results are saved under [project/evidence](project/evidence/). Test counts, skips and exact checks are recorded there. Actual dummy-SDL previews and signature/rebuild/stage/rollback checks passed. No physical-device performance result is claimed.
-- A previous complete separate PPSSPP PowerVR cross-build succeeded with the project extension and all ten selected pinned spruce patches. The read-only SDK audit found incompatible GLIBC requirements: libc `2.28` and libm `2.27`/`2.29`, absent from the recipe's `2.25` sysroot. See [candidate-build evidence](project/evidence/ppsspp-candidate-build.json). Its candidate and pinned source/input snapshot were retained privately in the prior environment; they were not restored here. Its bundled FFmpeg archives have not been matched to that pinned source; no executable was installed or published.
-- The corrected candidate builds both PPSSPP and its pinned FFmpeg from source, with explicit GCC 9/SDK header and library search. Its AArch64 executable is 19,909,952 bytes, SHA-256 `1f0980edcf4ddd2550a050d9159658046827d37165a80d283647c504226a77df`, and requires only `GLIBC_2.17`. The recursive 16-object SDK inventory passes. See [corrected-build evidence](project/evidence/ppsspp-sdk-search-build.json). This does not prove the installed device's loader, drivers, input or save compatibility.
+- Spruce stable **v4.5.4**: `d45ff8dfe5756147522b04ae5863d17a90e88b54`; PyUI tree `4d0bdb3111d9226fbacbea6c89d65e540620e21e`. The complete stable archive was independently hashed: 1,652,634,074 bytes, SHA256 `4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd`. Ten selected integration/licence files match Git; see [release-source audit](project/evidence/release-source-audit.json).
+- PPSSPP **v1.20.3**: `d357e6a32934800d3d80b49f910a603e1b069751`; spruce PowerVR recipe `9f770cb984fd8ffcc8f91d24fcbca859439c2e9b`. New state/API/recipe-override locks are separate from the original menu-only lock.
+- Current complete PPSSPP candidate: **19,934,560 bytes**, SHA256 `a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d`. It compiles project patches 0001–0004, all ten selected spruce patches and pinned FFmpeg. The recursive **16-object SDK audit passes**, requiring only GLIBC 2.17. FFmpeg's actual configuration is LGPL-2.1-or-later with GPL/nonfree/version-3 options disabled; 55 named component notices are retained. See [complete state build](project/evidence/ppsspp-complete-state-build.json). No target executable was run.
+- Earlier PPSSPP build attempts remain evidence: [initial build](project/evidence/ppsspp-candidate-build.json) linked against too-new libc symbols; [corrected menu-only build](project/evidence/ppsspp-sdk-search-build.json) fixed GCC9/SDK searches and rebuilt pinned FFmpeg. Their hashes/results do not describe the later state-session binary.
+- The [first state-session build](project/evidence/ppsspp-state-session-initial-build.json) passed compilation/SDK checks but lost the first successful checkpoint's export after a later failure in the same request. The later retained-success protocol fixes that source behavior and has separate binary/source identities.
+- RetroArch **v1.22.2**: `69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576`; actual spruce IGM recipe `71d84da4dc88945177a3eb34268013355c705dbd`. The new IGM controls patch SHA256 is `39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6`. [Native build instructions](project/retroarch/build-candidate.md) record original-target SDK adaptations separately from source acceptance.
+- Current complete RetroArch/IGM candidate: **15,182,848 bytes**, SHA256 `118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d`. The recursive **23-object SDK audit passes**. Original-target adaptations disable unavailable Vulkan, preserve bundled compatibility-header precedence and link the proved GCC9 C++ runtime statically. Earlier configure/link/audit failures are retained separately. See [complete IGM build](project/evidence/retroarch-igm-build.json). The private binary and source/build archives live under `/workspace/scratch/retroarch-igm-tg5040-final`. No target executable was run.
+- Bundled stable executable observations are separate: PPSSPP SHA256 `d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7`, embedded v1.20.3; `ra64.universal` SHA256 `bd96dd8f10c479d17ff4a5db943a6828ccb0b74c6eb463faeb99d941fa16d550`, embedded 1.22.2. Version strings do not establish exact source correspondence or installed-device identity.
 
-The PPSSPP patch reuses ConfigSetting serialization, SDL input translation, native menu key handling and existing settings widgets. Opt-in `[ProjectNativeMenu] IndependentMenuControls` defaults false; physical south/east Confirm/Back stays separate from PSP gameplay and ButtonPreference. Reserved keys cannot also trigger native info/tab/direction actions or a remapped Pause-to-exit action in native menus. Tests compile selected real patched functions and the actual INI value parser with explicit narrow fixtures. Target qualification remains separate from source acceptance and cross-building.
+## Verification and workspace continuity
 
-The whole-system status is tracked in [feature-coverage.md](project/docs/feature-coverage.md). [The binding contract](project/bridge/README.md) identifies the existing source lifecycle and principal return work that remains unbound.
+Run all host checks with three untouched pinned references. Source-dependent skips do not count as a complete pass:
 
-The new [lifecycle source audit](project/evidence/pyui-lifecycle-source-audit.json)
-pins ten actual sources and enumerates seven unaccounted owner groups. It does
-not qualify those workers. The optional PPSSPP patch and its separate lock retain
-their own source/acceptance evidence; neither the prior candidate's executable
-hash nor its SDK-inventory pass applies to that new patch. No installed-runtime
-report or original-device test was collected during this continuation.
+```sh
+PYTHON=/workspace/scratch/trimui-buildenv/bin/python \
+SPRUCE_SOURCE_ROOT=/workspace/spruce-base \
+PPSSPP_SOURCE_ROOT=/workspace/ppsspp-source \
+SPRUCE_RA_SOURCE_ROOT=/workspace/scratch/trimui-igm-ra-source \
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
+sh project/dev/check.sh
+```
 
-## Next concrete work
+The preview environment uses PySDL2 0.9.17 and Pillow 11.1.0 with system SDL2/libsodium. Source tests need Git, host C/C++ compilers and binutils. CI checks out all three exact sources and uploads original-only development artifacts; it does not publish native emulator/SDK outputs.
 
-1. **Complete the actual qualified PyUI caller and return authority.** `RetainedPyUITasks` now owns the existing two one-shot callbacks and cooperative audio watcher, preserving failures, stop timeouts and restoration ownership. `configure_source_caller` connects a trusted in-memory factory to `InitializedPyUIBinding`; source-use-gated staging adds the actual `mainui` caller and stop-event seam. No registration is shipped. Account for nested startup/audio refresh, SmartPro constructor/config/key/input workers, timezone/throttle/cache/network/audio workers and staged foreground descendants before supplying `other_owners_idle`. The ten-file audit lists those gaps. Pair the separate MainMenu hook while preserving its GameSwitcher, box-art and game-selection-only prelude. The principal still only waits for the staged shell and removes the command file; that does not prove descendant or display/input completion. No qualified principal return seam exists. Keep correlated same-boot receipts and real successful input polling; never clear a tombstone to start another UI.
-2. **Qualify the separate source-built PPSSPP candidate.** [The build procedure](project/ppsspp/build-candidate.md) uses `--strict-sdk-search --rebuild-ffmpeg` to avoid Ubuntu cross-header/library leakage and the old FFmpeg prebuilt's `fcntl64` import. The previous complete engine links and passes the recursive SDK symbol-version inventory. Preserve its failed attempts and corrected result. Use the new [read-only probe](project/docs/installed-runtime-evidence.md) for exact installed ELF/interpreter identities and already-running mapped libraries, then separately collect input and complete writer ownership. Verify saves, states, native widgets and PowerVR rendering on a spare/restorable card. The optional state patch needs a separate full build and new source/binary/SDK evidence before joining this candidate. Keep the installed engine unchanged until qualification passes. The pinned recipe scripts lack an explicit licence grant and SDK redistribution remains unaudited; keep candidate binaries and their full recipe/source archive private while distribution gates are unresolved. In upstream SDL, south/east are `NKCODE_BUTTON_2/3`, not Android `BUTTON_A/B`.
-3. **Qualify common controls and matching PPSSPP appearance.** The common UI now exposes both controls and PPSSPP appearance, with preview/apply/Undo and separate generations. Controls require all three extension keys, report persisted configuration status conservatively, and reject incomplete previews. Appearance matches contrast/motion only after explicit review; palette overwrite defaults to Cancel. Both use the actual PPSSPP INI rules and stopped-writer gates. Supply qualified installed profiles and serialize both adapters in the same write window before target use. Verify per-game overlay behavior. Keep standard RetroArch, spruce IGM and native PPSSPP surfaces separate; the IGM adapter remains unsupported.
-4. **Integrate and qualify exact in-emulator state evidence for real Resume.** The separate optional patch adds `SaveState::SaveSlotWithEvidence` around the actual queued Save/Process/SaveSlot lifecycle. It reports final rename failure and blocked operations; successful evidence uses the engine's real slot path/SFO identity, request/session correlation, and streamed ROM/engine/state hashes. It has no external exporter, caller or launch protocol. Full ROM hashing can pause emulation and remains qualification-only. Callback completion proves neither durable storage nor clean shutdown; abandoned queued work supplies no success. Supply a reviewed emulator owner/caller, complete writer and state profile evidence, separate full candidate build, and real save/load/return tests before wiring any Resume action. Do not guess `.ppst` paths, infer success from a screenshot or repurpose battery saves as states.
-5. **Complete the whole-system plan and physical qualification.** Hardware settings and advanced utilities should delegate to existing spruce authorities. Networking/power/sleep/USB, high-level settings UI coverage, all emulator/native-screen visual parity, port engines/data qualification and measured optimization remain incomplete. Use the plan's feature matrix and update it with actual results. Source-tested patches need a reviewed release application path, not silent writes.
-6. **Run original TG5040 tests on a spare/restorable card when hardware is available.** Capture installed firmware, libraries, devices, config writers, boot/scene hashes and save checksums; prove original-card/internal-startup restore, classic fallback, launch/return, saves, suspend/power, USB clean unmount and FAT/exFAT interruption recovery. Only then qualify the corresponding profile fields. No device is connected in this checkpoint.
+Rebuild **dev4** with a new output directory:
+
+```sh
+python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-development-20261022-dev4-ready --include-source --smoke-python /workspace/scratch/trimui-buildenv/bin/python
+```
+
+Private PPSSPP output lives under `/workspace/scratch/ppsspp-complete-checkpoint-final`: `output/PPSSPPSDL_TrimUI` and `candidate-corresponding-source.tar.gz`. The exact final source archive size and SHA256 are recorded in `project/evidence/ppsspp-complete-state-build.json`. The earlier 640ce8 binary and its matching archive remain under `/workspace/scratch/ppsspp-complete-state-final` as historical evidence. Source/recipe/SDK inputs are untouched in sibling scratch directories. Private workspace files may be absent after environment replacement; rebuild from locks and never imply that an absent archive is still available. Keep engine binaries, complete upstream source distributions, SDK blobs, owner data and private keys out of Git/public preview artifacts.
+
+Final original-only artifacts are in `/workspace/scratch/trimui-development-20261022-dev4-ready`. The verified review kit is `/workspace/scratch/trimui-source-review-20261022-dev4-ready`: 50 exact source/licence observations, five explicitly selected patches and the verified original overlay, with no derived base tree or source-use claim. See [review evidence](project/evidence/source-integration-review.json). An empty acceptance session is ready at `/workspace/scratch/trimui-tg5040-acceptance-ready`; all 13 physical areas remain `not_run`.
+
+## Remaining external work
+
+1. **When the original TG5040 is available**, use the [device runbook](project/docs/device-test-runbook.md) on a spare/restorable setup. Capture firmware, filesystem, installed source/engine/loader/library identities and complete writers; prove original-card/internal-launcher/scene restoration before experimenting. The recorder retains selected save hashes and append-only operator observations; checksums do not authenticate a hardware claim or enable a profile.
+2. Test built-in/external input, held keys, real display readiness, native menus/themes and per-game overrides. Test normal launch/quit, complete descendant ownership, state save/failed-save/Resume/load acknowledgement, battery saves, suspend/wake/audio/low battery, save-aware poweroff and clean-unmount USB. Preserve lexical launch paths and newer saves. Measure fixed scenes before claiming speed, memory or battery improvement.
+3. Prove FAT/exFAT interrupted transactions, update coexistence, classic fallback and recovery. Package rollback, whole-card restore, internal startup/scene restore and vendor firmware recovery are different procedures.
+4. Complete [source-use and distribution evidence](project/docs/release-rights.md). The concrete PyUI [notification draft](project/docs/author-notification-draft.txt) names both pinned recipients and a proposed public project contact. **It is unsent.** Do not use tools to contact anyone without an explicit send instruction. A fixture review object, development signature or arbitrary JSON cannot complete notification or grant redistribution rights. The exact PPSSPP/IGM recipe sources and SDK/runtime grants remain unresolved; retain per-component notices and matching source privately.
+5. Review each installed port's exact engine/runtime/data rights and physical input/graphics/save behavior. San Andreas has no verified target contract; do not label it supported or fabricate performance.
+
+Only reviewed evidence for the corresponding feature may change `hardware_qualified`, `runtime_verified`, `source_use_verified`, installed fingerprints, state formats or writer profiles. Do not merge/release/activate merely because host checks and cross-builds pass.
 
 ## Critical contracts
 
-- Runtime/principal remains the process owner. Existing PyUI stages `/tmp/cmd_to_run.sh`; the principal loop executes it. `sh -n` is not semantic validation. Fixed action tokens delegate existing initialized callbacks.
-- Preserve lexical launch spelling `Emu/<system>/../../spruce/scripts/emu/standard_launch.sh`; canonicalizing the invoked path breaks `$0`-based system detection. Validate containment separately.
-- Favorites/recents are PyUI JSON arrays. Some existing manager constructors rewrite/prune them: use the pure read-only snapshot path for inspection, and inject already initialized live managers for writes.
-- Per-game preset keys use ROM basename **including extension**; duplicate basenames can share an override. Unknown stored presets must not silently pick another engine.
-- PPSSPP authoritative platform INIs are under `Saves/.config/ppsspp/PSP/SYSTEM/`; spruce copies platform to active at launch and back on exit. Preserve writers and never edit gameplay controls to implement UI-only conventions.
-- Keep `enableButtonWatchers=false` and the existing `save_poweroff.sh` route. Do not introduce another power owner. Existing USB staged export uses reboot and clean unmount; the fourth source patch refuses its legacy mounted-export failure branch. Release application and physical storage/UI-return qualification remain pending.
-- Source hash matches do not qualify hardware. Shipped `hardware_qualified`, `runtime_verified`, `source_use_verified`, emulator fingerprints/extension and writer gates remain false/unsupported.
-- Package rollback is distinct from whole-card, internal boot/scene and vendor recovery. A rollback never restores older user saves over newer data.
+- Existing PyUI stages `/tmp/cmd_to_run.sh`; the principal owns foreground execution. Preserve the normal device/model/controller callbacks and initialized favorites/recents managers. Their constructors can rewrite/prune histories; use snapshots or existing instances.
+- Preserve lexical `Emu/<system>/../../spruce/scripts/emu/standard_launch.sh`. Canonicalizing the invoked path breaks `$0`-based system detection. Validate containment separately.
+- Per-game preset keys include the ROM extension; duplicate basenames can share overrides. Unknown presets must not silently select another engine.
+- PPSSPP platform INIs under `Saves/.config/ppsspp/PSP/SYSTEM/` remain authoritative; preserve spruce copy-in/copy-back. Manually authored per-game INIs can override global keys, so common changes require the complete independently verified override inventory.
+- Keep `enableButtonWatchers=false` and the existing `save_poweroff.sh`. No second input/power owner, global graphics/libc upgrade, guessed state path, fake clean shutdown or Resume from a recent entry.
+- Completed-state callback, process-tree completion, stopped config writers and durable storage are separate facts. A failed later save leaves an older authenticated checkpoint's original verification timestamp. Verification time is not the save-completion time and must not be labeled as such.
 
-## Licences and external actions
-
-Original Python/palette code is MIT and Noto Sans is OFL. PPSSPP patches/fixtures are separately GPL-2.0-or-later with exact retained notices. Spruce/PyUI terms and attribution remain separate; do not label the whole offshoot MIT or assume original code changes upstream rights.
-
-The pinned nested PyUI licence includes an author-notification requirement for use including derivatives. A draft exists at `project/docs/author-notification-draft.txt`; **nothing has been sent**. Source-use and derivative distribution remain unresolved gates. Continue independent original helpers, tests and PPSSPP work without inventing an approval requirement for those tasks. Do not send email/Slack/other outreach without the user's explicit send instruction. Do not mark the source-use gate complete from the draft alone.
-
-## Workspace continuity
-
-Current worktree: `/workspace/trimui`. Restored untouched sparse host references:
-`/workspace/spruce-base` and `/workspace/ppsspp-source`. Preview virtual
-environment: `/workspace/scratch/trimui-buildenv`. The prior environment's full
-PPSSPP checkout, recipe, SDK, target executables/source archives and full spruce
-release archive are not present in this environment. Their sanitized saved
-evidence remains in GitHub; reconstruct inputs from the pinned build procedure
-when needed. This continuation has not repeated the complete target cross-build.
-Current host development artifacts are
-`/workspace/scratch/trimui-development-20261022-dev3`. They can be rebuilt with
-`project/packaging/dev_release.py`;
-scratch paths are conveniences, not the durable handover.
-
-Only repository source, licences and saved evidence should be relied on in a new environment. Recreate dependencies/checkouts using the pinned identities. Never commit signing private keys, card dumps, user saves, proprietary game data, downloaded base distributions or credentials. Continue saving coherent commits and updating this handover as work advances.
+Original Python/assets use MIT, Noto Sans uses OFL, PPSSPP source patches/fixtures use their separate GPL-2.0-or-later scope, RetroArch patches/fixtures use GPL-3.0-or-later, and spruce/PyUI retain their own noncommercial/notification terms. Do not describe the combined project as wholly MIT or infer a root licence for every component.

@@ -98,7 +98,9 @@ class InitializedPyUIBinding:
                  tool_list: Callable | None = None, tool_actions: Mapping | None = None,
                  mode_actions: Mapping | None = None, report_error: Callable[[str], None] | None = None,
                  font_provider: Callable | None = None, control_adapter: Any = None,
-                 theme_manager: Any = None):
+                 theme_manager: Any = None, hardware_adapter: Any = None,
+                 experience_manager: Any = None, resume_evidence_provider: Callable | None = None,
+                 game_options_handler: Callable | None = None):
         required = (inventory, preferences, quiescent, stop_background_tasks, restore_background_tasks,
                     release_input, restore_input)
         if not isinstance(profile, Mapping) or not isinstance(models, ExistingPyUIModels) or any(not callable(value) for value in required):
@@ -117,7 +119,9 @@ class InitializedPyUIBinding:
             restore_background_tasks=restore_background_tasks, release_input=release_input,
             restore_input=restore_input, tool_list=tool_list, tool_actions=tool_actions,
             mode_actions=mode_actions, report_error=report_error, font_provider=font_provider,
-            control_adapter=control_adapter, theme_manager=theme_manager)
+            control_adapter=control_adapter, theme_manager=theme_manager,
+            hardware_adapter=hardware_adapter, experience_manager=experience_manager,
+            resume_evidence_provider=resume_evidence_provider, game_options_handler=game_options_handler)
         self._assert_owners()
 
     def _assert_owners(self):

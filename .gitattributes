@@ -5,3 +5,5 @@ project/assets/fonts/OFL.txt -text -whitespace
 project/ppsspp/LICENSE.PPSSPP.txt -text -whitespace
 project/assets/**/*.ttf binary
 project/evidence/*.png binary
+project/retroarch/patches/*.patch -text -whitespace
+project/retroarch/COPYING -text -whitespace

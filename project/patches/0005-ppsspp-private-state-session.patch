@@ -1,0 +1,44 @@
+diff --git a/spruce/scripts/emu/lib/ppsspp_functions.sh b/spruce/scripts/emu/lib/ppsspp_functions.sh
+index 88569b5..21ccca9 100644
+--- a/spruce/scripts/emu/lib/ppsspp_functions.sh
++++ b/spruce/scripts/emu/lib/ppsspp_functions.sh
+@@ -38,6 +38,27 @@ move_screenshots_if_present() {
+ 
+ run_ppsspp() {
+ 
++	# Explicit private project extension. Keep the existing launcher, SDL/device
++	# setup and configuration copy-in/copy-back as the authorities.
++	set --
++	if [ -n "${TRIMUI_PROJECT_STATE_REQUEST:-}" ]; then
++		case "$TRIMUI_PROJECT_STATE_REQUEST" in
++			/*/request) ;;
++			*) log_message "Invalid private project state request"; return 1 ;;
++		esac
++		set -- "--project-state-session=$TRIMUI_PROJECT_STATE_REQUEST"
++		if [ -n "${TRIMUI_PROJECT_RESUME_STATE:-}" ]; then
++			case "$TRIMUI_PROJECT_RESUME_STATE" in
++				/*) ;;
++				*) log_message "Invalid project Resume state"; return 1 ;;
++			esac
++			set -- "$@" "--state=$TRIMUI_PROJECT_RESUME_STATE"
++		fi
++	elif [ -n "${TRIMUI_PROJECT_RESUME_STATE:-}" ]; then
++		log_message "Project Resume requires its private state session"
++		return 1
++	fi
++
+ 	set_up_default_configs_if_needed
+ 	load_ppsspp_configs
+ 	configure_retroachievements
+@@ -87,9 +108,9 @@ run_ppsspp() {
+ 
+ 	/mnt/SDCARD/spruce/scripts/asound-setup.sh "$HOME"
+ 	if [ -z "$ROM_FILE" ]; then
+-		LD_PRELOAD="$(vk_display_preload)" "$PPSSPPSDL" --fullscreen > "$(emu_log_file)" 2>&1
++		LD_PRELOAD="$(vk_display_preload)" "$PPSSPPSDL" --fullscreen "$@" > "$(emu_log_file)" 2>&1
+ 	else
+-		LD_PRELOAD="$(vk_display_preload)" "$PPSSPPSDL" "$ROM_FILE" --fullscreen --pause-menu-exit > "$(emu_log_file)" 2>&1
++		LD_PRELOAD="$(vk_display_preload)" "$PPSSPPSDL" "$ROM_FILE" --fullscreen --pause-menu-exit "$@" > "$(emu_log_file)" 2>&1
+ 	fi
+ 
+ 	umount "$PSP_SS_DIR"

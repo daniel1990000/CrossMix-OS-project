@@ -1,0 +1,73 @@
+{
+  "automatic_activation": false,
+  "cases": {
+    "appearance": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "boot": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "input": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "launch_return": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "library": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "native_controls": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "ports": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "power_sleep": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "restore": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "save_resume": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "settings": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "storage_updates": {
+      "attempts": 0,
+      "status": "not_run"
+    },
+    "usb": {
+      "attempts": 0,
+      "status": "not_run"
+    }
+  },
+  "hardware_qualified": false,
+  "kind": "device-acceptance-review",
+  "limits": "Operator notes and recorded hashes cannot mint a trusted installed profile or certify physical behavior.",
+  "operator_cases_all_pass": false,
+  "review_required": true,
+  "schema": 1,
+  "session_id": "00d7d865643145b4a755febb757371dc",
+  "snapshot_sha256": {},
+  "snapshots_complete": false,
+  "evidence": "prepared operator session; no device observations",
+  "date": "2026-10-22",
+  "owner_device_available_today": false,
+  "device_connected": false,
+  "physical_tests_performed": false,
+  "case_count": 13,
+  "private_session": "/workspace/scratch/trimui-tg5040-acceptance-ready"
+}

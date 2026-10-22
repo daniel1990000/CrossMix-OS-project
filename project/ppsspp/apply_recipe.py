@@ -64,7 +64,8 @@ def selection(script: str, inputs: dict) -> tuple[list[dict], list[str]]:
     return selected, skipped
 
 
-def assemble(source: Path, recipe: Path, source_lock: dict, inputs: dict, output: Path) -> dict:
+def assemble(source: Path, recipe: Path, source_lock: dict, inputs: dict, output: Path,
+             override_lock: dict | None = None, override_root: Path | None = None) -> dict:
     report_path = output / "recipe-assembly.json"
     expected_commit = source_lock["upstream"]["commit"]
     if git(source, "rev-parse", "HEAD").decode().strip() != expected_commit:
@@ -77,6 +78,17 @@ def assemble(source: Path, recipe: Path, source_lock: dict, inputs: dict, output
     input_identity = {"upstream_commit": expected_commit, "recipe_commit": inputs["recipe_commit"],
                       "project_patch_sha256": [item["sha256"] for item in source_lock["patches"]],
                       "selected": [{"path": item["path"], "sha256": item["sha256"]} for item in selected]}
+    if override_lock:
+        if (override_lock.get("upstream_commit") != expected_commit or
+                override_lock.get("recipe_commit") != inputs["recipe_commit"] or override_root is None):
+            raise ValueError("Post-recipe override prerequisite differs")
+        if not override_lock.get("patches") or not override_lock.get("source_files") or not override_lock.get("patched_files"):
+            raise ValueError("Post-recipe override inventory is incomplete")
+        for item in override_lock["patches"]:
+            path = override_root / item["path"]
+            if path.is_symlink() or digest(path) != item["sha256"]:
+                raise ValueError("Post-recipe override patch changed")
+        input_identity["post_recipe_override"] = override_lock
     if report_path.exists():
         old = json.loads(report_path.read_text())
         if old.get("status") != "applied" or old.get("input_identity") != input_identity or old.get("final_source_files") != changed(source):
@@ -111,6 +123,19 @@ def assemble(source: Path, recipe: Path, source_lock: dict, inputs: dict, output
                 report["scripts"].append(record)
                 if result.returncode or not changes:
                     raise ValueError("Pinned recipe script failed or changed no source: " + item["path"])
+            if override_lock:
+                for item in override_lock["source_files"]:
+                    if digest(source / item["path"]) != item["sha256"]:
+                        raise ValueError("Post-recipe override source preimage differs: " + item["path"])
+                for item in override_lock["patches"]:
+                    path = override_root / item["path"]
+                    git(source, "apply", "--check", str(path))
+                    git(source, "apply", str(path))
+                    log.write("post-recipe override: " + item["path"] + "\n")
+                for item in override_lock["patched_files"]:
+                    if digest(source / item["path"]) != item["sha256"]:
+                        raise ValueError("Post-recipe override source postimage differs: " + item["path"])
+                report["post_recipe_overrides"] = override_lock["patches"]
         report["status"] = "applied"
         report["final_source_files"] = changed(source)
         (output / "combined-tracked-source.patch").write_bytes(git(source, "diff", "--binary"))
@@ -130,9 +155,13 @@ def main() -> int:
     parser.add_argument("source_lock", type=Path)
     parser.add_argument("build_inputs", type=Path)
     parser.add_argument("output", type=Path)
+    parser.add_argument("--override-lock", type=Path)
+    parser.add_argument("--override-root", type=Path)
     args = parser.parse_args()
     report = assemble(args.source, args.recipe, json.loads(args.source_lock.read_text()),
-                      json.loads(args.build_inputs.read_text()), args.output)
+                      json.loads(args.build_inputs.read_text()), args.output,
+                      json.loads(args.override_lock.read_text()) if args.override_lock else None,
+                      args.override_root)
     print(json.dumps({"status": report["status"], "scripts_applied": len(report["scripts"]),
                       "final_source_file_count": len(report["final_source_files"])}, indent=2))
     return 0
