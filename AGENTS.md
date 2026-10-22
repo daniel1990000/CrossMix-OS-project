@@ -1,6 +1,6 @@
 # TrimUI project working instructions
 
-Read `HANDOVER.md` and `project/README.md` first. The active implementation lives under `project/` on `build/spruce-psp-experience`; the inherited CrossMix runtime is historical reference.
+Read `HANDOVER.md`, `project/handover/LATEST.json` and `project/README.md` first. `NEXT_CHAT_PROMPT.txt` is the current continuation prompt; the master-plan register is `project/docs/master-plan-2026-10-22.md`. The active implementation lives under `project/` on `build/spruce-psp-experience`; the inherited CrossMix runtime is historical reference.
 
 The user requests autonomous implementation, research beyond supplied links, and parallel agents. Delegate independent lanes with explicit file ownership. Preserve existing unrelated work and save progress, evidence and next steps in GitHub.
 

@@ -93,5 +93,16 @@
   ],
   "pr": "https://github.com/daniel1990000/CrossMix-OS-project/pull/1",
   "pr_remains_draft": true,
-  "implementation_commit": "02999f4aa16b08c028e61861b8721c3905b7086e"
+  "implementation_commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
+  "ci": {
+    "receipt": "ci-readback.json",
+    "certification": "ci-certification.json",
+    "build_report": "ci-build-report.json",
+    "release_source": "ci-release-source.json",
+    "run_id": 39864873828,
+    "source_head": "e030677199884441096d90382121b86cfef81796",
+    "clean_merge_checkout": "6b4b59cfbdb0597c0dd2c23dea5d904256eeda70",
+    "conclusion": "success",
+    "covers_later_documentation_commit": false
+  }
 }

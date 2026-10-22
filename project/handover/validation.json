@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "master_plan_tasks": 25,
+  "complete_host": 11,
+  "pending": 14,
+  "physical_areas_run": 0,
+  "pinned_sources": 5,
+  "local_links_checked": 55,
+  "retained_report_hashes_verified": 3,
+  "source_inventory_files_unchanged": 150,
+  "ci_archive_and_inner_checksums_verified": 8,
+  "historical_hashes_preserved": 30,
+  "runtime_changes": false,
+  "independent_handover_audit": "ready; no material contradictions",
+  "checked_at_utc": "2026-10-22T22:40:12.973453+00:00",
+  "verified_source_snapshot": "e030677199884441096d90382121b86cfef81796",
+  "software_tests_rerun_for_documentation_only_changes": false,
+  "ci_provenance": "project/evidence/host-batch3/ci-readback.json",
+  "scope": "Handover consistency, links, exact retained evidence, pinned sources and unchanged packaged-source bytes; no physical-device claim."
+}

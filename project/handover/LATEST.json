@@ -1,0 +1,240 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-22",
+  "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
+  "branch": "build/spruce-psp-experience",
+  "pull_request": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/1",
+    "number": 1,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "implementation_root": "project",
+  "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
+  "project_stage": "host development preview; device qualification and release work remain open",
+  "read_order": [
+    "AGENTS.md",
+    "HANDOVER.md",
+    "project/handover/LATEST.json",
+    "project/README.md",
+    "project/docs/master-plan-2026-10-22.md",
+    "TRIMUI_PLAN.md"
+  ],
+  "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
+  "master_plan": "project/docs/master-plan-2026-10-22.md",
+  "completed_task_count": 11,
+  "total_task_count": 25,
+  "completed_host_tasks": [
+    "R01",
+    "R02",
+    "R03",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "pending_tasks": [
+    "R04",
+    "R05",
+    "R06",
+    "D01",
+    "D02",
+    "D03",
+    "D05",
+    "D06",
+    "N01",
+    "N02",
+    "P04",
+    "O01",
+    "O02",
+    "O03"
+  ],
+  "latest_five_completed_host_tasks": [
+    "U04",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "release_id": "smartpro-psp-0.1.0-dev9",
+  "delivery": "original-only-host-preview",
+  "selected_upstream_patches": [],
+  "selected_native_binaries": [],
+  "verified_snapshot": {
+    "implementation_commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
+    "local_clean_build_commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
+    "ci_source_head": "e030677199884441096d90382121b86cfef81796",
+    "ci_clean_merge_checkout": "6b4b59cfbdb0597c0dd2c23dea5d904256eeda70",
+    "later_handover_changes": "Documentation and evidence only; inspect git HEAD for the handover commit. Historical CI identities remain fixed.",
+    "strict_tests": {
+      "tests_run": 690,
+      "passed": 690,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "pinned_source_count": 5,
+    "evidence": "project/evidence/host-batch3/verification.json",
+    "local_certification": "project/evidence/host-batch3/certification.json",
+    "ci_receipt": "project/evidence/host-batch3/ci-readback.json",
+    "ci_certification": "project/evidence/host-batch3/ci-certification.json",
+    "ci_build_report": "project/evidence/host-batch3/ci-build-report.json",
+    "ci_release_source": "project/evidence/host-batch3/ci-release-source.json",
+    "ci_run_id": 39864873828,
+    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39864873828",
+    "ci_artifact_id": 12463233054,
+    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39864873828/artifacts/12463233054",
+    "ci_artifact_sha256": "a8cfc638853f2030fc5e6561a74bdd80ba9e44c1ab47c8085bc5272e8d29b03e",
+    "ci_artifact_size_bytes": 4836083,
+    "ci_artifact_expires_at_utc": "2027-01-20T22:25:40Z",
+    "original_source_inventory_files": 150,
+    "original_source_inventory_sha256": "627251e9c22a6b37740b8d3bfd223540969806c4add1deaf33ba6e19402385eb",
+    "packaged_payload_files": 57,
+    "private_native_outputs_recovered": false
+  },
+  "qualification": {
+    "hardware_tested": false,
+    "physical_areas_tested": 0,
+    "physical_areas_total": 13,
+    "runtime_gates_enabled": false,
+    "native_binaries_replaced": false,
+    "owner_data_changed": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "optional_celeste_patch_selected": false
+  },
+  "physical_acceptance": {
+    "restore": "not_run",
+    "boot": "not_run",
+    "input": "not_run",
+    "library": "not_run",
+    "launch_return": "not_run",
+    "save_resume": "not_run",
+    "native_controls": "not_run",
+    "appearance": "not_run",
+    "settings": "not_run",
+    "power_sleep": "not_run",
+    "usb": "not_run",
+    "storage_updates": "not_run",
+    "ports": "not_run"
+  },
+  "owner_device_status": {
+    "confirmed_original_tg5040_on": "2026-10-22",
+    "available_for_tests_that_day": false,
+    "actual_firmware": null,
+    "actual_filesystem": null,
+    "actual_installed_runtime_identities": null,
+    "proposed_qualification_matrix": "firmware 1.1.1 / FAT32; inventory actual device first",
+    "automatic_firmware_flash_authorized": false
+  },
+  "next_work": [
+    {
+      "id": "R04",
+      "next_action": "Recover/hash-check or rebuild exact private native outputs plus matching source/build archives; prove retained-storage retrieval and retain host preview before expiry.",
+      "completion_not_established_by_host_artifact": true
+    },
+    {
+      "id": "D01",
+      "next_action": "Design a trusted private experimental route, exact candidate identity, bounded exit and recovery without weakening shipped gates.",
+      "design_can_proceed_now": true,
+      "activation_prerequisites": [
+        "R05",
+        "R04 if native candidates are used",
+        "D02/D03 physical readiness"
+      ]
+    },
+    {
+      "id": "D02",
+      "next_action": "Prepare card/save/necessary internal-file backups and separate recovery procedures; perform verified restore rehearsal on expendable media when the device/operator is available.",
+      "physical_completion_pending": true
+    },
+    {
+      "id": "D03",
+      "next_action": "After D02, inventory actual TG5040 firmware/filesystem/runtime, kernel APIs, process identities and probe tooling.",
+      "physical_completion_pending": true
+    }
+  ],
+  "external_work": [
+    {
+      "id": "R05",
+      "status": "prepared notice is unsent; actual delivery/scope evidence absent",
+      "send_authorized": false,
+      "next_action": "Retain owner-supplied evidence or wait for explicit instruction to send; do independent preparation meanwhile."
+    },
+    {
+      "id": "R06",
+      "status": "exact native component/recipe/IGM/SDK terms and corresponding-source review open",
+      "next_action": "Review exact selected inputs and component scopes; do not infer binary redistribution permission from root licences or successful builds."
+    }
+  ],
+  "source_roots": [
+    {
+      "variable": "SPRUCE_SOURCE_ROOT",
+      "repository": "https://github.com/spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tag": "v4.5.4",
+      "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+      "lock": "docs/spruce-source-lock.json",
+      "temporary_checkout": "/workspace/spruce-baseline"
+    },
+    {
+      "variable": "PPSSPP_SOURCE_ROOT",
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tag": "v1.20.3",
+      "lock": "project/ppsspp/source-lock.json",
+      "temporary_checkout": "/workspace/ppsspp-reference"
+    },
+    {
+      "variable": "SPRUCE_RA_SOURCE_ROOT",
+      "repository": "https://github.com/spruceUI/RA",
+      "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "lock": "project/retroarch/source-lock.json",
+      "temporary_checkout": "/workspace/spruce-ra-reference"
+    },
+    {
+      "variable": "PORTS_SOURCE_ROOT",
+      "repository": "https://github.com/PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "lock": "project/ports/celeste-fix.lock.json",
+      "temporary_checkout": "/workspace/ports-reference"
+    },
+    {
+      "variable": "PORTMASTER_SOURCE_ROOT",
+      "repository": "https://github.com/PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "lock": "project/profiles/ports-sources.lock.json",
+      "temporary_checkout": "/workspace/portmaster-reference"
+    }
+  ],
+  "host_setup": {
+    "workflow": ".github/workflows/smartpro-offshoot.yml",
+    "requirements": "project/requirements-dev.txt",
+    "temporary_python": "/workspace/smartpro-venv/bin/python",
+    "python_version_observed": "3.12.14",
+    "pysdl2": "0.9.17",
+    "pillow": "11.1.0",
+    "temporary_sdl_image_directory": "/workspace/scratch/trimui-host-libs/usr/lib/x86_64-linux-gnu",
+    "sdl_image_version_observed": "2.8.8",
+    "all_workspace_paths_are_ephemeral": true,
+    "strict_check_command": "HANDOVER.md#verification-and-workspace-continuity"
+  },
+  "limitations": [
+    "No device FPS, panel/input latency, audio reliability, energy or battery improvement established.",
+    "U04 synthetic host warm-query improvements do not remove first-query cost or qualify device performance.",
+    "Resume is same-boot only and remains disabled pending actual native save/load and device evidence.",
+    "All proposed port save paths remain device-unverified; no port deletion/uninstall tool exists.",
+    "The optional Celeste source patch is tested with synthetic helpers and remains unselected.",
+    "Development package signatures are not an operational production trust root.",
+    "Prior native build logs/hashes do not prove the binaries or complete archives survived workspace replacement."
+  ],
+  "handover_only": "This checkpoint finishes documentation/evidence custody, not the remaining master-plan tasks. Preserve historical receipts and use actual future evidence to change status.",
+  "handover_validation": "project/handover/validation.json"
+}

@@ -2,6 +2,34 @@
 
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
 
+## Start the next chat here
+
+The handover records the completed host work and the remaining device and release work. Read the [current status record](project/handover/LATEST.json), [continuation prompt](NEXT_CHAT_PROMPT.txt), [project README](project/README.md) and [master-plan register](project/docs/master-plan-2026-10-22.md). Resume from the register; do not repeat completed batches or restart the historical CrossMix/C++ plan.
+
+**11 of 25 tasks are complete as host engineering work:** R01–R03, U01–U04, D04 and P01–P03. The latest requested five were U04, D04, P01, P02 and P03. The other 14 tasks remain open. **Zero of 13 physical acceptance areas have been run.** The owner confirmed an original TG5040 exists on 22 October, but it was unavailable for testing that day; actual firmware, filesystem and installed runtime identities remain unknown.
+
+| Verified item | Exact evidence |
+|---|---|
+| Runtime implementation and clean local dev9 build | `02999f4aa16b08c028e61861b8721c3905b7086e` |
+| Source branch head used by verified CI | `e030677199884441096d90382121b86cfef81796` |
+| Clean PR merge checkout actually built by CI | `6b4b59cfbdb0597c0dd2c23dea5d904256eeda70` |
+| Strict local and CI checks | **690 passed**, 629 host/source + 61 PPSSPP; zero skips, failures, errors, expected failures or unexpected successes |
+| CI result | [Run 39864873828](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39864873828), successful; [download readback receipt](project/evidence/host-batch3/ci-readback.json), [actual certification](project/evidence/host-batch3/ci-certification.json) and [build report](project/evidence/host-batch3/ci-build-report.json) |
+| Deliverable | `smartpro-psp-0.1.0-dev9`, original-only host preview; selected upstream patches and native binaries are empty |
+
+The [verified CI artifact](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39864873828/artifacts/12463233054) is `host-preview-evidence`, ID `12463233054`, 4,836,083 bytes, SHA-256 `a8cfc638853f2030fc5e6561a74bdd80ba9e44c1ab47c8085bc5272e8d29b03e`. GitHub lists expiry as **20 January 2027, 22:25:40 UTC**; retention is not permanent custody. The complete downloaded ZIP, all eight inner checksums, changed runtime bytes, development signature and 57-file payload inventory were verified. The [150-file original-source inventory](project/evidence/host-batch3/ci-release-source.json) has SHA-256 `627251e9c22a6b37740b8d3bfd223540969806c4add1deaf33ba6e19402385eb`; this is a different digest from the outer artifact. Development signing establishes package integrity, not production trust.
+
+This handover adds documentation and evidence after that verified snapshot. It does not claim CI tested a future documentation commit. The historical dev9 receipts retain their exact build identities; compare the recorded source inventory before reusing them for a later revision. See [current setup and workspace recovery](#verification-and-workspace-continuity) below.
+
+Next work, in dependency order:
+
+1. **R04:** retrieve and hash-check, or rebuild, the exact private native binaries with matching source/build archives; prove retrieval from retained storage. Retain the original-only host preview before expiry. A GitHub host artifact does not recover the earlier private native outputs.
+2. **D01:** design the trusted private experimental harness/manual route, bounded exit, candidate identity and recovery. Design can proceed now; derivative assembly/activation requires R05 evidence, and native candidate use also requires R04. Editable card JSON or a flag must never grant production qualification.
+3. **D02:** prepare and then perform verified card/save/necessary internal-file backups and restore rehearsal on expendable media. Overlay rollback, whole-card restore and internal startup/scene recovery are separate procedures.
+4. **D03:** after D02, record actual TG5040 firmware/filesystem/runtime, kernel APIs, process identity and probe tools. Firmware 1.1.1/FAT32 is a proposed qualification matrix, not an observation of the owner's device or authorization to flash it.
+
+**R05** actual PyUI notice delivery/scope evidence and **R06** exact native component/recipe/IGM/SDK terms and corresponding-source review remain open. The notice draft is unsent; no author contact has been authorized. Continue independent preparation while these or hardware are unavailable. PR #1 remains draft and unmerged. Production/device/runtime/source-use gates remain false; no emulator replacement, owner-data change, public device image or release tag has been performed. The optional Celeste patch is unselected, and all port save paths still require physical verification.
+
 ## Five-task batch U04 / D04 / P01–P03 — 22 October 2026
 
 All five requested tasks are complete as host engineering work. The [master plan](project/docs/master-plan-2026-10-22.md) now records 11 of 25 tasks complete. See [the exact batch evidence](project/evidence/host-batch3/verification.json), [measurement methods](project/docs/host-measurement.md) and [port preparation/save contracts](project/docs/ports-preparation-and-saves.md).
@@ -17,6 +45,10 @@ The full strict run passes **690 checks** (629 host/source + 61 PPSSPP), with ze
 The descriptor selects **dev9**, an original-only host preview. The optional Celeste source diff remains unselected, all runtime/rights/device flags remain false, all 13 physical acceptance areas remain unrun, installed engines/owner data are unchanged, and PR #1 stays draft and unmerged. Next: R04 artifact custody, D01 experimental-route design and D02/D03 operator preparation, alongside actual R05/R06 evidence. No author communication is authorized by this continuation.
 
 Implementation [`02999f4`](https://github.com/daniel1990000/CrossMix-OS-project/commit/02999f4aa16b08c028e61861b8721c3905b7086e) is the clean local dev9 build source. The signed package passes inventory/signature checks, same-key deterministic rebuilds, installed-payload rendering/settings/navigation smoke and fixture rollback. Rebuilding the exported source without Git produces byte-identical preview/source ZIPs. All eight artifact checksums and both changed runtime modules were read back. Local artifacts: `/workspace/scratch/trimui-host-batch3-dev9`; durable hashes and reports are in the batch evidence.
+
+## Earlier checkpoint ledger
+
+The checkpoint summaries below retain their original counts, release IDs and temporary paths. Their suggested batches are historical; use the current status and next steps above. Current setup instructions appear under “Verification and workspace continuity.”
 
 ## Interface batch U01–U03 — 22 October 2026
 
@@ -34,7 +66,7 @@ The descriptor now selects **dev8**. Development artifacts at `/workspace/scratc
 
 Implementation [`c42c003`](https://github.com/daniel1990000/CrossMix-OS-project/commit/c42c003a147c614788c1e22b58be3e573f6901a3) passes [GitHub CI run 39858609637](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39858609637): all **621 checks**, zero skips/failures/errors/expected failures, dev8 packaging and upload. The clean PR merge checkout is `77b26c92b1dece2e114aa2097aef3b461b58b73c`; signed metadata records that identity. [Download host-preview-evidence](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39858609637/artifacts/12460398356), artifact ID `12460398356`, SHA-256 `6f01d358a84bcce58bd88fdf4bd6fca531e06d2a258c29c5182ef4c0966e8aea`. The complete download and all eight inner artifact checksums were verified; the source inventory matches the local build. Later evidence/handover text changes preserve the tested implementation hashes and packaged source inventory.
 
-Suggested next group: **U04** large-library fixtures, **D04** measurement tooling and **P01** port dependency inventory. These are independent host tasks; physical qualification remains a separate stage.
+At that checkpoint the suggested next group was **U04** large-library fixtures, **D04** measurement tooling and **P01** port dependency inventory. Those tasks are now complete above; physical qualification remains a separate stage.
 
 ## Previous release tooling batch R01–R03 — 22 October 2026
 
@@ -154,29 +186,48 @@ The legacy retained-thread/cooperative-audio source experiment remains available
 
 ## Verification and workspace continuity
 
-Run all host checks with three untouched pinned references. Source-dependent skips do not count as a complete pass:
+Scratch outputs, virtual environments and source clones are temporary. After workspace replacement, use the lightweight branch checkout above, recreate the dependencies from `project/requirements-dev.txt`, and recreate all **five** untouched pinned references. The [CI workflow](.github/workflows/smartpro-offshoot.yml) records the exact sparse checkout paths and host package setup; avoid downloading complete base distributions. Source-dependent skips do not count as a complete pass.
+
+| Environment variable | Repository and exact commit | Current temporary checkout / lock |
+|---|---|---|
+| `SPRUCE_SOURCE_ROOT` | [spruceUI/spruceOS](https://github.com/spruceUI/spruceOS), `d45ff8dfe5756147522b04ae5863d17a90e88b54` (v4.5.4) | `/workspace/spruce-baseline`; `docs/spruce-source-lock.json` |
+| `PPSSPP_SOURCE_ROOT` | [hrydgard/ppsspp](https://github.com/hrydgard/ppsspp), `d357e6a32934800d3d80b49f910a603e1b069751` (v1.20.3) | `/workspace/ppsspp-reference`; `project/ppsspp/source-lock.json` |
+| `SPRUCE_RA_SOURCE_ROOT` | [spruceUI/RA](https://github.com/spruceUI/RA), `71d84da4dc88945177a3eb34268013355c705dbd` | `/workspace/spruce-ra-reference`; `project/retroarch/source-lock.json` |
+| `PORTS_SOURCE_ROOT` | [PortsMaster/PortMaster-New](https://github.com/PortsMaster/PortMaster-New), `444778f3ae29facbd97b823dc3ca7270b3ebe499` | `/workspace/ports-reference`; `project/ports/celeste-fix.lock.json` |
+| `PORTMASTER_SOURCE_ROOT` | [PortsMaster/PortMaster-GUI](https://github.com/PortsMaster/PortMaster-GUI), `ccea6b746827d0ae3a1cad744f6e8ccc5a032041` | `/workspace/portmaster-reference`; `project/profiles/ports-sources.lock.json` |
+
+From the repository root, the current local full-check command is:
 
 ```sh
-PYTHON=/workspace/trimui-venv/bin/python \
-SPRUCE_SOURCE_ROOT=/workspace/trimui-sources/spruce \
-PPSSPP_SOURCE_ROOT=/workspace/trimui-sources/ppsspp \
-SPRUCE_RA_SOURCE_ROOT=/workspace/trimui-sources/retroarch \
-PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-sdl-image/root/usr/lib/x86_64-linux-gnu \
+PYTHON=/workspace/smartpro-venv/bin/python PYTHONPATH=project \
+SPRUCE_SOURCE_ROOT=/workspace/spruce-baseline \
+PPSSPP_SOURCE_ROOT=/workspace/ppsspp-reference \
+SPRUCE_RA_SOURCE_ROOT=/workspace/spruce-ra-reference \
+PORTS_SOURCE_ROOT=/workspace/ports-reference \
+PORTMASTER_SOURCE_ROOT=/workspace/portmaster-reference \
+PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-libs/usr/lib/x86_64-linux-gnu \
 SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
-sh project/dev/check.sh
+sh project/dev/check.sh --report /workspace/scratch/trimui-next-certification.json
 ```
 
-The preview environment uses PySDL2 0.9.17 and Pillow 11.1.0 with system SDL2/libsodium. Source tests need Git, host C/C++ compilers and binutils. CI checks out all three exact sources and uploads original-only development artifacts; it does not publish native emulator/SDK outputs.
+The current host uses Python 3.12.14, PySDL2 0.9.17, Pillow 11.1.0 and system SDL2/libsodium. Its isolated SDL_image 2.8.8 directory is the `PYSDL2_DLL_PATH` above; a fresh host can use the packages pinned by CI. Source tests need Git, host C/C++ compilers and binutils. CI checks out all five exact sources and uploads original-only development artifacts; it does not publish native emulator/SDK outputs. Keep target SDL/system libraries unchanged. Future actual test counts may increase; do not hardcode 690 as the runner's success criterion.
 
 Build the current original-only preview from its descriptor with a new output directory:
 
 ```sh
-python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-interface-dev8 --include-source --smoke-python /workspace/trimui-venv/bin/python
+PYTHONPATH=project \
+PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-libs/usr/lib/x86_64-linux-gnu \
+SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
+/workspace/smartpro-venv/bin/python project/packaging/dev_release.py \
+  --output /workspace/scratch/trimui-next-development \
+  --include-source --smoke-python /workspace/smartpro-venv/bin/python
 ```
 
-Private PPSSPP output lives under `/workspace/scratch/ppsspp-complete-checkpoint-final`: `output/PPSSPPSDL_TrimUI` and `candidate-corresponding-source.tar.gz`. The exact final source archive size and SHA256 are recorded in `project/evidence/ppsspp-complete-state-build.json`. The earlier 640ce8 binary and its matching archive remain under `/workspace/scratch/ppsspp-complete-state-final` as historical evidence. Source/recipe/SDK inputs are untouched in sibling scratch directories. Private workspace files may be absent after environment replacement; rebuild from locks and never imply that an absent archive is still available. Keep engine binaries, complete upstream source distributions, SDK blobs, owner data and private keys out of Git/public preview artifacts.
+The earlier private PPSSPP checkpoint used `/workspace/scratch/ppsspp-complete-checkpoint-final`: `output/PPSSPPSDL_TrimUI` and `candidate-corresponding-source.tar.gz`. Its exact source archive size and SHA256 are recorded in `project/evidence/ppsspp-complete-state-build.json`. The earlier 640ce8 binary/archive used `/workspace/scratch/ppsspp-complete-state-final`, and the RetroArch checkpoint used `/workspace/scratch/retroarch-igm-tg5040-final`. These historical paths do not establish current custody; the prior native outputs were not established as recoverable in the replacement workspace. R04 must prove retrieval or rebuild matching inputs and outputs. Keep engine binaries, complete upstream source distributions, SDK blobs, owner data and private keys out of Git/public preview artifacts.
 
-Final original-only artifacts are in `/workspace/scratch/trimui-development-20261022-dev4-ready`. The verified review kit is `/workspace/scratch/trimui-source-review-20261022-dev4-ready`: 50 exact source/licence observations, five explicitly selected patches and the verified original overlay, with no derived base tree or source-use claim. See [review evidence](project/evidence/source-integration-review.json). An empty acceptance session is ready at `/workspace/scratch/trimui-tg5040-acceptance-ready`; all 13 physical areas remain `not_run`.
+Current local dev9 artifacts are at `/workspace/scratch/trimui-host-batch3-dev9`; its source-export rebuild is at `/workspace/scratch/trimui-dev9-source-rebuild`. The downloaded CI ZIP is `/workspace/scratch/trimui-dev9-ci-evidence.zip`. To recover without those files, retrieve artifact `12463233054`, verify its outer SHA-256 above and all eight entries in `development/SHA256SUMS`, then compare its certification, frontend identity and source inventory with the versioned receipts. If expired, rebuild from the exact historical commit and pinned inputs; a new signer produces a new signature, so retain its new provenance rather than claiming the old signed TAR digest. The exported original-source ZIP can reproduce the preview/source ZIPs without Git; strict five-source certification and upstream/native work still need the repository and source locks.
+
+Historical dev4 artifacts/review kits used `/workspace/scratch/trimui-development-20261022-dev4-ready`, `/workspace/scratch/trimui-source-review-20261022-dev4-ready` and `/workspace/scratch/trimui-tg5040-acceptance-ready`. Their review observations are retained in [review evidence](project/evidence/source-integration-review.json). Recreate private review kits or empty acceptance sessions when needed; none establishes source-use permission or a physical pass. All 13 areas remain `not_run`.
 
 ## Remaining external work
 
