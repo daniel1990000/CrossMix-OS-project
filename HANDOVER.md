@@ -2,6 +2,8 @@
 
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`.
 
+Saved for review in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The branch contains all implementation source, tests, notices, screenshots and this handover. Read the PR's latest Actions run for remote CI/artifacts; locally saved evidence remains separately identified.
+
 ## User direction
 
 Build a polished PSP-inspired whole-system experience for the **original TrimUI Smart Pro TG5040**. Improve and specialize spruceOS, retaining its working device support, emulators, existing features and saves. Reuse existing projects extensively, including [PPSSPP](https://github.com/hrydgard/PPSSPP), and research other useful sources. The user has authorized autonomous implementation and parallel agents. Keep progress, decisions, evidence and future-chat handovers in GitHub.
