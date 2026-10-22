@@ -16,6 +16,8 @@ The full strict run passes **690 checks** (629 host/source + 61 PPSSPP), with ze
 
 The descriptor selects **dev9**, an original-only host preview. The optional Celeste source diff remains unselected, all runtime/rights/device flags remain false, all 13 physical acceptance areas remain unrun, installed engines/owner data are unchanged, and PR #1 stays draft and unmerged. Next: R04 artifact custody, D01 experimental-route design and D02/D03 operator preparation, alongside actual R05/R06 evidence. No author communication is authorized by this continuation.
 
+Implementation [`02999f4`](https://github.com/daniel1990000/CrossMix-OS-project/commit/02999f4aa16b08c028e61861b8721c3905b7086e) is the clean local dev9 build source. The signed package passes inventory/signature checks, same-key deterministic rebuilds, installed-payload rendering/settings/navigation smoke and fixture rollback. Rebuilding the exported source without Git produces byte-identical preview/source ZIPs. All eight artifact checksums and both changed runtime modules were read back. Local artifacts: `/workspace/scratch/trimui-host-batch3-dev9`; durable hashes and reports are in the batch evidence.
+
 ## Interface batch U01–U03 — 22 October 2026
 
 The next three [master-plan](project/docs/master-plan-2026-10-22.md) tasks are complete as host engineering work. PNG, JPEG, BMP, static WebP and QOI now work through both decode paths. An original bounded QOI decoder avoids a new device dependency. Header checks bound native decoder allocation; malformed/oversize data and missing codecs produce the existing placeholder. [Format evidence and limits](project/docs/artwork-formats.md) distinguish actual host codec tests from untested target libraries.
