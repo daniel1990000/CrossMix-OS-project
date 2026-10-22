@@ -31,33 +31,56 @@ def _read_process(proc_root, pid):
             return None
         pages = (directory / 'statm').read_text().split()
         children = []
+        children_truncated = False
         try:
-            children = [int(p) for p in (directory / 'task' / str(pid) / 'children').read_text().split()]
+            with (directory / 'task' / str(pid) / 'children').open() as stream:
+                raw = stream.read(65537)
+            children_truncated = len(raw) > 65536
+            if children_truncated:
+                raw = raw[:65536].rsplit(' ', 1)[0] if ' ' in raw[:65536] else ''
+            children = [int(p) for p in raw.split()]
+        except (OSError, ValueError):
+            pass
+        pss = None
+        try:
+            with (directory / 'smaps_rollup').open() as stream:
+                for line in stream.read(65536).splitlines():
+                    if line.startswith('Pss:'):
+                        parts = line.split()
+                        if len(parts) == 3 and parts[2] == 'kB' and int(parts[1]) >= 0:
+                            pss = int(parts[1]) * 1024
         except (OSError, ValueError):
             pass
         return {
             'pid': pid, 'start_ticks': int(fields[19]),
             'cpu_ticks': int(fields[11]) + int(fields[12]),
             'rss_bytes': int(pages[1]) * os.sysconf('SC_PAGE_SIZE'),
+            'pss_bytes': pss,
             'children': children,
+            'children_truncated': children_truncated,
         }
     except (OSError, ValueError, IndexError):
         return None
 
 
 def _process_tree(proc_root, first):
-    pending, seen, records = [first], set(), []
+    pending, seen, records = [first], {first['pid']}, []
+    truncated = False
     while pending and len(records) < 256:
         record = pending.pop()
-        if record['pid'] in seen:
-            continue
-        seen.add(record['pid'])
         records.append(record)
+        truncated = truncated or record.get('children_truncated', False)
         for child in record['children']:
+            if child in seen:
+                continue
+            if len(seen) >= 256:
+                truncated = True
+                break
+            seen.add(child)
             found = _read_process(proc_root, child)
             if found:
                 pending.append(found)
-    return records
+    return records, truncated or bool(pending)
 
 
 def _write_report(path, value):
@@ -84,7 +107,7 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
             and 0 < seconds <= 3600 and 0.02 <= interval <= 60):
         raise BenchmarkError('Use a duration of 0–3600 seconds and an interval of 0.02–60 seconds')
     profiles = json.loads(Path(profiles_file).read_text())
-    profile = next((p for p in profiles['ports'] if p['id'] == port_id), None)
+    profile = next((p for p in profiles.get('ports', profiles.get('profiles', [])) if p['id'] == port_id), None)
     if not profile or not profile.get('enabled') or scene not in profile.get('scenes', []):
         raise BenchmarkError('Select an enabled port and one of its declared repeatable scenes')
     metadata = dict(metadata or {})
@@ -96,6 +119,8 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
     identity = first['start_ticks']
     started = time.monotonic()
     samples = []
+    previous_cpu = {}
+    tree_cpu_delta = 0
     stop_reason = 'duration-reached'
     while True:
         now = time.monotonic()
@@ -106,13 +131,25 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
         if current['start_ticks'] != identity:
             stop_reason = 'pid-reused'
             break
-        tree = _process_tree(proc_root, current)
+        tree, truncated = _process_tree(proc_root, current)
+        next_cpu = {}
+        for record in tree:
+            key = (record['pid'], record['start_ticks'])
+            previous = previous_cpu.get(key, record['cpu_ticks'])
+            tree_cpu_delta += max(0, record['cpu_ticks'] - previous)
+            next_cpu[key] = record['cpu_ticks']
+        previous_cpu = next_cpu
+        pss = [p['pss_bytes'] for p in tree]
         samples.append({
             'elapsed_seconds': now - started,
             'rss_bytes': current['rss_bytes'],
             'tree_rss_bytes': sum(p['rss_bytes'] for p in tree),
             'process_count': len(tree),
+            'tree_truncated': truncated,
+            'pss_bytes': current['pss_bytes'],
+            'tree_pss_bytes': sum(pss) if not truncated and all(p is not None for p in pss) else None,
             'root_cpu_seconds': current['cpu_ticks'] / os.sysconf('SC_CLK_TCK'),
+            'observed_tree_cpu_seconds_delta': tree_cpu_delta / os.sysconf('SC_CLK_TCK'),
         })
         remaining = seconds - (time.monotonic() - started)
         if remaining <= 0:
@@ -137,6 +174,8 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
             'peak_sampled_rss_bytes': max((s['rss_bytes'] for s in samples), default=None),
             'peak_sampled_tree_rss_bytes': max((s['tree_rss_bytes'] for s in samples), default=None),
             'root_cpu_seconds_delta': samples[-1]['root_cpu_seconds'] - samples[0]['root_cpu_seconds'] if len(samples) > 1 else None,
+            'observed_tree_cpu_seconds_delta': samples[-1]['observed_tree_cpu_seconds_delta'] if samples else None,
+            'peak_sampled_tree_pss_bytes': max((s['tree_pss_bytes'] for s in samples if s['tree_pss_bytes'] is not None), default=None),
             'fps': None, 'frame_time_p95_ms': None, 'audio_faults': None,
             'input_latency_ms': None, 'battery_energy_wh': None,
         },
@@ -144,6 +183,8 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
             'Fixed-scene execution and physical-device identity are supplied by the operator.',
             'No frame, audio, latency, temperature or energy measurement is inferred from process data.',
             'Sampled tree RSS may double-count shared pages and miss short-lived children.',
+            'Tree CPU is a lower bound between observations of each PID/start-time identity; departed work is retained, first-seen and missed work is unavailable.',
+            'PSS is unavailable when smaps_rollup is unreadable; children owned by other threads may be missed.',
             'The sampler does not control or terminate the game; exit through its normal save-safe path.',
             'Compare identical firmware, owner data, settings, brightness and supported CPU profiles.',
         ],
@@ -162,17 +203,18 @@ def main():
     parser.add_argument('--interval', type=float, default=0.2)
     parser.add_argument('--metadata', type=Path, help='Local JSON with firmware, data/settings hashes and scene conditions')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--profiles-file', type=Path, default=PROFILES)
     args = parser.parse_args()
     if args.list_scenes:
-        data = json.loads(PROFILES.read_text())
-        print(json.dumps({p['id']: p['scenes'] for p in data['ports'] if p['enabled']}, indent=2))
+        data = json.loads(args.profiles_file.read_text())
+        print(json.dumps({p['id']: p['scenes'] for p in data.get('ports', data.get('profiles', [])) if p['enabled']}, indent=2))
         return
     if not all((args.profile, args.scene, args.pid, args.output)):
         parser.error('--profile, --scene, --pid and --output are required')
     try:
         metadata = json.loads(args.metadata.read_text()) if args.metadata else {}
         result = capture(args.pid, args.output, port_id=args.profile, scene=args.scene,
-                         seconds=args.seconds, interval=args.interval, metadata=metadata)
+                         seconds=args.seconds, interval=args.interval, metadata=metadata, profiles_file=args.profiles_file)
     except (BenchmarkError, OSError, ValueError) as error:
         parser.error(str(error))
     print(json.dumps({'output': str(args.output), 'samples': len(result['samples']),

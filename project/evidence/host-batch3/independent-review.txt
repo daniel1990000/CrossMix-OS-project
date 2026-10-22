@@ -1,0 +1,7 @@
+Read-only parallel review, authorized by root AGENTS.md; no reviewers edited files.
+
+Port review found lexical parent-path containment and external-backup directory fsync gaps. Fixed canonical containment after rejecting symlinks, including create/load/CLI. Copied file names, output directory and all newly created ancestor entries are synced before the receipt. Focused traversal and completion-order tests pass.
+
+Library/measurement review found bindings left after failed cache loads, an empty file accepted after cache fill, and child probing ahead of the sample limit. Query bindings now commit atomically with the bounded cache, current file size is rechecked before action resolution, existing action identity rejects post-preview changes, and process identity slots are reserved before probes. Focused failure/empty-file/1000-child tests cover these cases.
+
+Review did not establish hardware behavior, complete native binaries or source-use/distribution clearance.

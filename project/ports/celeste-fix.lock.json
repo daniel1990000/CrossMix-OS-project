@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "repository": "PortsMaster/PortMaster-New",
+  "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+  "patch": "patches/0001-celeste-preparation-status.patch",
+  "selected_for_device": false,
+  "device_qualified": false,
+  "source_terms": "Upstream port scripts retain their own terms; this diff is not distribution clearance for Celeste or its engines/assets.",
+  "files": [
+    {
+      "path": "ports/celeste/celeste/repack.src",
+      "base_sha256": "060716ee47f753dc913b8ff03a2cfae052950b5738d70ca3c51eb1ceb7c26569",
+      "patched_sha256": "c9c5cddfcb29f39098786d599857314882976eb68f7a7c3c1c0f7bf0eb6690ac"
+    },
+    {
+      "path": "ports/celeste/Celeste.sh",
+      "base_sha256": "aaa2e217d6dc8a2d67a60263de59e16b7cca822e7ecb38999fdeb1febacdd1d0",
+      "patched_sha256": "fc59bd2640c51f10b360c059098144c5780cbe1b0646f35f96566c3b4a2ae870"
+    }
+  ]
+}

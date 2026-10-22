@@ -2,6 +2,20 @@
 
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
 
+## Five-task batch U04 / D04 / P01–P03 — 22 October 2026
+
+All five requested tasks are complete as host engineering work. The [master plan](project/docs/master-plan-2026-10-22.md) now records 11 of 25 tasks complete. See [the exact batch evidence](project/evidence/host-batch3/verification.json), [measurement methods](project/docs/host-measurement.md) and [port preparation/save contracts](project/docs/ports-preparation-and-saves.md).
+
+U04 adds a synthetic 10,000-entry corpus, complete pagination/focus/Unicode checks and a bounded live model cache cleared on explicit refresh. The unchanged baseline rebuilt every entry for every query (~6 seconds on this host); corrected warm page/search queries are in tens of milliseconds. These are synthetic host workloads, not device gains. Empty files remain review-only and malformed individual entries do not hide valid games. Existing upstream managers, preset conventions and execution ownership remain intact.
+
+D04 records real standalone SDL presentation-return timings, separate render/present durations, bounded samples and fixed navigation scenes. The read-only PID sampler now records child CPU and optional PSS while retaining identity and truncation limits. Physical video/audio/energy methods are specified separately; unmeasured hardware metrics remain unavailable.
+
+P01 inspects the actual PortMaster package/class/registration, legacy marker and pending self-updates without executing them. Sonic includes Game.so/libogg; helpers, local libraries and managed Mono are inventoried. P02 reproduces Celeste's false success and checks the exact optional fix against pinned source, with failed repack/mount/bind/full-storage, retry, cleanup and pipeline failure fixtures. P03 distinguishes generated Render96 resources from a consumed input ROM and keeps Celeste owner files mandatory. Scoped external save backups, reviewed transactional restores and undo preserve unlisted slots. All save paths still need physical readback before uninstall; the inventory tool never deletes ports.
+
+The full strict run passes **690 checks** (629 host/source + 61 PPSSPP), with zero skips, failures, errors or expected failures. Certification and CI now require **five** untouched pinned checkouts: SPRUCE_SOURCE_ROOT, PPSSPP_SOURCE_ROOT, SPRUCE_RA_SOURCE_ROOT, PORTS_SOURCE_ROOT and PORTMASTER_SOURCE_ROOT. The first full attempt caught a refresh regression in retained model bindings; its failed result is retained separately. The original assertion was preserved and the corrected implementation passes.
+
+The descriptor selects **dev9**, an original-only host preview. The optional Celeste source diff remains unselected, all runtime/rights/device flags remain false, all 13 physical acceptance areas remain unrun, installed engines/owner data are unchanged, and PR #1 stays draft and unmerged. Next: R04 artifact custody, D01 experimental-route design and D02/D03 operator preparation, alongside actual R05/R06 evidence. No author communication is authorized by this continuation.
+
 ## Interface batch U01–U03 — 22 October 2026
 
 The next three [master-plan](project/docs/master-plan-2026-10-22.md) tasks are complete as host engineering work. PNG, JPEG, BMP, static WebP and QOI now work through both decode paths. An original bounded QOI decoder avoids a new device dependency. Header checks bound native decoder allocation; malformed/oversize data and missing codecs produce the existing placeholder. [Format evidence and limits](project/docs/artwork-formats.md) distinguish actual host codec tests from untested target libraries.

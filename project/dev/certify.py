@@ -100,9 +100,13 @@ def source_specs(project=PROJECT):
     spruce_lock = project.parent / "docs/spruce-source-lock.json"
     ppsspp_lock = project / "ppsspp/source-lock.json"
     ra_lock = project / "retroarch/source-lock.json"
+    ports_lock = project / "ports/celeste-fix.lock.json"
+    portmaster_lock = project / "profiles/ports-sources.lock.json"
     spruce = json.loads(spruce_lock.read_text())
     ppsspp = json.loads(ppsspp_lock.read_text())
     ra = json.loads(ra_lock.read_text())
+    ports = json.loads(ports_lock.read_text())
+    portmaster = json.loads(portmaster_lock.read_text())["portmaster_gui_sources"]
     return [
         ("SPRUCE_SOURCE_ROOT", spruce_lock, spruce["base"]["source_commit"],
          {path: None for path in ("App/PyUI/main-ui/mainui.py", "App/PyUI/main-ui/LICENSE.md",
@@ -114,6 +118,10 @@ def source_specs(project=PROJECT):
           ppsspp["upstream"]["license_source"]: ppsspp["upstream"]["license_sha256"]}, None),
         ("SPRUCE_RA_SOURCE_ROOT", ra_lock, ra["recipe"]["commit"],
          {item["path"]: item["sha256"] for item in ra["inputs"]}, None),
+        ("PORTS_SOURCE_ROOT", ports_lock, ports["commit"],
+         {item["path"]: item["base_sha256"] for item in ports["files"]}, None),
+        ("PORTMASTER_SOURCE_ROOT", portmaster_lock, portmaster[0]["commit"],
+         {item["path"]: item["sha256"] for item in portmaster}, None),
     ]
 
 

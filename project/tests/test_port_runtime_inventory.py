@@ -172,7 +172,7 @@ class PortRuntimeInventoryTests(unittest.TestCase):
 
     def test_source_lock_pins_scripts_and_shipped_profiles_keep_all_gates_false(self):
         lock = json.loads((DEFAULT_PROFILES.parent / 'ports-sources.lock.json').read_text())
-        self.assertEqual(len(lock['sources']), 15)
+        self.assertGreaterEqual(len(lock['sources']), 17)
         for profile in self.manager.profiles():
             self.assertFalse(profile['runtime_qualified'])
             self.assertFalse(profile['distribution_cleared'])

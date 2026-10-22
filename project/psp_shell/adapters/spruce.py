@@ -421,12 +421,14 @@ class SourceSnapshotProvider:
         artwork = self._artwork(system, rom, config)
         metadata_label = self._metadata.get(str(rom), {}).get("label")
         rendered_label = _text(label or metadata_label or rom.stem, "game label", 1024)
+        empty = rom.stat().st_size == 0
         return {"id": game_id, "game_id": game_id, "system_id": system,
                 "relative_path": relative, "rom_path": str(rom),
                 "label": rendered_label, "display_name": rendered_label,
                 "metadata_label": bool(metadata_label),
                 "extension": rom.suffix.lstrip(".").casefold(), "artwork": artwork,
-                "artwork_ref": artwork, "availability": "available", "warnings": selected["warnings"],
+                "artwork_ref": artwork, "availability": "review_required" if empty else "available",
+                "warnings": selected["warnings"] + (["EMPTY_ROM"] if empty else []),
                 "selected_preset": selected["preset_id"], "governor": selected["governor"],
                 "preset_repair_required": selected["preset_repair_required"],
                 "capabilities": {"launch": False, "resume": False, "favorites_write": False},
@@ -638,6 +640,16 @@ class PyUIModelProvider(SourceSnapshotProvider):
         self.mode_actions = dict(mode_actions or {})
         self.label_for, self.artwork_for = label_for, artwork_for
         self.models: dict[str, Any] = {}
+        self._library_cache: dict[str, list[dict]] = {}
+
+    def refresh(self) -> None:
+        super().refresh()
+        # Drop only our cached query bindings. Existing injected/history model
+        # bindings and initialized managers remain owned by their authorities.
+        for records in self._library_cache.values():
+            for record in records:
+                self.models.pop(record['id'], None)
+        self._library_cache.clear()
 
     @classmethod
     def from_pyui(cls, sd_root: str | os.PathLike, *, device: Any,
@@ -703,13 +715,13 @@ class PyUIModelProvider(SourceSnapshotProvider):
                     "game_count": None, "availability": "available", "warnings": []})
         return output
 
-    def _record_model(self, model: Any) -> dict:
+    def _record_model(self, model: Any, config: dict | None = None, *, bind_model: bool = True) -> dict:
         game_system = getattr(model, "game_system", None)
         name = getattr(game_system, "system_name", None)
         if not name:
             name = getattr(getattr(game_system, "game_system_config", None), "system_name", None)
         label = self.label_for(model) if self.label_for else getattr(model, "display_name", None)
-        record = self.game_record(name, getattr(model, "rom_file_path", None), label=label)
+        record = self.game_record(name, getattr(model, "rom_file_path", None), label=label, config=config)
         if self.artwork_for:
             artwork = self.artwork_for(model)
             if artwork:
@@ -717,8 +729,9 @@ class PyUIModelProvider(SourceSnapshotProvider):
                     record["artwork"] = record["artwork_ref"] = str(self.path(artwork))
                 except SpruceError:
                     record["warnings"].append("ARTWORK_OUTSIDE_SNAPSHOT")
-        self.models[record["id"]] = model
-        record["capabilities"]["launch"] = True
+        if bind_model:
+            self.models[record["id"]] = model
+        record["capabilities"]["launch"] = record["availability"] == "available"
         return record
 
     def game_records(self, system_id: str | None = None) -> list[dict]:
@@ -726,10 +739,32 @@ class PyUIModelProvider(SourceSnapshotProvider):
         output = []
         seen, collisions = set(), {}
         for name in names:
-            for model in self.game_list(name):
+            if name not in self._library_cache:
+                # Reuse the initialized upstream list, then normalize it once
+                # per explicit refresh. Paging/search must not reread every
+                # descriptor, resolve every path and rebuild every model.
+                config = self._descriptor(self.root / "Emu" / name / "config.json")
+                records = []
+                bindings = {}
+                retained = sum(len(rows) for rows in self._library_cache.values())
+                for index, model in enumerate(self.game_list(name)):
+                    if index + retained >= self.max_entries:
+                        raise SpruceError("MODEL_LIMIT", "Live model query exceeded its budget")
+                    try:
+                        record = self._record_model(model, config, bind_model=False)
+                        records.append(record)
+                        bindings[record['id']] = model
+                    except (SpruceError, OSError, TypeError) as error:
+                        self._warn(getattr(error, "code", "INVALID_MODEL"), name)
+                # Bound aggregate retained records, including malformed-source
+                # duplicates. Never keep one max-sized cache per system.
+                if sum(len(rows) for rows in self._library_cache.values()) + len(records) > self.max_entries:
+                    raise SpruceError("MODEL_LIMIT", "Live library cache exceeded its budget")
+                self._library_cache[name] = records
+                self.models.update(bindings)
+            for record in self._library_cache[name]:
                 if len(output) >= self.max_entries:
                     raise SpruceError("MODEL_LIMIT", "Live model query exceeded its budget")
-                record = self._record_model(model)
                 if record["id"] in seen:
                     continue
                 seen.add(record["id"])
@@ -807,11 +842,11 @@ class SpruceBackend:
     def games(self, system_id: str | None = None, search: str = "", offset: int = 0, limit: int = 50) -> dict:
         if type(offset) is not int or type(limit) is not int or offset < 0 or offset > MAX_ENTRIES or not 1 <= limit <= 200:
             raise SpruceError("INVALID_QUERY", "Pagination exceeds its bounds")
-        search = _text(search, "search", 1024).casefold()
+        search = unicodedata.normalize("NFC", _text(search, "search", 1024)).casefold()
         if system_id is not None:
             _text(system_id, "system_id", 256)
         rows = self.provider.game_records(system_id)
-        rows = [row for row in rows if search in row["label"].casefold()]
+        rows = [row for row in rows if search in unicodedata.normalize("NFC", row["label"]).casefold()]
         rows.sort(key=lambda row: (row["label"].casefold(), row["id"]))
         return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset, "limit": limit}
 
@@ -932,7 +967,7 @@ class SpruceBackend:
         game = self._game(game_id)
         context = self.provider.resolve_game(game, preset_id, mode)
         context.update(self._resume_status(game))
-        if game["availability"] != "available":
+        if game["availability"] != "available" or self.provider.path(game['rom_path']).stat().st_size == 0:
             context["gate_reason"] = "GAME_REQUIRES_REVIEW"
             return context
         if not isinstance(self.provider, PyUIModelProvider) or self.read_only:

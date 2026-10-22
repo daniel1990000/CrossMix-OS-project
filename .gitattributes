@@ -7,3 +7,4 @@ project/assets/**/*.ttf binary
 project/evidence/*.png binary
 project/retroarch/patches/*.patch -text -whitespace
 project/retroarch/COPYING -text -whitespace
+project/ports/patches/*.patch -text -whitespace

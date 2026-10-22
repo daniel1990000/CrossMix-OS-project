@@ -27,6 +27,8 @@ PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo --headless 
 PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --sd-root /path/to/mounted-spruce-card --state-dir /tmp/smartpro-inspection
 ```
 
+Large-library, timing and port host tasks U04, D04 and P01–P03 are complete. See [measurement tools](docs/host-measurement.md) and [port preparation/save preservation](docs/ports-preparation-and-saves.md). Device qualification remains pending.
+
 The second command inspects a card without launching its scripts or modifying its data. State, screenshot and report outputs must be outside the inspected card. Standalone rendering uses Pillow. Embedded rendering can reuse PyUI's SDL_ttf/SDL_image and existing SDL renderer without Pillow, a second input owner, or global SDL shutdown.
 
 ## Implemented source
@@ -46,10 +48,10 @@ Continue Playing displays existing recents. Resume requires authenticated engine
 
 ## Check and package
 
-Provide untouched source checkouts at the exact pins in [the spruce lock](../docs/spruce-source-lock.json), [PPSSPP lock](ppsspp/source-lock.json) and [spruce RetroArch recipe lock](retroarch/source-lock.json). The certification command rejects missing or changed pinned references and any skipped test. Individual unittest invocations can still skip source-dependent cases and cannot count as a complete certification.
+Provide untouched source checkouts at the exact pins in [the spruce lock](../docs/spruce-source-lock.json), [PPSSPP lock](ppsspp/source-lock.json), [spruce RetroArch recipe lock](retroarch/source-lock.json), [Celeste patch lock](ports/celeste-fix.lock.json) and [PortMaster GUI text lock](profiles/ports-sources.lock.json). The certification command rejects missing or changed pinned references and any skipped test. Individual unittest invocations can still skip source-dependent cases and cannot count as a complete certification.
 
 ```sh
-PYTHON=/tmp/smartpro-venv/bin/python SPRUCE_SOURCE_ROOT=/path/to/spruce-v4.5.4 PPSSPP_SOURCE_ROOT=/path/to/ppsspp-v1.20.3 SPRUCE_RA_SOURCE_ROOT=/path/to/spruce-ra-recipe sh project/dev/check.sh
+PYTHON=/tmp/smartpro-venv/bin/python SPRUCE_SOURCE_ROOT=/path/to/spruce-v4.5.4 PPSSPP_SOURCE_ROOT=/path/to/ppsspp-v1.20.3 SPRUCE_RA_SOURCE_ROOT=/path/to/spruce-ra-recipe PORTS_SOURCE_ROOT=/path/to/portmaster-new PORTMASTER_SOURCE_ROOT=/path/to/portmaster-gui sh project/dev/check.sh
 python3 project/packaging/dev_release.py --output /tmp/smartpro-development --include-source --smoke-python /tmp/smartpro-venv/bin/python
 ```
 

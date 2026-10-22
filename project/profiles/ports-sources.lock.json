@@ -121,6 +121,20 @@
       "path": "ports/celeste/README.md",
       "git_blob": "9b73d6c81e2547cb335910a26dbe94e4e83074d4",
       "sha256": "05bd8d7fedfd51cc5d8283478576d0d96610bb9125670f2036665e74a417db2b"
+    },
+    {
+      "port_id": "sonic_mania",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/sonic.mania/sonicmania/BUILDING.md",
+      "sha256": "844acf42166828e879d3d5bcaffad2c3d491163014621ce32a7689514b68dfae"
+    },
+    {
+      "port_id": "celeste",
+      "repository": "PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "path": "ports/celeste/celeste/repack.src",
+      "sha256": "060716ee47f753dc913b8ff03a2cfae052950b5738d70ca3c51eb1ceb7c26569"
     }
   ],
   "spruce_sources": [
@@ -154,5 +168,108 @@
       "path": "Emu/PORTS/config.json",
       "sha256": "c0c85233eec6ad8130aea521f5033125ad1a68ae1b4381d9c347dcbeb4f0ae25"
     }
-  ]
+  ],
+  "portmaster_gui_sources": [
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/pylibs/harbourmaster/platform.py",
+      "sha256": "da2778cc1b7af3e0c82bfad604a41222a55981397285fd6397edd79ec03950d8"
+    },
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/pylibs/harbourmaster/platform/__init__.py",
+      "sha256": "103493f6c24ae3f15cc420e0e6b80b859a0afb80699bbbed71af6a422357c0c8"
+    },
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/pylibs/harbourmaster/platform/miyoo.py",
+      "sha256": "75f03e86ea6850b3322f9d02100bd5163f389b4b3d3d7d705c7d19718dc5f5da"
+    },
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/device_info.txt",
+      "sha256": "baf72c8439750855d2969955e218f02ee05d8bd32535fafea5121146ee147529"
+    },
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/control.txt",
+      "sha256": "bdcdf581349e02c10e803be7f97a1f87a13f4b60880affc1f802e04a959bd791"
+    },
+    {
+      "repository": "PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "path": "PortMaster/funcs.txt",
+      "sha256": "a8e73e9f189a78f35edcfefc0600e0167782f77fd4261cc913c3000beb07d755"
+    }
+  ],
+  "save_path_references": [
+    {
+      "repository": "RSDKModding/Sonic-Mania-Decompilation",
+      "commit": "9dc699428420d752af9767bdb13f585ee0881bc0",
+      "path": "SonicMania/Objects/Global/SaveGame.c",
+      "sha256": "30328000d1a62594fa06dde5056d051c047f773ce4c22529dcb8ae7be41f564d",
+      "scope": "SaveData.bin naming reference only; compiled engine/source correspondence unverified. *.bin preservation includes additional engine user files."
+    }
+  ],
+  "binary_tree_inventory": {
+    "sonic_mania": [
+      {
+        "path": "ports/sonic.mania/sonicmania/Game.so",
+        "git_blob": "c664d593679ecfff2413c86c857b882fb5c4fe73",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/sonic.mania/sonicmania/libs/libogg.so.0",
+        "git_blob": "1559d8e0752d87a70b76b20701f2cc70a4169e55",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/sonic.mania/sonicmania/sonicmania",
+        "git_blob": "160dd20ef1ef0727105b455a76b6becb47a1fc55",
+        "compiled_source_verified": false
+      }
+    ],
+    "celeste": [
+      {
+        "path": "ports/celeste/celeste/libs/fmodstudio_fix.so",
+        "git_blob": "a1029e19a75dcbb2405a6f83817c09ba4a4c07ee",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libFAudio.so.0",
+        "git_blob": "55f5a75926f8b269063d27b8179b40ceded0159d",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libFNA3D.so.0",
+        "git_blob": "37b2227a52a83c5b0b9852b3a9f8ffe5e831cc07",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libfmod.so.13",
+        "git_blob": "d8e036d1c86207aa5ce70bec9930d4adf3dd5601",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libfmod_SDL.so",
+        "git_blob": "b05b5d99bfef0798e7d8efdc06422f7e28415300",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libfmodstudio.so.13",
+        "git_blob": "9c82376efb0ef2b548198e515f6abe1dcfd62d16",
+        "compiled_source_verified": false
+      },
+      {
+        "path": "ports/celeste/celeste/libs/libtheorafile.so",
+        "git_blob": "65eb3a40eac97758ad2ee0d64277ecc48e6c3f6b",
+        "compiled_source_verified": false
+      }
+    ]
+  }
 }

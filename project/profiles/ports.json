@@ -51,9 +51,22 @@
         ],
         "support_files": [],
         "runtime_files": [],
-        "notes": "Script chooses re3_gl when glxinfo reports OpenGL; that choice is not inferred during inventory."
+        "notes": "Script chooses re3_gl when glxinfo reports OpenGL; that choice is not inferred during inventory.",
+        "library_directories": [
+          "Roms/ports/gta3/libs"
+        ]
       },
-      "source_binary_correspondence_verified": false
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/gta3/*.b",
+          "Roms/ports/gta3/*.sav"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
     },
     {
       "id": "gtavc",
@@ -100,9 +113,22 @@
         ],
         "support_files": [],
         "runtime_files": [],
-        "notes": "Script chooses reVC_gl when glxinfo reports OpenGL; that choice is not inferred during inventory."
+        "notes": "Script chooses reVC_gl when glxinfo reports OpenGL; that choice is not inferred during inventory.",
+        "library_directories": [
+          "Roms/ports/gtavc/libs"
+        ]
       },
-      "source_binary_correspondence_verified": false
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/gtavc/*.b",
+          "Roms/ports/gtavc/*.sav"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
     },
     {
       "id": "sonic_mania",
@@ -137,11 +163,26 @@
         "engine_alternatives": [
           "Roms/ports/sonicmania/sonicmania"
         ],
-        "support_files": [],
+        "support_files": [
+          "Roms/ports/sonicmania/Game.so",
+          "Roms/ports/sonicmania/libs/libogg.so.0"
+        ],
         "runtime_files": [],
-        "notes": "Existing PortMaster remains the installation and launch authority."
+        "notes": "The base game requires sonicmania and Game.so plus its shipped libs. Plus remains a separate, non-distributed build. Static inventory does not resolve system loader dependencies.",
+        "library_directories": [
+          "Roms/ports/sonicmania/libs"
+        ]
       },
-      "source_binary_correspondence_verified": false
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/sonicmania/*.bin"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
     },
     {
       "id": "render96ex",
@@ -185,9 +226,32 @@
           "Roms/ports/render96ex/bin.aarch64/text_viewer"
         ],
         "runtime_files": [],
-        "notes": "After successful extraction the existing launcher can remove the input ROM; input absence alone does not establish an unusable installed game."
+        "notes": "After successful extraction the existing launcher can remove the input ROM; input absence alone does not establish an unusable installed game.",
+        "preparation": {
+          "files": [
+            "Roms/ports/render96ex/res/base.zip"
+          ],
+          "directories": [
+            "Roms/ports/render96ex/res/demos",
+            "Roms/ports/render96ex/res/texts"
+          ],
+          "marker_is_runtime_proof": false,
+          "replaces_owner_input": true
+        },
+        "library_directories": [
+          "Roms/ports/render96ex/libs.aarch64"
+        ]
       },
-      "source_binary_correspondence_verified": false
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [
+          "Roms/ports/render96ex/conf"
+        ],
+        "file_patterns": [],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
     },
     {
       "id": "celeste",
@@ -230,14 +294,37 @@
           "Roms/ports/celeste/dlls/CelestePatches.dll",
           "Roms/ports/celeste/celeste-repacker",
           "Roms/ports/celeste/progressor",
-          "Roms/ports/celeste/repack.src"
+          "Roms/ports/celeste/repack.src",
+          "Roms/ports/celeste/common.src",
+          "Roms/ports/celeste/FiraCode-Regular.ttf"
         ],
         "runtime_files": [
           "Persistent/portmaster/PortMaster/libs/mono-6.12.0.122-aarch64.squashfs"
         ],
-        "notes": "The existing launcher mounts Mono and runs the owner Celeste.exe. It repacks imported textures and changes imported dependency files; originals remain outside the card."
+        "notes": "The existing launcher mounts Mono and runs the owner Celeste.exe. It repacks imported textures and changes imported dependency files; originals remain outside the card.",
+        "library_directories": [
+          "Roms/ports/celeste/libs",
+          "Roms/ports/celeste/dlls"
+        ],
+        "preparation": {
+          "files": [
+            "Roms/ports/celeste/gamedata/.astc_done"
+          ],
+          "directories": [],
+          "marker_is_runtime_proof": false,
+          "replaces_owner_input": false
+        }
       },
-      "source_binary_correspondence_verified": false
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [
+          "Roms/ports/celeste/savedata"
+        ],
+        "file_patterns": [],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
     },
     {
       "id": "gtasa",
@@ -294,6 +381,51 @@
       },
       {
         "path": "Saves/flip/home/.local/share/PortMaster/control.txt"
+      },
+      {
+        "path": "App/PortMaster/PortMaster.txt",
+        "source_sha256": "b868a2820f559addcbc27d25f7cc784197f97f60d77b340bd784eeedb272f78e"
+      },
+      {
+        "path": "App/PortMaster/mod_spruce.txt",
+        "source_sha256": "f81357cfbebc99b0c18d51ad0de770dd2b82c7bba3dca6b56ac10cae910d8d60"
+      },
+      {
+        "path": "spruce/portmaster/portmaster.txt",
+        "source_sha256": "167edccdd12b36c21661367e88b5c263fb5b3e0024291f7ae77e1e96b4204c9b"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs/harbourmaster/platform/__init__.py"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs/harbourmaster/platform/miyoo.py"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/funcs.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/tasksetter"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/PortMaster.sh"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/spruce/control.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/spruce/PortMaster.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/gptokeyb"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/gptokeyb2"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs.zip"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/.pugwash-reboot"
       }
     ]
   }

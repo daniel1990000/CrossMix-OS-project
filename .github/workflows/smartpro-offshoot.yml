@@ -74,6 +74,28 @@ jobs:
             common_src/spruce_igm_theme.h
             build.sh
       - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsdl2-image-2.0-0 libsodium23 binutils
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: PortsMaster/PortMaster-New
+          ref: 444778f3ae29facbd97b823dc3ca7270b3ebe499
+          path: ports-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            ports/celeste/Celeste.sh
+            ports/celeste/celeste/repack.src
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: PortsMaster/PortMaster-GUI
+          ref: ccea6b746827d0ae3a1cad744f6e8ccc5a032041
+          path: portmaster-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            PortMaster/pylibs/harbourmaster/platform.py
+            PortMaster/pylibs/harbourmaster/platform/__init__.py
+            PortMaster/pylibs/harbourmaster/platform/miyoo.py
+            PortMaster/device_info.txt
+            PortMaster/control.txt
+            PortMaster/funcs.txt
       - run: python -m pip install -r project/requirements-dev.txt
       - run: sh project/dev/check.sh
         env:
@@ -82,6 +104,8 @@ jobs:
           SPRUCE_SOURCE_ROOT: ${{ github.workspace }}/upstream-reference
           PPSSPP_SOURCE_ROOT: ${{ github.workspace }}/ppsspp-reference
           SPRUCE_RA_SOURCE_ROOT: ${{ github.workspace }}/spruce-ra-reference
+          PORTS_SOURCE_ROOT: ${{ github.workspace }}/ports-reference
+          PORTMASTER_SOURCE_ROOT: ${{ github.workspace }}/portmaster-reference
       - run: python project/packaging/dev_release.py --output dist/development --include-source --smoke-python "$(command -v python)"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()

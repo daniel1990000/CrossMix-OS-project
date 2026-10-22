@@ -1,0 +1,140 @@
+--- a/ports/celeste/celeste/repack.src
++++ b/ports/celeste/celeste/repack.src
+@@ -15,15 +15,19 @@
+     exit 1
+ fi
+ 	
++echo "Repacking textures..."
+ "$gamedir/celeste-repacker" "$gamedir/gamedata/Content/Graphics/" --install
+-echo "Repacking textures..."
+-if [[ $? != 0 ]]; then
+-	rm -f "${gamedir}/gamedata/.astc_done"
+-	echo "Failure patching game binaries."
+-	exit 1
++repack_status=$?
++if [[ $repack_status != 0 ]]; then
++    rm -f "${gamedir}/gamedata/.astc_done"
++    echo "Failure repacking textures (status $repack_status)."
++    exit "$repack_status"
+ fi
+ 
+-# Mark step as done
+-touch "${gamedir}/gamedata/.astc_done"
+-
++# A failed completion write (including full/read-only storage) is a failure.
++if ! touch "${gamedir}/gamedata/.astc_done"; then
++    rm -f "${gamedir}/gamedata/.astc_done"
++    echo "Cannot record completed texture preparation."
++    exit 1
++fi
+ exit 0
+--- a/ports/celeste/Celeste.sh
++++ b/ports/celeste/Celeste.sh
+@@ -19,26 +19,69 @@
+ 
+ export gamedir="/$directory/ports/celeste"
+ export gameassembly="Celeste.exe"
+-cd "$gamedir/gamedata"
++cd "$gamedir/gamedata" || exit 1
+ 
+ # Grab text output...
+ printf "\033c" > /dev/tty0
+ echo "Loading... Please Wait." > /dev/tty0
+ 
+-# Setup mono
++# Keep cleanup local to mounts created by this invocation. Never unmount an
++# existing owner's runtime or save mount, including after an earlier failure.
++mono_mounted=0
++save_bound=0
++controls_started=0
+ monodir="$HOME/mono"
++savedir="$HOME/.local/share/Celeste"
++cleanup_celeste() {
++    status=$?
++    trap - EXIT
++    if [[ $save_bound == 1 ]]; then
++        $ESUDO umount "$savedir" || { [[ $status != 0 ]] || status=1; }
++    fi
++    if [[ $mono_mounted == 1 ]]; then
++        $ESUDO umount "$monodir" || { [[ $status != 0 ]] || status=1; }
++    fi
++    if [[ $controls_started == 1 ]]; then
++        pm_finish || { [[ $status != 0 ]] || status=1; }
++    fi
++    exit "$status"
++}
++trap cleanup_celeste EXIT
++trap 'exit 130' INT
++trap 'exit 143' TERM
++
++# Setup mono. An existing mount needs operator recovery, not a forced unmount.
+ monofile="$controlfolder/libs/mono-6.12.0.122-aarch64.squashfs"
+-$ESUDO mkdir -p "$monodir"
+-$ESUDO umount "$monofile" || true
+-$ESUDO mount "$monofile" "$monodir"
++command -v mountpoint >/dev/null || exit 1
++if mountpoint -q "$monodir"; then
++    echo "Mono mount is already in use."
++    exit 1
++fi
++$ESUDO mkdir -p "$monodir" || exit 1
++$ESUDO mount "$monofile" "$monodir" || exit 1
++mono_mounted=1
++[[ -x "$monodir/bin/mono" ]] || exit 1
+ 
+-# Setup savedir
+-bind_directories ~/.local/share/Celeste "$gamedir/savedata"
++# Reuse PortMaster's save redirection; verify the actual mount when applicable.
++mkdir -p "$gamedir/savedata" || exit 1
++if [[ "$PM_CAN_MOUNT" == Y ]] && mountpoint -q "$savedir"; then
++    echo "Save mount is already in use."
++    exit 1
++fi
++bind_status=0
++bind_directories "$savedir" "$gamedir/savedata" || bind_status=$?
++if [[ "$PM_CAN_MOUNT" == Y ]] && mountpoint -q "$savedir"; then
++    save_bound=1
++fi
++[[ $bind_status == 0 ]] || exit "$bind_status"
++if [[ "$PM_CAN_MOUNT" == Y && $save_bound != 1 ]]; then
++    exit 1
++fi
+ 
+ # Remove all the dependencies in favour of system libs - e.g. the included 
+ # newer version of FNA with patcher included
+ rm -f System*.dll mscorlib.dll FNA.dll Mono.*.dll
+-cp $gamedir/libs/Celeste.exe.config $gamedir/gamedata
++cp "$gamedir/libs/Celeste.exe.config" "$gamedir/gamedata" || exit 1
+ 
+ # Setup path and other environment variables
+ export FNA_PATCH="$gamedir/dlls/CelestePatches.dll"
+@@ -51,19 +94,24 @@
+ # Compress all textures with ASTC codec, bringing massive vram gains
+ if [[ ! -f "$gamedir/gamedata/.astc_done" ]]; then
+ 	# Remove any Mac dotfiles, which break the repacker
+-	find $gamedir -name "._*" -exec rm -rf {} \;
++	find "$gamedir" -name "._*" -exec rm -rf {} \;
+ 
+-	chmod +x ../progressor ../repack.src ../utils/* "$gamedir/celeste-repacker"
++	chmod +x ../progressor ../repack.src ../utils/* "$gamedir/celeste-repacker" || exit 1
+ 	../progressor \
+ 		--log "../repack.log" \
+ 		--font "../FiraCode-Regular.ttf" \
+ 		--title "First Time Setup" \
+ 		../repack.src
+-	if [[ $? != 0 ]]; then
+-		exit
++	prepare_status=$?
++	if [[ $prepare_status != 0 ]]; then
++		rm -f "$gamedir/gamedata/.astc_done"
++		exit "$prepare_status"
+ 	fi
++	[[ -f "$gamedir/gamedata/.astc_done" ]] || exit 1
+ fi
+ 
++controls_started=1
+ $GPTOKEYB "mono" &
++set -o pipefail
+ $TASKSET mono Celeste.exe 2>&1 | tee "$gamedir/log.txt"
+-pm_finish
++exit $?

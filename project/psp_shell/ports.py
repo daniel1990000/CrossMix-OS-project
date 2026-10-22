@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from dataclasses import asdict, dataclass
+import ast
+import fnmatch
 import fcntl
 import hashlib
 import json
@@ -218,11 +220,76 @@ class PortsManager:
         contract = self._source_contract
         observations = [self._installed_file(item['path'], source_sha256=item.get('source_sha256'))
                         for item in contract.get('files', [])]
+        base = 'Persistent/portmaster/PortMaster/'
+        def syntax(relative):
+            try:
+                path = _safe(self.root, base + relative)
+                with os.fdopen(_open_regular(path), 'rb') as stream:
+                    raw = stream.read(128 * 1024 + 1)
+                _require(len(raw) <= 128 * 1024, 'TOO_LARGE', 'Platform source exceeds its read budget')
+                return ast.parse(raw.decode('utf-8'))
+            except (OSError, PortError, SyntaxError, UnicodeError, ValueError):
+                return None
+        legacy = syntax('pylibs/harbourmaster/platform.py')
+        package = syntax('pylibs/harbourmaster/platform/miyoo.py')
+        registration = syntax('pylibs/harbourmaster/platform/__init__.py')
+        has_class = lambda tree: tree is not None and any(isinstance(n, ast.ClassDef) and n.name == 'PlatformSpruce' for n in ast.walk(tree))
+        registered = registration is not None and any(
+            isinstance(node, ast.Dict) and any(isinstance(k, ast.Constant) and k.value == 'spruce'
+                and isinstance(v, ast.Name) and v.id == 'PlatformSpruce' for k, v in zip(node.keys, node.values))
+            for node in ast.walk(registration))
+        generation = ('native-package' if has_class(package) and registered else
+                      'legacy-single-file' if has_class(legacy) else 'compatibility-or-incomplete')
+        pending = any(r['path'] == base + 'pylibs.zip' and r['present'] for r in observations)
         return {'schema': 1, 'authority': 'existing spruce App/PortMaster and initialized PyUI tool callback',
                 'files': observations, 'native_platform_support_observed': False,
+                'detected_source_generation': generation,
+                'installed_generation': 'self-update-pending' if pending else generation,
+                'package_registration_observed': bool(has_class(package) and registered),
+                'legacy_marker_only': legacy is not None and not legacy.body,
+                'self_update_pending': pending,
                 'runtime_qualified': False, 'executed': False,
                 'notes': ['Presence and text hashes do not evaluate control.txt or PlatformSpruce.',
                           'Existing PortMaster chooses and prepares its control/GUI route at launch.']}
+
+    def _directory_status(self, relative):
+        result = {'path': relative, 'nonempty_directory': False}
+        try:
+            path = _safe(self.root, relative)
+            if path.is_dir():
+                with os.scandir(path) as children:
+                    child = next(children, None)
+                    if child is not None:
+                        _safe(self.root, relative + '/' + child.name)
+                        result['nonempty_directory'] = True
+        except (PortError, OSError) as error:
+            result['error'] = {'code': getattr(error, 'code', 'STORAGE_ERROR'), 'message': str(error)}
+        return result
+
+    def _library_directory(self, relative):
+        result = {'path': relative, 'files': [], 'complete': True}
+        try:
+            path = _safe(self.root, relative)
+            if not path.is_dir():
+                result['complete'] = False
+                return result
+            with os.scandir(path) as entries:
+                # Fixed enumeration budget, before sorting or hashing.
+                children = []
+                for entry in entries:
+                    _require(len(children) < 256, 'TOO_MANY_FILES', 'Library directory exceeded its inventory budget')
+                    children.append(entry.name)
+            for name in sorted(children):
+                target = relative + '/' + name
+                if _safe(self.root, target).is_dir():
+                    result['complete'] = False  # Nested libraries require separate inspection.
+                    continue
+                result['files'].append(self._installed_file(target))
+            result['complete'] = result['complete'] and bool(result['files']) and all(r['present'] for r in result['files'])
+        except (PortError, OSError) as error:
+            result['complete'] = False
+            result['error'] = {'code': getattr(error, 'code', 'STORAGE_ERROR'), 'message': str(error)}
+        return result
 
     def installed_status(self, port_id):
         """Read-only owner-data, installed launcher, engine and runtime inventory.
@@ -253,15 +320,43 @@ class PortsManager:
         engines = [self._installed_file(path, 'aarch64_elf') for path in installation.get('engine_alternatives', [])]
         support = [self._installed_file(path) for path in installation.get('support_files', [])]
         runtimes = [self._installed_file(path, 'squashfs') for path in installation.get('runtime_files', [])]
+        libraries = [self._library_directory(path) for path in installation.get('library_directories', [])]
+        preparation = installation.get('preparation', {})
+        prepared_files = [self._installed_file(path) for path in preparation.get('files', [])]
+        prepared_directories = [self._directory_status(path) for path in preparation.get('directories', [])]
+        # Celeste's completion marker is intentionally empty; file existence is
+        # an observation only, never successful texture/runtime qualification.
+        prepared = bool(preparation) and all(r['present'] or (r['path'].endswith('/.astc_done') and
+            r.get('sha256') is not None) for r in prepared_files) and all(
+            r['nonempty_directory'] for r in prepared_directories)
+        owner_present = all(item['present'] for item in owner) and all(item['nonempty_directory'] for item in directories)
+        components = all(r['present'] for r in support) and all(r.get('squashfs_magic') is True for r in runtimes)
+        engine = any(r.get('aarch64_elf') is True for r in engines) if engines else any(r.get('squashfs_magic') is True for r in runtimes)
+        data_available = owner_present or (prepared and preparation.get('replaces_owner_input') is True)
+        stage = ('prepared-inputs-observed' if prepared and data_available else
+                 'owner-inputs-observed' if owner_present else 'owner-inputs-missing')
+        blockers = []
+        if not launcher or not launcher['present']: blockers.append('LAUNCHER_MISSING')
+        if not engine: blockers.append('ENGINE_OR_MANAGED_RUNTIME_MISSING')
+        if not components: blockers.append('SUPPORT_OR_RUNTIME_MISSING')
+        if libraries and not all(v['complete'] for v in libraries): blockers.append('LIBRARY_INVENTORY_INCOMPLETE')
+        if not data_available: blockers.append('OWNER_INPUTS_OR_PREPARATION_MISSING')
+        if preparation and not prepared: blockers.append('PREPARATION_NOT_OBSERVED')
         return {'schema': 1, 'port_id': port_id, 'title': profile['title'], 'owner_files': owner,
                 'owner_directories': directories, 'owner_input_structure_present':
                     all(item['present'] for item in owner) and all(item['nonempty_directory'] for item in directories),
                 'launcher': launcher, 'engine_alternatives': engines,
                 'native_engine_header_present': any(item.get('aarch64_elf') is True for item in engines),
                 'support_files': support, 'runtime_files': runtimes,
+                'library_directories': libraries,
+                'readiness': {'stage': stage, 'blockers': blockers, 'launch_qualified': False,
+                              'prepared_files': prepared_files, 'prepared_directories': prepared_directories,
+                              'preparation_observed': prepared},
+                'resume_capability': profile.get('resume_capability', 'launch-only'),
+                'save_registry': profile.get('save_registry', {}),
                 'portmaster': self.portmaster_status(), 'runtime_qualified': False, 'measured_fps': None,
                 'source_binary_correspondence_verified': False, 'distribution_cleared': False,
-                'executed': False, 'inventory_scope': 'named source inputs only; no library or mount qualification',
+                'executed': False, 'inventory_scope': 'named inputs and bounded local library inventory; no loader or mount qualification',
                 'existing_launch_surface': {'system_id': 'PORTS', 'launcher': installation.get('launcher'),
                     'tool_id': 'app:PortMaster', 'authority': 'existing initialized SpruceBackend callbacks'}}
 
@@ -471,6 +566,8 @@ class PortsManager:
             _safe(self.root, record['target'])
             if value.get('kind') == 'owner-import':
                 _require(record['target'].startswith(profile['directory'] + '/'), 'UNSAFE_PATH', 'Receipt escaped its port')
+            elif value.get('kind') == 'save-restore':
+                _require(self._save_allowed(profile, record['target']), 'UNSAFE_PATH', 'Receipt escaped its save registry')
             else:
                 _require(record['target'] in settings, 'UNSAFE_PATH', 'Receipt escaped its settings profile')
         return folder, value
@@ -545,3 +642,143 @@ class PortsManager:
                 records.append({'target': record['target'], 'before': live['current'], 'after': record['sha256']})
                 sources.append(source)
             return self._transaction(receipt['port_id'], 'profile-restore', records, sources)
+
+    def _save_allowed(self, profile, relative):
+        registry = profile.get('save_registry', {})
+        return any(relative.startswith(directory + '/') for directory in registry.get('directories', [])) or any(
+            relative.rsplit('/', 1)[0] == pattern.rsplit('/', 1)[0]
+            and fnmatch.fnmatchcase(relative.rsplit('/', 1)[1].casefold(), pattern.rsplit('/', 1)[1].casefold())
+            for pattern in registry.get('file_patterns', []))
+
+    def save_inventory(self, port_id):
+        """Inspect only the declared preservation scope; do not infer completeness."""
+        profile = self._profile(port_id)
+        registry = profile.get('save_registry', {})
+        names, visited = set(), 0
+        for directory in registry.get('directories', []):
+            root = _safe(self.root, directory)
+            if not root.exists():
+                continue
+            _require(root.is_dir(), 'UNSAFE_PATH', 'A declared save directory is not a directory')
+            def walk_error(error):
+                raise PortError('STORAGE_ERROR', 'Save directory could not be fully inventoried') from error
+            for folder, directories, filenames in os.walk(root, followlinks=False, onerror=walk_error):
+                visited += len(directories) + len(filenames)
+                _require(visited <= MAX_FILES, 'TOO_MANY_FILES', 'Save inventory exceeded its entry budget')
+                for name in directories + filenames:
+                    relative = (Path(folder) / name).relative_to(self.root).as_posix()
+                    _safe(self.root, relative)
+                    if name in filenames:
+                        names.add(relative)
+        for pattern in registry.get('file_patterns', []):
+            parent, wildcard = pattern.rsplit('/', 1)
+            directory = _safe(self.root, parent)
+            if not directory.exists():
+                continue
+            with os.scandir(directory) as entries:
+                for entry in entries:
+                    visited += 1
+                    _require(visited <= MAX_FILES, 'TOO_MANY_FILES', 'Save inventory exceeded its entry budget')
+                    if fnmatch.fnmatchcase(entry.name.casefold(), wildcard.casefold()):
+                        relative = parent + '/' + entry.name
+                        _safe(self.root, relative)
+                        names.add(relative)
+        files = []
+        for relative in sorted(names):
+            digest, size = _fingerprint(_safe(self.root, relative))
+            _require(digest is not None, 'CONFLICT', 'A save disappeared during inventory')
+            files.append({'target': relative, 'sha256': digest, 'size': size})
+        return {'schema': 1, 'port_id': port_id, 'files': files, 'registry': registry,
+                'device_paths_verified': False, 'resume_capability': profile.get('resume_capability', 'launch-only'),
+                'uninstall_enabled': False,
+                'uninstall_contract': 'Retain a verified external backup and owner originals. Use PortMaster for removal; verify actual device save paths first. No deletion is performed here.'}
+
+    def snapshot_saves(self, port_id, output, *, confirm_idle=False):
+        _require(confirm_idle, 'BUSY', 'Stop the game and enter idle maintenance mode before backing up saves')
+        output = Path(output).absolute()
+        _require(not any(p.is_symlink() for p in (output, *output.parents)) and not output.exists(),
+                 'UNSAFE_PATH', 'Use a new external backup directory without symlinks')
+        output = output.resolve(strict=False)
+        _require(not output.is_relative_to(self.root) and not self.root.is_relative_to(output),
+                 'UNSAFE_PATH', 'Save backups must be outside the selected card')
+        with self._lock():
+            inventory = self.save_inventory(port_id)
+            _require(inventory['files'], 'NO_SAVES', 'No saves were found in the declared preservation scope')
+            new_parents = []
+            parent = output.parent
+            while not parent.exists():
+                new_parents.append(parent)
+                parent = parent.parent
+            output.mkdir(parents=True, mode=0o700)
+            try:
+                for index, record in enumerate(inventory['files']):
+                    _copy_checked(_safe(self.root, record['target']), output / f'files/{index}', record['sha256'])
+                _sync(output / 'files')
+                _sync(output)
+                for created in (output, *new_parents):
+                    _sync(created.parent)
+                _require(self.save_inventory(port_id)['files'] == inventory['files'],
+                         'CONFLICT', 'Saves changed while they were backed up')
+                receipt = {'schema': 1, 'kind': 'port-save-backup', 'root': str(self.root),
+                           'port_id': port_id, 'files': inventory['files'], 'complete': True,
+                           'registry': inventory['registry'], 'device_paths_verified': False}
+                _json_write(output / 'receipt.json', receipt)
+                _sync(output)
+            except BaseException:
+                shutil.rmtree(output)
+                raise
+        return output
+
+    def _save_backup(self, backup):
+        backup = Path(backup).absolute()
+        _require(not any(p.is_symlink() for p in (backup, *backup.parents)),
+                 'UNSAFE_PATH', 'Select an external save backup without symlinks')
+        backup = backup.resolve(strict=True)
+        _require(not backup.is_relative_to(self.root), 'UNSAFE_PATH', 'Select a backup outside the card')
+        with os.fdopen(_open_regular(_safe(backup, 'receipt.json')), 'rb') as stream:
+            data = stream.read(8 * CHUNK + 1)
+        _require(len(data) <= 8 * CHUNK, 'INVALID_BACKUP', 'Save manifest exceeds its limit')
+        try:
+            receipt = json.loads(data)
+        except (ValueError, UnicodeError, RecursionError) as error:
+            raise PortError('INVALID_BACKUP', 'Cannot read the save manifest') from error
+        _require(isinstance(receipt, dict) and type(receipt.get('schema')) is int and receipt['schema'] == 1 and
+                 receipt.get('kind') == 'port-save-backup' and receipt.get('complete') is True and
+                 receipt.get('root') == str(self.root), 'INVALID_BACKUP', 'Save manifest does not match this card contract')
+        profile = self._profile(receipt.get('port_id'))
+        _require(receipt.get('registry') == profile.get('save_registry'), 'INVALID_BACKUP', 'Save registry changed; review the backup mapping')
+        records = receipt.get('files')
+        _require(isinstance(records, list) and 0 < len(records) <= MAX_FILES, 'INVALID_BACKUP', 'Invalid save file list')
+        names = set()
+        for index, record in enumerate(records):
+            _require(isinstance(record, dict), 'INVALID_BACKUP', 'Invalid save record')
+            relative, digest = record.get('target'), record.get('sha256')
+            _safe(self.root, relative)
+            _require(self._save_allowed(profile, relative) and relative.casefold() not in names,
+                     'UNSAFE_PATH', 'Backup path is outside the save registry or duplicated')
+            names.add(relative.casefold())
+            _require(isinstance(digest, str) and len(digest) == 64 and all(c in '0123456789abcdef' for c in digest),
+                     'INVALID_BACKUP', 'Invalid save checksum')
+            _require(type(record.get('size')) is int and 0 <= record['size'] <= MAX_OWNER_FILE,
+                     'INVALID_BACKUP', 'Invalid save file size')
+            _require(_fingerprint(_safe(backup, f'files/{index}')) == (digest, record.get('size')),
+                     'INVALID_BACKUP', 'A saved file is missing or damaged')
+        return backup, receipt
+
+    def preview_save_restore(self, backup):
+        folder, receipt = self._save_backup(backup)
+        return {'backup': str(folder), 'port_id': receipt['port_id'], 'files': [
+            {'target': r['target'], 'current': _fingerprint(_safe(self.root, r['target']))[0],
+             'snapshot': r['sha256']} for r in receipt['files']],
+                'preserve_unlisted_files': True}
+
+    def restore_saves(self, backup, preview, *, confirm_idle=False, confirm_overwrite=False):
+        _require(confirm_idle, 'BUSY', 'Stop the game and enter idle maintenance mode before restoring saves')
+        _require(confirm_overwrite, 'CONFIRM_OVERWRITE', 'Review and confirm the exact save restore')
+        with self._lock():
+            folder, receipt = self._save_backup(backup)
+            _require(preview == self.preview_save_restore(folder), 'CONFLICT', 'Saves changed after the restore preview')
+            records = [{'target': r['target'], 'before': live['current'], 'after': r['sha256']}
+                       for r, live in zip(receipt['files'], preview['files'])]
+            return self._transaction(receipt['port_id'], 'save-restore', records,
+                                     [folder / f'files/{index}' for index in range(len(records))])

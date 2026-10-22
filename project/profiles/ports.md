@@ -13,7 +13,7 @@ case collisions, validates required structure and checks space before writing.
 The Render96 input additionally requires the upstream US ROM MD5 and SHA1.
 Apply stages and backs up selected files; failure rolls the copy back. Undo
 refuses externally changed imported files. The owner source is never changed.
-Profile snapshots/restores own only the listed settings and preserve saves.
+Profile snapshots/restores own only the listed settings and preserve saves. Separate external save snapshots and reviewed journaled restore now preserve the declared per-port save scope; see [the save contract](../docs/ports-preparation-and-saves.md).
 The existing PortMaster engine and unrelated installed files remain in place.
 
 `installed_status(port_id)` reads the named owner files, launcher, native
@@ -28,7 +28,7 @@ refuse files that grow, shrink or change identity while hashing.
 | Port | Source-backed installed surface | Remaining interpretation |
 |---|---|---|
 | GTA III / VC | Classic owner data; `re3` / `re3_gl` or `reVC` / `reVC_gl` | The existing launcher chooses GLES/OpenGL from `glxinfo`; inventory does not choose it. The GTA III README has Vice City copy/paste errors; metadata and the launch script remain separately pinned. |
-| Sonic Mania | Owner `Data.rsdk`; installed `sonicmania` | Plus requires the separately documented custom build; no DLC patch or compatibility is claimed. |
+| Sonic Mania | Owner `Data.rsdk`; installed `sonicmania`, `Game.so`, `libs/libogg.so.0` | Plus requires the separately documented custom build; no DLC patch or compatibility is claimed. |
 | Render96ex | US owner ROM; `sm64.us.f3dex2e.aarch64`; existing resource installer | The first launch extracts resources and can remove the input ROM. An absent original ROM does not prove that an already prepared game is unusable. Its 60 fps default is not a measurement. |
 | Celeste | Owner `Celeste.exe` and Content; installed repacker, patches, Mono squashfs | The existing launcher mounts Mono, modifies imported dependencies and repacks copied textures. Keep original owner files separate. Squashfs magic does not qualify Mono or its libraries. |
 
@@ -36,7 +36,7 @@ refuse files that grow, shrink or change identity while hashing.
 `App/PortMaster/launch.sh`, its control hooks and PortMaster's installed
 metadata. Spruce chooses between native `PlatformSpruce` and its compatibility
 surface at launch. Presence or a hash never evaluates that Python/shell code.
-Other external control folders, running processes, mounts and loader state
+The generation observer now parses the real modern package/class registration and reports pending self-update archives; a comment-only marker cannot establish native code. Bounded local library directories and stage-specific generated resources are inventoried separately. Other external control folders, running processes, mounts and loader state
 remain outside this named-file inventory.
 
 `resolve_existing_port(port_id, backend)` finds the exact installed script in

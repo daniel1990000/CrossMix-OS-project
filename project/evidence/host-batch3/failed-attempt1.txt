@@ -1,0 +1,15 @@
+Intermediate working-tree certification failure; not final code.
+Original full log SHA256: fba0443a0116e43da74e7d4ed699b1b6ef123cb50d2349e0c31624b4ac7de813
+
+ERROR: test_live_refresh_keeps_initialized_authorities_and_avoids_snapshot_scan (test_artwork_refresh.MetadataRefreshTests.test_live_refresh_keeps_initialized_authorities_and_avoids_snapshot_scan)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/CrossMix-OS-project/project/tests/test_artwork_refresh.py", line 214, in test_live_refresh_keeps_initialized_authorities_and_avoids_snapshot_scan
+    self.assertIs(provider.models["retained"], sentinel)
+                  ~~~~~~~~~~~~~~~^^^^^^^^^^^^
+KeyError: 'retained'
+
+----------------------------------------------------------------------
+Ran 614 tests in 45.501s
+
+FAILED (errors=1)
