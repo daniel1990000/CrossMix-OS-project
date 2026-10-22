@@ -46,6 +46,10 @@ class DemoBackend:
                 })
         self._favorites = {"sample:PSP:skyline", "sample:PS:echo", "sample:PORTS:summit"}
 
+    def refresh(self):
+        # Demo records are already in memory; no owner files are read or changed.
+        pass
+
     def systems(self):
         return copy.deepcopy(self._systems)
 

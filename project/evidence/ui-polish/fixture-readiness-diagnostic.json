@@ -1,0 +1,293 @@
+{
+  "change": "Atomic PID marker; liveness-checked wait extended from 3s to 6s. Production ownership checks and assertions unchanged.",
+  "controlled_delayed_original": {
+    "attempted": 1,
+    "errors": 0,
+    "failures": 1,
+    "injected_fixture_delay_seconds": 3.25,
+    "phase": "unchanged-test deterministic slow source setup diagnostic",
+    "seconds": 3.819672277999871
+  },
+  "controlled_fixture_delay_seconds": 3.25,
+  "fixture_file_sha256": "77ab10ab70507e20bef499508fa19173d9b2fe5c3883f46172fb01e537c1ffdd",
+  "full_principal_suite": {
+    "passed": 21,
+    "skipped": 0,
+    "tests_run": 21
+  },
+  "limitation": "The injected delay reproduces the failure signature; the precise delay location in the original failed run remains unproven.",
+  "local_log_sha256": {
+    "/workspace/scratch/trimui-orphan-readiness-20-original.log": "0675cab6c5348755214dbb59866bba10680a0823e99fbdbbc0c2e4610174d18b",
+    "/workspace/scratch/trimui-orphan-readiness-21-synchronized.log": "f463f3948ef3e1ce13bbb2b16a8197a8de28ba54ecadbda17a9faa710a6027b3",
+    "/workspace/scratch/trimui-orphan-readiness-delayed-original.log": "ac3a47f209a7ec3f166c614d2736359a73d448621799a8829650ecf0ddb1d90d",
+    "/workspace/scratch/trimui-principal-synchronized-suite.log": "ffd9e4d215b695b19e3a869d8bdf5824c4aec4e64406e369374f15d85285fd50",
+    "/workspace/scratch/trimui-ui-batch-reviewed-certification.log": "0de8d195fe0acc541f960b88ef03b0c4bf8e3bd80063ae870b7a6b25092f8a23"
+  },
+  "schema": 1,
+  "scope": "Fixture readiness diagnostic, separate from full certification totals.",
+  "synchronized_21_attempts": {
+    "attempted": 21,
+    "errors": 0,
+    "failures": 0,
+    "injected_fixture_delay_seconds": 3.25,
+    "normal_attempts": 20,
+    "observations": [
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6191105409998272,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5356529539999428,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5324427929999729,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5149091230000522,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5590834839999843,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5499161090001508,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5497437130002254,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.537349359000018,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5933537979999528,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5247133130001203,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5726923920001354,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5879586109999764,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.632932745999824,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6863343700001678,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.597136257999864,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6459411159999036,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6581013869999879,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5827615990001505,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6758999570001833,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6015530800000306,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 3.93192376900015,
+        "test": "__main__.SlowFixtureStartup.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      }
+    ],
+    "phase": "synchronized fixture predetermined diagnostic run",
+    "slow_fixture_attempts": 1
+  },
+  "unchanged_20_attempts": {
+    "attempted": 20,
+    "errors": 0,
+    "failures": 0,
+    "observations": [
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.549816901000213,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5666019350001079,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5983618790000946,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6951789499998995,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5876175680000415,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5176517449999665,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5726056860003155,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6596036800001457,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5998952220002138,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5541475400000309,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.6476799849997406,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5185255139999754,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5458137329997044,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5355933740002001,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5487118070000179,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5639463179995801,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5230162240000027,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.643860663000396,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.5138847180000994,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      },
+      {
+        "error_count_so_far": 0,
+        "failure_count_so_far": 0,
+        "seconds": 0.9251442309996492,
+        "test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid"
+      }
+    ],
+    "phase": "unchanged-test diagnostic run"
+  }
+}

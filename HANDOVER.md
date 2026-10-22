@@ -2,19 +2,35 @@
 
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`. Work is saved in [draft PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1). The inherited CrossMix tree is historical reference and an offline migration source. The active implementation is under `project/`.
 
-## Release tooling batch R01–R03 — 22 October 2026
+## Interface batch U01–U03 — 22 October 2026
+
+The next three [master-plan](project/docs/master-plan-2026-10-22.md) tasks are complete as host engineering work. PNG, JPEG, BMP, static WebP and QOI now work through both decode paths. An original bounded QOI decoder avoids a new device dependency. Header checks bound native decoder allocation; malformed/oversize data and missing codecs produce the existing placeholder. [Format evidence and limits](project/docs/artwork-formats.md) distinguish actual host codec tests from untested target libraries.
+
+**Games → Refresh library**, also available through F5, invalidates source metadata and positive/negative artwork caches. Refresh preserves the page and focused game or nearest surviving neighbor, clamps a removed page, and rejects stale asynchronous completions. Live integration retains initialized PyUI managers and the existing scanner/launch authorities.
+
+The keyboard now has 50 keys, title punctuation and wide action keys. Text, field, actions and controller help scale through 1.75. Physical hints follow South/East Confirm and show Cancel/Delete/Find; long text shows its suffix and end cursor. The standalone preview's external Unicode input stays bounded to 128 code points. Embedded text entry follows the existing PyUI input route, including remapped buttons. [Accessibility notes](project/docs/interface-accessibility.md) define entry, deletion and font limits. The new `ui/keyboard.py` is mandatory in the signed source inventory.
+
+The full local strict run passes **621 checks**: 560 host/source and 61 PPSSPP, with zero skips, failures, errors or expected failures. This includes 40 new format, refresh and keyboard checks, including the actual embedded input route under both Confirm conventions and inverse button remaps. [Normal keyboard](project/evidence/ui-polish/keyboard.png), [maximum-size keyboard](project/evidence/ui-polish/keyboard-large.png) and [QOI cover](project/evidence/ui-polish/artwork.png) captures are actual SDL host renders with original synthetic data. The capture script and [verification record](project/evidence/ui-polish/verification.json) are retained.
+
+A preceding full run passed 620 of 621 checks and failed while waiting for a test orphan to publish its PID. A fixed 20-attempt diagnostic passed unchanged, and a controlled 3.25-second setup delay reproduced the same three-second timeout failure. The fixture now publishes readiness atomically and waits with a six-second deadline and helper-liveness checks; production ownership logic and assertions are unchanged. All 21 synchronized diagnostic attempts and the 21-test principal suite pass. The failed certification is retained separately; the original host delay was not conclusively located.
+
+The descriptor now selects **dev8**. Development artifacts at `/workspace/scratch/trimui-interface-dev8` pass signature/inventory verification, same-key deterministic rebuilding, installed-payload rendering/settings/navigation smoke and fixture activation/rollback. The no-Git source export reproduces the preview and source ZIPs byte for byte. All artifact checksums, changed runtime bytes and retained MIT/OFL notices were read back. The host uses Pillow 11.1.0 and isolated SDL_image 2.8.8. No device runtime library, installed engine or qualification gate changed; all 13 physical areas remain unrun. Source-use/distribution evidence and private native artifact custody remain open; PR #1 stays draft and unmerged.
+
+Suggested next group: **U04** large-library fixtures, **D04** measurement tooling and **P01** port dependency inventory. These are independent host tasks; physical qualification remains a separate stage.
+
+## Previous release tooling batch R01–R03 — 22 October 2026
 
 The first three tasks in the [master plan](project/docs/master-plan-2026-10-22.md) are complete. The inherited CrossMix release workflow is archived byte for byte in `docs/historical/`, outside Actions discovery. The remaining host workflow has read-only repository permissions and no tag/release trigger; release tags must use a revision containing this isolation change.
 
 `project/dev/check.sh` now requires all three explicit pinned source roots. Certification checks their commits and materialized bytes before and after testing, rejects skipped/empty/incomplete suites and expected failures, and writes actual counts/identities to `dist/certification.json`. CI watches `docs/spruce-source-lock.json` and uploads failure records.
 
-`project/packaging/current-release.json` is the current **dev7** selection. CLI and CI use it by default. Signed metadata and the build report record the exact frontend commit, modified-source status and a SHA-256 inventory. Exported original source retains that provenance and rejects changed bytes when rebuilding. Native binary hashes are historical references only; no upstream patch or native binary is selected.
+At this checkpoint `project/packaging/current-release.json` selected **dev7**. CLI and CI use the descriptor by default. Signed metadata and the build report record the exact frontend commit, modified-source status and a SHA-256 inventory. Exported original source retains that provenance and rejects changed bytes when rebuilding. Native binary hashes are historical references only; no upstream patch or native binary is selected.
 
 The complete local certification passes **581 checks**: 520 host/source and 61 PPSSPP, with zero skips, failures, errors or expected failures. The unchanged baseline also passed all 561 checks in this workspace. See [batch evidence](project/evidence/release-tooling-batch1.json) for the actual certification and development package results. This session validates host behavior; all 13 physical acceptance areas remain unrun.
 
 Implementation [`9a8e772`](https://github.com/daniel1990000/CrossMix-OS-project/commit/9a8e77232cd2b6908c4e5cae17312e4a2d942068) passes [GitHub CI run 39853492605](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39853492605): all **581 checks**, zero skips/failures/errors/expected failures, dev7 packaging and upload. GitHub tested its clean PR merge checkout `b31f7e4d96bb7a6bf33b286d9f6e3699a11469dc`; the signed package records that exact frontend identity. [Download host-preview-evidence](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39853492605/artifacts/12457629490), artifact ID `12457629490`, SHA-256 `d37d8396fe7dd5ac060dd65faccee9fc020b422b1b580588340f3a57c0a7ee9b`. The complete download and all inner artifact checksums were verified. Local no-Git export rebuilds reproduce the preview and source ZIPs exactly. Later evidence/handover/master-plan text changes preserve the tested implementation hashes.
 
-Next suggested batch: **U01–U03**, covering artwork formats, same-path artwork refresh and controller keyboard accessibility. R04 artifact custody, device preparation and external source-use/distribution evidence remain open. Keep PR #1 draft and unmerged. Current private artifacts are under `/workspace/scratch/trimui-release-tooling-dev7`; they may need rebuilding after environment replacement.
+At this earlier checkpoint the suggested batch was **U01–U03**, now completed above. R04 artifact custody, device preparation and external source-use/distribution evidence remain open. Keep PR #1 draft and unmerged. These prior private artifacts are under `/workspace/scratch/trimui-release-tooling-dev7`; they may need rebuilding after environment replacement.
 
 ## Inherited integration checkpoint
 
@@ -123,10 +139,11 @@ The legacy retained-thread/cooperative-audio source experiment remains available
 Run all host checks with three untouched pinned references. Source-dependent skips do not count as a complete pass:
 
 ```sh
-PYTHON=/workspace/scratch/trimui-buildenv/bin/python \
-SPRUCE_SOURCE_ROOT=/workspace/spruce-base \
-PPSSPP_SOURCE_ROOT=/workspace/ppsspp-source \
-SPRUCE_RA_SOURCE_ROOT=/workspace/scratch/trimui-igm-ra-source \
+PYTHON=/workspace/trimui-venv/bin/python \
+SPRUCE_SOURCE_ROOT=/workspace/trimui-sources/spruce \
+PPSSPP_SOURCE_ROOT=/workspace/trimui-sources/ppsspp \
+SPRUCE_RA_SOURCE_ROOT=/workspace/trimui-sources/retroarch \
+PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-sdl-image/root/usr/lib/x86_64-linux-gnu \
 SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy \
 sh project/dev/check.sh
 ```
@@ -136,7 +153,7 @@ The preview environment uses PySDL2 0.9.17 and Pillow 11.1.0 with system SDL2/li
 Build the current original-only preview from its descriptor with a new output directory:
 
 ```sh
-python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-release-tooling-dev7 --include-source --smoke-python /workspace/trimui-venv/bin/python
+python3 project/packaging/dev_release.py --output /workspace/scratch/trimui-interface-dev8 --include-source --smoke-python /workspace/trimui-venv/bin/python
 ```
 
 Private PPSSPP output lives under `/workspace/scratch/ppsspp-complete-checkpoint-final`: `output/PPSSPPSDL_TrimUI` and `candidate-corresponding-source.tar.gz`. The exact final source archive size and SHA256 are recorded in `project/evidence/ppsspp-complete-state-build.json`. The earlier 640ce8 binary and its matching archive remain under `/workspace/scratch/ppsspp-complete-state-final` as historical evidence. Source/recipe/SDK inputs are untouched in sibling scratch directories. Private workspace files may be absent after environment replacement; rebuild from locks and never imply that an absent archive is still available. Keep engine binaries, complete upstream source distributions, SDK blobs, owner data and private keys out of Git/public preview artifacts.

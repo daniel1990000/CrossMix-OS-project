@@ -4,17 +4,16 @@ SPDX-License-Identifier: MIT
 """
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import datetime, timedelta
 from types import MappingProxyType
 from typing import Any, Iterable, Mapping
 import uuid
 
+from .keyboard import KEYBOARD_KEYS, keyboard_text, move_keyboard_focus
+
 
 CATEGORIES = ("Games", "Continue Playing", "Tools", "Settings")
-KEYBOARD_KEYS = tuple("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") + (
-    "Space", "Delete", "Find", "Cancel"
-)
 
 
 def _text(value: Any, limit: int = 512) -> str:
@@ -129,6 +128,7 @@ class Keyboard:
     text: str
     selected: int
     keys: tuple[str, ...] = KEYBOARD_KEYS
+    preferred_column: float | None = None
 
 
 @dataclass(frozen=True)
@@ -150,6 +150,7 @@ class UISnapshot:
     demo: bool
     exit_request: str | None
     display_clock: str = ""
+    artwork_generation: int = 0
 
     @property
     def selected_item(self) -> UIItem | None:
@@ -205,6 +206,7 @@ class NavigationModel:
         self._system_label = ""
         self._search = ""
         self._keyboard: Keyboard | None = None
+        self._artwork_generation = 0
         self._dialog: Dialog | None = None
         self._serial = 0
         if session_id is not None and (not isinstance(session_id, str) or not 1 <= len(session_id) <= 64 or
@@ -214,6 +216,7 @@ class NavigationModel:
         self._pending: set[int] = set()
         self._query_serial = 0
         self._query_last_focus = False
+        self._query_keep_focus = False
         self._favorites: set[str] = set()
         self._last_transaction = ""
         self._settings_view = "root"
@@ -255,8 +258,9 @@ class NavigationModel:
         self._pending.add(self._serial)
         return UICommand(self._serial, method, dict(params or {}), context)
 
-    def initial_commands(self) -> list[UICommand]:
-        commands = [self._request(method, context=context) for method, context in (
+    def initial_commands(self, *, preserve_focus: bool = False) -> list[UICommand]:
+        commands = [self._request(method, {"refresh": True} if preserve_focus and method == "library.systems" else None,
+                                  context=context) for method, context in (
             ("settings.get", "settings"), ("system.capabilities", "capabilities"),
             ("system.snapshot", "snapshot"), ("library.systems", "systems"),
             ("library.recent", "recent"), ("library.favorites", "favorites_cache"),
@@ -264,7 +268,8 @@ class NavigationModel:
         if self._games_view == "favorites":
             commands.append(self._request("library.favorites", context="favorites"))
         elif self._games_view != "systems":
-            commands.append(self._query())
+            commands.append(self._query(self._pages[0].offset if preserve_focus else 0,
+                                        keep_focus=preserve_focus))
         return commands
 
     def _page(self) -> _Page:
@@ -316,10 +321,12 @@ class NavigationModel:
             items.append(UIItem(identifier, _text(value.get("label", identifier)),
                                 f"{count} games", "system", identifier,
                                 available=value.get("availability", "available") == "available"))
+        items.append(_menu("refresh_library", "Refresh library", "Reload game lists and changed artwork"))
         self._systems.replace(items)
         self._restore_focus(self._systems, "systems")
 
-    def _query(self, offset: int = 0) -> UICommand:
+    def _query(self, offset: int = 0, *, keep_focus: bool = False,
+               last_focus: bool = False) -> UICommand:
         params: dict[str, Any] = {"offset": offset, "limit": self.PAGE_SIZE}
         if self._games_view == "system":
             params["system_id"] = self._system_id
@@ -327,6 +334,8 @@ class NavigationModel:
             params["search"] = self._search
         command = self._request("library.query", params, "games")
         self._query_serial = command.serial
+        self._query_keep_focus = keep_focus
+        self._query_last_focus = last_focus
         return command
 
     def receive(self, command: UICommand, result: Any) -> list[UICommand]:
@@ -438,10 +447,17 @@ class NavigationModel:
             items = [UIItem.from_record(value) for value in values if isinstance(value, Mapping)]
             offset = result.get("offset", 0)
             total = result.get("total", len(items))
-            self._pages[0].replace(items, offset=offset, total=total, keep_focus=False)
+            if (self._query_keep_focus and not items and type(total) is int and
+                    type(offset) is int and 0 < total <= offset):
+                # A refreshed collection can shrink past the old page. Retain
+                # its focus until the last surviving page is available.
+                last_page = ((total - 1) // self.PAGE_SIZE) * self.PAGE_SIZE
+                return [self._query(last_page, keep_focus=True)]
+            self._pages[0].replace(items, offset=offset, total=total, keep_focus=self._query_keep_focus)
             if self._query_last_focus and items:
                 self._pages[0].selected = len(items) - 1
             self._query_last_focus = False
+            self._query_keep_focus = False
             self._restore_focus(self._pages[0], "0")
         elif context in ("recent", "favorites", "favorites_cache"):
             items = [UIItem.from_record(value) for value in result if isinstance(value, Mapping)]
@@ -757,6 +773,8 @@ class NavigationModel:
             self._keyboard = Keyboard(self._search, 0)
         elif item.id == "random":
             return [self._request("library.random", context="random")]
+        elif item.id == "refresh_library":
+            return self.handle("refresh")
         elif item.id == "undo":
             return [self._request("settings.undo", {"transaction_id": self._last_transaction,
                         "request_id": f"ui-{self._session_id}-undo-{self._serial + 1}", "expected_generation": self.generation}, "undo")]
@@ -840,23 +858,24 @@ class NavigationModel:
             if action == "back":
                 self._keyboard = None
             elif action in ("left", "right", "up", "down"):
-                delta = {"left": -1, "right": 1, "up": -10, "down": 10}[action]
-                self._keyboard = Keyboard(keyboard.text, (keyboard.selected + delta) % len(KEYBOARD_KEYS))
+                selected, column = move_keyboard_focus(keyboard.selected, action,
+                                                       keyboard.preferred_column, keyboard.keys)
+                self._keyboard = replace(keyboard, selected=selected, preferred_column=column)
             elif action in ("text", "delete_text"):
-                value = keyboard.text[:-1] if action == "delete_text" else keyboard.text + _text(text, 128).replace("\n", "")
-                self._keyboard = Keyboard(value[:128], keyboard.selected)
+                value = keyboard.text[:-1] if action == "delete_text" else keyboard.text + keyboard_text(text)
+                self._keyboard = replace(keyboard, text=keyboard_text(value))
             elif action == "submit_text":
                 return self._submit_search()
             elif action == "confirm":
-                key = KEYBOARD_KEYS[keyboard.selected]
+                key = keyboard.keys[keyboard.selected]
                 if key == "Find":
                     return self._submit_search()
                 if key == "Cancel":
                     self._keyboard = None
                 elif key == "Delete":
-                    self._keyboard = Keyboard(keyboard.text[:-1], keyboard.selected)
+                    self._keyboard = replace(keyboard, text=keyboard.text[:-1])
                 else:
-                    self._keyboard = Keyboard((keyboard.text + (" " if key == "Space" else key))[:128], keyboard.selected)
+                    self._keyboard = replace(keyboard, text=keyboard_text(keyboard.text + (" " if key == "Space" else key)))
             return []
         if self._dialog:
             dialog = self._dialog
@@ -895,8 +914,7 @@ class NavigationModel:
             if page.selected > 0:
                 page.selected -= 1
             elif self.category == 0 and self._games_view not in ("systems", "favorites") and page.offset >= self.PAGE_SIZE:
-                self._query_last_focus = True
-                return [self._query(page.offset - self.PAGE_SIZE)]
+                return [self._query(page.offset - self.PAGE_SIZE, last_focus=True)]
         elif action == "down" and page.items:
             if page.selected + 1 < len(page.items):
                 page.selected += 1
@@ -909,7 +927,8 @@ class NavigationModel:
             if item.kind == "game":
                 return [self._request("library.favorite.set", {"game_id": item.id, "enabled": item.id not in self._favorites}, "favorite_set")]
         elif action == "refresh":
-            return self.initial_commands()
+            self._artwork_generation += 1
+            return self.initial_commands(preserve_focus=True)
         return []
 
     def snapshot(self, now: float = 0.0, *, display_clock: str = "") -> UISnapshot:
@@ -942,4 +961,5 @@ class NavigationModel:
         return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
                           self._status, "Loading your collection…" if self._pending and not items else empty,
-                          bool(self._pending), self.demo, self.exit_request, _text(display_clock, 32))
+                          bool(self._pending), self.demo, self.exit_request, _text(display_clock, 32),
+                          self._artwork_generation)

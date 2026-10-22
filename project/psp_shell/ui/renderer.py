@@ -14,6 +14,7 @@ from typing import Any, Iterator
 import sdl2
 
 from .artwork import ArtworkDecoder, SDLArtworkDecoder
+from .keyboard import keyboard_hints, keyboard_layout
 from .model import Dialog, Preferences, UIItem, UISnapshot
 from .pictograms import ALIASES, DRAWINGS
 from .motion import StepGlide
@@ -79,6 +80,7 @@ class Renderer:
         self._art_requested: OrderedDict[str, None] = OrderedDict()
         self._art_retry: OrderedDict[str, None] = OrderedDict()
         self._art_failed: OrderedDict[str, None] = OrderedDict()
+        self._art_generation = 0
         self._art_dirty = False
         self._last_selected_art = ""
         self._fingerprint = None
@@ -407,6 +409,20 @@ class Renderer:
             return False
         changed = False
         if snapshot is not None:
+            if snapshot.artwork_generation != self._art_generation:
+                # Refresh is an explicit library revision boundary. Discard
+                # both successful and negative entries without touching the
+                # filesystem on the renderer thread. Old worker completions
+                # carry their original generation and cannot restore stale art.
+                for texture, _, _ in self._art.values():
+                    sdl2.SDL_DestroyTexture(texture)
+                self._art.clear()
+                self._art_requested.clear()
+                self._art_retry.clear()
+                self._art_failed.clear()
+                self._art_generation = snapshot.artwork_generation
+                self._art_dirty = True
+                changed = True
             selected = snapshot.selected_item
             self._last_selected_art = selected.artwork if selected is not None and selected.kind == "game" else ""
             path = self._last_selected_art
@@ -415,6 +431,8 @@ class Renderer:
                 while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
                     self._art_retry.popitem(last=False)
         for image in self._decoder.poll():
+            if image.generation != self._art_generation:
+                continue
             self._art_requested.pop(image.path, None)
             if image.error or not image.pixels:
                 self._art_retry.pop(image.path, None)
@@ -443,7 +461,7 @@ class Renderer:
         for path in paths:
             if path in self._art or path in self._art_failed or path in self._art_requested:
                 self._art_retry.pop(path, None)
-            elif self._decoder.request(path):
+            elif self._decoder.request(path, generation=self._art_generation):
                 self._art_requested[path] = None
                 self._art_retry.pop(path, None)
             else:
@@ -464,7 +482,7 @@ class Renderer:
             sdl2.SDL_RenderCopy(self.renderer, texture, None, ctypes.byref(destination))
             return
         if item.artwork and item.artwork not in self._art_requested and item.artwork not in self._art_failed:
-            if self._decoder and self._decoder.request(item.artwork):
+            if self._decoder and self._decoder.request(item.artwork, generation=self._art_generation):
                 self._art_requested[item.artwork] = None
                 self._art_retry.pop(item.artwork, None)
             else:
@@ -722,22 +740,42 @@ class Renderer:
         if snapshot.display_clock:
             width = self.text.measure(snapshot.display_clock, 19)
             self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
-        self._text("Find a game", 199, 120, 27, primary, 876)
-        self._rect(198, 184, 884, 65, (255, 255, 255, 12))
-        self._line(198, 249, 1082, 249, (255, 255, 255, 165))
-        self._text(keyboard.text or "Type a title", 216, 207, 24, primary if keyboard.text else muted, 847)
-        for index, key in enumerate(keyboard.keys):
-            column, row = index % 10, index // 10
-            x, y = 198 + column * 89, 286 + row * 63
-            selected = index == keyboard.selected
-            self._rect(x, y, 80, 52, (255, 255, 255, 235) if selected else (255, 255, 255, 12))
+        layout = keyboard_layout(snapshot.preferences.text_scale, keyboard.keys)
+        x, y, size = layout.title
+        self._text("Find a game", x, y, size, primary, 1032)
+        x, y, width, height = layout.field
+        self._rect(x, y, width, height, (255, 255, 255, 12))
+        self._line(x, y + height, x + width, y + height, (255, 255, 255, 165))
+        x, y, size, width = layout.text
+        value = keyboard.text
+        # Text entry appends at the end. Keep the newly typed suffix and caret
+        # visible even when a long query no longer fits the input field.
+        if value and self.text.measure(value, size) > width - 14:
+            low, high = 0, len(value)
+            while low < high:
+                middle = (low + high) // 2
+                if self.text.measure("…" + value[middle:], size) > width - 14:
+                    low = middle + 1
+                else:
+                    high = middle
+            value = "…" + value[low:]
+        self._text(value or "Type a title", x, y, size, primary if value else muted, width)
+        caret_x = x + self.text.measure(value, size) + 4 if value else x
+        self._line(caret_x, y, caret_x, y + size, primary)
+        for cell in layout.cells:
+            selected = cell.index == keyboard.selected
+            self._rect(cell.x, cell.y, cell.width, cell.height,
+                       (255, 255, 255, 235) if selected else (255, 255, 255, 12))
             if not selected:
-                self._line(x, y + 51, x + 80, y + 51, (255, 255, 255, 40))
-            size = 17 if len(key) > 1 else 22
-            label_width = self.text.measure(key, size)
-            self._label(key, x + max(7, (80 - label_width) / 2), y + 15, size,
-                        (5, 39, 86) if selected else primary, 67)
-        self._text("Enter / Y  Find     Backspace / X  Delete     Esc  Cancel", 201, 570, 15, muted, 876)
+                self._line(cell.x, cell.y + cell.height - 1,
+                           cell.x + cell.width, cell.y + cell.height - 1, (255, 255, 255, 40))
+            label_width = self.text.measure(cell.key, cell.font_size)
+            self._label(cell.key, cell.x + max(6, (cell.width - label_width) / 2),
+                        cell.y + (cell.height - cell.font_size) / 2, cell.font_size,
+                        (5, 39, 86) if selected else primary, cell.width - 12)
+        for hint, (x, y) in zip(keyboard_hints(snapshot.preferences.confirm), layout.hint_positions):
+            self._button(hint.position, x - 20, y + layout.hint_font_size / 2, primary)
+            self._text(hint.title, x, y, layout.hint_font_size, muted, 450)
 
     def present(self) -> None:
         if self._external or self._closed:

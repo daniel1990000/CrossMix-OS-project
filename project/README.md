@@ -10,6 +10,8 @@ This checkpoint runs on a computer and has injected-runtime tests. It is not a d
 
 Use Python 3.9 or later, system SDL2 and libsodium. On Debian/Ubuntu the runtime packages are `libsdl2-2.0-0` and `libsodium23`.
 
+Complete host certification also requires `libsdl2-image-2.0-0` to exercise the embedded artwork path against a real host SDL_image. Device libraries are kept at the existing spruce versions. See [artwork formats and limits](docs/artwork-formats.md).
+
 ```sh
 python3 -m venv /tmp/smartpro-venv
 /tmp/smartpro-venv/bin/pip install -r project/requirements-dev.txt
@@ -17,6 +19,8 @@ PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo
 ```
 
 Use arrow keys or a controller to navigate. Enter confirms, Escape returns, and the on-screen hints follow the selected physical Confirm button. The sample titles and state cards are fixtures; no games are included or launched.
+
+The controller keyboard scales with text size, provides title punctuation and shows physical Confirm/Cancel/Delete/Find hints. Use Games → Refresh library (or F5) after changing covers; refresh preserves page/focus and clears stale artwork. See [interface accessibility](docs/interface-accessibility.md) and the [new host captures](evidence/ui-polish/).
 
 ```sh
 PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo --headless --frames 2 --screen library --screenshot /tmp/smartpro-library.png

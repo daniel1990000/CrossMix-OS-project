@@ -361,6 +361,70 @@ class EmbeddedTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             logical_action(Buttons.A, prefs, device)
 
+    def test_keyboard_shortcuts_respect_confirm_preferences_and_inverse_remaps(self):
+        class Buttons(Enum):
+            A = 1
+            B = 2
+            X = 3
+            Y = 4
+        for confirm in ("south", "east"):
+            for swapped in (False, True):
+                with self.subTest(confirm=confirm, swapped=swapped):
+                    mapping = {Buttons.A: Buttons.B, Buttons.B: Buttons.A,
+                               Buttons.X: Buttons.Y, Buttons.Y: Buttons.X} if swapped else {}
+                    remap = lambda button: mapping.get(button, button)
+                    device = SimpleNamespace(button_remapper=SimpleNamespace(get_mappping=remap))
+                    preferences = SimpleNamespace(confirm=confirm)
+                    self.assertEqual(logical_action(remap(Buttons.X), preferences, device, text_mode=True), "delete_text")
+                    self.assertEqual(logical_action(remap(Buttons.Y), preferences, device, text_mode=True), "submit_text")
+                    self.assertEqual(logical_action(remap(Buttons.X), preferences, device), "search")
+                    self.assertEqual(logical_action(remap(Buttons.Y), preferences, device), "favorite")
+                    physical = Buttons.B if confirm == "south" else Buttons.A
+                    self.assertEqual(logical_action(remap(physical), preferences, device, text_mode=True), "confirm")
+        device.button_remapper.get_mappping = lambda button: Buttons.X if button in {Buttons.X, Buttons.Y} else button
+        with self.assertRaises(ContractError):
+            logical_action(Buttons.X, preferences, device, text_mode=True)
+
+    def test_existing_controller_deletes_and_submits_the_open_keyboard(self):
+        class Buttons(Enum):
+            A = 1
+            B = 2
+            X = 3
+            Y = 4
+        for confirm in ("south", "east"):
+            for swapped in (False, True):
+                with self.subTest(confirm=confirm, swapped=swapped):
+                    mapping = {Buttons.A: Buttons.B, Buttons.B: Buttons.A,
+                               Buttons.X: Buttons.Y, Buttons.Y: Buttons.X} if swapped else {}
+                    remap = lambda button: mapping.get(button, button)
+                    self.device.button_remapper = SimpleNamespace(get_mappping=remap)
+                    physical_confirm = Buttons.B if confirm == "south" else Buttons.A
+                    inputs = iter(remap(button) for button in
+                                  (Buttons.X, physical_confirm, Buttons.X, physical_confirm, Buttons.Y))
+                    current = [None]
+                    def poll(timeout):
+                        current[0] = next(inputs, None)
+                        return current[0] is not None
+                    self.controller.get_input = poll
+                    self.controller.last_input = lambda: current[0]
+                    context = replace(self.context, state_dir=self.root / ("keyboard-" + confirm + str(swapped)))
+                    health = FrontendHealth(context.state_dir, boot_id="embedded-keyboard-fixture")
+                    health.request("project", 0)
+                    queries = []
+                    class Backend(FakeBackend):
+                        def games(self, *args, **kwargs):
+                            queries.append(kwargs.get("search"))
+                            return super().games(*args, **kwargs)
+                    dependencies = replace(self.dependencies, backend_factory=Backend,
+                        settings_factory=lambda path: SimpleNamespace(recover=lambda: None,
+                            get=lambda: {"generation": 0, "preferences": {"confirm": confirm}}))
+                    runner = EmbeddedRunner(context, health=health, dependencies=dependencies)
+                    with self.provider_patch():
+                        result = runner.run(max_frames=5)
+                    self.assertIsNone(runner.model.snapshot().keyboard)
+                    self.assertEqual(queries, ["A"])
+                    self.assertEqual(result.real_game_launches, 0)
+
     def test_source_patch_stages_only_after_hash_and_source_use_gate(self):
         root = self.root / "original-fixture-source"
         source = root / "App/PyUI/main-ui/menus/main_menu.py"

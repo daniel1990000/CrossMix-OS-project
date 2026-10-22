@@ -191,7 +191,14 @@ class Dispatcher:
                 raise AppError("UNQUALIFIED_THEME", "PPSSPP appearance is unavailable until the installed emulator is verified.")
             return getattr(self.theme_manager, action)(params)
         if method == "library.systems":
-            self._fields(params, ())
+            self._fields(params, ("refresh",))
+            if type(params.get("refresh", False)) is not bool:
+                raise AppError("INVALID_PARAMS", "Library refresh must be true or false.")
+            if params.get("refresh"):
+                refresh = getattr(self.backend, "refresh", None)
+                if not callable(refresh):
+                    raise AppError("REFRESH_UNAVAILABLE", "This library provider cannot refresh its records.")
+                refresh()
             return self.backend.systems()
         if method == "library.query":
             self._fields(params, ("system_id", "search", "offset", "limit"))

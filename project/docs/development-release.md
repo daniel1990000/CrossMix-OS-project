@@ -10,6 +10,8 @@ python3 project/packaging/dev_release.py --output /tmp/smartpro-development --in
 
 The output path must be new and outside `project/`. Python 3 and system libsodium are required to build/sign/verify. The `--smoke-python` environment additionally needs system SDL2, `PySDL2==0.9.17` and `Pillow==11.1.0`. No dependencies are downloaded or installed automatically by the builder.
 
+The full host certification additionally requires system SDL_image (`libsdl2-image-2.0-0` on Debian/Ubuntu) for actual embedded-path artwork decoding tests. The standalone preview continues to use Pillow; the device keeps its existing SDL libraries.
+
 [The current release descriptor](../packaging/current-release.json) selects the release ID, normalized timestamp, pinned spruce/PyUI baseline and exact original payload scope. The CLI and CI use it by default; an explicit `--release` must match it. The native candidate hashes, extension sets and historical evidence in that file are references only: no upstream patch or native binary is selected for this preview. The historical host pass does not certify this release.
 
 Each build resolves repository HEAD to an exact frontend commit and records whether `project/` has uncommitted changes. A SHA-256 inventory binds the actual allowlisted source bytes, including the descriptor and copied source lock. This identity appears in signed payload metadata and `build-report.json`. A modified checkout is explicitly labelled and must not be presented as an exact-commit certification.

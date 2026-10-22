@@ -4,7 +4,7 @@
 
 This is a researched execution plan, not a claim that its tasks have been implemented. Research covers the repository, pinned upstream source, current upstream changes, manufacturer firmware documentation, port launchers and licences. No physical device was tested, software installed, upstream notification sent or release published during this review.
 
-Execution update, 22 October 2026: **R01–R03 are complete** in the first engineering batch. The strict host run passes **581 checks** with zero skips, failures or errors. See [batch evidence](../evidence/release-tooling-batch1.json). The remaining 22 tasks are queued; all 13 physical acceptance areas remain untested. The research observations and 561-check baseline below retain their original scope.
+Execution update, 22 October 2026: **R01–R03 and U01–U03 are complete** as host engineering work. The latest strict run passes **621 checks** with zero skips, failures or errors. See [release tooling evidence](../evidence/release-tooling-batch1.json) and [interface evidence](../evidence/ui-polish/verification.json). The remaining 19 tasks are queued; all 13 physical acceptance areas remain untested. The research observations and 561-check baseline below retain their original scope.
 
 Reviewed checkpoint: `a7a735726b8635fb606e38e079d11ae8f0cdaa41`, branch `build/spruce-psp-experience`. This plan supplements the active [TRIMUI_PLAN.md](../../TRIMUI_PLAN.md); the collapsed historical CrossMix/C++ plan remains historical. Source observations are distinguished below from proposed work and hardware hypotheses.
 
@@ -64,7 +64,7 @@ Sources: [legacy workflow](https://github.com/daniel1990000/CrossMix-OS-project/
 
 ## 4. Prioritized execution register
 
-**R01–R03 are complete; all other rows remain proposed.** P0 means a prerequisite for the named activity, not that every optional feature blocks the core release. Owners: **engineering** = assistant/developer work; **operator** = owner with physical device; **maintainer** = release owner/source-use correspondence. Effort bands are rough engineering sizing: S up to a focused day, M several focused days, L multiple iterations. They exclude external response time and hardware debugging; they are not delivery dates.
+**R01–R03 and U01–U03 are complete as host work; all other rows remain proposed.** P0 means a prerequisite for the named activity, not that every optional feature blocks the core release. Owners: **engineering** = assistant/developer work; **operator** = owner with physical device; **maintainer** = release owner/source-use correspondence. Effort bands are rough engineering sizing: S up to a focused day, M several focused days, L multiple iterations. They exclude external response time and hardware debugging; they are not delivery dates.
 
 | ID | Priority / owner / size | Deliverable and completion criteria | Depends on |
 |---|---|---|---|
@@ -94,7 +94,7 @@ Sources: [legacy workflow](https://github.com/daniel1990000/CrossMix-OS-project/
 | O02 | P1 / engineering + maintainer / M | Release bundle has stable download, hashes, source/notices, exact support matrix, install/update/restore, known issues, support export and screenshots labelled by provenance. | R02–R06 as applicable, D06, O01 |
 | O03 | P2 / engineering + maintainer / M | Maintenance matrix and clean rebuild report; scoped upstream-drift reviews, bug triage and requalification rules. | R03, first pilot |
 
-With **R01–R03 complete**, take U01–U03 as the next small batch. R04, D01 design and D04 remain queued alongside R05/R06 and the device casebook. Port work is a separate lane and does not need to delay the core UI.
+With **R01–R03 and U01–U03 complete**, the suggested next host group is U04, D04 and P01. R04, D01 design and the device casebook remain queued alongside R05/R06. Port work is a separate lane and does not need to delay the core UI.
 
 ## 5. Dependencies and decision gates
 
@@ -226,7 +226,9 @@ Optional UI refinements: measured two-line focused titles before animated marque
 
 **Completed first batch:** R01 archives the inherited release workflow outside Actions discovery while retaining its exact bytes and reviewing notice allowlists. R02 requires the three untouched pinned source checkouts, rejects skips and incomplete suites, and records actual identities/counts. R03 makes the current dev7 descriptor the CLI/CI authority and binds signed metadata to the frontend revision and actual original-source inventory. Historical source locks and build evidence are preserved.
 
-**Suggested next small batch:** U01–U03 artwork formats, artwork refresh and controller keyboard accessibility. R04 artifact custody remains required before native use; D01 experimental-route design and D04 measurement work remain queued. Each change should include focused verification, then the complete pinned-source check where relevant. Keep runtime gates false.
+**Completed second batch:** U01 adds bounded PNG/JPEG/BMP/static WebP/QOI handling through both decode paths; U02 adds controller-accessible metadata/artwork refresh, stable page/focus and rejection of stale completions; U03 scales all keyboard text through 1.75 with 50 keys, title punctuation, physical help and defined Unicode limits. Dev8 is the current original-only host preview. Target codecs, rendering and input still need device acceptance.
+
+**Suggested next small batch:** U04 large-library fixtures, D04 measurement tooling and P01 port dependency inventory. R04 artifact custody remains required before native use; D01 experimental-route design and device work remain queued. Each change should include focused verification, then the complete pinned-source check where relevant. Keep runtime gates false.
 
 **Next operator preparation:** exact device/firmware/card inventory, expendable card and verified original saves, recovery payloads, representative owner content and a way to retain logs/video. Prepare scripts and casebook before consuming device time.
 
@@ -238,6 +240,6 @@ The existing [release pack](https://chatgpt.com/space/page_45bef6d344508191ad553
 
 Current concise statement:
 
-> Smart Pro PSP experience is a development preview for the original TrimUI Smart Pro, built on spruceOS/PyUI. The host implementation passes 581 automated checks. Release isolation, strict certification and current release selection are complete. Next come artwork and controller polish, recoverable device testing, and separately qualified emulator and port enhancements.
+> Smart Pro PSP experience is a development preview for the original TrimUI Smart Pro, built on spruceOS/PyUI. The host implementation passes 621 automated checks. Release tooling, artwork compatibility/refresh and controller keyboard polish are complete as host work. Next come large-library and measurement work, recoverable device testing, and separately qualified emulator and port enhancements.
 
 A future release statement should replace the last sentence with the exact physically supported scope and link its evidence. Do not announce “all done,” universal Resume, improved battery life or a device-ready image before those claims are demonstrated.

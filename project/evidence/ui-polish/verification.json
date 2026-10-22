@@ -1,0 +1,408 @@
+{
+  "artwork": {
+    "backend_tests": [
+      "Pillow",
+      "SDL_image",
+      "shared original QOI decoder"
+    ],
+    "formats": [
+      "PNG",
+      "JPEG",
+      "BMP",
+      "static WebP",
+      "QOI"
+    ],
+    "generation_tokens_and_same_path_refresh_verified": true,
+    "max_input_bytes": 8388608,
+    "max_output_axis": 512,
+    "max_source_axis": 8192,
+    "max_source_pixels": 16777216,
+    "target_codec_availability_verified": false
+  },
+  "captures": {
+    "clock": "Actual host coordinator clock",
+    "files": {
+      "artwork.png": "a6ca35935fe6b0eb8dc4022ad929c3d6170702a2f99b98a830801448cb232888",
+      "capture.py": "0e4e11bb17fe84e357258b1762141c29c14673bf092be9997faa06529916699d",
+      "keyboard-large.png": "aed412e591c4640615d34450aa5183c92c72a684028460b83002702efdee2743",
+      "keyboard.png": "27b871a76adefb83ef33edbb96ce7a040ec02001e4006c7e2a18d841315c7d73"
+    },
+    "kind": "Actual SDL host renders with original synthetic text and artwork; no game data or physical device photographs."
+  },
+  "certification": {
+    "device_qualified": false,
+    "finished_at": "2026-10-22T21:32:11.861494+00:00",
+    "kind": "pinned-source-host-certification",
+    "phase": "complete",
+    "preview_passed": true,
+    "schema": 1,
+    "sources": [
+      {
+        "environment_variable": "SPRUCE_SOURCE_ROOT",
+        "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "lock": "docs/spruce-source-lock.json",
+        "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+        "materialized_files_checked": 437,
+        "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "required_files_checked": 6,
+        "root": "/workspace/trimui-sources/spruce",
+        "subtree": {
+          "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "path": "App/PyUI/main-ui"
+        },
+        "tracked_content_clean": true
+      },
+      {
+        "environment_variable": "PPSSPP_SOURCE_ROOT",
+        "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "lock": "project/ppsspp/source-lock.json",
+        "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+        "materialized_files_checked": 1038,
+        "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "required_files_checked": 21,
+        "root": "/workspace/trimui-sources/ppsspp",
+        "tracked_content_clean": true
+      },
+      {
+        "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+        "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "lock": "project/retroarch/source-lock.json",
+        "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+        "materialized_files_checked": 4,
+        "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "required_files_checked": 4,
+        "root": "/workspace/trimui-sources/retroarch",
+        "tracked_content_clean": true
+      }
+    ],
+    "sources_after_tests": [
+      {
+        "environment_variable": "SPRUCE_SOURCE_ROOT",
+        "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "lock": "docs/spruce-source-lock.json",
+        "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+        "materialized_files_checked": 437,
+        "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "required_files_checked": 6,
+        "root": "/workspace/trimui-sources/spruce",
+        "subtree": {
+          "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "path": "App/PyUI/main-ui"
+        },
+        "tracked_content_clean": true
+      },
+      {
+        "environment_variable": "PPSSPP_SOURCE_ROOT",
+        "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "lock": "project/ppsspp/source-lock.json",
+        "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+        "materialized_files_checked": 1038,
+        "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "required_files_checked": 21,
+        "root": "/workspace/trimui-sources/ppsspp",
+        "tracked_content_clean": true
+      },
+      {
+        "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+        "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "lock": "project/retroarch/source-lock.json",
+        "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+        "materialized_files_checked": 4,
+        "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "required_files_checked": 4,
+        "root": "/workspace/trimui-sources/retroarch",
+        "tracked_content_clean": true
+      }
+    ],
+    "started_at": "2026-10-22T21:31:23.162167+00:00",
+    "successful": true,
+    "suites": [
+      {
+        "directory": "/workspace/trimui-project/project/tests",
+        "errors": 0,
+        "expected_failures": 0,
+        "failures": 0,
+        "passed": 560,
+        "process_exit_code": 0,
+        "skip_details": [],
+        "skipped": 0,
+        "successful": true,
+        "tests_run": 560,
+        "unexpected_successes": 0
+      },
+      {
+        "directory": "/workspace/trimui-project/project/ppsspp/tests",
+        "errors": 0,
+        "expected_failures": 0,
+        "failures": 0,
+        "passed": 61,
+        "process_exit_code": 0,
+        "skip_details": [],
+        "skipped": 0,
+        "successful": true,
+        "tests_run": 61,
+        "unexpected_successes": 0
+      }
+    ],
+    "totals": {
+      "errors": 0,
+      "expected_failures": 0,
+      "failures": 0,
+      "passed": 621,
+      "skipped": 0,
+      "tests_run": 621,
+      "unexpected_successes": 0
+    }
+  },
+  "date": "2026-10-22",
+  "development_package": {
+    "artifacts": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "eb3ca66407edbc33d93abbe741965c496a4cbd3b4c5e3f425f582c74aae14cee",
+      "development-verification.pub": "882eb8c4c1e1d7dc5a9d3cb173d7017beb8dbaf2cdb7d7f472c7f441b7430796",
+      "host-preview.png": "2ef49800976a14c411e70749a530392b963c6d5714a398e76a8a5ae22e848c30",
+      "release-source.json": "3022ff0963ad37704d888221d0ce0e8638e0211c5ad46986aea4a8a007dd6cf7",
+      "smartpro-psp-0.1.0-dev8-host-preview.zip": "ae4a115f787535fb5714773f39e38f9028d81175dc42b471e8117e300a609b7e",
+      "smartpro-psp-0.1.0-dev8-original-source.zip": "b7929a3b4545a5b765bd66b8f4667268fba73748413d616a182d5c8e320337c3",
+      "smartpro-psp-0.1.0-dev8.tar": "1fc4dd032f66d7cc3469cb6886f4fbd0c8c35318d57d2c8e862769b5a20dbc17"
+    },
+    "checksums_read_back": true,
+    "keyboard_in_signed_module_inventory": true,
+    "original_mit_and_font_ofl_retained": true,
+    "output": "/workspace/scratch/trimui-interface-dev8",
+    "report": {
+      "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "byte_identical_overlay_rebuild_with_same_key": true,
+      "byte_identical_unsigned_zip_rebuild": true,
+      "development_key_id": "882eb8c4c1e1d7dc5a9d3cb173d7017beb8dbaf2cdb7d7f472c7f441b7430796",
+      "device_activation_qualified": false,
+      "device_gates": {
+        "hardware_qualified": false,
+        "runtime_verified": false,
+        "source_use_verified": false
+      },
+      "fixture_stage_activate_rollback": true,
+      "generated_private_key_deleted": true,
+      "payload_files": 56,
+      "private_key_packaged": false,
+      "production_authenticity_claim": false,
+      "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+      "release_id": "smartpro-psp-0.1.0-dev8",
+      "release_selection": {
+        "descriptor": {
+          "base": {
+            "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+            "release_tag": "v4.5.4",
+            "repository": "https://github.com/spruceUI/spruceOS",
+            "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54"
+          },
+          "current_host_certification": "dist/certification.json is generated by the strict runner; historical passes do not certify dev8.",
+          "delivery": "original-only-host-preview",
+          "frontend": {
+            "identity": "Resolve exact commit and source inventory at build time; modified trees are explicitly labelled.",
+            "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
+            "selection": "repository-head-or-source-export"
+          },
+          "historical_host_evidence": {
+            "ci_run": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380",
+            "commit": "8768ab042da2c89c0087d068453bfd58f68445f5",
+            "covers_current_release": false,
+            "path": "project/evidence/source-study/verification.json"
+          },
+          "optional_native_references": [
+            {
+              "custody": "Historical build reference; current retrieval not verified.",
+              "device_qualified": false,
+              "evidence": "project/evidence/ppsspp-complete-state-build.json",
+              "extension_set": [
+                "ppsspp/patches/0001-independent-native-menu-controls.patch",
+                "ppsspp/patches/0002-save-slot-completion-evidence.patch",
+                "ppsspp/patches/0003-project-state-session.patch",
+                "ppsspp/patches/0004-checked-spruce-save-and-quit.patch"
+              ],
+              "id": "ppsspp-complete-state-candidate",
+              "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+              "selected": false,
+              "sha256": "a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d",
+              "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751"
+            },
+            {
+              "custody": "Historical build reference; current retrieval not verified.",
+              "device_qualified": false,
+              "evidence": "project/evidence/retroarch-igm-build.json",
+              "extension_set": [
+                "retroarch/patches/0001-independent-igm-menu-controls.patch"
+              ],
+              "id": "retroarch-igm-candidate",
+              "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+              "selected": false,
+              "sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+              "source_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576"
+            }
+          ],
+          "qualification": {
+            "hardware_qualified": false,
+            "runtime_verified": false,
+            "source_use_verified": false
+          },
+          "release_id": "smartpro-psp-0.1.0-dev8",
+          "schema": 1,
+          "selected_native_binaries": [],
+          "selected_original_payload": [
+            "psp_shell",
+            "bridge",
+            "profiles",
+            "ppsspp/theme",
+            "assets"
+          ],
+          "selected_upstream_patches": [],
+          "source_date_epoch": 1792701643
+        },
+        "descriptor_sha256": "8ac3c810bec5433a6c05e6e8997f0ae28e86d9921bfc45b8fa74c56530f6eaca",
+        "frontend": {
+          "commit": "960d0b0641b5d5f0599a2b72d14fb6e807e50242",
+          "working_tree_modified": true
+        },
+        "source_inventory_sha256": "a9439fcbfecabc2d9381696d1d7b41641aca7e9386087f25613ea1df7c25244c"
+      },
+      "schema": 1,
+      "signature_hash_inventory_verified": true,
+      "signer": "ephemeral development",
+      "smoke": {
+        "classic_delegation_contract": true,
+        "clean_process_exit": true,
+        "executed": true,
+        "navigation_actions_exercised": true,
+        "physical_device_verified": false,
+        "real_game_launches": 0,
+        "rendered_frames": 3,
+        "settings_dispatch": true
+      },
+      "source_date_epoch": 1792701643,
+      "status": "host-development-preview"
+    },
+    "runtime_module_bytes_read_back": true
+  },
+  "failed_attempt": {
+    "change": "Atomic readiness marker plus bounded liveness-checked setup wait; production ownership checks and assertions unchanged.",
+    "diagnostic": "fixture-readiness-diagnostic.json",
+    "diagnostic_sha256": "b856a1ba75458283c164ad87454926a87e5d2c9006dc463ca07e783767964bc0",
+    "failing_test": "test_principal_integration.PrincipalBoundaryTests.test_killed_source_helper_cannot_reauthorize_orphaned_owner_from_dead_source_pid",
+    "failure": "Fixture read escaped-pid before readiness was published.",
+    "limitation": "A controlled startup delay reproduces the failure signature; the exact cause of the original host delay remains unproven.",
+    "record": "failed-certification-before-fixture-sync.json",
+    "sha256": "4b6eac2c83db76cdf337b43b1099c7a3483403e7bbf525a86b7c4ae9af233ea5",
+    "totals": {
+      "errors": 0,
+      "expected_failures": 0,
+      "failures": 1,
+      "passed": 620,
+      "skipped": 0,
+      "tests_run": 621,
+      "unexpected_successes": 0
+    }
+  },
+  "github_ci": {
+    "status": "pending_for_this_batch"
+  },
+  "host_capabilities": {
+    "image_init_requested": 11,
+    "image_init_returned": 11,
+    "pillow": "11.1.0",
+    "pillow_jpeg": true,
+    "pillow_webp": true,
+    "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+    "pysdl2": "0.9.17",
+    "python": "3.12.14",
+    "sdl2": "2.32.4",
+    "sdl_image": "2.8.8",
+    "sdl_image_source": "isolated host Debian package; no device library installed"
+  },
+  "keyboard": {
+    "confirm_policies": [
+      "south",
+      "east"
+    ],
+    "embedded_actual_controller_route_tested": true,
+    "embedded_inverse_remaps_tested": true,
+    "keys": 50,
+    "logical_workspace": [
+      1280,
+      720
+    ],
+    "physical_input_verified": false,
+    "standalone_external_text_limit_codepoints": 128,
+    "tested_text_scales": [
+      0.75,
+      1.0,
+      1.75
+    ]
+  },
+  "local_source": {
+    "implementation_sha256": {
+      ".github/workflows/smartpro-offshoot.yml": "1b73cb8551843e97c111ace08bc06aa27de4a425c314db3b2a66e109b6ef0552",
+      "project/bridge/principal_integration.py": "66f1e16355ecf9306fdaa272fbc0d009f18714d3ea065576ad530fb229e0c49f",
+      "project/packaging/current-release.json": "8ac3c810bec5433a6c05e6e8997f0ae28e86d9921bfc45b8fa74c56530f6eaca",
+      "project/psp_shell/adapters/spruce.py": "fc6d74688dd4f3c21513fb5db7855419ee786707a815b4ba2f55b15261433518",
+      "project/psp_shell/app.py": "8f1b0867bba2c1db504d09c1926661f6c65837a4450e8ea43a7f6fb4f00253f0",
+      "project/psp_shell/demo.py": "2cf44bd71bd1494b7592b731c0454659c055b51a20d73d481236958bc4c9725e",
+      "project/psp_shell/embedded.py": "313640f837f567503e68118c54346d4e2e9ea6f4d93e4a33f368d319a0ef5eb8",
+      "project/psp_shell/ui/artwork.py": "c0aabc0d6ee5e65ab3c8e90c4a9af21c32395232f7e40365b9e271fc5de03c8c",
+      "project/psp_shell/ui/keyboard.py": "7f057986b18e259771a9c5e953f8e29d9050ce0a1b921c555d4a366aee63bdf1",
+      "project/psp_shell/ui/model.py": "1a145d83fa75d5431881edd3c1fbb2fc36b827147d523b3a6478ffc3fd214ba7",
+      "project/psp_shell/ui/renderer.py": "a809c6335aeb865042ab7fb4df4cdf6e1535e1bdff015fa3e01705ed6fb27c3a",
+      "project/tests/test_artwork_formats.py": "dbc34c0c443bfb8f6d558b641c58d4cdd0184de604f4390cbf8b6f5f1da2bee1",
+      "project/tests/test_artwork_refresh.py": "6a1b7dafcbd68c39fb47c7a33a8d6f716511c0ef5c32ec2e095729ea7e2762fe",
+      "project/tests/test_embedded.py": "600a4f1634dc047fd37b74e9f2f7d7806304990161bda329da30ba704e15ad73",
+      "project/tests/test_keyboard_accessibility.py": "3ac00440d9f37bb8fa05700380302faa16d258926fb15dd8f6e6c47d7273c7a4",
+      "project/tests/test_keyboard_rendering.py": "0cd0be7a19aebcf40e194d4628e634330e5fa5f21460e4fb008fa632ebc94f96",
+      "project/tests/test_principal_integration.py": "77ab10ab70507e20bef499508fa19173d9b2fe5c3883f46172fb01e537c1ffdd"
+    },
+    "parent_commit": "960d0b0641b5d5f0599a2b72d14fb6e807e50242",
+    "working_tree_modified": true
+  },
+  "new_checks": {
+    "artwork_formats": 19,
+    "artwork_refresh": 7,
+    "embedded_keyboard_routing": 2,
+    "keyboard_accessibility": 10,
+    "keyboard_rendering": 2,
+    "total": 40
+  },
+  "next_suggested_batch": [
+    "U04",
+    "D04",
+    "P01"
+  ],
+  "qualification": {
+    "hardware_qualified": false,
+    "native_binaries_selected": false,
+    "notification_sent": false,
+    "physical_acceptance_areas_tested": 0,
+    "physical_acceptance_areas_total": 13,
+    "release_published": false,
+    "runtime_verified": false,
+    "source_use_verified": false
+  },
+  "schema": 1,
+  "scope": "Host interface engineering and original-only development packaging; no physical device execution or native engine build.",
+  "source_export_rebuild": {
+    "git_available_in_export": false,
+    "installed_payload_smoke_passed": true,
+    "original_source_zip_byte_identical": true,
+    "output": "/workspace/scratch/trimui-interface-export-rebuild",
+    "signature_hash_inventory_verified": true,
+    "signatures_use_independent_ephemeral_development_keys": true,
+    "source_file_count": 137,
+    "source_identity_preserved": true,
+    "source_inventory_sha256": "a9439fcbfecabc2d9381696d1d7b41641aca7e9386087f25613ea1df7c25244c",
+    "unsigned_preview_zip_byte_identical": true
+  },
+  "tasks_completed": [
+    "U01",
+    "U02",
+    "U03"
+  ]
+}

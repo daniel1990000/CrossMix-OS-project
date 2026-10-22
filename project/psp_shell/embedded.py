@@ -120,7 +120,7 @@ def _logical_name(value: Any, device: Any) -> str:
     return name
 
 
-def logical_action(value: Any, preferences: Any, device: Any) -> str | None:
+def logical_action(value: Any, preferences: Any, device: Any, *, text_mode: bool = False) -> str | None:
     name = _logical_name(value, device)
     directions = {"DPAD_LEFT": "left", "DPAD_RIGHT": "right", "DPAD_UP": "up", "DPAD_DOWN": "down",
                   "LEFT_STICK_LEFT": "left", "LEFT_STICK_RIGHT": "right", "LEFT_STICK_UP": "up", "LEFT_STICK_DOWN": "down"}
@@ -129,7 +129,8 @@ def logical_action(value: Any, preferences: Any, device: Any) -> str | None:
     if name in {"A", "B"}:
         confirm = "B" if getattr(preferences, "confirm", "south") == "south" else "A"
         return "confirm" if name == confirm else "back"
-    return {"Y": "favorite", "X": "search", "SELECT": "search"}.get(name)
+    return {"Y": "submit_text" if text_mode else "favorite",
+            "X": "delete_text" if text_mode else "search", "SELECT": "search"}.get(name)
 
 
 def _existing_font_provider(display: Any) -> Callable[[int], Any]:
@@ -419,7 +420,8 @@ class EmbeddedRunner:
                     self.ready = True
                 action = next(scripted, None)
                 if action is None and has_input and not self._release_gate:
-                    action = logical_action(self.context.controller.last_input(), self.model.preferences, self.context.device)
+                    action = logical_action(self.context.controller.last_input(), self.model.preferences,
+                                            self.context.device, text_mode=snapshot.keyboard is not None)
                 if action:
                     self._commands(self.model.handle(action))
                     if action not in {"left", "right", "up", "down"}:

@@ -235,7 +235,8 @@ root=Path(sys.argv[1]);config=fixture_configuration(root)
 _fixture_stage_command(config,('printf launched > '+str(root/'should-not-run')+'\\n').encode())
 if os.fork(): os._exit(0)
 os.setsid()
-(root/'escaped-pid').write_text(str(os.getpid()))
+ready=root/'escaped-pid';pending=ready.with_suffix('.pending')
+pending.write_text(str(os.getpid()));pending.replace(ready)
 while not (root/'release-owner').exists(): time.sleep(.01)
 ''')
 launch=config.sd_root/'App/PyUI/launch.sh';launch.parent.mkdir(parents=True)
@@ -244,9 +245,13 @@ launch.write_text('#!/bin/sh\nexec '+shlex.quote(sys.executable)+' '+shlex.quote
 previous=_subreaper(True)
 helper=subprocess.Popen([sys.executable,'-c','from pathlib import Path;import sys;from test_principal_integration import fixture_configuration;from bridge.principal import PrincipalBoundary;PrincipalBoundary(fixture_configuration(Path(sys.argv[1]))).run_pyui()',str(ROOT)])
 try:
-    deadline=time.monotonic()+3
-    while not (ROOT/'escaped-pid').exists() and time.monotonic()<deadline: time.sleep(.01)
-    escaped=int((ROOT/'escaped-pid').read_text())
+    # Wait for completed source staging and a fully published orphan PID before
+    # testing helper death; imports and fsyncs are fixture setup, not the contract.
+    ready=ROOT/'escaped-pid';deadline=time.monotonic()+6
+    while not ready.exists() and helper.poll() is None and time.monotonic()<deadline: time.sleep(.01)
+    assert helper.poll() is None, f'source helper exited before orphan readiness: {helper.returncode}'
+    assert ready.is_file(), 'source helper did not publish orphan readiness within 6s'
+    escaped=int(ready.read_text())
     helper.kill();helper.wait()
     health=FrontendHealth(config.state_dir)
     assert health.foreground_identity() is not None

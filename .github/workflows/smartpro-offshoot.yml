@@ -73,7 +73,7 @@ jobs:
             common_src/spruce_igm_theme.c
             common_src/spruce_igm_theme.h
             build.sh
-      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsodium23 binutils
+      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsdl2-image-2.0-0 libsodium23 binutils
       - run: python -m pip install -r project/requirements-dev.txt
       - run: sh project/dev/check.sh
         env:

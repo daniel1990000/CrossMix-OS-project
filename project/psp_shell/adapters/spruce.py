@@ -179,6 +179,20 @@ class SourceSnapshotProvider:
         self._loaded = False
         self._visited = 0
 
+    def refresh(self) -> None:
+        """Invalidate only our read-only records; keep source managers intact.
+
+        The next snapshot query repeats the existing bounded inspection. Live
+        providers keep using their already initialized PyUI authorities.
+        """
+        self._loaded = False
+        self._systems.clear()
+        self._games.clear()
+        self._tools.clear()
+        self._metadata.clear()
+        self.warnings.clear()
+        self._visited = 0
+
     def _warn(self, code: str, item: str = "") -> None:
         if len(self.warnings) < 256:
             self.warnings.append({"code": code, "id": item})
@@ -319,7 +333,7 @@ class SourceSnapshotProvider:
                       self.root / "Imgs" / stem,
                       self.root / "Saves" / "states" / ".gameswitcher" / (rom.stem + ".state.auto")]
         for candidate in candidates:
-            for suffix in (".png", ".jpg", ".jpeg", ".qoi"):
+            for suffix in (".png", ".jpg", ".jpeg", ".qoi", ".bmp", ".webp"):
                 try:
                     path = self.path(str(candidate) + suffix)
                     if path.is_file():
@@ -783,6 +797,9 @@ class SpruceBackend:
         self._resume_records: dict[str, dict] = {}
         self._verified_resume_records: dict[str, Any] = {}
         self._engine_profiles: dict[str, dict] = {}
+
+    def refresh(self) -> None:
+        self.provider.refresh()
 
     def systems(self) -> list[dict]:
         return self.provider.systems()
