@@ -94,7 +94,7 @@ Sources: [legacy workflow](https://github.com/daniel1990000/CrossMix-OS-project/
 | O02 | P1 / engineering + maintainer / M | Release bundle has stable download, hashes, source/notices, exact support matrix, install/update/restore, known issues, support export and screenshots labelled by provenance. | R02–R06 as applicable, D06, O01 |
 | O03 | P2 / engineering + maintainer / M | Maintenance matrix and clean rebuild report; scoped upstream-drift reviews, bug triage and requalification rules. | R03, first pilot |
 
-Start with **R01–R04, U01–U03, D01 design and D04**, while preparing R05/R06 and the device casebook. Port work is a separate lane and does not need to delay the core UI.
+With **R01–R03 complete**, take U01–U03 as the next small batch. R04, D01 design and D04 remain queued alongside R05/R06 and the device casebook. Port work is a separate lane and does not need to delay the core UI.
 
 ## 5. Dependencies and decision gates
 
@@ -238,6 +238,6 @@ The existing [release pack](https://chatgpt.com/space/page_45bef6d344508191ad553
 
 Current concise statement:
 
-> Smart Pro PSP experience is a development preview for the original TrimUI Smart Pro, built on spruceOS/PyUI. The host implementation passes 561 automated checks. Work now focuses on release tooling, artwork and controller polish, recoverable device testing, and separately qualified emulator and port enhancements.
+> Smart Pro PSP experience is a development preview for the original TrimUI Smart Pro, built on spruceOS/PyUI. The host implementation passes 581 automated checks. Release isolation, strict certification and current release selection are complete. Next come artwork and controller polish, recoverable device testing, and separately qualified emulator and port enhancements.
 
 A future release statement should replace the last sentence with the exact physically supported scope and link its evidence. Do not announce “all done,” universal Resume, improved battery life or a device-ready image before those claims are demonstrated.
