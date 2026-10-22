@@ -58,8 +58,15 @@ python3 project/tools/device_acceptance.py report --session /tmp/tg5040-session
 ```
 
 Changed hashes are reported without overwriting newer saves. Expected gameplay
-changes and unexpected corruption require separate interpretation. A missing,
-stale, cross-session or edited evidence reference is rejected. Content checksums
+changes and unexpected corruption require separate interpretation. A selected
+save must exist at the baseline. If it or its parent directory disappears before
+the after capture, the snapshot and report retain `missing=true` and
+`unchanged=false` for that exact path. They do not recreate the file or restore
+the older save. Record the observed failure and investigate it before continuing.
+Symlinks, special files, permission failures and files changing while being
+hashed still fail collection; they are not treated as absent saves. These
+observations do not establish whether storage loss was caused by the candidate.
+A missing, stale, cross-session or edited evidence reference is rejected. Content checksums
 cover snapshots and every attempt, and historical snapshot references are
 checked along with the latest observation. These checks detect inconsistent or
 accidentally edited files. They are not authenticated attestations: an operator

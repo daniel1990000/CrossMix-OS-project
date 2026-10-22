@@ -133,6 +133,37 @@ class InventoryTest(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stderr)
         self.assertTrue(output.is_file())
 
+    def test_support_redacts_complete_private_paths_in_values_and_keys(self):
+        private_paths = [
+            "Saves/saves/Private Game.sav",
+            '/mnt/SDCARD/Roms/PSP/Owner "Special" Game.iso',
+            "Saves/saves/Owner's Game.sav",
+            "Saves/saves/Private\nGame.sav",
+            r"C:\card\Saves\Private Game.sav",
+        ]
+        diagnostic = self.put(self.root, "paths.json", json.dumps({
+            "selected": private_paths,
+            "by_path": {path: "private associated metadata" for path in private_paths},
+            "note": "changed: " + private_paths[0],
+            "status": "FAILED",
+        }))
+        report = self.put(self.root, "inventory.json", "{}")
+        output = self.root / "support-paths.json"
+        support_bundle.export(report, [diagnostic], output)
+        text = output.read_text()
+        for fragment in ("Private", "Owner", "Special", ".sav", ".iso", "associated metadata"):
+            self.assertNotIn(fragment, text)
+        data = json.loads(text)["entries"][1]["data"]
+        self.assertEqual(len(data["by_path"]), len(private_paths))
+        self.assertEqual(data["status"], "FAILED")
+
+    def test_support_raw_path_with_spaces_does_not_leak_filename_suffix(self):
+        report = self.put(self.root, "inventory.json", "{}")
+        diagnostic = self.put(self.root, "selected.log", "changed Saves/saves/Private Game Name.sav after test")
+        output = self.root / "support-raw-path.json"
+        support_bundle.export(report, [diagnostic], output)
+        self.assertNotIn("Game Name", output.read_text())
+
     def test_support_refuses_config_journals_and_strips_encoded_snapshots(self):
         report = self.put(self.root, "inventory.json", "{}")
         private = self.put(self.root, "transactions/one/journal.json", '{"before":"c2VjcmV0"}')

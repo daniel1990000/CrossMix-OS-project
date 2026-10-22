@@ -76,3 +76,9 @@ python3 project/tools/support_bundle.py --inventory /tmp/smartpro-inventory.json
 ```
 
 Only explicitly selected bounded files are read. The exporter strips secret fields, addresses, user-home identities, serial numbers and user-data paths, and never uploads anything. Review the output before choosing to share it. Do not attach spruceBackup archives: they can contain SSH keys, network/service configuration and other private state. The author-notification draft is also local and unsent; it does not clear the PyUI source-use gate.
+
+A string containing a `Roms/` or `Saves/` path is redacted in full, including
+spaces, quotes and newlines in filenames. This can remove an entire selected
+plain-text log; prefer structured diagnostics to retain unrelated status fields.
+Path-keyed entries are redacted too. Keep the original private evidence locally:
+the support copy is not a substitute for acceptance snapshots or their hashes.

@@ -57,6 +57,67 @@ class DeviceAcceptanceTests(unittest.TestCase):
         self.assertFalse(after["save_comparison"][0]["unchanged"])
         self.assertEqual(self.save.read_bytes(), b"newer save content")
 
+    def test_missing_save_after_testing_is_retained_as_failure_evidence(self):
+        self.capture("before")
+        self.save.unlink()
+        after = self.capture("after")
+        self.assertEqual(after["save_hashes_only"], [{"path": "Saves/saves/fixture.sav", "missing": True}])
+        expected = [{"path": "Saves/saves/fixture.sav", "unchanged": False, "missing": True}]
+        self.assertEqual(after["save_comparison"], expected)
+        acceptance.record(self.session, "save_resume", "fail", "Selected battery save disappeared during fixture test")
+        report = acceptance.report(self.session)
+        self.assertTrue(report["snapshots_complete"])
+        self.assertEqual(report["save_comparison"], expected)
+        self.assertEqual(report["cases"]["save_resume"]["status"], "fail")
+        self.assertFalse(self.save.exists())
+        self.assertFalse(report["hardware_qualified"])
+
+    def test_missing_save_directory_after_testing_is_retained_without_recreation(self):
+        self.capture("before")
+        shutil.rmtree(self.card / "Saves")
+        self.capture("after")
+        self.assertTrue(acceptance.report(self.session)["save_comparison"][0]["missing"])
+        self.assertFalse((self.card / "Saves").exists())
+
+    def test_missing_baseline_save_cannot_be_recorded_as_a_valid_before_snapshot(self):
+        self.save.unlink()
+        with self.assertRaises(FileNotFoundError):
+            self.capture("before")
+        self.assertFalse((self.session / "before.json").exists())
+
+    def test_after_snapshot_does_not_treat_dangling_symlink_or_special_file_as_missing(self):
+        self.capture("before")
+        self.save.unlink()
+        self.save.symlink_to(self.base / "nonexistent")
+        with self.assertRaises(OSError):
+            self.capture("after")
+        self.save.unlink()
+        os.mkfifo(self.save)
+        with self.assertRaisesRegex(ValueError, "regular file"):
+            self.capture("after")
+        self.assertFalse((self.session / "after.json").exists())
+
+    def test_missing_save_marker_is_after_only_and_cannot_hide_an_inconsistent_comparison(self):
+        self.capture("before")
+        before_path = self.session / "before.json"
+        raw = before_path.read_bytes()
+        before = json.loads(raw)
+        before.pop("content_sha256")
+        before["save_hashes_only"] = [{"path": "Saves/saves/fixture.sav", "missing": True}]
+        before_path.write_bytes(acceptance.encoded(acceptance.checksummed(before)))
+        with self.assertRaisesRegex(ValueError, "save identity"):
+            acceptance.report(self.session)
+        before_path.write_bytes(raw)
+        self.save.unlink()
+        self.capture("after")
+        path = self.session / "after.json"
+        after = json.loads(path.read_bytes())
+        after.pop("content_sha256")
+        after["save_comparison"][0]["unchanged"] = True
+        path.write_bytes(acceptance.encoded(acceptance.checksummed(after)))
+        with self.assertRaisesRegex(ValueError, "comparison is inconsistent"):
+            acceptance.report(self.session)
+
     def test_capture_refuses_replacement_card_location_and_stale_profile(self):
         with self.assertRaises(ValueError):
             acceptance.capture(self.session, "after", self.root, self.card, saves=[])

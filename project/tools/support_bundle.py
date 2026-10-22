@@ -13,6 +13,7 @@ sys.path.insert(0, str(Path(__file__).absolute().parent))
 from inventory import redact, SECRET_WORDS
 
 MAX_FILE = 128 * 1024
+USER_DATA_PATH = re.compile(r"(?i)(?:^|[/\\\s\"'=:(])(?:Roms|Saves)[/\\]")
 
 
 def sanitize(value, depth=0):
@@ -21,13 +22,26 @@ def sanitize(value, depth=0):
     if isinstance(value, dict):
         private_fields = {"before", "after", "backup", "snapshot", "content_base64", "data_base64",
                           "raw", "raw_bytes", "value", "values", "original_record", "provenance"}
-        return {str(k): "[REDACTED]" if SECRET_WORDS.search(str(k)) or str(k).casefold() in private_fields else sanitize(v, depth + 1)
-                for k, v in value.items()}
+        result = {}
+        for index, (key, item) in enumerate(value.items()):
+            key = str(key)
+            if USER_DATA_PATH.search(key):
+                # Paths can also be dictionary keys. Do not collapse several
+                # private keys into one entry or retain their associated data.
+                result["[USER DATA ENTRY %d]" % index] = "[REDACTED]"
+            else:
+                result[key] = ("[REDACTED]" if SECRET_WORDS.search(key) or key.casefold() in private_fields
+                               else sanitize(item, depth + 1))
+        return result
     if isinstance(value, list):
         return [sanitize(x, depth + 1) for x in value[:2048]]
     if isinstance(value, str):
+        # Whitespace, quotes and newlines are legal filename characters. A
+        # token-based regex leaks the rest of such names. Discard the entire
+        # containing string rather than guessing where a private path ends.
+        if USER_DATA_PATH.search(value):
+            return "[USER DATA PATH]"
         value = redact(value)
-        value = re.sub(r"(?:/mnt/SDCARD/)?(?:Roms|Saves)/[^\s\"']+", "[USER DATA PATH]", value)
         return value[:4096]
     if value is None or isinstance(value, (bool, int, float)):
         return value

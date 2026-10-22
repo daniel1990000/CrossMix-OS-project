@@ -221,14 +221,26 @@ def save_name(relative):
     return path
 
 
-def save_identity(tree, relative):
+def save_identity(tree, relative, *, allow_missing=False):
     path = save_name(relative)
     # Installed runtime inspection follows symlinks within its virtual root.
     # Owner-selected save files deliberately use a stricter no-link boundary.
+    # Only absence when opening is recordable; disappearance during hashing
+    # remains an inconsistent observation and must abort the capture.
     parent_path = tree.card.joinpath(*path.parts[:-1])
-    parent = tree._directory(parent_path)
     try:
-        fd = os.open(path.name, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=parent)
+        parent = tree._directory(parent_path)
+    except FileNotFoundError:
+        if allow_missing:
+            return {"path": relative, "missing": True}
+        raise
+    try:
+        try:
+            fd = os.open(path.name, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=parent)
+        except FileNotFoundError:
+            if allow_missing:
+                return {"path": relative, "missing": True}
+            raise
         with os.fdopen(fd, "rb") as stream:
             before = os.fstat(stream.fileno())
             if not stat.S_ISREG(before.st_mode) or before.st_size > MAX_SAVE:
@@ -261,6 +273,19 @@ def checksummed(value):
     return dict(value, content_sha256=digest(encoded(value)))
 
 
+def compare_saves(before, after):
+    old = {row["path"]: row for row in before}
+    if set(old) != {row["path"] for row in after}:
+        raise ValueError("before/after snapshots must select the same save files")
+    comparisons = []
+    for row in after:
+        comparison = {"path": row["path"], "unchanged": row == old[row["path"]]}
+        if row.get("missing") is True:
+            comparison["missing"] = True
+        comparisons.append(comparison)
+    return comparisons
+
+
 def validate_content(value, label):
     body = {key: item for key, item in value.items() if key != "content_sha256"}
     if value.get("content_sha256") != digest(encoded(body)):
@@ -279,7 +304,9 @@ def snapshot_value(session, identity, phase):
         raise ValueError("snapshot save identities are invalid")
     names = set()
     for row in saves:
-        if (not isinstance(row, dict) or set(row) != {"path", "size", "sha256"} or
+        missing = (isinstance(row, dict) and phase == "after" and
+                   set(row) == {"path", "missing"} and row["missing"] is True)
+        if not missing and (not isinstance(row, dict) or set(row) != {"path", "size", "sha256"} or
                 type(row["size"]) is not int or not 0 <= row["size"] <= MAX_SAVE or
                 not isinstance(row["sha256"], str) or re.fullmatch("[0-9a-f]{64}", row["sha256"]) is None):
             raise ValueError("snapshot save identity is invalid")
@@ -317,7 +344,7 @@ def capture(session, phase, root=Path("/"), sd_root=Path("/mnt/SDCARD"), *, save
                  "phase": phase, "captured_at": datetime.now(timezone.utc).isoformat(),
                  "capture_context": context,
                  "inventory": inventory_collect(root, sd_root, profile),
-                 "save_hashes_only": [save_identity(tree, name) for name in sorted(saves)],
+                 "save_hashes_only": [save_identity(tree, name, allow_missing=phase == "after") for name in sorted(saves)],
                  "runtime": runtime_collect(root, sd_root, "/mnt/SDCARD/Emu/PSP/PPSSPPSDL_TrimUI", pid=pid)
                             if pid is not None else None,
                  "hardware_qualified": False, "automatic_activation": False}
@@ -326,11 +353,7 @@ def capture(session, phase, root=Path("/"), sd_root=Path("/mnt/SDCARD"), *, save
             if before["capture_context"] != context:
                 raise ValueError("inspected root/card filesystem identity changed; use a separate session")
             value["baseline_sha256"] = before_hash
-            old = {row["path"]: row for row in before["save_hashes_only"]}
-            if set(old) != set(saves):
-                raise ValueError("before/after snapshots must select the same save files")
-            value["save_comparison"] = [{"path": row["path"], "unchanged": row == old[row["path"]]}
-                                        for row in value["save_hashes_only"]]
+            value["save_comparison"] = compare_saves(before["save_hashes_only"], value["save_hashes_only"])
         for path in (tree.root, tree.card):
             current = tree._directory(path)
             os.close(current)
@@ -418,7 +441,7 @@ def report(session):
             old = {row["path"]: row for row in before["save_hashes_only"]}
             if before["capture_context"] != after["capture_context"] or set(old) != {row["path"] for row in after["save_hashes_only"]}:
                 raise ValueError("before/after filesystem or save selection changed")
-            comparison = [{"path": row["path"], "unchanged": row == old[row["path"]]} for row in after["save_hashes_only"]]
+            comparison = compare_saves(before["save_hashes_only"], after["save_hashes_only"])
             if comparison != after.get("save_comparison"):
                 raise ValueError("after save comparison is inconsistent")
         results = {}
@@ -432,6 +455,7 @@ def report(session):
         return {"schema": 1, "kind": "device-acceptance-review", "session_id": identity["session_id"],
                 "cases": results, "operator_cases_all_pass": all(row["status"] == "pass" for row in results.values()),
                 "snapshots_complete": len(snapshots) == 2,
+                "save_comparison": snapshots["after"]["value"]["save_comparison"] if "after" in snapshots else None,
                 "snapshot_sha256": {key: value["sha256"] for key, value in snapshots.items()},
                 "hardware_qualified": False, "automatic_activation": False, "review_required": True,
                 "limits": "Operator notes and recorded hashes cannot mint a trusted installed profile or certify physical behavior."}

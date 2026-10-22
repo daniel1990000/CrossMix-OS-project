@@ -4,9 +4,19 @@ Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in
 
 The current checkpoint completes the host software integration, common settings, PPSSPP state protocol/Resume route, native menu extensions, source composition/restoration tools and private source builds. Read the final records in [project/evidence](project/evidence/) for actual host counts, build fingerprints and development packaging results. Host fixtures, complete native cross-builds and physical qualification remain separate claims.
 
-All **527 host checks pass with zero skips or failures**: 466 Python/SDL/source-integration checks and 61 PPSSPP C++/build-tool checks. The **dev4** original-only development artifacts pass signature/inventory verification, deterministic rebuilds, installed-payload rendering and fixture activation/rollback.
+The inherited software checkpoint passed **527 host checks with zero skips or failures**: 466 Python/SDL/source-integration checks and 61 PPSSPP C++/build-tool checks. The **dev4** original-only development artifacts pass signature/inventory verification, deterministic rebuilds, installed-payload rendering and fixture activation/rollback.
 
 **On 22 October 2026, the owner confirmed an original Smart Pro is available, but not for testing that day.** Physical acceptance has not been performed. PyUI notification delivery and exact recipe/SDK redistribution review remain open. Installed emulators are unchanged; runtime/profile activation stays disabled, and engine binaries/full recipe archives stay private.
+
+## Continuation — 22 October 2026
+
+The acceptance recorder now retains a selected save that disappears after the baseline as explicit `missing=true`, `unchanged=false` evidence, including a missing save directory. It never recreates or restores that save. Reports expose the comparison; baseline saves remain mandatory, and symlinks/special files/inconsistent observations still fail collection. Five regression tests cover these cases.
+
+Support export now redacts whole strings containing ROM/save paths and path-keyed entries, preventing filename fragments with spaces, quotes or newlines from leaking. Two regression tests cover structured and raw diagnostics. Unrelated structured status fields remain available; a plain-text log containing a private path can be redacted entirely.
+
+The [continuation rights review](project/docs/continuation-rights-review.md) records exact outstanding evidence and absent historical private artifacts. No device was attached or tested, no notification was sent, and no gate, installed emulator or owner save changed. Private native binaries/source archives must be recovered and hash-verified or rebuilt before use; historical SDK audit results have not been rerun here.
+
+Local validation: 21 acceptance tests and 13 inventory/support tests pass. The full host run attempted all 473 tests, with 14 failures and 22 errors in process-identity/lifecycle tests in this sandbox: Python's PID differs from `/proc/self` and `/proc/<pid>/stat` is absent. This is not a full passing run. Do not weaken identity checks or count those failures as skips. CI validation of the continuation is pending. Original-only development packaging passed signature/inventory, deterministic rebuild, installed-payload smoke and fixture rollback at `/workspace/scratch/08e013647ad3/development-continuation`.
 
 ## Latest verified GitHub checkpoint
 
