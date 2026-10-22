@@ -5,8 +5,9 @@ upstream copyright and GPL-2.0-or-later headers. The project native menu extensi
 and C++ acceptance fixtures are offered under GPL-2.0-or-later. The patch contains
 upstream context and project modifications; generated acceptance binaries also
 include actual upstream PPSSPP code. The original Python test driver is MIT.
-The original Python candidate builder, checked recipe-application helper and ABI
-inventory helper are also MIT. Their SPDX identifiers do not grant rights to
+The original Python candidate and FFmpeg builders, checked recipe-application
+helper, SDK search preflight and ABI inventory helper are also MIT. Their SPDX
+identifiers do not grant rights to
 the external source, recipe or SDK inputs they process.
 
 `LICENSE.PPSSPP.txt` is a verbatim copy of upstream `LICENSE.TXT` at

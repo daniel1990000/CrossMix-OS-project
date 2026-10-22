@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "plan_revision": "2026-10-22-qualified-binding-controls-usb-candidate",
-  "status": "host-tested initialized-owner binding, common PPSSPP controls/appearance and four pinned spruce patches; complete separate PPSSPP cross-build has an SDK ABI blocker; physical integration unqualified",
+  "plan_revision": "2026-10-22-qualified-binding-controls-usb-source-build",
+  "status": "host-tested initialized-owner binding, common PPSSPP controls/appearance and four pinned spruce patches; separate PPSSPP/FFmpeg source build passes SDK dependency inventory; physical integration unqualified",
   "base": {
     "repository": "https://github.com/spruceUI/spruceOS",
     "release_tag": "v4.5.4",
@@ -55,9 +55,10 @@
     "bundled_ppsspp_exact_compiled_source_verified": false,
     "ppsspp_extension_source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
     "ppsspp_extension_cross_build_completed": true,
-    "ppsspp_extension_sdk_dependency_inventory_pass": false,
+    "ppsspp_extension_sdk_dependency_inventory_pass": true,
     "ppsspp_extension_device_qualified": false,
-    "ppsspp_candidate_build_evidence": "project/evidence/ppsspp-candidate-build.json"
+    "ppsspp_candidate_build_evidence": "project/evidence/ppsspp-sdk-search-build.json",
+    "ppsspp_original_candidate_evidence": "project/evidence/ppsspp-candidate-build.json"
   },
   "ports_research": {
     "catalogue_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",

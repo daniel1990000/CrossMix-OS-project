@@ -75,11 +75,19 @@ The isolated [PowerVR candidate builder](build-candidate.md) verifies full sourc
 submodules, recipe and SDK inputs before copying them into a new work directory.
 Its output stays separate from the project overlay and installed engine. Build
 results, SDK dependency inventory and distribution clearance are separate claims.
-The 22 October 2026 full cross-build succeeded after all ten selected spruce
-patches were proved. Its ELF fails the pinned SDK inventory: libc requires
-`GLIBC_2.28`, and libm requires `GLIBC_2.27`/`GLIBC_2.29`, beyond that sysroot's
-glibc 2.25. The candidate, complete source archive and build inputs remain local.
-See the [sanitized build evidence](../evidence/ppsspp-candidate-build.json).
+The opt-in `--strict-sdk-search` mode requires a real compiler/linker preflight
+and preserves GCC 9's C++ runtime while selecting the old SDK's C headers and
+libraries explicitly. Use `--rebuild-ffmpeg` with it to replace the newer-libc
+prebuilt FFmpeg input with a build of its exact pinned source and codec selection.
+The corrected 22 October 2026 full build passed the recursive SDK inventory
+after the search correction and exact FFmpeg source rebuild. Its AArch64 ELF
+requires only `GLIBC_2.17`; all ten selected spruce patches and three SDL
+translation units were proved. See the [corrected build evidence](../evidence/ppsspp-sdk-search-build.json).
+The [preserved original attempt](../evidence/ppsspp-candidate-build.json) compiled
+but failed the SDK inventory and used FFmpeg prebuilt objects with unverified
+source correspondence. Both candidates and source archives remain local;
+installed-device input, loader, driver and performance qualification and
+recipe/SDK distribution clearance remain outstanding.
 
 The PPSSPP patch and C++ acceptance fixtures are GPL-2.0-or-later. The exact
 upstream license and PSPSDK notice are retained in

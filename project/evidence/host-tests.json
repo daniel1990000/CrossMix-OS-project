@@ -16,19 +16,19 @@
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 7.626
+      "seconds": 7.674
     },
     {
       "suite": "ppsspp_source_cpp_and_build_tools",
-      "tests": 24,
+      "tests": 29,
       "failures": 0,
       "errors": 0,
       "skipped": [],
       "passed": true,
-      "seconds": 13.202
+      "seconds": 11.617
     }
   ],
-  "total_tests": 301,
+  "total_tests": 306,
   "all_passed_without_skips": true,
   "device_tested": false,
   "checks": [
@@ -48,7 +48,9 @@
     "Actual pinned USB launcher refusal after failed staging with mocked device commands",
     "PPSSPP native info/tab/direction and Pause-to-exit remap collisions",
     "Isolated candidate build input rejection and read-only ABI path handling",
-    "Checked recipe script selection, nonzero/no-op refusal, pinned-source resume and actual SDL compile definitions"
+    "Checked recipe script selection, nonzero/no-op refusal, pinned-source resume and actual SDL compile definitions",
+    "Opt-in SDK search correction, quoted CMake argument execution and rejection of stale or ambiguous recipe options",
+    "Pinned FFmpeg codec argument preservation, refusal before unlocked shell expansion and private log/archive retention boundaries"
   ],
   "validation_command": "PYTHON=<preview-venv>/bin/python SPRUCE_SOURCE_ROOT=<untouched-spruce-v4.5.4> PPSSPP_SOURCE_ROOT=<untouched-ppsspp-v1.20.3> sh project/dev/check.sh",
   "source_checkouts_pristine": true,

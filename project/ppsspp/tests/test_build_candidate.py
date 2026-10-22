@@ -5,8 +5,11 @@ from __future__ import annotations
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
+import shlex
 import subprocess
+import sys
 import tarfile
 import tempfile
 import unittest
@@ -51,7 +54,7 @@ class CandidateInputTests(unittest.TestCase):
         git(self.source, "add", ".")
         git(self.source, "commit", "-qm", "Upstream fixture")
         (self.recipe / "Dockerfile.pvr").write_text("FROM ubuntu:20.04\nRUN apt-get update && apt-get install -y cmake\n# Extract Linaro\nRUN printf 'fixture' > /tmp/pvr-toolchain.cmake\nCOPY build-pvr.sh /build-pvr.sh\n")
-        (self.recipe / "build-pvr.sh").write_text("#!/bin/bash\n# Apply common patches\n# fixture patches\nmkdir -p build && cd build\nmake -j$(nproc) PPSSPPSDL\n")
+        (self.recipe / "build-pvr.sh").write_text('#!/bin/bash\n# Apply common patches\n# fixture patches\nmkdir -p build && cd build\ncmake .. -DCMAKE_C_FLAGS="-O2" -DCMAKE_CXX_FLAGS="-O2" -DCMAKE_EXE_LINKER_FLAGS="-static-libstdc++"\nmake -j$(nproc) PPSSPPSDL\n')
         git(self.recipe, "add", ".")
         git(self.recipe, "commit", "-qm", "Recipe fixture")
         project_patch = b"--- a/source.txt\n+++ b/source.txt\n@@ -1 +1 @@\n-before\n+after\n"
@@ -74,7 +77,7 @@ class CandidateInputTests(unittest.TestCase):
         }
         (self.here / "source-lock.json").write_text(json.dumps(self.lock))
         (self.here / "build-inputs.lock.json").write_text(json.dumps(self.inputs))
-        for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py"):
+        for name in ("build_candidate.py", "abi_audit.py", "apply_recipe.py", "sdk_search.py", "ffmpeg_build.py", "build-candidate.md"):
             (self.here / name).write_text("# Source-retention fixture\n")
         self.here_patch = patch.object(builder, "HERE", self.here)
         self.here_patch.start()
@@ -154,6 +157,80 @@ class CandidateInputTests(unittest.TestCase):
         (target / "flags.make").write_text("CXX_DEFINES = -DRELEASE=1\n")
         with self.assertRaisesRegex(ValueError, "SDL definition is absent"):
             builder.retain_build_configuration(work)
+
+    def test_strict_search_is_opt_in_and_keeps_gcc9_runtime_before_old_sysroot(self):
+        baseline = self.root / "baseline"
+        self.prepare(baseline)
+        self.assertNotIn("-nostdinc", (baseline / "rebuild-source.sh").read_text())
+        strict = self.root / "strict"
+        report = builder.prepare(self.source, self.recipe, self.sdk, strict, self.lock, self.inputs, 2, True)
+        self.assertTrue(report["strict_sdk_search"])
+        fakebin = self.root / "fakebin"
+        fakebin.mkdir()
+        captured = self.root / "calls.jsonl"
+        for name in ("cmake", "make"):
+            command = fakebin / name
+            command.write_text(f'#!{sys.executable}\nimport json,os,sys\nwith open(os.environ["PPSSPP_FIXTURE_ARGV"], "a") as stream: stream.write(json.dumps(sys.argv)+"\\n")\n')
+            command.chmod(0o755)
+        environment = dict(os.environ, PATH=str(fakebin) + os.pathsep + os.environ.get("PATH", ""),
+                           PPSSPP_FIXTURE_ARGV=str(captured))
+        subprocess.run(["/bin/bash", str(strict / "rebuild-source.sh")], cwd=strict / "source",
+                       env=environment, check=True, capture_output=True, text=True)
+        cmake, make = [json.loads(line) for line in captured.read_text().splitlines()]
+        self.assertEqual(Path(cmake[0]).name, "cmake")
+        self.assertEqual(cmake[1], "..")
+        # Each quoted -D value survives the generated shell as exactly one argument.
+        self.assertEqual(len(cmake), 5)
+        options = dict(argument[2:].split("=", 1) for argument in cmake[2:])
+        c_flags = shlex.split(options["CMAKE_C_FLAGS"])
+        cxx_flags = shlex.split(options["CMAKE_CXX_FLAGS"])
+        link_flags = shlex.split(options["CMAKE_EXE_LINKER_FLAGS"])
+        self.assertEqual(c_flags[:2], ["-O2", "-nostdinc"])
+        self.assertEqual(cxx_flags[:2], ["-O2", "-nostdinc"])
+        self.assertEqual(c_flags[-1], "-I/opt/sysroot/usr/include")
+        self.assertEqual(cxx_flags[-1], "-I/opt/sysroot/usr/include")
+        self.assertIn("-I/usr/aarch64-linux-gnu/include/c++/9", cxx_flags)
+        self.assertNotIn("-I/usr/aarch64-linux-gnu/include", cxx_flags)
+        self.assertEqual(link_flags, ["-static-libstdc++", "-L/usr/lib/gcc-cross/aarch64-linux-gnu/9",
+                                     "-L/opt/sysroot/lib", "-L/opt/sysroot/usr/lib"])
+        self.assertEqual(make[1:], ["-j2", "PPSSPPSDL"])
+        self.assertEqual(git(self.source, "status", "--porcelain"), "")
+
+    def test_search_correction_refuses_repeat_and_missing_or_duplicate_compiler_options(self):
+        module = builder.sdk_search_module()
+        original = (self.recipe / "build-pvr.sh").read_text()
+        corrected = module.adapt_script(original)
+        with self.assertRaisesRegex(ValueError, "already present"):
+            module.adapt_script(corrected)
+        for changed in (original.replace("CMAKE_CXX_FLAGS", "OTHER_FLAGS"), original + '\n-DCMAKE_C_FLAGS="-O3"'):
+            with self.assertRaisesRegex(ValueError, "changed or duplicated"):
+                module.adapt_script(changed)
+
+    def test_rebuilt_ffmpeg_source_retention_omits_old_archives_and_private_environment_log(self):
+        work = self.root / "ffmpeg-retention"
+        self.prepare(work)
+        ffmpeg = work / "source/ffmpeg"
+        ffmpeg.mkdir()
+        archive = ffmpeg / "unused.a"
+        archive.write_bytes(b"old prebuilt input")
+        (ffmpeg / "LICENSE").write_text("notice fixture")
+        (ffmpeg / "source.c").write_text("source fixture")
+        metadata = work / "ffmpeg-build-inputs"
+        metadata.mkdir()
+        (metadata / "manifest.json").write_text('{"status":"complete"}')
+        build = work / "ffmpeg-build"
+        build.mkdir()
+        (build / "config.log").write_text("private environment fixture")
+        result = builder.source_bundle(work)
+        with tarfile.open(work / result["name"]) as retained:
+            names = set(retained.getnames())
+            omitted = json.load(retained.extractfile("build/omitted-ffmpeg-prebuilt-archives.json"))
+        self.assertNotIn("ppsspp/ffmpeg/unused.a", names)
+        self.assertIn("ppsspp/ffmpeg/source.c", names)
+        self.assertIn("ppsspp/ffmpeg/LICENSE", names)
+        self.assertEqual(omitted["files"]["ppsspp/ffmpeg/unused.a"]["sha256"], sha(b"old prebuilt input"))
+        self.assertFalse(any(Path(name).name == "config.log" for name in names))
+        self.assertEqual(archive.read_bytes(), b"old prebuilt input")
 
 
 if __name__ == "__main__":

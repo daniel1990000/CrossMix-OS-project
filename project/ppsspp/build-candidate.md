@@ -23,7 +23,7 @@ output. SDK extraction happens only inside the build image.
 git clone --depth 1 --branch v1.20.3 --recurse-submodules --shallow-submodules https://github.com/hrydgard/ppsspp.git /tmp/ppsspp-full
 git clone https://github.com/spruceUI/PPSSPP-spruce.git /tmp/ppsspp-recipe
 git -C /tmp/ppsspp-recipe checkout --detach 9f770cb984fd8ffcc8f91d24fcbca859439c2e9b
-python3 project/ppsspp/build_candidate.py --source-root /tmp/ppsspp-full --recipe-root /tmp/ppsspp-recipe --sdk-dir /tmp/ppsspp-sdk --work-dir /tmp/ppsspp-power-vr --jobs 4
+python3 project/ppsspp/build_candidate.py --source-root /tmp/ppsspp-full --recipe-root /tmp/ppsspp-recipe --sdk-dir /tmp/ppsspp-sdk --work-dir /tmp/ppsspp-power-vr --jobs 4 --strict-sdk-search --rebuild-ffmpeg
 ```
 
 Place the downloaded archives in `/tmp/ppsspp-sdk` before running the builder.
@@ -39,6 +39,41 @@ PPSSPP source, missing/mismatched submodules, SDK hash mismatches and existing
 output. `--prepare-only` copies and patches the isolated source without starting
 Docker. An interrupted build can be inspected in place; start a new work
 directory for another complete run.
+
+`--strict-sdk-search` corrects the GCC 9 driver's default include/library search
+order while retaining the same compiler, sysroot, source and target options.
+It disables automatic C include search, lists GCC 9's C++ and intrinsic headers
+before the SDK C headers, and lists GCC 9's runtime directory before the SDK
+library directories. The recipe's final `-isystem` to `-I` rewrite is accounted
+for by using the proved explicit `-I` form. Keeping GCC 9's runtime directory
+first also prevents selection of the SDK's older GCC 7 static C++ archive.
+
+Before compiling the engine, this mode requires an actual cross-compile/link
+preflight: C and C++ must select glibc 2.25 headers, the large-file `fcntl`
+declaration must avoid the newer `fcntl64` import, and a C++17
+filesystem/future/math probe must link the GCC 9 static archive and pass the
+recursive SDK ABI inventory. The probe is inspected without executing target
+code. Its exact flags, header paths, archive hash and link trace are retained in
+`sdk-search-preflight.json`. Omitting the option reproduces the original recipe
+search behavior, whose completed candidate failed that SDK inventory.
+
+`--rebuild-ffmpeg` also rebuilds the exact pinned FFmpeg submodule
+`1e3b4965632f60b1d85360261d1b9dd45444bc71`. Its original `linux_arm64.sh`
+configuration supplies the unchanged codec/module selection. The helper expands
+that command as arguments without executing its in-tree build function, then
+adds the proved sysroot/header/library policy and an absolute new install
+prefix. Configure and make run outside the read-only source tree. PPSSPP's
+FFmpeg include/library/API cache entries are invalidated, and all five selected
+libraries and header roots must resolve to the rebuilt prefix.
+
+The old bundled `libavutil.a(file_open.o)` imports `fcntl64`, which prevents a
+strict old-SDK link even after PPSSPP's own headers are corrected. Its prebuilt
+version header says `a5baf97`, while the locked source is `1e3b496...`; exact
+prebuilt/source correspondence is unverified. The first archive is therefore a
+verified pinned-source/input snapshot, without proof of corresponding source
+for those old FFmpeg objects. Artifact hashes and the first build outcome are
+preserved. Rebuilding FFmpeg from the pinned source establishes a new source
+chain, subject to the final engine and SDK checks.
 
 ## Recipe adaptations
 
@@ -96,11 +131,21 @@ with actual device loader paths and driver behavior still untested.
 source and initialized submodule sources with their notices. It also retains
 project patches and source locks, the exact recipe scripts and patches, generated
 Dockerfile, compiler package inventory, assembly evidence and build helpers.
+The documented build procedure, strict-search helper and preflight evidence are
+retained alongside those inputs. New archives use gzip level 6; the first
+preserved candidate used the original default level 9.
+When FFmpeg has been rebuilt, the archive also retains its exact source,
+configure arguments, generated config/headers, version source and new archive
+hashes. Unused old FFmpeg `*.a` inputs are omitted only from that new archive,
+with an explicit file/hash manifest; working source/prebuilt files stay intact.
+FFmpeg's raw `config.log` includes an environment dump and stays private outside
+the retained source metadata. It is excluded along with session CA and secrets.
 `build-configuration/` retains CMake configuration, the generated
 `git-version.cpp`, and actual flags for `Core/KeyMap.cpp`, `UI/NativeApp.cpp` and
 `UI/GameSettingsScreen.cpp`; the builder requires `SDL` in all three units.
-The recorded local run also extracted `/tmp/pvr-toolchain.cmake` from its active
+The first local run also extracted `/tmp/pvr-toolchain.cmake` from its active
 build container into that directory before creating the source archive. The
+builder now retains that exact file during compiler package inventory. The
 generated Dockerfile reconstructs this file with the original recipe's exact
 `printf` instruction.
 The upstream version generator uses `git describe --always` without `--dirty`,
@@ -120,6 +165,31 @@ change with the new result. Use the same source/output/cache mounts and working
 directory as the recorded compile command. The archive is a source-retention
 record, and the SDK inputs and generated image must be obtained separately.
 
+For an archive produced with `--rebuild-ffmpeg`, recreate its separate FFmpeg
+prefix before running the engine helper. The original Python helper requires
+Git metadata to validate fresh checkouts. A manual archive rebuild uses the
+retained source identity and exact configure arguments instead. Inside the
+recorded compiler image, mount `ppsspp/` at `/build/ppsspp` read-only, retained
+`build/` at `/retained` read-only, and new writable directories at
+`/ffmpeg-build` and `/ffmpeg-sdk`, then run:
+
+```python
+import json, os, subprocess
+with open('/retained/ffmpeg-build-inputs/manifest.json') as stream:
+    manifest = json.load(stream)
+environment = dict(os.environ, revision=manifest['source_git_description'])
+subprocess.run(['/build/ppsspp/ffmpeg/configure', *manifest['configure_args']],
+               cwd='/ffmpeg-build', env=environment, check=True)
+subprocess.run(['make', '-j' + str(manifest['jobs']), 'install'],
+               cwd='/ffmpeg-build', env=environment, check=True)
+```
+
+The exported lowercase `revision` preserves the recorded `1e3b496` version
+source without Git metadata; preserve the original generated
+`libavutil/ffversion.h` separately and retain this explicit build-control choice.
+Mount the completed prefix at `/ffmpeg-sdk` for the PPSSPP build. Its generated
+engine script clears the old FFmpeg include/library/API cache selections.
+
 Keep `image-build.log`, `engine-build.log`, source archive and ABI evidence with
 the local candidate. No save-state, hardware input, PowerVR rendering,
 suspend/return or performance result follows from cross compilation. The
@@ -133,6 +203,15 @@ the independent header/link probes establish that mismatch. This first candidate
 and its source archive remain preserved separately from any corrected search
 policy. [The sanitized evidence](../evidence/ppsspp-candidate-build.json) records
 their exact hashes, assembly, compiler flags and failed ABI gate.
+
+The corrected build completed with the explicit search policy and rebuilt
+pinned FFmpeg. Its 19,909,952-byte AArch64 ELF requires only `GLIBC_2.17` and
+passes the recursive inventory across sixteen objects, with no missing
+basenames or symbol versions. [Corrected build evidence](../evidence/ppsspp-sdk-search-build.json)
+records the separate executable/source identities and failed strict attempt
+that exposed the old FFmpeg object. This passes the SDK inventory only; actual
+device loader paths, PowerVR/SDL behavior and physical qualification remain
+untested.
 
 ## Distribution status
 

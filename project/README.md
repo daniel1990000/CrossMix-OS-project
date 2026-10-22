@@ -46,7 +46,7 @@ PYTHON=/tmp/smartpro-venv/bin/python SPRUCE_SOURCE_ROOT=/path/to/spruce-v4.5.4 P
 python3 project/packaging/dev_release.py --output /tmp/smartpro-development --include-source --smoke-python /tmp/smartpro-venv/bin/python
 ```
 
-The PPSSPP checks also need `git` and `g++` with C++17 support. They compile selected real patched functions with narrow fixtures. The complete PowerVR candidate uses the separate Docker build procedure; it stays outside the development overlay and public artifacts while its distribution rights remain unresolved. [Development release instructions](docs/development-release.md) explain signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs checks and uploads the development artifacts.
+The PPSSPP checks also need `git` and `g++` with C++17 support. They compile selected real patched functions with narrow fixtures. The separate complete PPSSPP/FFmpeg PowerVR source build passes the read-only SDK dependency inventory; actual device compatibility remains unqualified. Its executable and full recipe/source archive stay outside the development overlay and public artifacts while distribution rights remain unresolved. [Development release instructions](docs/development-release.md) explain signing, deterministic rebuilds, installed-payload smoke checks and outputs. GitHub Actions runs checks and uploads the development artifacts.
 
 See [full-system coverage](docs/feature-coverage.md), [qualified binding](bridge/README.md), [recovery](docs/recovery.md), [packaging](packaging/README.md), and the saved [evidence](evidence/) for scope and remaining qualification. There is no measured hardware speed or battery improvement at this checkpoint.
 

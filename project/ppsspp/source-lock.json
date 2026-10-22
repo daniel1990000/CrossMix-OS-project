@@ -46,10 +46,10 @@
     "full_emulator_build": true,
     "device_tested": false,
     "installed_executable_sha256": null,
-    "activation": "unsupported: cross-built candidate fails SDK GLIBC symbol-version inventory; exact installed writer/input/ABI and physical qualification remain outstanding; no bundled binary replacement",
-    "full_build_evidence": "project/evidence/ppsspp-candidate-build.json",
-    "candidate_executable_sha256": "7d4c71a7f6d41b3e0507122bd8482d71f938832784f060f747314ba8031e78d4",
-    "candidate_sdk_dependency_inventory_pass": false
+    "activation": "unsupported until the exact installed executable and writer/input/dependency inventory are qualified on physical Smart Pro; candidate stays local with unresolved recipe/SDK distribution rights; no bundled binary replacement",
+    "full_build_evidence": "project/evidence/ppsspp-sdk-search-build.json",
+    "candidate_executable_sha256": "1f0980edcf4ddd2550a050d9159658046827d37165a80d283647c504226a77df",
+    "candidate_sdk_dependency_inventory_pass": true
   },
   "patches": [
     {
@@ -164,6 +164,25 @@
     {
       "path": "UI/NativeApp.cpp",
       "sha256": "fb0c376f81319dac9893ae80f71efa81d1627101705da87959df1086896f28bb"
+    }
+  ],
+  "candidate_build_history": [
+    {
+      "evidence": "project/evidence/ppsspp-candidate-build.json",
+      "executable_sha256": "7d4c71a7f6d41b3e0507122bd8482d71f938832784f060f747314ba8031e78d4",
+      "full_engine_cross_build": true,
+      "sdk_dependency_inventory_pass": false,
+      "ffmpeg_prebuilt_source_correspondence": "unverified; retained archive is pinned-source/input snapshot"
+    },
+    {
+      "evidence": "project/evidence/ppsspp-sdk-search-build.json",
+      "executable_sha256": "1f0980edcf4ddd2550a050d9159658046827d37165a80d283647c504226a77df",
+      "full_engine_cross_build": true,
+      "sdk_dependency_inventory_pass": true,
+      "ffmpeg_source_commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+      "device_tested": false,
+      "installed_engine_changed": false,
+      "distribution_cleared": false
     }
   ]
 }

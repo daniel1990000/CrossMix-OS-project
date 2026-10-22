@@ -90,5 +90,11 @@
     "SDK asset digests were read from the GitHub release API and independently matched by complete downloads on 2026-10-22.",
     "Ubuntu package repository updates are not frozen; each build records installed package versions. This is a source-reproducible candidate recipe, not a bit-identical binary claim.",
     "SDK/sysroot files are build inputs only; no right to redistribute vendor runtime libraries is assumed."
-  ]
+  ],
+  "ffmpeg": {
+    "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+    "script_path": "linux_arm64.sh",
+    "script_sha256": "f96e671253bcca1939f2adaff20d15aca799d04144605948e4a9d3bd9d7f7cf5",
+    "configure_sha256": "1b63d74a8b3efa782cec00d57e693dd1ddf20ab31e461871d8177f584e3a9588"
+  }
 }
