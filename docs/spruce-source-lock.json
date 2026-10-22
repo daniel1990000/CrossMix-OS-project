@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "plan_revision": "2026-10-22-spruce-source-contracts-v1",
+  "status": "documentation-only; implementation paused",
+  "base": {
+    "repository": "https://github.com/spruceUI/spruceOS",
+    "release_tag": "v4.5.4",
+    "release_published_at": "2026-10-10T19:16:40Z",
+    "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "pyui_source_path": "App/PyUI/main-ui",
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "pyui_mainui_blob": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+    "independent_pyui_upstream_version_verified": false,
+    "frontend_decision": "extend shipped PyUI and preserve spruce runtime/principal ownership",
+    "full_release_archive": {
+      "name": "spruceV4.5.4.7z",
+      "url": "https://github.com/spruceUI/spruceOS/releases/download/v4.5.4/spruceV4.5.4.7z",
+      "size": 1652634074,
+      "expected_sha256": "4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd",
+      "digest_provenance": "GitHub release API metadata; not an independently hashed local download",
+      "download_verified": false,
+      "source_archive_correspondence_verified": false
+    },
+    "development_comparison_only": "cb6210aa19c5cb61e404d4029444972448cac9f9"
+  },
+  "target": {
+    "model": "original TrimUI Smart Pro",
+    "hardware_id": "TG5040",
+    "runtime_platform": "SmartPro",
+    "pyui_device": "TRIMUI_SMART_PRO",
+    "emulator_platform": "TRIMUI_A133P",
+    "architecture": "aarch64",
+    "source_firmware_target": "1.1.1",
+    "installed_firmware_verified": false,
+    "excluded_models": [
+      "Smart Pro S",
+      "Brick",
+      "Brick Pro"
+    ]
+  },
+  "emulator_policy": {
+    "freeze_bundled_engines_for_interface_proof": true,
+    "smart_pro_ppsspp_binary": "Emu/PSP/PPSSPPSDL_TrimUI",
+    "smart_pro_ppsspp_git_blob": "509ffbd9ba3874c05ae3b470d77cab5299d85c4e",
+    "smart_pro_ppsspp_size": 19885376,
+    "bundled_ppsspp_upstream_version_verified": false,
+    "optional_ppsspp_recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "optional_recipe_matches_bundled_binary": false,
+    "emulator_or_save_state_compatibility_measured": false
+  },
+  "ports_research": {
+    "catalogue_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",
+    "catalogue_fetched_sha256": "ef1998c81b6f1a505d3cd3fdf98ceb331e4ae9ce7f0cdc5d7b3142f2c6347ff4",
+    "main_source_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+    "multiverse_source_commit": "981df31d3eedd77c7636f0589ed02bc3989698cd",
+    "compatibility_listing_is_physical_test": false,
+    "commercial_data_bundled": false
+  },
+  "licence_scope_files": [
+    "LICENSE",
+    "App/PyUI/LICENSE.md",
+    "App/PyUI/main-ui/LICENSE.md"
+  ],
+  "open_gates": {
+    "author_notification_or_scope_clarification_completed": false,
+    "derivative_distribution_rights_audited": false,
+    "theme_font_binary_provenance_complete": false,
+    "device_inventory_complete": false,
+    "original_card_restore_proved": false,
+    "internal_boot_and_scene_restore_proved": false,
+    "classic_frontend_fallback_proved": false,
+    "launch_and_save_integrity_proved": false,
+    "usb_sleep_power_proved": false,
+    "visual_exceptions_accepted": false,
+    "physical_release_qualified": false
+  },
+  "crossmix_reference": {
+    "role": "historical blueprint and offline migration source only",
+    "historical_plan_path": "TRIMUI_PLAN.md#historical-appendix-superseded-crossmix-research-and-first-save",
+    "original_plan_blob": "2c4f69c52c28dc44e3b74633dd6122cba99e507f",
+    "original_plan_commit": "5a8fb263dce2eadab93ffdc5bccbc9f6ff88b7c9",
+    "crossmix_implementation_status": "paused; incomplete prototypes preserved locally and excluded from this documentation change"
+  },
+  "active_plan_parent_commit": "3ed2b29f54728480a10d297d28e4376b64c31481",
+  "active_plan_parent_blob": "f9df3746e098d77d91381685a2254d095bf9164b",
+  "verified_source_file_blobs": {
+    ".github/workflows/create-latest-release-2026.yml": "ce6c6c359fd24754c359785a629dc61eeeaf2184",
+    ".tmp_update/updater": "27939e860b2d6ed89f3a1c24d201e30e95af72af",
+    "App/PyUI/LICENSE.md": "3e98034103df4771210012e478d792b2a361d856",
+    "App/PyUI/launch.sh": "8e23351cdfbf28069b30bc3a3e58c2badb7bfcce",
+    "App/PyUI/main-ui/LICENSE.md": "9c91591999e6049bb99dc191ffebc0608e28fa85",
+    "App/PyUI/main-ui/controller/controller.py": "a26e784c04ee259106d6a91184863be6f5a44d74",
+    "App/PyUI/main-ui/devices/miyoo_trim_common.py": "63467b26b5b8e1cb7b5508f448be8f200311fbce",
+    "App/PyUI/main-ui/devices/trimui/trim_ui_device.py": "10ca3d8a31a9444bd32d2a7f1f4564c22588077c",
+    "App/PyUI/main-ui/display/display.py": "8237bb3f7f7154b2289544c417ca91a46c3914cd",
+    "App/PyUI/main-ui/menus/games/in_game_menu_listener.py": "e74162bdfa4938b00bfc3bbc60122f18e5abd57a",
+    "App/PyUI/main-ui/menus/games/recents_menu_gs.py": "2adc9067c7b06dd0602fffd3bfa5ee2297c45dc2",
+    "App/PyUI/main-ui/menus/games/utils/roms_list_manager.py": "11a07582d7259863022c31272e41607e081969b6",
+    "App/PyUI/main-ui/menus/main_menu.py": "86ba5ccdba0be3453b6bddf1c24e9e91cec5c706",
+    "App/PyUI/main-ui/themes/theme.py": "6b4c787d57e19c65bae18893297e1818c0ae05e7",
+    "App/PyUI/main-ui/utils/cfw_system_config.py": "bc65758da4dad522f95700843475fe073f0c0940",
+    "App/PyUI/main-ui/utils/py_ui_config.py": "9de7d3859064e8eee22f71f7b6ee65ec0cc2a9c6",
+    "App/PyUI/main-ui/views/view_creator.py": "fce644532cfd11f28c7657ffeab7968c1de4cd77",
+    "App/PyUI/py-ui-config.json": "8dac198b5e4bceb38b7ff6e4b5b8f1170658d287",
+    "App/USBStorageMode/launch.sh": "85329dc12b4d69bbda10ded7725343fadde47a7f",
+    "App/spruceBackup/spruceBackup.sh": "f3552f9be886b4889f698cacbf16029117fc6778",
+    "Emu/PS/config.json": "d4114fff9149b088640046b785173c9ca85297c7",
+    "LICENSE": "7d82903f223c62b411247115f1b577c44e2e6bc2",
+    "RetroArch/platform/retroarch-SmartPro.cfg.bak": "38cfd98240d610e6958376e33b916e7f2b72b10b",
+    "spruce/scripts/button_actions.sh": "67c546c94373341cade4b377802ced55b13ffbe4",
+    "spruce/scripts/emu/lib/general_functions.sh": "42e6c02162ade322cd91b7c7e7a7589130cdf852",
+    "spruce/scripts/emu/lib/ppsspp_functions.sh": "88569b5c41dd109633650835c18f2a037b4162e5",
+    "spruce/scripts/emu/lib/ra_functions.sh": "c09123863f5ca047a65ea7abb9b8808ca0779757",
+    "spruce/scripts/emu/standard_launch.sh": "456503f9589785ed98102599a72c92ed3cd84ac1",
+    "spruce/scripts/menubutton_watchdog.sh": "27f9298c4870a9f8ddfd580f4d56e29f276ce5cd",
+    "spruce/scripts/platform/SmartPro.cfg": "3d271678195b5fb547db1a0d31e11afe3086cce9",
+    "spruce/scripts/platform/device_functions/SmartPro.sh": "5ed8fd031247840cf7c14585b934b9c1de192723",
+    "spruce/scripts/platform/device_functions/trimui_a133p.sh": "c295050b419776df00b737858bdd214bd43f9e6c",
+    "spruce/scripts/power_button_watchdog.sh": "158ea7f8a3f2586308d5fc370c91ad2b5bf25545",
+    "spruce/scripts/principal.sh": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+    "spruce/scripts/runtime.sh": "48953144c9482bd398a0c487c78801777024c79f",
+    "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76"
+  }
+}
+

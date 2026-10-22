@@ -1,3 +1,5 @@
+> **Project direction, 22 October 2026:** the original TrimUI Smart Pro project uses **spruceOS and its shipped PyUI** as the base. Read the [active project plan](TRIMUI_PLAN.md). The CrossMix source and upstream README below are historical reference. CrossMix-specific implementation is paused; this documentation change installs no software.
+
 <div align="center">
     <img src="_assets/readme/TSP-Logo.png">
     
