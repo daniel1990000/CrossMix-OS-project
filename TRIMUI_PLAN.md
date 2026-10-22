@@ -4,6 +4,14 @@ Updated 22 October 2026. **Active direction: build on spruceOS and its existing 
 
 The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
 
+## Current implementation checkpoint — 22 October 2026
+
+The active implementation is on `build/spruce-psp-experience` under [`project/`](project/). Read [`HANDOVER.md`](HANDOVER.md) before continuing. Original source now covers the SDL interface, injected PyUI model/runtime adapters, transactional settings and controls, save-safe offline migration, signed scoped packaging, recovery state, port-data import and benchmark tools. Source-pinned spruce reliability patches and a real PPSSPP independent-native-menu-controls patch are included separately with upstream licence scope.
+
+The PPSSPP work uses upstream v1.20.3 (`d357e6a32934800d3d80b49f910a603e1b069751`), a source-tested SDL menu-control extension, and original themes using PPSSPP's native theme schema, wave animation and widgets. The existing emulator remains the initial device engine. Host C++ acceptance checks are not a complete emulator build, cross-build, or physical test.
+
+The full spruce v4.5.4 archive has been downloaded and independently hashed. Its bundled Smart Pro PPSSPP reports an embedded `v1.20.3` string; its SHA-256 is recorded in the source lock. The exact build correspondence and new extension are unqualified. Device/runtime/source-use flags remain false, and automatic activation is blocked. Continue work against this checkpoint; the historical CrossMix appendix remains reference material.
+
 ## 1. Decision and evidence
 
 Use spruceOS's existing Python/SDL2 UI, launch flow, emulator integration, settings and hardware adapters. Add a PSP-inspired presentation mode and the missing functionality within those seams. **Do not start by writing a replacement C++ shell, importing EmulationStation, or extracting RetroArch XMB code.** A native renderer is a contingency only if a measured PyUI limitation cannot be solved with a bounded change.
@@ -13,7 +21,7 @@ This is a better-aligned architecture for reuse and editability, not proof of hi
 ### Baseline and reproducibility
 
 - Upstream: [spruceUI/spruceOS](https://github.com/spruceUI/spruceOS).
-- Machine-readable source/profile identities and outstanding evidence gates: [spruce source lock](docs/spruce-source-lock.json). Hashes from release metadata are expected values until independently checked against a downloaded asset.
+- Machine-readable source/profile identities and outstanding evidence gates: [spruce source lock](docs/spruce-source-lock.json). The full stable archive SHA-256 was independently checked against the downloaded asset; ten named integration/license files match the pinned source. See the [release audit](project/evidence/release-source-audit.json). This does not prove every archive file or physical compatibility.
 - Baseline candidate: [stable v4.5.4](https://github.com/spruceUI/spruceOS/releases/tag/v4.5.4), released 10 October 2026 and listing original Smart Pro as Stable. Pinned commit: `d45ff8dfe5756147522b04ae5863d17a90e88b54`. Record the exact release asset name and SHA-256 before building. No release asset has been installed or benchmarked here.
 - Inspected Development snapshot: `cb6210aa19c5cb61e404d4029444972448cac9f9`. Development observations are research, not instructions to mix newer files into stable. Several runtime/main-menu files differ from v4.5.4. Pin and test any later cherry-pick independently.
 - Target configuration is [SmartPro.cfg](https://github.com/spruceUI/spruceOS/blob/v4.5.4/spruce/scripts/platform/SmartPro.cfg): aarch64, 1280×720 UI coordinates, two sticks, platform-specific event discovery and emulator binaries. These UI coordinates do not assert the physical panel resolution. It declares firmware target `1.1.1`; the owner's installed firmware is unknown, and this does not authorize flashing it.
@@ -141,7 +149,7 @@ Read and preserve each component's actual terms, not a generic label:
 
 Decided: spruceOS is the base; extend existing PyUI and services; full-system PSP-inspired presentation; preserve original spruce mode; preserve games/saves; reuse before rewriting; keep emulator/ports work separate; document and test rollback.
 
-Unknown: actual installed firmware, SD layout/data, physical-device performance, whether all visual goals fit current views, exact licence permissions/notification completion, and tested SmartPro recovery behavior. Source inspection is not a hardware pass. No installation, author outreach, emulator update, firmware flash or software implementation was performed while preparing this document.
+Unknown: actual installed firmware, SD layout/data, physical-device performance, whether all visual goals fit current views, exact licence permissions/notification completion, and tested SmartPro recovery behavior. Source inspection is not a hardware pass. The original planning checkpoint installed no software. The implementation checkpoint now has original development source and host tests; see [HANDOVER.md](HANDOVER.md) for the current status. No device installation, author outreach, emulator replacement or firmware flash has occurred.
 
 
 ## 11. Source contracts for the spruce implementation

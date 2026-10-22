@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "upstream": {
+    "repository": "https://github.com/hrydgard/ppsspp",
+    "tag": "v1.20.3",
+    "tag_object": "a6c972d9dc2f31da29eab4d6b5c2f677891c956d",
+    "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "license": "GPL-2.0-or-later; retained LICENSE.TXT includes PSPSDK BSD notice",
+    "license_source": "LICENSE.TXT",
+    "license_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa"
+  },
+  "spruce_build_recipe": {
+    "repository": "https://github.com/spruceUI/PPSSPP-spruce",
+    "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "target": "PowerVR original TrimUI Smart Pro",
+    "version_default": "v1.20.3",
+    "binary_source_correspondence": "unverified"
+  },
+  "spruce_reference_binary": {
+    "release": "v4.5.4",
+    "path": "Emu/PSP/PPSSPPSDL_TrimUI",
+    "size": 19885376,
+    "sha256": "d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7",
+    "embedded_version_hint": "v1.20.3",
+    "contains_project_extension": false,
+    "source_correspondence": "not established by version string"
+  },
+  "extension": {
+    "section": "ProjectNativeMenu",
+    "enabled_key": "IndependentMenuControls",
+    "enabled_default": false,
+    "confirm_key": "NativeMenuConfirm",
+    "back_key": "NativeMenuBack",
+    "values": [
+      "south",
+      "east"
+    ],
+    "backend": "defined(SDL) only",
+    "south_native_key": "NKCODE_BUTTON_2",
+    "east_native_key": "NKCODE_BUTTON_3",
+    "scope": "native Confirm/Back only; no PSP gameplay mapping or system preference mutation"
+  },
+  "qualification": {
+    "source_patch_applies": true,
+    "host_narrow_harness": "project/ppsspp/tests",
+    "full_emulator_build": false,
+    "device_tested": false,
+    "installed_executable_sha256": null,
+    "activation": "unsupported until rebuilt executable is hashed and qualified with exact writer/input inventory; no bundled binary replacement"
+  },
+  "patches": [
+    {
+      "path": "patches/0001-independent-native-menu-controls.patch",
+      "sha256": "291ffdd241e27519a645f2c54d6b8a620b8b0b93005e70499274649d6d4c332c",
+      "license": "GPL-2.0-or-later"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "Core/Config.cpp",
+      "sha256": "e0c4d36ef8ccad3b4fbdc3bff7e831e397f7b82a9e4e250df93ee3602b298f69"
+    },
+    {
+      "path": "Core/Config.h",
+      "sha256": "f43b939bb07ebb4e80150ae9fda44204e1cad3faa298c42ef3446ecb0b184c25"
+    },
+    {
+      "path": "Core/KeyMap.cpp",
+      "sha256": "5a108b4e2c2b34e340316d27f6336a19a28ec5463a832ab3e18ca18ef8611af7"
+    },
+    {
+      "path": "Core/ConfigSettings.h",
+      "sha256": "fd7f6d5ec65229e1563433bf89c7ed41d9e48ce2c259fb815ffc60fec3250f4f"
+    },
+    {
+      "path": "Core/ConfigSettings.cpp",
+      "sha256": "8de93b8bd250d9303b45ab2185f1eaaa62e4aeb1d2e67530b91abc88aeea9038"
+    },
+    {
+      "path": "Core/ConfigValues.h",
+      "sha256": "b0b777315484af0e205830c34633dbf7ac9652f52ec05845dff628dd52981e08"
+    },
+    {
+      "path": "Core/HLE/sceCtrl.h",
+      "sha256": "ca6c2c2471b70a15c7961735744b0bdaea8ee810ed73eaa1ea0380a4739492fd"
+    },
+    {
+      "path": "Core/HLE/sceUtility.h",
+      "sha256": "bfbf1e929722f2d5d898946c4726b9b6efa31ecd970bcc3f4babbeb6d47cb453"
+    },
+    {
+      "path": "Common/Input/InputState.h",
+      "sha256": "22e680a30596a0813491d337eb61961bf85dea88b00a63e5fb6b9565ea7ad9da"
+    },
+    {
+      "path": "Common/Input/KeyCodes.h",
+      "sha256": "cd0b6790d215f3171e9b3db71915e1d04ebf0e6dbff47f1871751912a207adca"
+    },
+    {
+      "path": "Common/UI/PopupScreens.h",
+      "sha256": "c3f065a16c62278281a32110e7072c21f233984b710e784369880df60fc86a4e"
+    },
+    {
+      "path": "Common/Data/Text/I18n.h",
+      "sha256": "79fd0e2cb0b4adcbccd283aa637be5257e98d9ceea19855bd1eae56dff3fa786"
+    },
+    {
+      "path": "SDL/SDLJoystick.cpp",
+      "sha256": "fb1228ac734eca99d9873234274fa178a449854caea2694934cc2abbe6e44884"
+    },
+    {
+      "path": "UI/GameSettingsScreen.cpp",
+      "sha256": "20ea8f565adba1b15a80ff2a54d5ef4c0743f25314e26ed5ce599b8e48a441d2"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "Core/Config.cpp",
+      "sha256": "81e0aba0d29f01a33982a17687e1204dbd993eeefdbd457271d29234f074530b"
+    },
+    {
+      "path": "Core/Config.h",
+      "sha256": "a14626ea42d549f1a370a0c5878438f4da48abf219277e23f64025c5d84d774b"
+    },
+    {
+      "path": "Core/KeyMap.cpp",
+      "sha256": "a70a8c637ad6d6ea4947c448b33d553fabaa7f035f28fbd6207bbf6d7ba3229c"
+    },
+    {
+      "path": "Core/ProjectNativeMenuControls.h",
+      "sha256": "007d472681cbb685fd4311f7c5f9773d67bf498288ffb8d3db956da439cd134c"
+    },
+    {
+      "path": "UI/GameSettingsScreen.cpp",
+      "sha256": "683cf0247a11e0968fefef7a6af0d9968887699a1988973a78cdf523acf9d637"
+    }
+  ]
+}

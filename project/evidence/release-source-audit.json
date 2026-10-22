@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "evidence": "downloaded-release-archive-and-pinned-source",
+  "release": "v4.5.4",
+  "expected_sha256": "4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd",
+  "actual_sha256": "4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd",
+  "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "selected_files": [
+    {
+      "path": "App/PyUI/main-ui/menus/main_menu.py",
+      "archive_sha256": "c01560eec190bd9d2668533955453446d52e3cc3c08e53cd1606f04fc81cc8ad",
+      "source_sha256": "c01560eec190bd9d2668533955453446d52e3cc3c08e53cd1606f04fc81cc8ad",
+      "matches": true
+    },
+    {
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py",
+      "archive_sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "source_sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "matches": true
+    },
+    {
+      "path": "spruce/scripts/helperFunctions.sh",
+      "archive_sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
+      "source_sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
+      "matches": true
+    },
+    {
+      "path": "App/-OTA/downloader.sh",
+      "archive_sha256": "934632845d6f6f9ba64fe071231bde345f2f5fe39c0acfb86fcdaaaac3c88268",
+      "source_sha256": "934632845d6f6f9ba64fe071231bde345f2f5fe39c0acfb86fcdaaaac3c88268",
+      "matches": true
+    },
+    {
+      "path": "App/PyUI/py-ui-config.json",
+      "archive_sha256": "be2a11286cc0c23f265f9f4fac91eca4f28f641cee89b0f90246ef6e2b2ec2fa",
+      "source_sha256": "be2a11286cc0c23f265f9f4fac91eca4f28f641cee89b0f90246ef6e2b2ec2fa",
+      "matches": true
+    },
+    {
+      "path": "spruce/scripts/principal.sh",
+      "archive_sha256": "f45b37592708c6c6d9a47c6d8f2b94b23d7387233c566d445df78637e11fb953",
+      "source_sha256": "f45b37592708c6c6d9a47c6d8f2b94b23d7387233c566d445df78637e11fb953",
+      "matches": true
+    },
+    {
+      "path": "spruce/scripts/platform/SmartPro.cfg",
+      "archive_sha256": "196fbbaf9c8ea7478771543c6f4b3cde53df2858f44acc0255ada6e3ae5304d2",
+      "source_sha256": "196fbbaf9c8ea7478771543c6f4b3cde53df2858f44acc0255ada6e3ae5304d2",
+      "matches": true
+    },
+    {
+      "path": "App/PyUI/main-ui/LICENSE.md",
+      "archive_sha256": "750e5328faa651a9b63ae079586a58a347cd6889de31455f7f0735a149c3caae",
+      "source_sha256": "750e5328faa651a9b63ae079586a58a347cd6889de31455f7f0735a149c3caae",
+      "matches": true
+    },
+    {
+      "path": "App/PyUI/LICENSE.md",
+      "archive_sha256": "7ff719dcc48ccef9e70b3674803e1e7b5d2dd1095706a8fc50cc06a69d4999bb",
+      "source_sha256": "7ff719dcc48ccef9e70b3674803e1e7b5d2dd1095706a8fc50cc06a69d4999bb",
+      "matches": true
+    },
+    {
+      "path": "LICENSE",
+      "archive_sha256": "a01c51912b88f08db800c9600fcab358da621a7cf177a6f3adc8882a588522c5",
+      "source_sha256": "a01c51912b88f08db800c9600fcab358da621a7cf177a6f3adc8882a588522c5",
+      "matches": true
+    }
+  ],
+  "bundled_ppsspp": {
+    "path": "Emu/PSP/PPSSPPSDL_TrimUI",
+    "size": 19885376,
+    "sha256": "d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7",
+    "git_blob": "509ffbd9ba3874c05ae3b470d77cab5299d85c4e",
+    "matches_locked_git_blob": true,
+    "embedded_version_hint": "v1.20.3",
+    "exact_compiled_source_correspondence_verified": false,
+    "independent_native_menu_extension_present": false
+  },
+  "all_release_file_correspondence_verified": false,
+  "device_tested": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "id": "spruce-igm-unqualified",
+  "device": "TRIMUI_SMART_PRO",
+  "engine": "retroarch",
+  "surface": "spruce_igm",
+  "template": true,
+  "qualified": false,
+  "base_release": "v4.5.4",
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "executable": "RetroArch/ra64.universal",
+  "executable_sha256": null,
+  "config": "RetroArch/igm.json",
+  "writer_inventory_verified": false,
+  "writer_executables": ["RetroArch/ra64.universal"],
+  "qualification_gaps": [
+    "Theme igm.json provides appearance data, not proof of control-mapping support.",
+    "menu_swap_ok_cancel_buttons does not qualify spruce IGM controls.",
+    "Keep this surface unsupported until its source/build/input contract is verified."
+  ],
+  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ra_functions.sh#L223"
+}

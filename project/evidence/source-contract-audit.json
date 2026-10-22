@@ -1,0 +1,216 @@
+{
+  "schema": 1,
+  "evidence": "untouched-pinned-source-checkout",
+  "date": "2026-10-22",
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "contracts_checked": 34,
+  "all_contracts_match": true,
+  "contracts": [
+    {
+      "path": ".tmp_update/updater",
+      "sha256": "ab76d5c600799ee2f4d5b2daf87aec60d30067fab14719d376a8408780dc5d2d",
+      "git_blob": "27939e860b2d6ed89f3a1c24d201e30e95af72af",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/LICENSE.md",
+      "sha256": "7ff719dcc48ccef9e70b3674803e1e7b5d2dd1095706a8fc50cc06a69d4999bb",
+      "git_blob": "3e98034103df4771210012e478d792b2a361d856",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/launch.sh",
+      "sha256": "f5bbef6490abffce7e6cdf260d1107dfbe4a15eb5a9f11890f5b3aefddbf16b6",
+      "git_blob": "8e23351cdfbf28069b30bc3a3e58c2badb7bfcce",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/LICENSE.md",
+      "sha256": "750e5328faa651a9b63ae079586a58a347cd6889de31455f7f0735a149c3caae",
+      "git_blob": "9c91591999e6049bb99dc191ffebc0608e28fa85",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/controller/controller.py",
+      "sha256": "4ca32d3abc999d3c7a67c3bb3786e42dd1ac8b8ae6300206226948f68dbaffd8",
+      "git_blob": "a26e784c04ee259106d6a91184863be6f5a44d74",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py",
+      "sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "git_blob": "63467b26b5b8e1cb7b5508f448be8f200311fbce",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_device.py",
+      "sha256": "81c3de188bcd7c812deedf96d7d8bc58d4fefdcfc0dffc777b6dcc7f97c91c18",
+      "git_blob": "10ca3d8a31a9444bd32d2a7f1f4564c22588077c",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/display/display.py",
+      "sha256": "5fdbfc25eb874cb0b6c0dc3fccc6d2cfa473cf89b8d140f0dc152568d034f512",
+      "git_blob": "8237bb3f7f7154b2289544c417ca91a46c3914cd",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/mainui.py",
+      "sha256": "4d41c6e448dae7006ece6f81a0265bea6939052eb85daf05538b3ee6d58aaa2f",
+      "git_blob": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/menus/games/in_game_menu_listener.py",
+      "sha256": "bc92bddc900389df6b4a44d81abb19fb8a2bfd435b8dd9e23e3aa0e48f236c5d",
+      "git_blob": "e74162bdfa4938b00bfc3bbc60122f18e5abd57a",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/menus/games/recents_menu_gs.py",
+      "sha256": "ee7c0b20a67a2be8654b37dd257e463c96c36c35b85f7a0dd773faf03df33769",
+      "git_blob": "2adc9067c7b06dd0602fffd3bfa5ee2297c45dc2",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/menus/games/utils/roms_list_manager.py",
+      "sha256": "6c7e0c1af154c876706ff801543289e34bfa43284c205749a5598e727fc20df0",
+      "git_blob": "11a07582d7259863022c31272e41607e081969b6",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/menus/main_menu.py",
+      "sha256": "c01560eec190bd9d2668533955453446d52e3cc3c08e53cd1606f04fc81cc8ad",
+      "git_blob": "86ba5ccdba0be3453b6bddf1c24e9e91cec5c706",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/themes/theme.py",
+      "sha256": "e2bf1ffee783dc005252bd6fc06ec56beafcbd94ffbf251eb13988b066d98cca",
+      "git_blob": "6b4c787d57e19c65bae18893297e1818c0ae05e7",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/utils/cfw_system_config.py",
+      "sha256": "a4cee14984e3c9304bdc4871f1155b218f7c13bb922f594d5c90f8cd16e57a05",
+      "git_blob": "bc65758da4dad522f95700843475fe073f0c0940",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/utils/py_ui_config.py",
+      "sha256": "f3ee1564cf95c18fc26ef67856e5a0ebcc27432cf775fd7b0867f94c64ce8fa2",
+      "git_blob": "9de7d3859064e8eee22f71f7b6ee65ec0cc2a9c6",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/main-ui/views/view_creator.py",
+      "sha256": "77803860febbe1965ba54613957f6fda3aa915b570921af46548ab695adb3f6e",
+      "git_blob": "fce644532cfd11f28c7657ffeab7968c1de4cd77",
+      "matches_profile": true
+    },
+    {
+      "path": "App/PyUI/py-ui-config.json",
+      "sha256": "be2a11286cc0c23f265f9f4fac91eca4f28f641cee89b0f90246ef6e2b2ec2fa",
+      "git_blob": "8dac198b5e4bceb38b7ff6e4b5b8f1170658d287",
+      "matches_profile": true
+    },
+    {
+      "path": "App/USBStorageMode/launch.sh",
+      "sha256": "c28b684665a51d5b9208d6b4042538190e07f1f093f34b5dc212e856841dc849",
+      "git_blob": "85329dc12b4d69bbda10ded7725343fadde47a7f",
+      "matches_profile": true
+    },
+    {
+      "path": "App/spruceBackup/spruceBackup.sh",
+      "sha256": "2c227a26da698bb7960fbfe160484d37ce0f3ff41b98f9c8e5c9339925cd48b7",
+      "git_blob": "f3552f9be886b4889f698cacbf16029117fc6778",
+      "matches_profile": true
+    },
+    {
+      "path": "Emu/PS/config.json",
+      "sha256": "afe73ae1e9a73c438aa990f9720a44e2d259d890ca1a5801ae6f1f0a17a97aae",
+      "git_blob": "d4114fff9149b088640046b785173c9ca85297c7",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/button_actions.sh",
+      "sha256": "372678757a2393e7d15a190218b9cc5a7f435011123191c6782b91f9b0b44648",
+      "git_blob": "67c546c94373341cade4b377802ced55b13ffbe4",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/emu/lib/general_functions.sh",
+      "sha256": "f3c1d9be16f06234d83259903194c09819af9a96724f5db8fe76d471c0352723",
+      "git_blob": "42e6c02162ade322cd91b7c7e7a7589130cdf852",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/emu/lib/ppsspp_functions.sh",
+      "sha256": "f7d85b270a74d9f3da49a573e4419ca3bf7710b5579794b93b4cd3a19acdea8c",
+      "git_blob": "88569b5c41dd109633650835c18f2a037b4162e5",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/emu/lib/ra_functions.sh",
+      "sha256": "2905a1c68b67e10b9c1793b02b8d43c3475b525dcffdbe33728ffc75518be42f",
+      "git_blob": "c09123863f5ca047a65ea7abb9b8808ca0779757",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/emu/standard_launch.sh",
+      "sha256": "a2d28db4d36aec61746318e9e1c9a9ac6bbde992cd619715c93c0191e699b5fc",
+      "git_blob": "456503f9589785ed98102599a72c92ed3cd84ac1",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/menubutton_watchdog.sh",
+      "sha256": "971b1fc5ad4ec83cc68827b8ab2385d897c34507476dc3864e00161a52f2e365",
+      "git_blob": "27f9298c4870a9f8ddfd580f4d56e29f276ce5cd",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/platform/SmartPro.cfg",
+      "sha256": "196fbbaf9c8ea7478771543c6f4b3cde53df2858f44acc0255ada6e3ae5304d2",
+      "git_blob": "3d271678195b5fb547db1a0d31e11afe3086cce9",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/platform/device_functions/SmartPro.sh",
+      "sha256": "75984365c8cc0369bfd5c30af64b008cb0340159abc090c7c171a77ba85cbe75",
+      "git_blob": "5ed8fd031247840cf7c14585b934b9c1de192723",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/platform/device_functions/trimui_a133p.sh",
+      "sha256": "37af2c6c094e977fd2eb3191e402a1bd9c5ac44223c81755ea12805386b42372",
+      "git_blob": "c295050b419776df00b737858bdd214bd43f9e6c",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/power_button_watchdog.sh",
+      "sha256": "39cb39952a382eea7a718e03ffcb97276aea78e3321a61fae869a698a37a14f5",
+      "git_blob": "158ea7f8a3f2586308d5fc370c91ad2b5bf25545",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/principal.sh",
+      "sha256": "f45b37592708c6c6d9a47c6d8f2b94b23d7387233c566d445df78637e11fb953",
+      "git_blob": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+      "matches_profile": true
+    },
+    {
+      "path": "spruce/scripts/runtime.sh",
+      "sha256": "4a6c95d5839013836d660bc16e0ee608afa1b4293234685ac736cc6620d947de",
+      "git_blob": "48953144c9482bd398a0c487c78801777024c79f",
+      "matches_profile": true
+    },
+    {
+      "path": "trimui/app/MainUI",
+      "sha256": "94009c9dbd0db300ec60c534aaeddcaf841ef190b3897966cebfcca4065aeb44",
+      "git_blob": "45a1e1be9b173248e78e7a2b1736120639d6ee76",
+      "matches_profile": true
+    }
+  ],
+  "device_tested": false,
+  "device_qualification": false
+}

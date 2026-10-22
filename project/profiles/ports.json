@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "device": "TrimUI Smart Pro (original A133 / PowerVR)",
+  "spruce_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "catalog_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",
+  "catalog_sha256": "ef1998c81b6f1a505d3cd3fdf98ceb331e4ae9ce7f0cdc5d7b3142f2c6347ff4",
+  "ports": [
+    {
+      "id": "gta3", "title": "Grand Theft Auto III", "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/gta3", "layout": "classic_gta",
+      "required_files": ["models/gta3.img", "models/gta3.dir", "data/gta3.dat"],
+      "allowed_roots": ["anim", "audio", "data", "models", "text", "txd"],
+      "settings": ["re3.ini"], "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/gta3",
+      "owner_files": "Classic PC GTA III data, not Definitive Edition. Copy game data only; the installed PortMaster engine stays in place.",
+      "warnings": ["Structural validation cannot certify a complete or licensed game copy.", "Upstream README contains Vice City copy/paste details; use the GTA III port metadata and verify in game."],
+      "scenes": ["fixed-save-city-route", "dense-traffic-route"], "measured_fps": null
+    },
+    {
+      "id": "gtavc", "title": "Grand Theft Auto: Vice City", "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/gtavc", "layout": "classic_gta",
+      "required_files": ["models/gta3.img", "models/gta3.dir", "data/gta_vc.dat"],
+      "allowed_roots": ["anim", "audio", "data", "models", "text", "txd"],
+      "settings": ["reVC.ini"], "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/gtavc",
+      "owner_files": "Classic PC Vice City data, not Definitive Edition. The installed PortMaster engine stays in place.",
+      "warnings": ["Structural validation cannot certify a complete or licensed game copy."],
+      "scenes": ["fixed-save-city-route", "dense-traffic-route"], "measured_fps": null
+    },
+    {
+      "id": "sonic_mania", "title": "Sonic Mania", "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/sonicmania", "layout": "single_file", "import_name": "Data.rsdk",
+      "required_files": ["Data.rsdk"], "settings": ["Settings.ini"], "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster/PortMaster-New/tree/444778f3ae29facbd97b823dc3ca7270b3ebe499/ports/sonic.mania",
+      "owner_files": "Your own base-game Data.rsdk. Plus is a separate custom-build track; this tool does not download or patch DLC.",
+      "warnings": ["Filename and hash inventory identify the selected file; no published official game-data digest is assumed."],
+      "scenes": ["green-hill-act-1-fixed-route", "special-stage"], "measured_fps": null
+    },
+    {
+      "id": "render96ex", "title": "Super Mario 64 / Render96ex", "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/render96ex", "layout": "single_file", "import_name": "baserom.us.z64",
+      "required_files": ["baserom.us.z64"], "md5": "20b854b239203baf6c961b850a4a51a2",
+      "sha1": "9bef1128717f958171a4afac3ed78ee2bb4e86ce",
+      "settings": ["conf/sm64config.txt", "conf/DynOS.1.1.alpha.config.txt"], "workspace_bytes": 1073741824,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/render96ex",
+      "owner_files": "Legally owned US Super Mario 64 ROM. Only the documented US digest is accepted.",
+      "warnings": ["First launch needs about 1 GB extra space for extraction.", "Upstream's 60 fps default is a setting, not a measured guarantee; model packs may cause choppiness."],
+      "scenes": ["bob-omb-battlefield-fixed-route", "castle-courtyard"], "measured_fps": null
+    },
+    {
+      "id": "celeste", "title": "Celeste", "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/celeste/gamedata", "layout": "celeste",
+      "required_files": ["Celeste.exe"], "required_directories": ["Content"],
+      "settings_directory": "Roms/ports/celeste", "settings": ["savedata/settings.celeste"], "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster/PortMaster-New/tree/444778f3ae29facbd97b823dc3ca7270b3ebe499/ports/celeste",
+      "runtime": "mono-6.12.0.122-aarch64.squashfs",
+      "owner_files": "Supported DRM-free itch.io Linux or EGS files. Copy the original game folder; the source is never changed.",
+      "warnings": ["First launch performs texture repacking and modifies the imported copy; keep the original owner files untouched.", "Install the Mono runtime through the existing PortMaster manager first."],
+      "scenes": ["forsaken-city-fixed-room-route", "particles-and-transition-route"], "measured_fps": null
+    },
+    {
+      "id": "gtasa", "title": "Grand Theft Auto: San Andreas", "enabled": false,
+      "status": "experimental; no verified original-Smart-Pro package or import contract",
+      "directory": "Roms/ports/gtasa", "layout": "unsupported", "settings": [], "workspace_bytes": 0,
+      "owner_files": "No supported import recipe is declared.",
+      "warnings": ["No performance, compatibility, save or distribution claim is made."],
+      "scenes": [], "measured_fps": null
+    }
+  ]
+}

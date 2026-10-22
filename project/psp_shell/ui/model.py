@@ -1,0 +1,689 @@
+"""Pure navigation: immutable frames in, typed backend requests out.
+
+SPDX-License-Identifier: MIT
+"""
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+from types import MappingProxyType
+from typing import Any, Iterable, Mapping
+import uuid
+
+
+CATEGORIES = ("Games", "Continue Playing", "Tools", "Settings")
+KEYBOARD_KEYS = tuple("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") + (
+    "Space", "Delete", "Find", "Cancel"
+)
+
+
+def _text(value: Any, limit: int = 512) -> str:
+    """Metadata is display text, never markup or executable input."""
+    if not isinstance(value, str):
+        return ""
+    return "".join(c if c >= " " or c == "\n" else "�" for c in value)[:limit]
+
+
+@dataclass(frozen=True)
+class Preferences:
+    confirm: str = "south"
+    motion: bool = True
+    sound: bool = True
+    text_scale: float = 1.0
+    high_contrast: bool = False
+    interface: str = "classic"
+
+    @classmethod
+    def from_mapping(cls, values: Mapping[str, Any] | None) -> "Preferences":
+        values = values or {}
+        scale = values.get("text_scale", 1.0)
+        if not isinstance(scale, (float, int)) or isinstance(scale, bool):
+            scale = 1.0
+        return cls(
+            confirm=values.get("confirm") if values.get("confirm") in ("south", "east") else "south",
+            motion=values.get("motion", True) is True,
+            sound=values.get("sound", True) is True,
+            text_scale=max(0.75, min(1.75, float(scale))),
+            high_contrast=values.get("high_contrast", False) is True,
+            interface=values.get("interface") if values.get("interface") in ("classic", "project") else "classic",
+        )
+
+
+@dataclass(frozen=True)
+class UIItem:
+    id: str
+    title: str
+    subtitle: str = ""
+    kind: str = "game"
+    system_id: str = ""
+    artwork: str = ""
+    available: bool = True
+    resume_available: bool = False
+    reason: str = ""
+    favorite: bool = False
+
+    @classmethod
+    def from_record(cls, value: Mapping[str, Any], kind: str = "game") -> "UIItem":
+        identifier = value.get("game_id", value.get("tool_id", value.get("id", "")))
+        availability = value.get("availability", "available")
+        available = value.get("available", availability == "available") is True
+        return cls(
+            id=_text(identifier, 1024),
+            title=_text(value.get("display_name", value.get("title", value.get("label", identifier))), 512),
+            subtitle=_text(value.get("subtitle", value.get("description", value.get("system_id", ""))), 1024),
+            kind=kind,
+            system_id=_text(value.get("system_id", ""), 128),
+            artwork=_text(value.get("artwork_ref", value.get("artwork", "")), 4096),
+            available=available,
+            resume_available=value.get("resume_available", False) is True,
+            reason=_text(value.get("resume_reason", value.get("reason", "")), 2048),
+            favorite=value.get("favorite", False) is True,
+        )
+
+
+@dataclass(frozen=True)
+class UICommand:
+    serial: int
+    method: str
+    params: Mapping[str, Any] = field(default_factory=dict)
+    context: str = ""
+
+
+@dataclass(frozen=True)
+class DialogChoice:
+    title: str
+    action: str = "close"
+    method: str = ""
+    params: Mapping[str, Any] = field(default_factory=dict)
+    context: str = ""
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "params", MappingProxyType(dict(self.params)))
+
+
+@dataclass(frozen=True)
+class Dialog:
+    title: str
+    message: str
+    choices: tuple[DialogChoice, ...] = (DialogChoice("Back"),)
+    selected: int = 0
+    error: bool = False
+    message_page: int = 0
+
+
+@dataclass(frozen=True)
+class Keyboard:
+    text: str
+    selected: int
+    keys: tuple[str, ...] = KEYBOARD_KEYS
+
+
+@dataclass(frozen=True)
+class UISnapshot:
+    category: int
+    categories: tuple[str, ...]
+    title: str
+    breadcrumb: str
+    items: tuple[UIItem, ...]
+    selected: int
+    total: int
+    offset: int
+    preferences: Preferences
+    dialog: Dialog | None
+    keyboard: Keyboard | None
+    status: str
+    empty_message: str
+    loading: bool
+    demo: bool
+    exit_request: str | None
+
+    @property
+    def selected_item(self) -> UIItem | None:
+        return self.items[self.selected] if 0 <= self.selected < len(self.items) else None
+
+
+@dataclass
+class _Page:
+    items: tuple[UIItem, ...] = ()
+    selected: int = 0
+    offset: int = 0
+    total: int = 0
+
+    def replace(self, items: Iterable[UIItem], *, offset: int = 0,
+                total: int | None = None, keep_focus: bool = True) -> None:
+        previous = self.items[self.selected].id if keep_focus and 0 <= self.selected < len(self.items) else None
+        self.items = tuple(items)
+        self.offset = max(0, offset)
+        self.total = len(self.items) if total is None else max(0, total)
+        self.selected = next((i for i, item in enumerate(self.items) if item.id == previous), 0)
+
+
+def _menu(identifier: str, title: str, subtitle: str = "") -> UIItem:
+    return UIItem(identifier, title, subtitle, "menu")
+
+
+class NavigationModel:
+    """Backend-independent focus, dialogs, search and preference previews.
+
+    ``handle`` and ``receive`` return requests for the app coordinator. No method
+    here performs I/O. Applications may alternatively populate views directly
+    with ``set_category_items`` when embedding in the existing PyUI menu models.
+    """
+
+    PAGE_SIZE = 40
+
+    def __init__(self, demo: bool = False, preferences: Mapping[str, Any] | None = None,
+                 restored_state: Mapping[str, Any] | None = None, session_id: str | None = None):
+        self.demo = bool(demo)
+        self.preferences = Preferences.from_mapping(preferences)
+        self.generation = 0
+        self.category = 0
+        self._pages = [_Page() for _ in CATEGORIES]
+        self._systems = _Page()
+        self._games_view = "systems"
+        self._system_id = ""
+        self._system_label = ""
+        self._search = ""
+        self._keyboard: Keyboard | None = None
+        self._dialog: Dialog | None = None
+        self._serial = 0
+        if session_id is not None and (not isinstance(session_id, str) or not 1 <= len(session_id) <= 64 or
+                                       any(not (c.isascii() and (c.isalnum() or c in "_-")) for c in session_id)):
+            raise ValueError("Invalid UI session identity")
+        self._session_id = session_id or uuid.uuid4().hex
+        self._pending: set[int] = set()
+        self._query_serial = 0
+        self._query_last_focus = False
+        self._favorites: set[str] = set()
+        self._last_transaction = ""
+        self._settings_view = "root"
+        self._controls_generation = 0
+        self._controls_transaction = ""
+        self._capabilities: Mapping[str, Any] = {}
+        self._snapshot: Mapping[str, Any] = {}
+        self._status = ""
+        self.exit_request: str | None = None
+        self._restored_focus: dict[str, str] = {}
+        self._set_systems([])
+        self._rebuild_settings()
+        if restored_state and restored_state.get("schema", 1) == 1:
+            value = restored_state.get("category", 0)
+            self.category = value if isinstance(value, int) and not isinstance(value, bool) and 0 <= value < 4 else 0
+            focus = restored_state.get("focus", {})
+            if isinstance(focus, Mapping):
+                self._restored_focus = {str(k): _text(v, 1024) for k, v in focus.items()}
+            view = restored_state.get("games_view", "systems")
+            if view in ("systems", "all", "system", "favorites", "search"):
+                self._games_view = view
+            self._system_id = _text(restored_state.get("system_id", ""), 128)
+            self._system_label = _text(restored_state.get("system_label", ""), 512)
+            self._search = _text(restored_state.get("search", ""), 128).replace("\n", "")
+            if self._games_view == "system" and not self._system_id:
+                self._games_view = "systems"
+
+    def _request(self, method: str, params: Mapping[str, Any] | None = None,
+                 context: str = "") -> UICommand:
+        self._serial += 1
+        self._pending.add(self._serial)
+        return UICommand(self._serial, method, dict(params or {}), context)
+
+    def initial_commands(self) -> list[UICommand]:
+        commands = [self._request(method, context=context) for method, context in (
+            ("settings.get", "settings"), ("system.capabilities", "capabilities"),
+            ("system.snapshot", "snapshot"), ("library.systems", "systems"),
+            ("library.recent", "recent"), ("library.favorites", "favorites_cache"),
+            ("tools.list", "tools"))]
+        if self._games_view == "favorites":
+            commands.append(self._request("library.favorites", context="favorites"))
+        elif self._games_view != "systems":
+            commands.append(self._query())
+        return commands
+
+    def _page(self) -> _Page:
+        if self.category == 0 and self._games_view == "systems":
+            return self._systems
+        return self._pages[self.category]
+
+    def _focus_key(self) -> str:
+        return "systems" if self.category == 0 and self._games_view == "systems" else str(self.category)
+
+    def _restore_focus(self, page: _Page, key: str) -> None:
+        identifier = self._restored_focus.pop(key, "")
+        if identifier:
+            page.selected = next((i for i, item in enumerate(page.items) if item.id == identifier), page.selected)
+
+    def export_state(self) -> dict[str, Any]:
+        focus = {}
+        for key, page in [("systems", self._systems)] + [(str(i), page) for i, page in enumerate(self._pages)]:
+            if 0 <= page.selected < len(page.items):
+                focus[key] = page.items[page.selected].id
+        return {"schema": 1, "category": self.category, "focus": focus,
+                "games_view": self._games_view, "system_id": self._system_id,
+                "system_label": self._system_label, "search": self._search}
+
+    def set_category_items(self, category: int | str, items: Iterable[UIItem | Mapping[str, Any]],
+                           *, offset: int = 0, total: int | None = None) -> None:
+        if isinstance(category, str):
+            category = CATEGORIES.index(category)
+        if not 0 <= category < 4:
+            raise ValueError("Unknown category")
+        kind = "tool" if category == 2 else "game"
+        parsed = [item if isinstance(item, UIItem) else UIItem.from_record(item, kind) for item in items]
+        self._pages[category].replace(parsed, offset=offset, total=total)
+        if category == 0:
+            self._games_view = "all"
+        self._restore_focus(self._pages[category], str(category))
+
+    def _set_systems(self, records: Iterable[Mapping[str, Any]]) -> None:
+        items = [_menu("all", "All games", "Your existing collection"),
+                 _menu("favorites", "Favorites", "The games you keep close"),
+                 _menu("search", "Find a game", "Search across your collection"),
+                 _menu("random", "Surprise me", "Choose an available game")]
+        for value in records:
+            identifier = _text(value.get("system_id", value.get("id", "")), 128)
+            if not identifier:
+                continue
+            count = value.get("game_count", 0)
+            count = count if isinstance(count, int) and count >= 0 else 0
+            items.append(UIItem(identifier, _text(value.get("label", identifier)),
+                                f"{count} games", "system", identifier,
+                                available=value.get("availability", "available") == "available"))
+        self._systems.replace(items)
+        self._restore_focus(self._systems, "systems")
+
+    def _query(self, offset: int = 0) -> UICommand:
+        params: dict[str, Any] = {"offset": offset, "limit": self.PAGE_SIZE}
+        if self._games_view == "system":
+            params["system_id"] = self._system_id
+        if self._games_view == "search":
+            params["search"] = self._search
+        command = self._request("library.query", params, "games")
+        self._query_serial = command.serial
+        return command
+
+    def receive(self, command: UICommand, result: Any) -> list[UICommand]:
+        self._pending.discard(command.serial)
+        context = command.context
+        if context in ("settings", "apply", "undo"):
+            if not isinstance(result, Mapping):
+                raise ValueError("Settings reply must be an object")
+            self.preferences = Preferences.from_mapping(result.get("preferences"))
+            generation = result.get("generation", self.generation)
+            if isinstance(generation, int) and generation >= 0:
+                self.generation = generation
+            if context == "apply":
+                self._last_transaction = _text(result.get("transaction_id"), 256)
+                self.notice("Preference updated. Undo is available in Settings.")
+            elif context == "undo":
+                self._last_transaction = ""
+                self.notice("The previous preference was restored.")
+            if self._settings_view == "root":
+                self._rebuild_settings()
+        elif context == "capabilities":
+            self._capabilities = result if isinstance(result, Mapping) else {}
+        elif context == "snapshot":
+            self._snapshot = result if isinstance(result, Mapping) else {}
+        elif context == "systems":
+            self._set_systems(value for value in result if isinstance(value, Mapping))
+        elif context == "games":
+            if command.serial != self._query_serial:
+                return []
+            values = result.get("items", []) if isinstance(result, Mapping) else []
+            items = [UIItem.from_record(value) for value in values if isinstance(value, Mapping)]
+            offset = result.get("offset", 0)
+            total = result.get("total", len(items))
+            self._pages[0].replace(items, offset=offset, total=total, keep_focus=False)
+            if self._query_last_focus and items:
+                self._pages[0].selected = len(items) - 1
+            self._query_last_focus = False
+            self._restore_focus(self._pages[0], "0")
+        elif context in ("recent", "favorites", "favorites_cache"):
+            items = [UIItem.from_record(value) for value in result if isinstance(value, Mapping)]
+            if context != "recent":
+                self._favorites = {item.id for item in items}
+            if context != "favorites_cache":
+                page = self._pages[1 if context == "recent" else 0]
+                page.replace(items)
+                self._restore_focus(page, "1" if context == "recent" else "0")
+        elif context == "tools":
+            self._pages[2].replace(UIItem.from_record(value, "tool") for value in result if isinstance(value, Mapping))
+            self._restore_focus(self._pages[2], "2")
+        elif context == "random":
+            self._launch_dialog(UIItem.from_record(result))
+        elif context == "favorite_set":
+            identifier = command.params.get("game_id", "")
+            if command.params.get("enabled"):
+                self._favorites.add(identifier)
+                self.notice("Added to Favorites.")
+            else:
+                self._favorites.discard(identifier)
+                self.notice("Removed from Favorites.")
+            if self._games_view == "favorites":
+                return [self._request("library.favorites", context="favorites")]
+        elif context == "preview":
+            key = next(iter(command.params["changes"]))
+            diff = result.get("diff", [])
+            message = "Only this interface preference will change. Gameplay mappings stay as they are."
+            if diff:
+                message = f"{self._format_preference(diff[0].get('before'))}  →  {self._format_preference(diff[0].get('after'))}\n" + message
+            choice = DialogChoice("Apply", "request", "settings.apply", {
+                "preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-apply-{command.serial}",
+                "expected_generation": self.generation}, "apply")
+            self._dialog = Dialog("Change " + self._preference_label(key).lower(), message,
+                                  (choice, DialogChoice("Cancel")))
+        elif context == "launch":
+            if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
+                self.exit_request = "launch"
+            else:
+                self.notice("The launch has not been accepted. Your current interface remains active.")
+        elif context == "switch":
+            if isinstance(result, Mapping) and (result.get("state") == "releasing_ui" or result.get("interface") == "classic"):
+                self.exit_request = "classic"
+            else:
+                self.notice("The interface switch has not been accepted.")
+        elif context == "support":
+            location = _text(result.get("path", result.get("output", ""))) if isinstance(result, Mapping) else ""
+            self._dialog = Dialog("Diagnostic report saved", location or "The redacted report is ready.", (DialogChoice("Done"),))
+        elif context == "controls":
+            self._settings_view = "controls"
+            generation = result.get("generation", 0)
+            self._controls_generation = generation if isinstance(generation, int) and generation >= 0 else 0
+            profiles = result.get("profiles", [])
+            items = []
+            for entry in profiles:
+                if not isinstance(entry, Mapping):
+                    continue
+                identifier = _text(entry.get("profile_id"), 256)
+                if not identifier:
+                    continue
+                writable = entry.get("writable", False) is True
+                error = entry.get("error", {})
+                reason = _text(error.get("message", ""), 2048) if isinstance(error, Mapping) else ""
+                surface = _text(entry.get("surface", ""), 128)
+                items.append(UIItem(identifier, _text(entry.get("label", identifier)),
+                                    (surface + " · " if surface else "") + ("Menu adapter ready" if writable else "Unavailable on this profile"),
+                                    "control_profile", available=writable, reason=reason))
+            if not items:
+                items.append(_menu("controls_info", "No qualified menu profiles", _text(result.get("reason")) or "Your existing emulator mappings remain unchanged"))
+            if self._controls_transaction:
+                items.append(_menu("controls_undo", "Undo last menu change", "Restore only the menu keys changed by this interface"))
+            self._pages[3].replace(items)
+        elif context == "controls_preview":
+            diff = result.get("diff", [])
+            lines = [_text(result.get("profile_id"), 256)]
+            for entry in diff[:2]:
+                before = entry.get("before")
+                after = entry.get("after")
+                show = lambda value: "Unset" if value is None else "On" if value is True else "Off" if value is False else str(value)
+                lines.append(f"{_text(entry.get('key'))}: {show(before)} → {show(after)}")
+            lines.append("Gameplay mappings stay unchanged. Apply only while the emulator is stopped.")
+            self._dialog = Dialog("Review emulator menu changes", "\n".join(lines),
+                (DialogChoice("Apply menu changes", "request", "controls.apply", {
+                    "preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-controls-apply-{command.serial}",
+                    "expected_generation": self._controls_generation}, "controls_apply"), DialogChoice("Cancel")))
+        elif context in ("controls_apply", "controls_undo"):
+            generation = result.get("generation", self._controls_generation)
+            self._controls_generation = generation if isinstance(generation, int) and generation >= 0 else self._controls_generation
+            self._controls_transaction = _text(result.get("transaction_id"), 256) if context == "controls_apply" else ""
+            self.notice("Emulator menu controls updated. Gameplay mappings were preserved." if context == "controls_apply" else "The previous emulator menu controls were restored.")
+            return [self._request("controls.capabilities", context="controls")]
+        return []
+
+    def error(self, command: UICommand | None, code: str, message: str) -> None:
+        if command:
+            self._pending.discard(command.serial)
+        self._dialog = Dialog("Unable to complete that action", _text(message, 2048) + "\n" + _text(code, 128), error=True)
+
+    def notice(self, message: str) -> None:
+        self._status = _text(message, 512)
+
+    @staticmethod
+    def _preference_label(key: str) -> str:
+        return {"confirm": "Confirm button", "motion": "Background motion", "sound": "Interface sounds",
+                "text_scale": "Text size", "high_contrast": "High contrast"}.get(key, key)
+
+    @staticmethod
+    def _format_preference(value: Any) -> str:
+        if isinstance(value, bool):
+            return "On" if value else "Off"
+        if isinstance(value, (float, int)):
+            return f"{value * 100:.0f}%"
+        return {"south": "South button", "east": "East button"}.get(str(value), str(value))
+
+    def _rebuild_settings(self) -> None:
+        items = [UIItem(key, self._preference_label(key), self._format_preference(getattr(self.preferences, key)), "setting")
+                 for key in ("confirm", "motion", "sound", "text_scale", "high_contrast")]
+        items.extend((_menu("controls", "Emulator menu controls", "Keep gameplay mappings separate"),
+                      _menu("device", "System status", "Capabilities and firmware availability"),
+                      _menu("power_usb", "Power & USB", "Use the verified spruce handoff"),
+                      _menu("support", "Save diagnostic report", "Redacted component and failure information"),
+                      _menu("about", "About & credits", "Version, source credits and license information")))
+        if self._last_transaction:
+            items.append(_menu("undo", "Undo last preference change", "Restore only the setting this interface changed"))
+        items.append(_menu("classic", "Return to spruce", "Use the existing interface"))
+        self._pages[3].replace(items)
+        self._restore_focus(self._pages[3], "3")
+
+    def _launch_dialog(self, item: UIItem) -> None:
+        if not item.available:
+            self._dialog = Dialog(item.title, item.reason or "This entry needs a reviewed launcher or dependency. Your files remain unchanged.", error=True)
+            return
+        choices: list[DialogChoice] = []
+        message = item.system_id
+        if item.resume_available:
+            choices.append(DialogChoice("Resume", "demo_launch" if self.demo else "request", "game.launch",
+                                         {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
+            message += ("\nSample resume card. This demonstration is not an emulator state." if self.demo else
+                        "\nA compatible, verified state is available.")
+        elif self.category == 1:
+            message += "\nNo verified resume state is available. Start normally to use your in-game saves."
+        fresh = self.category == 1 or item.resume_available
+        choices.append(DialogChoice("Fresh start" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
+                                     {"game_id": item.id, "preset_id": "", "mode": "fresh" if fresh else "normal"}, "launch"))
+        choices.append(DialogChoice("Cancel"))
+        self._dialog = Dialog(item.title, message, tuple(choices))
+
+    def _activate(self, item: UIItem) -> list[UICommand]:
+        if item.kind == "game":
+            self._launch_dialog(item)
+        elif item.kind == "system":
+            self._games_view = "system"
+            self._system_id, self._system_label = item.system_id, item.title
+            self._pages[0] = _Page()
+            return [self._query()]
+        elif item.kind == "tool":
+            if not item.available:
+                self._dialog = Dialog(item.title, item.reason or "Open this tool from the classic spruce interface until its handoff is verified.",
+                                      (DialogChoice("Return to spruce", "classic"), DialogChoice("Back")), selected=1)
+            else:
+                self._dialog = Dialog(item.title, "This installed tool keeps its own interface.",
+                                      (DialogChoice("Open tool", "demo_launch" if self.demo else "request", "tool.launch", {"tool_id": item.id}, "launch"),
+                                       DialogChoice("Cancel")))
+        elif item.kind == "control_profile":
+            if not item.available:
+                self._dialog = Dialog(item.title, item.reason or "This emulator profile is not qualified for independent menu changes. Its existing mappings stay unchanged.", error=True)
+            else:
+                self._dialog = Dialog(item.title, "Choose the physical Confirm button for this emulator's menu. The existing gameplay mapping stays unchanged.", (
+                    DialogChoice("South Confirm", "request", "controls.preview", {"profile_id": item.id, "confirm": "south", "expected_generation": self._controls_generation}, "controls_preview"),
+                    DialogChoice("East Confirm", "request", "controls.preview", {"profile_id": item.id, "confirm": "east", "expected_generation": self._controls_generation}, "controls_preview"),
+                    DialogChoice("Cancel")))
+        elif item.kind == "setting":
+            value = getattr(self.preferences, item.id)
+            if isinstance(value, bool):
+                value = not value
+            elif item.id == "confirm":
+                value = "east" if value == "south" else "south"
+            elif item.id == "text_scale":
+                value = 1.15 if value < 1.1 else 1.3 if value < 1.25 else 1.5 if value < 1.45 else 1.0
+            return [self._request("settings.preview", {"changes": {item.id: value}, "expected_generation": self.generation}, "preview")]
+        elif item.id == "all":
+            self._games_view = "all"
+            self._pages[0] = _Page()
+            return [self._query()]
+        elif item.id == "favorites":
+            self._games_view = "favorites"
+            self._pages[0] = _Page()
+            return [self._request("library.favorites", context="favorites")]
+        elif item.id == "search":
+            self._keyboard = Keyboard(self._search, 0)
+        elif item.id == "random":
+            return [self._request("library.random", context="random")]
+        elif item.id == "undo":
+            return [self._request("settings.undo", {"transaction_id": self._last_transaction,
+                        "request_id": f"ui-{self._session_id}-undo-{self._serial + 1}", "expected_generation": self.generation}, "undo")]
+        elif item.id == "controls":
+            return [self._request("controls.capabilities", context="controls")]
+        elif item.id == "controls_info":
+            self._dialog = Dialog("Menu controls keep games intact", "No installed emulator profile is qualified for this action. "
+                                  "RetroArch can expose independent menu controls; PPSSPP needs a verified independent mapping. "
+                                  "Your current gameplay and menu settings remain unchanged.", (DialogChoice("Done"),))
+        elif item.id == "controls_undo":
+            return [self._request("controls.undo", {"transaction_id": self._controls_transaction,
+                        "request_id": f"ui-{self._session_id}-controls-undo-{self._serial + 1}",
+                        "expected_generation": self._controls_generation}, "controls_undo")]
+        elif item.id == "device":
+            profile = _text(self._snapshot.get("profile_id", self._snapshot.get("profile", "No verified device profile")))
+            self._dialog = Dialog("System status", profile + "\n" + ("Desktop preview with sample data. Hardware readings are unavailable." if self.demo else
+                                  "Only verified firmware functions are exposed. Unavailable readings remain unknown."), (DialogChoice("Done"),))
+        elif item.id == "power_usb":
+            self._dialog = Dialog("Power & USB", "A safe handoff must close games and storage users first. "
+                                  "Use the existing spruce controls until these device transitions are verified.", (DialogChoice("Back"),))
+        elif item.id == "support":
+            return [self._request("support.export", context="support")]
+        elif item.id == "about":
+            from .. import __version__
+            self._dialog = Dialog("About & credits", f"Version {__version__}\nOriginal interface for spruce.\n"
+                                  "PyUI — Copyright (c) 2025 Christopher Jacobs.\nUsed under its non-commercial license.\n"
+                                  "Optional PPSSPP changes retain separate GPL notices.\n"
+                                  "Original Smart Pro hardware qualification is pending.", (DialogChoice("Done"),))
+        elif item.id == "classic":
+            self._dialog = Dialog("Return to spruce?", "Your existing games, saves and emulator settings stay in place.",
+                                  (DialogChoice("Return to spruce", "classic"), DialogChoice("Stay here")), selected=1)
+        return []
+
+    def _activate_choice(self, choice: DialogChoice) -> list[UICommand]:
+        self._dialog = None
+        if choice.action == "request":
+            return [self._request(choice.method, choice.params, choice.context)]
+        if choice.action == "demo_launch":
+            self._dialog = Dialog("Sample collection", "This preview never starts games or changes your device. "
+                                  "Use your installed spruce library through a verified production adapter.", (DialogChoice("Done"),))
+        elif choice.action == "classic":
+            if self.demo:
+                self.notice("The desktop preview cannot switch the device interface.")
+            else:
+                return [self._request("interface.switch", {"interface": "classic"}, "switch")]
+        return []
+
+    def _submit_search(self) -> list[UICommand]:
+        self._search = self._keyboard.text if self._keyboard else self._search
+        self._keyboard = None
+        self.category = 0
+        self._games_view = "search"
+        self._pages[0] = _Page()
+        return [self._query()]
+
+    def handle(self, action: str, text: str = "") -> list[UICommand]:
+        self._status = ""
+        if self.exit_request:
+            return []
+        if action == "quit":
+            self.exit_request = "quit"
+            return []
+        if self._keyboard:
+            keyboard = self._keyboard
+            if action == "back":
+                self._keyboard = None
+            elif action in ("left", "right", "up", "down"):
+                delta = {"left": -1, "right": 1, "up": -10, "down": 10}[action]
+                self._keyboard = Keyboard(keyboard.text, (keyboard.selected + delta) % len(KEYBOARD_KEYS))
+            elif action in ("text", "delete_text"):
+                value = keyboard.text[:-1] if action == "delete_text" else keyboard.text + _text(text, 128).replace("\n", "")
+                self._keyboard = Keyboard(value[:128], keyboard.selected)
+            elif action == "submit_text":
+                return self._submit_search()
+            elif action == "confirm":
+                key = KEYBOARD_KEYS[keyboard.selected]
+                if key == "Find":
+                    return self._submit_search()
+                if key == "Cancel":
+                    self._keyboard = None
+                elif key == "Delete":
+                    self._keyboard = Keyboard(keyboard.text[:-1], keyboard.selected)
+                else:
+                    self._keyboard = Keyboard((keyboard.text + (" " if key == "Space" else key))[:128], keyboard.selected)
+            return []
+        if self._dialog:
+            dialog = self._dialog
+            if action == "back":
+                self._dialog = None
+            elif action in ("up", "left", "down", "right"):
+                delta = -1 if action in ("up", "left") else 1
+                self._dialog = Dialog(dialog.title, dialog.message, dialog.choices,
+                                      (dialog.selected + delta) % max(1, len(dialog.choices)), dialog.error, dialog.message_page)
+            elif action in ("search", "favorite"):
+                self._dialog = Dialog(dialog.title, dialog.message, dialog.choices, dialog.selected,
+                                      dialog.error, dialog.message_page + (1 if action == "search" else -1))
+            elif action == "confirm" and dialog.choices:
+                return self._activate_choice(dialog.choices[dialog.selected])
+            return []
+        if action in ("left", "right"):
+            self.category = (self.category + (-1 if action == "left" else 1)) % 4
+            return []
+        if action == "search":
+            self._keyboard = Keyboard(self._search, 0)
+            return []
+        if action == "back":
+            if self.category == 0 and self._games_view != "systems":
+                self._games_view = "systems"
+            elif self.category == 3 and self._settings_view != "root":
+                self._settings_view = "root"
+                self._rebuild_settings()
+            else:
+                return self._activate(_menu("classic", "Return to spruce"))
+            return []
+        page = self._page()
+        if action == "up" and page.items:
+            if page.selected > 0:
+                page.selected -= 1
+            elif self.category == 0 and self._games_view not in ("systems", "favorites") and page.offset >= self.PAGE_SIZE:
+                self._query_last_focus = True
+                return [self._query(page.offset - self.PAGE_SIZE)]
+        elif action == "down" and page.items:
+            if page.selected + 1 < len(page.items):
+                page.selected += 1
+            elif self.category == 0 and self._games_view not in ("systems", "favorites") and page.offset + len(page.items) < page.total:
+                return [self._query(page.offset + len(page.items))]
+        elif action == "confirm" and page.items:
+            return self._activate(page.items[page.selected])
+        elif action == "favorite" and page.items:
+            item = page.items[page.selected]
+            if item.kind == "game":
+                return [self._request("library.favorite.set", {"game_id": item.id, "enabled": item.id not in self._favorites}, "favorite_set")]
+        elif action == "refresh":
+            return self.initial_commands()
+        return []
+
+    def snapshot(self, now: float = 0.0) -> UISnapshot:
+        del now  # Presentation alone owns animation time.
+        page = self._page()
+        if self.category == 1:
+            title, breadcrumb = "Pick up where you left off", "Continue Playing"
+            empty = "Your recently played games will appear here. A compatible state is required for Resume."
+        elif self.category == 2:
+            title, breadcrumb = "Your tools, together", "Tools"
+            empty = "No app entries were found. Your installed tools remain available in classic spruce."
+        elif self.category == 3:
+            title, breadcrumb = ("Emulator menu controls", "Settings  /  Controls") if self._settings_view == "controls" else ("Make it yours", "Settings")
+            empty = "No emulator menu profile is qualified." if self._settings_view == "controls" else "Settings are unavailable. Return to the classic interface to check your configuration."
+        else:
+            title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results"}.get(self._games_view, self._system_label)
+            breadcrumb = "Games  /  " + ("Collection" if self._games_view == "systems" else self._search if self._games_view == "search" else title)
+            empty = {"favorites": "Save a game with Favorite to keep it here.", "search": "No games match this search. Try another title."}.get(self._games_view,
+                     "No available games were found. Keep ROMs in their existing spruce folders and refresh the library.")
+        items = tuple(UIItem(item.id, item.title, item.subtitle, item.kind, item.system_id, item.artwork,
+                             item.available, item.resume_available, item.reason, item.id in self._favorites or item.favorite)
+                      for item in page.items)
+        return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
+                          page.total, page.offset, self.preferences, self._dialog, self._keyboard,
+                          self._status, "Loading your collection…" if self._pending and not items else empty,
+                          bool(self._pending), self.demo, self.exit_request)

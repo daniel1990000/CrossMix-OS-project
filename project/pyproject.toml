@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=69,<76", "wheel>=0.43,<0.46"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartpro-psp-experience"
+version = "0.1.0.dev1"
+description = "Original Smart Pro interface extensions around pinned spruce integrations"
+requires-python = ">=3.9"
+dependencies = ["PySDL2==0.9.17"]
+
+[project.optional-dependencies]
+preview = ["Pillow==11.1.0"]
+
+[project.scripts]
+smartpro-preview = "psp_shell.app:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["psp_shell*"]
+
+[tool.setuptools.data-files]
+"share/psp_shell/assets/fonts" = ["assets/fonts/NotoSans.ttf", "assets/fonts/OFL.txt"]

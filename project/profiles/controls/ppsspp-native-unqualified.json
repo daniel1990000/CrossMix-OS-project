@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "id": "ppsspp-native-unqualified",
+  "device": "TRIMUI_SMART_PRO",
+  "engine": "ppsspp",
+  "surface": "native_menu",
+  "template": true,
+  "qualified": false,
+  "base_release": "v4.5.4",
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "executable": "Emu/PSP/PPSSPPSDL_TrimUI",
+  "executable_sha256": null,
+  "config": "Saves/.config/ppsspp/PSP/SYSTEM/ppsspp-SmartPro.ini",
+  "writer_inventory_verified": false,
+  "writer_executables": ["Emu/PSP/PPSSPPSDL_TrimUI"],
+  "native_menu_extension": null,
+  "qualification_gaps": [
+    "Stock native Confirm/Back derives from Cross/Circle mappings and PSP button preference.",
+    "Do not edit controls.ini, controls-SmartPro.ini or ButtonPreference to change the shell menu convention.",
+    "An independent-menu extension requires a separately pinned, qualified build and explicit extension schema.",
+    "Preserve platform-to-active copy-in and active-to-platform copy-back on launch/exit."
+  ],
+  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh#L154"
+}

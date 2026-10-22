@@ -1,0 +1,28 @@
+--- a/spruce/scripts/helperFunctions.sh
++++ b/spruce/scripts/helperFunctions.sh
+@@ -1216,7 +1216,13 @@
+         sleep 2
+     fi
+ 
+-    7zr x -y -scsUTF-8 -bb1 -o"$DEST_DIR" "$UPDATE_FILE" 2>>"$LOG_LOCATION" |
++    # POSIX sh reports the progress reader's status for a pipeline. Record
++    # the producer's actual result separately so a failed 7zr cannot succeed.
++    EXTRACT_STATUS_FILE=$(mktemp "${TMPDIR:-/tmp}/spruce-extract.XXXXXX") || return 1
++    (
++        7zr x -y -scsUTF-8 -bb1 -o"$DEST_DIR" "$UPDATE_FILE" 2>>"$LOG_LOCATION"
++        printf '%s\n' "$?" >"$EXTRACT_STATUS_FILE"
++    ) |
+     while read -r line || [ -n "$line" ]; do
+         case "$line" in
+             "- "*) FILE="${line#- }" ;;
+@@ -1241,7 +1247,9 @@
+         fi
+     done
+ 
+-    RET=$?
++    RET=$(cat "$EXTRACT_STATUS_FILE")
++    rm -f "$EXTRACT_STATUS_FILE"
++    case "$RET" in ''|*[!0-9]*) RET=2 ;; esac
+ 
+     if [ "$RET" -ne 0 ]; then
+         log_update_message "Warning: Some files may have been skipped during extraction. Check $LOG_LOCATION for details."

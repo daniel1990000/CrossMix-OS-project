@@ -1,0 +1,104 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Type-checks and executes the actual inserted PPSSPP settings widget fragment.
+// Widgets/event dispatch are narrow stubs, not a rendered native UI acceptance.
+#include <cassert>
+#include <functional>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <vector>
+
+struct Config {
+/*@@CONFIG_MEMBERS@@*/
+    int iButtonPreference = 1;
+} g_Config;
+namespace KeyMap {
+    int refreshes = 0;
+    void UpdateNativeMenuKeys() { ++refreshes; }
+}
+enum class I18NCat { NONE };
+class ScreenManager {};
+namespace UI {
+    class LayoutParams {};
+    struct EventParams {};
+    class Event {
+    public:
+        void Add(std::function<void(EventParams &)> callback) { callback_ = callback; }
+        void Dispatch() { EventParams params; assert(callback_); callback_(params); }
+    private:
+        std::function<void(EventParams &)> callback_;
+    };
+    class View {
+    public:
+        virtual ~View() = default;
+        void SetEnabledPtr(bool *enabled) { enabled_ = enabled; }
+        bool *enabled_ = nullptr;
+    };
+    class CheckBox : public View {
+    public:
+        CheckBox(bool *value, std::string_view) : value_(value) {}
+        bool *value_;
+        Event OnClick;
+    };
+    class PopupMultiChoiceDynamic : public View {
+    public:
+/*@@POPUP_SIGNATURE@@*/
+            : value_(value), values_(values ? *values : choices) {}
+        std::string *value_;
+        std::vector<std::string> values_;
+        Event OnChoice;
+    };
+    class ViewGroup {
+    public:
+        template <class T> T *Add(T *view) { views.emplace_back(view); return view; }
+        std::vector<std::unique_ptr<View>> views;
+    };
+}
+class SettingHint : public UI::View {
+public:
+    SettingHint(std::string_view text, UI::View *setting) {}
+};
+class I18NCategory {
+public:
+    std::string_view T(std::string_view key, std::string_view def = "") { return def.empty() ? key : def; }
+};
+class GameSettingsScreen {
+public:
+    ScreenManager *screenManager() { return &manager_; }
+    void BuildMenu(UI::ViewGroup *controlsSettings) {
+        using namespace UI;
+        I18NCategory category;
+        auto co = &category;
+/*@@PROJECT_UI@@*/
+    }
+    ScreenManager manager_;
+};
+
+int main(int argc, char **argv) {
+    assert(argc == 2 && std::string(argv[1]) == "widgets");
+    GameSettingsScreen screen;
+    UI::ViewGroup group;
+    screen.BuildMenu(&group);
+    assert(group.views.size() == 3);
+    auto checkbox = dynamic_cast<UI::CheckBox *>(group.views[0].get());
+    auto picker = dynamic_cast<UI::PopupMultiChoiceDynamic *>(group.views[2].get());
+    assert(checkbox && picker);
+    assert(checkbox->value_ == &g_Config.bProjectIndependentMenuControls);
+    assert(picker->enabled_ == &g_Config.bProjectIndependentMenuControls);
+    assert(picker->values_ == std::vector<std::string>({"south", "east"}));
+    *checkbox->value_ = true;
+    checkbox->OnClick.Dispatch();
+    assert(KeyMap::refreshes == 1);
+    *picker->value_ = "east";
+    picker->OnChoice.Dispatch();
+    assert(g_Config.sProjectNativeMenuConfirm == "east" && g_Config.sProjectNativeMenuBack == "south");
+    *picker->value_ = "south";
+    picker->OnChoice.Dispatch();
+    assert(g_Config.sProjectNativeMenuBack == "east" && KeyMap::refreshes == 3);
+    *checkbox->value_ = false;
+    checkbox->OnClick.Dispatch();
+    assert(!g_Config.bProjectIndependentMenuControls && KeyMap::refreshes == 4);
+    assert(g_Config.iButtonPreference == 1);
+    std::cout << "PASS widgets\n";
+}

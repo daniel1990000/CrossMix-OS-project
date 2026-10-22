@@ -1,4 +1,5 @@
-> **Project direction, 22 October 2026:** the original TrimUI Smart Pro project uses **spruceOS and its shipped PyUI** as the base. Read the [active project plan](TRIMUI_PLAN.md). The CrossMix source and upstream README below are historical reference. CrossMix-specific implementation is paused; this documentation change installs no software.
+> **Active TrimUI Smart Pro offshoot:** spruceOS v4.5.4 + its shipped PyUI, with a PSP-inspired interface and PPSSPP source integration. Start with [the handover](HANDOVER.md), [implementation and run instructions](project/README.md), and [the complete plan](TRIMUI_PLAN.md). Development source and host checks are saved on `build/spruce-psp-experience`; physical-device qualification is pending. The CrossMix source/README below is historical reference.
+
 
 <div align="center">
     <img src="_assets/readme/TSP-Logo.png">

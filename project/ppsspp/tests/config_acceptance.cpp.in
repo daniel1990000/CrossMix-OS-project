@@ -1,0 +1,108 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Executes actual PPSSPP ConfigSetting constructors and INI read/write methods.
+// Section and Path here are explicit, in-memory stubs; no full INI parser claim.
+#include <algorithm>
+#include <cassert>
+#include <cstdint>
+#include <iostream>
+#include <map>
+#include <string>
+#include <string_view>
+#include <type_traits>
+#include <unordered_map>
+#include <vector>
+using u8 = uint8_t;
+using u32 = uint32_t;
+#define _dbg_assert_(expr) assert(expr)
+#define _dbg_assert_msg_(expr, ...) assert(expr)
+#define ENUM_CLASS_BITOPS(Type) \
+    inline bool operator &(Type a, Type b) { return (static_cast<u8>(a) & static_cast<u8>(b)) != 0; } \
+    inline Type operator |(Type a, Type b) { return static_cast<Type>(static_cast<u8>(a) | static_cast<u8>(b)); }
+
+/*@@CONFIG_TYPES@@*/
+
+class Path {
+public:
+    explicit Path(const std::string &value) : value_(value) {}
+    explicit Path(const char *value) : value_(value) {}
+    const std::string &ToString() const { return value_; }
+private:
+    std::string value_;
+};
+class Section {
+public:
+    std::map<std::string, std::string> values;
+    template <class T> bool Get(std::string_view key, T *target) const {
+        const auto found = values.find(std::string(key));
+        if (found == values.end()) return false;
+        if constexpr (std::is_same_v<T, bool>) {
+            if (found->second == "True") { *target = true; return true; }
+            if (found->second == "False") { *target = false; return true; }
+            return false;
+        } else if constexpr (std::is_same_v<T, std::string>) {
+            *target = found->second; return true;
+        }
+        return false;
+    }
+    void Set(std::string_view key, bool value) { values[std::string(key)] = value ? "True" : "False"; }
+    void Set(std::string_view key, const std::string &value) { values[std::string(key)] = value; }
+    template <class T> void Set(std::string_view key, const T &) { values[std::string(key)] = "unrelated-type-stub"; }
+};
+void CopyStrings(std::vector<std::string> *target, const std::vector<std::string_view> &source) {
+    target->clear();
+    for (auto item : source) target->emplace_back(item);
+}
+void MakeUnique(std::vector<std::string> &items) {
+    std::sort(items.begin(), items.end());
+    items.erase(std::unique(items.begin(), items.end()), items.end());
+}
+struct UrlEncoder;
+
+/*@@CONFIG_SETTING@@*/
+
+struct Config : ConfigBlock {
+/*@@CONFIG_MEMBERS@@*/
+    int iButtonPreference = 1;
+    size_t Size() const override { return sizeof(Config); }
+} g_Config;
+
+/*@@READ_CONFIG@@*/
+/*@@WRITE_CONFIG@@*/
+
+#define SETTING(a, x) &a, &a.x
+/*@@PROJECT_SETTINGS@@*/
+
+int main(int argc, char **argv) {
+    assert(argc == 2 && std::string(argv[1]) == "serialization");
+    assert(!g_Config.bProjectIndependentMenuControls);
+    assert(g_Config.sProjectNativeMenuConfirm == "south" && g_Config.sProjectNativeMenuBack == "east");
+    g_Config.bProjectIndependentMenuControls = true;
+    g_Config.sProjectNativeMenuConfirm = "wrong";
+    g_Config.sProjectNativeMenuBack = "wrong";
+    for (const ConfigSetting &setting : projectNativeMenuSettings) {
+        assert(!setting.PerGame() && setting.SaveSetting());
+        assert(!setting.ReadFromIniSection(&g_Config, nullptr, true));
+    }
+    assert(!g_Config.bProjectIndependentMenuControls);
+    assert(g_Config.sProjectNativeMenuConfirm == "south" && g_Config.sProjectNativeMenuBack == "east");
+    Section input;
+    input.values = {{"IndependentMenuControls", "True"}, {"NativeMenuConfirm", "east"}, {"NativeMenuBack", "south"}};
+    for (const ConfigSetting &setting : projectNativeMenuSettings)
+        assert(setting.ReadFromIniSection(&g_Config, &input, true));
+    assert(g_Config.bProjectIndependentMenuControls);
+    assert(g_Config.sProjectNativeMenuConfirm == "east" && g_Config.sProjectNativeMenuBack == "south");
+    assert(g_Config.iButtonPreference == 1);
+    Section output;
+    output.values["UnrelatedCustomKey"] = "preserve-me";
+    for (const ConfigSetting &setting : projectNativeMenuSettings) setting.WriteToIniSection(&g_Config, &output);
+    assert(output.values["IndependentMenuControls"] == "True");
+    assert(output.values["NativeMenuConfirm"] == "east" && output.values["NativeMenuBack"] == "south");
+    assert(output.values["UnrelatedCustomKey"] == "preserve-me");
+    assert(output.values.size() == 4);
+    // Missing optional keys on an overlay leave current values untouched.
+    Section empty;
+    for (const ConfigSetting &setting : projectNativeMenuSettings)
+        assert(!setting.ReadFromIniSection(&g_Config, &empty, false));
+    assert(g_Config.bProjectIndependentMenuControls && g_Config.sProjectNativeMenuConfirm == "east");
+    std::cout << "PASS serialization\n";
+}

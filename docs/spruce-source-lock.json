@@ -1,7 +1,7 @@
 {
   "schema": 1,
-  "plan_revision": "2026-10-22-spruce-source-contracts-v1",
-  "status": "documentation-only; implementation paused",
+  "plan_revision": "2026-10-22-implementation-handover-v2",
+  "status": "implemented host-tested development source; device integration and release qualification pending",
   "base": {
     "repository": "https://github.com/spruceUI/spruceOS",
     "release_tag": "v4.5.4",
@@ -17,9 +17,12 @@
       "url": "https://github.com/spruceUI/spruceOS/releases/download/v4.5.4/spruceV4.5.4.7z",
       "size": 1652634074,
       "expected_sha256": "4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd",
-      "digest_provenance": "GitHub release API metadata; not an independently hashed local download",
-      "download_verified": false,
-      "source_archive_correspondence_verified": false
+      "digest_provenance": "GitHub release API metadata independently matched by complete local archive SHA-256",
+      "download_verified": true,
+      "source_archive_correspondence_verified": false,
+      "selected_source_correspondence_verified": true,
+      "selected_source_file_count": 10,
+      "audit_report": "project/evidence/release-source-audit.json"
     },
     "development_comparison_only": "cb6210aa19c5cb61e404d4029444972448cac9f9"
   },
@@ -46,7 +49,12 @@
     "bundled_ppsspp_upstream_version_verified": false,
     "optional_ppsspp_recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
     "optional_recipe_matches_bundled_binary": false,
-    "emulator_or_save_state_compatibility_measured": false
+    "emulator_or_save_state_compatibility_measured": false,
+    "bundled_ppsspp_sha256": "d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7",
+    "bundled_ppsspp_embedded_version_hint": "v1.20.3",
+    "bundled_ppsspp_exact_compiled_source_verified": false,
+    "ppsspp_extension_source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "ppsspp_extension_built_for_device": false
   },
   "ports_research": {
     "catalogue_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",
@@ -79,7 +87,7 @@
     "historical_plan_path": "TRIMUI_PLAN.md#historical-appendix-superseded-crossmix-research-and-first-save",
     "original_plan_blob": "2c4f69c52c28dc44e3b74633dd6122cba99e507f",
     "original_plan_commit": "5a8fb263dce2eadab93ffdc5bccbc9f6ff88b7c9",
-    "crossmix_implementation_status": "paused; incomplete prototypes preserved locally and excluded from this documentation change"
+    "crossmix_implementation_status": "paused; incomplete early prototypes archived locally and excluded from active spruce source"
   },
   "active_plan_parent_commit": "3ed2b29f54728480a10d297d28e4376b64c31481",
   "active_plan_parent_blob": "f9df3746e098d77d91381685a2254d095bf9164b",
@@ -120,6 +128,6 @@
     "spruce/scripts/principal.sh": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
     "spruce/scripts/runtime.sh": "48953144c9482bd398a0c487c78801777024c79f",
     "trimui/app/MainUI": "45a1e1be9b173248e78e7a2b1736120639d6ee76"
-  }
+  },
+  "implementation_handover": "HANDOVER.md"
 }
-

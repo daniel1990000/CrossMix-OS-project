@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "spruce-4.5.4-tg5040",
+  "target": "original TrimUI Smart Pro TG5040",
+  "architecture": "aarch64",
+  "baseline": {
+    "repository": "https://github.com/spruceUI/spruceOS",
+    "release": "v4.5.4",
+    "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54"
+  },
+  "device_names": ["TRIMUI_A133P", "TRIMUI_SMART_PRO", "SPRUCE_TRIMUI_SMART_PRO"],
+  "excluded_devices": ["TrimUI Brick", "TrimUI Smart Pro S", "TrimUI Brick Pro"],
+  "paths": {
+    "emulators": "Emu",
+    "apps": "App",
+    "roms": "Roms",
+    "favorites": "Saves/pyui-favorites.json",
+    "recents": "Saves/pyui-recents.json",
+    "gameswitcher": "Saves/gameswitcher.json",
+    "navigation": "Saves/pyui-state.json",
+    "collections": "Collections",
+    "system_settings": "Saves/trim-ui-smart-pro-system.json",
+    "spruce_settings": "Saves/spruce/spruce-config.json",
+    "retroarch_config": "Saves/ra-configs/retroarch-SmartPro.cfg",
+    "ppsspp_platform_config": "Saves/.config/ppsspp/PSP/SYSTEM/ppsspp-SmartPro.ini",
+    "ppsspp_platform_controls": "Saves/.config/ppsspp/PSP/SYSTEM/controls-SmartPro.ini"
+  },
+  "runtime_contracts": {
+    "launch": "existing PyUI device.run_game, then existing spruce principal loop",
+    "lexical_launcher_identity": "Preserve Emu/<system>/../../spruce/scripts/emu/standard_launch.sh spelling",
+    "favorites_and_recents_format": "JSON array, never CrossMix line-JSON",
+    "per_game_preset_key": "ROM basename including extension",
+    "emulator_binary_policy": "installed binaries unchanged",
+    "resume_policy": "unknown until exact game, engine hash, state format, state hash, slot and clean lifecycle match"
+  },
+  "engines": {
+    "PSP": {"binary": "Emu/PSP/PPSSPPSDL_TrimUI", "state_compatibility": "unverified"},
+    "PS": {"default_core": "pcsx_rearmed", "choices": ["pcsx_rearmed", "swanstation", "PCSX-ReARMed-standalone"], "state_compatibility": "unverified"}
+  },
+  "hardware_evidence": {"display": "not_run", "input": "not_run", "launch_return": "not_run", "sleep": "not_run", "usb": "not_run"},
+  "supports_automatic_boot_activation": false
+}

@@ -1,0 +1,144 @@
+--- a/Core/Config.cpp
++++ b/Core/Config.cpp
+@@ -1118,6 +1118,13 @@
+ 	ConfigSetting("DismissedVersion", SETTING(g_Config, sDismissedVersion), "", CfgFlag::DEFAULT),
+ };
+ 
++// Project extension; DEFAULT deliberately keeps this outside per-game PSP settings.
++static const ConfigSetting projectNativeMenuSettings[] = {
++	ConfigSetting("IndependentMenuControls", SETTING(g_Config, bProjectIndependentMenuControls), false, CfgFlag::DEFAULT),
++	ConfigSetting("NativeMenuConfirm", SETTING(g_Config, sProjectNativeMenuConfirm), "south", CfgFlag::DEFAULT),
++	ConfigSetting("NativeMenuBack", SETTING(g_Config, sProjectNativeMenuBack), "east", CfgFlag::DEFAULT),
++};
++
+ static const ConfigSetting themeSettings[] = {
+ 	ConfigSetting("ThemeName", SETTING(g_Config, sThemeName), "Default", CfgFlag::DEFAULT),
+ };
+@@ -1149,6 +1156,7 @@
+ 	{ &g_Config, graphicsSettings, ARRAY_SIZE(graphicsSettings), "Graphics" },
+ 	{ &g_Config, soundSettings, ARRAY_SIZE(soundSettings), "Sound" },
+ 	{ &g_Config, controlSettings, ARRAY_SIZE(controlSettings), "Control" },
++	{ &g_Config, projectNativeMenuSettings, ARRAY_SIZE(projectNativeMenuSettings), "ProjectNativeMenu" },
+ 	{ &g_Config, systemParamSettings, ARRAY_SIZE(systemParamSettings), "SystemParam" },
+ 	{ &g_Config, networkSettings, ARRAY_SIZE(networkSettings), "Network" },
+ 	{ &g_Config, debuggerSettings, ARRAY_SIZE(debuggerSettings), "Debugger" },
+--- a/Core/Config.h
++++ b/Core/Config.h
+@@ -538,6 +538,12 @@
+ 	// Risky JIT optimizations
+ 	bool bDiscardRegsOnJRRA;
+ 
++	// ProjectNativeMenu extension: native gamepad menu only, never PSP input.
++	// Off by default so existing PPSSPP behavior and game profiles stay intact.
++	bool bProjectIndependentMenuControls = false;
++	std::string sProjectNativeMenuConfirm = "south";
++	std::string sProjectNativeMenuBack = "east";
++
+ 	// SystemParam
+ 	std::string sNickName;  // AdHoc and system nickname
+ 	std::string sMACAddress;
+--- a/Core/KeyMap.cpp
++++ b/Core/KeyMap.cpp
+@@ -37,6 +37,7 @@
+ #include "Core/Config.h"
+ #include "Core/KeyMap.h"
+ #include "Core/KeyMapDefaults.h"
++#include "Core/ProjectNativeMenuControls.h"
+ 
+ namespace KeyMap {
+ 
+@@ -128,8 +129,20 @@
+ 	const int confirmKey = confirmWithCross ? CTRL_CROSS : CTRL_CIRCLE;
+ 	const int cancelKey = confirmWithCross ? CTRL_CIRCLE : CTRL_CROSS;
+ 
+-	SingleInputMappingFromPspButton(confirmKey, &confirmKeys, true);
+-	SingleInputMappingFromPspButton(cancelKey, &cancelKeys, true);
++	int physicalConfirmKey = 0;
++	int physicalBackKey = 0;
++	if (ResolveProjectNativeMenuKeys(g_Config.bProjectIndependentMenuControls,
++		g_Config.sProjectNativeMenuConfirm, g_Config.sProjectNativeMenuBack,
++		&physicalConfirmKey, &physicalBackKey)) {
++		// SDL's positional south/east buttons. Do not mutate g_controllerMap,
++		// controls.ini, iButtonPreference, or the PSP system setting.
++		confirmKeys.emplace_back(DEVICE_ID_ANY, physicalConfirmKey);
++		cancelKeys.emplace_back(DEVICE_ID_ANY, physicalBackKey);
++	} else {
++		// Disabled or invalid project configuration preserves upstream behavior.
++		SingleInputMappingFromPspButton(confirmKey, &confirmKeys, true);
++		SingleInputMappingFromPspButton(cancelKey, &cancelKeys, true);
++	}
+ 	SingleInputMappingFromPspButton(CTRL_TRIANGLE, &infoKeys, true);
+ 	SingleInputMappingFromPspButton(CTRL_LTRIGGER, &tabLeft, true);
+ 	SingleInputMappingFromPspButton(CTRL_RTRIGGER, &tabRight, true);
+--- /dev/null
++++ b/Core/ProjectNativeMenuControls.h
+@@ -0,0 +1,39 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Project modification for the Smart Pro spruce offshoot, 2026.
++// Uses PPSSPP input key codes; distributed with the PPSSPP GPL-2.0-or-later
++// source and notices. This extension is not an upstream PPSSPP setting.
++#pragma once
++
++#include <string_view>
++#include "Common/Input/KeyCodes.h"
++
++namespace KeyMap {
++
++// "south" and "east" describe SDL positional buttons, not printed A/B labels.
++// SDLJoystick.cpp translates SDL A/B to PPSSPP BUTTON_2/BUTTON_3.
++// Malformed/equal choices fail closed to the caller's original menu policy.
++// No controller mapping or emulated PSP system parameter is modified here.
++inline bool ResolveProjectNativeMenuKeys(bool enabled, std::string_view confirm,
++	std::string_view back, int *confirmKey, int *backKey) {
++#if !defined(SDL)
++	// This extension is qualified only against PPSSPP's SDL input translation.
++	(void)enabled; (void)confirm; (void)back; (void)confirmKey; (void)backKey;
++	return false;
++#else
++	if (!enabled || !confirmKey || !backKey)
++		return false;
++	if (confirm == "south" && back == "east") {
++		*confirmKey = NKCODE_BUTTON_2;
++		*backKey = NKCODE_BUTTON_3;
++		return true;
++	}
++	if (confirm == "east" && back == "south") {
++		*confirmKey = NKCODE_BUTTON_3;
++		*backKey = NKCODE_BUTTON_2;
++		return true;
++	}
++	return false;
++#endif
++}
++
++}  // namespace KeyMap
+--- a/UI/GameSettingsScreen.cpp
++++ b/UI/GameSettingsScreen.cpp
+@@ -825,6 +825,27 @@
+ 	int deviceType = System_GetPropertyInt(SYSPROP_DEVICE_TYPE);
+ 
+ 	controlsSettings->Add(new ItemHeader(ms->T("Controls")));
++#if defined(SDL)
++	CheckBox *independentMenu = controlsSettings->Add(new CheckBox(&g_Config.bProjectIndependentMenuControls,
++		co->T("IndependentNativeMenu", "Independent native menu controls")));
++	independentMenu->OnClick.Add([](UI::EventParams &) {
++		KeyMap::UpdateNativeMenuKeys();
++	});
++	controlsSettings->Add(new SettingHint(co->T("IndependentNativeMenuHint",
++		"Only changes native menu Confirm/Back. PSP gameplay mappings and PSP button preference stay unchanged."), independentMenu));
++	const std::vector<std::string> nativeMenuLabels = {
++		std::string(co->T("NativeMenuSouth", "South (bottom)")), std::string(co->T("NativeMenuEast", "East (right)"))
++	};
++	std::vector<std::string> nativeMenuValues = { "south", "east" };
++	PopupMultiChoiceDynamic *nativeMenuConfirm = controlsSettings->Add(new PopupMultiChoiceDynamic(
++		&g_Config.sProjectNativeMenuConfirm, co->T("NativeMenuConfirm", "Native menu Confirm button"),
++		nativeMenuLabels, I18NCat::NONE, screenManager(), &nativeMenuValues));
++	nativeMenuConfirm->SetEnabledPtr(&g_Config.bProjectIndependentMenuControls);
++	nativeMenuConfirm->OnChoice.Add([](UI::EventParams &) {
++		g_Config.sProjectNativeMenuBack = g_Config.sProjectNativeMenuConfirm == "south" ? "east" : "south";
++		KeyMap::UpdateNativeMenuKeys();
++	});
++#endif
+ 	controlsSettings->Add(new Choice(co->T("Control mapping")))->OnClick.Add([this](UI::EventParams &e) {
+ 		screenManager()->push(new ControlMappingScreen(gamePath_));
+ 	});

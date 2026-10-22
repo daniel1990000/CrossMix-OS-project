@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "evidence": "host-only",
+  "date": "2026-10-22",
+  "python": "3.12.14",
+  "system": "Linux",
+  "architecture": "x86_64",
+  "spruce_source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "ppsspp_source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "source_dependent_tests_enabled": true,
+  "suites": [
+    {
+      "suite": "host",
+      "tests": 229,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "passed": true,
+      "seconds": 2.688
+    },
+    {
+      "suite": "ppsspp_source_cpp",
+      "tests": 10,
+      "failures": 0,
+      "errors": 0,
+      "skipped": [],
+      "passed": true,
+      "seconds": 4.222
+    }
+  ],
+  "total_tests": 239,
+  "all_passed_without_skips": true,
+  "device_tested": false,
+  "complete_ppsspp_engine_built": false,
+  "checks": [
+    "Original SDL input/rendering and injected ownership",
+    "PyUI snapshot/live-model boundaries and guarded launch",
+    "Transactional settings/controls, conflicts, crash recovery and undo",
+    "Runtime handoff and classic fallback",
+    "Signed overlay verification, staging, rollback and deterministic rebuild",
+    "Offline migration, port owner-data and read-only tooling",
+    "Three actual pinned spruce source regressions and patches",
+    "PPSSPP theme schema versus actual pinned parser",
+    "Compiled patched PPSSPP KeyMap, SDL translation, ConfigSetting serialization and native widget fragments"
+  ]
+}
