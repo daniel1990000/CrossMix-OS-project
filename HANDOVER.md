@@ -1,26 +1,57 @@
 # TrimUI Smart Pro implementation handover
 
-## Active continuation — dev14 to release
+## Active continuation — dev15 software increments complete
 
-The owner requested six focused additions to the delivered dev14 foundation:
-per-game native performance controls and Undo, gameplay reports, game information,
-combined system/search/history filters, clearer Continue/verified backup status,
-and existing PS1 disc-set presentation. Work is on the same branch and draft PR #1.
-See the new continuation section in the [active master plan](project/docs/master-plan-2026-10-22.md).
-The following dev14 records retain their original exact identities and 1,011-check
-result; they do not certify later changed source.
+The six requested additions are saved on the existing branch and draft PR #1:
+per-game PPSSPP performance options/Undo, evidence-backed gameplay reporting,
+game information, combined library filters, Continue/verified backup status and
+read-only PS1 disc-set presentation. The original dev14 interface, launch/save
+integration, native builds, retained compiler/artifacts, recovery and publishing
+infrastructure remain the foundation. No native device build was needed.
 
-Keep PPSSPP, the existing PS1 route, settings/save authorities, native artifacts,
-recovery and build infrastructure. Do not introduce emulator/OS rewrites, an SDK
-programme or test-game development milestone. State galleries, named save history
-and Resume after power-off are later enhancements. Candidate performance presets
-remain untested until measured. Device qualification uses the existing recovery
-and 13-area casebook, five matched runs per named scene and 30-minute sustained
-runs for demanding release profiles. No device improvement figure is established.
-All device/profile gates stay disabled and PR #1 stays draft until qualification.
-Public distribution, production signing and maintenance ownership remain open.
+Clean implementation/build commit: `65fdc58cb502d187b2259cec1691ad22482f07da`.
+**1,092 strict checks pass** (1,031 host/source plus 61 PPSSPP), zero failures,
+errors or skips against all five pinned references. Signature/payload checks,
+same-key deterministic packaging, installed SDL/game-info/filter/backup smoke
+and fixture rollback pass. The no-Git export rebuild reproduces both ZIPs byte
+for byte. The clean 222-file original-source inventory is
+`856aa7c97136a22cd8c7fb43b47897b7850ba6ca3f97653050ffe0c77b99326b`;
+the signed payload contains 66 files. Generated disposable keys were deleted.
+An initial full run rejected the displaced direct Game options shortcut; it was
+restored alongside Game information before the final successful certification.
+[CI run 39923557908](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39923557908)
+also passes all 1,092 checks. Its actual clean PR merge checkout is
+`aa1106734f392cc3506ede13fa642cdadb0a54b2`. Artifact 12488980507 was downloaded
+and fully verified: 5,240,857 bytes, SHA256
+`9098f9c0ceace681c1830506b87b55a635fdbab1a233d4119d20e7e60a652d24`.
+All eight development checksums, signature/payload and 222 exported source files
+pass readback. Its artifact expires 21 January 2027; independent owner-storage
+retention was not performed for this new checkpoint. Dev14 custody is unchanged.
 
-## Current continuation — dev14 without device access
+See the [continuation report](project/docs/release-continuation-2026-10-23.md),
+[exact verification](project/evidence/release-continuation-20261023/verification.json)
+and [updated active plan](project/docs/master-plan-2026-10-22.md).
+The small stock desktop PPSSPP v1.20.3 save/load evidence uses existing GPL2
+BlockOut II PSP software. Native logs confirm serialization, load-undo and
+deserialization completion; host graphics/audio were not visually verified.
+It does not exercise our native callback/Resume patches or qualify Smart Pro.
+No game, emulator or state binary was added to Git. Gameplay metrics remain
+unavailable; candidate presets remain untested. Native per-game writes require
+live content/native-ID/preset/engine identity and existing verified INIs.
+
+All six additions are complete as host software; actual gameplay measurement
+and device acceptance remain pending. The original register stays 14/25 complete
+and 0/13 physical areas run. Keep PPSSPP/current PS1 route, memory cards and game
+files. No playlist generation or game movement occurs. Runtime/profile gates
+stay disabled; PR #1 stays draft. Public native distribution, production key
+custody and maintenance ownership remain open. State-gallery expansion, named
+save history and power-off Resume follow later.
+
+Dev14's published preview and historical receipts below retain their exact
+identities and 1,011-check result. Later handover/evidence edits do not acquire
+this clean implementation's 222-file source inventory or its package hashes.
+
+## Historical dev14 baseline
 
 The [computer preview is published](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14).
 All eleven attached assets pass fresh readback before and after publication;

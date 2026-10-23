@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "verified_at_utc": "2026-10-23T08:22:53.416170+00:00",
+  "run_id": 39923557908,
+  "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39923557908",
+  "status": "success",
+  "branch_source_commit": "65fdc58cb502d187b2259cec1691ad22482f07da",
+  "actual_clean_checkout": "aa1106734f392cc3506ede13fa642cdadb0a54b2",
+  "event": "pull_request",
+  "artifact_id": 12488980507,
+  "artifact_bytes": 5240857,
+  "artifact_sha256": "9098f9c0ceace681c1830506b87b55a635fdbab1a233d4119d20e7e60a652d24",
+  "artifact_expires_at_utc": "2027-01-21T08:17:03Z",
+  "checksums_verified": {
+    "START-HERE.txt": {
+      "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "bytes": 859
+    },
+    "build-report.json": {
+      "sha256": "5d56378dc6d993f1e221eacfcae60294e80ec6bbf061857c3c1adbc557b581ea",
+      "bytes": 5468
+    },
+    "development-verification.pub": {
+      "sha256": "78e419e26079853ea291b301610a5a9f16f914e3e0bbb4a504910dcda44b93c2",
+      "bytes": 32
+    },
+    "host-preview.png": {
+      "sha256": "37ba3e9bccd642172a2288ce1b160a319e742717b841435f51665a29eebaf031",
+      "bytes": 153143
+    },
+    "release-source.json": {
+      "sha256": "a99f5b02a431671d635f478e16bf54529dc37992395580c73cd839e42ec37d61",
+      "bytes": 28663
+    },
+    "smartpro-psp-0.1.0-dev15-host-preview.zip": {
+      "sha256": "e2bec62d2ea146e0898fe55f74b1abaf9718ccb94f79c159f162ce13d66a9690",
+      "bytes": 1460102
+    },
+    "smartpro-psp-0.1.0-dev15-original-source.zip": {
+      "sha256": "ba20a61f337e005e3adddf64fefe7d2e6be525b6819aaf3e3ba8b70fb2400a09",
+      "bytes": 2042297
+    },
+    "smartpro-psp-0.1.0-dev15.tar": {
+      "sha256": "6adcc6c3921e0a72ca8c292bfc83592d046c7c65598846a9fe684b8be76101cc",
+      "bytes": 3082240
+    }
+  },
+  "signature_payload_verified": true,
+  "payload_files_verified": 66,
+  "source_export_files_verified": 222,
+  "source_inventory_sha256": "856aa7c97136a22cd8c7fb43b47897b7850ba6ca3f97653050ffe0c77b99326b",
+  "strict_tests": {
+    "tests_run": 1092,
+    "passed": 1092,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "independent_private_storage_retention_performed": false,
+  "public_release_created": false,
+  "hardware_qualified": false
+}

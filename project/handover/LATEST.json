@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "Dev14 foundation retained; six scoped release-continuation increments in progress on the existing branch and draft PR. No physical qualification.",
+  "project_stage": "Dev15 six scoped software additions complete and locally certified; published dev14 computer preview retained. Smart Pro qualification and exact distribution/operational release criteria remain open.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -60,7 +60,7 @@
     "P03",
     "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev14",
+  "release_id": "smartpro-psp-0.1.0-dev15",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -151,6 +151,11 @@
   },
   "next_work": [
     {
+      "id": "C01_C06_device_qualification",
+      "next_action": "When Smart Pro is available, validate the new screens, native per-game identity association and PS1 options/discs in the existing casebook. Measure five matched unchanged-engine scene runs before isolating individual settings; 30-minute sustained demanding profiles. Candidate presets remain untested.",
+      "physical_completion_pending": true
+    },
+    {
       "id": "D02",
       "next_action": "When the operator/device becomes available, use the real backup-payload and retained-readback tools for complete selected card/save/internal coverage, then rehearse physical recovery on expendable media.",
       "physical_completion_pending": true
@@ -229,7 +234,7 @@
   "host_setup": {
     "workflow": ".github/workflows/smartpro-offshoot.yml",
     "requirements": "project/requirements-dev.txt",
-    "temporary_python": "/workspace/trimui-venv/bin/python",
+    "temporary_python": "/workspace/smartpro-venv/bin/python",
     "python_version_observed": "3.12.14",
     "pysdl2": "0.9.17",
     "pillow": "11.1.0",
@@ -247,7 +252,7 @@
     "Development package signatures are not an operational production trust root.",
     "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; the retained compiler was restored into an observed empty daemon and passed offline C/C++ link smoke; target execution remains untested."
   ],
-  "handover_validation": "project/evidence/nondevice-completion-20261023/verification.json",
+  "handover_validation": "project/evidence/release-continuation-20261023/verification.json",
   "latest_completed_host_task": "D01",
   "previous_five_task_batch": [
     "U04",
@@ -263,51 +268,38 @@
     "R06"
   ],
   "current_snapshot": {
-    "release_id": "smartpro-psp-0.1.0-dev14",
+    "release_id": "smartpro-psp-0.1.0-dev15",
     "strict_tests": {
-      "tests_run": 1011,
-      "passed": 1011,
+      "tests_run": 1092,
+      "passed": 1092,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "clean_implementation_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
-    "original_source_inventory_files": 207,
-    "original_source_inventory_sha256": "b796a5e796e1de1cb180bf8769e4a45f34b551e418b389c70fd0750ba9e79eda",
-    "payload_files": 60,
+    "clean_implementation_commit": "65fdc58cb502d187b2259cec1691ad22482f07da",
+    "original_source_inventory_files": 222,
+    "original_source_inventory_sha256": "856aa7c97136a22cd8c7fb43b47897b7850ba6ca3f97653050ffe0c77b99326b",
+    "payload_files": 66,
     "build_status": "passed",
-    "local_certification": "project/evidence/nondevice-completion-20261023/certification.json",
-    "local_build_report": "project/evidence/nondevice-completion-20261023/build-report.json",
-    "local_release_source": "project/evidence/nondevice-completion-20261023/release-source.json",
-    "evidence": "project/evidence/nondevice-completion-20261023/verification.json",
-    "later_evidence_edits": "Exact public tag/source/artifact selects ab644b9. Later workflow, static-coverage, documentation and evidence commits have separate frontend/source identities.",
+    "local_certification": "project/evidence/release-continuation-20261023/certification.json",
+    "local_build_report": "project/evidence/release-continuation-20261023/build-report.json",
+    "local_release_source": "project/evidence/release-continuation-20261023/release-source.json",
+    "evidence": "project/evidence/release-continuation-20261023/verification.json",
+    "later_evidence_edits": "Clean tested/build source is65fdc58. Later handover/evidence/documentation commits retain their own frontend/source identity; dev14 public downloads remain unchanged.",
+    "published_host_preview": "Dev14 remains the existing public host download; dev15 uses current development/CI packaging without a new public release.",
     "ci": {
-      "run_id": 39893214010,
-      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39893214010",
-      "event": "workflow_dispatch",
-      "source_branch_head": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
-      "actual_clean_checkout": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+      "run_id": 39923557908,
+      "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39923557908",
+      "branch_source_commit": "65fdc58cb502d187b2259cec1691ad22482f07da",
+      "actual_clean_checkout": "aa1106734f392cc3506ede13fa642cdadb0a54b2",
+      "artifact_id": 12488980507,
+      "artifact_sha256": "9098f9c0ceace681c1830506b87b55a635fdbab1a233d4119d20e7e60a652d24",
+      "artifact_bytes": 5240857,
+      "artifact_expires_at_utc": "2027-01-21T08:17:03Z",
       "status": "success",
-      "artifact_id": 12475702753,
-      "artifact_sha256": "e7a4be34153ac6135c3920a7bfbf238ae52ecd368ef098c4fa7b14dab0feab4a",
-      "artifact_bytes": 5124897,
-      "artifact_expires_at_utc": "2027-01-21T03:06:26Z",
-      "readback": "project/evidence/nondevice-completion-20261023/ci-readback.json",
-      "signature_payload_and_source_export_bytes_verified": true,
-      "independent_private_retention_performed": true
-    },
-    "host_publication": {
-      "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14",
-      "attached_assets": 11,
-      "attested_subjects": 10,
-      "fresh_public_readback_verified": true,
-      "public_device_release": false,
-      "automatic_inherited_repository_archives_excluded": true,
-      "native_runner_retry_run_id": 39894762504,
-      "native_runner_retry_status": "success",
-      "production_ed25519_key_custody_established": false
+      "readback": "project/evidence/release-continuation-20261023/ci-readback.json"
     }
   },
   "artifact_custody": {
@@ -609,36 +601,36 @@
   "release_continuation": {
     "baseline_release": "smartpro-psp-0.1.0-dev14",
     "baseline_strict_passed": 1011,
-    "status": "in_progress",
+    "status": "host_software_complete_device_measurements_pending",
     "increments": [
       {
         "id": "C01",
-        "status": "in_progress",
+        "status": "host_complete_device_qualification_pending",
         "addition": "Per-game native performance options and Undo"
       },
       {
         "id": "C02",
-        "status": "in_progress",
+        "status": "reporting_complete_gameplay_measurements_pending",
         "addition": "PSP/PS1 game-and-scene gameplay reports"
       },
       {
         "id": "C03",
-        "status": "in_progress",
+        "status": "host_complete_device_qualification_pending",
         "addition": "Readable game information panel"
       },
       {
         "id": "C04",
-        "status": "in_progress",
+        "status": "host_complete_device_qualification_pending",
         "addition": "Combined system/search/favorites/recent filters"
       },
       {
         "id": "C05",
-        "status": "in_progress",
+        "status": "host_complete_device_qualification_pending",
         "addition": "Resume and verified backup status"
       },
       {
         "id": "C06",
-        "status": "in_progress",
+        "status": "host_complete_device_qualification_pending",
         "addition": "Existing PS1 disc-set presentation"
       }
     ],
@@ -657,6 +649,8 @@
       ]
     },
     "device_activation_enabled": false,
-    "recommended_presets_measured": false
+    "recommended_presets_measured": false,
+    "evidence": "project/evidence/release-continuation-20261023/verification.json",
+    "original_25_row_register_unchanged": true
   }
 }

@@ -14,6 +14,10 @@ performance and existing emulator options. The current development descriptor
 selects **smartpro-psp-0.1.0-dev15**; the published dev14 preview retains its own
 exact artifact identity and 1,011-check evidence. Candidate presets remain
 untested, and no Smart Pro performance improvement is claimed.
+The clean dev15 implementation passes **1,092 strict checks** with zero skips,
+errors or failures. Packaging, installed smoke/rollback and the no-Git source
+export rebuild pass; [exact snapshot evidence](evidence/release-continuation-20261023/verification.json)
+keeps later documentation edits separate from those build identities.
 
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,

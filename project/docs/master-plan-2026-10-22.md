@@ -24,8 +24,15 @@ development milestone or replacement build infrastructure is required.
 | C05 / 5 | Clear Continue and backup presentation | Distinguish Resume available from Recently played; explain unavailable Resume and original checkpoint verification times; show verified backup scope/status and supported recovery actions. |
 | C06 / 6 | PS1 presentation polish | Read existing disc sets, warn on missing/malformed playlist entries, explain current native disc-management route. Never silently generate playlists, move game files, change memory-card locations or change emulator selection. |
 
-The continuation is in progress. Completion and exact new verification belong
-in the continuation receipt, separate from dev14's published artifact identity.
+C01–C06 are now complete as host software; gameplay measurements and physical
+acceptance remain pending. The clean dev15 implementation `65fdc58` passes
+**1,092 strict checks**, zero skips/failures/errors, plus packaging, installed
+smoke, rollback and a no-Git source-export rebuild. Stock desktop PPSSPP native
+save/load completed with existing GPL2 BlockOut II PSP software; this exercises
+native serialization/deserialization and no custom Resume/device qualification.
+See [the continuation report](release-continuation-2026-10-23.md) and
+[exact verification](../evidence/release-continuation-20261023/verification.json).
+The original 25-row register and all historical evidence retain their scope.
 Use existing Android reference research only for specific unanswered interface
 questions. State galleries, named save history and Resume after power-off are
 subsequent enhancements, not missing foundations or immediate release blockers.

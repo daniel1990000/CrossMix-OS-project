@@ -1,4 +1,5 @@
-Continue the existing dev14 project in daniel1990000/CrossMix-OS-project,
+Continue the existing dev14 foundation and completed dev15 additions in
+daniel1990000/CrossMix-OS-project,
 branch build/spruce-psp-experience, PR #1 (draft until device qualification).
 
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md
@@ -11,13 +12,21 @@ preview already exist. Dev14 records 1,011 strict passing checks for its bytes.
 Keep PPSSPP and the current PS1 route. No emulator rewrite, new OS, SDK
 programme, homebrew-development milestone or replacement build infrastructure.
 
-Continue the six scoped increments in the existing master plan:
-C01: Extend native per-game performance controls and Undo, preserving settings.
-C02: Extend gameplay reporting with exact game/scene/emulator/settings evidence.
-C03: Improve the existing Game options information panel and artwork.
-C04: Combine system/search and PSP/PS1 favorites/recent filters; preserve focus.
-C05: Clarify Resume available versus Recently played and verified backup status.
-C06: Read existing PS1 disc sets/warnings and explain native disc management.
+The six scoped increments below are implemented and host-tested. Clean dev15
+implementation 65fdc58 passes 1,092 strict checks, zero skips/errors/failures;
+packaging/installed smoke/rollback and no-Git ZIP rebuild pass. Read the exact
+continuation verification before changing source. Stock desktop PPSSPP native
+save/load was observed with existing GPL2 BlockOut II PSP software; rendering,
+audio, custom native integration and Smart Pro qualification remain separate.
+Do not redo these completed foundations. Extend only reproduced issues or the
+pending actual device/measurement work:
+
+C01 delivered: Native per-game performance controls and Undo preserve settings.
+C02 delivered: Gameplay reporting requires exact game/scene/emulator/settings evidence.
+C03 delivered: Game information panel and artwork; native Game options preserved.
+C04 delivered: Combined system/search and PSP/PS1 history filters preserve focus.
+C05 delivered: Resume/recent distinctions and verified backup scope/status.
+C06 delivered: Read-only PS1 disc sets/warnings and native disc-management guidance.
 Never silently generate playlists, move games, change memory cards or select a
 different emulator. Candidate presets stay untested until measured.
 

@@ -39,8 +39,15 @@ production qualification gates remain in force.
 
 ## Validation and release boundary
 
-The continuation evidence records the exact changed-source checks, packaging,
-installed smoke and desktop-native scope. The unchanged starting head was
+[The continuation evidence](../evidence/release-continuation-20261023/verification.json)
+records all 1,092 strict passing checks (1,031 host/source plus 61 PPSSPP), zero
+skips/errors/failures, packaging, installed smoke/rollback and byte-identical
+preview/source ZIPs rebuilt from the no-Git source export. Clean build commit
+`65fdc58` contains 66 payload files and 222 inventoried original-source files.
+The [desktop native receipt](../evidence/release-continuation-20261023/desktop-ppsspp/receipt.json)
+records stock PPSSPP v1.20.3 serialization/deserialization completion using
+existing GPL2 BlockOut II PSP software. It establishes no rendered/audio,
+custom integration, gameplay-performance or device result. The unchanged starting head was
 independently certified first: 1,011 checks passed against all five pinned source
 references, with zero failures, errors or skips. Source integration tests and
 native desktop PPSSPP observations are distinct from Smart Pro qualification.
@@ -57,3 +64,10 @@ PR #1 remains draft, all device gates remain disabled and no native binary or
 upstream patch is selected. Public native distribution, production key custody
 and maintenance ownership retain their existing open criteria. State-gallery
 expansion, named save history and Resume after power-off follow later.
+
+CI run 39923557908 independently passes all 1,092 checks on clean PR merge
+`aa1106734f392cc3506ede13fa642cdadb0a54b2`. The downloaded artifact passes
+[full checksum, signature, payload and source readback](../evidence/release-continuation-20261023/ci-readback.json).
+The branch build and CI merge have separate frontend identities and the same
+222-file source inventory. Later evidence/handover edits retain their own source
+identity; the exact implementation build remains 65fdc58.
