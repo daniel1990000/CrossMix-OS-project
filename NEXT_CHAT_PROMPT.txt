@@ -1,15 +1,42 @@
-Continue the original TG5040 TrimUI spruceOS/PyUI project autonomously from GitHub.
-Read AGENTS.md and follow its parallel work/file ownership instructions.
-Repository: https://github.com/daniel1990000/CrossMix-OS-project
-Branch: build/spruce-psp-experience
-PR #1 remains draft and unmerged.
+Continue the existing dev14 project in daniel1990000/CrossMix-OS-project,
+branch build/spruce-psp-experience, PR #1 (draft until device qualification).
 
-Latest instruction: complete all remaining work not needing the Smart Pro. The owner cannot supply an existing production signing/recovery destination and does not know what that means. Do not repeat that technical question or ask for private keys/passwords. Original-only host provenance can use GitHub's workflow identity; persistent device signing still requires usable owner-controlled custody/recovery.
+Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md
+and the active project/docs/master-plan-2026-10-22.md first.
 
-Read the current dev14 section of HANDOVER.md, project/handover/LATEST.json, project/README.md, project/docs/nondevice-completion-2026-10-23.md and linked verification. Dev14 passes 1,011 strict checks (950 host/source + 61 PPSSPP), locally and in CI, no skips/failures/errors. Public computer preview: https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14 . The exact public build/tag is ab644b93a463fe71d10cd32bb9f7fa113b30c771, with 207 original-source files and 60 signed payload files. Attached host assets, provenance, private retention and fresh readbacks are verified; automatic inherited repository archives are excluded. Later workflow/coverage/evidence heads have distinct source identities. Dev13 has new independent private retention with complete readback. The retained compiler now passes a real empty-daemon recovery and offline C/C++ cross-link smoke. Current native source/header/asset coverage and its exact remaining external grants are in project/docs/nondevice-native-coverage-2026-10-23.md. Historical snapshots retain their own identities.
+Continue from completed work: interface, spruce launch integration, PPSSPP
+controls/themes/save acknowledgements/same-boot Resume plumbing, native builds,
+retained compiler/artifacts, recovery, packaging, CI and published computer
+preview already exist. Dev14 records 1,011 strict passing checks for its bytes.
+Keep PPSSPP and the current PS1 route. No emulator rewrite, new OS, SDK
+programme, homebrew-development milestone or replacement build infrastructure.
 
-Remaining rows retain original criteria: actual D02 card/save/internal recovery rehearsal, D03 device inventory, D05/D06 core evidence/qualification, optional N01/N02/P04 physical scopes, narrow R06 native grants, O01 operational signer recovery, O02 qualified device release, and O03 named maintainer/first pilot. Use current maintenance hold dispositions; do not update pins merely because upstream moved. Private noncommercial author permission remains accepted; no further notice or public-native grant is inferred.
+Continue the six scoped increments in the existing master plan:
+C01: Extend native per-game performance controls and Undo, preserving settings.
+C02: Extend gameplay reporting with exact game/scene/emulator/settings evidence.
+C03: Improve the existing Game options information panel and artwork.
+C04: Combine system/search and PSP/PS1 favorites/recent filters; preserve focus.
+C05: Clarify Resume available versus Recently played and verified backup status.
+C06: Read existing PS1 disc sets/warnings and explain native disc management.
+Never silently generate playlists, move games, change memory cards or select a
+different emulator. Candidate presets stay untested until measured.
 
-Both qualified_runtime.configuration() and experimental_runtime.configuration() return None. Production/profile/runtime/source-use gates remain false. Original-only preview selects no native binary/upstream/Celeste patch. No firmware flash, owner-data mutation, device image, physical performance/battery/Resume claim, public device release or PR merge is authorized. Retain exact evidence and do all useful independent work before asking the owner for anything.
+Reuse models, settings transactions, save authorities, tests, native artifacts
+and release tooling. Add meaningful tests for changed behavior; run the existing
+strict five-source checks and packaging verification. Record desktop native
+PPSSPP save/load separately from exact project integration and device testing.
+Unavailable gameplay FPS/latency/battery figures remain unavailable.
 
-Ephemeral workspace: /workspace/CrossMix-OS-project; Python /workspace/trimui-venv/bin/python; all five pinned roots under /workspace/trimui-sources/{spruce,ppsspp,ra,ports,portmaster}; PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-libs/usr/lib/x86_64-linux-gnu. All workspace paths are temporary; resume from GitHub receipts.
+State-gallery expansion, named save history and power-off Resume follow later.
+Use existing research only for specific unanswered interface questions.
+Prepare same-device comparisons: unchanged spruce engine/settings, our frontend
+with those same settings, then individual engine/settings changes. Five matched
+runs per named scene; 30-minute sustained runs for demanding release profiles.
+Recommend final presets and publish marketing figures only from actual Smart
+Pro measurements with game, scene, settings and baseline identified.
+
+Keep device gates disabled and PR #1 draft. Complete remaining precise public
+native distribution, production signing/custody and maintenance ownership
+requirements before device release. Preserve historical evidence and exact
+artifact identities. Save changes, tests and updated handover in GitHub when
+execution permits writes; this continuation is running in execution mode.

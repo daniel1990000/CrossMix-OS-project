@@ -1,5 +1,56 @@
 # TrimUI master plan — 22 October 2026
 
+## Dev14 to release continuation — 23 October 2026
+
+Continue the existing project on `build/spruce-psp-experience`, PR #1. Dev14
+delivered the PSP interface, library and accessibility work, spruce launch and
+return, PPSSPP native controls/themes/save acknowledgement and same-boot Resume
+plumbing, full PPSSPP/FFmpeg and RetroArch builds, retained compiler/artifacts,
+recovery, migration, packaging, CI and the published computer preview. Its exact
+1,011-check record remains historical evidence for those bytes. The original
+register below remains **14/25 complete; 0/13 physical areas run**.
+
+These are additions to that foundation. Keep PPSSPP and the current PS1 route;
+reuse models, settings transactions, save authorities, native artifacts and
+release tooling. No emulator rewrite, OS rewrite, SDK programme, test-game
+development milestone or replacement build infrastructure is required.
+
+| ID / priority | Addition to existing work | Acceptance and evidence |
+|---|---|---|
+| C01 / 1 | Small native per-game performance controls with descriptions and Undo; PS1 existing emulator options | Preserve user/global/per-game overrides; test interrupted writes, stale previews and Undo. Candidate presets stay untested until measured. |
+| C02 / 2 | PSP/PS1 game-and-scene gameplay reports | Exact emulator/settings/content identities and available native speed/FPS evidence. Reject missing or incompatible observations; menu timing stays separate. |
+| C03 / 3 | Readable game information panel | Artwork, system, selected emulator/preset, availability and existing launch actions; long titles and missing artwork handled. |
+| C04 / 4 | Combined library filters | Search within selected system; favorites/recents filtered by PSP/PS1; retain pagination, focus and game identities. |
+| C05 / 5 | Clear Continue and backup presentation | Distinguish Resume available from Recently played; explain unavailable Resume and original checkpoint verification times; show verified backup scope/status and supported recovery actions. |
+| C06 / 6 | PS1 presentation polish | Read existing disc sets, warn on missing/malformed playlist entries, explain current native disc-management route. Never silently generate playlists, move game files, change memory-card locations or change emulator selection. |
+
+The continuation is in progress. Completion and exact new verification belong
+in the continuation receipt, separate from dev14's published artifact identity.
+Use existing Android reference research only for specific unanswered interface
+questions. State galleries, named save history and Resume after power-off are
+subsequent enhancements, not missing foundations or immediate release blockers.
+
+Without hardware, exercise desktop PPSSPP save/load when legitimate existing
+test software or supplied games are available. Record native desktop paths
+separately from the project's exact integration harnesses and device evidence.
+Run the existing strict five-source checks and packaging verification after
+changes. Reuse retained native builds unless changed native code requires the
+existing build pipeline.
+
+When the Smart Pro is available, extend the existing recovery preparation and
+13-area casebook with C01–C06. Compare existing spruce with its current engine
+and settings, our interface with those same engine/settings, then individual
+settings or engine changes separately. Use five matched runs per named scene
+and a 30-minute sustained run for demanding release profiles. Record intended
+game speed, frame pacing, audio, resolution and frameskip. Select recommended
+presets only from these results; show image-quality tradeoffs. Marketing claims
+must name actual Smart Pro game, scene, settings and baseline. No improvement
+percentage, FPS, latency or battery figure is promised before measurement.
+
+Public native distribution decisions, production signing/custody and accepted
+maintenance ownership retain their existing criteria. PR #1 stays draft and
+device activation stays disabled until qualification.
+
 Current dev14 work, 23 October 2026: [the nondevice report](nondevice-completion-2026-10-23.md)
 records exact native notice/source review, recovered-key verification, current
 upstream dispositions and original-only host delivery/provenance. The original

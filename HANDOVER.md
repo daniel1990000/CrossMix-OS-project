@@ -1,5 +1,25 @@
 # TrimUI Smart Pro implementation handover
 
+## Active continuation — dev14 to release
+
+The owner requested six focused additions to the delivered dev14 foundation:
+per-game native performance controls and Undo, gameplay reports, game information,
+combined system/search/history filters, clearer Continue/verified backup status,
+and existing PS1 disc-set presentation. Work is on the same branch and draft PR #1.
+See the new continuation section in the [active master plan](project/docs/master-plan-2026-10-22.md).
+The following dev14 records retain their original exact identities and 1,011-check
+result; they do not certify later changed source.
+
+Keep PPSSPP, the existing PS1 route, settings/save authorities, native artifacts,
+recovery and build infrastructure. Do not introduce emulator/OS rewrites, an SDK
+programme or test-game development milestone. State galleries, named save history
+and Resume after power-off are later enhancements. Candidate performance presets
+remain untested until measured. Device qualification uses the existing recovery
+and 13-area casebook, five matched runs per named scene and 30-minute sustained
+runs for demanding release profiles. No device improvement figure is established.
+All device/profile gates stay disabled and PR #1 stays draft until qualification.
+Public distribution, production signing and maintenance ownership remain open.
+
 ## Current continuation — dev14 without device access
 
 The [computer preview is published](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14).

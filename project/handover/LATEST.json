@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "Published original-only dev14 computer preview; available no-device source, trust, maintenance, compiler and hosting work completed. Physical and exact external operational/rights criteria remain open.",
+  "project_stage": "Dev14 foundation retained; six scoped release-continuation increments in progress on the existing branch and draft PR. No physical qualification.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -384,7 +384,7 @@
       "focused_checks": 24
     }
   },
-  "continuation_scope": "Complete all remaining work not needing Smart Pro. Owner has no existing signing/recovery reference to provide. Use workflow provenance for original-only host delivery; preserve 14/25 row criteria and 0/13 physical areas, no author contact or device activation.",
+  "continuation_scope": "Per-game performance controls and Undo; gameplay observations; game information; combined library filters; Continue and verified backup status; existing PS1 disc presentation. No emulator/OS/SDK/build replacement.",
   "historical_handover_validation": "project/handover/validation.json",
   "current_consistency_record": "project/evidence/nondevice-completion-20261023/verification.json",
   "historical_dev10_snapshot": {
@@ -605,5 +605,58 @@
       "signature_payload_and_source_export_bytes_verified": true,
       "independent_private_retention_performed": false
     }
+  },
+  "release_continuation": {
+    "baseline_release": "smartpro-psp-0.1.0-dev14",
+    "baseline_strict_passed": 1011,
+    "status": "in_progress",
+    "increments": [
+      {
+        "id": "C01",
+        "status": "in_progress",
+        "addition": "Per-game native performance options and Undo"
+      },
+      {
+        "id": "C02",
+        "status": "in_progress",
+        "addition": "PSP/PS1 game-and-scene gameplay reports"
+      },
+      {
+        "id": "C03",
+        "status": "in_progress",
+        "addition": "Readable game information panel"
+      },
+      {
+        "id": "C04",
+        "status": "in_progress",
+        "addition": "Combined system/search/favorites/recent filters"
+      },
+      {
+        "id": "C05",
+        "status": "in_progress",
+        "addition": "Resume and verified backup status"
+      },
+      {
+        "id": "C06",
+        "status": "in_progress",
+        "addition": "Existing PS1 disc-set presentation"
+      }
+    ],
+    "follow_on": [
+      "Richer state gallery",
+      "Named save history",
+      "Resume after power-off"
+    ],
+    "device_comparisons": {
+      "matched_runs_per_scene": 5,
+      "demanding_profile_sustained_minutes": 30,
+      "order": [
+        "Existing spruce with current emulator/settings",
+        "Our interface with same emulator/settings",
+        "Individual settings or emulator changes separately"
+      ]
+    },
+    "device_activation_enabled": false,
+    "recommended_presets_measured": false
   }
 }
