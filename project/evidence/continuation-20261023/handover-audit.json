@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "checked_at_utc": "2026-10-23T00:22:29.739771+00:00",
+  "scope": "current ten-item handover/task/source/evidence/link consistency; no device authority",
+  "engineering_items": 10,
+  "master_plan_tasks": 25,
+  "completed_host_tasks": 12,
+  "pending_tasks": 13,
+  "physical_areas_run": 0,
+  "local_and_ci_tests_passed": 833,
+  "source_snapshot": "0585e1de62b1e38b291a96eed7793464c4f272e1",
+  "ci_clean_merge_checkout": "71d2c19dcdaa78782ccfaa98c464801c00dd98a5",
+  "source_snapshot_files_checked": 177,
+  "non_document_source_files_unchanged_through_handover": 148,
+  "local_links_checked": 127,
+  "missing_links": [],
+  "historical_dev10_receipts_preserved": true,
+  "gates_enabled": false,
+  "fixed_device_entry_implemented": false,
+  "independent_review": "project/evidence/continuation-20261023/review.json"
+}

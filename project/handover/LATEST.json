@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date_utc": "2026-10-22",
+  "date_utc": "2026-10-23",
   "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
   "branch": "build/spruce-psp-experience",
   "pull_request": {
@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "original-only host preview; private replacement native artifacts retained; device qualification and source-use/distribution work remain open",
+  "project_stage": "original-only dev11 host preview; ten host engineering items advance five open rows; device entry/qualification and rights/operations remain open",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -61,7 +61,7 @@
     "P03",
     "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev10",
+  "release_id": "smartpro-psp-0.1.0-dev11",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -148,7 +148,7 @@
     },
     {
       "id": "D01",
-      "next_action": "Implement/review trusted experimental admission and bounded stop at the existing owner boundaries from the prepared design. Activation requires actual R05 and D02/D03 readiness; native use must bind the newly retained exact R04 set.",
+      "next_action": "Integrate/review fixed experimental device entry and actual action/stop bindings using tested host foundations; actual R05 and D02/D03 readiness required. Native use binds exact retained R04 artifacts.",
       "design_prepared": true,
       "experimental_entry_implemented": false,
       "activation_prerequisites": [
@@ -233,7 +233,7 @@
     "Development package signatures are not an operational production trust root.",
     "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; an empty-daemon compiler restore and all target execution remain untested."
   ],
-  "handover_validation": "project/handover/final-audit.json",
+  "handover_validation": "project/evidence/continuation-20261023/handover-audit.json",
   "latest_completed_host_task": "R04",
   "previous_five_task_batch": [
     "U04",
@@ -249,6 +249,100 @@
     "R06"
   ],
   "current_snapshot": {
+    "release_id": "smartpro-psp-0.1.0-dev11",
+    "implementation_commit": "0585e1de62b1e38b291a96eed7793464c4f272e1",
+    "local_clean_build_commit": "0585e1de62b1e38b291a96eed7793464c4f272e1",
+    "strict_tests": {
+      "tests_run": 833,
+      "passed": 833,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "evidence": "project/evidence/continuation-20261023/verification.json",
+    "local_certification": "project/evidence/continuation-20261023/certification.json",
+    "local_build_report": "project/evidence/continuation-20261023/build-report.json",
+    "local_release_source": "project/evidence/continuation-20261023/release-source.json",
+    "ci_run_id": 39877124999,
+    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999",
+    "ci_status": "success",
+    "ci_source_head": "0585e1de62b1e38b291a96eed7793464c4f272e1",
+    "original_source_inventory_files": 177,
+    "original_source_inventory_sha256": "179b85ec30396c3031431fe59da0a588fe9311d717f8350c622c994e2ca04df9",
+    "packaged_payload_files": 59,
+    "source_export_zip_rebuild_byte_identical": true,
+    "later_handover_changes": "Documentation/evidence only; exact build/source-inventory and CI checkout identities remain separate.",
+    "ci_clean_merge_checkout": "71d2c19dcdaa78782ccfaa98c464801c00dd98a5",
+    "ci_receipt": "project/evidence/continuation-20261023/ci-readback.json",
+    "ci_certification": "project/evidence/continuation-20261023/ci-certification.json",
+    "ci_build_report": "project/evidence/continuation-20261023/ci-build-report.json",
+    "ci_release_source": "project/evidence/continuation-20261023/ci-release-source.json",
+    "ci_artifact_id": 12469330647,
+    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999/artifacts/12469330647",
+    "ci_artifact_sha256": "7e6cbbf345417d97f2390ae424a285001f943de75fa4f5284e60ef08428f1110",
+    "ci_artifact_size_bytes": 4970680,
+    "ci_artifact_expires_at_utc": "2027-01-21T00:16:26Z"
+  },
+  "artifact_custody": {
+    "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
+    "historical_host_receipt": "project/evidence/artifact-custody/host-retention.json",
+    "current_host_receipt": "project/evidence/device-preparation/ci-readback.json",
+    "native_build_report": "project/evidence/artifact-custody/native-rebuild.json",
+    "native_source_review": "project/evidence/artifact-custody/native-source-review.json",
+    "native_retention_receipt": "project/evidence/artifact-custody/native-retention.json",
+    "native_artifacts_retrieved": 7,
+    "native_parts_retrieved": 18,
+    "old_native_binary_hashes_recovered": false,
+    "replacement_native_outputs_retrieved": true,
+    "new_compiler_image_retrieved": true,
+    "new_compiler_image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "ppsspp_replacement_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+    "retroarch_replacement_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+    "storage_sharing": "owner-only Drive; no permissions added",
+    "compiler_empty_daemon_restore_tested": false,
+    "native_target_executed": false
+  },
+  "preparation": {
+    "D01": {
+      "status": "Host-only admission/action/deadline/journal foundations and optional principal observation seam tested; fixed device entry and real action/stop wiring absent",
+      "design": "project/docs/experimental-device-route.md",
+      "evidence": "project/evidence/device-preparation/d01-design.json",
+      "host_foundations": "project/docs/experimental-admission-host.md",
+      "principal_observations": "project/docs/principal-deadlines.md"
+    },
+    "D02_D03": {
+      "status": "offline verifier and operator procedure prepared; real backups/restoration/device inventory unrun",
+      "tool": "project/tools/recovery_preflight.py",
+      "documentation": "project/docs/device-recovery-preflight.md",
+      "focused_checks": 20,
+      "independent_review": "project/evidence/device-preparation/review.json"
+    },
+    "R06": {
+      "status": "Record joins and seven primary-file notices reviewed; exact grants/membership/remaining source-notice review open",
+      "ledger": "project/docs/native-component-ledger.json",
+      "audit": "project/docs/component-audit.md",
+      "evidence": "project/evidence/continuation-20261023/component-review.json"
+    },
+    "D03": {
+      "status": "Read-only probe and isolated host kernel/tool identity tests prepared; real target inventory unrun",
+      "tool": "project/tools/device_probe.py",
+      "documentation": "project/docs/device-probe.md"
+    },
+    "O01": {
+      "status": "Disposable host trust lifecycle/recovery rehearsal passed; operational custody and recovery open",
+      "tool": "project/tools/trust_rehearsal.py"
+    },
+    "O03": {
+      "status": "Local scoped upstream review tool and actual stable/Development comparison prepared; maintenance owner and pilot still pending",
+      "tool": "project/tools/upstream_drift.py"
+    }
+  },
+  "continuation_scope": "Ten host engineering items advance D01/D03/R06/O01/O03. No new plan row or physical area is complete. Existing production and source-use gates remain closed.",
+  "historical_handover_validation": "project/handover/validation.json",
+  "current_consistency_record": "project/evidence/continuation-20261023/handover-audit.json",
+  "historical_dev10_snapshot": {
     "release_id": "smartpro-psp-0.1.0-dev10",
     "implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
     "local_clean_build_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
@@ -282,44 +376,21 @@
     "host_preview_private_retention_verified": true,
     "later_handover_changes": "Documentation/evidence only; retain these exact clean local and CI identities."
   },
-  "artifact_custody": {
-    "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
-    "historical_host_receipt": "project/evidence/artifact-custody/host-retention.json",
-    "current_host_receipt": "project/evidence/device-preparation/ci-readback.json",
-    "native_build_report": "project/evidence/artifact-custody/native-rebuild.json",
-    "native_source_review": "project/evidence/artifact-custody/native-source-review.json",
-    "native_retention_receipt": "project/evidence/artifact-custody/native-retention.json",
-    "native_artifacts_retrieved": 7,
-    "native_parts_retrieved": 18,
-    "old_native_binary_hashes_recovered": false,
-    "replacement_native_outputs_retrieved": true,
-    "new_compiler_image_retrieved": true,
-    "new_compiler_image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
-    "ppsspp_replacement_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
-    "retroarch_replacement_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
-    "storage_sharing": "owner-only Drive; no permissions added",
-    "compiler_empty_daemon_restore_tested": false,
-    "native_target_executed": false
+  "latest_batch": {
+    "date_utc": "2026-10-23",
+    "engineering_items": 10,
+    "plan_rows_advanced": [
+      "D01",
+      "D03",
+      "R06",
+      "O01",
+      "O03"
+    ],
+    "new_tests": 123,
+    "new_plan_rows_completed": 0,
+    "report": "project/docs/continuation-2026-10-23.md",
+    "evidence": "project/evidence/continuation-20261023/verification.json"
   },
-  "preparation": {
-    "D01": {
-      "status": "design prepared; trusted experimental entry/admission and bounded stop still unimplemented",
-      "design": "project/docs/experimental-device-route.md",
-      "evidence": "project/evidence/device-preparation/d01-design.json"
-    },
-    "D02_D03": {
-      "status": "offline verifier and operator procedure prepared; real backups/restoration/device inventory unrun",
-      "tool": "project/tools/recovery_preflight.py",
-      "documentation": "project/docs/device-recovery-preflight.md",
-      "focused_checks": 20,
-      "independent_review": "project/evidence/device-preparation/review.json"
-    },
-    "R06": {
-      "status": "partial review only; 16 component scopes, actual IJG link membership/credit retained; exact grants and remaining source/notice mapping open",
-      "ledger": "project/docs/native-component-ledger.json"
-    }
-  },
-  "continuation_scope": "R04 completed through real private rebuild/retrieval. New original offline recovery tooling and D01/D02/D03/R06 preparation do not complete physical or source-use qualification.",
-  "historical_handover_validation": "project/handover/validation.json",
-  "current_consistency_record": "project/handover/current-validation.json"
+  "historical_current_consistency_record": "project/handover/current-validation.json",
+  "historical_dev10_handover_validation": "project/handover/final-audit.json"
 }

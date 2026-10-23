@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "scope": "independent read-only review of current host helpers and handover",
+  "reviewers": [
+    "principal_deadlines agent",
+    "trust_rehearsal agent",
+    "parent integration review"
+  ],
+  "device_qualification_granted": false,
+  "findings_fixed": [
+    {
+      "area": "upstream review",
+      "findings": [
+        "Git fsmonitor/clean filter execution",
+        "Git replace identity ambiguity",
+        "ordinary missing file treated as sparse",
+        "pathname cleanup deletion races"
+      ],
+      "result": "Raw bounded index/blob inspection, replace disabled, sparse flags checked, uncertain failed output retained; 17 regression checks pass."
+    },
+    {
+      "area": "device probe",
+      "findings": [
+        "signal after child reaped",
+        "closed-pipe timeout escaping observation handling",
+        "helper interpreter/source provenance mismatch"
+      ],
+      "result": "Only owned unreaped disposable groups signalled; normalized wait timeout; exact opened interpreter/source descriptors hashed/executed/rechecked; 25 checks pass."
+    },
+    {
+      "area": "component audit",
+      "findings": [
+        "valid-shaped component commits and patch digests not joined"
+      ],
+      "result": "Exact source/recipe joins and five actual patch bytes checked; 22 checks pass."
+    },
+    {
+      "area": "journal",
+      "findings": [
+        "same-size prior/current content changes"
+      ],
+      "result": "Full bounded content stamp checks before/after fsync and fresh readback; admission/journal suite38 pass."
+    }
+  ],
+  "remaining_scope": [
+    "Fixed device entry and real action wiring absent",
+    "No actual R05 or D02/D03 evidence",
+    "Operational key custody and component grants remain open"
+  ],
+  "final_handover_review": "Counts, snapshots and links passed; stale dev10 current-validation pointers corrected to this batch audit."
+}

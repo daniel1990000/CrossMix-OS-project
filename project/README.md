@@ -14,6 +14,13 @@ a [private experimental-route design](docs/experimental-device-route.md),
 need their remaining implementation, external or physical evidence. There are
 12 completed host tasks and zero completed physical acceptance areas.
 
+The 23 October [ten-item continuation](docs/continuation-2026-10-23.md) adds host
+admission/timeout/evidence helpers, read-only device probes, component identity
+audits, disposable trust recovery and scoped upstream review. The dev11 snapshot
+passes 833 strict checks and verified packaging. The fixed device entry and
+physical/permission/operational requirements remain open; task completion stays
+12 of 25 and no physical area has run.
+
 ## Run the preview
 
 Use Python 3.9 or later, system SDL2 and libsodium. On Debian/Ubuntu the runtime packages are `libsdl2-2.0-0` and `libsodium23`.

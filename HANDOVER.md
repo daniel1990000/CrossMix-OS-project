@@ -1,5 +1,38 @@
 # TrimUI Smart Pro implementation handover
 
+Checkpoint: **23 October 2026**. Active branch: `build/spruce-psp-experience` in `daniel1990000/CrossMix-OS-project`. [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Continue the original TG5040 spruceOS/PyUI project under `project/`.
+
+## Current continuation
+
+The requested batch adds **10 host engineering items** across D01, D03, R06, O01 and O03. Read [the item register](project/docs/continuation-2026-10-23.md), [LATEST.json](project/handover/LATEST.json) and [the master plan](project/docs/master-plan-2026-10-22.md). These are portions of five open plan rows. **12 of 25 host tasks remain complete; zero of 13 physical areas have run.** Do not count the ten items as ten additional completed plan rows.
+
+Clean source/build commit: `0585e1de62b1e38b291a96eed7793464c4f272e1`. Strict local checks pass **833 tests** (772 host/source + 61 PPSSPP), with zero skips, failures or errors against all five exact source checkouts. The original-only `smartpro-psp-0.1.0-dev11` build verifies its signature, 59-file payload, same-key determinism, installed SDL/navigation/settings smoke and fixture rollback. Both ZIPs reproduce byte for byte from the no-Git export. Its 177-file source inventory SHA-256 is `179b85ec30396c3031431fe59da0a588fe9311d717f8350c622c994e2ca04df9`. Later handover/evidence edits retain this exact snapshot; they do not acquire its source-inventory identity.
+
+[CI run 39877124999](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999) **passed all 833 checks** on actual clean merge checkout `71d2c19dcdaa78782ccfaa98c464801c00dd98a5`, for source head `0585e1de62b1e38b291a96eed7793464c4f272e1`. [Artifact 12469330647](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999/artifacts/12469330647), 4,970,680 bytes, SHA-256 `7e6cbbf345417d97f2390ae424a285001f943de75fa4f5284e60ef08428f1110`, was completely retrieved. All eight inner checksums, development signature/payload and actual 177-file source export pass readback. Expiry: 21 January 2027, 00:16:26 UTC. [Readback receipt](project/evidence/continuation-20261023/ci-readback.json) records the exact scope; permanent private retention was not performed. See [verification](project/evidence/continuation-20261023/verification.json), [local certification](project/evidence/continuation-20261023/certification.json) and [build report](project/evidence/continuation-20261023/build-report.json).
+
+New engineering boundaries:
+
+- [Host admission and journal](project/docs/experimental-admission-host.md): independent hashes, boot/principal identities, one-shot expiry, view-only actions, cooperative return and durable redacted evidence. The factory admits synthetic host cases only. Fixed device entry and real action wiring remain absent.
+- [Principal observations](project/docs/principal-deadlines.md): timeout keeps descendant ownership through actual `ECHILD`, then refuses completion. The optional policy is not selected by shipped runtime configuration.
+- [D03 probe](project/docs/device-probe.md): read-only copied-root or explicitly selected live-host metadata, exact tool/helper identities and isolated kernel probes. A host helper cannot prove target support.
+- [R06 audit](project/docs/component-audit.md): joins component/custody/source/patch identities and retains seven primary-file notice observations. Recipe/IGM/SDK and distribution review remain open.
+- [Key rehearsal](project/docs/trust-rehearsal.md) uses disposable keys and existing package APIs; operational custody remains open. [Upstream review](project/docs/upstream-maintenance.md) queues 230 in-scope and 374 outside-scope changes from the previously inspected Development revision. No pin was updated.
+
+## Next work and unchanged limits
+
+1. D01: bind the reviewed policy and bounded stop requests at the fixed principal/embedded device entries; prove actual action restrictions and fail-closed return. The host helpers alone cannot admit hardware.
+2. D02/D03: when the original TG5040 and operator are available, complete actual card/save/necessary internal backups, retained retrieval and restoration rehearsal, then observe the real firmware/filesystem/runtime/writers and kernel/tool identities.
+3. R05/R06: retain actual notification delivery/scope evidence and finish exact selected component permissions/source/notices. The PyUI notice remains **unsent**; no instruction authorizes contacting anyone. Native use must bind the existing exact retained R04 set.
+4. O01/O03: establish actual key custody/recovery and a maintenance owner; review each upstream change and qualify the supported scope after the first pilot.
+
+No device was connected or probed, emulator executed, firmware changed or owner data edited. All production/profile/runtime/source-use gates stay false; selected upstream patches/native binaries remain empty and Celeste remains unselected. No physical recovery, device performance/battery gain or Resume durability result is established. Reuse R04 receipts; do not rebuild completed native custody as new work.
+
+The existing five-source setup under “Verification and workspace continuity” below remains valid. Current local build/export paths use `/workspace/scratch/trimui-dev11-*`; all are temporary. Resume from the versioned handover and exact receipts.
+
+---
+
+## Historical dev10 checkpoint, 22 October 2026
+
 Checkpoint: 22 October 2026. Active branch: **`build/spruce-psp-experience`** in `daniel1990000/CrossMix-OS-project`; [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Active code is `project/` for the original TG5040 on pinned spruceOS v4.5.4/PyUI. The CrossMix/C++ material and prior checkpoint next-work suggestions are historical.
 
 ## Start the next chat here
