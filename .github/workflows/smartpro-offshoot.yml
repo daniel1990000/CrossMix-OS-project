@@ -6,6 +6,10 @@ on:
         description: 'Publish the exact previously certified original-only dev14 host artifacts'
         type: boolean
         default: false
+      publish_verified_dev16:
+        description: 'Publish the fixed, provenance-verified original-only dev16 host artifacts'
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
@@ -170,5 +174,34 @@ jobs:
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: dev14-host-delivery-readback
+          path: host-delivery-receipt.json
+          if-no-files-found: error
+  deliver-verified-dev16:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_verified_dev16
+    needs: host
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /project/packaging/
+            /project/evidence/artifact-custody/verify-host-artifacts.py
+            /project/evidence/nondevice-completion-20261023/publish_verified_host.py
+            /project/evidence/host-publication-20261023/publish_dev16.py
+            /project/evidence/host-publication-20261023/dev16-publication-packet.json
+      - name: Install host signature verifier dependency
+        run: sudo apt-get update && sudo apt-get install -y libsodium23
+      - name: Verify exact dev16 artifacts, provenance and uploaded bytes before publication
+        run: python3 project/evidence/host-publication-20261023/publish_dev16.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dev16-host-delivery-readback
           path: host-delivery-receipt.json
           if-no-files-found: error

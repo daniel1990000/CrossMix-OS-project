@@ -1,0 +1,9 @@
+{
+  "source": "https://github.com/cli/cli/releases/tag/v2.103.2",
+  "release_assets_verified_against_api_sha256": {
+    "gh_2.103.2_checksums.txt": "414d6009dc7f9f936d70831af818d1a32aa0ff07a77646861efd207356a36b2d",
+    "gh_2.103.2_linux_amd64.tar.gz": "62ccf747115ddc61237efffdde66a3c8f70ba249433dc64f70801089b59c59c8"
+  },
+  "tarball_matches_published_checksums": true,
+  "reason": "System gh2.46 lacks attestation verify; reuse existing publisher with official CLI2.103.2."
+}

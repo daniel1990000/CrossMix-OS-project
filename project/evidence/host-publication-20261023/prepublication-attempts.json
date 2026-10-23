@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "release_id": 422401559,
+  "draft_remained_unpublished_during_failed_attempts": true,
+  "attempts": [
+    {
+      "operation": "Artifact ZIP download through shell gh",
+      "outcome": "Redirected artifact storage request returned403 before upload; no release assets changed.",
+      "recovery": "Connected artifact downloader retrieved both exact ZIPs; provider SHA256 values passed."
+    },
+    {
+      "operation": "Shell original-only publication with verified cached artifacts",
+      "outcome": "All10 provenance subjects passed; uploads.github.com returned401; draft release readback confirmed zero assets.",
+      "recovery": "Use the existing GitHub Actions delivery route with its job-scoped token and the fixed dev16 packet."
+    }
+  ],
+  "ephemeral_redirect_urls_or_credentials_retained": false
+}

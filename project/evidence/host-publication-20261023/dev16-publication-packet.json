@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "repository": "daniel1990000/CrossMix-OS-project",
+  "source_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+  "source_inventory_sha256": "a0c9c9179528ddc0e9316a6aef2bda9c6f4d4ef24f70c91296d49c18a6ea834a",
+  "run_id": 40041273891,
+  "release_id": 422401559,
+  "tag": "smartpro-host-0.1.0-dev16",
+  "artifacts": [
+    [12538738783, "0f57972e96f34700c3b5642dce064fe91e2cd859a1e4f85703ad1ffeec491524"],
+    [12539710823, "cb616ccb3e7329ccdb9f32d32c7040c470b793d666dcbe1f94900f3f295ef0d9"]
+  ],
+  "delivery": "original-only-computer-preview-prerelease",
+  "device_activation_enabled": false,
+  "production_signing_custody_established": false,
+  "private_native_sdk_or_owner_data_selected": false,
+  "dev14_release_changed": false
+}

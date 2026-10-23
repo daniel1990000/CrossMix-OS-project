@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "authorization": "Owner explicitly instructed merging and publishing the completed work in this session.",
+  "user_instruction": "Okay then merge it all publish it all etc get everyone done",
+  "prior_merge_draft_hold_superseded": true,
+  "selected_publication_scope": "Completed source merged into main and an original-only dev16 computer-preview prerelease.",
+  "device_qualification_supplied": false,
+  "native_sdk_distribution_grants_inferred": false,
+  "device_profile_gates_enabled": false,
+  "production_key_created": false,
+  "ongoing_maintenance_owner_inferred": false,
+  "author_messages_sent": false,
+  "pr_number": 1,
+  "merged_commit": "87264629735e179c81c2ad360516665c1e7fd5cd",
+  "source_head": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+  "historical_permission_records_unchanged": true
+}
