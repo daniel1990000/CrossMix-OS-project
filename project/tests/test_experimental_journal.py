@@ -220,6 +220,19 @@ class ExperimentalJournalTests(unittest.TestCase):
         self.assertEqual(result, ["rejected"])
         self.assertEqual(self.path.read_bytes(), b"")
 
+    def test_private_observation_provenance_is_explicit_and_unknown_claims_are_refused(self):
+        journal = HostEvidenceJournal(self.directory, session="1" * 64, candidate="2" * 64,
+                                      boot="3" * 64, owner="4" * 64, provenance="private_experimental")
+        self.addCleanup(journal.close)
+        journal.append("prepared", 1)
+        self.assertEqual(read_host_journal(self.directory)[0]["provenance"], "private_experimental")
+        other = self.base / "invalid-provenance"
+        other.mkdir(mode=0o700)
+        with self.assertRaises(ContractError):
+            HostEvidenceJournal(other, session="1" * 64, candidate="2" * 64,
+                                boot="3" * 64, owner="4" * 64, provenance="hardware_qualified")
+        self.assertFalse((other / "events.jsonl").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

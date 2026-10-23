@@ -21,14 +21,26 @@ MAIN_MENU_PATH = "App/PyUI/main-ui/menus/main_menu.py"
 MAIN_MENU_BLOB = "86ba5ccdba0be3453b6bddf1c24e9e91cec5c706"
 _factory: Callable[[Any], Any] | None = None
 _state_dir: str | Path = DEFAULT_STATE
+_experimental_session = None
 
 
 def bind_context_factory(factory: Callable[[Any], Any] | None, *, state_dir: str | Path = DEFAULT_STATE) -> None:
     """Called by trusted source bootstrap, never by a saved preference file."""
     if factory is not None and not callable(factory):
         raise ContractError("INVALID_CONTEXT", "A trusted in-process context factory is required")
-    global _factory, _state_dir
-    _factory, _state_dir = factory, state_dir
+    global _factory, _state_dir, _experimental_session
+    _factory, _state_dir, _experimental_session = factory, state_dir, None
+
+
+def bind_experimental_context_factory(factory, session, *, state_dir=DEFAULT_STATE):
+    """Fixed reviewed code binds one typed private case after source startup."""
+    from .experimental_runtime import ExperimentalRuntimeSession
+    if type(session) is not ExperimentalRuntimeSession:
+        raise ContractError("INVALID_CONTEXT", "Private source binding requires a typed reviewed session")
+    session.assert_configuration(session._config)
+    bind_context_factory(factory, state_dir=state_dir)
+    global _experimental_session
+    _experimental_session = session
 
 
 def maybe_run_main_menu(main_menu: Any, *, context: Any = None, health: FrontendHealth | None = None,
@@ -39,6 +51,11 @@ def maybe_run_main_menu(main_menu: Any, *, context: Any = None, health: Frontend
     independent foreground-ownership record proves no same-boot uncertainty.
     No new Flip boot-session or firmware fallback is assumed.
     """
+    experimental = getattr(context, "experimental_session", None) if context is not None else _experimental_session
+    if experimental is not None:
+        from .experimental_runtime import ExperimentalRuntimeSession
+        if type(experimental) is not ExperimentalRuntimeSession:
+            raise ContractError("INVALID_CONTEXT", "Private entry requires the fixed typed reviewed session")
     health = health or FrontendHealth(context.state_dir if context is not None else _state_dir)
     health.assert_no_foreground()
     try:
@@ -47,14 +64,22 @@ def maybe_run_main_menu(main_menu: Any, *, context: Any = None, health: Frontend
         if exc.code == "FUTURE_SCHEMA":
             return False
         raise
-    if selected == "classic":
+    if selected == "classic" and experimental is None:
         return False
+    private_health = None
+    if experimental is not None:
+        private_health = health.record()
+        if (private_health["attempt"] is not None or private_health["fallback_used"] or
+                private_health["blocked"] or health.marker.exists()):
+            raise ContractError("EXPERIMENTAL_RECOVERY_REQUIRED", "Existing frontend recovery must be resolved before a private case; its record is retained")
     if context is None:
         if _factory is None:
             return False
         try:
             context = _factory(main_menu)
         except ContractError as exc:
+            if experimental is not None:
+                experimental.block("identity_changed")
             # The trusted bootstrap only captures initialized references and
             # reads evidence. A not-yet-ready model or changed owner leaves
             # the current classic MainMenu available without loading views.
@@ -69,11 +94,22 @@ def maybe_run_main_menu(main_menu: Any, *, context: Any = None, health: Frontend
             raise ContractError("INVALID_CONTEXT", "Bound frontend state does not match the recovery selector")
         qualification(context).assert_safe()
     except ContractError as exc:
+        if experimental is not None:
+            experimental.block("identity_changed")
         if context.report_error:
             context.report_error(exc.code)
         return False
-    attempt = health.begin(selected)
+    if experimental is not None:
+        if context.experimental_session is not experimental:
+            raise ContractError("INVALID_CONTEXT", "The private context does not match its reviewed bound session")
+        state = health.request("project", private_health["generation"])
+        selected = "project"
+        attempt = health.begin(selected, expected_generation=state["generation"])
+    else:
+        attempt = health.begin(selected)
     if attempt["attempt"]["interface"] == "classic":
+        if experimental is not None:
+            experimental.block()
         # begin detected an interrupted previous project startup. Classic's
         # own frame/input acceptance belongs to the source hook qualification;
         # do not fabricate a readiness receipt for it here.

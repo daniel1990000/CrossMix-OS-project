@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "owner-confirmed-private-source-use",
+  "basis": "The owner reports that notice was already delivered and author permission received. Accepted for continuing private noncommercial work.",
+  "private_attestation": {
+    "drive_file_id": "1c8jjtGPJ06eJPf4KZ89_2F74WOxm6_-_",
+    "size_bytes": 1183,
+    "sha256": "4aedefcd71fa2fc000a9700c6432c5931103f6584cffa60956ec5de01fc9d122",
+    "sharing": "owner-only; shared=false; sole owner permission",
+    "fresh_retained_readback_verified": true
+  },
+  "owner_reports_notification_delivered": true,
+  "owner_reports_author_permission_received": true,
+  "assistant_sent_messages": false,
+  "author_correspondence_independently_inspected": false,
+  "private_noncommercial_source_candidate_authorized": true,
+  "public_native_binary_distribution_granted": false,
+  "commercial_or_sdk_redistribution_granted": false,
+  "hardware_qualification_granted": false,
+  "raw_attestation_committed": false,
+  "next_action": "No further notification or permission request. Continue private integration; evaluate exact distribution scope separately."
+}

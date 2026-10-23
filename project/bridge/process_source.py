@@ -46,6 +46,7 @@ class ProcessSourceConfiguration:
     resume_evidence: Callable[[], Any] | None = None
     mode_actions: Callable[[Any], Mapping[str, Any]] | None = None
     execution_environment: str = "device"
+    experimental_session: Any = None
 
     def __post_init__(self):
         if (not isinstance(self.profile, Mapping) or not callable(self.inventory) or
@@ -60,6 +61,12 @@ class ProcessSourceConfiguration:
             object.__setattr__(self, name, Path(getattr(self, name)).absolute())
 
     def assert_safe(self):
+        if self.experimental_session is not None:
+            from .experimental_runtime import ExperimentalRuntimeSession
+            if type(self.experimental_session) is not ExperimentalRuntimeSession:
+                raise ContractError("INVALID_CONTEXT", "Private experiment requires the fixed reviewed in-memory session type")
+            self.experimental_session.assert_configuration(self)
+            return
         profile = self.profile
         if (not isinstance(profile.get("required_hashes"), Mapping) or
                 any(profile.get(name) is not True for name in
@@ -107,6 +114,9 @@ def configured_runtime() -> ProcessSourceConfiguration | None:
     # A fixed reviewed import; no configuration file supplies a module name.
     from .qualified_runtime import configuration
     value = configuration()
+    if value is None:
+        from .experimental_runtime import configuration as private_configuration
+        value = private_configuration()
     if value is not None and type(value) is not ProcessSourceConfiguration:
         raise ContractError("INVALID_CONTEXT", "The fixed runtime module did not supply a typed source configuration")
     return value
@@ -189,6 +199,8 @@ class ProcessExitSourceTasks:
     @contextmanager
     def write_window(self):
         with self._lock:
+            if self.config.experimental_session is not None:
+                self.config.experimental_session.block("action_denied")
             if self._phase != "running" or not self.quiescent():
                 raise ContractError("BUSY_SESSION", "Source settings writes and process handoffs share one owner window")
             self.config.assert_safe()
@@ -314,6 +326,9 @@ def stage_existing_command(command):
     authority to load code. Its game path must be independently checked by any
     qualified state/config adapter. A missing journal leaves the handoff blocked.
     """
+    config = configured_runtime()
+    if config is not None and config.experimental_session is not None:
+        config.experimental_session.block("action_denied")
     tasks = _source_tasks
     if tasks is None:
         return False
@@ -415,6 +430,14 @@ def bind_initialized_source(main_menu, tasks: ProcessExitSourceTasks, builder):
             "control_adapter", "theme_manager", "hardware_adapter", "experience_manager"}:
         raise ContractError("INVALID_CONTEXT", "Source adapters must use the fixed initialized adapter slots")
     binding.options.update(adapters)
+    if config.experimental_session is not None:
+        if adapters or config.resume_evidence is not None or config.mode_actions is not None:
+            raise ContractError("EXPERIMENTAL_ACTION_DENIED", "View-only binding cannot install mutator or Resume adapters")
+        binding.options.update(experimental_session=config.experimental_session,
+                               game_options_handler=None, tool_actions={}, mode_actions={})
+        from .pyui_entry import bind_experimental_context_factory
+        bind_experimental_context_factory(binding, config.experimental_session, state_dir=config.state_dir)
+        return binding
     if "hardware_adapter" not in adapters:
         from psp_shell.hardware_settings import FixedHardwareSettings
         def qualified():

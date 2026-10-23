@@ -51,6 +51,7 @@ class EmbeddedContext:
     model_provider_factory: Callable[..., Any] | None = None
     restore_background_tasks: Callable[[], None] | None = None
     assert_owners: Callable[[], None] | None = None
+    experimental_session: Any = None
 
 
 @dataclass
@@ -81,6 +82,12 @@ def qualification(context: EmbeddedContext) -> PreflightReport:
         context.preferences = context.preferences_provider()
     if not isinstance(context.inventory, Mapping) or not isinstance(context.preferences, Mapping):
         raise ContractError("INVALID_EVIDENCE", "Live inventory and preferences must be mappings")
+    if context.experimental_session is not None:
+        from bridge.experimental_runtime import ExperimentalRuntimeSession
+        if type(context.experimental_session) is not ExperimentalRuntimeSession:
+            raise ContractError("INVALID_CONTEXT", "A private view requires the fixed typed runtime session")
+        context.experimental_session.attach_context(context)
+        return PreflightReport(warnings=("Private view-only case; production/device qualification remains false.",))
     if context.execution_environment == "host-fixture":
         root = Path(context.sd_root).resolve()
         if context.profile.get("execution_environment") != "host-fixture" or not str(context.profile.get("id", "")).startswith("host-fixture") or context.inventory.get("live") is not False or root == Path("/mnt/SDCARD") or Path("/mnt/SDCARD") in root.parents:
@@ -151,6 +158,8 @@ class _LaunchBridge:
 
     def validate(self, action_id: str, mode: str) -> None:
         runner = self.runner
+        if runner.context.experimental_session is not None:
+            runner.context.experimental_session.block("action_denied")
         qualification(runner.context).assert_safe()
         runner.backend.validate_action(action_id, mode)
         if action_id not in self.registered:
@@ -213,6 +222,8 @@ class EmbeddedRunner:
 
     def _snapshot(self):
         value = self.model.export_state()
+        if self.context.experimental_session is not None:
+            return value
         from .app import _save_navigation
         _save_navigation(self.context.state_dir, self.model)
         return value
@@ -287,17 +298,27 @@ class EmbeddedRunner:
             self.context.sd_root, device=self.context.device, release_resources=self._close_project_renderer,
             quiescent=self.context.quiescent, tool_list=self.context.tool_list,
             tool_actions=self.context.tool_actions, mode_actions=self.context.mode_actions)
-        self.backend = (deps.backend_factory or SpruceBackend)(self.context.sd_root, read_only=False, managers=provider)
+        experimental = self.context.experimental_session
+        self.backend = (deps.backend_factory or SpruceBackend)(self.context.sd_root, read_only=experimental is not None, managers=provider)
         if self.context.resume_evidence_provider is not None:
             self.backend.set_verified_resume_evidence(self.context.resume_evidence_provider())
-        self.settings = (deps.settings_factory or SettingsStore)(str(self.context.state_dir))
-        self.settings.recover()
+        if experimental is not None:
+            from bridge.experimental_runtime import ReadOnlyViewSettings
+            self.settings = ReadOnlyViewSettings(self.context.preferences)
+        else:
+            self.settings = (deps.settings_factory or SettingsStore)(str(self.context.state_dir))
+            self.settings.recover()
         self.model = (deps.model_factory or NavigationModel)(demo=False, restored_state=_restore_navigation(self.context.state_dir))
         self.coordinator = LaunchCoordinator(self.registry, LaunchHooks(self._snapshot,
             self._stop_background_tasks, self._close_project_renderer, self._release_input, self._restore),
             preflight=lambda: qualification(self.context), exclusive=self.exclusive, health=self.health)
         runner = self
         class EmbeddedDispatcher(Dispatcher):
+            def dispatch(self, method, params=None):
+                if experimental is not None:
+                    experimental.check_method(method, params or {})
+                return super().dispatch(method, params)
+
             def _dispatch(self, method, params):
                 if method == "spruce.advanced":
                     self._fields(params, ("route",), ("route",))
@@ -308,7 +329,7 @@ class EmbeddedRunner:
                     return {"state": "releasing_ui"}
                 if method == "tools.list":
                     result = super()._dispatch(method, params)
-                    if callable(getattr(runner.context.main_menu, "launch_selection", None)):
+                    if experimental is None and callable(getattr(runner.context.main_menu, "launch_selection", None)):
                         result = list(result) + [{"id": "route:" + route, "tool_id": "route:" + route,
                             "label": label, "description": "Existing spruce interface", "available": True}
                             for route, label in (("settings", "All spruce system settings"), ("apps", "All installed spruce apps"), ("collections", "Spruce collections"))]
@@ -318,13 +339,13 @@ class EmbeddedRunner:
                     return self._dispatch("spruce.advanced", {"route": params["tool_id"][6:]})
                 return super()._dispatch(method, params)
         self.dispatcher = EmbeddedDispatcher(self.backend, self.settings, self.context.state_dir,
-                                             launch_bridge=_LaunchBridge(self),
-                                             control_adapter=self.context.control_adapter,
-                                             theme_manager=self.context.theme_manager,
-                                             hardware_adapter=self.context.hardware_adapter,
-                                             experience_manager=self.context.experience_manager,
+                                             launch_bridge=_LaunchBridge(self) if experimental is None else None,
+                                             control_adapter=self.context.control_adapter if experimental is None else None,
+                                             theme_manager=self.context.theme_manager if experimental is None else None,
+                                             hardware_adapter=self.context.hardware_adapter if experimental is None else None,
+                                             experience_manager=self.context.experience_manager if experimental is None else None,
                                              game_options_handler=self._schedule_game_options
-                                             if self.context.game_options_handler is not None else None)
+                                             if experimental is None and self.context.game_options_handler is not None else None)
         self._commands(self.model.initial_commands())
         self.renderer = self._new_renderer()
 
@@ -336,6 +357,8 @@ class EmbeddedRunner:
             try:
                 pending.extend(self.model.receive(command, self.dispatcher.dispatch(command.method, command.params)))
             except Exception as exc:
+                if self.context.experimental_session is not None and getattr(exc, "code", "").startswith("EXPERIMENTAL_"):
+                    raise
                 self.model.error(command, *error_fields(exc))
 
     def _schedule_game_options(self, game_id):
@@ -347,6 +370,8 @@ class EmbeddedRunner:
         return {"state": "releasing_ui"}
 
     def open_advanced(self, route: str):
+        if self.context.experimental_session is not None:
+            self.context.experimental_session.block("action_denied")
         qualification(self.context).assert_safe()
         if route in self.ADVANCED_ROUTES and callable(getattr(self.context.main_menu, "launch_selection", None)):
             callback = lambda: self.context.main_menu.launch_selection(self.ADVANCED_ROUTES[route])
@@ -402,12 +427,17 @@ class EmbeddedRunner:
         if self.model is None:
             self.setup()
         scripted = iter(scripted_actions)
+        experimental = self.context.experimental_session
         try:
             while max_frames == 0 or self.frames < max_frames:
+                if experimental is not None and not experimental.check_view():
+                    return self._finish_experimental()
                 now = time.monotonic()
                 snapshot = self.model.snapshot(now, display_clock=time.strftime("%m/%d  %H:%M"))
                 self.renderer.render(snapshot, now)
                 self.context.display.present()
+                if experimental is not None and not experimental.check_view():
+                    return self._finish_experimental()
                 self.frames += 1
                 # Readiness includes a successful service poll of the existing
                 # input owner, even when host tests inject navigation actions.
@@ -415,6 +445,8 @@ class EmbeddedRunner:
                     self.context.controller.clear_input_queue()
                     self._release_gate = False
                 has_input = self.context.controller.get_input(timeout=1 / 60)
+                if experimental is not None and not experimental.check_view():
+                    return self._finish_experimental()
                 if not self.ready:
                     self.health.mark_ready(first_frame=True, input_ready=True, settings_ready=True, attempt_id=self.attempt_id)
                     self.ready = True
@@ -429,20 +461,68 @@ class EmbeddedRunner:
                 if self._pending_advanced:
                     self.open_advanced(self._pending_advanced)
                 if self.dispatcher.pending_launch:
+                    if experimental is not None:
+                        experimental.block("action_denied")
                     intent = self.dispatcher.pending_launch
                     receipt = self.coordinator.launch(intent["action_id"], mode=intent["mode"])
                     return EmbeddedResult("delegated", self.frames, self.context.execution_environment, self.ready)
                 if self.model.exit_request in {"classic", "quit"}:
+                    if experimental is not None:
+                        return self._finish_experimental()
                     state = self.health.record()
                     self.health.request("classic", state["generation"])
                     self._snapshot()
                     return EmbeddedResult("classic", self.frames, self.context.execution_environment, self.ready)
+            if experimental is not None:
+                return self._finish_experimental()
             self._snapshot()
             return EmbeddedResult("frame_limit", self.frames, self.context.execution_environment, self.ready)
+        except ContractError as exc:
+            if experimental is not None and exc.code == "EXPERIMENTAL_RETURN_REQUESTED":
+                return self._finish_experimental()
+            if experimental is not None and not exc.code.startswith("EXPERIMENTAL_"):
+                experimental.block("callback_failed")
+            raise
+        except Exception:
+            if experimental is not None:
+                experimental.block("callback_failed")
+            raise
         finally:
             self._close_project_renderer()
 
+    def _finish_experimental(self):
+        """Release this view before authenticated return; never claim classic readiness."""
+        session = self.context.experimental_session
+        try:
+            if session is None or self._owner_restore_failed or self._advanced_in_progress:
+                raise ContractError("EXPERIMENTAL_RELEASE_UNCERTAIN", "The private view cannot release uncertain owners")
+            session.request_return()
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
+            self._close_project_renderer()
+            self._restore_owners()
+            self.context.controller.clear_input_queue()
+            self.context.controller.clear_last_input()
+            if self.context.assert_owners is not None:
+                self.context.assert_owners()
+            config = session._config
+            state = self.health.record()
+            if state["attempt"] is not None:
+                self.health.note_failure(attempt_id=self.attempt_id)
+            else:
+                self.health.request("classic", state["generation"])
+            session.release_source(owners_restored=self.renderer is None and not self._input_released and not self._background_stopped,
+                                   idle=self.context.quiescent(),
+                                   staged_command_absent=not config.staged_command.exists() and not config.staged_command.is_symlink())
+            return EmbeddedResult("classic", self.frames, self.context.execution_environment, self.ready)
+        except BaseException:
+            self._owner_restore_failed = True
+            raise
+
     def release_for_fallback(self) -> bool:
+        if self.context.experimental_session is not None:
+            if self.context.experimental_session.phase != "released":
+                return False
         if self._owner_restore_failed or self._advanced_in_progress or (self.coordinator and self.coordinator.state in {LaunchState.DELEGATED, LaunchState.DELEGATING, LaunchState.BLOCKED}):
             return False
         try:

@@ -6,20 +6,20 @@ See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparis
 
 This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
 
-The current preparation work adds [verified host-artifact retention](evidence/artifact-custody/host-retention.json),
-a [private experimental-route design](docs/experimental-device-route.md),
-[offline backup/readback verification](docs/device-recovery-preflight.md) and a
-[native component review](docs/native-component-review.md). R04 is complete as
-[private native artifact custody](docs/artifact-custody.md); D01–D03 and R06 still
-need their remaining implementation, external or physical evidence. There are
-12 completed host tasks and zero completed physical acceptance areas.
+The [remaining-plan software completion](docs/completion-2026-10-23.md)
+implements the conditional private viewing route, real backup/restore payloads,
+structured casebook review, exact native notice review and original-only release
+handoff. The current descriptor selects **smartpro-psp-0.1.0-dev12**.
+The owner confirms author permission for private noncommercial source work;
+the attestation is retained privately. No message was sent by this work.
 
-The 23 October [ten-item continuation](docs/continuation-2026-10-23.md) adds host
-admission/timeout/evidence helpers, read-only device probes, component identity
-audits, disposable trust recovery and scoped upstream review. The dev11 snapshot
-passes 833 strict checks and verified packaging. The fixed device entry and
-physical/permission/operational requirements remain open; task completion stays
-12 of 25 and no physical area has run.
+The master register has 14 completed scoped rows: 13 host engineering rows
+including D01, plus owner-confirmed R05 private source use. Zero of 13 physical
+acceptance areas have run. Actual device recovery/inventory, qualification,
+precise public native distribution rights and operational release custody remain
+open. The fixed selectors and production/profile gates remain unavailable.
+Exact certification, packaging, source identities and retained readbacks are in
+[the completion evidence](evidence/completion-20261023/verification.json).
 
 ## Run the preview
 

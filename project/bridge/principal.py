@@ -81,11 +81,13 @@ class TreeObservationPolicy:
     deadline_monotonic: float
     on_blocked: Callable[[TreeBlockedObservation], None]
     poll_interval_seconds: float = 0.05
+    observation_active: Callable[[], bool] | None = None
 
     def __post_init__(self):
         if (type(self.deadline_monotonic) not in (int, float) or
                 not math.isfinite(self.deadline_monotonic) or self.deadline_monotonic <= 0 or
                 not callable(self.on_blocked) or
+                self.observation_active is not None and not callable(self.observation_active) or
                 type(self.poll_interval_seconds) not in (int, float) or
                 not math.isfinite(self.poll_interval_seconds) or
                 not 0.01 <= self.poll_interval_seconds <= 0.25):
@@ -133,18 +135,28 @@ def run_owned_tree(argv, *, pass_fds=(), env=None,
         raise ContractError("FOREIGN_CHILD", "The principal helper already owns another child")
     previous = _subreaper(True)
     root, reaped, root_status, complete = None, 0, None, False
-    blocked, observer_failed = False, False
+    blocked, observer_failed, observing = False, False, observation is not None
     try:
         if observation is not None and time.monotonic() >= observation.deadline_monotonic:
             raise ContractError("OBSERVATION_EXPIRED", "The observation expired before source startup")
         root = subprocess.Popen(argv, pass_fds=tuple(pass_fds), close_fds=True, env=env)
         root_start = process_start(root.pid) if observation is not None else None
         while True:
-            if observation is not None and not blocked:
+            if observing and not blocked:
                 now = time.monotonic()
-                if now >= observation.deadline_monotonic:
+                active_failed = False
+                if observation.observation_active is not None:
+                    try:
+                        active = observation.observation_active()
+                        if type(active) is not bool:
+                            raise ValueError("Observation activity must be a boolean")
+                        observing = active
+                    except BaseException:
+                        active_failed = True
+                if active_failed or observing and now >= observation.deadline_monotonic:
                     blocked = True
-                    event = TreeBlockedObservation("deadline_expired", observation.deadline_monotonic,
+                    observer_failed = active_failed
+                    event = TreeBlockedObservation("observation_failed" if active_failed else "deadline_expired", observation.deadline_monotonic,
                         now, helper_pid, helper_start, root.pid, root_start, reaped,
                         root_status is not None)
                     try:
@@ -155,7 +167,7 @@ def run_owned_tree(argv, *, pass_fds=(), env=None,
                         # Exception strings can contain private data: omit them.
                         observer_failed = True
             try:
-                pid, status = os.waitpid(-1, os.WNOHANG if observation is not None else 0)
+                pid, status = os.waitpid(-1, os.WNOHANG if observing else 0)
             except InterruptedError:
                 continue
             except ChildProcessError:
@@ -326,7 +338,13 @@ class PrincipalBoundary:
         parent = _parent_identity()
         from .resident import PrincipalLease, CAPABILITY_ENV, SERVER_ENV, source_environment
         lease = PrincipalLease(self.config)
-        lease.begin_source()
+        experimental = getattr(self.config, "experimental_session", None)
+        if experimental is not None:
+            experimental.before_source(self.config)
+        if experimental is not None:
+            lease.begin_source(experimental_session=experimental)
+        else:
+            lease.begin_source()
         environment = dict(os.environ)
         for key in ("TRIMUI_PROJECT_STATE_REQUEST", "TRIMUI_PROJECT_RESUME_STATE", CAPABILITY_ENV):
             environment.pop(key, None)
@@ -336,15 +354,21 @@ class PrincipalBoundary:
             environment.update(source_environment(self.config))
         elif self.config.execution_environment != "host-fixture":
             raise ContractError("RESIDENT_UNVERIFIED", "Qualified source routes require principal's resident delegation authority")
-        result = run_owned_tree([str(self.config.sd_root / "App/PyUI/launch.sh")], env=environment)
+        observation = experimental.source_observation_policy() if experimental is not None else None
+        result = run_owned_tree([str(self.config.sd_root / "App/PyUI/launch.sh")], env=environment,
+                                **({"observation": observation} if observation is not None else {}))
         self.config.assert_safe()
         if _parent_identity() != parent:
             raise ContractError("RETURN_UNVERIFIED", "The existing principal changed during its source process boundary")
+        if experimental is not None:
+            experimental.after_source(self.config, result)
         lease.close_source(result)
         return result
 
     def run_command(self) -> tuple[OwnedTreeCompletion, PrincipalCompletion | None]:
         self.config.assert_safe()
+        if getattr(self.config, "experimental_session", None) is not None:
+            raise ContractError("EXPERIMENTAL_ACTION_DENIED", "A view-only experiment cannot consume or execute staged commands")
         parent = _parent_identity()
         expected = ForegroundIdentity.from_health(self.health)
         if expected is not None and expected.boot_id != self.health.boot_id:

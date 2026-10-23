@@ -15,6 +15,7 @@ import hmac
 import json
 import os
 from pathlib import Path
+import re
 import secrets
 import socket
 import stat
@@ -209,11 +210,33 @@ class PrincipalLease:
         value = {**value, **self.identity}
         _write_private(self.directory / name, {**value, "mac": _mac(self.key, value)})
 
-    def begin_source(self):
+    def begin_source(self, *, experimental_session=None):
         with self.transaction():
             if self.global_state()["phase"] != "idle":
                 raise ContractError("SOURCE_CLOSURE_UNVERIFIED", "An earlier source or command boundary remains active")
+            if experimental_session is not None:
+                from .experimental_runtime import ExperimentalRuntimeSession
+                if type(experimental_session) is not ExperimentalRuntimeSession:
+                    raise ContractError("EXPERIMENTAL_REJECTED", "The source admission is not the fixed reviewed typed session")
+                name = experimental_session.record_name
+                if not isinstance(name, str) or not re.fullmatch(r"experimental-[0-9a-f]{64}\.json", name):
+                    raise ContractError("EXPERIMENTAL_REJECTED", "The experimental case identity is invalid")
+                try:
+                    self.read(name)
+                except FileNotFoundError:
+                    pass
+                else:
+                    raise ContractError("EXPERIMENTAL_REPLAY", "This boot/principal case has already been reserved or consumed")
+                now = time.monotonic()
+                self.write(name, {"phase": "prepared", "candidate_sha256": experimental_session.candidate_sha256,
+                    "case_sha256": experimental_session.case_sha256, "helper_pid": os.getpid(),
+                    "helper_start": process_start(os.getpid()), "started_monotonic": now,
+                    "view_deadline": now + experimental_session.view_seconds,
+                    "return_deadline": now + experimental_session.view_seconds + experimental_session.return_seconds})
             self._begin_source()
+            if experimental_session is not None:
+                current = self.read(experimental_session.record_name)
+                self.write(experimental_session.record_name, {**current, "source_nonce": self.read("source.json")["nonce"]})
 
     def _begin_source(self):
         try:
@@ -353,6 +376,56 @@ class ResidentServer:
         self.reaped = 0
         self.closing = False
 
+    def _experimental(self, value, scope, peer_pid):
+        """Observe one admitted source through the existing authenticated relay.
+
+        The caller already checked peer credentials, live ancestry, MAC and the
+        consumed sequence. A message can name only a phase, never a callback,
+        candidate, principal, key, executable or authority record.
+        """
+        session = getattr(self.config, "experimental_session", None)
+        if session is None or value.get("stdin") is not None or value.get("arguments") not in (["startup"], ["view"], ["return-start"], ["return"]):
+            raise ContractError("EXPERIMENTAL_REJECTED", "The view-only relay request is unavailable or has an invalid phase")
+        phase = value["arguments"][0]
+        with self.lease.transaction():
+            if self.lease.global_state()["phase"] != "source-running":
+                raise ContractError("EXPERIMENTAL_REJECTED", "The experimental source no longer owns its running lifetime")
+            record = self.lease.read(session.record_name)
+            source = self.lease.read("source.json")
+            if (record.get("candidate_sha256") != session.candidate_sha256 or
+                    record.get("case_sha256") != session.case_sha256 or
+                    (record.get("helper_pid"), record.get("helper_start")) != (scope["pid"], scope["start"]) or
+                    source.get("phase") != "running" or source.get("nonce") != record.get("source_nonce") or
+                    (source.get("helper_pid"), source.get("helper_start")) != (scope["pid"], scope["start"])):
+                raise ContractError("EXPERIMENTAL_REJECTED", "The experiment differs from the current authenticated source lifetime")
+            allowed = {"startup": {"prepared"}, "view": {"running", "return_requested"},
+                       "return-start": {"running", "return_requested"}, "return": {"return_requested"}}
+            if record.get("phase") not in allowed[phase]:
+                raise ContractError("EXPERIMENTAL_REPLAY", "The source phase is stale or already released")
+            peer_start = process_start(peer_pid)
+            if peer_start is None or (phase != "startup" and
+                    (record.get("source_pid"), record.get("source_start")) != (peer_pid, peer_start)):
+                raise ContractError("EXPERIMENTAL_REJECTED", "Another source process cannot consume the admitted case")
+            if phase == "return" and "return_started_monotonic" not in record:
+                raise ContractError("EXPERIMENTAL_REJECTED", "The source must begin its bounded cleanup before reporting release")
+            requested = time.monotonic()
+            result = session.relay_check(phase, scope["pid"], scope["start"], peer_pid)
+            permitted = {"startup": {"running"}, "view": {"running", "return_requested"},
+                         "return-start": {"return_requested"}, "return": {"released"}}
+            if (type(result) is not dict or result.get("phase") not in permitted[phase] or
+                    result.get("candidate_sha256") != session.candidate_sha256 or
+                    result.get("case_sha256") != session.case_sha256):
+                raise ContractError("EXPERIMENTAL_REJECTED", "The reviewed observer did not confirm this exact case phase")
+            status = {name: result[name] for name in ("phase", "candidate_sha256", "case_sha256")}
+            if phase == "return-start" and "return_started_monotonic" not in record:
+                # Commit the first cleanup request before acknowledging it.
+                # Repeated requests cannot extend either reviewed deadline.
+                record = {**record, "return_started_monotonic": requested,
+                          "return_deadline": min(record["return_deadline"], requested + session.return_seconds)}
+            self.lease.write(session.record_name, {**record, **status,
+                "source_pid": peer_pid, "source_start": peer_start})
+        return status
+
     def _handle(self, connection):
         if process_start(self.lease.principal[0]) != self.lease.principal[1]:
             raise ContractError("RESIDENT_UNVERIFIED", "The delegating principal lifetime has ended")
@@ -405,6 +478,14 @@ class ResidentServer:
                     len(fields[1].encode("utf-8")) > 64):
                 raise ContractError("INVALID_RESIDENT_REQUEST", "WiFi connection data must contain a bounded SSID and password")
         self.config.assert_safe()
+        experimental = getattr(self.config, "experimental_session", None)
+        if value.get("operation") == "experimental-check":
+            status = self._experimental(value, scope, pid)
+            _send(connection, {"sequence": scope["sequence"], "returncode": 0,
+                               "experimental": status, "resident_services_stopped": False})
+            return
+        if experimental is not None:
+            raise ContractError("EXPERIMENTAL_ACTION_DENIED", "View-only source cases cannot mutate shared services")
         argv = operation_argv(self.config, value.get("operation"), value.get("arguments"))
         environment = dict(os.environ)
         for key in (CAPABILITY_ENV, SERVER_ENV, "TRIMUI_PROJECT_STATE_REQUEST", "TRIMUI_PROJECT_RESUME_STATE"):
@@ -498,17 +579,8 @@ _client_sequence = 0
 _client_lock = __import__("threading").Lock()
 
 
-def delegate(operation, arguments=(), *, stdin_text=None):
-    """Return False only when no qualified source context exists.
-
-    Once enabled, transport/validation failures raise: the source must never
-    fall back to spawning the same persistent service under its foreground.
-    """
-    from .process_source import configured_runtime
-    config = configured_runtime()
-    if config is None:
-        return False
-    config.assert_safe()
+def _exchange(config, operation, arguments=(), *, stdin_text=None):
+    """Use the existing source capability; callers validate their fixed config."""
     capability = json.loads(os.environ[CAPABILITY_ENV])
     lease = PrincipalLease(config, tuple(capability["principal"]))
     scope = capability["scope"]
@@ -523,7 +595,48 @@ def delegate(operation, arguments=(), *, stdin_text=None):
             _send(connection, {**value, "mac": _mac(bytes.fromhex(scope["key"]), value)})
             result = _receive(connection)
         if result.get("sequence") != _client_sequence or result.get("returncode") != 0:
-            raise ContractError("RESIDENT_OPERATION_FAILED", "The existing shared service did not accept the delegated operation")
+            raise ContractError("RESIDENT_OPERATION_FAILED", "The existing shared authority did not accept the delegated operation")
+    return result
+
+
+def experimental_check(config, phase):
+    """Check one phase against the resident, never deserialize an admission.
+
+    The fixed source verifier has already bound reviewed inputs and local live
+    identities. Its validation is relay-free to avoid recursively calling this
+    transport from ProcessSourceConfiguration.assert_safe().
+    """
+    from .experimental_runtime import ExperimentalRuntimeSession
+    from .process_source import ProcessSourceConfiguration
+    if (type(config) is not ProcessSourceConfiguration or
+            type(getattr(config, "experimental_session", None)) is not ExperimentalRuntimeSession or
+            phase not in {"startup", "view", "return-start", "return"}):
+        raise ContractError("EXPERIMENTAL_REJECTED", "An exact typed source admission and phase are required")
+    config.experimental_session.assert_configuration(config, source_side=True)
+    result = _exchange(config, "experimental-check", [phase])
+    status = result.get("experimental")
+    if (type(status) is not dict or set(status) != {"phase", "candidate_sha256", "case_sha256"} or
+            status.get("candidate_sha256") != config.experimental_session.candidate_sha256 or
+            status.get("case_sha256") != config.experimental_session.case_sha256 or
+            status.get("phase") not in {"running", "return_requested", "released"}):
+        raise ContractError("EXPERIMENTAL_REJECTED", "The authenticated response does not match the source case")
+    return status
+
+
+def delegate(operation, arguments=(), *, stdin_text=None):
+    """Return False only when no qualified source context exists.
+
+    Once enabled, transport/validation failures raise: the source must never
+    fall back to spawning the same persistent service under its foreground.
+    """
+    from .process_source import configured_runtime
+    config = configured_runtime()
+    if config is None:
+        return False
+    config.assert_safe()
+    if getattr(config, "experimental_session", None) is not None:
+        raise ContractError("EXPERIMENTAL_ACTION_DENIED", "View-only source cases cannot mutate shared services")
+    _exchange(config, operation, arguments, stdin_text=stdin_text)
     return True
 
 

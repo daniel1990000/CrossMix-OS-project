@@ -25,6 +25,7 @@ EVENTS = frozenset({"prepared", "started", "action_denied", "return_requested",
 MAX_EVENTS = 256
 MAX_BYTES = 256 * 1024
 ZERO = "0" * 64
+PROVENANCE = frozenset({"host_fixture", "private_experimental"})
 
 
 def encoded(value):
@@ -55,7 +56,7 @@ def _valid_row(row, sequence, previous):
     fields = {"schema", "provenance", "session", "candidate", "boot", "owner", "sequence",
               "event", "monotonic_ns", "previous", "sha256"}
     if (type(row) is not dict or set(row) != fields or type(row["schema"]) is not int or row["schema"] != 1 or
-            row["provenance"] != "host_fixture" or row["event"] not in EVENTS or
+            row["provenance"] not in PROVENANCE or row["event"] not in EVENTS or
             type(row["sequence"]) is not int or row["sequence"] != sequence or
             type(row["monotonic_ns"]) is not int or row["monotonic_ns"] < 0 or
             row["previous"] != previous or
@@ -76,7 +77,7 @@ class HostEvidenceJournal:
     that could mislabel an uncertain record as successful.
     """
 
-    def __init__(self, directory, *, session, candidate, boot, owner):
+    def __init__(self, directory, *, session, candidate, boot, owner, provenance="host_fixture"):
         self.directory = Path(directory).absolute()
         self._thread = threading.get_ident()
         self._dir = self._fd = None
@@ -84,6 +85,9 @@ class HostEvidenceJournal:
         self._sequence, self._bytes, self._previous, self._time = 0, 0, ZERO, -1
         self._content_hash = hashlib.sha256()
         self._binding = dict(session=session, candidate=candidate, boot=boot, owner=owner)
+        if type(provenance) is not str or provenance not in PROVENANCE:
+            raise _fail()
+        self._provenance = provenance
         if any(type(value) is not str or not DIGEST.fullmatch(value) for value in self._binding.values()):
             raise _fail()
         try:
@@ -141,7 +145,7 @@ class HostEvidenceJournal:
                     type(monotonic_ns) is not int or monotonic_ns < self._time or
                     monotonic_ns < 0 or self._sequence >= MAX_EVENTS):
                 raise _fail()
-            row = dict(schema=1, provenance="host_fixture", **self._binding,
+            row = dict(schema=1, provenance=self._provenance, **self._binding,
                        sequence=self._sequence, event=event, monotonic_ns=monotonic_ns,
                        previous=self._previous)
             row["sha256"] = hashlib.sha256(encoded(row)).hexdigest()
@@ -214,7 +218,7 @@ def read_host_journal(directory):
                 return value
             row = json.loads(line, object_pairs_hook=unique)
             _valid_row(row, index, previous)
-            observed = tuple(row[name] for name in ("session", "candidate", "boot", "owner"))
+            observed = tuple(row[name] for name in ("session", "candidate", "boot", "owner", "provenance"))
             if (binding is not None and binding != observed) or row["monotonic_ns"] < last_time:
                 raise _fail()
             result.append(row)

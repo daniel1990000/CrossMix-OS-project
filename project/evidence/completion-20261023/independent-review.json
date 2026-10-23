@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "independent-host-correctness-review",
+  "reviewer": "completion_review; independent read-only agent plus experimental author cross-review of parent composition",
+  "reviewed_files": {
+    "bridge/principal.py": "6df9ec5a91d03c342efdf7ffca883e4294fb61b12972216a6a9f4b485f633b7c",
+    "bridge/resident.py": "67b141c27f83c4a614a23f6b4facca2c1159ae6d3b064772a8159e51b2188a52",
+    "bridge/experimental_runtime.py": "2f6e9f17d692932fe82b33ab29eec60ec7dfb11063587238f50fe14b22caeea3",
+    "bridge/process_source.py": "5dfa78bf8a17ea2ec1e3e39d8f21d321cf87151d3f22a26f0f8afd3f6f825da0",
+    "bridge/pyui_entry.py": "275e1438bf227faf94b983034fefceb77f09ac0e279c32340789fe251b1b4287",
+    "psp_shell/embedded.py": "682a32acd4bba1d309458bb7691bd0c30551fa28c5635e9aa5312535850d8269",
+    "tools/recovery_payload.py": "8dc74cd578dab7cf02ec5a8ee57612f9aaa4a35587b20a11037951f627e2004a",
+    "tools/release_handoff.py": "f77e934698b66e731042ee6ea13b005d04d9da6865c5a710a2c3e3d39d9dcc03",
+    "tools/qualification_review.py": "85c315dae3adfb16d3cf0282e3e3f423a673f5fd26171f5b2a510f99b81bc054"
+  },
+  "focused_checks": {
+    "runtime_embedded_principal": 34,
+    "recovery_payload": 37,
+    "release_handoff": 24,
+    "qualification_review": 33,
+    "total": 128,
+    "failed": 0,
+    "skipped": 0
+  },
+  "resolved_findings": [
+    "Recovery/release directory replacement must be detected before descriptor mutation or writing; preserve uncertain output without recursive deletion.",
+    "Late source extended metadata must reject recovery completion.",
+    "Release publication must preserve uncertain staging and bind/read back the published inode and bytes.",
+    "Principal observation uses the signed case deadline, with a separately shortened return-start cleanup window.",
+    "Authenticated release requires prior return-start; repeated cleanup requests cannot extend deadlines.",
+    "Private entry must preserve interrupted prior-boot attempts and fallback decisions before starting any renderer or relay.",
+    "New tests must discover from an isolated working directory with only the project PYTHONPATH."
+  ],
+  "actual_compound_cases": [
+    "positive existing-owner view and authenticated release, followed by real kernel ECHILD completion",
+    "consumed case replay and direct premature release rejection",
+    "forbidden model action retains blocked source lifetime",
+    "staged command remains unchanged and blocks release",
+    "overdue renderer cleanup cannot borrow remaining view time"
+  ],
+  "remaining_concrete_blockers_in_reviewed_software": [],
+  "hardware_tested": false,
+  "production_gates_enabled": false,
+  "source_use_basis": "Retained owner-confirmed private permission; no author correspondence independently inspected."
+}
