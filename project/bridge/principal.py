@@ -13,6 +13,7 @@ from dataclasses import dataclass
 import errno
 import fcntl
 import hashlib
+import math
 import os
 from pathlib import Path
 import platform
@@ -20,6 +21,8 @@ import stat
 import subprocess
 import sys
 import tempfile
+import time
+from typing import Callable
 import uuid
 
 from .bootstrap import ForegroundIdentity, PRINCIPAL_PATH, SpruceReturnEvidence
@@ -45,6 +48,50 @@ class OwnedTreeCompletion:
     _seal: object
 
 
+@dataclass(frozen=True)
+class TreeBlockedObservation:
+    """Bounded local metadata; no command, environment or content paths.
+
+    This is a blocked decision, never evidence of process/resource closure.
+    PID/start pairs identify the helper and launched root as initially seen;
+    waitpid/ECHILD, not another /proc lookup, establishes eventual closure.
+    """
+
+    reason: str
+    deadline_monotonic: float
+    observed_monotonic: float
+    helper_pid: int
+    helper_start: str
+    root_pid: int
+    root_start: str | None
+    children_reaped: int
+    root_exit_observed: bool
+
+
+@dataclass(frozen=True)
+class TreeObservationPolicy:
+    """One cooperative observation deadline at the existing owner boundary.
+
+    Fixed trusted code may supply this policy; no CLI, file or environment
+    setting loads one. The observer must itself be bounded and must not spawn
+    another UI, terminate children or claim successful save/closure. A blocked
+    observer syscall cannot be preempted safely by this helper.
+    """
+
+    deadline_monotonic: float
+    on_blocked: Callable[[TreeBlockedObservation], None]
+    poll_interval_seconds: float = 0.05
+
+    def __post_init__(self):
+        if (type(self.deadline_monotonic) not in (int, float) or
+                not math.isfinite(self.deadline_monotonic) or self.deadline_monotonic <= 0 or
+                not callable(self.on_blocked) or
+                type(self.poll_interval_seconds) not in (int, float) or
+                not math.isfinite(self.poll_interval_seconds) or
+                not 0.01 <= self.poll_interval_seconds <= 0.25):
+            raise ContractError("INVALID_OBSERVATION", "Observation requires a finite deadline, fixed observer and bounded polling interval")
+
+
 def _subreaper(value=None):
     libc = ctypes.CDLL(None, use_errno=True)
     current = ctypes.c_int()
@@ -55,13 +102,29 @@ def _subreaper(value=None):
     return current.value
 
 
-def run_owned_tree(argv, *, pass_fds=(), env=None) -> OwnedTreeCompletion:
+def run_owned_tree(argv, *, pass_fds=(), env=None,
+                   observation: TreeObservationPolicy | None = None) -> OwnedTreeCompletion:
     """Run one fixed trusted source operation in this dedicated helper.
 
     Call only in principal's fresh helper process. Existing children are
     refused; a live descendant keeps this wait pending, even after the staged
     shell exits. No process names, argv, ROM paths or environment are exported.
+
+    With an observation policy, expiry reports a single blocked decision while
+    continuing to own/reap every descendant. Even eventual ECHILD cannot turn
+    that failed observation into a completion: raise instead, leaving callers'
+    staged command, lease and foreground records untouched. With no policy the
+    original blocking wait is unchanged.
     """
+    if observation is not None:
+        if type(observation) is not TreeObservationPolicy:
+            raise ContractError("INVALID_OBSERVATION", "Principal observation requires the fixed typed policy")
+        if time.monotonic() >= observation.deadline_monotonic:
+            raise ContractError("OBSERVATION_EXPIRED", "The observation expired before source startup")
+        helper_pid = os.getpid()
+        helper_start = process_start(helper_pid)
+        if helper_start is None:
+            raise ContractError("SOURCE_CAPABILITY_UNAVAILABLE", "The principal helper identity is unavailable")
     try:
         os.waitpid(-1, os.WNOHANG)
     except ChildProcessError:
@@ -70,22 +133,51 @@ def run_owned_tree(argv, *, pass_fds=(), env=None) -> OwnedTreeCompletion:
         raise ContractError("FOREIGN_CHILD", "The principal helper already owns another child")
     previous = _subreaper(True)
     root, reaped, root_status, complete = None, 0, None, False
+    blocked, observer_failed = False, False
     try:
+        if observation is not None and time.monotonic() >= observation.deadline_monotonic:
+            raise ContractError("OBSERVATION_EXPIRED", "The observation expired before source startup")
         root = subprocess.Popen(argv, pass_fds=tuple(pass_fds), close_fds=True, env=env)
+        root_start = process_start(root.pid) if observation is not None else None
         while True:
+            if observation is not None and not blocked:
+                now = time.monotonic()
+                if now >= observation.deadline_monotonic:
+                    blocked = True
+                    event = TreeBlockedObservation("deadline_expired", observation.deadline_monotonic,
+                        now, helper_pid, helper_start, root.pid, root_start, reaped,
+                        root_status is not None)
+                    try:
+                        observation.on_blocked(event)
+                    except BaseException:
+                        # An unwritable report or failed observer cannot make
+                        # us relinquish surviving children or issue completion.
+                        # Exception strings can contain private data: omit them.
+                        observer_failed = True
             try:
-                pid, status = os.waitpid(-1, 0)
+                pid, status = os.waitpid(-1, os.WNOHANG if observation is not None else 0)
             except InterruptedError:
                 continue
             except ChildProcessError:
                 complete = True
                 break
+            if pid == 0:
+                delay = observation.poll_interval_seconds
+                if not blocked:
+                    delay = min(delay, max(0.0, observation.deadline_monotonic - time.monotonic()))
+                if delay > 0:
+                    time.sleep(delay)
+                continue
             reaped += 1
             if pid == root.pid:
                 root_status = os.waitstatus_to_exitcode(status)
                 root.returncode = root_status
         if root_status is None:
             raise ContractError("RETURN_UNVERIFIED", "The kernel did not report the launched root process exit")
+        if blocked:
+            if observer_failed:
+                raise ContractError("OBSERVATION_REPORT_FAILED", "Observation reporting failed; actual descendant closure does not admit a new source")
+            raise ContractError("OBSERVATION_BLOCKED", "The source observation expired; actual descendant closure does not complete the failed admission")
         return OwnedTreeCompletion(root.pid, root_status, reaped, _KERNEL_SEAL)
     finally:
         # Restoring subreaper state is safe only once there are no descendants.

@@ -62,6 +62,8 @@ SOURCE_BLOBS = {**LIFECYCLE_BLOBS,
 REQUIRED_PROJECT_MODULES = [
     'app/bridge/__init__.py',
     'app/bridge/bootstrap.py',
+    'app/bridge/experimental.py',
+    'app/bridge/experimental_journal.py',
     'app/bridge/frontend.py',
     'app/bridge/lifecycle.py',
     'app/bridge/principal.py',
