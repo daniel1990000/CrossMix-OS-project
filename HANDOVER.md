@@ -2,7 +2,119 @@
 
 Checkpoint: **23 October 2026**. Active branch: `build/spruce-psp-experience` in `daniel1990000/CrossMix-OS-project`. [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Continue the original TG5040 spruceOS/PyUI project under `project/`.
 
-## Current continuation
+## Current completion — dev12
+
+The user's latest request is **“Finish everything.”** The owner is busy and
+cannot provide device/card/SSH/operator access now. The owner also confirms
+that the authors were already notified and gave permission. No further notice
+or permission request is needed. No message was sent by the assistant. That
+owner-confirmed private noncommercial decision and its freshly retrieved private
+attestation satisfy R05 for this scope; independently inspected correspondence,
+commercial/SDK/public-native grants are not claimed.
+
+Read [the completion report](project/docs/completion-2026-10-23.md),
+[LATEST.json](project/handover/LATEST.json) and
+[verification](project/evidence/completion-20261023/verification.json).
+**14 of 25 scoped rows are complete:** the earlier 12 host engineering rows,
+D01 conditional software and R05 owner-confirmed private source use. The remaining
+11 rows retain physical, precise distribution or operational criteria.
+**Zero of 13 physical acceptance areas have run.** Do not turn the new tools or
+synthetic cases into device passes.
+
+Clean implementation/build commit:
+`b8a5fd665076ecde1cd42c54aa232ffb757f583b`,
+tree `4a6325a7b587920e52995aaaa902315999e57c6b`.
+**974 strict checks pass** (913 host/source + 61 PPSSPP), with zero skips,
+failures or errors against all five exact source checkouts. Independent review
+verified 128 focused checks and the exact failure reproductions. A failed early
+isolated-discovery run was corrected; the final strict run and CI both pass.
+
+The original-only `smartpro-psp-0.1.0-dev12` build verifies its signature,
+60-file payload, same-key determinism, installed SDL/navigation/settings/classic
+smoke and fixture rollback. Both ZIPs reproduce byte for byte from the no-Git
+source export. The 197-file source inventory SHA-256 is
+`bd4b8affa77296a1d1583983ba1e5639e7ab4c0b623eeac842475c135923a27d`.
+
+[CI run 39883665932](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932)
+passed all 974 checks on actual clean merge
+`fba239bcd793000faca805fa22dacb306504bdcb`, for source head `b8a5fd6`.
+[Artifact 12471113691](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932/artifacts/12471113691)
+was fully retrieved: 5,091,243 bytes, SHA-256
+`6be0bd6d136011af623254fdc1d9b6840886a8eeb166ce07f12fb2ef5e5d75cf`.
+Expiry: 21 January 2027, 01:22:56 UTC. All eight development checksums,
+signature/payload and actual exported source bytes pass readback. Later
+handover/documentation/evidence edits preserve these exact snapshot identities;
+they do not acquire this exported-source inventory digest.
+
+The CI evidence archive, original-only review handoff and private scoped source
+candidate were also retained in owner-only Drive and freshly retrieved. All
+three full archive hashes and every member pass. The private candidate applies
+five patch records to 11 upstream source files, verifies the signed original
+overlay, and has a separately verified source restoration with all 11 preimages.
+It was never executed or installed. [Retention](project/evidence/completion-20261023/retention-readback.json)
+and [private integration](project/evidence/completion-20261023/private-source-integration.json)
+keep the identities separate. No private source archive, author correspondence,
+SDK, native binary, signing key or owner data was committed to Git. Storage
+readback is verified; permanent availability is not guaranteed.
+
+Completed software boundaries:
+
+- [D01 private runtime](project/docs/experimental-runtime.md) connects the existing
+  source configuration, initialized owners, embedded UI, dispatcher and principal/
+  resident boundary. Real host subprocess tests cover positive release, replay,
+  denied writes, retained staged commands and overdue cleanup. Signed deadlines
+  shorten at return-start; actual kernel `ECHILD` remains required. Interrupted
+  startup/fallback health is preserved before any private view starts.
+- [D02 backup payloads](project/docs/recovery-payload.md) copy selected offline
+  card/save/internal file trees into new private containers, then verify retained
+  and separately restored bytes. Unsupported metadata/links and partial writes
+  fail without deleting uncertain owner paths. Physical coverage/recovery is unrun.
+- [D05/D06/native/Resume/ports review](project/docs/qualification-review.md) adds
+  scoped structured observations to the existing recorder, exact runtime/source/
+  raw hashes, per-context cycle thresholds, save policy and bound reviewer
+  statements. Host data cannot qualify a device or generate production profiles.
+- [R06 exact review](project/docs/component-resolution-2026-10-23.md) uses freshly
+  retrieved native sources/builds and SDK inputs, actual static archive selection,
+  exact GCC package provenance, inline/font/SDK notices and current dev12 archive
+  inventories. Public native distribution still needs its narrow remaining
+  incorporated-component/source/notice decision.
+- [O01/O02 handoff](project/docs/release-handoff.md) verifies independent trust/
+  checksum inputs, actual signed payload/source/notices and published local bytes.
+  The 14-file original-only review bundle was retained and verified again from
+  retrieved storage. Operational production key custody/public device hosting
+  remain open. Existing [O03 drift/maintenance work](project/docs/upstream-maintenance.md)
+  stays pinned; no upstream revision changed.
+
+## Next work when the device is available
+
+1. D02: actual complete card/save/necessary internal backups, independent retained
+   readback and physical expendable-media restore/classic recovery rehearsal.
+2. D03: actual original TG5040 firmware/filesystem/runtime/writer and kernel/tool
+   inventory. Do not assume a connection or authorize a firmware flash.
+3. D05/D06: provide those real reviews to the completed D01 harness; run the
+   bounded core casebook through existing owners, retain failures and obtain
+   independent review before any narrow production configuration.
+4. Qualify selected native engines, same-boot Resume or individual ports only
+   under their additional scopes. Complete public distribution/key/hosting and
+   maintenance requirements for the exact supported release.
+
+The shipped `qualified_runtime.configuration()` and
+`experimental_runtime.configuration()` still return `None`. Actual device
+factory reviews are absent and all production/runtime/profile/source-use gates
+remain false. No native candidate/upstream patch is selected in the public host
+preview, and Celeste remains unselected. No physical recovery, device FPS,
+battery improvement or Resume durability is established. PR #1 stays draft and
+unmerged. Reuse completed R04 custody instead of rebuilding it as new progress.
+
+All workspace/scratch paths remain temporary. The five-source/venv/SDL_image
+setup in LATEST and the historical sections remains valid. Current scratch
+outputs use `/workspace/scratch/trimui-dev12-*`. Continue from the versioned
+receipts; do not send another author notice or ask the busy owner to repeat
+permission already given.
+
+---
+
+## Historical dev11 continuation, before the completion work and owner permission update
 
 The requested batch adds **10 host engineering items** across D01, D03, R06, O01 and O03. Read [the item register](project/docs/continuation-2026-10-23.md), [LATEST.json](project/handover/LATEST.json) and [the master plan](project/docs/master-plan-2026-10-22.md). These are portions of five open plan rows. **12 of 25 host tasks remain complete; zero of 13 physical areas have run.** Do not count the ten items as ten additional completed plan rows.
 

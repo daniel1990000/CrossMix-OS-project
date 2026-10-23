@@ -172,3 +172,22 @@ hashes, paths, classifications and evidence only. The 12 focused inventory tests
 cover unsafe/duplicate paths, links, special files, bounds, archive changes,
 notice false positives, generated suffix notices and deterministic file
 inventories across ZIP and TAR.
+
+## Current dev12 original-only readback
+
+The final dev12 CI artifact was downloaded in full and all eight development
+checksums, the signature, 60-file payload and all 197 source-inventory rows
+were checked against actual exported bytes. The preview and source ZIPs also
+have new complete [preview](../evidence/completion-20261023/dev12-preview-notice-inventory.json)
+and [source](../evidence/completion-20261023/dev12-source-notice-inventory.json)
+notice inventories; neither archive contains an ELF executable. The handoff
+verifier joins exact MIT/OFL/dependency notice bytes to the corresponding source
+and signed payload. Source-inventory SHA-256:
+`bd4b8affa77296a1d1583983ba1e5639e7ab4c0b623eeac842475c135923a27d`.
+
+The CI archive, original-only review handoff and private scoped source candidate
+were retained owner-only and freshly retrieved. [The readback receipt](../evidence/completion-20261023/retention-readback.json)
+keeps their distinct hashes and provenance. No native candidate was selected or
+executed; the private upstream source artifact is not part of the public host
+preview. Later documentation/evidence edits retain the exact original build
+identity recorded in [verification](../evidence/completion-20261023/verification.json).
