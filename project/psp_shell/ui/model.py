@@ -959,11 +959,11 @@ class NavigationModel:
         fresh = self.category == 1 or item.resume_available
         choices.append(DialogChoice("Fresh start" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
                                      {"game_id": item.id, "preset_id": "", "mode": "fresh" if fresh else "normal"}, "launch"))
-        if self._capabilities.get("game_information") is True:
-            choices.append(DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"))
-        elif self._capabilities.get("game_options") is True:
+        if self._capabilities.get("game_options") is True:
             choices.append(DialogChoice("Game options", "demo_launch" if self.demo else "request", "game.options",
                                         {"game_id": item.id}, "game_options"))
+        if self._capabilities.get("game_information") is True:
+            choices.append(DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"))
         choices.append(DialogChoice("Cancel"))
         self._dialog = Dialog(item.title, message, tuple(choices), artwork=item.artwork, system_id=item.system_id)
 
