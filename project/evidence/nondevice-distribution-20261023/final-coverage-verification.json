@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "kind": "offline-native-source-final-coverage-verification",
+  "captured_at_utc": "2026-10-23T03:32:47.459919+00:00",
+  "native_binaries_retrieved_and_hash_verified": {
+    "PPSSPPSDL_TrimUI": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+    "retroarch-igm-tg5040": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+  },
+  "all_179_native_asset_public_git_blobs_matched": true,
+  "actual_header_sources_retained": 2299,
+  "ubuntu_source_files_dsc_checksums_verified": 10,
+  "debugger_lock_scope_tarballs_integrity_verified": 36,
+  "debugger_declared_package_names": 32,
+  "debugger_full_notice_material_covers_every_retained_lock_scope_package": true,
+  "native_notice_source_locations": 15042,
+  "distinct_exact_native_notice_blocks": 4710,
+  "private_source_supplement_archive_and_all_70_files_freshly_verified": true,
+  "private_font_history_supplement_and_all_5_files_freshly_verified": true,
+  "private_storage_parts_owner_only_verified": 4,
+  "historical_Roboto_input_blob_matches_explicit_Apache_contribution": true,
+  "native_target_executed": false,
+  "public_native_distribution_cleared": false,
+  "shipped_runtime_gates_enabled": false,
+  "source_build_identity": "Later evidence; does not acquire implementation/build ab644b9 exported-source inventory identity.",
+  "R06_row_completed": false,
+  "offline_traceable_source_material_work_complete": true,
+  "remaining_external_or_device_evidence": [
+    "Exact public grant for selected external PPSSPP recipe-generated changes and RA IGM additions",
+    "Actual ArialUnicode/Kozuka bitmap source terms and unresolved exact PGF source-font contribution scope",
+    "Observed installed loader/library choices and target qualification (requires device)"
+  ],
+  "host_suite_count_not_incremented_for_static_checks": true,
+  "evidence_file_sha256": {
+    "final-coverage-assets.json": "88d41330fac771e6940aa81b391ee504fd23942fe68462bcbe0732c431c382a5",
+    "final-coverage-debugger.json": "601b399cd16d5ba226e645a0b2bc1b5b58e3a8adb4dfd792a475dec4188b763f",
+    "final-coverage-emblem-terms.json": "3f77c226d1f883d197ed5b4207f2bea0c03a098d7e327d6362f59b34183f6792",
+    "final-coverage-headers.json": "7487264e818a943dde601d341d9668a3a7c7abe00f2ee983e378d7c40c128bce",
+    "final-coverage-native-notices.json": "4685f0ec4264c4765fd700634cb2690292476625bbe1f2a9293b2d94546131b8",
+    "final-coverage-retention.json": "afdd20130d87b3300ea244651f4f30b9c5e890af79f8a305650810b269ec9c83",
+    "final-coverage-source-packages.json": "280f0a98c354776605297e8d49af78eff2d255247a72b1e5fa387474a06ad1d1"
+  },
+  "official_emblem_terms_retrieved_and_scope_reviewed": true,
+  "future_release_specific_criteria": [
+    "Apply the resolved official emblem conditions to exact future branding/support claims; no further permission message required for compliant use"
+  ]
+}

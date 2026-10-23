@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "nondevice-completion-verification",
+  "release_id": "smartpro-psp-0.1.0-dev14",
+  "delivery": "original-only-host-preview-attached-assets",
+  "clean_implementation_build_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+  "source_inventory_files": 207,
+  "source_inventory_sha256": "b796a5e796e1de1cb180bf8769e4a45f34b551e418b389c70fd0750ba9e79eda",
+  "payload_files": 60,
+  "strict_local_and_exact_manual_ci": {
+    "tests_run": 1011,
+    "passed": 1011,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "local_certification": "certification.json",
+  "local_build_report": "build-report.json",
+  "ci_certification": "ci-certification.json",
+  "ci_build_report": "ci-build-report.json",
+  "original_source_metadata": "release-source.json",
+  "reproduction": {
+    "record": "source-export-reproduction.json",
+    "signed_overlay_and_both_zips_reproduce_from_no_git_export": true,
+    "same_disposable_development_signer": true,
+    "disposable_private_signer_deleted_after_reproduction": true,
+    "local_and_ci_unsigned_preview_and_source_zips_byte_identical": true
+  },
+  "ci": {
+    "exact_build_run_id": 39893214010,
+    "exact_build_event": "workflow_dispatch",
+    "exact_actual_checkout": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+    "exact_build_status": "success",
+    "source_head_pr_run_id": 39893213488,
+    "source_head_pr_status": "success",
+    "artifact_id": 12475702753,
+    "artifact_sha256": "e7a4be34153ac6135c3920a7bfbf238ae52ecd368ef098c4fa7b14dab0feab4a",
+    "artifact_bytes": 5124897,
+    "artifact_expires_at_utc": "2027-01-21T03:06:26Z",
+    "provenance_artifact_id": 12475598120,
+    "provenance_artifact_sha256": "52bfefd8e040965c55fc3eec273ed018b0b855ba8c390cbad8b98a87a47104b0",
+    "full_readback": "ci-readback.json",
+    "provenance_verification": "provenance-verification.json"
+  },
+  "host_publication": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14",
+    "source_tag_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+    "attached_assets": 11,
+    "attested_ci_subjects": 10,
+    "all_attached_assets_freshly_read_back_before_and_after_publication": true,
+    "record": "publication-readback.json",
+    "automatic_mixed_repository_archives_excluded_from_verified_scope": true,
+    "native_runner_successful_verification_run_id": 39894762504,
+    "native_runner_workflow_commit": "baff8da724f5557a5905e89bff931ba23ef49273",
+    "native_runner_status": "success",
+    "native_runner_readback": "publisher-successful-native-runner-readback.json",
+    "independent_live_readback": "publisher-independent-live-readback.json",
+    "retry_did_not_mutate_release_tag_or_assets": true,
+    "initial_publisher_failure_preserved": "Initial delivery run 39894170401 uploaded and verified assets, then stopped before publication on denied tag creation. The connected application created the exact tag and published only after another full readback. Safe published-state retry passed in run 39894762504.",
+    "later_workflow_head_pr_run_id": 39894766685,
+    "later_workflow_head_pr_status": "success"
+  },
+  "retention": {
+    "dev13": "dev13-retention-readback.json",
+    "dev14_ci_and_handoff": "retention-readback.json",
+    "dev14_provenance_and_publication_proof": "publication-proof-retention.json",
+    "all_owner_only_and_freshly_retrieved": true,
+    "permanent_availability_guaranteed": false,
+    "private_native_source_supplements": "project/evidence/nondevice-distribution-20261023/final-coverage-retention.json"
+  },
+  "completed_without_hardware": [
+    "Recovered-key exact possession verifier, 12 real-signature regression checks and independent review",
+    "Maintenance current hold decisions for 2,445 changed paths, 604 historical paths, 10 regression checks and independent full-tree comparison",
+    "Exact native 137-entry notice packet and static source/header/asset coverage supplement, with corresponding-source custody",
+    "True empty-daemon compiler recovery from 8 retained parts and offline C/C++ cross-link smoke",
+    "Stable attached original-only host downloads, exact-source workflow provenance, private retention and complete fresh readbacks"
+  ],
+  "compiler_recovery": "project/evidence/nondevice-compiler-20261023/verification.json",
+  "compiler_startup_and_headers": [
+    "project/evidence/nondevice-compiler-20261023/final-startup-objects.json",
+    "project/evidence/nondevice-compiler-20261023/final-header-source-control.json"
+  ],
+  "distribution_review": "project/docs/nondevice-distribution-2026-10-23.md",
+  "native_static_coverage": "project/docs/nondevice-native-coverage-2026-10-23.md",
+  "maintenance_review": "project/evidence/nondevice-maintenance-20261023/verification.json",
+  "operational_signing": {
+    "persistent_private_key_created": false,
+    "repository_secret_discovery": "Connected application returned HTTP403; no secret contents were inspected.",
+    "host_preview_authenticity": "GitHub workflow/source provenance; no owner private key management required",
+    "device_production_ed25519_custody_verified": false,
+    "remaining_external_inputs": [
+      "Operational trust-root designation",
+      "Owner-controlled protected recovery access and encrypted retained key recovery",
+      "Independently distributed production root and revocation records"
+    ],
+    "owner_supplied_recovery_reference": false
+  },
+  "remaining_original_register": {
+    "completed_rows": 14,
+    "total_rows": 25,
+    "physical_areas_run": 0,
+    "physical_areas_total": 13,
+    "physical_rows": [
+      "D02",
+      "D03",
+      "D05",
+      "D06",
+      "N01",
+      "N02",
+      "P04"
+    ],
+    "other_rows": {
+      "R06": "Exact public recipe/IGM grants and remaining Arial Unicode/Kozuka/PGF source-font terms or deliberately selected replacements; actual installed loader scope and physical qualification. European-emblem conditional terms are now retrieved and documented.",
+      "O01": "Actual operational signer/recovery control; host workflow provenance is operational for attached original-only downloads.",
+      "O02": "Host download/custody work complete; public device release still requires qualified matrix and operational device trust.",
+      "O03": "Current software maintenance review/procedure complete; first pilot and accepted ongoing ownership remain."
+    }
+  },
+  "gates": {
+    "hardware_tested": false,
+    "qualified_runtime_configuration_available": false,
+    "experimental_runtime_configuration_available": false,
+    "production_runtime_gates_enabled": false,
+    "native_binaries_selected": false,
+    "upstream_patches_selected": false,
+    "owner_data_changed": false,
+    "further_author_contact_performed": false,
+    "public_native_distribution_performed": false,
+    "pr_draft": true,
+    "pr_merged": false
+  },
+  "snapshot_rule": "The public tag,source archive and retained CI artifact select clean commit ab644b9 with 207 inventoried files. Later workflow,coverage,documentation and evidence commits retain their own frontend/source identities and do not acquire this source inventory.",
+  "static_native_coverage": {
+    "record": "project/evidence/nondevice-distribution-20261023/final-coverage-verification.json",
+    "main_supplement_sha256": "eef158dabdca9d4f29abc8111b2c76399724f89f15056608b8c69ab079659bf5",
+    "main_supplement_bytes": 161413120,
+    "main_supplement_members_freshly_read_back": 70,
+    "historical_font_script_supplement_sha256": "802018294b7777c2fd68f5c7d284cb6c08c6c85d29ca372dd0d960349e9f57f7",
+    "historical_supplement_members_freshly_read_back": 5,
+    "header_files": 2299,
+    "asset_files": 179,
+    "native_notice_locations": 15042,
+    "distinct_notice_blocks": 4710,
+    "public_native_distribution_cleared": false,
+    "emblem_terms": "project/evidence/nondevice-distribution-20261023/final-coverage-emblem-terms.json",
+    "emblem_terms_unavailable_blocker_resolved": true
+  }
+}

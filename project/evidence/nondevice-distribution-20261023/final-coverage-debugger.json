@@ -1,0 +1,743 @@
+{
+  "source_map_sources": 632,
+  "source_map_sources_content": 632,
+  "bundle_package_names": [
+    "@babel/runtime",
+    "asap",
+    "classnames",
+    "clsx",
+    "core-js",
+    "dom-helpers",
+    "exenv",
+    "history",
+    "hoist-non-react-statics",
+    "isarray",
+    "mini-create-react-context",
+    "object-assign",
+    "path-to-regexp",
+    "promise",
+    "prop-types",
+    "react",
+    "react-app-polyfill",
+    "react-contextmenu",
+    "react-dom",
+    "react-is",
+    "react-lifecycles-compat",
+    "react-modal",
+    "react-router",
+    "react-router-dom",
+    "react-tabs",
+    "react-virtualized",
+    "regenerator-runtime",
+    "resolve-pathname",
+    "scheduler",
+    "tiny-invariant",
+    "warning",
+    "whatwg-fetch"
+  ],
+  "lock_scope_tarballs": [
+    {
+      "package": "@babel/runtime",
+      "version": "7.18.0",
+      "resolved": "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.0.tgz#6d77142a19cb6088f0af662af1ada37a604d34ae",
+      "integrity": "sha512-YMQvx/6nKEaucl0MY56mwIG483xk8SDNdlUwb2Ts6FUpr7fm85DxEmsY18LXBNhcTz6tO6JwZV8w1W06v8UKeg==",
+      "source_tarball_name": "babel_runtime-7.18.0.tgz",
+      "sha256": "588df2a91ed7f6145817278d283bc26c2559d49fffbe509c93f0904113c5794a",
+      "size_bytes": 44026,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1106,
+          "sha256": "117da2af0d4ce0fe1c8e19b5cff9dcd806adf973d328d27b11d4448c4ff24f76"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "asap",
+      "version": "2.0.6",
+      "resolved": "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46",
+      "integrity": "sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==",
+      "source_tarball_name": "asap-2.0.6.tgz",
+      "sha256": "5ab440764cf46d8d4783d3f1173c0269e4bf9ebf013ae5a9d4bc0197cd89ccde",
+      "size_bytes": 11403,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE.md",
+          "size_bytes": 1083,
+          "sha256": "e80373b1ed0f33cecc47173b4b0c6afe0d0318b32dbd84116a1a957e3f7f43a8"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "classnames",
+      "version": "2.3.1",
+      "resolved": "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e",
+      "integrity": "sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==",
+      "source_tarball_name": "classnames-2.3.1.tgz",
+      "sha256": "d75d1fced4d74a1f0358e60512b3a1977cf8c94ee792696eeba98125e8ca2a5e",
+      "size_bytes": 6483,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1077,
+          "sha256": "0c1c24dcc129cb0c02ee9803cfa7a50061c236a3b59b36a714c27f3ade66d7be"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "clsx",
+      "version": "1.1.1",
+      "resolved": "https://registry.yarnpkg.com/clsx/-/clsx-1.1.1.tgz#98b3134f9abbdf23b2663491ace13c5c03a73188",
+      "integrity": "sha512-6/bPho624p3S2pMyvP5kKBPXnI3ufHLObBFCfgx+LkeR5lg2XYy2hqZqUf45ypD8COn2bhgGJSUE+l5dhNBieA==",
+      "source_tarball_name": "clsx-1.1.1.tgz",
+      "sha256": "115bbf67f6d4853b2fdfd82e4bacabb46dee3c35fd8f29e70eb950ec7c89012b",
+      "size_bytes": 2986,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/license",
+          "size_bytes": 1104,
+          "sha256": "9a9edad7baae52622bddf3c15b2ef8a33d2c89f2d25408ad13e8a7481c6b0c97"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "core-js",
+      "version": "3.22.5",
+      "resolved": "https://registry.yarnpkg.com/core-js/-/core-js-3.22.5.tgz#a5f5a58e663d5c0ebb4e680cd7be37536fb2a9cf",
+      "integrity": "sha512-VP/xYuvJ0MJWRAobcmQ8F2H6Bsn+s7zqAAjFaHGBMc5AQm7zaelhD1LGduFn2EehEcQcU+br6t+fwbpQ5d1ZWA==",
+      "source_tarball_name": "core-js-3.22.5.tgz",
+      "sha256": "9e467066bc2dce9eeac698302b44d7d851240d197152160748a7935d9b72f7ac",
+      "size_bytes": 239706,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1064,
+          "sha256": "e1dad265f157187a8b0290f57b3c6807d94c322ffbcdf75ab82b638eb52b1789"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "dom-helpers",
+      "version": "5.2.1",
+      "resolved": "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-5.2.1.tgz#d9400536b2bf8225ad98fe052e029451ac40e902",
+      "integrity": "sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==",
+      "source_tarball_name": "dom-helpers-5.2.1.tgz",
+      "sha256": "8391d72aaa505137d4db8701c3331197cf0cb0e7346d0fab0750a7d55443c89a",
+      "size_bytes": 26562,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1078,
+          "sha256": "1b0a9ba95a67bc484e028b13c61b83fc5aa1ca7957d1e2d43c2b0f70d9e9dd45"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "exenv",
+      "version": "1.2.2",
+      "resolved": "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d",
+      "integrity": "sha1-KueOhdmJQVhnCwPUe+wfA72Ru50=",
+      "source_tarball_name": "exenv-1.2.2.tgz",
+      "sha256": "9b6cc24d6c91a60a55ed8550691e88a7d7199ca3de53fc9dc92b632742d56b8e",
+      "size_bytes": 2190,
+      "declared_license": "BSD-3-Clause",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1523,
+          "sha256": "426ce3c23fa4006e34391ac67170a41ea6eb8bbd4bca2a8b16a7a37cef8b1f86"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "history",
+      "version": "4.10.1",
+      "resolved": "https://registry.yarnpkg.com/history/-/history-4.10.1.tgz#33371a65e3a83b267434e2b3f3b1b4c58aad4cf3",
+      "integrity": "sha512-36nwAD620w12kuzPAsyINPWJqlNbij+hpK1k9XRloDtym8mxzGYl2c17LnV6IAGB2Dmg4tEa7G7DlawS0+qjew==",
+      "source_tarball_name": "history-4.10.1.tgz",
+      "sha256": "287df8e55f2547b5966c71465717cc923252d2da0cdc3b548011e42d64f07a10",
+      "size_bytes": 21642,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1076,
+          "sha256": "079b9fe13858745a8faeaf305231a339b63ba13f36b65e6e9eca94d89196c456"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "hoist-non-react-statics",
+      "version": "3.3.2",
+      "resolved": "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45",
+      "integrity": "sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==",
+      "source_tarball_name": "hoist-non-react-statics-3.3.2.tgz",
+      "sha256": "0f7ae4b52c57171711a2e061ea793ff340f17e0bec3eef2d7d5fdb821462c8ba",
+      "size_bytes": 10062,
+      "declared_license": "BSD-3-Clause",
+      "notices": [
+        {
+          "path": "package/LICENSE.md",
+          "size_bytes": 1662,
+          "sha256": "eb32ff0ec52b6ea86e3d3e06c6ad1b68ee03798b6729af13919f6d5c14b368f3"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "isarray",
+      "version": "0.0.1",
+      "resolved": "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf",
+      "integrity": "sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=",
+      "source_tarball_name": "isarray-0.0.1.tgz",
+      "sha256": "3e8444020696800aed92a09d4c52602adc76140a39b6c8e94fe7c89cf70a9f0a",
+      "size_bytes": 2742,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/README.md",
+          "offset_bytes": 449,
+          "size_bytes": 1108,
+          "sha256": "66aa9feab8bb39aceebd69f2a357015d57ceab486d3c7a19ff8d3d4110a6d101",
+          "classification": "exact-inline-full-MIT-notice"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "isarray",
+      "version": "1.0.0",
+      "resolved": "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11",
+      "integrity": "sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=",
+      "source_tarball_name": "isarray-1.0.0.tgz",
+      "sha256": "e23c76f14f5222e07e39d89858b61e8e33f96956de9e0df3659cbdf8db950c87",
+      "size_bytes": 2021,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/README.md",
+          "offset_bytes": 782,
+          "size_bytes": 1108,
+          "sha256": "66aa9feab8bb39aceebd69f2a357015d57ceab486d3c7a19ff8d3d4110a6d101",
+          "classification": "exact-inline-full-MIT-notice"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "mini-create-react-context",
+      "version": "0.4.1",
+      "resolved": "https://registry.yarnpkg.com/mini-create-react-context/-/mini-create-react-context-0.4.1.tgz#072171561bfdc922da08a60c2197a497cc2d1d5e",
+      "integrity": "sha512-YWCYEmd5CQeHGSAKrYvXgmzzkrvssZcuuQDDeqkT+PziKGMgE+0MCCtcKbROzocGBG1meBLl2FotlRwf4gAzbQ==",
+      "source_tarball_name": "mini-create-react-context-0.4.1.tgz",
+      "sha256": "458b0124de6d47781c764d359582c13e9aa1f6ce8840f71031b0bad32701be16",
+      "size_bytes": 5387,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1149,
+          "sha256": "7db99d052f19a19586a529097b1b50141b796fa3329250794dc76b7374cb1003"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "object-assign",
+      "version": "4.1.1",
+      "resolved": "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863",
+      "integrity": "sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=",
+      "source_tarball_name": "object-assign-4.1.1.tgz",
+      "sha256": "782d726a263ba7b26cced612af97b80035516df4b0cd788524e7b2cebc4e29ed",
+      "size_bytes": 2675,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/license",
+          "size_bytes": 1119,
+          "sha256": "6fb9754611c20f6649f68805e8c990e83261f29316e29de9e6cedae607b8634c"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "path-to-regexp",
+      "version": "0.1.7",
+      "resolved": "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c",
+      "integrity": "sha1-32BBeABfUi8V60SQ5yR6G/qmf4w=",
+      "source_tarball_name": "path-to-regexp-0.1.7.tgz",
+      "sha256": "de5462f169a8975b74b0fbb63bd6a4de62516a60f9de7075b5cd3fa882c98f36",
+      "size_bytes": 3269,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1103,
+          "sha256": "4eeb3271453a891df609e5a9f4ee79a68307f730c13417a3bfeffa604ac8cf25"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "path-to-regexp",
+      "version": "1.8.0",
+      "resolved": "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.8.0.tgz#887b3ba9d84393e87a0a0b9f4cb756198b53548a",
+      "integrity": "sha512-n43JRhlUKUAlibEJhPeir1ncUID16QnEjNpwzNdO3Lm4ywrBpBZ5oLD0I6br9evr1Y9JTqwRtAh7JLoOzAQdVA==",
+      "source_tarball_name": "path-to-regexp-1.8.0.tgz",
+      "sha256": "124f702ef45b640b54b174bbc9ca93480c0b1a6b455d1e6f3d8fa060c2cff434",
+      "size_bytes": 8725,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1103,
+          "sha256": "4eeb3271453a891df609e5a9f4ee79a68307f730c13417a3bfeffa604ac8cf25"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "promise",
+      "version": "8.1.0",
+      "resolved": "https://registry.yarnpkg.com/promise/-/promise-8.1.0.tgz#697c25c3dfe7435dd79fcd58c38a135888eaf05e",
+      "integrity": "sha512-W04AqnILOL/sPRXziNicCjSNRruLAuIHEOVBazepu0545DDNGYHz7ar9ZgZ1fMU8/MA4mVxp5rkBWRi6OXIy3Q==",
+      "source_tarball_name": "promise-8.1.0.tgz",
+      "sha256": "209bcdda3c2085efd5a410a596dca4f24ce864fc87997ba30dda17a0cac8773b",
+      "size_bytes": 14167,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1059,
+          "sha256": "5e733eb92ed0c571da3f27c5da203e0a9f975b4f96e7692c9fa3660ca54820ec"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "prop-types",
+      "version": "15.8.1",
+      "resolved": "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5",
+      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+      "source_tarball_name": "prop-types-15.8.1.tgz",
+      "sha256": "1c739eb05d8a462c286a4e9dd02f2ce5485c6fa3529244e9ff9b13a3671aa557",
+      "size_bytes": 22651,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1080,
+          "sha256": "f657f99d3fb9647db92628e96007aabb46e5f04f33e49999075aab8e250ca7ce"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react",
+      "version": "18.1.0",
+      "resolved": "https://registry.yarnpkg.com/react/-/react-18.1.0.tgz#6f8620382decb17fdc5cc223a115e2adbf104890",
+      "integrity": "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ==",
+      "source_tarball_name": "react-18.1.0.tgz",
+      "sha256": "0df3c6168dc7e6374b67858811ec85bb0ab646ef5e418557bfd7cb59754a6ce6",
+      "size_bytes": 81166,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-app-polyfill",
+      "version": "3.0.0",
+      "resolved": "https://registry.yarnpkg.com/react-app-polyfill/-/react-app-polyfill-3.0.0.tgz#95221e0a9bd259e5ca6b177c7bb1cb6768f68fd7",
+      "integrity": "sha512-sZ41cxiU5llIB003yxxQBYrARBqe0repqPTTYBTmMqTz9szeBbE37BehCE891NZsmdZqqP+xWKdT3eo3vOzN8w==",
+      "source_tarball_name": "react-app-polyfill-3.0.0.tgz",
+      "sha256": "56c28719f5efc1209756094842b26351863b7c34d454b093f285e3b77e39a014",
+      "size_bytes": 2820,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1080,
+          "sha256": "f657f99d3fb9647db92628e96007aabb46e5f04f33e49999075aab8e250ca7ce"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-contextmenu",
+      "version": "2.14.0",
+      "resolved": "https://registry.yarnpkg.com/react-contextmenu/-/react-contextmenu-2.14.0.tgz#d8966f30614b9b780b928be4c8d92bd740d55cdd",
+      "integrity": "sha512-ktqMOuad6sCFNJs/ltEwppN8F0YeXmqoZfwycgtZR/MxOXMYx1xgYC44SzWH259HdGyshk1/7sXGuIRwj9hzbw==",
+      "source_tarball_name": "react-contextmenu-2.14.0.tgz",
+      "sha256": "fe71af1e0da8acf6fd5cd5c91a8b673c5612e0e10ff3c3c622b983cf1a8fdc52",
+      "size_bytes": 27836,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE.md",
+          "size_bytes": 1084,
+          "sha256": "f83e2f9d39d3159e805352ce453e484284661bcdd1deafb8757b582055912b0d"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-dom",
+      "version": "18.1.0",
+      "resolved": "https://registry.yarnpkg.com/react-dom/-/react-dom-18.1.0.tgz#7f6dd84b706408adde05e1df575b3a024d7e8a2f",
+      "integrity": "sha512-fU1Txz7Budmvamp7bshe4Zi32d0ll7ect+ccxNu9FlObT605GOEB8BfO4tmRJ39R5Zj831VCpvQ05QPBW5yb+w==",
+      "source_tarball_name": "react-dom-18.1.0.tgz",
+      "sha256": "a62027261ef830a018a5eb04d3586659ed3bba681eb4eecc4c5c4b75fcf83be7",
+      "size_bytes": 1073042,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-is",
+      "version": "16.13.1",
+      "resolved": "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4",
+      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+      "source_tarball_name": "react-is-16.13.1.tgz",
+      "sha256": "0bdbb5d473ddc13e850987f3937666e261b6a3a8fcaffddd8195953ff0faee8f",
+      "size_bytes": 5463,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-is",
+      "version": "17.0.2",
+      "resolved": "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0",
+      "integrity": "sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==",
+      "source_tarball_name": "react-is-17.0.2.tgz",
+      "sha256": "9b1850c05b4fc08e9b814a201281a103a7651ac46500dce7b6bedd0865963eb1",
+      "size_bytes": 5785,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-is",
+      "version": "18.1.0",
+      "resolved": "https://registry.yarnpkg.com/react-is/-/react-is-18.1.0.tgz#61aaed3096d30eacf2a2127118b5b41387d32a67",
+      "integrity": "sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==",
+      "source_tarball_name": "react-is-18.1.0.tgz",
+      "sha256": "0064acb4a8bce398f969956f096e9b9892a1867bfae1db7cda6a3bb00f6a5f48",
+      "size_bytes": 5340,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-lifecycles-compat",
+      "version": "3.0.4",
+      "resolved": "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362",
+      "integrity": "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==",
+      "source_tarball_name": "react-lifecycles-compat-3.0.4.tgz",
+      "sha256": "4e063ff3ccfa89ef3ee748e2a6c107b8ad48c96c7add226522464580623c9ae5",
+      "size_bytes": 5999,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE.md",
+          "size_bytes": 1079,
+          "sha256": "2a4be07005467fe561cfc967903dcf9b414ca4d768fead609e42d2db0df55cc7"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-modal",
+      "version": "3.15.1",
+      "resolved": "https://registry.yarnpkg.com/react-modal/-/react-modal-3.15.1.tgz#950ce67bfef80971182dd0ed38f2d9b1a681288b",
+      "integrity": "sha512-duB9bxOaYg7Zt6TMFldIFxQRtSP+Dg3F1ZX3FXxSUn+3tZZ/9JCgeAQKDg7rhZSAqopq8TFRw3yIbnx77gyFTw==",
+      "source_tarball_name": "react-modal-3.15.1.tgz",
+      "sha256": "c8014501c9251cc0561b375f1058e0f9b2d865570e76beda7bc32c5d907306f9",
+      "size_bytes": 49987,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1057,
+          "sha256": "6adc7808530c3a23d44643fda93406ff074220756f8ee31540e4849323850281"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-router",
+      "version": "5.3.3",
+      "resolved": "https://registry.yarnpkg.com/react-router/-/react-router-5.3.3.tgz#8e3841f4089e728cf82a429d92cdcaa5e4a3a288",
+      "integrity": "sha512-mzQGUvS3bM84TnbtMYR8ZjKnuPJ71IjSzR+DE6UkUqvN4czWIqEs17yLL8xkAycv4ev0AiN+IGrWu88vJs/p2w==",
+      "source_tarball_name": "react-router-5.3.3.tgz",
+      "sha256": "2bfba63348a79118e7c33eecfaf75f0e14a700caf18f24c4f3e3990945562c15",
+      "size_bytes": 161890,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1115,
+          "sha256": "f8028d6599b4b781d151ba12c534ff23a9fce4f3bb3f417778302ed8970306e2"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-router-dom",
+      "version": "5.3.3",
+      "resolved": "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.3.3.tgz#8779fc28e6691d07afcaf98406d3812fe6f11199",
+      "integrity": "sha512-Ov0tGPMBgqmbu5CDmN++tv2HQ9HlWDuWIIqn4b88gjlAN5IHI+4ZUZRcpz9Hl0azFIwihbLDYw1OiHGRo7ZIng==",
+      "source_tarball_name": "react-router-dom-5.3.3.tgz",
+      "sha256": "af91a36b2bef8dd79404dcfcd97ccbcea10164bda6aa6a82fa20bf230b698a91",
+      "size_bytes": 143426,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1115,
+          "sha256": "f8028d6599b4b781d151ba12c534ff23a9fce4f3bb3f417778302ed8970306e2"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-tabs",
+      "version": "5.1.0",
+      "resolved": "https://registry.yarnpkg.com/react-tabs/-/react-tabs-5.1.0.tgz#5ef8fad015c71c23b0fff65bd9b3bd419219c27b",
+      "integrity": "sha512-jsPVEPuhG7JljTo8Q4ujz4UKRpG90nHlDClAdvV5KrLxCHU+MT/kg7dmhq8fDv8+frciDtaYeFFlTVRLm4N5AQ==",
+      "source_tarball_name": "react-tabs-5.1.0.tgz",
+      "sha256": "a84464a6e2d4b543cbbe54e0a9f236304a8f7d9de4a692aa2b887ac57866fdbe",
+      "size_bytes": 45606,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1074,
+          "sha256": "6ec568895e3e3c7bed6bb0bf7067ede6c743a40035db7a8bb1020edcfac34177"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "react-virtualized",
+      "version": "9.22.3",
+      "resolved": "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.22.3.tgz#f430f16beb0a42db420dbd4d340403c0de334421",
+      "integrity": "sha512-MKovKMxWTcwPSxE1kK1HcheQTWfuCxAuBoSTf2gwyMM21NdX/PXUhnoP8Uc5dRKd+nKm8v41R36OellhdCpkrw==",
+      "source_tarball_name": "react-virtualized-9.22.3.tgz",
+      "sha256": "5c7e1ec9d336e0c16a7fe85c2a019bf7e3d320ec260f9681f99abffc064832ea",
+      "size_bytes": 392865,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1080,
+          "sha256": "5949e37f2f4750f0e486cf8dd9db6f7bba26c0eab3596febeeb1d2317d6818da"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "regenerator-runtime",
+      "version": "0.13.9",
+      "resolved": "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.9.tgz#8925742a98ffd90814988d7566ad30ca3b263b52",
+      "integrity": "sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==",
+      "source_tarball_name": "regenerator-runtime-0.13.9.tgz",
+      "sha256": "1a6b5437215dc6558817acfd9f8300f5519475ddc8f9f55bec243c622fd099b8",
+      "size_bytes": 8437,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1080,
+          "sha256": "51887a3d47051ac2fce1210562e5b9fe0830a8a8fabeb272c2d586eeb18a05fd"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "resolve-pathname",
+      "version": "3.0.0",
+      "resolved": "https://registry.yarnpkg.com/resolve-pathname/-/resolve-pathname-3.0.0.tgz#99d02224d3cf263689becbb393bc560313025dcd",
+      "integrity": "sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==",
+      "source_tarball_name": "resolve-pathname-3.0.0.tgz",
+      "sha256": "f1d8397229b327c043dd792dd8f5305c7396818dd9415c41633b0d8c7fccddf0",
+      "size_bytes": 3877,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1077,
+          "sha256": "e0dca6c79586466b5df4c3b31766391152dc4074978fd3c68fe10da744d0f114"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "scheduler",
+      "version": "0.22.0",
+      "resolved": "https://registry.yarnpkg.com/scheduler/-/scheduler-0.22.0.tgz#83a5d63594edf074add9a7198b1bae76c3db01b8",
+      "integrity": "sha512-6QAm1BgQI88NPYymgGQLCZgvep4FyePDWFpXVK+zNSUgHwlqpJy8VEh8Et0KxTACS4VWwMousBElAZOH9nkkoQ==",
+      "source_tarball_name": "scheduler-0.22.0.tgz",
+      "sha256": "29d86dc45d2db972608b2f65ae07736db53d9d91b703aa3ab1d8f7e04bf0ef4e",
+      "size_bytes": 17809,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1086,
+          "sha256": "52412d7bc7ce4157ea628bbaacb8829e0a9cb3c58f57f99176126bc8cf2bfc85"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "tiny-invariant",
+      "version": "1.2.0",
+      "resolved": "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.2.0.tgz#a1141f86b672a9148c72e978a19a73b9b94a15a9",
+      "integrity": "sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==",
+      "source_tarball_name": "tiny-invariant-1.2.0.tgz",
+      "sha256": "dab624139ed8ba992100d4d39aee2a173c6f63d55a3d4d536601657adc39aa87",
+      "size_bytes": 4354,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1073,
+          "sha256": "b1c501095de70182748cb8e8d97ac5577701a4ef3b755ba30d59fd87b24bdb0f"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "warning",
+      "version": "4.0.3",
+      "resolved": "https://registry.yarnpkg.com/warning/-/warning-4.0.3.tgz#16e9e077eb8a86d6af7d64aa1e05fd85b4678ca3",
+      "integrity": "sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==",
+      "source_tarball_name": "warning-4.0.3.tgz",
+      "sha256": "ed6bd46b838a1255dc4e7c191e261a02c8686d16d7049f9fc2ed8fe80982d49a",
+      "size_bytes": 3750,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE.md",
+          "size_bytes": 1080,
+          "sha256": "f657f99d3fb9647db92628e96007aabb46e5f04f33e49999075aab8e250ca7ce"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    },
+    {
+      "package": "whatwg-fetch",
+      "version": "3.6.2",
+      "resolved": "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.2.tgz#dced24f37f2624ed0281725d51d0e2e3fe677f8c",
+      "integrity": "sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==",
+      "source_tarball_name": "whatwg-fetch-3.6.2.tgz",
+      "sha256": "b2720186de91f769abf5234f35de33b5d5fcf1a761db9a9c3b02b2c2184f2a3b",
+      "size_bytes": 12959,
+      "declared_license": "MIT",
+      "notices": [
+        {
+          "path": "package/LICENSE",
+          "size_bytes": 1061,
+          "sha256": "05a4adff1d99954f18ed2ef89d47b4567cdba599635ddbe9393a95b9d48b2643"
+        }
+      ],
+      "lock_integrity_verified": true,
+      "actual_bundle_single_version_inference": false
+    }
+  ],
+  "overinclusive_version_scope": true,
+  "assembled_notice_material": {
+    "sha256": "af387c687d695ef2f44538a7249693b839dfaf44b1777100af9676dce9741e7f",
+    "size_bytes": 42048,
+    "every_lock_scope_source_package_has_actual_notice_material": true
+  },
+  "schema": 1,
+  "deployed_commit": "9776332f720c854ef26f325a0cf9e32c02115a9c",
+  "deployed_commit_message": "deploy: e47358f0b7c59737bca23a2efab114d686aff5ca",
+  "preferred_source_commit": "e47358f0b7c59737bca23a2efab114d686aff5ca",
+  "preferred_source_archive_sha256": "1dd795d15f88f9da18a4ec53bbd2963a1569b9582fb30ef26e2c74808d64aa91",
+  "preferred_source_archive_size_bytes": 258849,
+  "source_declared_license": "GPL-3.0-or-later",
+  "every_bundle_source_map_entry_has_sourcesContent": true,
+  "npm_install_or_package_scripts_executed": false
+}

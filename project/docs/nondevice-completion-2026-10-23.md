@@ -2,10 +2,22 @@
 
 The dev14 continuation covers native distribution research, signing-key recovery
 verification, upstream maintenance review and retained original-only host delivery.
+[Download the verified computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14).
+All eleven attached assets passed fresh readback before and after publication;
+ten CI subjects carry verified exact-source workflow provenance. The publisher
+also passed a full published-state check without release writes.
 The exact build, CI, hosting and storage results belong to
 `project/evidence/nondevice-completion-20261023/verification.json`; an absent
 result is pending work, never a pass. The dev13 receipts keep their original
 source and artifact identities.
+
+The public tag and all attached host assets select clean source commit
+`ab644b93a463fe71d10cd32bb9f7fa113b30c771`: 1,011 passing strict checks, a
+60-file signed payload and 207 inventoried original-source files. The local
+build and CI produce byte-identical preview/source ZIPs; the signed overlay and
+both ZIPs also reproduce from the no-Git export with the same disposable signer.
+The signer was deleted. Later workflow, native-coverage and evidence commits
+have separate source identities and do not acquire this inventory digest.
 
 The retained compiler was also recovered into an observed empty container daemon.
 Its restored toolchain compiled and linked original AArch64 C/C++ smoke programs
@@ -34,6 +46,7 @@ master total remains 14/25 until a row's remaining evidence exists; physical
 acceptance remains 0/13.
 
 See the [distribution review](nondevice-distribution-2026-10-23.md),
+[full static native coverage](nondevice-native-coverage-2026-10-23.md),
 [key recovery](nondevice-trust-2026-10-23.md) and
 [maintenance review](nondevice-maintenance-2026-10-23.md) for the exact scope.
 
@@ -41,7 +54,9 @@ See the [distribution review](nondevice-distribution-2026-10-23.md),
 
 Download the original-only host preview ZIP, original-source ZIP, checksum index,
 build report, source report and certification from the dev14 host prerelease.
-Its release notes and verification receipt identify the exact source commit,
+Use the eleven attached assets. GitHub’s automatic repository ZIP/tar files
+contain the inherited mixed source/runtime tree and historical emulator binaries;
+they are outside this verified host deliverable. Its release notes and verification receipt identify the exact source commit,
 workflow run and attestation bundle. Follow `START-HERE.txt` on a computer.
 
 With a current GitHub CLI, verify each downloaded artifact against the expected

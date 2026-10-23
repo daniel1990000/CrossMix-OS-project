@@ -2,6 +2,32 @@
 
 ## Current continuation — dev14 without device access
 
+The [computer preview is published](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14).
+All eleven attached assets pass fresh readback before and after publication;
+ten subjects carry verified GitHub workflow/source attestations. The public tag
+selects clean build `ab644b93a463fe71d10cd32bb9f7fa113b30c771`, 60 signed payload
+files and 207 original-source files, inventory
+`b796a5e796e1de1cb180bf8769e4a45f34b551e418b389c70fd0750ba9e79eda`.
+The local and CI preview/source ZIPs match; a no-Git export reproduces both ZIPs
+and the signed overlay with the same subsequently deleted disposable signer.
+CI run 39893214010 passes the exact build; run 39894762504 passes the later
+workflow and verifies the published release again without release writes.
+The earlier denied tag-publication attempt remains documented; the connected
+repository application completed the exact tag/publication after full readback.
+
+Dev14's CI archive, 14-file review handoff and complete provenance/publication
+proof are retained in owner-only Drive and freshly retrieved. The compiler's
+previously unrun empty-daemon restore now passes, including offline C/C++ link
+smoke. Current native static coverage is in
+[the supplemental source/asset report](project/docs/nondevice-native-coverage-2026-10-23.md).
+No missing third-party grant is inferred from those inventories.
+
+The attached allowlisted source ZIP is the matching source for the host preview.
+GitHub's automatic repository archives include inherited mixed source/runtime
+and historical engines; they are outside this verified attached-asset scope.
+Later workflow, native-coverage and documentation/evidence heads have their own
+source identities; they do not acquire the public build's source inventory.
+
 The owner's instruction is **complete all remaining items that do not need the
 Smart Pro**. Read [the nondevice completion report](project/docs/nondevice-completion-2026-10-23.md)
 and its exact verification receipt. Dev14 adds recovered-key possession

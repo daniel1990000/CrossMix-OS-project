@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "kind": "owner-private-host-publication-proof-retention",
+  "drive_file_id": "10UAe-uB8iVsE3Zn-oUeK-SYAlOHOw2L7",
+  "sha256": "04eafe09a02dde4526ca06c7b0691b3153f3300dfd8106481e97b9a55ac5678e",
+  "bytes": 30381,
+  "archive_members": 11,
+  "shared": false,
+  "observed_permission_roles": [
+    "owner"
+  ],
+  "fresh_download_sha256_and_all_members_verified": true,
+  "includes_original_provenance_bundle": true,
+  "source_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+  "guaranteed_permanent_availability": false
+}

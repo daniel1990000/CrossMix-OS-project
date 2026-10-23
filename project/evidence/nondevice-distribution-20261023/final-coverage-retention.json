@@ -1,0 +1,551 @@
+{
+  "schema": 1,
+  "kind": "private-native-source-packet-retention",
+  "captured_at_utc": "2026-10-23T03:32:47.459285+00:00",
+  "new_source_supplement": {
+    "sha256": "eef158dabdca9d4f29abc8111b2c76399724f89f15056608b8c69ab079659bf5",
+    "size_bytes": 161413120,
+    "parts": [
+      {
+        "order": 0,
+        "name": "native-source-supplement-20261023.tar.part000",
+        "size_bytes": 67108864,
+        "sha256": "0b530610624c450ca03f862f0e882281ed9405433de350d96667b551af049474",
+        "retained_storage": {
+          "order": 0,
+          "file_id": "18wgs5x0lpXC04_S4ptGD6jMEPlHMTJKk",
+          "url": "https://drive.google.com/file/d/18wgs5x0lpXC04_S4ptGD6jMEPlHMTJKk/view?usp=drivesdk",
+          "shared": false,
+          "observed_permission_roles": [
+            "owner"
+          ],
+          "size_bytes": 67108864,
+          "metadata_readback": true
+        },
+        "fresh_part_hash_verified": true
+      },
+      {
+        "order": 1,
+        "name": "native-source-supplement-20261023.tar.part001",
+        "size_bytes": 67108864,
+        "sha256": "86c1d79c7acbb0cc23e19e7b268aedd4b2452a2224f52eadf85c1ff2036a08a3",
+        "retained_storage": {
+          "order": 1,
+          "file_id": "1znuq29bL5dMU3RFKjl_x5h7RXBtme2B9",
+          "url": "https://drive.google.com/file/d/1znuq29bL5dMU3RFKjl_x5h7RXBtme2B9/view?usp=drivesdk",
+          "shared": false,
+          "observed_permission_roles": [
+            "owner"
+          ],
+          "size_bytes": 67108864,
+          "metadata_readback": true
+        },
+        "fresh_part_hash_verified": true
+      },
+      {
+        "order": 2,
+        "name": "native-source-supplement-20261023.tar.part002",
+        "size_bytes": 27195392,
+        "sha256": "5741aae68e9ce015093ff5a881c554430bfd40fa224f9b7ed0a2fd70c957c4b7",
+        "retained_storage": {
+          "order": 2,
+          "file_id": "1WQx7wkA9xN72vpohrvnvr8KjxjZ-tdM2",
+          "url": "https://drive.google.com/file/d/1WQx7wkA9xN72vpohrvnvr8KjxjZ-tdM2/view?usp=drivesdk",
+          "shared": false,
+          "observed_permission_roles": [
+            "owner"
+          ],
+          "size_bytes": 27195392,
+          "metadata_readback": true
+        },
+        "fresh_part_hash_verified": true
+      }
+    ]
+  },
+  "historical_atlas_font_script_supplement": {
+    "sha256": "802018294b7777c2fd68f5c7d284cb6c08c6c85d29ca372dd0d960349e9f57f7",
+    "size_bytes": 184320,
+    "files": [
+      {
+        "path": "original-font_atlasscript.txt",
+        "size_bytes": 122,
+        "sha256": "3d5d64bfc46b672f8f45bf079ce5b9b1bace0ff656f9cf404094ea50ee08becd"
+      },
+      {
+        "path": "original-asciifont_atlasscript.txt",
+        "size_bytes": 59,
+        "sha256": "0a733510ab6e6f47a619815f5f514dbb77372bb9bdc9f610688463177a3b8e24"
+      },
+      {
+        "path": "original-ppge_atlasscript.txt",
+        "size_bytes": 338,
+        "sha256": "5abed8463e776f35693e7a85d0392389932b91fd1f90064b2874d4b39c6d0c2f"
+      },
+      {
+        "path": "original-atlas-sources.json",
+        "size_bytes": 1818,
+        "sha256": "1a0372df124a58492fcddc2c119fbcf5157ad9bcb17293a82fecd44e12a46062"
+      },
+      {
+        "path": "original-Roboto-Condensed.ttf",
+        "size_bytes": 175044,
+        "sha256": "970370587f57f5fc54ea830d71b0d1dad31cdd0d9db35c68e099e45f39f28bee"
+      }
+    ],
+    "public_distribution_cleared": false,
+    "retained_storage": {
+      "file_id": "1hwpPgTlc_Bg-h_L52uTg-zzaaHKSza7m",
+      "url": "https://drive.google.com/file/d/1hwpPgTlc_Bg-h_L52uTg-zzaaHKSza7m/view?usp=drivesdk",
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "size_bytes": 184320,
+      "metadata_readback": true
+    },
+    "fresh_archive_and_all_members_verified": true
+  },
+  "fresh_readback": {
+    "schema": 1,
+    "kind": "fresh-private-native-source-supplement-readback",
+    "parts_verified": 3,
+    "sha256": "eef158dabdca9d4f29abc8111b2c76399724f89f15056608b8c69ab079659bf5",
+    "size_bytes": 161413120,
+    "all_members_verified": 70,
+    "target_executed": false,
+    "historical_atlas_supplement": {
+      "sha256": "802018294b7777c2fd68f5c7d284cb6c08c6c85d29ca372dd0d960349e9f57f7",
+      "size_bytes": 184320,
+      "all_members_verified": 5
+    }
+  },
+  "new_supplement_index": {
+    "schema": 1,
+    "kind": "private-native-source-supplement",
+    "candidate_binaries": {
+      "PPSSPPSDL_TrimUI": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+      "retroarch-igm-tg5040": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+    },
+    "required_existing_R04_archive_set": [
+      {
+        "id": "ra-source",
+        "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+        "size_bytes": 144576907,
+        "fresh_part_and_complete_hashes_verified": true
+      },
+      {
+        "id": "ra-build-records",
+        "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+        "size_bytes": 595274,
+        "fresh_part_and_complete_hashes_verified": true
+      },
+      {
+        "id": "ppsspp-source",
+        "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+        "size_bytes": 177963111,
+        "fresh_part_and_complete_hashes_verified": true
+      },
+      {
+        "id": "ppsspp-build-records",
+        "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+        "size_bytes": 291510,
+        "fresh_part_and_complete_hashes_verified": true
+      }
+    ],
+    "purpose": "Actual source/header/notice supplement joined to freshly retrieved exact R04 source/build archives. Source packet is the full indexed set; original engine/source archives are retained once in R04 rather than duplicated. Private custody only; no native redistribution grant or target execution.",
+    "source_package_dsc_checksums_verified": true,
+    "source_package_openpgp_signatures_verified": false,
+    "original_native_include_dependency_files_retained": false,
+    "header_strategy": "Exact configured include-root source snapshots are intentionally overinclusive; do not claim every header was incorporated. Complete runtime/upstream source packages and packaging changes preserved.",
+    "files": [
+      {
+        "path": "debugger-deps/asap-2.0.6.tgz",
+        "sha256": "5ab440764cf46d8d4783d3f1173c0269e4bf9ebf013ae5a9d4bc0197cd89ccde",
+        "size_bytes": 11403
+      },
+      {
+        "path": "debugger-deps/babel_runtime-7.18.0.tgz",
+        "sha256": "588df2a91ed7f6145817278d283bc26c2559d49fffbe509c93f0904113c5794a",
+        "size_bytes": 44026
+      },
+      {
+        "path": "debugger-deps/classnames-2.3.1.tgz",
+        "sha256": "d75d1fced4d74a1f0358e60512b3a1977cf8c94ee792696eeba98125e8ca2a5e",
+        "size_bytes": 6483
+      },
+      {
+        "path": "debugger-deps/clsx-1.1.1.tgz",
+        "sha256": "115bbf67f6d4853b2fdfd82e4bacabb46dee3c35fd8f29e70eb950ec7c89012b",
+        "size_bytes": 2986
+      },
+      {
+        "path": "debugger-deps/core-js-3.22.5.tgz",
+        "sha256": "9e467066bc2dce9eeac698302b44d7d851240d197152160748a7935d9b72f7ac",
+        "size_bytes": 239706
+      },
+      {
+        "path": "debugger-deps/dom-helpers-5.2.1.tgz",
+        "sha256": "8391d72aaa505137d4db8701c3331197cf0cb0e7346d0fab0750a7d55443c89a",
+        "size_bytes": 26562
+      },
+      {
+        "path": "debugger-deps/exenv-1.2.2.tgz",
+        "sha256": "9b6cc24d6c91a60a55ed8550691e88a7d7199ca3de53fc9dc92b632742d56b8e",
+        "size_bytes": 2190
+      },
+      {
+        "path": "debugger-deps/history-4.10.1.tgz",
+        "sha256": "287df8e55f2547b5966c71465717cc923252d2da0cdc3b548011e42d64f07a10",
+        "size_bytes": 21642
+      },
+      {
+        "path": "debugger-deps/hoist-non-react-statics-3.3.2.tgz",
+        "sha256": "0f7ae4b52c57171711a2e061ea793ff340f17e0bec3eef2d7d5fdb821462c8ba",
+        "size_bytes": 10062
+      },
+      {
+        "path": "debugger-deps/isarray-0.0.1.tgz",
+        "sha256": "3e8444020696800aed92a09d4c52602adc76140a39b6c8e94fe7c89cf70a9f0a",
+        "size_bytes": 2742
+      },
+      {
+        "path": "debugger-deps/isarray-1.0.0.tgz",
+        "sha256": "e23c76f14f5222e07e39d89858b61e8e33f96956de9e0df3659cbdf8db950c87",
+        "size_bytes": 2021
+      },
+      {
+        "path": "debugger-deps/mini-create-react-context-0.4.1.tgz",
+        "sha256": "458b0124de6d47781c764d359582c13e9aa1f6ce8840f71031b0bad32701be16",
+        "size_bytes": 5387
+      },
+      {
+        "path": "debugger-deps/object-assign-4.1.1.tgz",
+        "sha256": "782d726a263ba7b26cced612af97b80035516df4b0cd788524e7b2cebc4e29ed",
+        "size_bytes": 2675
+      },
+      {
+        "path": "debugger-deps/path-to-regexp-0.1.7.tgz",
+        "sha256": "de5462f169a8975b74b0fbb63bd6a4de62516a60f9de7075b5cd3fa882c98f36",
+        "size_bytes": 3269
+      },
+      {
+        "path": "debugger-deps/path-to-regexp-1.8.0.tgz",
+        "sha256": "124f702ef45b640b54b174bbc9ca93480c0b1a6b455d1e6f3d8fa060c2cff434",
+        "size_bytes": 8725
+      },
+      {
+        "path": "debugger-deps/promise-8.1.0.tgz",
+        "sha256": "209bcdda3c2085efd5a410a596dca4f24ce864fc87997ba30dda17a0cac8773b",
+        "size_bytes": 14167
+      },
+      {
+        "path": "debugger-deps/prop-types-15.8.1.tgz",
+        "sha256": "1c739eb05d8a462c286a4e9dd02f2ce5485c6fa3529244e9ff9b13a3671aa557",
+        "size_bytes": 22651
+      },
+      {
+        "path": "debugger-deps/react-18.1.0.tgz",
+        "sha256": "0df3c6168dc7e6374b67858811ec85bb0ab646ef5e418557bfd7cb59754a6ce6",
+        "size_bytes": 81166
+      },
+      {
+        "path": "debugger-deps/react-app-polyfill-3.0.0.tgz",
+        "sha256": "56c28719f5efc1209756094842b26351863b7c34d454b093f285e3b77e39a014",
+        "size_bytes": 2820
+      },
+      {
+        "path": "debugger-deps/react-contextmenu-2.14.0.tgz",
+        "sha256": "fe71af1e0da8acf6fd5cd5c91a8b673c5612e0e10ff3c3c622b983cf1a8fdc52",
+        "size_bytes": 27836
+      },
+      {
+        "path": "debugger-deps/react-dom-18.1.0.tgz",
+        "sha256": "a62027261ef830a018a5eb04d3586659ed3bba681eb4eecc4c5c4b75fcf83be7",
+        "size_bytes": 1073042
+      },
+      {
+        "path": "debugger-deps/react-is-16.13.1.tgz",
+        "sha256": "0bdbb5d473ddc13e850987f3937666e261b6a3a8fcaffddd8195953ff0faee8f",
+        "size_bytes": 5463
+      },
+      {
+        "path": "debugger-deps/react-is-17.0.2.tgz",
+        "sha256": "9b1850c05b4fc08e9b814a201281a103a7651ac46500dce7b6bedd0865963eb1",
+        "size_bytes": 5785
+      },
+      {
+        "path": "debugger-deps/react-is-18.1.0.tgz",
+        "sha256": "0064acb4a8bce398f969956f096e9b9892a1867bfae1db7cda6a3bb00f6a5f48",
+        "size_bytes": 5340
+      },
+      {
+        "path": "debugger-deps/react-lifecycles-compat-3.0.4.tgz",
+        "sha256": "4e063ff3ccfa89ef3ee748e2a6c107b8ad48c96c7add226522464580623c9ae5",
+        "size_bytes": 5999
+      },
+      {
+        "path": "debugger-deps/react-modal-3.15.1.tgz",
+        "sha256": "c8014501c9251cc0561b375f1058e0f9b2d865570e76beda7bc32c5d907306f9",
+        "size_bytes": 49987
+      },
+      {
+        "path": "debugger-deps/react-router-5.3.3.tgz",
+        "sha256": "2bfba63348a79118e7c33eecfaf75f0e14a700caf18f24c4f3e3990945562c15",
+        "size_bytes": 161890
+      },
+      {
+        "path": "debugger-deps/react-router-dom-5.3.3.tgz",
+        "sha256": "af91a36b2bef8dd79404dcfcd97ccbcea10164bda6aa6a82fa20bf230b698a91",
+        "size_bytes": 143426
+      },
+      {
+        "path": "debugger-deps/react-tabs-5.1.0.tgz",
+        "sha256": "a84464a6e2d4b543cbbe54e0a9f236304a8f7d9de4a692aa2b887ac57866fdbe",
+        "size_bytes": 45606
+      },
+      {
+        "path": "debugger-deps/react-virtualized-9.22.3.tgz",
+        "sha256": "5c7e1ec9d336e0c16a7fe85c2a019bf7e3d320ec260f9681f99abffc064832ea",
+        "size_bytes": 392865
+      },
+      {
+        "path": "debugger-deps/regenerator-runtime-0.13.9.tgz",
+        "sha256": "1a6b5437215dc6558817acfd9f8300f5519475ddc8f9f55bec243c622fd099b8",
+        "size_bytes": 8437
+      },
+      {
+        "path": "debugger-deps/resolve-pathname-3.0.0.tgz",
+        "sha256": "f1d8397229b327c043dd792dd8f5305c7396818dd9415c41633b0d8c7fccddf0",
+        "size_bytes": 3877
+      },
+      {
+        "path": "debugger-deps/scheduler-0.22.0.tgz",
+        "sha256": "29d86dc45d2db972608b2f65ae07736db53d9d91b703aa3ab1d8f7e04bf0ef4e",
+        "size_bytes": 17809
+      },
+      {
+        "path": "debugger-deps/tiny-invariant-1.2.0.tgz",
+        "sha256": "dab624139ed8ba992100d4d39aee2a173c6f63d55a3d4d536601657adc39aa87",
+        "size_bytes": 4354
+      },
+      {
+        "path": "debugger-deps/warning-4.0.3.tgz",
+        "sha256": "ed6bd46b838a1255dc4e7c191e261a02c8686d16d7049f9fc2ed8fe80982d49a",
+        "size_bytes": 3750
+      },
+      {
+        "path": "debugger-deps/whatwg-fetch-3.6.2.tgz",
+        "sha256": "b2720186de91f769abf5234f35de33b5d5fcf1a761db9a9c3b02b2c2184f2a3b",
+        "size_bytes": 12959
+      },
+      {
+        "path": "header-component-sources/SDL2-2.26.1.tar.gz",
+        "sha256": "91d8d26fc45a27c215b70090b351fd30e36bfe44bdd940e5db13d5148058d226",
+        "size_bytes": 8464624
+      },
+      {
+        "path": "header-component-sources/alsa-lib-1.1.4.1.tar.gz",
+        "sha256": "21d46b859d483acaee7227193e109f2863a925ee7d9b77ab7fc2e09ac6d841ae",
+        "size_bytes": 755415
+      },
+      {
+        "path": "header-component-sources/fontconfig-2.12.1.tar.gz",
+        "sha256": "4ecb0785242f127a9e0a95ffb8a0c866b4180ff1953dd30703c87e6a94b47da6",
+        "size_bytes": 469013
+      },
+      {
+        "path": "header-component-sources/freetype-2.6.1.tar.gz",
+        "sha256": "85764250282ec0b8ff2918f48a5c462be4d2089456e3e1d65f1bd6648cb5000c",
+        "size_bytes": 1869082
+      },
+      {
+        "path": "notices/controller-database-LICENSE",
+        "sha256": "600110690b6f02046274151bd031274de52d0e092578bc79737fcf8d5280b62f",
+        "size_bytes": 885
+      },
+      {
+        "path": "notices/debugger-dependency-notices.txt",
+        "sha256": "af387c687d695ef2f44538a7249693b839dfaf44b1777100af9676dce9741e7f",
+        "size_bytes": 42048
+      },
+      {
+        "path": "notices/glibc-COPYING.LIB",
+        "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+        "size_bytes": 26530
+      },
+      {
+        "path": "notices/imgui-LICENSE.txt",
+        "sha256": "0ebf8feb061536bdebd7c6a365b64808ae3479048b1c44113e19037680c5f2be",
+        "size_bytes": 1083
+      },
+      {
+        "path": "notices/selected-native-notices.txt",
+        "sha256": "88463b6395cbb499ffd9448712577062d911df8e21cd08fc1148b811c4409ee4",
+        "size_bytes": 543710
+      },
+      {
+        "path": "notices/sfmt-LICENSE.txt",
+        "sha256": "9d6db9b6702bf80c926b36d61f6282bf48d0a9a8044db2bd31e524aa08ccac0f",
+        "size_bytes": 1706
+      },
+      {
+        "path": "records/asset-final-coverage.json",
+        "sha256": "81e53afb4db78aed94d2116e38fdcfca4ca1cc431b2aee6d1cc5aa93ee358a3b",
+        "size_bytes": 129034
+      },
+      {
+        "path": "records/compiler-header-source-control.json",
+        "sha256": "3040aa95de86c27d7833d021a850ec015de4baf6743c49849b78e375e2322281",
+        "size_bytes": 191191
+      },
+      {
+        "path": "records/compiler-incorporated-inputs.json",
+        "sha256": "58afc0b74f1b81fa1f7e63acfdc9eb296af826ad2fa308fc62dce2ea1556f057",
+        "size_bytes": 297757
+      },
+      {
+        "path": "records/configured-actual-headers.json",
+        "sha256": "bfc3b5f74a35902149a4530597a84a22014bc683a26dd24f122ab7a1357c7230",
+        "size_bytes": 513284
+      },
+      {
+        "path": "records/controller-database-license.json",
+        "sha256": "05d398057119656603ce4d3ad9c8528f7310c69d94c5ec42e6e7007dc5778136",
+        "size_bytes": 255
+      },
+      {
+        "path": "records/debugger-dependencies.json",
+        "sha256": "1ce19888a4a2ab379e60b89443e537e7d713f68ff21e9c96750b41190949b2c1",
+        "size_bytes": 30185
+      },
+      {
+        "path": "records/header-component-sources.json",
+        "sha256": "1569efe9eb609e55b5675eb4f9c6579d9e5327a683518baa69fc003ca50fa4e4",
+        "size_bytes": 937
+      },
+      {
+        "path": "records/source-packages-retrieval.json",
+        "sha256": "42b33b447b8b9d00af1f6f55bf416525be9c90116975aeea896f3234d8920460",
+        "size_bytes": 3308
+      },
+      {
+        "path": "records/startup-preferred-source-map.json",
+        "sha256": "2abe02940d929698477841fcbfb2855f094305ff6099c768518247479b4216c3",
+        "size_bytes": 11369
+      },
+      {
+        "path": "source-and-header-material/all-native-notice-material.tar.gz",
+        "sha256": "13663ad58999742001a8a7dcac782a6b30a4077622a58bdb82975fb2bdd675cf",
+        "size_bytes": 1823178
+      },
+      {
+        "path": "source-and-header-material/configured-actual-headers.tar.gz",
+        "sha256": "45e0ca8cdc154ddd8581adc94678ddff61ecfd666b7301d029cacc6bc6dfd02f",
+        "size_bytes": 2359821
+      },
+      {
+        "path": "source-and-header-material/debugger-e47358f.tar.gz",
+        "sha256": "1dd795d15f88f9da18a4ec53bbd2963a1569b9582fb30ef26e2c74808d64aa91",
+        "size_bytes": 258849
+      },
+      {
+        "path": "source-and-header-material/gcc9-actual-headers.tar.gz",
+        "sha256": "946f1b16456947ba3e4daa5bd9995518775d822cd2d043180b831a5773f21f9f",
+        "size_bytes": 1570615
+      },
+      {
+        "path": "source-and-header-material/glibc-a0408ec.tar.gz",
+        "sha256": "c8d491a68591b5a7ad548d56068eda407ec00b77bcdb70355addf182a1b006b1",
+        "size_bytes": 28193321
+      },
+      {
+        "path": "source-packages/cross-toolchain-base_43ubuntu3.2.dsc",
+        "sha256": "30bb762e8ebff61d794d31f956ef2823b30177c697d5a36e26ea5e8e061b003a",
+        "size_bytes": 8164
+      },
+      {
+        "path": "source-packages/cross-toolchain-base_43ubuntu3.2.tar.xz",
+        "sha256": "c3ab69a304105445ee8731678fc1753f1774ee43533a44692591af2f54c7e552",
+        "size_bytes": 43528
+      },
+      {
+        "path": "source-packages/gcc-9-cross_21ubuntu7.dsc",
+        "sha256": "6fb4aebba01366f9e3d6f5c5f70b9e4484dae6f1f3d8abcf4690ce14d7e767e2",
+        "size_bytes": 34467
+      },
+      {
+        "path": "source-packages/gcc-9-cross_21ubuntu7.tar.xz",
+        "sha256": "d5a3c9c2028a694e3f3ed5a5e2a8a493e1dfe1288f208506a69703f587f68aa5",
+        "size_bytes": 42432
+      },
+      {
+        "path": "source-packages/gcc-9_9.4.0-1ubuntu1~20.04.2.debian.tar.xz",
+        "sha256": "ab3063758ba6918406f865632429cf5a0870e869bb5287496388d856413b2509",
+        "size_bytes": 579772
+      },
+      {
+        "path": "source-packages/gcc-9_9.4.0-1ubuntu1~20.04.2.dsc",
+        "sha256": "8fd0e94bc001ef407d6800fd819d7ad2556ea7345b73118730089b2eebe2c2a4",
+        "size_bytes": 23760
+      },
+      {
+        "path": "source-packages/gcc-9_9.4.0.orig.tar.gz",
+        "sha256": "ec1e4c12fe4bcf40ef3aad1aeeef33ea918b5e63a371274cf903667639fba642",
+        "size_bytes": 92368536
+      },
+      {
+        "path": "source-packages/glibc_2.31-0ubuntu9.9.debian.tar.xz",
+        "sha256": "5fb39af04625e94ba10aae98b3c186acce42882c403b73c8ab1669a9c19980ae",
+        "size_bytes": 875580
+      },
+      {
+        "path": "source-packages/glibc_2.31-0ubuntu9.9.dsc",
+        "sha256": "49304b4d1b2904c4548bfb36be492f139ded302c5733ba1dc4bbe32b56bac6ed",
+        "size_bytes": 9548
+      },
+      {
+        "path": "source-packages/glibc_2.31.orig.tar.xz",
+        "sha256": "2b22c7b04a36747d6c74796a73193a6f8856bfd1efc551b5db96baefa053fe5e",
+        "size_bytes": 17317924
+      }
+    ],
+    "public_native_distribution_cleared": false,
+    "target_executed": false,
+    "supplement_archive_sha256": "eef158dabdca9d4f29abc8111b2c76399724f89f15056608b8c69ab079659bf5",
+    "supplement_archive_size_bytes": 161413120
+  },
+  "permissions_added": false,
+  "sharing": "Owner-only Drive; observed role owner on all4 files, no shared permissions",
+  "required_existing_R04_archive_set": [
+    {
+      "id": "ra-source",
+      "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+      "size_bytes": 144576907,
+      "fresh_part_and_complete_hashes_verified": true
+    },
+    {
+      "id": "ra-build-records",
+      "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+      "size_bytes": 595274,
+      "fresh_part_and_complete_hashes_verified": true
+    },
+    {
+      "id": "ppsspp-source",
+      "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+      "size_bytes": 177963111,
+      "fresh_part_and_complete_hashes_verified": true
+    },
+    {
+      "id": "ppsspp-build-records",
+      "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+      "size_bytes": 291510,
+      "fresh_part_and_complete_hashes_verified": true
+    }
+  ],
+  "existing_R04_custody_index": "project/evidence/artifact-custody/native-retention.json",
+  "source_packet_is_existing_R04_archives_plus_new_supplements": true,
+  "public_native_distribution_cleared": false,
+  "target_executed": false,
+  "permanent_availability_guaranteed": false,
+  "old_historical_font_copyright_grant_context": "The historical font source artifact records no embedded licence string. Exact introduction ae17f40e explicitly identifies Apache licensing of the identical git blob; later final-coverage-assets.json records that primary evidence. Do not infer an unresolved Roboto grant solely from absence of an embedded string."
+}
