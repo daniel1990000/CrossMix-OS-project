@@ -58,9 +58,10 @@ def main():
             run['head_branch'] == 'build/spruce-psp-experience' and
             run['path'] == '.github/workflows/smartpro-offshoot.yml', 'Wrong certified workflow/run')
     release = api(f'releases/{RELEASE}')
-    require(release['draft'] is True and release['prerelease'] is True and
-            release['tag_name'] == TAG and release['target_commitish'] == SOURCE and
-            release['assets'] == [], 'Require the empty original-only draft; never overwrite a release')
+    require(type(release['draft']) is bool and release['prerelease'] is True and
+            release['tag_name'] == TAG and release['target_commitish'] == SOURCE,
+            'Require the exact original-only draft or published prerelease')
+    already_published = not release['draft']
     with tempfile.TemporaryDirectory(prefix='verified-host-delivery-') as temporary:
         work = Path(temporary)
         archives = []
@@ -94,9 +95,15 @@ def main():
                '--deny-self-hosted-runners')
         files.append(bundle)
         expected = {path.name: digest(path.read_bytes()) for path in files}
-        gh('release', 'upload', TAG, '--repo', REPO, *map(str, files))
+        if not release['assets']:
+            require(not already_published, 'Never add files to a published release')
+            gh('release', 'upload', TAG, '--repo', REPO, *map(str, files))
+        else:
+            require(len(release['assets']) == len(expected) and
+                    {item['name'] for item in release['assets']} == set(expected),
+                    'Existing assets must be the exact complete inventory; never overwrite')
         uploaded = api(f'releases/{RELEASE}')
-        require(uploaded['draft'] is True and
+        require(uploaded['draft'] is release['draft'] and
                 {item['name'] for item in uploaded['assets']} == set(expected), 'Uploaded inventory differs')
         readback = work / 'readback'
         readback.mkdir()
@@ -105,11 +112,13 @@ def main():
         require(observed == expected, 'Fresh release asset bytes differ')
         existing_tag = tag_commit()
         if existing_tag is None:
+            require(not already_published, 'Published release must already have its exact tag')
             gh('api', '--method', 'POST', f'repos/{REPO}/git/refs',
                '-f', 'ref=refs/tags/' + TAG, '-f', 'sha=' + SOURCE)
         require(tag_commit() == SOURCE, 'Actual tag does not select certified source')
         # Publish only after the fixed CI identity, scope, provenance and actual uploaded bytes pass.
-        gh('release', 'edit', TAG, '--repo', REPO, '--draft=false', '--latest=false')
+        if not already_published:
+            gh('release', 'edit', TAG, '--repo', REPO, '--draft=false', '--latest=false')
         final = api(f'releases/{RELEASE}')
         require(final['draft'] is False and final['prerelease'] is True and
                 final['tag_name'] == TAG and final['target_commitish'] == SOURCE,
@@ -118,9 +127,13 @@ def main():
         receipt = {'schema': 1, 'kind': 'verified-original-only-host-publication',
                    'source_commit': SOURCE, 'run_id': RUN, 'release_id': RELEASE,
                    'release_url': final['html_url'], 'tag': TAG,
-                   'asset_sha256': expected, 'all_assets_freshly_read_back_before_publication': True,
+                   'asset_sha256': expected, 'all_assets_freshly_read_back': True,
+                   'publication_performed_by_this_run': not already_published,
+                   'readback_phase': ('published-release-reverification' if already_published
+                                      else 'before-publication'),
                    'all_ten_host_subjects_provenance_verified': True,
-                   'actual_tag_commit_before_and_after_publication': SOURCE,
+                   'already_published_verified_without_release_writes': already_published,
+                   'tag_commit_before_and_after_final_metadata_check': SOURCE,
                    'payload_files': evidence['payload_files'], 'source_inventory_sha256': INVENTORY,
                    'hardware_qualified': False, 'production_ed25519_trust_established': False}
         Path('host-delivery-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')

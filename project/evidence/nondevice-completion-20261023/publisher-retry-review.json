@@ -1,0 +1,72 @@
+{
+  "chronology_correction_verified": true,
+  "failures": 0,
+  "files": [
+    {
+      "path": "project/evidence/nondevice-completion-20261023/publish_verified_host.py",
+      "sha256": "4378c6073b749e471f242bb2e5c74d1be99313fb590db348a6fed7df38983e14"
+    },
+    {
+      "path": ".github/workflows/smartpro-offshoot.yml",
+      "sha256": "3127ccd0bee25edcf07c299d14fe6eabe3d62adfc5c3b6cc714870e706462a6d"
+    }
+  ],
+  "findings": [],
+  "kind": "independent-published-host-retry-review",
+  "live_workspace_observation": {
+    "full_initial_reverification_completed": false,
+    "published_release_metadata_read": true,
+    "reason": "Workspace artifact ZIP redirect returned HTTP 403 before any mutation; native Actions retry is a separate operational result."
+  },
+  "passed": 7,
+  "remote_mutations_performed_by_reviewer": false,
+  "reviewed_at_utc": "2026-10-23T03:23:09.728499+00:00",
+  "reviewed_guards": [
+    "Published release requires the exact complete asset-name inventory and freshly downloaded matching bytes.",
+    "Published release never adds or replaces an asset, creates a tag, or edits publication metadata.",
+    "A complete exact draft can resume after readback; incomplete or changed existing artifacts are refused without overwrite.",
+    "Already-published receipt identifies published-release-reverification and publication_performed_by_this_run=false.",
+    "Actual exact tag commit is checked before and after the final metadata check."
+  ],
+  "schema": 1,
+  "scope": "Read-only review and command-path simulations of fixed host artifact delivery. No original artifact/source identity changes, native distribution clearance, production signing custody or hardware qualification.",
+  "simulation_cases": [
+    {
+      "case": "published-good",
+      "mutating_commands_simulated": [],
+      "passed": true
+    },
+    {
+      "case": "published-corrupt",
+      "mutating_commands_simulated": [],
+      "passed": true
+    },
+    {
+      "case": "published-missing",
+      "mutating_commands_simulated": [],
+      "passed": true
+    },
+    {
+      "case": "published-extra",
+      "mutating_commands_simulated": [],
+      "passed": true
+    },
+    {
+      "case": "published-missing-tag",
+      "mutating_commands_simulated": [],
+      "passed": true
+    },
+    {
+      "case": "complete-draft-retry",
+      "mutating_commands_simulated": [
+        "release-edit"
+      ],
+      "passed": true
+    },
+    {
+      "case": "complete-draft-corrupt",
+      "mutating_commands_simulated": [],
+      "passed": true
+    }
+  ]
+}
