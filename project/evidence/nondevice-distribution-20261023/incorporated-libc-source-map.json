@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "toolchain_archive_sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+  "toolchain_archive_size_bytes": 213977008,
+  "sdk_archive_sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+  "sdk_archive_contains_these_nonshared_objects": false,
+  "sysroot_origin": "build_candidate.py copies Linaro libc tree before overlaying vendor SDK usr/include and usr/lib; exact SDK has none of these objects",
+  "manifest_path": "gcc-linaro-7.5.0-2019.12-linux-manifest.txt",
+  "manifest_sha256": "dd8dbfb94d4165d836b416871577560d6ce05cd3bb0c42053e30d49ecdb9db14",
+  "declared_glibc_commit": "a0408ec51ea862dda102482036c401d2e707e20b",
+  "declared_glibc_branch": "release/2.25/master",
+  "retrieved_glibc_source_url": "https://codeload.github.com/bminor/glibc/tar.gz/a0408ec51ea862dda102482036c401d2e707e20b",
+  "retrieved_glibc_source_sha256": "c8d491a68591b5a7ad548d56068eda407ec00b77bcdb70355addf182a1b006b1",
+  "retrieved_glibc_source_size_bytes": 28193321,
+  "glibc_source_identity_basis": "Toolchain embedded producer manifest and object DWARF source path; not independently reproduced object bytes",
+  "archives": [
+    {
+      "path": "aarch64-linux-gnu/libc/usr/lib/libc_nonshared.a",
+      "sha256": "19a48e2db48587db67299cb6369ff2f72975b33c7870bfac654bede3ce34b3f6",
+      "size_bytes": 80518,
+      "members": [
+        {
+          "name": "elf-init.oS",
+          "sha256": "2bc4635511bbb5c03683737a018f29f3c942c97d43cefc7ac9b34f07a07b2325",
+          "size_bytes": 5568,
+          "dwarf_source_path": "csu/elf-init.c",
+          "manifest_commit_source_sha256": "a361207169951b74f2523fcfb11d3f80aed33a38d3ec8916e099630a1ef95f7f",
+          "source_notice_prefix": "/* Startup support for ELF initializers/finalizers in the main executable.\n   Copyright (C) 2002-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "__read_tp.oS",
+          "sha256": "28305fedd5cb89367c19ba9c1c07ca301e39b6a49ddc1c3d8c6c39d3a7a2be4c",
+          "size_bytes": 2232,
+          "dwarf_source_path": "sysdeps/unix/sysv/linux/aarch64/__read_tp.S",
+          "manifest_commit_source_sha256": "15527a7a2e0b9f525d02e4dc0bc0ac97d5af6858dfccecbc3f4e3d3ed28852dd",
+          "source_notice_prefix": "/* Copyright (C) 2005-2017 Free Software Foundation, Inc.\n\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public License as\n   published by the Free Software Foundation; either version 2.1 of the\n   License, or (at your option) any later version.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "atexit.oS",
+          "sha256": "9bd2730b491fc26cf440a90ade39e87e36b3a8fd327803cbdb3f753c63bbdbc6",
+          "size_bytes": 5632,
+          "dwarf_source_path": "stdlib/atexit.c",
+          "manifest_commit_source_sha256": "2ab44eff5ac210eb191e4054e482b717f25f9be688a96c3277c353bd82b2fa95",
+          "source_notice_prefix": "/* Copyright (C) 1991-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "at_quick_exit.oS",
+          "sha256": "06aea4ed824a0ea0956a33b28b3b94f7b4db7fdf755dc992825f7e63570756e3",
+          "size_bytes": 5792,
+          "dwarf_source_path": "stdlib/at_quick_exit.c",
+          "manifest_commit_source_sha256": "f89a272c97b6959c7e40cce3cb337160e15d19327bb8aaf70360e9d8b8ea8825",
+          "source_notice_prefix": "/* Copyright (C) 1991-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "stat.oS",
+          "sha256": "7edb447899e11efc6f2d84ad94ee7047bbf3bc3c921a3cdc20416d629aa983a7",
+          "size_bytes": 5512,
+          "dwarf_source_path": "io/stat.c",
+          "manifest_commit_source_sha256": "b83b5c12917d8901b3a48742573cb70ad568ecc04d1c59fca1860f23b9d794a7",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "fstat.oS",
+          "sha256": "5c03602f5bf1778af6973411764f0551fdfdbd42bae3d630b707e7879e83c3ee",
+          "size_bytes": 5448,
+          "dwarf_source_path": "io/fstat.c",
+          "manifest_commit_source_sha256": "df3fc6cc4b87a7cbfbd882011991a5fc5923ab7312de326f3e88ab853e2c4818",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "lstat.oS",
+          "sha256": "180b8495777f8ea4dbf8e058a2e7d2782455f09b2fb35182d8a9d9c5a5c543d8",
+          "size_bytes": 5512,
+          "dwarf_source_path": "io/lstat.c",
+          "manifest_commit_source_sha256": "970da8042f5aab081e85501ef4b53f523432bb5350a02a53e39b8c3cf6672036",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "stat64.oS",
+          "sha256": "d1713a8bb8b20b735d5f00694e781a6370a42b827531068addcee26eef7283d1",
+          "size_bytes": 5496,
+          "dwarf_source_path": "io/stat64.c",
+          "manifest_commit_source_sha256": "ac1ac31afe3f1dbdf96c216c962bb8d55e59242331cc85442c72c2699d217665",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "fstat64.oS",
+          "sha256": "06038314288ed2ff066740cf3db33d1833276d350fe338f7652b869478409255",
+          "size_bytes": 5448,
+          "dwarf_source_path": "io/fstat64.c",
+          "manifest_commit_source_sha256": "930f3ef22c4804055fc7eeaef194e4edc5b70a39a6f7d912a0c31385ea984a05",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "lstat64.oS",
+          "sha256": "deeee6b2668b9245de08aa4aee3ec4a5f5cd1687c0525e8a696f1fe40301ff74",
+          "size_bytes": 5512,
+          "dwarf_source_path": "io/lstat64.c",
+          "manifest_commit_source_sha256": "62bb57de45837a78536965a6a78ba62d1004dee5d1b1a2d420f12fa925470a19",
+          "source_notice_prefix": "/* Copyright (C) 1996-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "fstatat.oS",
+          "sha256": "e4afa37008250c38f20b7f764387248cbcc00ee5af88e6d6dc81253b133f7d3e",
+          "size_bytes": 5784,
+          "dwarf_source_path": "io/fstatat.c",
+          "manifest_commit_source_sha256": "3ee8af4e497d6c39afbc53e826d6b033673e7ea3db1f2061909984ddd78e346c",
+          "source_notice_prefix": "/* Copyright (C) 2005-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "fstatat64.oS",
+          "sha256": "ba918002d843600808915708ef0643d2f5644e1049ceb2b094083345b089deed",
+          "size_bytes": 5808,
+          "dwarf_source_path": "io/fstatat64.c",
+          "manifest_commit_source_sha256": "885f2bd10ab3a6a53a95d9448f008f7dda5f64ef6398a1ba499c55e322ff83a0",
+          "source_notice_prefix": "/* Copyright (C) 2005-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "mknod.oS",
+          "sha256": "7932255969c5144ed7800dd8f994b2181ec10f6901e1c2146066a790d7eee0fa",
+          "size_bytes": 4416,
+          "dwarf_source_path": "io/mknod.c",
+          "manifest_commit_source_sha256": "ad1d7eadccdc174793eaebf3bc3a1f515d21bc9df79de657e9b170016292d04d",
+          "source_notice_prefix": "/* Copyright (C) 1995-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "mknodat.oS",
+          "sha256": "c6dda59a2ec756b4b9166be2248f495ab0f56d9b44b249ea2b6c1e85b1e0999d",
+          "size_bytes": 4520,
+          "dwarf_source_path": "io/mknodat.c",
+          "manifest_commit_source_sha256": "d2c50d65e63d69af13ac5bfd78efc331fcacb81af3426411bbfe4051d33f3f45",
+          "source_notice_prefix": "/* Copyright (C) 1995-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "warning-nop.oS",
+          "sha256": "de5a61c8ee18968e7849ef315ea5f13f9b9917fe6534be0ef3486ceeff54cc22",
+          "size_bytes": 3272,
+          "dwarf_source_path": "debug/warning-nop.c",
+          "manifest_commit_source_sha256": "31166587c01243e461380bb91a9da78689823e6eb0e1719c10059bf39946b449",
+          "source_notice_prefix": "/* Dummy nop functions to elicit link-time warnings.\n   Copyright (C) 2005-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        },
+        {
+          "name": "stack_chk_fail_local.oS",
+          "sha256": "deb1f565d3f29ef8d9b33c222dd3b8dccdff255a5b9ad4ceeb90725d9ed07840",
+          "size_bytes": 3160,
+          "dwarf_source_path": "debug/stack_chk_fail_local.c",
+          "manifest_commit_source_sha256": "9a6b2a1bdbc996b6ba670e227683898918d01b597858915ee586da945296f6f9",
+          "source_notice_prefix": "/* Copyright (C) 2005-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        }
+      ]
+    },
+    {
+      "path": "aarch64-linux-gnu/libc/usr/lib/libpthread_nonshared.a",
+      "sha256": "81cc52b0a9ba8b5cf989dc25766fa777e5600343d0d7be1735d2e0448e3a6edb",
+      "size_bytes": 28340,
+      "members": [
+        {
+          "name": "pthread_atfork.oS",
+          "sha256": "9c8f8ab699755ffa8d8bb4eae5e0f2657c6630bd73009171b8d74c164b1e9c14",
+          "size_bytes": 28088,
+          "dwarf_source_path": "nptl/pthread_atfork.c",
+          "manifest_commit_source_sha256": "9ffba499ab18c936bc343a8c84d9f305c9884fdbd87be3dde6002231aa9f1014",
+          "source_notice_prefix": "/* Copyright (C) 2002-2017 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n   Contributed by Ulrich Drepper <drepper@redhat.com>, 2002.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <http://www.gnu.org/licenses/>.  */",
+          "byte_identical_recompile_proved": false
+        }
+      ]
+    }
+  ],
+  "all_header_and_startup_source_correspondence_complete": false,
+  "native_distribution_cleared": false,
+  "target_code_executed": false
+}

@@ -1,0 +1,136 @@
+{
+  "baseline_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "candidate_commit": "902e5ccd8c1400b4387b73942491cded655e5f9c",
+  "changed_required_inputs": 18,
+  "files": [
+    {
+      "baseline_tree_entry": "100644 blob 4380e8036b69b7520ff4fe6ade7578b6a4a215fb\tCore/Config.cpp",
+      "candidate_tree_entry": "100644 blob edcb81421d4790287988d47d80fa89d07e87f0d2\tCore/Config.cpp",
+      "changed": true,
+      "path": "Core/Config.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 3cb451c5d57e219b427eef0d4adcfcd6e8b24810\tCore/Config.h",
+      "candidate_tree_entry": "100644 blob 569c9fd0e1151e9c05788b726db247a2a56c0827\tCore/Config.h",
+      "changed": true,
+      "path": "Core/Config.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 032678226a47fb6bbdf55d933f9cf2a20f7f99ae\tCore/KeyMap.cpp",
+      "candidate_tree_entry": "100644 blob 16f8c4ff8088163db6323224af5dacc42428d18c\tCore/KeyMap.cpp",
+      "changed": true,
+      "path": "Core/KeyMap.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 04472b4fd0177346d30506ea2799aaed951576d2\tCore/ConfigSettings.h",
+      "candidate_tree_entry": "100644 blob 5951608003560d46b3e9a4419b288ac5c3f1987f\tCore/ConfigSettings.h",
+      "changed": true,
+      "path": "Core/ConfigSettings.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob d0062dc447d2ba77274e82a7222871eb05c7e2f2\tCore/ConfigSettings.cpp",
+      "candidate_tree_entry": "100644 blob a4a4e1062e899b090a6c8c1eaf8f0e9459f706fd\tCore/ConfigSettings.cpp",
+      "changed": true,
+      "path": "Core/ConfigSettings.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 34d6fadc9d97ed45d561f5ba33121d3dffac7da8\tCore/ConfigValues.h",
+      "candidate_tree_entry": "100644 blob f06afd1f4ccb431a6a09b528aad87d6f919227a2\tCore/ConfigValues.h",
+      "changed": true,
+      "path": "Core/ConfigValues.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 220c5d341ab0fbcf98063a5f28570b2ea10fbdb4\tCore/HLE/sceCtrl.h",
+      "candidate_tree_entry": "100644 blob 768c1f8f2d26e34175935c9bdb1e867cde90dd24\tCore/HLE/sceCtrl.h",
+      "changed": true,
+      "path": "Core/HLE/sceCtrl.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob cc576a850cc27d0026640c65b82a02cb61483c6b\tCore/HLE/sceUtility.h",
+      "candidate_tree_entry": "100644 blob 93b20b9a2afaf96de5220b29ba1bfb9b07be12b8\tCore/HLE/sceUtility.h",
+      "changed": true,
+      "path": "Core/HLE/sceUtility.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob bdbec037d73aeabfd362d0e1f62d27e6b78b25c8\tCommon/Input/InputState.h",
+      "candidate_tree_entry": "100644 blob 5580ca79e6e9f2f286b762f2552d82d80a0777a4\tCommon/Input/InputState.h",
+      "changed": true,
+      "path": "Common/Input/InputState.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 30365511eedd9e65c46ae89649f1fd6628098c4c\tCommon/Input/KeyCodes.h",
+      "candidate_tree_entry": "100644 blob 30365511eedd9e65c46ae89649f1fd6628098c4c\tCommon/Input/KeyCodes.h",
+      "changed": false,
+      "path": "Common/Input/KeyCodes.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 4a6792d037e6445f375c466039ed1faa12b58089\tCommon/UI/PopupScreens.h",
+      "candidate_tree_entry": "100644 blob 35bafbb316db66d4ba8134fb97b41201d342b922\tCommon/UI/PopupScreens.h",
+      "changed": true,
+      "path": "Common/UI/PopupScreens.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 9d1c98045f8877ba903ff484cef9f7805af8702d\tCommon/Data/Text/I18n.h",
+      "candidate_tree_entry": "100644 blob 9d1c98045f8877ba903ff484cef9f7805af8702d\tCommon/Data/Text/I18n.h",
+      "changed": false,
+      "path": "Common/Data/Text/I18n.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 290cf57ce1fe3b74832b3c3378899b224f5e4e07\tSDL/SDLJoystick.cpp",
+      "candidate_tree_entry": "100644 blob 70b01c97b3ae121b5c1c089e0cf32d8887f05f70\tSDL/SDLJoystick.cpp",
+      "changed": true,
+      "path": "SDL/SDLJoystick.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 85cd7f76583310422b5d7bed47258b2f6a575a41\tUI/GameSettingsScreen.cpp",
+      "candidate_tree_entry": "100644 blob 9617feba821a7a1441c5afcdff56c52be058b90e\tUI/GameSettingsScreen.cpp",
+      "changed": true,
+      "path": "UI/GameSettingsScreen.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 7ba4c83e7820f76d798f5d487241d54ee989978e\tCore/KeyMap.h",
+      "candidate_tree_entry": "100644 blob 77484215c1f2f428eab0467856df79cbf34fba0d\tCore/KeyMap.h",
+      "changed": true,
+      "path": "Core/KeyMap.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob a5dd39489d4aec61328cdb8b27427cc4085e2171\tCore/System.h",
+      "candidate_tree_entry": "100644 blob 883b4cb71fc5bc7cf1b43ddc0be2741b2987d3aa\tCore/System.h",
+      "changed": true,
+      "path": "Core/System.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob cf2b0974da2d9f4210487ae1229294eeab201d12\tUI/NativeApp.cpp",
+      "candidate_tree_entry": "100644 blob bbbf6cf3867fd7cb34206d069c98791c096c4179\tUI/NativeApp.cpp",
+      "changed": true,
+      "path": "UI/NativeApp.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 98a9af42166e2dc1f90b9d7d1c93a065addf1beb\tCommon/Data/Format/IniFile.cpp",
+      "candidate_tree_entry": "100644 blob 57a54e7a40b59ab52ca252abf4c72297fa42b04e\tCommon/Data/Format/IniFile.cpp",
+      "changed": true,
+      "path": "Common/Data/Format/IniFile.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 4e2789b82c370c31675d5a6d6627b63e4ce8233b\tCommon/Data/Text/Parsers.cpp",
+      "candidate_tree_entry": "100644 blob b5b5c0992ccb149c7d875ecc06f85746c37b0f36\tCommon/Data/Text/Parsers.cpp",
+      "changed": true,
+      "path": "Common/Data/Text/Parsers.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob e0dd9976645afadc4baf685893748e8a63a3e1a1\tCommon/StringUtils.cpp",
+      "candidate_tree_entry": "100644 blob 4ec97b7171d4c6a48a8a0f9be06c1d0f054d73b6\tCommon/StringUtils.cpp",
+      "changed": true,
+      "path": "Common/StringUtils.cpp"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 1c3210d9d1eaf47cc33a1e0c451f4704a765852d\tLICENSE.TXT",
+      "candidate_tree_entry": "100644 blob 1c3210d9d1eaf47cc33a1e0c451f4704a765852d\tLICENSE.TXT",
+      "changed": false,
+      "path": "LICENSE.TXT"
+    }
+  ],
+  "schema": 1,
+  "source": "PPSSPP_SOURCE_ROOT",
+  "source_pin_updated": false
+}

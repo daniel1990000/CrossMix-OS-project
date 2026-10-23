@@ -112,3 +112,32 @@ jobs:
         with:
           name: host-preview-evidence
           path: dist/
+  provenance:
+    # A manually selected repository revision can receive publisher provenance.
+    # PR validation keeps its read-only token and cannot enter this job.
+    if: github.event_name == 'workflow_dispatch'
+    needs: host
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: host-preview-evidence
+          path: dist/
+      - name: Attest original host artifacts and certification
+        id: attest
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a
+        with:
+          subject-path: |
+            dist/development/*
+            dist/certification.json
+      - name: Retain independently verifiable provenance bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: host-preview-provenance
+          path: ${{ steps.attest.outputs.bundle-path }}
+          if-no-files-found: error

@@ -1,6 +1,35 @@
 # TrimUI Smart Pro implementation handover
 
-## Current continuation — dev13 software validation
+## Current continuation — dev14 without device access
+
+The owner's instruction is **complete all remaining items that do not need the
+Smart Pro**. Read [the nondevice completion report](project/docs/nondevice-completion-2026-10-23.md)
+and its exact verification receipt. Dev14 adds recovered-key possession
+verification, current upstream review and original-only host provenance/delivery.
+The restored dev13 baseline passes 989 checks; the new software passes **1,011**
+(950 host/source plus 61 PPSSPP), with no skips, failures or errors. Exact clean
+build and CI identities are retained separately from that local development run.
+
+The exact dev13 CI artifact now also has independent owner-only retention and a
+fresh complete readback in
+[its custody receipt](project/evidence/nondevice-completion-20261023/dev13-retention-readback.json).
+Earlier records describing its absence of retention remain historical.
+
+The owner does not have a signing/recovery destination to provide and need not
+manage keys for the host preview. Use GitHub's exact workflow/source attestation
+for host downloads. No persistent Ed25519 device-release key was created; actual
+owner-controlled production custody/recovery remains open. Never ask the owner
+to send a private key or password. Do not send another author notice.
+
+Original-only host delivery is distinct from a device release. The original
+register remains **14/25 rows complete and 0/13 physical areas run** until the
+remaining exact grant, operational and hardware criteria are met. The PR stays
+draft and unmerged, both runtime selectors return None, all production gates
+remain false, and no native binary/upstream patch is selected. Dev13 and older
+build/source/CI evidence retains its own exact snapshot identity.
+
+## Historical dev13 continuation
+
 
 The owner confirmed **no device access; continue software work** on 23 October
 2026. The current original-only descriptor is `smartpro-psp-0.1.0-dev13`.

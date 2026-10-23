@@ -1,0 +1,22 @@
+{
+  "adoption_authorized": false,
+  "all_changed_paths_bound_to_hold": true,
+  "baseline_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+  "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+  "candidate_executed": false,
+  "changed_in_scope": 0,
+  "changed_outside_scope": 111,
+  "changed_paths": 111,
+  "decision_groups": {
+    "ports-new": 109,
+    "ports-runtime": 2
+  },
+  "device_qualified": false,
+  "distribution_cleared": false,
+  "kind": "upstream-hold-review-validation",
+  "pins_updated": false,
+  "review_coverage": "metadata identity and explained hold; no full behavioral audit or adoption",
+  "review_sha256": "2c5fddcac00a6634cb41ac98fca70836a500f4afb520991f96fad95c195604f4",
+  "schema": 1,
+  "source": "PORTS_SOURCE_ROOT"
+}

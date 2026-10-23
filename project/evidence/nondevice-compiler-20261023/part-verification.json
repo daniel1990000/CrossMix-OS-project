@@ -1,0 +1,10 @@
+{
+  "artifact": "compiler-image",
+  "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+  "size_bytes": 471632780,
+  "parts_verified": 8,
+  "verified_at_utc": "2026-10-23T03:02:58.081443+00:00",
+  "hardware_qualified": false,
+  "source_use_verified": false,
+  "production_authorization": false
+}

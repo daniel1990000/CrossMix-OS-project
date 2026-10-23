@@ -1,0 +1,8 @@
+{
+  "compressed_sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+  "compressed_bytes": 471632780,
+  "raw_sha256": "53af6bbcce2b3ad494d51f02de98c5682b91c73b5725df101039d678e7255889",
+  "raw_bytes": 1516103168,
+  "config_sha256": "15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+  "all_content_addressed_blobs_verified": 8
+}

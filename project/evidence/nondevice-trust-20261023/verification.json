@@ -1,0 +1,41 @@
+{
+  "actual_retained_private_key_recovery_exercised": false,
+  "claims": [
+    "Exact recovered key possession can be verified against a separately selected public fingerprint and fresh nonce challenge.",
+    "The signature alone does not establish storage provenance, actor identity, recovery access separation or production designation."
+  ],
+  "date_utc": "2026-10-23T02:57:57.551770+00:00",
+  "gates_changed": false,
+  "hardware_tested": false,
+  "kind": "nondevice-signing-recovery-verifier-validation",
+  "operational_key_created": false,
+  "operational_trust_established": false,
+  "private_key_uploaded": false,
+  "reason_not_creating_candidate": "No designated owner recovery recipient or independent recovery control is configured. An ephemeral password cannot make a candidate owner-recoverable, and a password retained beside its envelope would not prove separate recovery access.",
+  "remaining_nondevice_inputs": [
+    "Owner-designated release trust root",
+    "Owner-controlled wrapping recipient or separate recovery service",
+    "Actual encrypted retained key backup and fresh retrieval/decryption evidence",
+    "Separately verified public trust-root and revocation distribution"
+  ],
+  "schema": 1,
+  "scope": "Host engineering for O01; actual operational key custody remains open.",
+  "source_files": [
+    {
+      "path": "project/tools/operational_trust.py",
+      "sha256": "c1d762c37d43ac709c8e2ea04747197d5d5dd3b7957efaebd99d93a54fcecf7a"
+    },
+    {
+      "path": "project/tests/test_operational_trust.py",
+      "sha256": "4221b0b847dc93c8fa16083ec4cd69910bcecf2d586f7175088751ad14fdd6ed"
+    }
+  ],
+  "test_signatures": "Actual libsodium Ed25519; temporary fixture keys removed by test cleanup.",
+  "tests": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 12,
+    "run": 12,
+    "skipped": 0
+  }
+}

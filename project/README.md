@@ -9,7 +9,13 @@ This checkpoint runs on a computer and has injected-runtime tests. It is not a d
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,
 revocation receipts and trust report readback. The current descriptor selects
-**smartpro-psp-0.1.0-dev13**, an original-only host preview.
+**smartpro-psp-0.1.0-dev14**, an original-only host preview.
+
+The [work completed without hardware](docs/nondevice-completion-2026-10-23.md)
+adds exact recovered-key possession verification, current upstream maintenance
+review, native notice/source work and original-only host hosting/provenance.
+The current exact build and retained-readback evidence is kept separately from
+the historical receipts.
 
 The earlier [remaining-plan software completion](docs/completion-2026-10-23.md)
 implements the conditional private viewing route, real backup/restore payloads,

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "evidence_kind": "pinned-source-rights-register; not a permission or delivery receipt",
-  "date": "2026-10-22",
+  "date": "2026-10-23",
   "original_preview": {
     "python_and_graphics": "project/LICENSE (MIT)",
     "font": "Noto Sans, project/assets/fonts/OFL.txt",
@@ -36,12 +36,15 @@
         "source_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/LICENSE.md"
       }
     ],
-    "author_notification_sent": false,
-    "owner_reply_to_provided": false,
-    "source_use_obligations_complete": false,
+    "author_notification_sent": "owner-confirmed; correspondence not independently inspected",
+    "source_use_obligations_complete": true,
     "notification_draft": "project/docs/author-notification-draft.txt",
-    "remaining_action": "Owner reviews the prepared recipients/public contact and sends, or explicitly authorizes sending, the exact notice; retain delivery evidence and reconcile stated contact/scope.",
-    "proposed_contact_for_owner_review": "Public GitHub account daniel1990000 and project issue tracker; no private sender address inferred."
+    "remaining_action": "No further notification for the current owner-confirmed private noncommercial scope. Review an actual proposed public derivative distribution separately; do not expand private attestation into unrelated native/SDK terms.",
+    "proposed_contact_for_owner_review": "Public GitHub account daniel1990000 and project issue tracker; no private sender address inferred.",
+    "source_use_scope": "Current private noncommercial source integration only; no commercial, SDK or public-native grant inferred.",
+    "owner_permission_evidence": "project/evidence/completion-20261023/owner-permission.json",
+    "further_author_contact_required": false,
+    "assistant_sent_message": false
   },
   "ppsspp": {
     "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
@@ -78,10 +81,10 @@
     "hardware_qualified": false,
     "automatic_device_activation": false,
     "remaining_external_evidence": [
-      "PyUI source-use notification delivery/scope",
-      "Recipe/SDK and exact combined-binary redistribution review",
+      "Exact public recipe/IGM and incorporated toolchain/source/notice scope",
       "Original TG5040 acceptance and independently reviewed installed profiles"
-    ]
+    ],
+    "R05_private_noncommercial_scope_complete": true
   },
   "retroarch_igm": {
     "upstream_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
@@ -94,5 +97,6 @@
     "notice": "project/retroarch/NOTICE.md",
     "source_lock": "project/retroarch/source-lock.json",
     "private_complete_build_evidence": "project/evidence/retroarch-igm-build.json"
-  }
+  },
+  "native_notice_work": "project/docs/nondevice-distribution-2026-10-23.md"
 }

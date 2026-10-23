@@ -1,0 +1,26 @@
+[
+  {
+    "id": "ra-source",
+    "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+    "size_bytes": 144576907,
+    "fresh_part_and_complete_hashes_verified": true
+  },
+  {
+    "id": "ra-build-records",
+    "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+    "size_bytes": 595274,
+    "fresh_part_and_complete_hashes_verified": true
+  },
+  {
+    "id": "ppsspp-source",
+    "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+    "size_bytes": 177963111,
+    "fresh_part_and_complete_hashes_verified": true
+  },
+  {
+    "id": "ppsspp-build-records",
+    "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+    "size_bytes": 291510,
+    "fresh_part_and_complete_hashes_verified": true
+  }
+]

@@ -1,0 +1,46 @@
+{
+  "baseline_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+  "candidate_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+  "changed_required_inputs": 0,
+  "files": [
+    {
+      "baseline_tree_entry": "100644 blob 1af7c6ce613345f2f42b73f54a3b264e36e6c7b1\tPortMaster/pylibs/harbourmaster/platform.py",
+      "candidate_tree_entry": "100644 blob 1af7c6ce613345f2f42b73f54a3b264e36e6c7b1\tPortMaster/pylibs/harbourmaster/platform.py",
+      "changed": false,
+      "path": "PortMaster/pylibs/harbourmaster/platform.py"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 5558fe9f15c5f330523ea2442d678c3e296ca78e\tPortMaster/pylibs/harbourmaster/platform/__init__.py",
+      "candidate_tree_entry": "100644 blob 5558fe9f15c5f330523ea2442d678c3e296ca78e\tPortMaster/pylibs/harbourmaster/platform/__init__.py",
+      "changed": false,
+      "path": "PortMaster/pylibs/harbourmaster/platform/__init__.py"
+    },
+    {
+      "baseline_tree_entry": "100644 blob c7a809505a7b1152a703c9d07c256acff5ece207\tPortMaster/pylibs/harbourmaster/platform/miyoo.py",
+      "candidate_tree_entry": "100644 blob c7a809505a7b1152a703c9d07c256acff5ece207\tPortMaster/pylibs/harbourmaster/platform/miyoo.py",
+      "changed": false,
+      "path": "PortMaster/pylibs/harbourmaster/platform/miyoo.py"
+    },
+    {
+      "baseline_tree_entry": "100755 blob 0d310b9e136cc43be94707495a0f32271253335c\tPortMaster/device_info.txt",
+      "candidate_tree_entry": "100755 blob 0d310b9e136cc43be94707495a0f32271253335c\tPortMaster/device_info.txt",
+      "changed": false,
+      "path": "PortMaster/device_info.txt"
+    },
+    {
+      "baseline_tree_entry": "100644 blob e58faaa81a7a3177f58933c4a85537c3e0ded4d9\tPortMaster/control.txt",
+      "candidate_tree_entry": "100644 blob e58faaa81a7a3177f58933c4a85537c3e0ded4d9\tPortMaster/control.txt",
+      "changed": false,
+      "path": "PortMaster/control.txt"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 605d980422dcfeb9f1875154bbb0724b1fb76d9e\tPortMaster/funcs.txt",
+      "candidate_tree_entry": "100644 blob 605d980422dcfeb9f1875154bbb0724b1fb76d9e\tPortMaster/funcs.txt",
+      "changed": false,
+      "path": "PortMaster/funcs.txt"
+    }
+  ],
+  "schema": 1,
+  "source": "PORTMASTER_SOURCE_ROOT",
+  "source_pin_updated": false
+}

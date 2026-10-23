@@ -1,6 +1,14 @@
 # TrimUI master plan — 22 October 2026
 
-Current software update, 23 October 2026: the original-only **dev13** preview
+Current dev14 work, 23 October 2026: [the nondevice report](nondevice-completion-2026-10-23.md)
+records exact native notice/source review, recovered-key verification, current
+upstream dispositions and original-only host delivery/provenance. The original
+row criteria still require **14/25 complete and 0/13 physical areas run** until
+the missing operational inputs and physical evidence are supplied. Host hosting
+is separate from a public device release. See the report and exact verification
+for completed operations; the older dated checkpoints below keep their scope.
+
+Historical dev13 software update, 23 October 2026: the original-only **dev13** preview
 fixes source certification, probe cleanup, evidence chronology, revocation
 receipts and report publication. See [the changes and remaining criteria](software-hardening-2026-10-23.md)
 and [exact validation](../evidence/software-hardening-20261023/verification.json).

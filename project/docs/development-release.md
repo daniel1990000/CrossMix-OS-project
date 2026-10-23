@@ -58,3 +58,8 @@ PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=app /path/to/preview-venv/bin/python -m psp
 For a headless screenshot add `--headless --frames 2 --state-dir /tmp/smartpro-preview-state --screenshot /tmp/smartpro-preview.png`. Keep state outside the extracted payload. Device boot/launch integration, source-use notification/rights, internal startup/scene restoration, sleep/USB/power and save integrity remain separate gates described in [recovery.md](recovery.md).
 
 The extracted `smartpro-original-source` directory can rebuild the same deliverable using `python3 packaging/dev_release.py --output /tmp/smartpro-rebuild --include-source` and the same optional signing/smoke arguments. Its `metadata/release-source.json` preserves the original Git identity and verifies all selected source bytes before building. Changed exported source is rejected instead of being attributed to the original commit. Use a repository checkout and a new descriptor for subsequent development. Full pinned-source certification additionally needs the separately scoped upstream patches/native fixtures and the five pinned source references (spruce, PPSSPP, spruce RA, PortMaster-New and PortMaster-GUI); the original-only ZIP does not contain those upstream/native source scopes.
+
+Dev14 adds manually dispatched GitHub build provenance and stable original-only
+host delivery. See [verification instructions](nondevice-completion-2026-10-23.md).
+Attestation identifies the workflow/source that produced host bytes; device
+qualification and the existing operational signing requirements remain separate.

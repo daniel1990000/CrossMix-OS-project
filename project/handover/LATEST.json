@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "Original-only dev13 host preview; validation and cleanup fixes. Device, public native distribution and operational release requirements remain open.",
+  "project_stage": "Original-only dev14 host preview; nondevice distribution, key recovery, upstream maintenance and host delivery work. Device qualification and exact operational/external criteria remain open.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -60,7 +60,7 @@
     "P03",
     "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev13",
+  "release_id": "smartpro-psp-0.1.0-dev14",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -136,7 +136,7 @@
     "proposed_qualification_matrix": "firmware 1.1.1 / FAT32; inventory actual device first",
     "automatic_firmware_flash_authorized": false,
     "connected_or_probed_in_this_continuation": false,
-    "latest_availability_reply": "2026-10-23: No device access\u2014continue software work."
+    "latest_availability_reply": "2026-10-23: Complete all remaining items not needing my Smart Pro."
   },
   "next_work": [
     {
@@ -234,9 +234,9 @@
     "All proposed port save paths remain device-unverified; no port deletion/uninstall tool exists.",
     "The optional Celeste source patch is tested with synthetic helpers and remains unselected.",
     "Development package signatures are not an operational production trust root.",
-    "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; an empty-daemon compiler restore and all target execution remain untested."
+    "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; the retained compiler was restored into an observed empty daemon and passed offline C/C++ link smoke; target execution remains untested."
   ],
-  "handover_validation": "project/evidence/software-hardening-20261023/verification.json",
+  "handover_validation": "project/evidence/nondevice-completion-20261023/verification.json",
   "latest_completed_host_task": "D01",
   "previous_five_task_batch": [
     "U04",
@@ -304,11 +304,13 @@
     "ppsspp_replacement_sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
     "retroarch_replacement_sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
     "storage_sharing": "owner-only Drive; no permissions added",
-    "compiler_empty_daemon_restore_tested": false,
+    "compiler_empty_daemon_restore_tested": true,
     "native_target_executed": false,
     "current_host_and_private_source_retrieved": true,
     "historical_dev12_private_retention_receipt": "project/evidence/completion-20261023/retention-readback.json",
-    "current_dev13_independent_private_retention_performed": false
+    "current_dev13_independent_private_retention_performed": true,
+    "dev13_private_retention_receipt": "project/evidence/nondevice-completion-20261023/dev13-retention-readback.json",
+    "compiler_recovery_receipt": "project/evidence/nondevice-compiler-20261023/verification.json"
   },
   "preparation": {
     "D01": {
@@ -357,9 +359,9 @@
       "focused_checks": 24
     }
   },
-  "continuation_scope": "Owner confirms no device access; continue software work. Preserve 14/25 scope completion and 0/13 physical areas. No further author notice or automatic device activation.",
+  "continuation_scope": "Complete all remaining work not needing Smart Pro. Owner has no existing signing/recovery reference to provide. Use workflow provenance for original-only host delivery; preserve 14/25 row criteria and 0/13 physical areas, no author contact or device activation.",
   "historical_handover_validation": "project/handover/validation.json",
-  "current_consistency_record": "project/evidence/software-hardening-20261023/verification.json",
+  "current_consistency_record": "project/evidence/nondevice-completion-20261023/verification.json",
   "historical_dev10_snapshot": {
     "release_id": "smartpro-psp-0.1.0-dev10",
     "implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
@@ -528,5 +530,15 @@
     "additional_plan_rows_completed": 0,
     "hardware_tested": false,
     "production_gates_enabled": false
+  },
+  "nondevice_continuation": {
+    "report": "project/docs/nondevice-completion-2026-10-23.md",
+    "verification": "project/evidence/nondevice-completion-20261023/verification.json",
+    "distribution": "project/docs/nondevice-distribution-2026-10-23.md",
+    "signing": "project/docs/nondevice-trust-2026-10-23.md",
+    "maintenance": "project/docs/nondevice-maintenance-2026-10-23.md",
+    "owner_signing_input": "Owner cannot provide an existing recovery destination and does not know the term; no repeated technical request. No persistent production private key created.",
+    "dev13_retention": "project/evidence/nondevice-completion-20261023/dev13-retention-readback.json",
+    "compiler_recovery": "project/docs/nondevice-compiler-2026-10-23.md"
   }
 }
