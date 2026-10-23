@@ -75,9 +75,31 @@
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "clean_implementation_commit": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+    "original_source_inventory_files": 198,
+    "original_source_inventory_sha256": "ab91840f50415fd9468c06f54d88c3efb8994da5cfc57cbb62a268696092ba65",
+    "payload_files": 60,
+    "build_status": "passed",
     "local_certification": "project/evidence/software-hardening-20261023/certification.json",
-    "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
+    "local_build_report": "project/evidence/software-hardening-20261023/build-report.json",
+    "local_release_source": "project/evidence/software-hardening-20261023/release-source.json",
+    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "later_evidence_edits": "Preserve the exact clean implementation/build source inventory. Later documentation/evidence commits have separate frontend/source identities.",
+    "ci": {
+      "run_id": 39891041396,
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396",
+      "source_branch_head": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+      "status": "success",
+      "actual_clean_merge_checkout": "ae1d11ea1b0c52bda8f579039183697cb3d811f9",
+      "artifact_id": 12474603842,
+      "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396/artifacts/12474603842",
+      "artifact_sha256": "7e2b8c55dfade9c77f3255652b7f1169e669c599dea4d7dfc844aa0e81e5d3bb",
+      "artifact_bytes": 5098635,
+      "artifact_expires_at_utc": "2027-01-21T02:42:34Z",
+      "readback": "project/evidence/software-hardening-20261023/ci-readback.json",
+      "signature_payload_and_source_export_bytes_verified": true,
+      "independent_private_retention_performed": false
+    }
   },
   "qualification": {
     "hardware_tested": false,
@@ -240,14 +262,36 @@
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "clean_implementation_commit": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+    "original_source_inventory_files": 198,
+    "original_source_inventory_sha256": "ab91840f50415fd9468c06f54d88c3efb8994da5cfc57cbb62a268696092ba65",
+    "payload_files": 60,
+    "build_status": "passed",
     "local_certification": "project/evidence/software-hardening-20261023/certification.json",
-    "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
+    "local_build_report": "project/evidence/software-hardening-20261023/build-report.json",
+    "local_release_source": "project/evidence/software-hardening-20261023/release-source.json",
+    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "later_evidence_edits": "Preserve the exact clean implementation/build source inventory. Later documentation/evidence commits have separate frontend/source identities.",
+    "ci": {
+      "run_id": 39891041396,
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396",
+      "source_branch_head": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+      "status": "success",
+      "actual_clean_merge_checkout": "ae1d11ea1b0c52bda8f579039183697cb3d811f9",
+      "artifact_id": 12474603842,
+      "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396/artifacts/12474603842",
+      "artifact_sha256": "7e2b8c55dfade9c77f3255652b7f1169e669c599dea4d7dfc844aa0e81e5d3bb",
+      "artifact_bytes": 5098635,
+      "artifact_expires_at_utc": "2027-01-21T02:42:34Z",
+      "readback": "project/evidence/software-hardening-20261023/ci-readback.json",
+      "signature_payload_and_source_export_bytes_verified": true,
+      "independent_private_retention_performed": false
+    }
   },
   "artifact_custody": {
     "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
     "historical_host_receipt": "project/evidence/artifact-custody/host-retention.json",
-    "current_host_receipt": "project/evidence/completion-20261023/retention-readback.json",
+    "current_host_receipt": "project/evidence/software-hardening-20261023/ci-readback.json",
     "native_build_report": "project/evidence/artifact-custody/native-rebuild.json",
     "native_source_review": "project/evidence/artifact-custody/native-source-review.json",
     "native_retention_receipt": "project/evidence/artifact-custody/native-retention.json",
@@ -262,7 +306,9 @@
     "storage_sharing": "owner-only Drive; no permissions added",
     "compiler_empty_daemon_restore_tested": false,
     "native_target_executed": false,
-    "current_host_and_private_source_retrieved": true
+    "current_host_and_private_source_retrieved": true,
+    "historical_dev12_private_retention_receipt": "project/evidence/completion-20261023/retention-readback.json",
+    "current_dev13_independent_private_retention_performed": false
   },
   "preparation": {
     "D01": {
@@ -304,7 +350,7 @@
       "focused_checks": 33
     },
     "O02": {
-      "status": "Original-only 14-file review handoff prepared, verified, privately retained and freshly retrieved; public device release remains gated.",
+      "status": "Historical dev12 original-only 14-file handoff was retained and retrieved; new dev13 CI artifact has separate complete readback, without independent private retention. Public device release remains gated.",
       "tool": "project/tools/release_handoff.py",
       "documentation": "project/docs/release-handoff.md",
       "evidence": "project/evidence/completion-20261023/release-handoff.json",

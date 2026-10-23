@@ -37,6 +37,27 @@ results, source/build identities and package checks are recorded in
 [the validation evidence](../evidence/software-hardening-20261023/verification.json).
 Historical dev12 receipts continue to describe their original artifacts.
 
+Strict local and [CI run 39891041396](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396)
+pass **989 checks**: 928 host/source and 61 PPSSPP, with zero skips, failures or
+errors. This adds 15 regression checks. The clean implementation/build commit is
+`7d21f63d8b8803b2d6af9dcb703cca429f50c3b5`; CI actually built clean merge
+`ae1d11ea1b0c52bda8f579039183697cb3d811f9`.
+
+The 60-file signed payload passes installed SDL/navigation/settings/classic
+smoke and fixture rollback. The 198-file original-source inventory is
+`ab91840f50415fd9468c06f54d88c3efb8994da5cfc57cbb62a268696092ba65`.
+The local no-Git source export reproduces both ZIPs byte for byte with the same
+disposable development signer, which was deleted. Neither ZIP contains an ELF.
+
+[CI artifact 12474603842](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396/artifacts/12474603842)
+was retrieved in full: 5,098,635 bytes, SHA-256
+`7e2b8c55dfade9c77f3255652b7f1169e669c599dea4d7dfc844aa0e81e5d3bb`.
+All eight inner development checksums, signature/payload and actual exported
+source bytes pass readback. It expires on **21 January 2027 at 02:42:34 UTC**;
+independent private retention was not performed for this new artifact. Later
+documentation/evidence commits preserve the above build identities and receive
+their own source inventory if rebuilt.
+
 ## Completion limits
 
 The register remains **14 of 25 completed scoped rows**, including 13 host

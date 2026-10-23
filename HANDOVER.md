@@ -10,6 +10,21 @@ revocation and report-publication defects, with regression tests and independent
 review. Exact validation/build/CI records are in
 [verification](project/evidence/software-hardening-20261023/verification.json).
 
+Strict local certification passes **989 checks** (928 host/source and 61 PPSSPP),
+with zero skips, failures or errors against all five exact sources. Clean build
+commit `7d21f63d8b8803b2d6af9dcb703cca429f50c3b5` has a verified 60-file signed
+payload and 198-file original-source inventory
+`ab91840f50415fd9468c06f54d88c3efb8994da5cfc57cbb62a268696092ba65`.
+The source export reproduces both ZIPs byte for byte with the same disposable
+development signer; the signer was deleted. Packaging verifies installed SDL,
+navigation/settings/classic contracts and fixture rollback. These are host
+results; exact CI/artifact identities are saved separately in verification.
+[CI run 39891041396](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396)
+also passes all 989 checks on clean merge `ae1d11ea1b0c52bda8f579039183697cb3d811f9`.
+Artifact `12474603842` was retrieved and fully verified against the provider
+checksum; expiry is 21 January 2027. Later documentation/evidence edits preserve
+these exact build identities and do not acquire their source-inventory digest.
+
 The project remains **14 of 25 scoped rows complete; zero of 13 physical areas
 tested**. The remaining rows require actual hardware, precise public native
 distribution decisions or operational release evidence. Both shipped selectors
@@ -30,7 +45,7 @@ in `project/README.md`. Scratch is temporary; resume from GitHub evidence.
 
 Checkpoint: **23 October 2026**. Active branch: `build/spruce-psp-experience` in `daniel1990000/CrossMix-OS-project`. [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Continue the original TG5040 spruceOS/PyUI project under `project/`.
 
-## Current completion — dev12
+## Historical completion — dev12
 
 The user's latest request is **“Finish everything.”** The owner is busy and
 cannot provide device/card/SSH/operator access now. The owner also confirms

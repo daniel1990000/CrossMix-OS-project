@@ -29,5 +29,63 @@
   "selected_upstream_patches": [],
   "device_ready": false,
   "release_ready": false,
-  "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
+  "build_status": "passed",
+  "clean_implementation_commit": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+  "local_build_report": "project/evidence/software-hardening-20261023/build-report.json",
+  "local_release_source": "project/evidence/software-hardening-20261023/release-source.json",
+  "original_source_inventory_files": 198,
+  "original_source_inventory_sha256": "ab91840f50415fd9468c06f54d88c3efb8994da5cfc57cbb62a268696092ba65",
+  "payload_files": 60,
+  "development_build_checks": {
+    "clean_git_source": true,
+    "signature_and_payload": true,
+    "same_key_overlay_rebuild": true,
+    "installed_sdl_settings_navigation_classic_smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "fixture_rollback": true,
+    "no_git_export_both_zips_byte_identical": true,
+    "disposable_private_signer_deleted": true
+  },
+  "local_notice_inventories": {
+    "preview": {
+      "sha256": "772b260eaca52fd846eed8c1746723aacbd8723b9eaf9d57bfea9b0e60c79e68",
+      "regular_files": 61,
+      "elf_members": []
+    },
+    "source": {
+      "sha256": "659df0a906345f82f4ac5dfa0e8b9984cc3ad0e0f45f640f9e1b78122f261092",
+      "regular_files": 199,
+      "elf_members": []
+    }
+  },
+  "later_evidence_edits": "Preserve the exact clean implementation/build source inventory. Later documentation/evidence commits have separate frontend/source identities.",
+  "ci": {
+    "run_id": 39891041396,
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396",
+    "source_branch_head": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+    "status": "success",
+    "actual_clean_merge_checkout": "ae1d11ea1b0c52bda8f579039183697cb3d811f9",
+    "artifact_id": 12474603842,
+    "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39891041396/artifacts/12474603842",
+    "artifact_sha256": "7e2b8c55dfade9c77f3255652b7f1169e669c599dea4d7dfc844aa0e81e5d3bb",
+    "artifact_bytes": 5098635,
+    "artifact_expires_at_utc": "2027-01-21T02:42:34Z",
+    "readback": "project/evidence/software-hardening-20261023/ci-readback.json",
+    "signature_payload_and_source_export_bytes_verified": true,
+    "independent_private_retention_performed": false
+  },
+  "trust_rehearsal": {
+    "evidence": "project/evidence/software-hardening-20261023/trust-rehearsal.json",
+    "sha256": "2c8f7098601295b2344b1fc35f08ead545f858949058bb7c35ba32a8fe190603",
+    "operational_trust_established": false
+  },
+  "handover_consistency": "project/evidence/software-hardening-20261023/handover-audit.json"
 }
