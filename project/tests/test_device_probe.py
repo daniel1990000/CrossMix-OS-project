@@ -4,6 +4,8 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import signal
+import socket
 import subprocess
 import sys
 import tempfile
@@ -187,14 +189,56 @@ class DeviceProbeTests(unittest.TestCase):
         with patch.object(probe, "run_bounded", side_effect=version), self.assertRaises(ValueError):
             probe.tool_identity(live_tree, str(path), execute_version=True)
 
-    def test_completed_disposable_command_never_signals_a_reaped_group(self):
-        with patch.object(probe.os, "killpg") as kill:
+    def test_completed_disposable_group_is_stopped_before_root_reaping(self):
+        real_kill = os.killpg
+        observations = []
+        def kill(pid, sig):
+            observation = os.waitid(os.P_PID, pid, os.WEXITED | os.WNOHANG | os.WNOWAIT)
+            self.assertIsNotNone(observation)
+            self.assertEqual(observation.si_pid, pid)
+            observations.append(observation.si_status)
+            return real_kill(pid, sig)
+        with patch.object(probe.os, "killpg", side_effect=kill):
             self.assertEqual(probe.run_bounded([sys.executable, "-c", "print('done')"]), b"done\n")
-            kill.assert_not_called()
-        with patch.object(probe.os, "killpg") as kill:
             with self.assertRaises(ValueError):
                 probe.run_bounded([sys.executable, "-c", "raise SystemExit(3)"])
-            kill.assert_not_called()
+        self.assertEqual(observations, [0, 3])
+
+    def test_successful_root_cannot_leave_a_disposable_descendant_running(self):
+        program = ("import os,socket,sys,time\nchild=os.fork()\n"
+                   "if child:\n"
+                   " control=socket.socket(fileno=int(sys.argv[1]))\n"
+                   " socket.send_fds(control,[b'p'],[os.pidfd_open(child)])\n"
+                   " print(child,flush=True)\n os._exit(0)\n"
+                   "os.close(1);os.close(2);time.sleep(30)\n")
+        # Acquire the cleanup handle in the actual parent, while the newly
+        # forked child is still unreaped. SCM_RIGHTS keeps that exact process
+        # pinned even if its numeric PID disappears or is reused after return.
+        receiving, sending = socket.socketpair()
+        with receiving, sending:
+            receiving.settimeout(1)
+            child = int(probe.run_bounded([sys.executable, "-c", program, str(sending.fileno())],
+                                         pass_fds=(sending.fileno(),)))
+            _, handles, _, _ = socket.recv_fds(receiving, 1, 1)
+        self.assertEqual(len(handles), 1)
+        handle = handles[0]
+        try:
+            deadline = time.monotonic() + 1
+            while time.monotonic() < deadline:
+                try:
+                    state = Path('/proc/%d/stat' % child).read_text().rpartition(')')[2].split()[0]
+                except FileNotFoundError:
+                    return
+                if state in {'Z', 'X'}:
+                    return
+                time.sleep(.01)
+            try:
+                signal.pidfd_send_signal(handle, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            self.fail('disposable descendant survived successful observation')
+        finally:
+            os.close(handle)
 
     def test_timed_out_disposable_command_is_cleaned_before_wait_reaps_root(self):
         real_kill = os.killpg

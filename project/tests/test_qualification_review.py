@@ -228,6 +228,43 @@ class QualificationReviewTests(unittest.TestCase):
         row = next(item for item in report["context_cycles"] if item["test"] == "cold_boot" and item["context"] == "classic")
         self.assertEqual(row["passed"], 1)
 
+    def test_passing_retest_cannot_predate_the_failure_it_supersedes(self):
+        failed = self.observation("input", context="classic")
+        self.record("input", status="fail", observation=failed)
+        replacement = self.observation("input", context="classic")
+        replacement.update(started_at=(self.clock - timedelta(hours=1)).isoformat(),
+                           ended_at=(self.clock - timedelta(minutes=59)).isoformat(),
+                           retest_of=hashlib.sha256((self.session / "input/001.json").read_bytes()).hexdigest())
+        self.record("input", observation=replacement)
+        report = self.review()
+        self.assertIn("incomplete_or_inconsistent_attempt", self.issue_codes(report))
+        self.assertEqual(report["cases"]["input"]["status"], "fail")
+        history = [item for item in report["retained_attempt_history"] if item["case"] == "input"]
+        self.assertEqual([item["status"] for item in history], ["fail"])
+
+    def test_numbered_cycle_order_cannot_run_backwards_even_without_overlap(self):
+        second = self.observation("boot", "cold_boot", "classic", 2)
+        first = self.observation("boot", "cold_boot", "classic", 1)
+        self.record("boot", observation=first)
+        self.record("boot", observation=second)
+        report = self.review()
+        issue = next(item for item in report["issues"] if item["code"] == "missing_or_failed_context_cycles"
+                     and item["case"] == "boot" and item["test"] == "cold_boot" and item["context"] == "classic")
+        self.assertTrue(issue["contiguous"])
+        self.assertFalse(issue["chronological"])
+
+    def test_later_retest_of_earlier_cycle_preserves_valid_first_execution_order(self):
+        self.record("boot", "cold_boot", "classic", 1, status="fail")
+        self.record("boot", "cold_boot", "classic", 2)
+        replacement = self.observation("boot", "cold_boot", "classic", 1)
+        replacement["retest_of"] = hashlib.sha256((self.session / "boot/001.json").read_bytes()).hexdigest()
+        self.record("boot", observation=replacement)
+        report = self.review()
+        self.assertNotIn("incomplete_or_inconsistent_attempt", self.issue_codes(report))
+        row = next(item for item in report["context_cycles"] if item["test"] == "cold_boot" and item["context"] == "classic")
+        self.assertTrue(row["complete"])
+        self.assertEqual(row["passed"], 2)
+
     def test_cycle_gaps_overlaps_and_reused_cold_boot_identity_are_rejected(self):
         first = self.observation("boot", "cold_boot", "classic", 1)
         second = self.observation("boot", "cold_boot", "psp", 2)

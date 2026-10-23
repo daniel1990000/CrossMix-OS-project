@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import stat
 import struct
+import tarfile
 import tempfile
 from types import SimpleNamespace
 import unittest
@@ -340,6 +341,69 @@ class ReleaseHandoffTests(unittest.TestCase):
             handoff.custody_receipt(self.bundle, self.root / "receipt.json", step="rotation", evidence_reference="fixture",
                                     expected_index=prepared["index_sha256"], **self.kwargs())
         self.assertFalse((self.root / "receipt.json").exists())
+
+    def revocation_kwargs(self):
+        current_pub, current_private = self.root / "current.pub", self.root / "current.private"
+        handoff.ov.keygen(current_private, current_pub)
+        fingerprint = handoff.ov.digest(current_pub.read_bytes())
+        registry = self.root / "registry.json"
+        registry.write_bytes(handoff.ov.canonical({"schema": 1, "keys": [
+            {"id": self.fingerprint, "introduced_epoch": 0, "status": "revoked"},
+            {"id": fingerprint, "public_key": current_pub.name, "introduced_epoch": 1, "status": "active"}]}))
+        return {"public_key": current_pub, "expected_fingerprint": fingerprint,
+                "trust_reference": "reviewed-revocation", "registry": registry,
+                "evidence_reference": "registry-owner-record"}
+
+    def update_bundle_index(self, name, data):
+        (self.bundle / name).write_bytes(data)
+        path = self.bundle / "index.json"
+        index = json.loads(path.read_bytes())
+        for row in index["files"]:
+            if row["path"] == name:
+                row.update(bytes=len(data), sha256=handoff.ov.digest(data))
+        path.write_bytes(handoff.ov.canonical(index))
+        return handoff.ov.digest(path.read_bytes())
+
+    def test_revocation_receipt_refuses_an_unrelated_unknown_signer(self):
+        self.prepare()
+        kwargs = self.revocation_kwargs()
+        private, public = self.root / "unknown.private", self.root / "unknown.pub"
+        handoff.ov.keygen(private, public)
+        substitute = self.root / "substitute.tar"
+        profile = handoff.ov.read_json(self.root / "host-fixture/fixture-profile.json")
+        handoff.ov.create_archive(self.root / "original-payload", substitute, private, public,
+                                  profile, self.release, "python-extension")
+        digest = self.update_bundle_index("artifacts/" + self.release + ".tar", substitute.read_bytes())
+        output = self.root / "receipt.json"
+        with self.assertRaises(handoff.ov.OverlayError):
+            handoff.custody_receipt(self.bundle, output, step="revocation", expected_index=digest, **kwargs)
+        self.assertFalse(output.exists())
+
+    def test_revocation_receipt_refuses_corrupted_payload_before_counting_registry_rejection(self):
+        self.prepare()
+        kwargs = self.revocation_kwargs()
+        name = "artifacts/" + self.release + ".tar"
+        raw = bytearray((self.bundle / name).read_bytes())
+        with tarfile.open(fileobj=io.BytesIO(raw), mode="r:") as archive:
+            offset = archive.getmember("payload/app/psp_shell/__main__.py").offset_data
+        raw[offset] ^= 1
+        digest = self.update_bundle_index(name, bytes(raw))
+        output = self.root / "receipt.json"
+        with self.assertRaisesRegex(handoff.ov.OverlayError, "hash rejected"):
+            handoff.custody_receipt(self.bundle, output, step="revocation", expected_index=digest, **kwargs)
+        self.assertFalse(output.exists())
+
+    def test_revocation_receipt_requires_original_only_artifact_scope(self):
+        self.prepare()
+        kwargs = self.revocation_kwargs()
+        name = "artifacts/build-report.json"
+        report = json.loads((self.bundle / name).read_bytes())
+        report["device_activation_qualified"] = True
+        digest = self.update_bundle_index(name, handoff.ov.canonical(report))
+        output = self.root / "receipt.json"
+        with self.assertRaisesRegex(handoff.ov.OverlayError, "unqualified original host preview"):
+            handoff.custody_receipt(self.bundle, output, step="revocation", expected_index=digest, **kwargs)
+        self.assertFalse(output.exists())
 
     def test_final_fsync_failure_preserves_uncertain_bundle_without_claiming_success(self):
         real_fsync = os.fsync

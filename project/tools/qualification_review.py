@@ -500,7 +500,7 @@ def review(session, scope, evidence_root, *, plan=DEFAULT_PLAN, reviewer=None):
             issue("candidate_artifact_identity_mismatch", role=role)
     expected_rows = _requirements(scope)
     required_keys = {(case, test, context): (minimum, roles) for case, test, context, minimum, roles in expected_rows}
-    latest, history = {}, []
+    latest, first_execution, history = {}, {}, []
     for case, rows in attempts.items():
         for row, hashed in rows:
             try:
@@ -512,6 +512,9 @@ def review(session, scope, evidence_root, *, plan=DEFAULT_PLAN, reviewer=None):
                 cycle_key = (*key, observation["cycle"])
                 prior = latest.get(cycle_key)
                 require(observation["retest_of"] == (prior[2] if prior else None), "cycle replay/retest reference differs")
+                if prior is not None:
+                    require(stamp(observation["started_at"]) >= stamp(prior[1]["ended_at"]),
+                            "a retest must start after the superseded attempt ended")
                 roles = {item["scope"] for item in observation["raw"]}
                 require(required_keys[key][1].issubset(roles), "required raw evidence scopes are missing")
                 if case == "restore":
@@ -524,6 +527,7 @@ def review(session, scope, evidence_root, *, plan=DEFAULT_PLAN, reviewer=None):
                                 for item in observation["raw"]), "native corresponding-source artifact differs")
                 for item in observation["raw"]:
                     artifact(item)
+                first_execution.setdefault(cycle_key, (stamp(observation["started_at"]), stamp(observation["ended_at"])))
                 latest[cycle_key] = (row, observation, hashed)
                 history.append({"case": case, "test": key[1], "context": key[2], "cycle": cycle_key[3],
                                 "status": row["status"], "attempt_sha256": hashed})
@@ -544,11 +548,16 @@ def review(session, scope, evidence_root, *, plan=DEFAULT_PLAN, reviewer=None):
             passed = [item for item in cells if item[1][0]["status"] == "pass"]
             valid_indices = [item[0] for item in cells]
             contiguous = valid_indices == list(range(1, len(valid_indices) + 1))
-            ok = len(passed) >= minimum and len(passed) == len(cells) and contiguous
+            # Cycle labels describe execution order, even when notes were
+            # imported later. A backwards sequence cannot supply extra cycles.
+            intervals = [first_execution[(case, test, context, index)] for index, _ in cells]
+            chronological = all(left[1] <= right[0] for left, right in zip(intervals, intervals[1:]))
+            ok = len(passed) >= minimum and len(passed) == len(cells) and contiguous and chronological
             if not ok:
                 complete = False
                 issue("missing_or_failed_context_cycles", case=case, test=test, context=context,
-                      required=minimum, passed=len(passed), attempted=len(cells), contiguous=contiguous)
+                      required=minimum, passed=len(passed), attempted=len(cells), contiguous=contiguous,
+                      chronological=chronological)
             failed = failed or any(item[1][0]["status"] == "fail" for item in cells)
             all_physical = all_physical and all(item[1][1]["provenance"] == "physical_operator" for item in passed)
             counts.append({"case": case, "test": test, "context": context, "required": minimum,

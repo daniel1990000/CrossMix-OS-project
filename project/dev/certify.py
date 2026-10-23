@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import stat
 import subprocess
 import sys
 import tempfile
@@ -36,8 +37,9 @@ def write_report(path, value):
 
 def git(source, *arguments):
     try:
-        return subprocess.run(["git", "-C", str(source), *arguments],
-                              check=True, capture_output=True, text=True).stdout.rstrip("\n")
+        return subprocess.run(["git", "-c", "core.fsmonitor=false", "-C", str(source), *arguments],
+                              check=True, capture_output=True, text=True,
+                              env={**os.environ, "GIT_NO_REPLACE_OBJECTS": "1"}).stdout.rstrip("\n")
     except (OSError, subprocess.CalledProcessError) as error:
         raise ValueError("Cannot read the required Git source checkout: " + str(source)) from error
 
@@ -55,21 +57,42 @@ def verify_checkout(source, expected_commit, required_files, tree=None):
         raise ValueError("Source checkout has changed tracked files: " + str(source))
     if git(source, "ls-files", "--others", "--exclude-standard"):
         raise ValueError("Source checkout has untracked files: " + str(source))
+    committed = {}
+    for entry in git(source, "ls-tree", "-r", "-z", "--full-tree", "HEAD").split("\0"):
+        if entry:
+            metadata, relative = entry.split("\t", 1)
+            mode, kind, object_id = metadata.split()
+            committed[relative] = (mode, kind, object_id)
+    indexed, sparse = {}, set()
+    for entry in git(source, "ls-files", "--stage", "-t", "-z").split("\0"):
+        if not entry:
+            continue
+        metadata, relative = entry.split("\t", 1)
+        tag, mode, object_id, stage = metadata.split()
+        if stage != "0" or relative in indexed:
+            raise ValueError("Source checkout has unresolved or duplicate staged files: " + str(source))
+        indexed[relative] = (mode, object_id)
+        if tag == "S":
+            sparse.add(relative)
+    if indexed != {name: (item[0], item[2]) for name, item in committed.items()}:
+        raise ValueError("Source checkout has changed tracked index files: " + str(source))
     materialized = 0
     # Compare actual bytes to HEAD, including files hidden from diff by local
     # assume-unchanged/skip-worktree flags. Sparse-excluded files may be absent;
     # consumed inputs below and the source tests must still be present.
-    for entry in git(source, "ls-tree", "-r", "-z", "--full-tree", "HEAD").split("\0"):
-        if not entry:
-            continue
-        metadata, relative = entry.split("\t", 1)
-        mode, kind, object_id = metadata.split()
+    for relative, (mode, kind, object_id) in committed.items():
         path = source / relative
-        if kind != "blob" or (not path.exists() and not path.is_symlink()):
+        if kind != "blob":
+            continue
+        if not path.exists() and not path.is_symlink():
+            if relative not in sparse:
+                raise ValueError("Tracked source file is missing without a sparse exclusion: " + str(path))
             continue
         if mode == "120000" and path.is_symlink():
             data = os.fsencode(os.readlink(path))
         elif mode in ("100644", "100755") and path.is_file() and not path.is_symlink():
+            if bool(path.stat().st_mode & stat.S_IXUSR) != (mode == "100755"):
+                raise ValueError("Materialized source file mode differs: " + str(path))
             data = path.read_bytes()
         else:
             raise ValueError("Materialized source file type differs: " + str(path))

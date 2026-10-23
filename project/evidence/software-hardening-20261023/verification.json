@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "software-validation-hardening",
+  "release_id": "smartpro-psp-0.1.0-dev13",
+  "strict_tests": {
+    "tests_run": 989,
+    "passed": 989,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "host_source_tests": 928,
+  "ppsspp_tests": 61,
+  "new_tests_since_dev12": 15,
+  "pinned_source_count": 5,
+  "local_certification": "project/evidence/software-hardening-20261023/certification.json",
+  "independent_review": "project/evidence/software-hardening-20261023/independent-review.json",
+  "completed_task_count": 14,
+  "total_task_count": 25,
+  "physical_areas_tested": 0,
+  "physical_areas_total": 13,
+  "owner_device_status": "No device access\u2014continue software work.",
+  "runtime_selectors_unavailable": true,
+  "production_gates_enabled": false,
+  "selected_native_binaries": [],
+  "selected_upstream_patches": [],
+  "device_ready": false,
+  "release_ready": false,
+  "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
+}

@@ -116,6 +116,9 @@ PYTHONPATH=project python3 project/tools/release_handoff.py custody-receipt \
   custody.
 - `revocation` requires that the actual registry revokes this package's signer
   and that the existing overlay verifier rejects these exact package bytes.
+  Before checking rejection, it diagnostically verifies the exact reviewed
+  signer's package, matching source/notices and host-only scope. Unknown-key
+  substitution or corrupt bytes cannot count as a successful revocation test.
   The independently retained index binds the otherwise no-longer-trusted
   artifact. Revocation is not a physical rollback, does not remove installed
   code and may remove eligibility to roll back to an older package.

@@ -85,6 +85,59 @@ class CertificationSourceTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "differs from Git HEAD"):
             self.verify()
 
+    def test_assume_unchanged_does_not_hide_a_deleted_consumed_file(self):
+        other = self.root / "consumed.py"
+        other.write_text("# consumed by source acceptance tests\n")
+        self.git("add", "consumed.py")
+        self.git("commit", "-qm", "additional consumed input")
+        self.commit = self.git("rev-parse", "HEAD").strip()
+        self.git("update-index", "--assume-unchanged", "consumed.py")
+        other.unlink()
+        self.assertEqual(self.git("diff", "--name-only", "HEAD"), "")
+        with self.assertRaisesRegex(ValueError, "missing without a sparse exclusion"):
+            self.verify()
+
+    def test_sparse_excluded_optional_input_may_be_absent(self):
+        (self.root / "omitted.py").write_text("# intentionally outside the source test scope\n")
+        self.git("add", "omitted.py")
+        self.git("commit", "-qm", "optional input")
+        self.commit = self.git("rev-parse", "HEAD").strip()
+        self.git("sparse-checkout", "set", "--no-cone", "/input.py")
+        self.assertFalse((self.root / "omitted.py").exists())
+        self.assertEqual(self.verify()["materialized_files_checked"], 1)
+
+    def test_hidden_executable_mode_change_is_rejected(self):
+        self.git("config", "core.filemode", "false")
+        self.git("update-index", "--assume-unchanged", "input.py")
+        (self.root / "input.py").chmod(0o755)
+        self.assertEqual(self.git("diff", "--name-only", "HEAD"), "")
+        with self.assertRaisesRegex(ValueError, "file mode differs"):
+            self.verify()
+
+    def test_replacement_objects_cannot_substitute_the_pinned_source_tree(self):
+        original = (self.root / "input.py").read_bytes()
+        (self.root / "input.py").write_text("# replacement tree\n")
+        self.git("add", "input.py")
+        self.git("commit", "-qm", "replacement tree")
+        replacement = self.git("rev-parse", "HEAD").strip()
+        self.git("checkout", "--detach", self.commit)
+        self.git("replace", self.commit, replacement)
+        self.assertEqual((self.root / "input.py").read_bytes(), original)
+        self.assertEqual(self.verify()["observed_commit"], self.commit)
+
+    def test_group_execution_cannot_hide_a_missing_owner_execute_bit(self):
+        source = self.root / "input.py"
+        source.chmod(0o755)
+        self.git("add", "input.py")
+        self.git("commit", "-qm", "executable source fixture")
+        self.commit = self.git("rev-parse", "HEAD").strip()
+        self.git("config", "core.filemode", "false")
+        self.git("update-index", "--assume-unchanged", "input.py")
+        source.chmod(0o645)
+        self.assertEqual(self.git("diff", "--name-only", "HEAD"), "")
+        with self.assertRaisesRegex(ValueError, "file mode differs"):
+            self.verify()
+
     def test_all_source_roots_must_be_explicit(self):
         records = []
         with self.assertRaisesRegex(ValueError, "SPRUCE_SOURCE_ROOT"):

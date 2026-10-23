@@ -1,5 +1,33 @@
 # TrimUI Smart Pro implementation handover
 
+## Current continuation — dev13 software validation
+
+The owner confirmed **no device access; continue software work** on 23 October
+2026. The current original-only descriptor is `smartpro-psp-0.1.0-dev13`.
+[Software validation fixes](project/docs/software-hardening-2026-10-23.md)
+close reproduced source-certification, disposable-probe, evidence-chronology,
+revocation and report-publication defects, with regression tests and independent
+review. Exact validation/build/CI records are in
+[verification](project/evidence/software-hardening-20261023/verification.json).
+
+The project remains **14 of 25 scoped rows complete; zero of 13 physical areas
+tested**. The remaining rows require actual hardware, precise public native
+distribution decisions or operational release evidence. Both shipped selectors
+still return `None`, and no native binary or upstream patch is selected. PR #1
+remains draft and unmerged. R05 private noncommercial permission remains
+owner-confirmed; no further author notice is needed or authorized. Historical
+dev12 receipts below retain their exact artifact/source identities and do not
+certify changed dev13 bytes.
+
+Current ephemeral setup: `/workspace/TrimUi`, Python
+`/workspace/trimui-venv/bin/python`; pinned roots under
+`/workspace/trimui-sources/{spruce,ppsspp,ra,ports,portmaster}`.
+Set `PYSDL2_DLL_PATH=/workspace/scratch/trimui-host-libs/usr/lib/x86_64-linux-gnu`.
+Use all five explicit source variables with `project/dev/check.sh` as documented
+in `project/README.md`. Scratch is temporary; resume from GitHub evidence.
+
+## Historical dev12 checkpoint
+
 Checkpoint: **23 October 2026**. Active branch: `build/spruce-psp-experience` in `daniel1990000/CrossMix-OS-project`. [PR #1](https://github.com/daniel1990000/CrossMix-OS-project/pull/1) remains draft and unmerged. Continue the original TG5040 spruceOS/PyUI project under `project/`.
 
 ## Current completion — dev12

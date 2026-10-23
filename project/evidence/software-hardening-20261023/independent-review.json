@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "kind": "independent-software-cross-review",
+  "date_utc": "2026-10-23",
+  "reviewers": {
+    "qualification_review": [
+      "dev/certify.py",
+      "tools/device_probe.py"
+    ],
+    "recovery_review": [
+      "tools/qualification_review.py",
+      "tools/release_handoff.py",
+      "tools/trust_rehearsal.py"
+    ]
+  },
+  "reviewed_file_sha256": {
+    "dev/certify.py": "7fcfcc6acc6dd609ce994daa96afd19709b1e15f4a443d3fd2bd72161db5c432",
+    "tools/device_probe.py": "8086cc5d446024f602c9b00f6a2aa4e6cc8a034e1e0bdc7b3caff4256b5a5181",
+    "tools/qualification_review.py": "9c3b9f6785dfa91dad85f405fc9149035cbb5e246b0803d8dd59a0029cfd9ed6",
+    "tools/release_handoff.py": "b81b311607306310f24724bf312e7261f7f1ed276d2aea423fd4d2ed14bd959c",
+    "tools/trust_rehearsal.py": "16324a793d24333be1292e363c3a036fff6804f2ac694f9d4f0493c3d63b6c23"
+  },
+  "resolved_review_findings": [
+    "Use the owner executable bit, not any executable bit, for Git 100755 source identity.",
+    "Verify the requested report parent pathname still identifies the retained directory.",
+    "Test cleanup uses an exact transferred pidfd and never signals a recycled numeric PID."
+  ],
+  "remaining_review_blockers": [],
+  "scope": "Read-only review of changed software and focused tests; no physical or legal qualification."
+}

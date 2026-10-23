@@ -12,7 +12,7 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "Original-only dev12 host preview; D01 conditional software complete; R05 private permission owner-confirmed and retained; actual device and public operational/distribution gates pending.",
+  "project_stage": "Original-only dev13 host preview; validation and cleanup fixes. Device, public native distribution and operational release requirements remain open.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -60,50 +60,24 @@
     "P03",
     "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev12",
+  "release_id": "smartpro-psp-0.1.0-dev13",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
   "verified_snapshot": {
-    "release_id": "smartpro-psp-0.1.0-dev12",
-    "implementation_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
-    "local_clean_build_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "release_id": "smartpro-psp-0.1.0-dev13",
     "strict_tests": {
-      "tests_run": 974,
-      "passed": 974,
+      "tests_run": 989,
+      "passed": 989,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "evidence": "project/evidence/completion-20261023/verification.json",
-    "local_certification": "project/evidence/completion-20261023/certification.json",
-    "local_build_report": "project/evidence/completion-20261023/build-report.json",
-    "local_release_source": "project/evidence/completion-20261023/release-source.json",
-    "ci_run_id": 39883665932,
-    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932",
-    "ci_status": "success",
-    "ci_source_head": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
-    "ci_clean_merge_checkout": "fba239bcd793000faca805fa22dacb306504bdcb",
-    "ci_receipt": "project/evidence/completion-20261023/ci-readback.json",
-    "ci_certification": "project/evidence/completion-20261023/ci-certification.json",
-    "ci_build_report": "project/evidence/completion-20261023/ci-build-report.json",
-    "ci_release_source": "project/evidence/completion-20261023/ci-release-source.json",
-    "ci_artifact_id": 12471113691,
-    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932/artifacts/12471113691",
-    "ci_artifact_sha256": "6be0bd6d136011af623254fdc1d9b6840886a8eeb166ce07f12fb2ef5e5d75cf",
-    "ci_artifact_size_bytes": 5091243,
-    "ci_artifact_expires_at_utc": "2027-01-21T01:22:56Z",
-    "original_source_inventory_files": 197,
-    "original_source_inventory_sha256": "bd4b8affa77296a1d1583983ba1e5639e7ab4c0b623eeac842475c135923a27d",
-    "packaged_payload_files": 60,
-    "source_export_zip_rebuild_byte_identical": true,
-    "owner_private_retention_readback_verified": true,
-    "retention_receipt": "project/evidence/completion-20261023/retention-readback.json",
-    "later_handover_changes": "Documentation/evidence only. They preserve these clean build/CI identities and do not acquire the exact exported-source inventory digest.",
-    "pinned_source_count": 5,
-    "private_native_outputs_recovered": false
+    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "local_certification": "project/evidence/software-hardening-20261023/certification.json",
+    "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
   },
   "qualification": {
     "hardware_tested": false,
@@ -140,7 +114,7 @@
     "proposed_qualification_matrix": "firmware 1.1.1 / FAT32; inventory actual device first",
     "automatic_firmware_flash_authorized": false,
     "connected_or_probed_in_this_continuation": false,
-    "latest_availability_reply": "Owner is busy and cannot provide device access now; no further questions or device actions."
+    "latest_availability_reply": "2026-10-23: No device access\u2014continue software work."
   },
   "next_work": [
     {
@@ -187,7 +161,7 @@
       "tag": "v4.5.4",
       "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
       "lock": "docs/spruce-source-lock.json",
-      "temporary_checkout": "/workspace/spruce-baseline"
+      "temporary_checkout": "/workspace/trimui-sources/spruce"
     },
     {
       "variable": "PPSSPP_SOURCE_ROOT",
@@ -195,34 +169,34 @@
       "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
       "tag": "v1.20.3",
       "lock": "project/ppsspp/source-lock.json",
-      "temporary_checkout": "/workspace/ppsspp-reference"
+      "temporary_checkout": "/workspace/trimui-sources/ppsspp"
     },
     {
       "variable": "SPRUCE_RA_SOURCE_ROOT",
       "repository": "https://github.com/spruceUI/RA",
       "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
       "lock": "project/retroarch/source-lock.json",
-      "temporary_checkout": "/workspace/spruce-ra-reference"
+      "temporary_checkout": "/workspace/trimui-sources/ra"
     },
     {
       "variable": "PORTS_SOURCE_ROOT",
       "repository": "https://github.com/PortsMaster/PortMaster-New",
       "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
       "lock": "project/ports/celeste-fix.lock.json",
-      "temporary_checkout": "/workspace/ports-reference"
+      "temporary_checkout": "/workspace/trimui-sources/ports"
     },
     {
       "variable": "PORTMASTER_SOURCE_ROOT",
       "repository": "https://github.com/PortsMaster/PortMaster-GUI",
       "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
       "lock": "project/profiles/ports-sources.lock.json",
-      "temporary_checkout": "/workspace/portmaster-reference"
+      "temporary_checkout": "/workspace/trimui-sources/portmaster"
     }
   ],
   "host_setup": {
     "workflow": ".github/workflows/smartpro-offshoot.yml",
     "requirements": "project/requirements-dev.txt",
-    "temporary_python": "/workspace/smartpro-venv/bin/python",
+    "temporary_python": "/workspace/trimui-venv/bin/python",
     "python_version_observed": "3.12.14",
     "pysdl2": "0.9.17",
     "pillow": "11.1.0",
@@ -240,7 +214,7 @@
     "Development package signatures are not an operational production trust root.",
     "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; an empty-daemon compiler restore and all target execution remain untested."
   ],
-  "handover_validation": "project/evidence/completion-20261023/handover-audit.json",
+  "handover_validation": "project/evidence/software-hardening-20261023/verification.json",
   "latest_completed_host_task": "D01",
   "previous_five_task_batch": [
     "U04",
@@ -256,43 +230,19 @@
     "R06"
   ],
   "current_snapshot": {
-    "release_id": "smartpro-psp-0.1.0-dev12",
-    "implementation_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
-    "local_clean_build_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "release_id": "smartpro-psp-0.1.0-dev13",
     "strict_tests": {
-      "tests_run": 974,
-      "passed": 974,
+      "tests_run": 989,
+      "passed": 989,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "evidence": "project/evidence/completion-20261023/verification.json",
-    "local_certification": "project/evidence/completion-20261023/certification.json",
-    "local_build_report": "project/evidence/completion-20261023/build-report.json",
-    "local_release_source": "project/evidence/completion-20261023/release-source.json",
-    "ci_run_id": 39883665932,
-    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932",
-    "ci_status": "success",
-    "ci_source_head": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
-    "ci_clean_merge_checkout": "fba239bcd793000faca805fa22dacb306504bdcb",
-    "ci_receipt": "project/evidence/completion-20261023/ci-readback.json",
-    "ci_certification": "project/evidence/completion-20261023/ci-certification.json",
-    "ci_build_report": "project/evidence/completion-20261023/ci-build-report.json",
-    "ci_release_source": "project/evidence/completion-20261023/ci-release-source.json",
-    "ci_artifact_id": 12471113691,
-    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932/artifacts/12471113691",
-    "ci_artifact_sha256": "6be0bd6d136011af623254fdc1d9b6840886a8eeb166ce07f12fb2ef5e5d75cf",
-    "ci_artifact_size_bytes": 5091243,
-    "ci_artifact_expires_at_utc": "2027-01-21T01:22:56Z",
-    "original_source_inventory_files": 197,
-    "original_source_inventory_sha256": "bd4b8affa77296a1d1583983ba1e5639e7ab4c0b623eeac842475c135923a27d",
-    "packaged_payload_files": 60,
-    "source_export_zip_rebuild_byte_identical": true,
-    "owner_private_retention_readback_verified": true,
-    "retention_receipt": "project/evidence/completion-20261023/retention-readback.json",
-    "later_handover_changes": "Documentation/evidence only. They preserve these clean build/CI identities and do not acquire the exact exported-source inventory digest."
+    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "local_certification": "project/evidence/software-hardening-20261023/certification.json",
+    "build_status": "Not yet packaged in this certification checkpoint; subsequent build receipts bind the exact clean implementation commit."
   },
   "artifact_custody": {
     "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
@@ -361,9 +311,9 @@
       "focused_checks": 24
     }
   },
-  "continuation_scope": "Finish all feasible software/evidence work without unavailable physical hardware. D01 software and R05 scoped owner-confirmed permission complete; remaining 11 rows retain real physical/distribution/operational criteria. No further notification request.",
+  "continuation_scope": "Owner confirms no device access; continue software work. Preserve 14/25 scope completion and 0/13 physical areas. No further author notice or automatic device activation.",
   "historical_handover_validation": "project/handover/validation.json",
-  "current_consistency_record": "project/evidence/completion-20261023/handover-audit.json",
+  "current_consistency_record": "project/evidence/software-hardening-20261023/verification.json",
   "historical_dev10_snapshot": {
     "release_id": "smartpro-psp-0.1.0-dev10",
     "implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
@@ -476,5 +426,61 @@
     "assistant_sent_messages": false,
     "further_notification_needed": false,
     "commercial_sdk_or_public_native_terms_inferred": false
+  },
+  "historical_dev12_snapshot": {
+    "release_id": "smartpro-psp-0.1.0-dev12",
+    "implementation_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "local_clean_build_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "strict_tests": {
+      "tests_run": 974,
+      "passed": 974,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "evidence": "project/evidence/completion-20261023/verification.json",
+    "local_certification": "project/evidence/completion-20261023/certification.json",
+    "local_build_report": "project/evidence/completion-20261023/build-report.json",
+    "local_release_source": "project/evidence/completion-20261023/release-source.json",
+    "ci_run_id": 39883665932,
+    "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932",
+    "ci_status": "success",
+    "ci_source_head": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "ci_clean_merge_checkout": "fba239bcd793000faca805fa22dacb306504bdcb",
+    "ci_receipt": "project/evidence/completion-20261023/ci-readback.json",
+    "ci_certification": "project/evidence/completion-20261023/ci-certification.json",
+    "ci_build_report": "project/evidence/completion-20261023/ci-build-report.json",
+    "ci_release_source": "project/evidence/completion-20261023/ci-release-source.json",
+    "ci_artifact_id": 12471113691,
+    "ci_artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39883665932/artifacts/12471113691",
+    "ci_artifact_sha256": "6be0bd6d136011af623254fdc1d9b6840886a8eeb166ce07f12fb2ef5e5d75cf",
+    "ci_artifact_size_bytes": 5091243,
+    "ci_artifact_expires_at_utc": "2027-01-21T01:22:56Z",
+    "original_source_inventory_files": 197,
+    "original_source_inventory_sha256": "bd4b8affa77296a1d1583983ba1e5639e7ab4c0b623eeac842475c135923a27d",
+    "packaged_payload_files": 60,
+    "source_export_zip_rebuild_byte_identical": true,
+    "owner_private_retention_readback_verified": true,
+    "retention_receipt": "project/evidence/completion-20261023/retention-readback.json",
+    "later_handover_changes": "Documentation/evidence only. They preserve these clean build/CI identities and do not acquire the exact exported-source inventory digest.",
+    "pinned_source_count": 5,
+    "private_native_outputs_recovered": false
+  },
+  "software_hardening": {
+    "documentation": "project/docs/software-hardening-2026-10-23.md",
+    "evidence": "project/evidence/software-hardening-20261023/verification.json",
+    "addressed_scopes": [
+      "R02",
+      "D03",
+      "D05",
+      "D06",
+      "O01",
+      "O02"
+    ],
+    "additional_plan_rows_completed": 0,
+    "hardware_tested": false,
+    "production_gates_enabled": false
   }
 }

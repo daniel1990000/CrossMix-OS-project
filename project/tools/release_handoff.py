@@ -554,6 +554,18 @@ def custody_receipt(bundle, output, *, step, evidence_reference, expected_index,
     signer = index.get("candidate", {}).get("package_signer_fingerprint")
     if step == "revocation":
         require(registry is not None and summary["statuses"].get(signer) == "revoked", "actual external registry must revoke this package signer")
+        blobs = {name.removeprefix("artifacts/"): data for name, data in files.items() if name.startswith("artifacts/")}
+        public = blobs["development-verification.pub"]
+        require(len(public) == 32 and ov.digest(public) == signer, "revocation package signer identity differs")
+        # The diagnostic key is bound to the independently reviewed index. It
+        # checks package integrity only; it must never replace external trust
+        # for activation. Otherwise any unknown-key or corrupted archive could
+        # be credited as an observation of this exact signer's revocation.
+        candidate = inspect_artifacts(blobs, public)
+        require(candidate == index["candidate"] and
+                decode(files["support-matrix.json"]) == support_matrix() and
+                files["README.md"] == instructions(candidate["release_id"]),
+                "revocation handoff scope/instructions or candidate changed")
         release = index["candidate"]["release_id"]
         with tempfile.TemporaryDirectory(prefix="smartpro-revocation-check-") as name:
             path = Path(name) / "preview.tar"

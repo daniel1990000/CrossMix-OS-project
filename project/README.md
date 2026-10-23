@@ -6,10 +6,15 @@ See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparis
 
 This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
 
-The [remaining-plan software completion](docs/completion-2026-10-23.md)
+The [software validation fixes](docs/software-hardening-2026-10-23.md)
+address source certification, disposable probe cleanup, device evidence chronology,
+revocation receipts and trust report readback. The current descriptor selects
+**smartpro-psp-0.1.0-dev13**, an original-only host preview.
+
+The earlier [remaining-plan software completion](docs/completion-2026-10-23.md)
 implements the conditional private viewing route, real backup/restore payloads,
 structured casebook review, exact native notice review and original-only release
-handoff. The current descriptor selects **smartpro-psp-0.1.0-dev12**.
+handoff. Its dev12 build and retention receipts retain their historical identities.
 The owner confirms author permission for private noncommercial source work;
 the attestation is retained privately. No message was sent by this work.
 
@@ -78,4 +83,4 @@ See [full-system coverage](docs/feature-coverage.md), [qualified binding](bridge
 
 ## Licences
 
-New original Python helpers use [MIT](LICENSE). Spruce/PyUI source patches retain their upstream terms and notices. PPSSPP patches/fixtures retain [GPL-2.0-or-later](ppsspp/NOTICE.md), and RetroArch patches/fixtures retain [GPL-3.0-or-later](retroarch/NOTICE.md). The bundled Noto Sans font uses [OFL](assets/fonts/OFL.txt). The [rights register](docs/release-rights.md) records the prepared, unsent PyUI notice and unresolved recipe/SDK redistribution review. No Sony graphics, commercial game data, firmware or emulator binaries are included in the new payload.
+New original Python helpers use [MIT](LICENSE). Spruce/PyUI source patches retain their upstream terms and notices. PPSSPP patches/fixtures retain [GPL-2.0-or-later](ppsspp/NOTICE.md), and RetroArch patches/fixtures retain [GPL-3.0-or-later](retroarch/NOTICE.md). The bundled Noto Sans font uses [OFL](assets/fonts/OFL.txt). The [owner-confirmed permission record](evidence/completion-20261023/owner-permission.json) covers private noncommercial source work. The [rights register](docs/release-rights.md) retains unresolved public recipe/SDK distribution questions. No Sony graphics, commercial game data, firmware or emulator binaries are included in the new payload.

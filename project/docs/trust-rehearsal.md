@@ -19,6 +19,10 @@ contain public fingerprints, registry/package/manifest hashes and fixed outcome
 labels. They contain no private key bytes, key paths or signed package bytes.
 Random keys mean a new run has new fingerprints and signed-package hashes.
 
+Publication also reads back the actual report bytes, checks the file identity
+and reopens the requested parent to detect directory replacement. A changed
+file or parent returns failure. Unrelated replacement files are preserved.
+
 The exercise verifies:
 
 - Active signing and exact package payload verification, including same-key

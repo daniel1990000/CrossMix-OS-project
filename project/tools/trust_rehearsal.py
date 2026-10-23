@@ -25,8 +25,10 @@ import overlay as ov
 
 if __package__:
     from .fixture_card import create_fixture
+    from .recovery_preflight import directory_fd, fingerprint
 else:
     from fixture_card import create_fixture
+    from recovery_preflight import directory_fd, fingerprint
 
 FIXTURE = b"print('original-only host trust rehearsal fixture')\n"
 MAX_REPORT_BYTES = 64 * 1024
@@ -238,7 +240,7 @@ def write_report(path, report):
     ov.require(parent.is_dir() and path.name not in {"", ".", ".."}, "existing report parent required")
     raw = ov.canonical(report) + b"\n"
     ov.require(len(raw) <= MAX_REPORT_BYTES, "rehearsal report exceeds bound")
-    directory = os.open(parent, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    directory = directory_fd(parent)
     temporary = ".trust-rehearsal-" + uuid.uuid4().hex
     owned_identity = None
     published = False
@@ -254,6 +256,28 @@ def write_report(path, report):
         os.link(temporary, path.name, src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
         published = True
         os.fsync(directory)
+        # A completed link/fsync does not establish that the named report still
+        # contains these bytes. Read the actual publication before returning its
+        # digest, retaining unrelated replacements if a concurrent writer won.
+        checked = os.open(path.name, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW | os.O_CLOEXEC,
+                          dir_fd=directory)
+        with os.fdopen(checked, "rb") as stream:
+            before = os.fstat(stream.fileno())
+            ov.require(stat.S_ISREG(before.st_mode) and (before.st_dev, before.st_ino) == owned_identity and
+                       before.st_size == len(raw), "published report identity or size changed")
+            observed = stream.read(MAX_REPORT_BYTES + 1)
+            named = os.stat(path.name, dir_fd=directory, follow_symlinks=False)
+            ov.require(observed == raw and fingerprint(before) == fingerprint(os.fstat(stream.fileno())) ==
+                       fingerprint(named), "published report bytes or identity changed during readback")
+        # The anchored descriptor can outlive a rename of its parent. Confirm
+        # the caller's requested pathname still resolves to that same directory.
+        current_parent = directory_fd(parent)
+        try:
+            retained, current = os.fstat(directory), os.fstat(current_parent)
+            ov.require((retained.st_dev, retained.st_ino) == (current.st_dev, current.st_ino),
+                       "published report parent pathname changed")
+        finally:
+            os.close(current_parent)
     except BaseException:
         if published:
             current = os.stat(path.name, dir_fd=directory, follow_symlinks=False)

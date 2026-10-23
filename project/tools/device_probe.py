@@ -105,10 +105,21 @@ def run_bounded(argv, *, pass_fds=(), timeout=3, limit=MAX_OUTPUT):
                         raise ValueError("disposable observation exceeded its output budget")
                     if key.fileobj is process.stdout:
                         stdout.extend(block)
+        # Observe root exit without reaping it. A trusted tool/helper can fork
+        # and close both pipes before its disposable children have finished;
+        # pipe EOF and root success therefore do not establish cleanup. Keeping
+        # the root unreaped reserves its PID while its group is stopped, so the
+        # cleanup signal cannot target a reused process-group identity.
+        while os.waitid(os.P_PID, process.pid, os.WEXITED | os.WNOHANG | os.WNOWAIT) is None:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise ValueError("disposable observation exceeded its deadline after closing output")
+            time.sleep(min(.01, remaining))
         try:
-            process.wait(timeout=max(.001, deadline - time.monotonic()))
-        except subprocess.TimeoutExpired as exc:
-            raise ValueError("disposable observation exceeded its deadline after closing output") from exc
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=1)
         if process.returncode:
             raise ValueError("disposable observation failed")
         return bytes(stdout)

@@ -72,9 +72,11 @@ still requires the existing runtime inventory and review.
 The helper has a five-second outer deadline and bounded output. Version commands
 have a three-second deadline. A process that closes both output pipes and
 then hangs remains subject to the same deadline and records an unavailable
-observation, rather than escaping as an unhandled timeout. On timeout/overflow, cleanup signals only the new
-disposable subprocess group while its root is still an unreaped owned child.
-Successful or nonzero completed commands never signal a reaped group. An
+observation, rather than escaping as an unhandled timeout. On completion or
+timeout/overflow, cleanup signals only the new disposable subprocess group while
+its root is still an unreaped owned child. Closing both output pipes and exiting
+successfully cannot leave a child in that group running. Cleanup never signals
+a reaped group. An
 observed PID, game, service or foreground owner is never signalled. The helper changes only its own process state
 and uses a temporary local Unix socket, without a persistent/network service.
 It tests descriptor inheritance through the current trusted Python interpreter;

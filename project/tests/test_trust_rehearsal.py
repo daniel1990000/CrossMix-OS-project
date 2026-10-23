@@ -139,6 +139,62 @@ class TrustRehearsalTests(unittest.TestCase):
             self.assertFalse(output.exists())
             self.assertEqual(list(root.iterdir()), [])
 
+    def test_published_report_must_match_actual_readback_before_returning_digest(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            output = root / "report.json"
+            original = os.fsync
+
+            def change_published(descriptor):
+                if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+                    output.write_bytes(b'{"status":"changed after publication"}\n')
+                return original(descriptor)
+
+            with mock.patch.object(tr.os, "fsync", side_effect=change_published):
+                with self.assertRaisesRegex(tr.ov.OverlayError, "published report"):
+                    tr.write_report(output, {"status": "passed"})
+            self.assertFalse(output.exists())
+
+    def test_swapped_published_report_is_preserved_but_never_receives_success_digest(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            output = root / "report.json"
+            displaced = root / "owned-report-held"
+            original = os.fsync
+
+            def replace_published(descriptor):
+                if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+                    output.rename(displaced)
+                    output.write_bytes(b"unrelated concurrent output")
+                return original(descriptor)
+
+            with mock.patch.object(tr.os, "fsync", side_effect=replace_published):
+                with self.assertRaisesRegex(tr.ov.OverlayError, "published report"):
+                    tr.write_report(output, {"status": "passed"})
+            self.assertEqual(output.read_bytes(), b"unrelated concurrent output")
+            self.assertEqual(json.loads(displaced.read_bytes()), {"status": "passed"})
+
+    def test_renamed_report_parent_cannot_receive_success_for_a_replacement_path(self):
+        with tempfile.TemporaryDirectory() as name:
+            root = Path(name)
+            parent, held = root / "reports", root / "held-reports"
+            parent.mkdir()
+            output = parent / "report.json"
+            original = os.fsync
+
+            def replace_parent(descriptor):
+                if stat.S_ISDIR(os.fstat(descriptor).st_mode):
+                    parent.rename(held)
+                    parent.mkdir()
+                    output.write_bytes(b"unrelated report at requested pathname")
+                return original(descriptor)
+
+            with mock.patch.object(tr.os, "fsync", side_effect=replace_parent):
+                with self.assertRaisesRegex(tr.ov.OverlayError, "parent pathname changed"):
+                    tr.write_report(output, {"status": "passed"})
+            self.assertEqual(output.read_bytes(), b"unrelated report at requested pathname")
+            self.assertEqual(list(parent.iterdir()), [output])
+
     def test_report_size_bound_precedes_any_output(self):
         with tempfile.TemporaryDirectory() as name:
             output = Path(name) / "report.json"

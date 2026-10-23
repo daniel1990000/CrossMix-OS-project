@@ -1,5 +1,13 @@
 # TrimUI master plan — 22 October 2026
 
+Current software update, 23 October 2026: the original-only **dev13** preview
+fixes source certification, probe cleanup, evidence chronology, revocation
+receipts and report publication. See [the changes and remaining criteria](software-hardening-2026-10-23.md)
+and [exact validation](../evidence/software-hardening-20261023/verification.json).
+The count remains **14/25 scoped rows complete and 0/13 physical areas run**.
+The owner reconfirmed that no device access is available. The earlier dev12
+completion/build receipts below retain their historical identities.
+
 **Recommendation:** finish and qualify a focused PSP-style experience for the original TrimUI Smart Pro on pinned spruceOS/PyUI. Release the core interface with existing emulators first; treat patched engines, authenticated Resume and showcase ports as separately qualified additions.
 
 The original 22 October text is a researched execution plan; current completion is recorded in the execution updates below. Research covers the repository, pinned upstream source, current upstream changes, manufacturer firmware documentation, port launchers and licences. No physical device was tested, software installed, upstream notification sent or release published during this review.

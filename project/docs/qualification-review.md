@@ -148,7 +148,10 @@ cycle/evidence records.
 | `state_resume` | Each selected state-capable runtime's completed write, load acknowledgement, replay rejection, reboot fallback and native config-change evidence |
 
 Cycle indices start at one without gaps. Duplicated cycles and overlapping
-intervals within the same test cannot inflate counts. Different contexts have
+intervals within the same test cannot inflate counts. First executions must
+follow numbered order; a retest must start after the superseded attempt ended.
+A later retest of an earlier cycle retains that cycle's first-execution order.
+Different contexts have
 separate requirements. The launch/sleep policy is intentionally conservative:
 the minimum is enforced for every selected runtime. Performance numbers remain
 the contents of raw evidence for human assessment; a file hash cannot establish
