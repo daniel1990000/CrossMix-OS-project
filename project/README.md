@@ -22,7 +22,10 @@ keeps later documentation edits separate from those build identities.
 Dev16 fixes reproduced gameplay-report output collisions, mixed repeat protocols
 and PS1 disc-reference path swaps. [The fix report](docs/release-preflight-fixes-2026-10-23.md)
 records their scope; new checks and build identities are recorded separately
-from dev15. The public dev14 preview remains unchanged.
+from dev15. Clean dev16 passes **1,099 strict checks**, zero skips/errors/failures,
+plus packaging/installed smoke/rollback, byte-identical no-Git ZIP rebuilds and
+CI artifact readback. [Exact dev16 evidence](evidence/release-preflight-20261023/verification.json)
+binds those results to their build snapshots. The public dev14 preview remains unchanged.
 
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,

@@ -1,6 +1,50 @@
 # TrimUI Smart Pro implementation handover
 
-## Active continuation — dev15 software increments complete
+## Active continuation — dev16 reproduced host defects fixed
+
+This continuation starts at `2d4a43dbc8eb472fbdeb98bc8e09b5432c3ef69b`.
+Hardware remains unavailable. It fixes gameplay-report outputs overwriting
+retained inputs/evidence, mixed measurement protocols across five repeated
+pairs, and PS1 disc-reference symlink swaps after containment validation.
+Existing in-card symlinks and native disc-management routes are preserved.
+See [the fix report](project/docs/release-preflight-fixes-2026-10-23.md) and
+[exact verification](project/evidence/release-preflight-20261023/verification.json).
+
+Clean implementation/build: `a8ba3176e78d248162d3d40b91ec1d8b854491a9`.
+**1,099 strict checks pass** (1,038 host/source plus 61 PPSSPP), zero failures,
+errors or skips against the five pinned references. Seven added regression
+methods reproduce the historical defects. Independent review passes all 40
+focused checks, confirms legitimate symlink compatibility and finds no descriptor
+leak through 1,000 repeated inspections.
+
+Dev16 packaging verifies its signed 66-file payload, same-key determinism,
+installed SDL/game-info/filter/backup smoke and fixture rollback. A no-Git source
+export reproduces both ZIPs byte for byte with a new disposable signer; generated
+keys are deleted. Its 223-file original-source inventory is
+`5058e82140dc25e5d0b7ff429845b90566865cd804e25b92078192f953fcbd4d`.
+[CI 39926662133](https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39926662133)
+also passes all 1,099 checks on clean merge
+`933a1a5367552804cca8a78725e4c87779f9ce9b`. Downloaded artifact `12490006540`
+is 5,246,728 bytes, SHA256
+`96a1426c9201e8b3f27e57d531e6476c702a264749ebe6c4fa5cc6785bdc8c9a`;
+all eight checksums, signature/payload and all 223 exported source files pass
+fresh readback. It expires 21 January 2027; new independent owner-storage
+retention was not performed. Later handover/evidence/docs commits have separate
+source identities and do not inherit these exact package hashes or inventory.
+
+The public dev14 preview, dev15 build `65fdc58` and historical evidence remain
+unchanged. PPSSPP and the current PS1 route remain selected; no native code,
+engine binary, game file or memory-card location changes. No playlist is generated.
+The register remains **14/25 complete and 0/13 physical areas run**. PR #1 stays
+draft and unmerged; all device/profile gates stay disabled. Actual recovery/
+inventory, qualification, game-scene measurements and recommended presets,
+precise public native distribution decisions, production signing/custody and
+accepted maintenance ownership remain pending. Candidate presets are untested;
+unavailable figures remain unavailable. State galleries, named save history
+and power-off Resume remain later enhancements. Existing permission records
+are preserved and no author message was sent.
+
+## Historical dev15 software increments complete
 
 The six requested additions are saved on the existing branch and draft PR #1:
 per-game PPSSPP performance options/Undo, evidence-backed gameplay reporting,

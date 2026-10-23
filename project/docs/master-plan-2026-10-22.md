@@ -1,5 +1,20 @@
 # TrimUI master plan — 22 October 2026
 
+## Dev16 host defect fixes — 23 October 2026
+
+The [release preparation fix report](release-preflight-fixes-2026-10-23.md)
+records gameplay output/evidence preservation, consistent five-run measurement
+protocols and descriptor-relative PS1 disc inspection after reproduced path
+swaps. Clean implementation `a8ba317` passes **1,099 strict checks**, zero
+skips/errors/failures, packaging/installed smoke/rollback and byte-identical
+no-Git ZIP rebuilds. CI 39926662133 and full downloaded-artifact readback pass.
+[Exact evidence](../evidence/release-preflight-20261023/verification.json)
+keeps local, CI and later handover identities separate. The descriptor selects
+dev16; public dev14 and historical dev15 artifacts remain unchanged.
+The register remains **14/25 complete; 0/13 physical areas run**. Hardware,
+measurements, precise public native distribution and operational ownership/
+custody criteria remain open. PR #1 stays draft and device gates stay disabled.
+
 ## Dev14 to release continuation — 23 October 2026
 
 Continue the existing project on `build/spruce-psp-experience`, PR #1. Dev14

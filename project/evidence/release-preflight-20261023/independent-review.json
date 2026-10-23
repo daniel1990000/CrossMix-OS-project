@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "kind": "independent-read-only-host-regression-review",
+  "recorded_at_utc": "2026-10-23T08:45:04.568279+00:00",
+  "implementation_commit": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
+  "local_head_at_receipt": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
+  "files": {
+    "project/tools/gameplay_benchmark.py": {
+      "sha256": "727e1e38a00684c378a51b20b0a492fb7571e7ebf4b3ab22a32b20c3aeefa179",
+      "bytes": 21240
+    },
+    "project/tests/test_gameplay_benchmark.py": {
+      "sha256": "4efdf5342a54fed1d7fca75929f0192587592fb1f33d4192c51c9a28dd957e8c",
+      "bytes": 20098
+    },
+    "project/psp_shell/game_information.py": {
+      "sha256": "efda8a605bc6af38e2365e6a4b3e639d15626aafb38629fcd91de7c5c388e4c4",
+      "bytes": 7936
+    },
+    "project/tests/test_game_information.py": {
+      "sha256": "7423f166036f0180d86056c346fa23374ee7affffd2937b540fd413a571d4793",
+      "bytes": 13868
+    }
+  },
+  "review": {
+    "blocking_findings": [],
+    "scope": "Existing gameplay report/evidence output protection and repeat comparability; read-only PS1 disc containment and descriptor handling.",
+    "checks": [
+      "Directory descriptor traversal uses no-follow opens for resolved card-root and all parent components; descriptors close on normal and rejected traversal paths.",
+      "Initially valid in-card symlink targets remain supported through containment resolution.",
+      "Record CLI protects manifest, observations and optional resources inputs; comparison CLI protects regular/sustained reports and all selected/unselected raw observation paths, including resolved aliases."
+    ],
+    "repo_files_edited_by_reviewer": false,
+    "device_claims_made": false
+  },
+  "focused_tests": [
+    {
+      "command": "PYTHONPATH=project /workspace/smartpro-venv/bin/python -m unittest discover -s project/tests -p test_gameplay_benchmark.py",
+      "tests_run": 23,
+      "passed": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "status": "passed"
+    },
+    {
+      "command": "PYTHONPATH=project /workspace/smartpro-venv/bin/python -m unittest discover -s project/tests -p test_game_information.py",
+      "tests_run": 17,
+      "passed": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "status": "passed"
+    }
+  ],
+  "additional_checks": {
+    "git_diff_check": "passed",
+    "symlinked_card_root_compatibility": "passed",
+    "symlinked_in_card_ancestor_compatibility": "passed",
+    "descriptor_inspections": {
+      "successful": 500,
+      "outside_card_rejected": 500,
+      "total": 1000,
+      "descriptor_count_change": 0,
+      "before_after_absolute_counts_retained": false,
+      "method": "Asserted len(/proc/self/fd) unchanged after each 500-inspection block; absolute counts were not printed."
+    },
+    "ad_hoc_assertion_correction": {
+      "initial_outcome": "Assertion failed because the reviewer expected missing_count=1 for a ROM whose complete path was rejected outside the card.",
+      "correction": "Assert the established DISC_PATH_OUTSIDE_CARD warning for a completely rejected ROM.",
+      "corrected_check_status": "passed",
+      "production_or_test_source_changed": false
+    }
+  },
+  "evidence_source": "Retained tool outputs from the independent review; receipt creation hashes current files and does not rerun tests.",
+  "hardware_qualified": false
+}

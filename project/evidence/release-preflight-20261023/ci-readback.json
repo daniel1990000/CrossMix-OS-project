@@ -1,0 +1,49 @@
+{
+  "verified_at_utc": "2026-10-23T08:47:55.627566+00:00",
+  "artifact_sha256": "96a1426c9201e8b3f27e57d531e6476c702a264749ebe6c4fa5cc6785bdc8c9a",
+  "artifact_size_bytes": 5246728,
+  "frontend": {
+    "commit": "933a1a5367552804cca8a78725e4c87779f9ce9b",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 1099,
+    "passed": 1099,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "108200ad8d7835fbd4f07d88813a62879d0dd8aafb4adf6532c30672bd6f62f6",
+    "development-verification.pub": "c76392841f6a62d2cba0707ba05a52c834d2ca18b409578d2167ec0140af2b6f",
+    "host-preview.png": "a72ec6601c047a03716c75e2cd262801cabd6ebc864ba7410fe0477524252ebc",
+    "release-source.json": "abfe6e97134115a68b9a29d45bde96b5d5e29a1bf842c737db18348c54d3f20f",
+    "smartpro-psp-0.1.0-dev16-host-preview.zip": "1a40841729977c94719eede2d8e27a99775e77303f0f304223e838c770a152a4",
+    "smartpro-psp-0.1.0-dev16-original-source.zip": "aafdb2f7ae93f5b0f219184c3f5edbc40243da48a79b2b453cadb4aac30ad3f3",
+    "smartpro-psp-0.1.0-dev16.tar": "07c4fd51758fe8d1f9bf2358055f0ee11a79e3aea3da9402c205ca4f4ed2d684"
+  },
+  "source_inventory_files": 223,
+  "source_inventory_sha256": "5058e82140dc25e5d0b7ff429845b90566865cd804e25b92078192f953fcbd4d",
+  "payload_files": 66,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false,
+  "schema": 1,
+  "run_id": 39926662133,
+  "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39926662133",
+  "status": "success",
+  "branch_source_commit": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
+  "actual_clean_checkout": "933a1a5367552804cca8a78725e4c87779f9ce9b",
+  "event": "pull_request",
+  "artifact_id": 12490006540,
+  "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39926662133/artifacts/12490006540",
+  "artifact_expires_at_utc": "2027-01-21T08:43:21Z",
+  "independent_private_storage_retention_performed": false,
+  "public_release_created": false,
+  "readback": "ci-readback.json"
+}

@@ -1,51 +1,62 @@
-Continue the existing dev14 foundation and completed dev15 additions in
-daniel1990000/CrossMix-OS-project,
-branch build/spruce-psp-experience, PR #1 (draft until device qualification).
+Continue the existing project in daniel1990000/CrossMix-OS-project,
+branch build/spruce-psp-experience, PR #1 (draft and unmerged).
 
-Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md
-and the active project/docs/master-plan-2026-10-22.md first.
+Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
+project/docs/master-plan-2026-10-22.md,
+project/docs/release-preflight-fixes-2026-10-23.md and
+project/evidence/release-preflight-20261023/verification.json first.
 
-Continue from completed work: interface, spruce launch integration, PPSSPP
-controls/themes/save acknowledgements/same-boot Resume plumbing, native builds,
-retained compiler/artifacts, recovery, packaging, CI and published computer
-preview already exist. Dev14 records 1,011 strict passing checks for its bytes.
-Keep PPSSPP and the current PS1 route. No emulator rewrite, new OS, SDK
-programme, homebrew-development milestone or replacement build infrastructure.
+Continue from completed foundations. Dev14 delivered the PSP-style interface,
+spruce launch/return, PPSSPP controls/themes/save acknowledgements/same-boot
+Resume plumbing, native builds, retained compiler/artifacts, recovery, packaging,
+CI and published computer preview. Dev15 added native per-game performance
+controls/Undo, evidence-backed gameplay reporting, game information, combined
+library filters, clear Continue/backup status and read-only PS1 disc information.
+Its clean implementation/build is 65fdc58cb502d187b2259cec1691ad22482f07da;
+1,092 strict checks and its exact build/CI artifacts remain historical evidence.
 
-The six scoped increments below are implemented and host-tested. Clean dev15
-implementation 65fdc58 passes 1,092 strict checks, zero skips/errors/failures;
-packaging/installed smoke/rollback and no-Git ZIP rebuild pass. Read the exact
-continuation verification before changing source. Stock desktop PPSSPP native
-save/load was observed with existing GPL2 BlockOut II PSP software; rendering,
-audio, custom native integration and Smart Pro qualification remain separate.
-Do not redo these completed foundations. Extend only reproduced issues or the
-pending actual device/measurement work:
+Dev16 fixes three reproduced host defects: gameplay output overwriting input/raw
+evidence, mixed durations/methods/windows across scene repeats, and PS1 disc
+inspection symlink swaps after containment checks. Existing in-card symlinks
+remain supported. Clean implementation/build:
+a8ba3176e78d248162d3d40b91ec1d8b854491a9.
+1,099 strict checks pass (1,038 host/source + 61 PPSSPP), zero skips/errors/
+failures. Packaging, installed smoke/rollback and no-Git ZIP rebuilds pass.
+CI 39926662133 passes on clean merge 933a1a5367552804cca8a78725e4c87779f9ce9b;
+artifact 12490006540 was downloaded and fully verified. Its exact source inventory
+has 223 files, SHA256 5058e82140dc25e5d0b7ff429845b90566865cd804e25b92078192f953fcbd4d.
+Later handover/evidence/docs commits have separate frontend/source identities.
 
-C01 delivered: Native per-game performance controls and Undo preserve settings.
-C02 delivered: Gameplay reporting requires exact game/scene/emulator/settings evidence.
-C03 delivered: Game information panel and artwork; native Game options preserved.
-C04 delivered: Combined system/search and PSP/PS1 history filters preserve focus.
-C05 delivered: Resume/recent distinctions and verified backup scope/status.
-C06 delivered: Read-only PS1 disc sets/warnings and native disc-management guidance.
-Never silently generate playlists, move games, change memory cards or select a
-different emulator. Candidate presets stay untested until measured.
+Keep PPSSPP and the current PS1 route. Do not redo completed foundations or
+introduce an emulator rewrite, new OS, SDK programme, test-game development
+milestone or replacement build infrastructure. Never silently generate playlists,
+move games, change memory-card locations or select another emulator. Native code
+and retained builds were unchanged by dev16. The published dev14 preview remains
+unchanged; dev15/dev16 retain separate development/CI artifacts.
 
-Reuse models, settings transactions, save authorities, tests, native artifacts
-and release tooling. Add meaningful tests for changed behavior; run the existing
-strict five-source checks and packaging verification. Record desktop native
-PPSSPP save/load separately from exact project integration and device testing.
-Unavailable gameplay FPS/latency/battery figures remain unavailable.
+Stock desktop PPSSPP v1.20.3 completed native serialization/deserialization with
+existing GPL-2.0 BlockOut II PSP software. Rendering/audio, custom callbacks/Resume,
+gameplay performance and Smart Pro qualification remain separate.
 
-State-gallery expansion, named save history and power-off Resume follow later.
-Use existing research only for specific unanswered interface questions.
-Prepare same-device comparisons: unchanged spruce engine/settings, our frontend
-with those same settings, then individual engine/settings changes. Five matched
-runs per named scene; 30-minute sustained runs for demanding release profiles.
-Recommend final presets and publish marketing figures only from actual Smart
-Pro measurements with game, scene, settings and baseline identified.
+Hardware remains unavailable. Without access, address only concrete reproducible
+defects or remaining release preparation. Reuse existing source locks, authorities,
+tests, native artifacts and release tooling. Run the strict five-source checks
+and packaging after changes. Preserve historical evidence and permission records;
+do not send author messages or ask the owner to provide private keys.
 
-Keep device gates disabled and PR #1 draft. Complete remaining precise public
-native distribution, production signing/custody and maintenance ownership
-requirements before device release. Preserve historical evidence and exact
-artifact identities. Save changes, tests and updated handover in GitHub when
-execution permits writes; this continuation is running in execution mode.
+When hardware is available, use existing recovery preparation and the 13-area
+casebook. Compare existing spruce with current emulator/settings, our interface
+with those same emulator/settings, then individual changes separately. Use five
+matched runs per named scene with consistent protocols and 30-minute sustained
+runs for demanding profiles. Record intended speed, frame pacing, audio,
+resolution and frameskip. Candidate presets remain untested until measured;
+unavailable figures remain unavailable. No improvement percentage is promised.
+
+The register remains 14/25 complete; all 13 physical areas remain unrun.
+Keep device/profile gates disabled and PR #1 draft and unmerged until qualification.
+Actual recovery/inventory, physical acceptance, gameplay measurements/recommended
+presets, precise public native distribution decisions, production signing/custody
+and accepted maintenance ownership remain open. State galleries, named save
+history and power-off Resume are later enhancements.
+
+Save authorized changes, evidence and updated handover to the existing branch.
