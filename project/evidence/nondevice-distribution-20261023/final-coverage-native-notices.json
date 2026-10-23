@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "kind": "native-complete-source-notice-material",
+  "method": "All matching C-style and contiguous slash comments in retained native C/C++/assembler/shader source; deduplicated exact bytes. Material discovery, not grant inference. Complete original source archives remain part of source packet.",
+  "source_archives": {
+    "ppsspp-source": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+    "ra-source": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+  },
+  "source_notice_locations": 15042,
+  "distinct_notice_blocks": 4710,
+  "notice_material_bytes": 4409456,
+  "public_distribution_cleared": false,
+  "private_material_archive_sha256": "13663ad58999742001a8a7dcac782a6b30a4077622a58bdb82975fb2bdd675cf",
+  "private_material_archive_size_bytes": 1823178,
+  "entire_preferred_native_source_archives_also_retained": true,
+  "not_just_named_licence_files": true
+}

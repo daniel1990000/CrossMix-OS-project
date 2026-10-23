@@ -1,0 +1,15 @@
+test_acceptance_cannot_be_smuggled_into_hold_review (project.tests.test_maintenance_review.MaintenanceReviewTests.test_acceptance_cannot_be_smuggled_into_hold_review) ... ok
+test_all_changes_include_deletion_addition_mode_and_outside_scope (project.tests.test_maintenance_review.MaintenanceReviewTests.test_all_changes_include_deletion_addition_mode_and_outside_scope) ... ok
+test_changed_mode_invalidates_decision (project.tests.test_maintenance_review.MaintenanceReviewTests.test_changed_mode_invalidates_decision) ... ok
+test_duplicate_path_fails (project.tests.test_maintenance_review.MaintenanceReviewTests.test_duplicate_path_fails) ... ok
+test_missing_decision_group_fails (project.tests.test_maintenance_review.MaintenanceReviewTests.test_missing_decision_group_fails) ... ok
+test_moving_ref_is_refused (project.tests.test_maintenance_review.MaintenanceReviewTests.test_moving_ref_is_refused) ... ok
+test_omitted_outside_change_fails (project.tests.test_maintenance_review.MaintenanceReviewTests.test_omitted_outside_change_fails) ... ok
+test_replacement_objects_do_not_substitute_candidate (project.tests.test_maintenance_review.MaintenanceReviewTests.test_replacement_objects_do_not_substitute_candidate) ... ok
+test_uncommitted_source_does_not_get_certified_as_executed (project.tests.test_maintenance_review.MaintenanceReviewTests.test_uncommitted_source_does_not_get_certified_as_executed) ... ok
+test_wrong_candidate_invalidates_decision (project.tests.test_maintenance_review.MaintenanceReviewTests.test_wrong_candidate_invalidates_decision) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.546s
+
+OK

@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "scope": "Separate optional in-emulator state-completion API; excluded from existing native-menu candidate and its full-build evidence",
+  "patch": {
+    "path": "patches/0002-save-slot-completion-evidence.patch",
+    "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3",
+    "license": "GPL-2.0-or-later"
+  },
+  "source_files": [
+    {
+      "path": "Core/SaveState.h",
+      "sha256": "e51f0e32e532412a994c937b37f102caaf00bf6ec4492f1b212f8357b304797d"
+    },
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "e92ebdaf1f627041d183614b7a734333732c4e91a3fb5304f4c5b665dd7540d1"
+    },
+    {
+      "path": "Common/Crypto/sha256.h",
+      "sha256": "b56996a99c0e204fed2ecf515d552687e92fa717a9d41ed9992b55ee53b38eb7"
+    },
+    {
+      "path": "Common/Crypto/sha256.cpp",
+      "sha256": "5978a51cdf51701d650d34a31c73808f3d56d8a36954b18b0a85668f36703832"
+    },
+    {
+      "path": "Common/Serialize/Serializer.h",
+      "sha256": "513b671c015be2bec2e7378f1e90d5f0a71af571864248ccb502c74676e38ff4"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "Core/SaveState.h",
+      "sha256": "dbc8028d8f0eace9b62f1cdbbd6afa4fb0c08db708c8763094aeda110ca1e043"
+    },
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "774f59281052f787726bf352bbda6f81f09f0ac422920285d788229d57091610"
+    }
+  ],
+  "qualification": {
+    "host_narrow_harness": "project/ppsspp/tests/test_state_evidence_patch.py",
+    "full_engine_build": false,
+    "device_tested": false,
+    "external_exporter": false,
+    "installed_engine_changed": false,
+    "resume_enabled": false
+  },
+  "evidence_format": {
+    "extension_id": "trimui-slot-evidence-v1",
+    "state_format_id": "ppsspp:d357e6a32934800d3d80b49f910a603e1b069751:chunk5-savestart3",
+    "engine_fingerprint": "Linux /proc/self/exe SHA256 before and after operation",
+    "game_fingerprint": "Active PSP_CoreParameter fileToStart SHA256 before and after operation, SFO DISC_ID/DISC_VERSION and engine-generated game prefix",
+    "state_fingerprint": "Engine GenerateSaveSlotPath path and SHA256 after successful async save and checked slot rename",
+    "clean_shutdown_proof": false
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "kind": "archive-notice-candidate-inventory",
+  "archive_sha256": "772b260eaca52fd846eed8c1746723aacbd8723b9eaf9d57bfea9b0e60c79e68",
+  "archive_size_bytes": 1430275,
+  "expected_archive_hash_matched": true,
+  "members_seen": 61,
+  "regular_files": 61,
+  "unfollowed_links": 0,
+  "regular_file_bytes": 2898175,
+  "file_inventory_sha256": "f35ca92888be951aae178a23a934d92f77eb758446cb2154551127d5e3f94efb",
+  "named_notice_candidates": [
+    {
+      "path": "smartpro-host-preview/app/ppsspp/theme/LICENSE",
+      "size_bytes": 1321,
+      "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+      "header_signals": [
+        "copyright",
+        "permission-grant"
+      ],
+      "empty": false,
+      "classification": "named-notice-candidate"
+    },
+    {
+      "path": "smartpro-host-preview/assets/fonts/OFL.txt",
+      "size_bytes": 4396,
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "header_signals": [
+        "copyright",
+        "permission-grant"
+      ],
+      "empty": false,
+      "classification": "named-notice-candidate"
+    },
+    {
+      "path": "smartpro-host-preview/notices/NotoSans-OFL.txt",
+      "size_bytes": 4396,
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "header_signals": [
+        "copyright",
+        "permission-grant"
+      ],
+      "empty": false,
+      "classification": "named-notice-candidate"
+    },
+    {
+      "path": "smartpro-host-preview/notices/ORIGINAL-PROJECT-LICENSE.txt",
+      "size_bytes": 1402,
+      "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+      "header_signals": [
+        "copyright",
+        "permission-grant"
+      ],
+      "empty": false,
+      "classification": "named-notice-candidate"
+    }
+  ],
+  "header_signal_file_counts": {
+    "copyright": 4,
+    "permission-grant": 4,
+    "spdx": 19
+  },
+  "header_scan_limit_bytes": 8192,
+  "distribution_cleared": false,
+  "source_use_verified": false,
+  "compiled_membership_established": false,
+  "limits": [
+    "Notice names and header signals are discovery aids, not licence decisions.",
+    "Inline terms outside the scanned prefix and differently named notices can remain undiscovered.",
+    "An archive inventory does not establish binary link membership or corresponding-source completeness."
+  ],
+  "elf_members": []
+}

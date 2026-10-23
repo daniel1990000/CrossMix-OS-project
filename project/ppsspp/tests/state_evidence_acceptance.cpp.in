@@ -1,0 +1,315 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Narrow fixture: real patched SaveState queue/slot/Process functions and SHA256;
+// serializer, PSP lifecycle, screenshot and platform services are explicit stubs.
+#include <algorithm>
+#include <atomic>
+#include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <filesystem>
+#include <fstream>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <memory>
+#include <mutex>
+#include <string>
+#include <string_view>
+#include <vector>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include "Common/Crypto/sha256.h"
+
+#define PPSSPP_GIT_VERSION "v1.20.3-fixture"
+#define STR_VIEW(value) (int)(value).size(), (value).data()
+#define INFO_LOG(...)
+#define ERROR_LOG(...)
+
+enum class PathType { NATIVE, CONTENT_URI };
+struct Path {
+	std::string value;
+	Path() = default;
+	explicit Path(std::string value_) : value(std::move(value_)) {}
+	bool empty() const { return value.empty(); }
+	bool IsAbsolute() const { return !value.empty() && value.front() == '/'; }
+	size_t size() const { return value.size(); }
+	const char *c_str() const { return value.c_str(); }
+	const std::string &ToString() const { return value; }
+	std::string ToVisualString() const { return value; }
+	PathType Type() const { return value.rfind("content://", 0) == 0 ? PathType::CONTENT_URI : PathType::NATIVE; }
+	Path operator/(std::string_view name) const { return Path(value + "/" + std::string(name)); }
+	Path WithExtraExtension(std::string_view ext) const { return Path(value + std::string(ext)); }
+	bool operator==(const Path &other) const { return value == other.value; }
+	bool operator!=(const Path &other) const { return value != other.value; }
+};
+
+static bool failFinalRename = false;
+static bool emptyFinalState = false;
+static int screenshotCount = 0;
+static Path stateDirectory;
+namespace File {
+bool Exists(const Path &path) { return std::filesystem::exists(path.value); }
+bool Delete(const Path &path, bool) { return std::filesystem::remove(path.value); }
+bool Rename(const Path &from, const Path &to) {
+	if (failFinalRename && from.value.size() >= 4 && from.value.substr(from.value.size() - 4) == ".tmp")
+		return false;
+	std::error_code error;
+	std::filesystem::rename(from.value, to.value, error);
+	if (emptyFinalState && !error)
+		std::ofstream(to.value, std::ios::trunc);
+	return !error;
+}
+bool CreateFullPath(const Path &path) { std::filesystem::create_directories(path.value); return true; }
+}
+
+static const int DIRECTORY_SAVESTATE = 1;
+Path GetSysDirectory(int) { return stateDirectory; }
+template<typename... Args>
+std::string StringFromFormat(const char *format, Args... args) {
+	char output[512];
+	snprintf(output, sizeof(output), format, args...);
+	return output;
+}
+
+struct ParamSFOData {
+	std::map<std::string, std::string> data{{"DISC_ID", "ULUS12345"}, {"DISC_VERSION", "1.00"}, {"TITLE", "Fixture"}};
+	std::string GetValueString(std::string_view key) const {
+		auto value = data.find(std::string(key));
+		return value == data.end() ? "" : value->second;
+	}
+	std::string GenerateFakeID(const Path &) const { return "FAKE00000"; }
+};
+static ParamSFOData g_paramSFO;
+struct Configuration {
+	int iSaveStateSlotCount = 5;
+	bool bEnableStateUndo = true;
+	bool bAchievementsSaveStateInHardcoreMode = false;
+	std::string sStateUndoLastSaveGame;
+	int iStateUndoLastSaveSlot = -1;
+	void Save(const char *) {}
+};
+static Configuration g_Config;
+static int networkRejectCall = 0;
+static int networkCalls = 0;
+bool NetworkAllowSaveState() { return ++networkCalls != networkRejectCall; }
+static bool hardcore = false;
+namespace Achievements { bool HardcoreModeActive() { return hardcore; } }
+static bool initialized = true;
+static bool kernelRunning = true;
+bool PSP_IsInited() { return initialized; }
+bool __KernelIsRunning() { return kernelRunning; }
+struct CoreParameter { Path fileToStart; };
+static CoreParameter coreParameter;
+CoreParameter &PSP_CoreParameter() { return coreParameter; }
+enum class CoreState { CORE_RUNTIME_ERROR, RUNNING };
+static CoreState coreState = CoreState::RUNNING;
+enum class BreakReason { SavestateSave, SavestateLoad };
+void Core_Break(BreakReason, int) {}
+void Core_ResetException() {}
+void __DisplaySetWasPaused() {}
+double time_now_d() { return 1; }
+
+enum class I18NCat { SYSTEM, SCREEN };
+struct I18NCategory {
+	const char *T(const char *value, const char * = nullptr) { return value; }
+	const char *T_cstr(const char *value) { return value; }
+};
+I18NCategory *GetI18NCategory(I18NCat) { static I18NCategory instance; return &instance; }
+
+// These stubs replace the complete emulator and serializer. They never claim
+// that the fixture bytes are a real PSP save state or prove file-system durability.
+class PointerWrap;
+static std::string serializedStateBytes = "fixture state bytes\n";
+class CChunkFileReader {
+public:
+	enum Error { ERROR_NONE, ERROR_BROKEN_STATE, ERROR_OTHER };
+	static Error result;
+	template<class State> static Error Save(const Path &path, const std::string &, const char *, State &) {
+		if (result == ERROR_NONE)
+			std::ofstream(path.value, std::ios::binary | std::ios::trunc) << serializedStateBytes;
+		return result;
+	}
+	template<class State> static Error Load(const Path &, std::string *, State &, std::string *) { return result; }
+	template<class State> static Error Verify(State &) { return result; }
+};
+CChunkFileReader::Error CChunkFileReader::result = CChunkFileReader::ERROR_NONE;
+
+namespace SaveState {
+/*@@STATUS@@*/
+using Callback = std::function<void(Status, std::string_view)>;
+/*@@EVIDENCE_TYPE@@*/
+using SlotEvidenceCallback = std::function<void(Status, std::string_view, const SlotEvidence *)>;
+
+static std::atomic<uint64_t> projectEvidenceGeneration{0};
+static bool needsProcess = false;
+static std::mutex mutex;
+static double g_lastSaveTime = -1;
+static bool hasLoadedState = false;
+static int saveStateGeneration = 0;
+static int saveDataGeneration = 0;
+static int lastSaveDataGeneration = 0;
+static std::string saveStateInitialGitVersion;
+static const int LOAD_UNDO_SLOT = -2;
+static const char *const STATE_EXTENSION = "ppst";
+static const char *const UNDO_STATE_EXTENSION = "undo.ppst";
+static const char *const UNDO_SCREENSHOT_EXTENSION = "undo.jpg";
+static const char *const SCREENSHOT_EXTENSION = "jpg";
+struct RewindStates {
+	void NotifyState() {}
+	void Process() {}
+	void Clear() {}
+	CChunkFileReader::Error Restore(std::string *) { return CChunkFileReader::ERROR_OTHER; }
+};
+static RewindStates rewindStates;
+/*@@SAVE_START@@*/
+/*@@OPERATION_TYPE@@*/
+/*@@OPERATION@@*/
+static std::vector<Operation> g_pendingOperations;
+Status TriggerLoadWarnings(std::string &) { return Status::SUCCESS; }
+bool HandleLoadFailure(bool) { return false; }
+void ScheduleSaveScreenshot(const Path &) { ++screenshotCount; }
+void Rescan(std::string_view) {}
+
+/*@@GAME_PREFIX_GENERATOR@@*/
+/*@@GAME_PREFIX@@*/
+/*@@SLOT_FILENAME@@*/
+/*@@SLOT_PATH@@*/
+/*@@DELETE@@*/
+/*@@RENAME@@*/
+/*@@ENQUEUE@@*/
+/*@@SAVE@@*/
+/*@@SAVE_SLOT@@*/
+/*@@FINGERPRINT_TYPE@@*/
+/*@@FINGERPRINT@@*/
+/*@@VALIDATE_ID@@*/
+/*@@SAVE_EVIDENCE@@*/
+/*@@SESSION_CODE@@*/
+/*@@FLUSH@@*/
+/*@@PROCESS@@*/
+/*@@INIT@@*/
+/*@@SHUTDOWN@@*/
+}
+
+int main(int argc, char **argv) {
+	assert(argc == 3);
+	std::string scenario(argv[1]);
+	std::filesystem::path work(argv[2]);
+	stateDirectory = Path((work / "states").string());
+	std::filesystem::create_directories(stateDirectory.value);
+	coreParameter.fileToStart = Path((work / "game ü.iso").string());
+	std::ofstream(coreParameter.fileToStart.value, std::ios::binary) << "fixture ROM bytes\n";
+	using namespace SaveState;
+	Init();
+	int callbacks = 0;
+	bool success = false;
+	SlotEvidence retained;
+	auto callback = [&](Status status, std::string_view, const SlotEvidence *evidence) {
+		++callbacks;
+		assert((status == Status::SUCCESS) == (evidence != nullptr));
+		if (evidence) {
+			success = true;
+			retained = *evidence;
+		}
+	};
+	int slot = scenario == "bad-slot" ? 100 : 2;
+	std::string request = scenario == "bad-request" ? "../bad" : "request-123";
+	if (scenario == "missing-disc")
+		g_paramSFO.data.erase("DISC_ID");
+	if (scenario == "inactive")
+		initialized = false;
+	if (scenario == "network-slot")
+		networkRejectCall = 1;
+	if (scenario == "network-save")
+		networkRejectCall = 2;
+	if (scenario == "network-queue")
+		networkRejectCall = 3;
+	if (scenario == "hardcore")
+		hardcore = true;
+	if (scenario == "hardcore-save-allowed") {
+		hardcore = true;
+		g_Config.bAchievementsSaveStateInHardcoreMode = true;
+	}
+	if (scenario == "rom-directory") {
+		std::filesystem::remove(coreParameter.fileToStart.value);
+		std::filesystem::create_directory(coreParameter.fileToStart.value);
+	}
+	if (scenario == "rom-fifo") {
+		std::filesystem::remove(coreParameter.fileToStart.value);
+		assert(mkfifo(coreParameter.fileToStart.c_str(), 0600) == 0);
+	}
+	if (scenario == "rom-oversize")
+		std::filesystem::resize_file(coreParameter.fileToStart.value, 8ULL * 1024 * 1024 * 1024 + 1);
+	if (scenario == "rom-empty")
+		std::filesystem::resize_file(coreParameter.fileToStart.value, 0);
+	SaveSlotWithEvidence(slot, request, callback);
+	bool immediate = scenario == "bad-request" || scenario == "bad-slot" || scenario == "missing-disc" ||
+		scenario == "inactive" || scenario == "rom-directory" || scenario == "rom-fifo" ||
+		scenario == "rom-oversize" || scenario == "rom-empty" || scenario == "network-slot" ||
+		scenario == "network-save" || scenario == "network-queue" || scenario == "hardcore";
+#ifndef SDL
+	immediate = true;
+#endif
+	if (immediate) {
+		assert(callbacks == 1 && !success && g_pendingOperations.empty());
+		return 0;
+	}
+	assert(callbacks == 0);
+	assert(g_pendingOperations.size() == 1);
+	assert(!success);  // Enqueued is not completed.
+	assert(screenshotCount == 1);  // A screenshot request is not state success.
+	if (scenario == "unprocessed") {
+		assert(callbacks == 0 && !File::Exists(GenerateSaveSlotPath(GetGamePrefix(g_paramSFO), slot, STATE_EXTENSION)));
+		return 0;
+	}
+	if (scenario == "write-failure")
+		CChunkFileReader::result = CChunkFileReader::ERROR_OTHER;
+	if (scenario == "rename-failure")
+		failFinalRename = true;
+	if (scenario == "empty-state")
+		emptyFinalState = true;
+	if (scenario == "rom-changed")
+		std::ofstream(coreParameter.fileToStart.value, std::ios::app) << "changed";
+	if (scenario == "rom-replaced") {
+		Path replacement = coreParameter.fileToStart.WithExtraExtension(".replacement");
+		std::ofstream(replacement.value, std::ios::binary) << "different ROM data";
+		assert(std::filesystem::file_size(replacement.value) == 18);
+		std::filesystem::rename(replacement.value, coreParameter.fileToStart.value);
+	}
+	if (scenario == "disc-changed")
+		g_paramSFO.data["DISC_VERSION"] = "1.01";
+	if (scenario == "game-path-changed")
+		coreParameter.fileToStart = Path((work / "different.iso").string());
+	if (scenario == "reinitialized")
+		Init();
+	if (scenario == "shutdown")
+		Shutdown();
+	if (scenario == "kernel-lost")
+		kernelRunning = false;
+	auto duplicatedCompletion = g_pendingOperations.front().callback;
+	Process();
+	if (scenario == "kernel-lost") {
+		assert(callbacks == 0 && !success);
+		assert(!File::Exists(GenerateSaveSlotPath(GetGamePrefix(g_paramSFO), slot, STATE_EXTENSION)));
+		return 0;
+	}
+	assert(callbacks == 1);
+	if (scenario == "success" || scenario == "hardcore-save-allowed") {
+		assert(success);
+		assert(retained.requestID == "request-123" && retained.slot == 2);
+		assert(retained.discID == "ULUS12345" && retained.discVersion == "1.00");
+		assert(retained.gamePrefix == "ULUS12345_1.00");
+		assert(retained.statePath.value == (work / "states/ULUS12345_1.00_2.ppst").string());
+		assert(retained.gamePath == coreParameter.fileToStart);
+		assert(retained.gameSize == 18 && retained.stateSize == 20 && retained.engineSize > 0);
+		assert(retained.engineVersion == PPSSPP_GIT_VERSION);
+		assert(retained.upstreamCommit == "d357e6a32934800d3d80b49f910a603e1b069751");
+		assert(retained.extensionID == "trimui-slot-evidence-v1");
+		assert(retained.architecture == "x86_64" || retained.architecture == "aarch64");
+		std::cout << "engine=" << retained.engineSHA256 << "\ngame=" << retained.gameSHA256 << "\nstate=" << retained.stateSHA256 << "\n";
+	} else {
+		assert(!success);
+	}
+	duplicatedCompletion(Status::SUCCESS, "duplicate callback");
+	assert(callbacks == 1);  // Evidence delivery is once only.
+}

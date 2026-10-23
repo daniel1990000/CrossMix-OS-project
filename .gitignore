@@ -1,0 +1,12 @@
+/build*/
+/dist/
+/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+/project/build/
+/project/dist/
+/.pytest_cache/
+/project/.pytest_cache/
+/.preview-state/
+/.coverage

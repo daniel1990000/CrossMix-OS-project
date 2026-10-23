@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "kind": "private-native-rebuild-and-source-retention",
+  "captured_at_utc": "2026-10-22T23:18:46.518168+00:00",
+  "starting_frontend_commit": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+  "status": "rebuilt-unqualified",
+  "historical_native_outputs_recovered": false,
+  "replacement_native_outputs_rebuilt": true,
+  "remote_storage_retrieval_certified_by_this_report": false,
+  "remote_storage_readback": "Separate root-agent custody receipt and current HANDOVER.md; the local rebuild does not prove retained-storage retrieval.",
+  "target_executed": false,
+  "device_tested": false,
+  "distribution_cleared": false,
+  "installed_emulators_changed": false,
+  "source_use_verified": false,
+  "shipped_native_selection_changed": false,
+  "ppsspp": {
+    "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "enabled_project_extensions": [
+      "state-evidence.lock.json",
+      "state-session.lock.json"
+    ],
+    "post_recipe_overrides": [
+      {
+        "path": "patches/0004-checked-spruce-save-and-quit.patch",
+        "sha256": "06f648921f13d57475a507cdbd6c082b31dc125e2f1f00ba6adf107b85f6c3ab",
+        "license": "GPL-2.0-or-later"
+      }
+    ],
+    "project_patches": [
+      {
+        "path": "patches/0001-independent-native-menu-controls.patch",
+        "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a"
+      },
+      {
+        "path": "patches/0002-save-slot-completion-evidence.patch",
+        "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3"
+      },
+      {
+        "path": "patches/0003-project-state-session.patch",
+        "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e"
+      }
+    ],
+    "full_engine_cross_build": true,
+    "sdk_dependency_inventory_pass": true,
+    "sdk_abi_object_count": 16,
+    "binary": {
+      "name": "PPSSPPSDL_TrimUI",
+      "size": 19934560,
+      "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+      "needed": [
+        "libz.so.1",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6",
+        "ld-linux-aarch64.so.1",
+        "libpthread.so.0",
+        "librt.so.1",
+        "libSDL2-2.0.so.0",
+        "libGLESv2.so.2",
+        "libEGL.so.1",
+        "libdl.so.2"
+      ]
+    },
+    "historical_binary_sha256": "a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d",
+    "historical_binary_byte_identical": false,
+    "builder_report_sha256": "5439b1c27d9a49406f33c8e6b60025237d536c80ee4c508d333c925a41fefda8",
+    "executed_builder_sha256": "8761ccc8d3808f169134c0a2cb59a914e0ca4b0a394fa3e2d715fb5edeed6e56",
+    "ffmpeg_commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+    "ffmpeg_built_archive_evidence": {
+      "kind": "selected-built-FFmpeg-archive-evidence",
+      "archive_sha256": "46326ab853d38ef62d933d69f05aab3c0a392b31be2fea78d96b7ed0a665c65a",
+      "member_count": 170,
+      "selected_members": {
+        "jfdctfst.o": {
+          "size": 23040,
+          "sha256": "2ad35be670c5ebb543d0d8b2d1b1679c48cc83885fdc2229b365526b49fbca76"
+        },
+        "jfdctint.o": {
+          "size": 39552,
+          "sha256": "ddd18a591b84c6fde75c623f8da00c5d16f2ba61ce1e40c1ac1833a032c10ed9"
+        },
+        "jrevdct.o": {
+          "size": 71176,
+          "sha256": "d77ad9c518b2c078fe6aed821a6550ecbed095cac2c7db1e44eb68b7838d8053"
+        },
+        "mjpegenc.o": {
+          "size": 535680,
+          "sha256": "b47ae6fff4f1016197dcd62f56c577d24b0c1a5951b64ee200919d296d590d6e"
+        },
+        "mjpegdec.o": {
+          "size": 665432,
+          "sha256": "747492d81c0085f479557d3bd2f3098eb56ab38a73d595e48c3ef5bf36e5864d"
+        },
+        "fdctdsp.o": {
+          "size": 70680,
+          "sha256": "dbf4c34ce7e472329244fe9127e5d2a46b20aae1079cfa26688aef5dced012a0"
+        },
+        "idctdsp.o": {
+          "size": 130920,
+          "sha256": "3a86f40f240731faf140dc242c730d2011603ca5bd51931725ffb409b8fa5a38"
+        }
+      },
+      "actual_config": {
+        "CONFIG_MJPEG_ENCODER": true,
+        "CONFIG_MJPEG_DECODER": true,
+        "CONFIG_FDCTDSP": true,
+        "CONFIG_IDCTDSP": true,
+        "CONFIG_GPL": false,
+        "CONFIG_NONFREE": false,
+        "CONFIG_VERSION3": false
+      },
+      "selected_defined_symbols": [
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctfst.o:0000000000000000 T ff_fdct_ifast",
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctfst.o:0000000000000238 T ff_fdct_ifast248",
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctint.o:0000000000000840 T ff_fdct248_islow_10",
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctint.o:00000000000002d8 T ff_fdct248_islow_8",
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctint.o:0000000000000568 T ff_jpeg_fdct_islow_10",
+        "/ffmpeg-sdk/lib/libavcodec.a:jfdctint.o:0000000000000000 T ff_jpeg_fdct_islow_8",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:0000000000000000 T ff_j_rev_dct",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:00000000000014d8 T ff_j_rev_dct1",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:0000000000001478 T ff_j_rev_dct2",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:0000000000000cd8 T ff_j_rev_dct4",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:0000000000001538 T ff_jref_idct_add",
+        "/ffmpeg-sdk/lib/libavcodec.a:jrevdct.o:00000000000014f0 T ff_jref_idct_put",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000314 t build_basic_mjpeg_vlc",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:00000000000000fc t build_vlc.constprop.0",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:00000000000001f8 t build_vlc.constprop.1",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000010 t build_vlc.part.0",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000000 t decode_flush",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:00000000000002a8 T ff_mjpeg_decode_dht",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000040 T ff_mjpeg_decode_dqt",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000000 T ff_mjpeg_decode_end",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000005470 T ff_mjpeg_decode_frame",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:00000000000003e0 T ff_mjpeg_decode_init",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000000998 T ff_mjpeg_decode_sof",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000001da8 T ff_mjpeg_decode_sos",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegdec.o:0000000000004ed0 T ff_mjpeg_find_marker",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegenc.o:00000000000001a0 T ff_mjpeg_encode_close",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegenc.o:0000000000000068 T ff_mjpeg_encode_init",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegenc.o:0000000000000000 T ff_mjpeg_encode_mb",
+        "/ffmpeg-sdk/lib/libavcodec.a:mjpegenc.o:0000000000000000 t init_uni_ac_vlc"
+      ],
+      "scope": "Compiled archive and generated config; final engine archive input and retained symbols recorded separately. No target execution."
+    },
+    "ffmpeg_final_engine_link_evidence": {
+      "kind": "final-engine-static-link-evidence",
+      "unstripped_binary_sha256": "e865e4166af883e7012c66282beff143657454484873f0d5e69b4062be992822",
+      "generated_actual_link_command_sha256": "e0865e50364b64efdd8a96b590c783d9eac100669188121f3d783c7dedf1e2bd",
+      "selected_ffmpeg_archive_inputs": [
+        "/ffmpeg-sdk/lib/libavformat.a",
+        "/ffmpeg-sdk/lib/libavcodec.a",
+        "/ffmpeg-sdk/lib/libswresample.a",
+        "/ffmpeg-sdk/lib/libswscale.a",
+        "/ffmpeg-sdk/lib/libavutil.a"
+      ],
+      "retained_ijg_mjpeg_defined_symbols": [
+        "0000000000e0e528 T ff_fdct_ifast",
+        "0000000000e0e760 T ff_fdct_ifast248",
+        "0000000000e0f498 T ff_j_rev_dct",
+        "0000000000e10970 T ff_j_rev_dct1",
+        "0000000000e10910 T ff_j_rev_dct2",
+        "0000000000e10170 T ff_j_rev_dct4",
+        "0000000000e0eed0 T ff_jpeg_fdct_islow_10",
+        "0000000000e0e968 T ff_jpeg_fdct_islow_8",
+        "0000000000e109d0 T ff_jref_idct_add",
+        "0000000000e10988 T ff_jref_idct_put",
+        "0000000000e0f438 T ff_mjpeg_build_huffman_codes",
+        "0000000000d3afc0 T ff_mjpeg_decode_dht",
+        "0000000000d3ad58 T ff_mjpeg_decode_dqt",
+        "00000000000f9534 T ff_mjpeg_decode_end",
+        "0000000000d40188 T ff_mjpeg_decode_frame",
+        "00000000000f9914 T ff_mjpeg_decode_init",
+        "0000000000d3b6b0 T ff_mjpeg_decode_sof",
+        "0000000000d3cac0 T ff_mjpeg_decode_sos",
+        "0000000001310730 D ff_mjpeg_decoder",
+        "00000000000f9ce4 T ff_mjpeg_encode_close",
+        "0000000000d48e60 T ff_mjpeg_encode_dc",
+        "00000000000f9bac T ff_mjpeg_encode_init",
+        "0000000000d41d08 T ff_mjpeg_encode_mb",
+        "0000000000d45548 T ff_mjpeg_encode_picture_header",
+        "0000000000d48d38 T ff_mjpeg_encode_picture_trailer",
+        "0000000000d48b28 T ff_mjpeg_encode_stuffing",
+        "00000000013107f8 D ff_mjpeg_encoder",
+        "0000000000d48678 T ff_mjpeg_escape_FF",
+        "0000000000d3fbe8 T ff_mjpeg_find_marker",
+        "0000000000d45440 T ff_mjpeg_init_hvsample"
+      ],
+      "scope": "Actual completed engine link command plus defined symbols in the resulting unstripped ELF; target never executed."
+    },
+    "ffmpeg_ijg_source_preservation": {
+      "jfdctfst.c": {
+        "pristine_sha256": "765705418b16cf4ccf0fb4f6250974227c14804278225277029a1a1e4fd20749",
+        "built_source_sha256": "765705418b16cf4ccf0fb4f6250974227c14804278225277029a1a1e4fd20749",
+        "unchanged": true
+      },
+      "jfdctint_template.c": {
+        "pristine_sha256": "9c74eb2989d1479107b0d7e8b5de111f12f580262babf1e6304631e4811e68be",
+        "built_source_sha256": "9c74eb2989d1479107b0d7e8b5de111f12f580262babf1e6304631e4811e68be",
+        "unchanged": true
+      },
+      "jrevdct.c": {
+        "pristine_sha256": "a0069655562e7ca92e803ce4111eb9f1b0e7094beb5af2539e33a23fe9b2aaa5",
+        "built_source_sha256": "a0069655562e7ca92e803ce4111eb9f1b0e7094beb5af2539e33a23fe9b2aaa5",
+        "unchanged": true
+      }
+    },
+    "source_archive_includes_component_scope_notice": true,
+    "raw_ffmpeg_config_log_retained_in_archives": false
+  },
+  "retroarch": {
+    "upstream_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+    "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "candidate": {
+      "name": "retroarch-igm-tg5040",
+      "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+      "size": 15182848
+    },
+    "sdk_dependency_inventory_pass": true,
+    "sdk_abi_object_count": 23,
+    "historical_binary_sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+    "historical_binary_byte_identical": false,
+    "builder_report_sha256": "aa853a0413bf4ed6f73855091b18b912414fb243c92ab8330ddaea9e44e395f6",
+    "original_pinned_image_configure_attempt": {
+      "reason": "No such image: sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c",
+      "failure_retained_separately": true,
+      "docker_exit_code": 125,
+      "builder_exit_code": 1
+    },
+    "new_build_input_delta": [
+      {
+        "path": "toolchain.image_id",
+        "before": "sha256:e7bac3a2e267e0a447eca219d212be1ac4452b1aa59388db0d18d745955c1f4c",
+        "after": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b"
+      }
+    ],
+    "original_repository_lock_sha256": "689db77ed8a1a7ef17cebc910e409bc5dcf16b77d0a5a9239e74b801a32916a4",
+    "new_private_lock_sha256": "33ab6a3a1b2c5e31e6c192cf1630ef00a13d345d495345041b7ca65f362d1fad",
+    "original_repository_lock_unchanged": true,
+    "copied_builder_and_helpers_unmodified": true,
+    "source_archive_supplement": {
+      "kind": "supplemented-corresponding-source",
+      "original_prepare_archive": {
+        "name": "source-inputs.tar.gz",
+        "size": 143620281,
+        "sha256": "a7bd2aa57eb293ac585f2243688f979c39be2e2d6d69e1814f65ff0c2d890d5e"
+      },
+      "retained_archive": {
+        "name": "corresponding-source-with-notices.tar.gz",
+        "size": 144576907,
+        "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+      },
+      "original_member_count": 25128,
+      "added_files": [
+        {
+          "path": "project/retroarch/NOTICE.md",
+          "size": 1484,
+          "sha256": "e0ff59a664ad3923312567a6438f9c58f3b314e7d8f7fb6cf3c058eea5f9b672"
+        },
+        {
+          "path": "project/retroarch/COPYING",
+          "size": 35147,
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+        },
+        {
+          "path": "build/ra-rebuild-input-provenance.json",
+          "size": 1777,
+          "sha256": "79c140cd2de4bd8f406f220fee1bf5e6649d70adc15c60eec3892ab0cf74ce15"
+        },
+        {
+          "path": "build/compiler-image-provenance.json",
+          "size": 1200,
+          "sha256": "e9d8beabc359d923249e225a58e25865b05a563511c38a46039a2acc29180ddb"
+        }
+      ],
+      "scope": "Original prepare archive is preserved unchanged. Distinct final archive retains original members and adds project notices plus the explicit new-image provenance; actual byte preservation checked separately.",
+      "original_members_byte_identical": true,
+      "original_members_checked": 25128,
+      "final_members_checked": 25132,
+      "additional_member_names": [
+        "build/compiler-image-provenance.json",
+        "build/ra-rebuild-input-provenance.json",
+        "project/retroarch/COPYING",
+        "project/retroarch/NOTICE.md"
+      ],
+      "unsafe_paths_or_git_metadata": false
+    },
+    "actual_gcc9_static_libstdcpp_link_proved": true
+  },
+  "compiler_image": {
+    "kind": "private-compiler-image-archive",
+    "image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "captured_at": "2026-10-22T23:13:20.749373+00:00",
+    "config_checks": {
+      "config_environment_names": [
+        "PATH",
+        "DEBIAN_FRONTEND"
+      ],
+      "only_expected_environment": true,
+      "history_credential_markers_found": false,
+      "temporary_public_ca_mount_reference_expected": true,
+      "history_sha256": "8d04bf1b4520ab76798cb9d58232aae3f7a1cf7d554508d30d56c5ccd72a721a"
+    },
+    "sdk_runtime_redistribution_cleared": false,
+    "private_only": true,
+    "archive_retrieval_proven": false,
+    "target_executed": false,
+    "archive": {
+      "name": "compiler-image-15ef8c75094b.docker.tar.gz",
+      "size": 471632780,
+      "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+      "gzip_mtime": 0,
+      "gzip_filename": "",
+      "compresslevel": 6,
+      "raw_docker_save_tar_size": 1516103168,
+      "raw_docker_save_tar_sha256": "53af6bbcce2b3ad494d51f02de98c5682b91c73b5725df101039d678e7255889"
+    },
+    "determinism_scope": "Two independent docker-save streams of the same immutable image and fixed gzip settings were compared; result recorded explicitly. No equivalence to historical image or cross-environment rebuild is inferred.",
+    "archive_identity_validation": {
+      "docker_manifest_binds_expected_config": true,
+      "expected_config_blob_sha256": "15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+      "content_addressed_blobs_verified": 8,
+      "all_blob_digests_match": true
+    },
+    "second_save_rebuild": {
+      "raw_size": 1516103168,
+      "raw_sha256": "35402c717c612b685e7170beaed18c476adaeb6ec995cebf6f09f744e38d42a8",
+      "compressed_size": 471632615,
+      "compressed_sha256": "8e56eaef55ea51afae27135159aa9a2c8156cb5e657f98304b236640e5af40bb",
+      "raw_byte_identical": false,
+      "compressed_byte_identical": false
+    }
+  },
+  "artifacts": [
+    {
+      "role": "ppsspp-binary",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/ppsspp-state-session/output/PPSSPPSDL_TrimUI",
+      "size": 19934560,
+      "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773"
+    },
+    {
+      "role": "ppsspp-corresponding-source",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/ppsspp-state-session/candidate-corresponding-source.tar.gz",
+      "size": 177963111,
+      "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556"
+    },
+    {
+      "role": "ppsspp-build-records",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/ppsspp-state-session/candidate-build-records.tar.gz",
+      "size": 291510,
+      "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1"
+    },
+    {
+      "role": "retroarch-binary",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/retroarch-new-image/output/retroarch-igm-tg5040",
+      "size": 15182848,
+      "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+    },
+    {
+      "role": "retroarch-corresponding-source",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/retroarch-new-image/corresponding-source-with-notices.tar.gz",
+      "size": 144576907,
+      "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+    },
+    {
+      "role": "retroarch-build-records",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/retroarch-new-image/build-records-with-provenance.tar.gz",
+      "size": 595274,
+      "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446"
+    },
+    {
+      "role": "compiler-image-private-sdk-containing",
+      "private_workspace_path": "/workspace/scratch/trimui-native-r04/compiler-image-15ef8c75094b.docker.tar.gz",
+      "size": 471632780,
+      "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2"
+    }
+  ],
+  "private_scope": "Native ELF files, complete upstream/recipe archives and SDK-containing compiler image remain outside Git/public host previews. New image and output digests have distinct records; no historical recovery or device compatibility inferred.",
+  "remaining_boundaries": [
+    "Independent retained-storage fresh download and hash/reassembly proof; root custody receipt owns this step.",
+    "R05 PyUI notice delivery/scope evidence remains absent and unsent.",
+    "R06 exact recipe/IGM/SDK and corresponding-source distribution review remains open.",
+    "D01-D03 experimental route/recovery/device readiness and all physical acceptance remain unqualified."
+  ]
+}

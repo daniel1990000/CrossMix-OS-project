@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-22T23:09:29.064606+00:00",
+  "scope": "D02/D03 engineering preparation; synthetic offline host fixtures only",
+  "source_base_commit": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+  "task_status": {
+    "D02": "open: physical coverage, backup retrieval and restore rehearsal unrun",
+    "D03": "open: actual TG5040 runtime and bounded kernel probes unrun"
+  },
+  "implemented_files": [
+    "project/tools/recovery_preflight.py",
+    "project/tests/test_recovery_preflight.py",
+    "project/docs/device-recovery-preflight.md"
+  ],
+  "focused_tests": {
+    "command": "python3 -m unittest discover -s project/tests -p test_recovery_preflight.py -v",
+    "tests_run": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "initial_test_setup_error": "One first-run test omitted creating its input manifest; fixed setup and all 13 tests pass. No production assertion removed.",
+    "earlier_successful_count": 13
+  },
+  "actual_host_fixture_readback": {
+    "source_backup_match": true,
+    "separately_restored_tree_match": true,
+    "retained_backup_readback_match": true,
+    "source_inventory_sha256": "534e3a1bc65c76c8ab79098a385cc6718855498b7043cdae52dcb2f654a3ff4d",
+    "manifest_sha256": "84acf089fea644c264c1476694e1dde0faa7eef1036c5e6de7fef6cf297cbd9f",
+    "source_file_count": 1,
+    "source_bytes": 34,
+    "deliberate_changed_and_unlisted_save_rejected": true,
+    "mismatch_statuses": [
+      {
+        "path": "Saves/core/fixture.sav",
+        "status": "changed"
+      },
+      {
+        "path": "Saves/core/unlisted.sav",
+        "status": "unlisted"
+      }
+    ],
+    "newer_save_preserved": true,
+    "original_source_preserved": true
+  },
+  "limits": {
+    "entries": 250000,
+    "payload_bytes": 2199023255552,
+    "json_bytes": 67108864,
+    "directory_depth": 64
+  },
+  "source_observations": {
+    "spruce_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "SmartPro_device_init": "spruce/scripts/platform/device_functions/SmartPro.sh:43; bash:56-58; FN apply:64"
+  },
+  "qualification": {
+    "hardware_qualified": false,
+    "physical_restore_tested": false,
+    "actual_backups_verified": false,
+    "target_kernel_probes_run": false,
+    "runtime_gates_enabled": false,
+    "automatic_activation": false
+  },
+  "not_claimed": [
+    "whole-card sector/partition image verification",
+    "xattr/ACL/hardlink/special-file restoration",
+    "all actual save paths discovered",
+    "independent physical storage proved by host inode/device numbers",
+    "author notification or commercial permission",
+    "physical boot, internal recovery or save-load acceptance"
+  ],
+  "next_steps": [
+    "Owner establishes actual complete card/save/internal payload coverage and stopped writers.",
+    "Make and retain backups with trusted operator tools; record file-tree matches and independently retain manifest/image/archive hashes.",
+    "Retrieve retained copies, restore expendable media, verify bytes, then perform physical boot/save/internal-FN recovery checks.",
+    "After D02, record actual model/firmware/filesystem/runtime and trusted probe tools, then bounded target kernel/API observations."
+  ],
+  "independent_review": {
+    "reviewer": "parallel d01_design agent; read-only diagnostics",
+    "reproduced_gaps": [
+      "selected internal root metadata omitted",
+      "source/backup/restored root alias after interscan rename",
+      "success JSON remained after injected fsync failure"
+    ],
+    "fixes": [
+      "root mode/uid/gid captured, validated and compared",
+      "original root descriptors retained and names/identities revalidated across the full scan batch; observed aliases rejected",
+      "owned0600 staged bytes are fsynced then published without replacement; owned temp/final files cleaned on failure"
+    ],
+    "new_regressions": 7,
+    "final_focused_tests": 20,
+    "existing_output_preserved_on_publication_failure": true,
+    "hardware_claim": false
+  }
+}

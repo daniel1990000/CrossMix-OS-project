@@ -1,0 +1,19 @@
+{
+  "adoption_authorized": false,
+  "all_changed_paths_bound_to_hold": true,
+  "baseline_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "candidate_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "candidate_executed": false,
+  "changed_in_scope": 0,
+  "changed_outside_scope": 0,
+  "changed_paths": 0,
+  "decision_groups": {},
+  "device_qualified": false,
+  "distribution_cleared": false,
+  "kind": "upstream-hold-review-validation",
+  "pins_updated": false,
+  "review_coverage": "metadata identity and explained hold; no full behavioral audit or adoption",
+  "review_sha256": "2e8dd3db6a8d7efc43ff1600e909c085d301fb0161463f1eacf0ff6174ef7919",
+  "schema": 1,
+  "source": "SPRUCE_RA_SOURCE_ROOT"
+}

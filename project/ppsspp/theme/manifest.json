@@ -1,0 +1,17 @@
+{
+  "copied_upstream_assets": false,
+  "device_rendering_evidence": "not_run",
+  "files": {
+    "LICENSE": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+    "preview.svg": "d13004446a32d72e9a652718bb7a820fc9dadbc13f2a88c5fd1726801c4db6a8",
+    "spruce-midnight.ini": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a"
+  },
+  "implementation": "original classic azure palette data; existing PPSSPP native UI and renderer",
+  "license": "MIT",
+  "name": "Spruce Midnight",
+  "schema": 1,
+  "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "source_version": "v1.20.3",
+  "stable_binary_correspondence": "unverified",
+  "theme_parser_sha256": "c2c3910f9bcda69c073dcd6bb4a3ca5b84438632e87ff5aebcea1a0d5d07ffcd"
+}

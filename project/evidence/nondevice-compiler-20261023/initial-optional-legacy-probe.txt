@@ -1,0 +1,53 @@
+/usr/bin/aarch64-linux-gnu-gcc
+/usr/bin/aarch64-linux-gnu-g++
+aarch64-linux-gnu-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+aarch64-linux-gnu-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0
+aarch64-linux-gnu
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Version:                           0x1
+  Entry point address:               0x680
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          7504 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         9
+  Size of section headers:           64 (bytes)
+  Number of section headers:         28
+  Section header string table index: 27
+ELF Header:
+  Magic:   7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00 
+  Class:                             ELF64
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - GNU
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           AArch64
+  Version:                           0x1
+  Entry point address:               0x3f84
+  Start of program headers:          64 (bytes into file)
+  Start of section headers:          248128 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               64 (bytes)
+  Size of program headers:           56 (bytes)
+  Number of program headers:         10
+  Size of section headers:           64 (bytes)
+  Number of section headers:         31
+  Section header string table index: 30
+      [Requesting program interpreter: /lib/ld-linux-aarch64.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]
+/input/run.sh: 14: /opt/aarch64-linux-gnu-7.5.0-linaro/bin/aarch64-linux-gnu-gcc: not found
+cmake version 3.16.3
+GNU Make 4.2.1
+ff85833c4cedebf12bac6cdbc65b8edb525da7e88dac4f4171ef7ff853975534  /output/smoke-c
+314c1eb12f83da79fdd8034b92e3bf981d326a277d03eff3175ce6e96b6e37a1  /output/smoke-cpp

@@ -1,0 +1,459 @@
+diff --git a/Core/SaveState.cpp b/Core/SaveState.cpp
+index 202d49f..d30f4c5 100644
+--- a/Core/SaveState.cpp
++++ b/Core/SaveState.cpp
+@@ -235,6 +235,8 @@ int g_screenshotFailures;
+ 
+ 	void Load(const Path &filename, int slot, Callback callback) {
+ 		if (!NetworkAllowSaveState()) {
++			if (callback)
++				callback(Status::FAILURE, "State load blocked by networking");
+ 			return;
+ 		}
+ 
+@@ -486,7 +488,7 @@ int g_screenshotFailures;
+ 		}
+ 	}
+ 
+-	void SaveSlot(std::string_view gamePrefix, int slot, Callback callback) {
++	static void SaveSlotInternal(std::string_view gamePrefix, int slot, Callback callback) {
+ 		if (!NetworkAllowSaveState()) {
+ 			if (callback)
+ 				callback(Status::FAILURE, "Save state operation blocked by networking");
+@@ -661,7 +663,7 @@ int g_screenshotFailures;
+ 		}
+ 		const uint64_t generation = projectEvidenceGeneration.load();
+ 		auto delivered = std::make_shared<std::atomic<bool>>(false);
+-		SaveSlot(evidence.gamePrefix, slot, [evidence, gameBefore, engineBefore, generation, delivered, callback](Status status, std::string_view message) mutable {
++		SaveSlotInternal(evidence.gamePrefix, slot, [evidence, gameBefore, engineBefore, generation, delivered, callback](Status status, std::string_view message) mutable {
+ 			if (delivered->exchange(true))
+ 				return;
+ 			auto fail = [&callback](const char *reason) { callback(Status::FAILURE, reason, nullptr); };
+@@ -693,6 +695,367 @@ int g_screenshotFailures;
+ 		});
+ 	}
+ 
++	// Explicit private-session extension. The default SaveSlot path is unchanged
++	// unless NativeInit accepts --project-state-session=/private/session/request.
++	struct ProjectStateSession {
++		int directory = -1;
++		std::vector<std::string> request;
++		uint64_t sequence = 0;
++		uint64_t engineGeneration = 0;
++		bool loadStarted = false;
++		struct Pending { std::string prefix; int slot; Callback callback; };
++		std::vector<Pending> pending;
++		~ProjectStateSession() {
++#if defined(SDL) && defined(__linux__)
++			if (directory >= 0)
++				close(directory);
++#endif
++		}
++	};
++	static std::mutex projectSessionMutex;
++	static std::shared_ptr<ProjectStateSession> projectSession;
++
++	static bool ProjectParsePacket(std::string_view packet, const char *magic, size_t count, std::vector<std::string> *fields) {
++		std::string_view prefix(magic);
++		if (packet.size() > 32768 || packet.substr(0, prefix.size()) != prefix)
++			return false;
++		size_t at = prefix.size();
++		std::vector<std::string> result;
++		for (size_t item = 0; item < count; ++item) {
++			size_t colon = packet.find(':', at);
++			if (colon == std::string_view::npos || colon == at || colon - at > 5 ||
++				(colon - at > 1 && packet[at] == '0'))
++				return false;
++			size_t length = 0;
++			for (; at < colon; ++at) {
++				if (packet[at] < '0' || packet[at] > '9')
++					return false;
++				length = length * 10 + packet[at] - '0';
++			}
++			at = colon + 1;
++			if (length > 8192 || length >= packet.size() - at || packet[at + length] != ',')
++				return false;
++			result.emplace_back(packet.substr(at, length));
++			if (result.back().find('\0') != std::string::npos)
++				return false;
++			at += length + 1;
++		}
++		if (at != packet.size())
++			return false;
++		*fields = std::move(result);
++		return true;
++	}
++
++	static std::string ProjectMakePacket(const char *magic, const std::vector<std::string> &fields) {
++		std::string result(magic);
++		for (const auto &field : fields) {
++			if (field.size() > 8192 || field.find('\0') != std::string::npos)
++				return "";
++			result += std::to_string(field.size()) + ":" + field + ",";
++		}
++		return result.size() <= 32768 ? result : "";
++	}
++
++	static bool ProjectHex(std::string_view value, size_t size) {
++		return value.size() == size && std::all_of(value.begin(), value.end(), [](char c) {
++			return (c >= '0' && c <= '9') || (c >= 'a' && c <= 'f');
++		});
++	}
++
++	static bool ProjectDecimal(std::string_view value, uint64_t max, uint64_t *number) {
++		if (value.empty() || value.size() > 16 || (value.size() > 1 && value[0] == '0'))
++			return false;
++		uint64_t result = 0;
++		for (char c : value) {
++			if (c < '0' || c > '9' || result > (max - (uint64_t)(c - '0')) / 10)
++				return false;
++			result = result * 10 + c - '0';
++		}
++		*number = result;
++		return result <= max;
++	}
++
++	static bool ProjectAbsolute(std::string_view path) {
++		if (path.empty() || path[0] != '/' || path.size() > 4096 || path.find('\0') != std::string_view::npos)
++			return false;
++		size_t at = 1;
++		while (at < path.size()) {
++			size_t end = path.find('/', at);
++			if (end == std::string_view::npos)
++				end = path.size();
++			auto part = path.substr(at, end - at);
++			if (part.empty() || part == "." || part == "..")
++				return false;
++			at = end + 1;
++		}
++		return path.back() != '/';
++	}
++
++	static bool ProjectLoadSession(const Path &requestPath, std::shared_ptr<ProjectStateSession> *session) {
++#if defined(SDL) && defined(__linux__)
++		std::string path = requestPath.ToString();
++		if (!ProjectAbsolute(path) || path.size() < 9 || path.substr(path.size() - 8) != "/request")
++			return false;
++		std::string parent = path.substr(0, path.size() - 8);
++		// Open every directory component without following symlinks.
++		int directory = open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
++		if (directory < 0)
++			return false;
++		size_t at = 1;
++		while (at < parent.size()) {
++			size_t end = parent.find('/', at);
++			if (end == std::string::npos)
++				end = parent.size();
++			std::string component = parent.substr(at, end - at);
++			int next = openat(directory, component.c_str(), O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
++			close(directory);
++			if (next < 0)
++				return false;
++			directory = next;
++			at = end + 1;
++		}
++		auto result = std::make_shared<ProjectStateSession>();
++		result->directory = directory;
++		struct stat owner{};
++		if (fstat(directory, &owner) != 0 || owner.st_uid != getuid() || (owner.st_mode & 0777) != 0700)
++			return false;
++		int input = openat(directory, "request", O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK);
++		if (input < 0)
++			return false;
++		struct stat before{}, after{};
++		if (fstat(input, &before) != 0 || !S_ISREG(before.st_mode) || before.st_uid != getuid() ||
++			(before.st_mode & 0777) != 0600 || before.st_nlink != 1 || before.st_size <= 0 || before.st_size > 32768) {
++			close(input);
++			return false;
++		}
++		std::string packet((size_t)before.st_size, '\0');
++		size_t total = 0;
++		while (total < packet.size()) {
++			ssize_t count = read(input, &packet[total], packet.size() - total);
++			if (count <= 0)
++				break;
++			total += (size_t)count;
++		}
++		bool stable = total == packet.size() && fstat(input, &after) == 0 && before.st_size == after.st_size &&
++			before.st_mtim.tv_sec == after.st_mtim.tv_sec && before.st_mtim.tv_nsec == after.st_mtim.tv_nsec &&
++			before.st_ctim.tv_sec == after.st_ctim.tv_sec && before.st_ctim.tv_nsec == after.st_ctim.tv_nsec;
++		close(input);
++		if (!stable || !ProjectParsePacket(packet, "TPSE1Q\n", 15, &result->request))
++			return false;
++		auto &r = result->request;
++		uint64_t generation, slot;
++		if (!ProjectHex(r[0], 32) || !ProjectHex(r[1], 32) || !ProjectHex(r[2], 32) ||
++			!ProjectEvidenceID(r[3], 64, false) || !ProjectDecimal(r[4], 1000000000000000ULL, &generation) ||
++			r[5].empty() || r[5].size() > 192 || !ProjectAbsolute(r[6]) || !ProjectHex(r[7], 64) ||
++			!ProjectHex(r[8], 64) || !ProjectAbsolute(r[9]) || (r[10] != "save" && r[10] != "resume") ||
++			r[13] != "ppsspp:d357e6a32934800d3d80b49f910a603e1b069751:chunk5-savestart3" ||
++			!ProjectDecimal(r[14], 99, &slot))
++			return false;
++		if (r[10] == "save" ? (!r[11].empty() || !r[12].empty()) :
++			(!ProjectAbsolute(r[11]) || !ProjectHex(r[12], 64) || r[11].rfind(r[9] + "/", 0) != 0))
++			return false;
++		ProjectFileFingerprint engine;
++		if (!ProjectFingerprintFile(Path("/proc/self/exe"), 512ULL * 1024 * 1024, &engine) || engine.sha256 != r[8])
++			return false;
++		*session = std::move(result);
++		return true;
++#else
++		return false;
++#endif
++	}
++
++	bool ConfigureProjectStateSessionArgs(int argc, const char *argv[], std::string *error) {
++		std::string option, state;
++		bool seen = false, duplicateState = false;
++		for (int i = 1; i < argc; ++i) {
++			std::string_view value(argv[i]);
++			if (value.substr(0, 24) == "--project-state-session=") {
++				if (seen) { *error = "Duplicate project state session"; return false; }
++				seen = true;
++				option = value.substr(24);
++			}
++			if (value.substr(0, 8) == "--state=") {
++				if (!state.empty())
++					duplicateState = true;
++				state = value.substr(8);
++			}
++		}
++		if (!seen)
++			return true;
++		std::shared_ptr<ProjectStateSession> configured;
++		if (duplicateState || !ProjectLoadSession(Path(option), &configured) ||
++			(configured->request[10] == "resume" ? state != configured->request[11] : !state.empty())) {
++			*error = "Invalid or mismatched private project state session";
++			return false;
++		}
++		std::lock_guard<std::mutex> guard(projectSessionMutex);
++		if (projectSession) { *error = "Project state session already configured"; return false; }
++		projectSession = std::move(configured);
++		return true;
++	}
++
++	bool ProjectStateSessionHandlesLoad() {
++		std::lock_guard<std::mutex> guard(projectSessionMutex);
++		return projectSession && projectSession->request[10] == "resume";
++	}
++
++	static bool ProjectExportResult(const std::shared_ptr<ProjectStateSession> &session, const char *operation,
++		uint64_t sequence, Status status, std::string_view message, const SlotEvidence *evidence) {
++#if defined(SDL) && defined(__linux__)
++		std::string_view operationName(operation);
++		if (status == Status::SUCCESS && (!evidence || (operationName != "save" && operationName != "load")))
++			return false;
++		if (status != Status::SUCCESS)
++			evidence = nullptr;
++		std::vector<std::string> fields(session->request.begin(), session->request.begin() + 6);
++		fields.insert(fields.end(), {operation, std::to_string(sequence), status == Status::SUCCESS ? "success" : "failure",
++			std::string(message.substr(0, 256))});
++		if (evidence) {
++			const auto &e = *evidence;
++			fields.insert(fields.end(), {e.discID, e.discVersion, e.gamePrefix, e.gamePath.ToString(), e.engineSHA256,
++				e.gameSHA256, e.stateSHA256, std::to_string(e.engineSize), std::to_string(e.gameSize), std::to_string(e.stateSize),
++				e.statePath.ToString(), std::to_string(e.slot), e.upstreamCommit, e.extensionID, e.engineVersion, e.architecture, e.stateFormatID});
++		} else {
++			fields.resize(27);
++		}
++		std::string packet = ProjectMakePacket("TPSE1R\n", fields);
++		if (packet.empty())
++			return false;
++		auto publish = [&](const char *name) {
++			std::string temporary = std::string(name) + ".tmp";
++			unlinkat(session->directory, temporary.c_str(), 0);
++			int output = openat(session->directory, temporary.c_str(), O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC | O_NOFOLLOW, 0600);
++			if (output < 0)
++				return false;
++			size_t at = 0;
++			while (at < packet.size()) {
++				ssize_t count = write(output, packet.data() + at, packet.size() - at);
++				if (count <= 0)
++					break;
++				at += (size_t)count;
++			}
++			bool ok = at == packet.size() && fsync(output) == 0;
++			if (close(output) != 0)
++				ok = false;
++			if (!ok || renameat(session->directory, temporary.c_str(), session->directory, name) != 0)
++				return false;
++			return fsync(session->directory) == 0;
++		};
++		// Retain completed save/load identities independently. Later failures
++		// report their own status without erasing a genuinely completed state.
++		// The final result bounds eligible completion sequences: a publication
++		// interrupted before this final record cannot promote a newer receipt.
++		if (status == Status::SUCCESS && !publish(operationName == "save" ? "save-completed" : "load-completed"))
++			return false;
++		return publish("result");
++#else
++		return false;
++#endif
++	}
++
++	static bool ProjectQueueSlot(std::string_view prefix, int slot, Callback callback) {
++		bool busy = false;
++		{
++			std::lock_guard<std::mutex> guard(projectSessionMutex);
++			if (!projectSession)
++				return false;
++			busy = projectSession->pending.size() >= 4 || prefix.empty() || prefix.size() > 96 || slot < 0 || slot > 99;
++			if (!busy)
++				projectSession->pending.push_back({std::string(prefix), slot, callback});
++		}
++		if (busy && callback)
++			callback(Status::FAILURE, "Project state queue is full");
++		return true;
++	}
++
++	void SaveSlot(std::string_view gamePrefix, int slot, Callback callback) {
++		if (!ProjectQueueSlot(gamePrefix, slot, callback))
++			SaveSlotInternal(gamePrefix, slot, callback);
++	}
++
++	static void ProjectServiceStateSession() {
++		std::shared_ptr<ProjectStateSession> session;
++		ProjectStateSession::Pending pending;
++		bool load = false;
++		{
++			std::lock_guard<std::mutex> guard(projectSessionMutex);
++			session = projectSession;
++			if (!session)
++				return;
++			if (session->request[10] == "resume" && !session->loadStarted) {
++				session->loadStarted = true;
++				load = true;
++			} else {
++				if (session->pending.empty())
++					return;
++				pending = std::move(session->pending.front());
++				session->pending.erase(session->pending.begin());
++			}
++		}
++		uint64_t sequence = ++session->sequence;
++		auto finish = [session, sequence, load, callback = pending.callback](Status status, std::string_view message, const SlotEvidence *evidence) {
++			const auto &r = session->request;
++			if (evidence && (evidence->engineSHA256 != r[8] || evidence->gameSHA256 != r[7] ||
++				evidence->gamePath.ToString() != r[6] || evidence->statePath.ToString().rfind(r[9] + "/", 0) != 0)) {
++				status = Status::FAILURE; evidence = nullptr; message = "Project state identity mismatch";
++			}
++			if (!ProjectExportResult(session, load ? "load" : "save", sequence, status, message, evidence)) {
++				status = Status::FAILURE; message = "Project state result export failed";
++			}
++			if (callback)
++				callback(status, message);
++		};
++		if (session->engineGeneration == 0)
++			session->engineGeneration = projectEvidenceGeneration.load();
++		if (session->engineGeneration != projectEvidenceGeneration.load()) {
++			finish(Status::FAILURE, "Project emulator session changed", nullptr);
++			return;
++		}
++		if (!load) {
++			if (pending.prefix != GetGamePrefix(g_paramSFO)) {
++				finish(Status::FAILURE, "Project state game prefix changed", nullptr);
++				return;
++			}
++			SaveSlotWithEvidence(pending.slot, session->request[1], finish);
++			return;
++		}
++		// Resume uses the actual pinned --state= path and SaveState::Load API.
++		const auto &r = session->request;
++		ProjectFileFingerprint game, engine, state;
++		Path path(r[11]);
++		if (!PSP_IsInited() || !__KernelIsRunning() || PSP_CoreParameter().fileToStart.ToString() != r[6] ||
++			!ProjectFingerprintFile(PSP_CoreParameter().fileToStart, 8ULL * 1024 * 1024 * 1024, &game) || game.sha256 != r[7] ||
++			!ProjectFingerprintFile(Path("/proc/self/exe"), 512ULL * 1024 * 1024, &engine) || engine.sha256 != r[8] ||
++			!ProjectFingerprintFile(path, 512ULL * 1024 * 1024, &state) || state.sha256 != r[12]) {
++			finish(Status::FAILURE, "Project resume input identity mismatch", nullptr);
++			return;
++		}
++		SlotEvidence evidence;
++		evidence.requestID = r[1]; evidence.gamePath = PSP_CoreParameter().fileToStart; evidence.statePath = path;
++		evidence.discID = g_paramSFO.GetValueString("DISC_ID"); evidence.discVersion = g_paramSFO.GetValueString("DISC_VERSION");
++		evidence.gamePrefix = GetGamePrefix(g_paramSFO); evidence.slot = (r[14][0] - '0') * (r[14].size() == 2 ? 10 : 1) + (r[14].size() == 2 ? r[14][1] - '0' : 0);
++		evidence.upstreamCommit = "d357e6a32934800d3d80b49f910a603e1b069751";
++		evidence.extensionID = "trimui-slot-evidence-v1"; evidence.engineVersion = PPSSPP_GIT_VERSION;
++		evidence.stateFormatID = r[13]; evidence.engineSHA256 = engine.sha256; evidence.engineSize = engine.size;
++		evidence.gameSHA256 = game.sha256; evidence.gameSize = game.size; evidence.stateSHA256 = state.sha256; evidence.stateSize = state.size;
++#if defined(__aarch64__)
++		evidence.architecture = "aarch64";
++#elif defined(__x86_64__)
++		evidence.architecture = "x86_64";
++#endif
++		uint64_t generation = projectEvidenceGeneration.load();
++		Load(path, evidence.slot, [evidence, generation, finish](Status status, std::string_view message) {
++			ProjectFileFingerprint currentGame, currentEngine, currentState;
++			bool valid = status == Status::SUCCESS && generation == projectEvidenceGeneration.load() &&
++				PSP_IsInited() && __KernelIsRunning() && PSP_CoreParameter().fileToStart == evidence.gamePath &&
++				GetGamePrefix(g_paramSFO) == evidence.gamePrefix &&
++				ProjectFingerprintFile(evidence.gamePath, 8ULL * 1024 * 1024 * 1024, &currentGame) && currentGame.sha256 == evidence.gameSHA256 &&
++				ProjectFingerprintFile(Path("/proc/self/exe"), 512ULL * 1024 * 1024, &currentEngine) && currentEngine.sha256 == evidence.engineSHA256 &&
++				ProjectFingerprintFile(evidence.statePath, 512ULL * 1024 * 1024, &currentState) && currentState.sha256 == evidence.stateSHA256;
++			finish(valid ? Status::SUCCESS : Status::FAILURE, message, valid ? &evidence : nullptr);
++		});
++	}
++
+ 	bool UndoSaveSlot(std::string_view gamePrefix, int slot) {
+ 		if (!NetworkAllowSaveState()) {
+ 			return false;
+@@ -974,6 +1337,7 @@ int g_screenshotFailures;
+ 	// TODO: This should run the actual operations on a thread. While this returns true (for example), emulation
+ 	// *must* not run further, in order not to disturb the current state operation.
+ 	void Process() {
++		ProjectServiceStateSession();
+ 		rewindStates.Process();
+ 
+ 		if (!needsProcess)
+diff --git a/Core/SaveState.h b/Core/SaveState.h
+index 3e2f0fd..2bb4c93 100644
+--- a/Core/SaveState.h
++++ b/Core/SaveState.h
+@@ -82,6 +82,9 @@ namespace SaveState {
+ 	// for rejection or on the existing asynchronous SaveState completion thread.
+ 	using SlotEvidenceCallback = std::function<void(Status, std::string_view, const SlotEvidence *)>;
+ 	void SaveSlotWithEvidence(int slot, std::string requestID, SlotEvidenceCallback callback);
++	// New private session extension, parsed by NativeInit. No option means disabled.
++	bool ConfigureProjectStateSessionArgs(int argc, const char *argv[], std::string *error);
++	bool ProjectStateSessionHandlesLoad();
+ 	void LoadSlot(std::string_view gamePrefix, int slot, Callback callback);
+ 	bool UndoSaveSlot(std::string_view gamePrefix, int slot);
+ 	bool UndoLastSave(std::string_view gamePrefix);
+diff --git a/UI/EmuScreen.cpp b/UI/EmuScreen.cpp
+index 067fb70..0d4c322 100644
+--- a/UI/EmuScreen.cpp
++++ b/UI/EmuScreen.cpp
+@@ -2022,6 +2022,8 @@ void EmuScreen::renderUI() {
+ }
+ 
+ void EmuScreen::AutoLoadSaveState() {
++	if (SaveState::ProjectStateSessionHandlesLoad())
++		return;
+ 	if (autoLoadFailed_) {
+ 		return;
+ 	}
+diff --git a/UI/NativeApp.cpp b/UI/NativeApp.cpp
+index 33fd083..c9d19fb 100644
+--- a/UI/NativeApp.cpp
++++ b/UI/NativeApp.cpp
+@@ -327,6 +327,11 @@ static void ClearFailedGPUBackends() {
+ }
+ 
+ void NativeInit(int argc, const char *argv[], const char *savegame_dir, const char *external_dir, const char *cache_dir) {
++	std::string projectStateError;
++	if (!SaveState::ConfigureProjectStateSessionArgs(argc, argv, &projectStateError)) {
++		fprintf(stderr, "%s\n", projectStateError.c_str());
++		exit(2);
++	}
+ 	net::Init();  // This needs to happen before we load the config. So on Windows we also run it in Main. It's fine to call multiple times.
+ 
+ 	g_Config.Init();
+@@ -684,7 +689,7 @@ void NativeInit(int argc, const char *argv[], const char *savegame_dir, const ch
+ 
+ 	g_BackgroundAudio.SFX().Init();
+ 
+-	if (!boot_filename.empty() && stateToLoad.Valid()) {
++	if (!boot_filename.empty() && stateToLoad.Valid() && !SaveState::ProjectStateSessionHandlesLoad()) {
+ 		SaveState::Load(stateToLoad, -1, [](SaveState::Status status, std::string_view message) {
+ 			if (!message.empty() && (!g_Config.bDumpFrames || !g_Config.bDumpVideoOutput)) {
+ 				g_OSD.Show(status == SaveState::Status::SUCCESS ? OSDType::MESSAGE_SUCCESS : OSDType::MESSAGE_ERROR,

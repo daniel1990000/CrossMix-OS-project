@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "captured_at_utc": "2026-10-23T03:03:25.207793+00:00",
+  "kind": "nondevice-distribution-review",
+  "R05_private_noncommercial_complete": true,
+  "further_author_contact_required": false,
+  "R06_complete": false,
+  "native_distribution_cleared": false,
+  "hardware_tested": false,
+  "native_selected": false,
+  "runtime_gates_enabled": false,
+  "work_completed": [
+    "Fresh exact retained PPSSPP/RetroArch source and build-record retrieval",
+    "Actual selected native notice packet and independent byte replay",
+    "Actual five-font embedded notice extraction",
+    "Exact vendor SDK versus Linaro nonshared-object provenance separation",
+    "Declared glibc commit source retrieval and 17-object DWARF/source map",
+    "R05 historical rights-register contradiction corrected"
+  ],
+  "remaining": [
+    "Exact public external PPSSPP recipe and RetroArch IGM grant",
+    "Complete selected native asset and FFmpeg/component notices",
+    "Exact final incorporated startup/header/runtime source-delivery scope",
+    "RetroArch complete incorporated membership",
+    "Target loader/system-library observations (requires device)"
+  ],
+  "evidence_files": {
+    "fresh-retrieval.json": "99de6e28c1a8b152d33a3db5354cce9a4083d7a09a28f05c01e428c8f26b56d8",
+    "incorporated-libc-source-map.json": "e21404198bad2ad6d853bdd4f7a5fcb9f7805cb8104f94b0ba5e544485accac9",
+    "native-font-notices.json": "6f04b251507b2bf43dda36dce02b02c048ce3d8311ce688ab86261975ea98e03",
+    "notice-packet-manifest.json": "7f201b9dd245372a3ba6418c4189ea4d9476a8622e6601d93635745df085af34",
+    "replay_notice_packet.py": "d18b5adfc79015183647366c820bdddd80909db324a16dbcae893a83e35a6f9d",
+    "selected-native-notices.txt": "88463b6395cbb499ffd9448712577062d911df8e21cd08fc1148b811c4409ee4",
+    "verification.json": "88c83f2ad07a38cadf4c9bbbe73a0e0a9fca272c10c38b90f59f60a8e95fcb95"
+  },
+  "downloads_committed": false
+}

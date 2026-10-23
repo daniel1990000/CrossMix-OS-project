@@ -1,0 +1,133 @@
+{
+  "adoption_authorized": false,
+  "current_unique_changed_paths": 2445,
+  "method": "git ls-remote --symref HEAD; exact raw diff-tree without rename inference, text filters or source execution",
+  "observed_at_utc": "2026-10-23T03:00:43.585843+00:00",
+  "physical_testing_performed": false,
+  "pins_updated": false,
+  "previous_spruce_queue_preserved_and_superseded": true,
+  "schema": 1,
+  "sources": [
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "cb6210aa19c5cb61e404d4029444972448cac9f9",
+      "changed_in_scope": 230,
+      "changed_outside_scope": 374,
+      "changed_paths": 604,
+      "decision_groups": {
+        "assets-and-notices": 28,
+        "frontend": 91,
+        "lifecycle": 58,
+        "native-engines": 235,
+        "optional-apps": 74,
+        "other-platforms": 101,
+        "portmaster": 3,
+        "upstream-release": 14
+      },
+      "name": "spruce-previous",
+      "observed_reference": "historical comparison",
+      "repository": "https://github.com/spruceUI/spruceOS",
+      "review": "spruce-previous-review.json",
+      "review_sha256": "cb827e790e1cca9019cb59ff437db442e8c7a5c057d8a757e12c66d7b0f8d0e0",
+      "source": "SPRUCE_SOURCE_ROOT",
+      "validation": "spruce-previous-validation.json",
+      "validation_sha256": "8ca00a6cb491f1318d0552df525da07f40d557709014eec28651661e7e611a49"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "changed_in_scope": 244,
+      "changed_outside_scope": 391,
+      "changed_paths": 635,
+      "decision_groups": {
+        "assets-and-notices": 28,
+        "frontend": 91,
+        "lifecycle": 60,
+        "native-engines": 239,
+        "optional-apps": 86,
+        "other-platforms": 113,
+        "portmaster": 3,
+        "upstream-release": 15
+      },
+      "name": "spruce-current",
+      "observed_reference": "refs/heads/Development",
+      "repository": "https://github.com/spruceUI/spruceOS",
+      "review": "spruce-current-review.json",
+      "review_sha256": "ca275ea011d32118b4af2ceea1c98db550dc78e698d0d33f50104e51dcea219a",
+      "source": "SPRUCE_SOURCE_ROOT",
+      "validation": "spruce-current-validation.json",
+      "validation_sha256": "ad330bfdef34f871130dac1212a6b090cd6560e758f556480c23885c50a58cec"
+    },
+    {
+      "baseline_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "candidate_commit": "902e5ccd8c1400b4387b73942491cded655e5f9c",
+      "changed_in_scope": 909,
+      "changed_outside_scope": 790,
+      "changed_paths": 1699,
+      "decision_groups": {
+        "ppsspp-core": 1078,
+        "ppsspp-dependencies": 157,
+        "ppsspp-other": 464
+      },
+      "name": "ppsspp-current",
+      "observed_reference": "refs/heads/master",
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "review": "ppsspp-current-review.json",
+      "review_sha256": "28cf74e8718ee2db097409387daddb3c9504479c4834e825e50e6bcb7ef95be2",
+      "source": "PPSSPP_SOURCE_ROOT",
+      "validation": "ppsspp-current-validation.json",
+      "validation_sha256": "959c2413e5372a20386a254ece8b1ebc2f1727115bc2981482935be0b548d827"
+    },
+    {
+      "baseline_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+      "changed_in_scope": 0,
+      "changed_outside_scope": 111,
+      "changed_paths": 111,
+      "decision_groups": {
+        "ports-new": 109,
+        "ports-runtime": 2
+      },
+      "name": "ports-current",
+      "observed_reference": "refs/heads/main",
+      "repository": "https://github.com/PortsMaster/PortMaster-New",
+      "review": "ports-current-review.json",
+      "review_sha256": "2c5fddcac00a6634cb41ac98fca70836a500f4afb520991f96fad95c195604f4",
+      "source": "PORTS_SOURCE_ROOT",
+      "validation": "ports-current-validation.json",
+      "validation_sha256": "bfdf845d03b286eb949dbf417afe33f864e950de1f97a22d0f677bd5b824f7df"
+    },
+    {
+      "baseline_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "candidate_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "changed_in_scope": 0,
+      "changed_outside_scope": 0,
+      "changed_paths": 0,
+      "decision_groups": {},
+      "name": "ra-current",
+      "observed_reference": "refs/heads/main",
+      "repository": "https://github.com/spruceUI/RA",
+      "review": "ra-current-review.json",
+      "review_sha256": "2e8dd3db6a8d7efc43ff1600e909c085d301fb0161463f1eacf0ff6174ef7919",
+      "source": "SPRUCE_RA_SOURCE_ROOT",
+      "validation": "ra-current-validation.json",
+      "validation_sha256": "806d7cff2c4ba09bc2508164123f3403ba522a194e9b5c248da0e99180828e5b"
+    },
+    {
+      "baseline_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "candidate_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "changed_in_scope": 0,
+      "changed_outside_scope": 0,
+      "changed_paths": 0,
+      "decision_groups": {},
+      "name": "portmaster-current",
+      "observed_reference": "refs/heads/main",
+      "repository": "https://github.com/PortsMaster/PortMaster-GUI",
+      "review": "portmaster-current-review.json",
+      "review_sha256": "6fabd121108710195c7399ada0ad6267e6a7f07aaa7cf2e16164ccd56859f39b",
+      "source": "PORTMASTER_SOURCE_ROOT",
+      "validation": "portmaster-current-validation.json",
+      "validation_sha256": "501fd2d93e0d7fce29deae0e695326e0151edec74c72a0a4f36321046527eaf3"
+    }
+  ]
+}

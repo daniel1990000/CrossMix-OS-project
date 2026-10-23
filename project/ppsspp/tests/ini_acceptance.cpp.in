@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Acceptance fixture. PPSSPP source blocks are inserted verbatim at test time.
+// Copyright (c) PPSSPP Project (inserted upstream code); project additions 2026.
+#include <cassert>
+#include <iostream>
+#include <string>
+#include <string_view>
+#include <strings.h>
+
+/*@@STRIP_SPACES@@*/
+/*@@STRIP_QUOTES@@*/
+/*@@PARSE_VALUE@@*/
+/*@@PARSE_BOOL@@*/
+
+std::string value(std::string_view text) {
+    size_t position = 0;
+    std::string result;
+    assert(ParseLineValue(text, position, &result));
+    return result;
+}
+
+int main(int argc, char **argv) {
+    assert(argc == 2 && std::string(argv[1]) == "ini-values");
+    for (std::string_view input : {"true", "TRUE", "1", "\"true\"", "\"true\" # comment", " true # comment"}) {
+        bool enabled = false;
+        assert(TryParse(value(input), &enabled) && enabled);
+    }
+    for (std::string_view input : {"false", "FALSE", "0", "\"false\" # comment"}) {
+        bool enabled = true;
+        assert(TryParse(value(input), &enabled) && !enabled);
+    }
+    bool enabled = false;
+    assert(!TryParse(value("true ; note"), &enabled) && !enabled);
+    assert(value("\"e\\u0061st\"") == "e\\u0061st");
+    assert(value("\"e\\u0061st\"") != "east");
+    assert(value("\"east\" # comment") == "east");
+    assert(value("\"south#button\"") == "south#button");
+    std::cout << "PASS ini-values\n";
+}

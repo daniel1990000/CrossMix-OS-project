@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "id": "spruce-igm-unqualified",
+  "device": "TRIMUI_SMART_PRO",
+  "engine": "retroarch",
+  "surface": "spruce_igm",
+  "template": true,
+  "qualified": false,
+  "base_release": "v4.5.4",
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "executable": "RetroArch/ra64.universal",
+  "executable_sha256": null,
+  "config": "RetroArch/igm.json",
+  "writer_inventory_verified": false,
+  "writer_executables": [
+    "RetroArch/ra64.universal"
+  ],
+  "qualification_gaps": [
+    "The pinned bundled IGM uses raw libretro A to confirm and B to close; standard RetroArch menu swap is separate.",
+    "The optional trimui-igm-native-menu-v1 source patch is implemented and source-tested separately; no installed binary or physical pair is qualified.",
+    "Qualify the exact rebuilt engine hash, raw south/east input, full writer inventory and theme/global JSON precedence before declaring an igm_menu_extension.",
+    "The appearance adapter requires an independently observed active theme config, the exact installed parser/path contract and a stopped-writer session.",
+    "Default, disabled and invalid extension settings preserve the original IGM action/release behavior."
+  ],
+  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ra_functions.sh#L223",
+  "appearance_qualified": false,
+  "path_contract_verified": false,
+  "igm_menu_extension": null,
+  "igm_schema_sha256": "b4f7cae205b360a7b73e63630697b2ffb14034f683cd9d369d5091dcbee2875e",
+  "source_provenance": {
+    "repository": "https://github.com/spruceUI/RA",
+    "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "implementation": "patches/common/0001-spruce-igm.patch",
+    "json_parser": "common_src/spruce_igm_theme.c",
+    "upstream_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+    "source_lock": "project/retroarch/source-lock.json",
+    "bundled_source_correspondence_verified": false
+  }
+}

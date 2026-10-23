@@ -1,0 +1,83 @@
+{
+  "adoption_authorized": false,
+  "candidate_executed": false,
+  "device_qualified": false,
+  "files": [
+    {
+      "path": "project/tools/maintenance_review.py",
+      "sha256": "14dd67697577f13842e5e1794adddfff5cc0e6b1220d51d109781790c1add835"
+    },
+    {
+      "path": "project/tests/test_maintenance_review.py",
+      "sha256": "fd971a5ade4426fd16e07661a394cad1f53220f305f63b786330cca652c8c9a9"
+    },
+    {
+      "path": "project/tools/upstream_drift.py",
+      "sha256": "7f6eea5be4e86972663adfab4fe4331d2a825abce118994339b16c82aa694373"
+    }
+  ],
+  "findings": [],
+  "focused_tests": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 10,
+    "skipped": 0,
+    "tests_run": 10
+  },
+  "independent_checks": {
+    "changed_path_records_checked": 3049,
+    "method": "Separate git ls-tree full-tree comparison, independent of maintenance_review diff-tree inventory",
+    "omission_stale_object_and_wrong_candidate_mutations_refused": true,
+    "packet_and_validation_digest_joins_verified": true,
+    "packets_checked": 6
+  },
+  "kind": "independent-maintenance-review",
+  "packets": [
+    {
+      "changed_paths": 604,
+      "independent_full_tree_delta_matches": true,
+      "name": "spruce-previous",
+      "review_sha256": "cb827e790e1cca9019cb59ff437db442e8c7a5c057d8a757e12c66d7b0f8d0e0",
+      "validation_sha256": "8ca00a6cb491f1318d0552df525da07f40d557709014eec28651661e7e611a49"
+    },
+    {
+      "changed_paths": 635,
+      "independent_full_tree_delta_matches": true,
+      "name": "spruce-current",
+      "review_sha256": "ca275ea011d32118b4af2ceea1c98db550dc78e698d0d33f50104e51dcea219a",
+      "validation_sha256": "ad330bfdef34f871130dac1212a6b090cd6560e758f556480c23885c50a58cec"
+    },
+    {
+      "changed_paths": 1699,
+      "independent_full_tree_delta_matches": true,
+      "name": "ppsspp-current",
+      "review_sha256": "28cf74e8718ee2db097409387daddb3c9504479c4834e825e50e6bcb7ef95be2",
+      "validation_sha256": "959c2413e5372a20386a254ece8b1ebc2f1727115bc2981482935be0b548d827"
+    },
+    {
+      "changed_paths": 111,
+      "independent_full_tree_delta_matches": true,
+      "name": "ports-current",
+      "review_sha256": "2c5fddcac00a6634cb41ac98fca70836a500f4afb520991f96fad95c195604f4",
+      "validation_sha256": "bfdf845d03b286eb949dbf417afe33f864e950de1f97a22d0f677bd5b824f7df"
+    },
+    {
+      "changed_paths": 0,
+      "independent_full_tree_delta_matches": true,
+      "name": "ra-current",
+      "review_sha256": "2e8dd3db6a8d7efc43ff1600e909c085d301fb0161463f1eacf0ff6174ef7919",
+      "validation_sha256": "806d7cff2c4ba09bc2508164123f3403ba522a194e9b5c248da0e99180828e5b"
+    },
+    {
+      "changed_paths": 0,
+      "independent_full_tree_delta_matches": true,
+      "name": "portmaster-current",
+      "review_sha256": "6fabd121108710195c7399ada0ad6267e6a7f07aaa7cf2e16164ccd56859f39b",
+      "validation_sha256": "501fd2d93e0d7fce29deae0e695326e0151edec74c72a0a4f36321046527eaf3"
+    }
+  ],
+  "pins_updated": false,
+  "reviewed_at_utc": "2026-10-23T03:01:56.225755+00:00",
+  "schema": 1,
+  "scope": "Exact changed-path identities and explained hold coverage, including outside configured scopes. No full behavioral audit, update adoption, candidate execution, distribution clearance or device qualification is established."
+}

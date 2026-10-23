@@ -1,0 +1,18 @@
+{
+  "git_present_in_export": false,
+  "zip_comparisons": [
+    {
+      "file": "smartpro-psp-0.1.0-dev11-host-preview.zip",
+      "sha256": "459d3c426ab04ffd6eab9523e2f41f909c16a044220d8dfb584e1ff8aad01c5d",
+      "bytes": 1419967,
+      "byte_identical": true
+    },
+    {
+      "file": "smartpro-psp-0.1.0-dev11-original-source.zip",
+      "sha256": "a6d1c0df900a3cb34adaecafce46cb7877c975cba466dbbbe6362bb49dc28644",
+      "bytes": 1845532,
+      "byte_identical": true
+    }
+  ],
+  "signed_tar_same_across_different_generated_keys": false
+}

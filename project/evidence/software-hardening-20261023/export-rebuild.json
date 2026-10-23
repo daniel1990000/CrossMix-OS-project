@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "kind": "clean-dev13-source-export-rebuild",
+  "frontend": {
+    "commit": "7d21f63d8b8803b2d6af9dcb703cca429f50c3b5",
+    "working_tree_modified": false
+  },
+  "zip_comparison": {
+    "smartpro-psp-0.1.0-dev13-original-source.zip": {
+      "bytes": 1956339,
+      "sha256": "659df0a906345f82f4ac5dfa0e8b9984cc3ad0e0f45f640f9e1b78122f261092",
+      "byte_identical": true
+    },
+    "smartpro-psp-0.1.0-dev13-host-preview.zip": {
+      "bytes": 1430275,
+      "sha256": "772b260eaca52fd846eed8c1746723aacbd8723b9eaf9d57bfea9b0e60c79e68",
+      "byte_identical": true
+    }
+  },
+  "disposable_private_signer_deleted": true,
+  "hardware_tested": false
+}

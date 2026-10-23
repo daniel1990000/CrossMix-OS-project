@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "patch": {
+    "path": "project/patches/0005-ppsspp-private-state-session.patch",
+    "sha256": "9974950d8b93ab9098f82823cd9f29739ccc4c2f11c1a684f3ddcc16a30f37e8",
+    "license": "retains pinned spruce source terms"
+  },
+  "source_files": [
+    {
+      "path": "spruce/scripts/emu/lib/ppsspp_functions.sh",
+      "sha256": "f7d85b270a74d9f3da49a573e4419ca3bf7710b5579794b93b4cd3a19acdea8c"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "spruce/scripts/emu/lib/ppsspp_functions.sh",
+      "sha256": "9095dc1e606928c7873f2345b0c5795c0c2017fc40578fa7f0bf97434fc0446d"
+    }
+  ],
+  "qualification": {
+    "device_tested": false,
+    "source_use_verified": false,
+    "installed": false,
+    "scope": "Optional quoted argv forwarding only; existing spruce launcher/config/PowerVR authorities retained"
+  }
+}

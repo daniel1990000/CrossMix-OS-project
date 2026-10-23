@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "kind": "native-corresponding-source-package-material",
+  "distro_source_files": [
+    {
+      "name": "gcc-9-cross_21ubuntu7.dsc",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/gcc-9-cross/21ubuntu7/gcc-9-cross_21ubuntu7.dsc",
+      "size_bytes": 34467,
+      "sha256": "6fb4aebba01366f9e3d6f5c5f70b9e4484dae6f1f3d8abcf4690ce14d7e767e2",
+      "dsc_listed_full_source_hashes_verified": true,
+      "openpgp_signature_verified": false
+    },
+    {
+      "name": "gcc-9-cross_21ubuntu7.tar.xz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/gcc-9-cross/21ubuntu7/gcc-9-cross_21ubuntu7.tar.xz",
+      "size_bytes": 42432,
+      "sha256": "d5a3c9c2028a694e3f3ed5a5e2a8a493e1dfe1288f208506a69703f587f68aa5"
+    },
+    {
+      "name": "gcc-9_9.4.0-1ubuntu1~20.04.2.dsc",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/gcc-9/9.4.0-1ubuntu1~20.04.2/gcc-9_9.4.0-1ubuntu1~20.04.2.dsc",
+      "size_bytes": 23760,
+      "sha256": "8fd0e94bc001ef407d6800fd819d7ad2556ea7345b73118730089b2eebe2c2a4",
+      "dsc_listed_full_source_hashes_verified": true,
+      "openpgp_signature_verified": false
+    },
+    {
+      "name": "gcc-9_9.4.0-1ubuntu1~20.04.2.debian.tar.xz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/gcc-9/9.4.0-1ubuntu1~20.04.2/gcc-9_9.4.0-1ubuntu1~20.04.2.debian.tar.xz",
+      "size_bytes": 579772,
+      "sha256": "ab3063758ba6918406f865632429cf5a0870e869bb5287496388d856413b2509"
+    },
+    {
+      "name": "gcc-9_9.4.0.orig.tar.gz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/gcc-9/9.4.0-1ubuntu1~20.04.2/gcc-9_9.4.0.orig.tar.gz",
+      "size_bytes": 92368536,
+      "sha256": "ec1e4c12fe4bcf40ef3aad1aeeef33ea918b5e63a371274cf903667639fba642"
+    },
+    {
+      "name": "cross-toolchain-base_43ubuntu3.2.dsc",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/cross-toolchain-base/43ubuntu3.2/cross-toolchain-base_43ubuntu3.2.dsc",
+      "size_bytes": 8164,
+      "sha256": "30bb762e8ebff61d794d31f956ef2823b30177c697d5a36e26ea5e8e061b003a",
+      "dsc_listed_full_source_hashes_verified": true,
+      "openpgp_signature_verified": false
+    },
+    {
+      "name": "cross-toolchain-base_43ubuntu3.2.tar.xz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/cross-toolchain-base/43ubuntu3.2/cross-toolchain-base_43ubuntu3.2.tar.xz",
+      "size_bytes": 43528,
+      "sha256": "c3ab69a304105445ee8731678fc1753f1774ee43533a44692591af2f54c7e552"
+    },
+    {
+      "name": "glibc_2.31-0ubuntu9.9.dsc",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/glibc/2.31-0ubuntu9.9/glibc_2.31-0ubuntu9.9.dsc",
+      "size_bytes": 9548,
+      "sha256": "49304b4d1b2904c4548bfb36be492f139ded302c5733ba1dc4bbe32b56bac6ed",
+      "dsc_listed_full_source_hashes_verified": true,
+      "openpgp_signature_verified": false
+    },
+    {
+      "name": "glibc_2.31-0ubuntu9.9.debian.tar.xz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/glibc/2.31-0ubuntu9.9/glibc_2.31-0ubuntu9.9.debian.tar.xz",
+      "size_bytes": 875580,
+      "sha256": "5fb39af04625e94ba10aae98b3c186acce42882c403b73c8ab1669a9c19980ae"
+    },
+    {
+      "name": "glibc_2.31.orig.tar.xz",
+      "url": "https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/glibc/2.31-0ubuntu9.9/glibc_2.31.orig.tar.xz",
+      "size_bytes": 17317924,
+      "sha256": "2b22c7b04a36747d6c74796a73193a6f8856bfd1efc551b5db96baefa053fe5e"
+    }
+  ],
+  "header_component_source_releases": [
+    {
+      "id": "SDL2-2.26.1",
+      "url": "https://codeload.github.com/libsdl-org/SDL/tar.gz/refs/tags/release-2.26.1",
+      "sha256": "91d8d26fc45a27c215b70090b351fd30e36bfe44bdd940e5db13d5148058d226",
+      "size_bytes": 8464624
+    },
+    {
+      "id": "freetype-2.6.1",
+      "url": "https://codeload.github.com/freetype/freetype/tar.gz/refs/tags/VER-2-6-1",
+      "sha256": "85764250282ec0b8ff2918f48a5c462be4d2089456e3e1d65f1bd6648cb5000c",
+      "size_bytes": 1869082
+    },
+    {
+      "id": "fontconfig-2.12.1",
+      "url": "https://codeload.github.com/fontconfig/fontconfig/tar.gz/refs/tags/2.12.1",
+      "sha256": "4ecb0785242f127a9e0a95ffb8a0c866b4180ff1953dd30703c87e6a94b47da6",
+      "size_bytes": 469013
+    },
+    {
+      "id": "alsa-lib-1.1.4.1",
+      "url": "https://codeload.github.com/alsa-project/alsa-lib/tar.gz/refs/tags/v1.1.4.1",
+      "sha256": "21d46b859d483acaee7227193e109f2863a925ee7d9b77ab7fc2e09ac6d841ae",
+      "size_bytes": 755415
+    }
+  ],
+  "startup_runtime_source_entries": [
+    {
+      "source_path": "gcc-9.4.0/libgcc/crtstuff.c",
+      "sha256": "a463c3605a66623aff73295ab83fd28e825010c71a4ce1bd615776acf0bf92b4",
+      "size_bytes": 24977,
+      "notice_prefix": "/* Specialized bits of code needed to support construction and\n   destruction of file-scope objects in C++ code.\n   Copyright (C) 1991-2019 Free Software Foundation, Inc.\n   Contributed by Ron Guilmette (rfg@monkeys.com).\n\nThis file is part of GCC.\n\nGCC is free software; you can redistribute it and/or modify it under\nthe terms of the GNU General Public License as published by the Free\nSoftware Foundation; either version 3, or (at your option) any later\nversion.\n\nGCC is distributed in the hope that it will be useful, but WITHOUT ANY\nWARRANTY; without even the implied warranty of MERCHANTABILITY or\nFITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License\nfor more details.\n\nUnder Section 7 of GPL version 3, you are granted additional\npermissions described in the GCC Runtime Library Exception, version\n3.1, as published by the Free Software Foundation.\n\nYou should have received a copy of the GNU General Public License and\na copy of the GCC Runtime Library Exception along with this program;\nsee the files COPYING3 and COPYING.RUNTIME respectively.  If not, see\n<http://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "gcc-9.4.0/libgcc/config/aarch64/crtfastmath.c",
+      "sha256": "58e34a4092746e296caf9de52aa1f76fb021a528fdd839676b224a276bf753e9",
+      "size_bytes": 1305,
+      "notice_prefix": "/*\n * Copyright (C) 2014-2019 Free Software Foundation, Inc.\n *\n * This file is free software; you can redistribute it and/or modify it\n * under the terms of the GNU General Public License as published by the\n * Free Software Foundation; either version 3, or (at your option) any\n * later version.\n *\n * This file is distributed in the hope that it will be useful, but\n * WITHOUT ANY WARRANTY; without even the implied warranty of\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n * General Public License for more details.\n *\n * Under Section 7 of GPL version 3, you are granted additional\n * permissions described in the GCC Runtime Library Exception, version\n * 3.1, as published by the Free Software Foundation.\n *\n * You should have received a copy of the GNU General Public License and\n * a copy of the GCC Runtime Library Exception along with this program;\n * see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see\n * <http://www.gnu.org/licenses/>.\n */"
+    },
+    {
+      "source_path": "gcc-9.4.0/gcc/config/aarch64/arm_neon.h",
+      "sha256": "df23da184be29724ec61df0d07b2b2e8e2142f3561c0f764e80e8a85358b666b",
+      "size_bytes": 1125953,
+      "notice_prefix": "/* ARM NEON intrinsics include file.\n\n   Copyright (C) 2011-2019 Free Software Foundation, Inc.\n   Contributed by ARM Ltd.\n\n   This file is part of GCC.\n\n   GCC is free software; you can redistribute it and/or modify it\n   under the terms of the GNU General Public License as published\n   by the Free Software Foundation; either version 3, or (at your\n   option) any later version.\n\n   GCC is distributed in the hope that it will be useful, but WITHOUT\n   ANY WARRANTY; without even the implied warranty of MERCHANTABILITY\n   or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public\n   License for more details.\n\n   Under Section 7 of GPL version 3, you are granted additional\n   permissions described in the GCC Runtime Library Exception, version\n   3.1, as published by the Free Software Foundation.\n\n   You should have received a copy of the GNU General Public License and\n   a copy of the GCC Runtime Library Exception along with this program;\n   see the files COPYING3 and COPYING.RUNTIME respectively.  If not, see\n   <http://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "gcc-9.4.0/COPYING.RUNTIME",
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+      "size_bytes": 3324,
+      "notice_prefix": null
+    },
+    {
+      "source_path": "gcc-9.4.0/COPYING3",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "size_bytes": 35147,
+      "notice_prefix": null
+    },
+    {
+      "source_path": "glibc-2.31/sysdeps/aarch64/start.S",
+      "sha256": "1354965d93e9517299681fa6ac35456114426dedf68c0c28338c7e4182fe6953",
+      "size_bytes": 3129,
+      "notice_prefix": "/* Copyright (C) 1995-2020 Free Software Foundation, Inc.\n\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public License as\n   published by the Free Software Foundation; either version 2.1 of the\n   License, or (at your option) any later version.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library.  If not, see\n   <https://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "glibc-2.31/sysdeps/aarch64/crti.S",
+      "sha256": "d322edc86267f1abb82d8580a0af6d8ddc1f91bc0327dc5e89a79a5d5455b90d",
+      "size_bytes": 2925,
+      "notice_prefix": "/* Special .init and .fini section support for AArch64.\n   Copyright (C) 1995-2020 Free Software Foundation, Inc.\n\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <https://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "glibc-2.31/sysdeps/aarch64/crtn.S",
+      "sha256": "34d61eb018a7abfc8098b949f70f0414607258874149f32154fe3d9009e74784",
+      "size_bytes": 1991,
+      "notice_prefix": "/* Special .init and .fini section support for AArch64.\n   Copyright (C) 1995-2020 Free Software Foundation, Inc.\n\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <https://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "glibc-2.31/csu/elf-init.c",
+      "sha256": "2d9b3d9b6af5d2ad6bf8a881e3c34f0bd7478f9709b62dfe9d48a749a5768519",
+      "size_bytes": 3822,
+      "notice_prefix": "/* Startup support for ELF initializers/finalizers in the main executable.\n   Copyright (C) 2002-2020 Free Software Foundation, Inc.\n   This file is part of the GNU C Library.\n\n   The GNU C Library is free software; you can redistribute it and/or\n   modify it under the terms of the GNU Lesser General Public\n   License as published by the Free Software Foundation; either\n   version 2.1 of the License, or (at your option) any later version.\n\n   In addition to the permissions in the GNU Lesser General Public\n   License, the Free Software Foundation gives you unlimited\n   permission to link the compiled version of this file with other\n   programs, and to distribute those programs without any restriction\n   coming from the use of this file. (The GNU Lesser General Public\n   License restrictions do apply in other respects; for example, they\n   cover modification of the file, and distribution when not linked\n   into another program.)\n\n   Note that people who make modified versions of this file are not\n   obligated to grant this special exception for their modified\n   versions; it is their choice whether to do so. The GNU Lesser\n   General Public License gives permission to release a modified\n   version without this exception; this exception also makes it\n   possible to release a modified version which carries forward this\n   exception.\n\n   The GNU C Library is distributed in the hope that it will be useful,\n   but WITHOUT ANY WARRANTY; without even the implied warranty of\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU\n   Lesser General Public License for more details.\n\n   You should have received a copy of the GNU Lesser General Public\n   License along with the GNU C Library; if not, see\n   <https://www.gnu.org/licenses/>.  */"
+    },
+    {
+      "source_path": "glibc-2.31/COPYING.LIB",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "size_bytes": 26530,
+      "notice_prefix": null
+    }
+  ],
+  "actual_startup_selection_reference": "project/evidence/nondevice-compiler-20261023/final-startup-objects.json",
+  "exact_GCC9_and_Ubuntu_crt_provenance": "Restored immutable compiler image plus installed package controls; actual RA trace names those startup files. PPSSPP default startup dry driver reconstruction is labelled separately.",
+  "libc6_dev_cross_Built_Using_glibc": "2.31-0ubuntu9.9",
+  "glibc_linaro_declared_commit": "a0408ec51ea862dda102482036c401d2e707e20b",
+  "full_sources_and_debian_patches_retained": true,
+  "source_material_mapped": true,
+  "independent_native_recompile_claimed": false,
+  "openpgp_validation_claimed": false,
+  "public_native_distribution_cleared": false
+}

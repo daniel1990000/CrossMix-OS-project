@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "evidence_kind": "pinned-source-rights-register; not a permission or delivery receipt",
+  "date": "2026-10-23",
+  "original_preview": {
+    "python_and_graphics": "project/LICENSE (MIT)",
+    "font": "Noto Sans, project/assets/fonts/OFL.txt",
+    "contains_upstream_runtime_or_engine": false,
+    "contains_sony_assets_or_owner_game_data": false
+  },
+  "spruce_pyui": {
+    "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "licenses": [
+      {
+        "path": "LICENSE",
+        "sha256": "a01c51912b88f08db800c9600fcab358da621a7cf177a6f3adc8882a588522c5",
+        "scope": "spruceOS source and patches; noncommercial terms and attribution",
+        "contact_from_pinned_text": "thespruceosteam@gmail.com",
+        "requirement": "Prior permission for commercial use; retain applicable notices.",
+        "source_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/LICENSE"
+      },
+      {
+        "path": "App/PyUI/LICENSE.md",
+        "sha256": "7ff719dcc48ccef9e70b3674803e1e7b5d2dd1095706a8fc50cc06a69d4999bb",
+        "scope": "outer PyUI package; noncommercial redistribution notice",
+        "contact_from_pinned_text": "chrisj951@gmail.com",
+        "requirement": "Noncommercial redistribution notification with intended use and means of contact.",
+        "source_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/LICENSE.md"
+      },
+      {
+        "path": "App/PyUI/main-ui/LICENSE.md",
+        "sha256": "750e5328faa651a9b63ae079586a58a347cd6889de31455f7f0735a149c3caae",
+        "scope": "nested main-ui; noncommercial use including derivatives",
+        "contact_from_pinned_text": "mainpyui@gmail.com",
+        "requirement": "Noncommercial use/derivative notification with intended use and means of contact.",
+        "source_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/LICENSE.md"
+      }
+    ],
+    "author_notification_sent": "owner-confirmed; correspondence not independently inspected",
+    "source_use_obligations_complete": true,
+    "notification_draft": "project/docs/author-notification-draft.txt",
+    "remaining_action": "No further notification for the current owner-confirmed private noncommercial scope. Review an actual proposed public derivative distribution separately; do not expand private attestation into unrelated native/SDK terms.",
+    "proposed_contact_for_owner_review": "Public GitHub account daniel1990000 and project issue tracker; no private sender address inferred.",
+    "source_use_scope": "Current private noncommercial source integration only; no commercial, SDK or public-native grant inferred.",
+    "owner_permission_evidence": "project/evidence/completion-20261023/owner-permission.json",
+    "further_author_contact_required": false,
+    "assistant_sent_message": false
+  },
+  "ppsspp": {
+    "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "license": "GPL-2.0-or-later with retained third-party notices",
+    "scope": "Separate emulator process and GPL patches/acceptance; no engine source embedded in Python/PyUI.",
+    "corresponding_source": "Exact modified source, submodules, build inputs and configuration must accompany any future binary distribution.",
+    "recipe": {
+      "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+      "explicit_license_grant_verified": false,
+      "distribution_cleared": false,
+      "reason": "Pinned recipe scripts lack an explicit grant; private retention is not redistribution clearance."
+    },
+    "sdk": {
+      "runtime_redistribution_audited": false,
+      "sdk_bundled_in_public_artifacts": false
+    },
+    "binary_distribution_cleared": false,
+    "private_complete_build_evidence": "project/evidence/ppsspp-complete-state-build.json",
+    "ffmpeg": {
+      "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+      "configuration_license": "LGPL-2.1-or-later",
+      "CONFIG_GPL": false,
+      "CONFIG_NONFREE": false,
+      "CONFIG_VERSION3": false,
+      "scope": "Exact generated configuration and 55 component notices retained in the private source archive; no blanket third-party grant inferred."
+    }
+  },
+  "ports": {
+    "owner_commercial_game_data_bundled": false,
+    "engine_runtime_licenses": "Separate per-title inventory and original-device qualification; no blanket PortMaster grant for games."
+  },
+  "combined_release": {
+    "distribution_cleared": false,
+    "hardware_qualified": false,
+    "automatic_device_activation": false,
+    "remaining_external_evidence": [
+      "Exact public recipe/IGM and incorporated toolchain/source/notice scope",
+      "Original TG5040 acceptance and independently reviewed installed profiles"
+    ],
+    "R05_private_noncommercial_scope_complete": true
+  },
+  "retroarch_igm": {
+    "upstream_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+    "upstream_license": "GPL-3.0-or-later with retained component notices",
+    "project_scope": "Separate optional IGM source patch and native acceptance fixtures; original Python helpers remain MIT.",
+    "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "recipe_and_igm_explicit_grant_verified": false,
+    "sdk_runtime_redistribution_audited": false,
+    "binary_distribution_cleared": false,
+    "notice": "project/retroarch/NOTICE.md",
+    "source_lock": "project/retroarch/source-lock.json",
+    "private_complete_build_evidence": "project/evidence/retroarch-igm-build.json"
+  },
+  "native_notice_work": "project/docs/nondevice-distribution-2026-10-23.md"
+}

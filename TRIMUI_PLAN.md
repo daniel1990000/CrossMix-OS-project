@@ -1,8 +1,35 @@
 # TrimUI Smart Pro: spruceOS-based PSP-inspired project plan
 
-Updated 22 October 2026. **Active direction: build on spruceOS and its existing PyUI frontend for the original TrimUI Smart Pro (TG5040), not CrossMix.** This is a documentation update, not an installation, implementation or hardware-test report.
+Updated 22 October 2026. **Active direction: build on spruceOS and its existing PyUI frontend for the original TrimUI Smart Pro (TG5040), not CrossMix.** The current host implementation and next steps are recorded in HANDOVER.md; no physical-device release is qualified.
 
 The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
+
+## Current implementation checkpoint — 22 October 2026
+
+Current continuation: **R04 private artifact custody is complete**, bringing
+host completion to 12 of 25 tasks. Two new native builds, matching source/build
+archives and their compiler image were privately retained and freshly retrieved;
+historical binary hashes remain unchanged. The host suite passes 710 checks.
+[D01 design](project/docs/experimental-device-route.md),
+[D02/D03 preflight](project/docs/device-recovery-preflight.md) and
+[R06 review](project/docs/native-component-review.md) advance preparation; their
+remaining implementation, external and physical requirements stay open.
+The earlier complete-build receipts below retain their original identities;
+use [current native custody](project/docs/artifact-custody.md) for the replacements.
+All 13 physical areas remain unrun, and shipped runtime/source-use gates remain
+false. Dev10 is an original-only host preview; no native binary is selected.
+
+The active implementation is on `build/spruce-psp-experience` under [`project/`](project/). Read [`HANDOVER.md`](HANDOVER.md) before continuing. The software checkpoint now includes the common hardware settings UI, per-game/advanced source routes, one journaled PPSSPP controls/appearance transaction with verified per-game override preservation, separate spruce IGM controls/appearance adapters, pinned port/runtime inventory and existing source launch-token reuse.
+
+The exact-source frontend integration preserves initialized PyUI models and the original game/principal launch flow. A Linux child subreaper accounts for foreground descendants, sealed command bytes preserve lexical launch paths, and correlated completion governs frontend return. The fixed reviewed runtime configuration defaults to unavailable. The older retained-thread experiment is an alternative and must not be installed alongside the process-boundary integration. See [the binding contract](project/bridge/README.md) and [private source composition](project/docs/release-qualification.md).
+
+The complete PPSSPP/FFmpeg candidate now includes native menu controls, completed-state evidence, the new private session protocol and checked save-and-quit behavior. It passes the recursive 16-object SDK audit and requires only GLIBC 2.17. Separate-process acceptance covers real patched SaveSlot/Process export, source exit, kernel descendant cleanup, authenticated checkpoint transfer, fresh typed Resume and native load acknowledgement. Its serializer/platform are explicit host fixtures; no physical save, durability or performance claim follows. See [complete-build evidence](project/evidence/ppsspp-complete-state-build.json), [state integration](project/ppsspp/state-session.md) and the preserved earlier build attempts.
+
+The RetroArch work pins upstream v1.22.2 and the actual spruce IGM recipe, adds an opt-in independent Confirm/Back namespace, preserves gameplay remaps, and now compiles a full-source original-TG5040 candidate passing its 23-object recursive SDK audit. [The build evidence](project/evidence/retroarch-igm-build.json) preserves the target-specific configuration and earlier failures. The bundled stable emulator's version/hash observations do not establish correspondence with the new candidate.
+
+Original-only development packaging verifies signatures, inventories, deterministic same-key rebuilds, installed-payload rendering and fixture rollback. Private source review kits retain exact patch inputs, licence notices and restoration evidence; they cannot grant source use or device qualification. Host checks and native cross-builds have separate records in [project/evidence](project/evidence/).
+
+The owner confirmed that the original Smart Pro is available, but not for testing today. The [device runbook and recorder](project/docs/device-test-runbook.md) are ready for the later spare/restorable-card session. Original-device rendering/input, installed libraries and writers, saves, power/sleep/USB, storage interruption, recovery and per-port acceptance remain external evidence. The prepared PyUI notification is unsent and recipe/SDK redistribution review remains open. Installed emulators are unchanged, all shipped qualification gates stay false, and engine binaries/full recipe archives stay private. Continue from this source checkpoint and collect the outstanding evidence; do not restart the superseded CrossMix architecture.
 
 ## Codex research and reuse mandate
 
@@ -23,6 +50,7 @@ This is a better-aligned architecture for reuse and editability, not proof of hi
 ### Baseline and reproducibility
 
 - Upstream: [spruceUI/spruceOS](https://github.com/spruceUI/spruceOS).
+- Machine-readable source/profile identities and outstanding evidence gates: [spruce source lock](docs/spruce-source-lock.json). The full stable archive SHA-256 was independently checked against the downloaded asset; ten named integration/license files match the pinned source. See the [release audit](project/evidence/release-source-audit.json). This does not prove every archive file or physical compatibility.
 - Baseline candidate: [stable v4.5.4](https://github.com/spruceUI/spruceOS/releases/tag/v4.5.4), released 10 October 2026 and listing original Smart Pro as Stable. Pinned commit: `d45ff8dfe5756147522b04ae5863d17a90e88b54`. Record the exact release asset name and SHA-256 before building. No release asset has been installed or benchmarked here.
 - Inspected Development snapshot: `cb6210aa19c5cb61e404d4029444972448cac9f9`. Development observations are research, not instructions to mix newer files into stable. Several runtime/main-menu files differ from v4.5.4. Pin and test any later cherry-pick independently.
 - Target configuration is [SmartPro.cfg](https://github.com/spruceUI/spruceOS/blob/v4.5.4/spruce/scripts/platform/SmartPro.cfg): aarch64, 1280×720 UI coordinates, two sticks, platform-specific event discovery and emulator binaries. These UI coordinates do not assert the physical panel resolution. It declares firmware target `1.1.1`; the owner's installed firmware is unknown, and this does not authorize flashing it.
@@ -296,8 +324,67 @@ Read and preserve each component's actual terms, not a generic label:
 
 Decided: spruceOS is the base; extend existing PyUI and services; full-system PSP-inspired presentation; preserve original spruce mode; preserve games/saves; reuse before rewriting; keep emulator/ports work separate; document and test rollback.
 
-Unknown: actual installed firmware, SD layout/data, physical-device performance, whether all visual goals fit current views, exact licence permissions/notification completion, and tested SmartPro recovery behavior. Source inspection is not a hardware pass. No installation, author outreach, emulator update, firmware flash or software implementation was performed while preparing this document.
+Unknown: actual installed firmware, SD layout/data, physical-device performance, whether all visual goals fit current views, exact licence permissions/notification completion, and tested SmartPro recovery behavior. Source inspection is not a hardware pass. The original planning checkpoint installed no software. The implementation checkpoint now has original development source and host tests; see [HANDOVER.md](HANDOVER.md) for the current status. No device installation, author outreach, emulator replacement or firmware flash has occurred.
 
+
+## 11. Source contracts for the spruce implementation
+
+These details supplement the active plan above. They were checked against stable commit `d45ff8dfe5756147522b04ae5863d17a90e88b54`. They are source findings and test requirements, not completed hardware tests. CrossMix-specific implementation remains paused; incomplete prototype work is preserved separately and is not part of this documentation change.
+
+### Frontend and launch ownership
+
+The shipped `App/PyUI/main-ui` Git tree is `4d0bdb3111d9226fbacbea6c89d65e540620e21e`. Pin this embedded snapshot; no independently declared upstream PyUI release was established. The [release workflow](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/.github/workflows/create-latest-release-2026.yml#L117) also downloads theme archives separately, so source-tree identity does not establish every asset in the release archive.
+
+The full v4.5.4 archive is `spruceV4.5.4.7z`, 1,652,634,074 bytes. Its complete downloaded SHA-256 matched `4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd` in the saved [release audit](project/evidence/release-source-audit.json); ten named integration/licence files also matched the pin. This does not qualify every archive file or an installed device. The v4.5.2-to-v4.5.4 delta is not an installer for CrossMix or an arbitrary modified card.
+
+Keep the current [PyUI launch producer](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/devices/miyoo_trim_common.py#L70) and [principal loop](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/principal.sh#L79) as the initial launch/return owners. PyUI writes the existing command file, releases Display and exits. Principal checks nonempty content and shell syntax; this does not establish semantic command/argument authorization. Audit the producer and quoting before claiming safe handling of arbitrary filenames or metadata.
+
+Preserve the launcher's **lexical system identity**. PSP joins `Emu/PSP` with `../../spruce/scripts/emu/standard_launch.sh`, and [standard_launch.sh](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/standard_launch.sh#L22) derives `EMU_NAME` from the unnormalized `/Emu/<system>/` path. Check containment without removing this context before invocation. A new explicit system-ID contract would require a coordinated producer/consumer patch and tests.
+
+Theme configuration covers static images and shared appearance. Continuously animated waves need a bounded [Display/render-loop](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/display/display.py) change; no arbitrary animated-theme API was verified. Existing [main-menu](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/menus/main_menu.py) merged tabs do not already provide the requested four-category left/right and vertical-item navigation. Prove the view extension using existing menu models before decorative expansion.
+
+### Data and preset authorities
+
+| Data | Existing spruce authority | Preservation rule |
+| --- | --- | --- |
+| System settings | `Saves/spruce/spruce-config.json` | Keep device filters and backend effects; preview and journal project changes. |
+| Frontend preferences | `App/PyUI/py-ui-config.json` | Use existing config classes with validated project extensions and classic-mode defaults. |
+| Original Smart Pro device state | `Saves/trim-ui-smart-pro-system.json` | Keep physical-input mappings and device settings under the existing authority. |
+| Favorites/recents | `Saves/pyui-favorites.json`, `Saves/pyui-recents.json` | JSON arrays, not CrossMix NDJSON. Preserve record fields and identities. |
+| Apps/focus | `Saves/pyui-apps.json`, `Saves/pyui-state.json` | Preserve visibility and navigation state. |
+| Game Switcher/collections | `Saves/gameswitcher.json`, `Collections/` | Reuse managers; screenshot/list membership alone does not prove a valid state. |
+
+[TrimUIDevice](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/devices/trimui/trim_ui_device.py#L204) establishes the frontend paths. Read-only inventory must parse copies directly: [RomsListManager](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/menus/games/utils/roms_list_manager.py) can rewrite/prune lists during initialization. Normal frontend reuse should continue through its established managers after recovery/baseline work.
+
+[Emulator selection](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/general_functions.sh) uses `Emu/<system>/config.json`, device/platform-filtered `menuOptions.Emulator*`, `.selected` and `.overrides[GAME]`; Governor has a separate selection/override. `GAME` is the ROM basename including extension, so identical names in different subfolders may share an override. Preserve this until a coordinated migration changes it. CrossMix `.games_config`/`launchers.cfg` are not spruce runtime contracts.
+
+The [PS descriptor](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/Emu/PS/config.json) includes `pcsx_rearmed`, `swanstation` and the existing `PCSX-ReARMed-standalone` route. Preserve all eligible installed options. The [RetroArch template](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/RetroArch/platform/retroarch-SmartPro.cfg.bak#L3135) uses `Saves/saves` and `Saves/states`, sorted by core; [launcher bind mounts](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ra_functions.sh#L431) add architecture-specific directories for some cores. Do not flatten these paths.
+
+[PPSSPP platform INIs](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh#L154) are `Saves/.config/ppsspp/PSP/SYSTEM/controls-SmartPro.ini` and `ppsspp-SmartPro.ini`. They are copied to active INIs at launch and copied back on exit. The wrapper sets `HOME=/mnt/SDCARD/Saves`; exact installed savedata/state roots still need runtime or exact fork-source confirmation before migration. Do not edit only active INIs or assume CrossMix's emulator-local HOME layout.
+
+### Controls, menu and power traps
+
+Keep frontend semantics, emulator-menu controls, system hotkeys and gameplay as separate policies even when one editor presents them. RetroArch's standard/XMB menu and spruce's custom IGM are separate surfaces. The [RA wrapper](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ra_functions.sh#L223) supports `raInGameMenu` and theme `igm.json`; `menu_swap_ok_cancel_buttons` alone does not establish custom-IGM Confirm/Back parity. PPSSPP's independent menu preference must not be assumed from controls.ini; any required patch stays version-pinned and separate from gameplay mapping.
+
+The real original-TSP menu route is [menubutton_watchdog.sh](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/menubutton_watchdog.sh#L42) into [button_actions.sh](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/button_actions.sh#L299): it signals PPSSPP with `USR2` or calls the [Smart Pro RetroArch hook](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/platform/device_functions/SmartPro.sh#L67), which sends virtual L3/R3. Game Switcher captures/records, closes the game and returns to the next PyUI session. It is not a persistent PyUI overlay above a running emulator. Generic PyUI listener/framebuffer methods are not proof of original-TSP support.
+
+Preserve shipped [`enableButtonWatchers=false` and `poweroffCmd`](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/py-ui-config.json#L5) routing to `save_poweroff.sh`. The [missing-key default](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/utils/py_ui_config.py#L92) for watchers is true, and the generic TrimUI special-input route can directly write `/sys/power/state`. Missing/corrupt preferences must not enable competing power handling. Test this explicitly alongside named `TRIMUI Player1` discovery, held-key release and hotkey collisions.
+
+### Reliability and recovery evidence
+
+[CfwSystemConfig](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/utils/cfw_system_config.py#L26) currently truncates its JSON file and saves selection before invoking its backend; handler failure is logged without reverting selection. These are source-backed fault-test candidates. Transactional writes and truthful rollback are additions to build, not existing guarantees.
+
+Internal recovery must also cover [SmartPro initialization](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/platform/device_functions/SmartPro.sh#L56), which can copy an internal `/bin/bash` and apply Fn actions, as well as the already-described runtrimui files. Spruce Backup/Restore covers selected files and can include SSH keys/service credentials; it is not a full-card or internal-boot restore and must remain private. Keep separate procedures for project-interface rollback, spruce-version rollback, original-card return and vendor firmware recovery.
+
+The [USB app](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/USBStorageMode/launch.sh#L81) stages a RAM handoff to `save_poweroff.sh --usb-storage-export`, and staged export refuses unsuccessful clean unmount. Completion uses reboot. Its stage-failure branch calls legacy mounted export; the fourth [project patch](project/patches/README.md) now refuses that branch and has actual-source mocked regression evidence. The patch is not applied to an installed release. Check mapped executables/libraries, current directories, descriptors and services, not just the helper's `/tmp` location, before physical qualification.
+
+The inspected [OTA downloader](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/-OTA/downloader.sh) uses mutable feeds/MD5 and can retry TLS errors with `curl -k`; the [updater](https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/-Updater/updater.py) backs up selected files then updates in place. Do not describe this as signed immutable/A-B rollback. Project updates need exact model/base/hash preconditions, staged scoped payloads, maintained signature verification, safe restore and visible upstream-compatibility status. Do not silently remove the user's existing update route.
+
+### Optional engine and port provenance
+
+The bundled `Emu/PSP/PPSSPPSDL_TrimUI` is Git blob `509ffbd9ba3874c05ae3b470d77cab5299d85c4e`, 19,885,376 bytes. The current PPSSPP-spruce release asset differs; its version cannot identify the bundled binary. Optional [PowerVR recipe commit `9f770cb9`](https://github.com/spruceUI/PPSSPP-spruce/blob/9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/build-pvr.sh) is a research candidate, not a qualified replacement or measured speedup.
+
+The reviewed [PortMaster catalogue](https://github.com/PortsMaster/PortMaster-Info/blob/e7353407e4d6f72631c279b88d01fe3281ee61ca/ports.json) has fetched SHA-256 `ef1998c81b6f1a505d3cd3fdf98ceb331e4ae9ce7f0cdc5d7b3142f2c6347ff4`. Candidate sources split between [main ports](https://github.com/PortsMaster/PortMaster-New/tree/444778f3ae29facbd97b823dc3ca7270b3ebe499/ports) for Sonic Mania/Celeste and [Multiverse](https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports) for GTA III/VC/Render96ex. Catalogue support is not performance qualification. Validate classic GTA data, owner-provided Sonic `Data.rsdk`, the selected SM64 ROM/build route and supported Celeste distribution/runtime separately. San Andreas remains experimental. Wrapper licences do not automatically cover engines/assets; no commercial data is included.
 
 ## Historical appendix: superseded CrossMix research and first save
 

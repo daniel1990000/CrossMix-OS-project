@@ -1,0 +1,1234 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-22T11:52:36+00:00",
+  "kind": "private full source cross-build with explicit GCC9/SDK search order; unqualified candidate",
+  "candidate_id": "strict-sdk-search-ffmpeg-v2",
+  "outcome": {
+    "full_engine_cross_build": true,
+    "aarch64_elf_inspected": true,
+    "sdk_dependency_inventory_pass": true,
+    "target_executed": false,
+    "device_tested": false,
+    "installed_engine_changed": false,
+    "distribution_cleared": false
+  },
+  "prior_candidate_preserved": {
+    "evidence": "project/evidence/ppsspp-candidate-build.json",
+    "binary": {
+      "name": "PPSSPPSDL_TrimUI",
+      "size": 19881280,
+      "sha256": "7d4c71a7f6d41b3e0507122bd8482d71f938832784f060f747314ba8031e78d4",
+      "needed": [
+        "libz.so.1",
+        "libm.so.6",
+        "libgcc_s.so.1",
+        "libc.so.6",
+        "ld-linux-aarch64.so.1",
+        "libpthread.so.0",
+        "librt.so.1",
+        "libSDL2-2.0.so.0",
+        "libGLESv2.so.2",
+        "libEGL.so.1",
+        "libdl.so.2"
+      ],
+      "machine": "AArch64",
+      "interpreter": "/lib/ld-linux-aarch64.so.1",
+      "interpreter_present_in_sysroot": true,
+      "required_versions": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "librt.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.3",
+          "GCC_3.3.1",
+          "GCC_4.2.0"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_2.27",
+          "GLIBC_2.29"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_2.28"
+        ]
+      }
+    },
+    "corresponding_source_sha256": "94c2e31c20b45254d40e81eac61d7b8cb983433622ce58899d4604e2d63c80a4",
+    "prior_sdk_inventory_pass": false,
+    "source_tree_unchanged": true,
+    "source_correspondence_limit": "old FFmpeg prebuilt/source correspondence unverified; prior archive is pinned-source/input snapshot"
+  },
+  "source": {
+    "upstream": {
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "tag": "v1.20.3",
+      "tag_object": "a6c972d9dc2f31da29eab4d6b5c2f677891c956d",
+      "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "license": "GPL-2.0-or-later; retained LICENSE.TXT includes PSPSDK BSD notice",
+      "license_source": "LICENSE.TXT",
+      "license_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa"
+    },
+    "recipe_repository": "https://github.com/spruceUI/PPSSPP-spruce",
+    "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "project_patch_sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a",
+    "source_lock_input_sha256": "4a80abf51ccc828b01406259b4eda428ecc02366f5db8007206e9bfbc67997c2",
+    "build_input_lock_sha256": "04af7bcb60c21fb431866db452a553d98ad40c84bbce6bd54156e445fd2c3183",
+    "recursive_submodule_count": 29,
+    "submodule_manifest_sha256": "f75c6081848fac18b18b442a32a0b5708bc579c7350763e0e2865e8623970562",
+    "combined_modified_source_identical_to_prior_candidate": true,
+    "pristine_inputs_revalidated_after_build": true
+  },
+  "build": {
+    "base_image": "ubuntu:20.04@sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214",
+    "image_id": "sha256:65974d2b2981e6d2423d0e264d5d81981caab485b53ffe275c3ae07ff0a2e97a",
+    "cross_compiler_version": "aarch64-linux-gnu-g++ (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0",
+    "cmake_version": "cmake version 3.16.3",
+    "jobs": 4,
+    "strict_sdk_search": true,
+    "sdk_assets": [
+      {
+        "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+        "size": 213977008,
+        "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+      },
+      {
+        "name": "SDK_usr_tg5040_a133p.tgz",
+        "size": 185049621,
+        "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+        "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+      }
+    ],
+    "generated_dockerfile_sha256": "39bc0d051e9e710f7dd32e0f51f15748f5a059e9214258792d4d7d3168ea49b4",
+    "generated_build_script_sha256": "2a6e37334d9abe382f8d022ef03333cba390979934cea87f823c80b3928e18b9",
+    "compiled_source_only_script_sha256": "dc56879e61e7997d70bf52a2698be34a9bc9e88e323e47e2f4da1e5a3e0322e1",
+    "executed_helper_sha256": {
+      "build_candidate.py": "9ff6d3775e3eac722e958f16770390a32ef73a93520c2cdcc2454518e1cdbf68",
+      "abi_audit.py": "e555c50dede39755ec5cb66d9fee29f02bfdccfcaf45ee18cc8b6f5e6398cee3",
+      "apply_recipe.py": "ed0532d53777b4fbd0d313bb49bea1054e493aa64db71f2cf68ea725f6d30442",
+      "sdk_search.py": "378593402bddc0d141a620db57260cc0b782c033ed6183f7f25173ed5552f129",
+      "ffmpeg_build.py": "23785caeeade54a3c4587950d5fbf965611a3f75f24d2d326f3196c1485c2343",
+      "local-staged-build.py": "7e4bcaa3467986dd693581996e53f8e7a7e226c2f0a311deda3c9c28946ad8eb"
+    },
+    "toolchain_package_inventory_sha256": "7aa29188b880fcddebe8cabcdc9bf4cae820358ae4a46a01400261610097c834",
+    "generated_toolchain_sha256": "5afd500c3e2bb0a3cd0237b3bffa7bbb865dd3584c8b3e0615925293616b2ca8",
+    "build_mode": "dependency-aware PPSSPP rebuild/relink after exact pinned FFmpeg source rebuild; first strict objects retained",
+    "engine_started_at": "2026-10-22T11:42:05.339781+00:00",
+    "engine_log_completed_at": "2026-10-22T11:47:13.553072+00:00",
+    "engine_approx_wall_seconds": 308.213,
+    "translation_units": {
+      "Core/KeyMap.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/Core.dir/flags.make",
+        "flags_sha256": "ec76ebbbb2a659aa401b75e3a9699ca51af83e4de4f62c8dedac03690136845b",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHAVE_LIBAVCODEC_CONST_AVCODEC=1 -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSE_FFMPEG=1 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -nostdinc -I/usr/aarch64-linux-gnu/include/c++/9 -I/usr/aarch64-linux-gnu/include/c++/9/aarch64-linux-gnu -I/usr/aarch64-linux-gnu/include/c++/9/backward -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -I/opt/sysroot/usr/include -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      },
+      "UI/NativeApp.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/PPSSPPSDL.dir/flags.make",
+        "flags_sha256": "ceec29cb6be471f3dc3e192ac638bc834c2a9dcd660d9c6cec79118c97fee537",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -nostdinc -I/usr/aarch64-linux-gnu/include/c++/9 -I/usr/aarch64-linux-gnu/include/c++/9/aarch64-linux-gnu -I/usr/aarch64-linux-gnu/include/c++/9/backward -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -I/opt/sysroot/usr/include -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      },
+      "UI/GameSettingsScreen.cpp": {
+        "sdl_defined": true,
+        "flags_path": "CMakeFiles/PPSSPPSDL.dir/flags.make",
+        "flags_sha256": "ceec29cb6be471f3dc3e192ac638bc834c2a9dcd660d9c6cec79118c97fee537",
+        "definitions": [
+          "-DASSETS_DIR=\\\"/usr/local/share/ppsspp/assets/\\\" -DEGL_NO_X11 -DHAVE_GETAUXVAL -DHTTPS_NOT_AVAILABLE -DPNG_ARM_NEON_OPT=0 -DRC_DISABLE_LUA -DSDL -DSHARED_ZLIB -DSTACK_LINE_READER_BUFFER_SIZE=1024 -DUSING_FBDEV -DUSING_GLES2 -DVK_USE_PLATFORM_DISPLAY_KHR -D_BSD_SOURCE -D_DEFAULT_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE=1 -D_XOPEN_SOURCE=700 -D_XOPEN_SOURCE_EXTENDED -D__BSD_VISIBLE=1 -D__STDC_CONSTANT_MACROS"
+        ],
+        "compile_flags": [
+          "-O2 -mcpu=cortex-a53 -ffunction-sections -fdata-sections -fomit-frame-pointer -flto=auto -Wno-error -nostdinc -I/usr/aarch64-linux-gnu/include/c++/9 -I/usr/aarch64-linux-gnu/include/c++/9/aarch64-linux-gnu -I/usr/aarch64-linux-gnu/include/c++/9/backward -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -I/opt/sysroot/usr/include -O3 -DNDEBUG -flto -fno-fat-lto-objects   -Wall -Werror=return-type -Wno-unused-function -Wno-sign-compare -Wno-unused-but-set-variable -Wno-reorder -Wno-unknown-pragmas -Wno-unused-value -Wno-unused-variable -Wno-error=incompatible-pointer-types -Wno-class-memaccess -Wformat -Wno-multichar -fno-strict-aliasing -fno-math-errno -Wno-psabi -std=gnu++17"
+        ]
+      }
+    },
+    "cmake_cache_sha256": "e6ba3d27642ea57e20d08b6b793a76e888d25bb31895dfdd31adc8bdc3f2c57f",
+    "git_version_cpp_sha256": "641bd191fa8f6962808a743e9b97967862673ffe13e1351108a4c83054414e8f",
+    "embedded_git_version": "v1.20.3",
+    "git_version_limit": "upstream generator runs git describe --always without --dirty; the tag string does not identify applied source patches",
+    "git_trust": "exact /build/ppsspp allowlist inside ephemeral build containers only",
+    "preparation_history": [
+      "Prepared separate pristine pinned source with --prepare-only before strict mode was added.",
+      "Revalidated pristine source/recipe/submodule/SDK inputs, applied sdk_search.adapt_script to both recorded scripts, copied exact executed helpers, and invoked the same build() stages used by the strict-mode CLI.",
+      "Preserved failed strict attempt/config/helpers and original prebuilt FFmpeg files. Revalidated pinned inputs; selected external rebuilt FFmpeg prefix and invalidated only FFmpeg include/library/API cache entries. Reused dependency-aware correct PPSSPP objects; original source and prebuilt archives remain unchanged."
+    ],
+    "mutable_package_limit": "Ubuntu apt package versions retained; bit-identical binary rebuild not established"
+  },
+  "search_policy": {
+    "c_flags": [
+      "-nostdinc",
+      "-I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include",
+      "-I/opt/sysroot/usr/include"
+    ],
+    "cxx_flags": [
+      "-nostdinc",
+      "-I/usr/aarch64-linux-gnu/include/c++/9",
+      "-I/usr/aarch64-linux-gnu/include/c++/9/aarch64-linux-gnu",
+      "-I/usr/aarch64-linux-gnu/include/c++/9/backward",
+      "-I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include",
+      "-I/opt/sysroot/usr/include"
+    ],
+    "link_flags": [
+      "-L/usr/lib/gcc-cross/aarch64-linux-gnu/9",
+      "-L/opt/sysroot/lib",
+      "-L/opt/sysroot/usr/lib"
+    ],
+    "purpose": "GCC9 C++/intrinsic headers and static runtime, SDK C headers/libraries; avoid Ubuntu cross C header/library leakage and GCC7 static archive selection",
+    "runtime_libraries_replaced": false,
+    "source_symbols_aliased": false,
+    "compiler_replaced": false
+  },
+  "compiler_preflight": {
+    "status": "pass",
+    "target_executed": false,
+    "report_sha256": "3c3a8231fc1f5f93d350652c688964a4aba8bb664886f7d907eec39b80a35983",
+    "header_checks": {
+      "c": {
+        "glibc": "2.25",
+        "headers": [
+          "/opt/sysroot/usr/include/bits/byteswap-16.h",
+          "/opt/sysroot/usr/include/bits/byteswap.h",
+          "/opt/sysroot/usr/include/bits/endian.h",
+          "/opt/sysroot/usr/include/bits/fcntl-linux.h",
+          "/opt/sysroot/usr/include/bits/fcntl.h",
+          "/opt/sysroot/usr/include/bits/long-double.h",
+          "/opt/sysroot/usr/include/bits/stat.h",
+          "/opt/sysroot/usr/include/bits/types.h",
+          "/opt/sysroot/usr/include/bits/types/struct_timespec.h",
+          "/opt/sysroot/usr/include/bits/typesizes.h",
+          "/opt/sysroot/usr/include/bits/uintn-identity.h",
+          "/opt/sysroot/usr/include/bits/wordsize.h",
+          "/opt/sysroot/usr/include/endian.h",
+          "/opt/sysroot/usr/include/fcntl.h",
+          "/opt/sysroot/usr/include/features.h",
+          "/opt/sysroot/usr/include/gnu/stubs-lp64.h",
+          "/opt/sysroot/usr/include/gnu/stubs.h",
+          "/opt/sysroot/usr/include/stdc-predef.h",
+          "/opt/sysroot/usr/include/sys/cdefs.h"
+        ],
+        "macros_sha256": "4f1b89e3b5325f65bc0521fd2d4410f9a237531c6d971144be75d8247f323d53"
+      },
+      "cxx": {
+        "glibc": "2.25",
+        "headers": [
+          "/opt/sysroot/usr/include/bits/byteswap-16.h",
+          "/opt/sysroot/usr/include/bits/byteswap.h",
+          "/opt/sysroot/usr/include/bits/endian.h",
+          "/opt/sysroot/usr/include/bits/fcntl-linux.h",
+          "/opt/sysroot/usr/include/bits/fcntl.h",
+          "/opt/sysroot/usr/include/bits/long-double.h",
+          "/opt/sysroot/usr/include/bits/pthreadtypes.h",
+          "/opt/sysroot/usr/include/bits/select.h",
+          "/opt/sysroot/usr/include/bits/sigset.h",
+          "/opt/sysroot/usr/include/bits/stat.h",
+          "/opt/sysroot/usr/include/bits/sysmacros.h",
+          "/opt/sysroot/usr/include/bits/types.h",
+          "/opt/sysroot/usr/include/bits/types/clock_t.h",
+          "/opt/sysroot/usr/include/bits/types/clockid_t.h",
+          "/opt/sysroot/usr/include/bits/types/struct_timespec.h",
+          "/opt/sysroot/usr/include/bits/types/struct_timeval.h",
+          "/opt/sysroot/usr/include/bits/types/time_t.h",
+          "/opt/sysroot/usr/include/bits/types/timer_t.h",
+          "/opt/sysroot/usr/include/bits/typesizes.h",
+          "/opt/sysroot/usr/include/bits/uintn-identity.h",
+          "/opt/sysroot/usr/include/bits/uio.h",
+          "/opt/sysroot/usr/include/bits/wordsize.h",
+          "/opt/sysroot/usr/include/endian.h",
+          "/opt/sysroot/usr/include/fcntl.h",
+          "/opt/sysroot/usr/include/features.h",
+          "/opt/sysroot/usr/include/gnu/stubs-lp64.h",
+          "/opt/sysroot/usr/include/gnu/stubs.h",
+          "/opt/sysroot/usr/include/linux/falloc.h",
+          "/opt/sysroot/usr/include/stdc-predef.h",
+          "/opt/sysroot/usr/include/sys/cdefs.h",
+          "/opt/sysroot/usr/include/sys/select.h",
+          "/opt/sysroot/usr/include/sys/sysmacros.h",
+          "/opt/sysroot/usr/include/sys/types.h",
+          "/usr/lib/gcc-cross/aarch64-linux-gnu/9/include/stddef.h"
+        ],
+        "macros_sha256": "f7c22b52e24d76b7513f8109d4e0edeacff9bba8b46f78956550ce3397c62dec"
+      }
+    },
+    "undefined_symbols": [
+      "                 U _Unwind_Resume",
+      "                 U _ZNKSt10filesystem7__cxx114path5_List13_Impl_deleterclEPNS2_5_ImplE",
+      "                 U _ZNSt10filesystem7__cxx114path14_M_split_cmptsEv",
+      "                 U _ZNSt10filesystem7__cxx114path5_ListC1Ev",
+      "                 U _ZNSt11logic_errorC2ERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE",
+      "                 U _ZNSt11logic_errorC2ERKS_",
+      "                 U _ZNSt12future_errorD1Ev",
+      "                 U _ZNSt13__future_base12_Result_baseC2Ev",
+      "                 U _ZNSt13__future_base12_Result_baseD2Ev",
+      "                 U _ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode",
+      "                 U _ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev",
+      "                 U _ZNSt15__exception_ptr13exception_ptr4swapERS0_",
+      "                 U _ZNSt15__exception_ptr13exception_ptrC1EPv",
+      "                 U _ZNSt15__exception_ptr13exception_ptrC1ERKS0_",
+      "                 U _ZNSt15__exception_ptr13exception_ptrD1Ev",
+      "                 U _ZNSt15__exception_ptreqERKNS_13exception_ptrES2_",
+      "                 U _ZNSt28__atomic_futex_unsigned_base19_M_futex_notify_allEPj",
+      "                 U _ZNSt28__atomic_futex_unsigned_base19_M_futex_wait_untilEPjjbNSt6chrono8durationIlSt5ratioILl1ELl1EEEENS2_IlS3_ILl1ELl1000000000EEEE",
+      "                 U _ZNSt6thread4joinEv",
+      "                 U _ZNSt6thread6_StateD2Ev",
+      "                 U _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm",
+      "                 U _ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm",
+      "                 U _ZSt11__once_call",
+      "                 U _ZSt15__once_callable",
+      "                 U _ZSt15future_categoryv",
+      "                 U _ZSt17rethrow_exceptionNSt15__exception_ptr13exception_ptrE",
+      "                 U _ZSt19__throw_logic_errorPKc",
+      "                 U _ZSt20__throw_future_errori",
+      "                 U _ZSt20__throw_system_errori",
+      "                 U _ZSt25__throw_bad_function_callv",
+      "                 U _ZSt9terminatev",
+      "                 U _ZTIN10__cxxabiv115__forced_unwindE",
+      "                 U _ZTINSt13__future_base12_Result_baseE",
+      "                 U _ZTINSt6thread6_StateE",
+      "                 U _ZTISt12future_error",
+      "                 U _ZTISt12system_error",
+      "                 U _ZTVN10__cxxabiv117__class_type_infoE",
+      "                 U _ZTVN10__cxxabiv120__si_class_type_infoE",
+      "                 U _ZTVSt12future_error",
+      "                 U _ZdlPv",
+      "                 U _ZdlPvm",
+      "                 U _Znwm",
+      "                 U __cxa_allocate_exception",
+      "                 U __cxa_begin_catch",
+      "                 U __cxa_end_catch",
+      "                 U __cxa_init_primary_exception",
+      "                 U __cxa_rethrow",
+      "                 U __gxx_personality_v0",
+      "                 U __once_proxy",
+      "                 w __pthread_key_create",
+      "                 U __stack_chk_fail",
+      "                 U __stack_chk_guard",
+      "                 U fcntl",
+      "                 U memcpy",
+      "                 U pow",
+      "                 w pthread_once",
+      "                 U strcmp",
+      "                 U strlen"
+    ],
+    "selected_static_stdlib": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+    "static_stdlib_sha256": "c6e9d9e3a4965a811e3281aa593a14d3d6c56897ee2e62812eae9fb1ac2f1c4d",
+    "link_trace": [
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crti.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o",
+      "/tmp/ppsspp-sdk-search-964t_lde/probe.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+      "/opt/sysroot/usr/lib/libm.so",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc_s.so",
+      "/opt/sysroot/lib/libgcc_s.so.1",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/opt/sysroot/usr/lib/libpthread.so",
+      "/opt/sysroot/lib/libpthread.so.0",
+      "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "/opt/sysroot/usr/lib/libc.so",
+      "/opt/sysroot/lib/libc.so.6",
+      "/opt/sysroot/usr/lib/libc_nonshared.a",
+      "/opt/sysroot/lib/ld-linux-aarch64.so.1",
+      "/opt/sysroot/usr/lib/libc_nonshared.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc_s.so",
+      "/opt/sysroot/lib/libgcc_s.so.1",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crtn.o"
+    ],
+    "sdk_probe_inventory_pass": true,
+    "source_sha256": "15f639b5ecbfb4708185c9b2f34a7dda55490d96ad6b443a15d2cd609e83b794"
+  },
+  "actual_filedescriptor_header_proof": {
+    "method": "read-only preprocessor include trace using actual generated Common target flags/includes, no target execution",
+    "source_sha256": "5945ac41834aac1633a8fc65494d1274edd1f6f0007cfdd0a63e205f1bde73ef",
+    "flags_sha256": "d527c0de7b56195af0d4c37e49b92bde73bd4504ffed07d0df572d7ecf159cb7",
+    "glibc_minor": 25,
+    "sdk_header_count": 129,
+    "ubuntu_c_header_paths": [],
+    "sdk_critical_header_sha256": {
+      "/opt/sysroot/usr/include/bits/fcntl.h": "b9ff4d1d496d087a68151d23103b96978d60f40f9ad7fc7f5477d846c5279fc9",
+      "/opt/sysroot/usr/include/fcntl.h": "c46c233ec99245a0d6076c89b56bbb25fdd3140092d669836dd29f33856a2c9a",
+      "/opt/sysroot/usr/include/features.h": "1b08db105840ce1d4b87e23e803cbe7ec1b95947462d4a011d070545f16c2a84"
+    },
+    "compiled_object_fcntl_refs": [
+      "         U fcntl"
+    ],
+    "retained_trace_sha256": "ca8a6b3c5a443acbeeb61d655a8609c36184091b985e3985640b2d7f78adc289",
+    "limitation": "CMake dependency metadata omits system headers; its clean-path scan is not the proof"
+  },
+  "assembly": {
+    "status": "applied",
+    "input_identity": {
+      "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+      "project_patch_sha256": [
+        "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a"
+      ],
+      "selected": [
+        {
+          "path": "patches/common/hide-cursor.py",
+          "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d"
+        },
+        {
+          "path": "patches/common/no-mute-secondary.py",
+          "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641"
+        },
+        {
+          "path": "patches/common/remap-pause-menu.py",
+          "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5"
+        },
+        {
+          "path": "patches/common/sigusr1-save-and-quit.py",
+          "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8"
+        },
+        {
+          "path": "patches/common/sigusr2-toggle-pause-menu.py",
+          "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c"
+        },
+        {
+          "path": "patches/pvr/fix-copy-image-crash.py",
+          "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556"
+        },
+        {
+          "path": "patches/pvr/fix-glgetstringi-crash.py",
+          "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5"
+        },
+        {
+          "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+          "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f"
+        },
+        {
+          "path": "patches/pvr/no-alpha-channel.py",
+          "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4"
+        },
+        {
+          "path": "patches/pvr/vulkan-display-fallback.py",
+          "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0"
+        }
+      ]
+    },
+    "applied_script_count": 10,
+    "skipped_by_pinned_recipe": [
+      "patches/common/fullscreen.py",
+      "patches/common/skip-vulkan-probe.py",
+      "patches/pvr/debug-gl-init.py",
+      "patches/pvr/glfinish-before-swap.py",
+      "patches/pvr/revert-fullscreen.py"
+    ],
+    "scripts": [
+      {
+        "path": "patches/common/hide-cursor.py",
+        "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "4e7553d480b93f7be5321de02d5074b08485005f8e3ff1f3786f9922445c144c",
+            "after_sha256": "8dbb510d30d7460c9fd7461cad5c9b9f328468d4dfc55886557116a10accdab6"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/no-mute-secondary.py",
+        "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Core/Config.cpp",
+            "before_sha256": "81e0aba0d29f01a33982a17687e1204dbd993eeefdbd457271d29234f074530b",
+            "after_sha256": "8d74015cf35cc9c29870fd65f30c67678d84c3b53e7b9fd55f9160119c504088"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/remap-pause-menu.py",
+        "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLJoystick.cpp",
+            "before_sha256": "fb1228ac734eca99d9873234274fa178a449854caea2694934cc2abbe6e44884",
+            "after_sha256": "cdcf5551648075f3d42e1d42276d5d22d5d255c8c949d061eace988df927c78d"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/sigusr1-save-and-quit.py",
+        "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "8dbb510d30d7460c9fd7461cad5c9b9f328468d4dfc55886557116a10accdab6",
+            "after_sha256": "6b60d2f44ffb0a8f9c373d1da88ce6ef3a990489738adac65d9b328730560531"
+          }
+        ]
+      },
+      {
+        "path": "patches/common/sigusr2-toggle-pause-menu.py",
+        "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "6b60d2f44ffb0a8f9c373d1da88ce6ef3a990489738adac65d9b328730560531",
+            "after_sha256": "1984ce104abaabce5ab8dc45f3fb7a1d7b8716e63bdce7390190be7e41a1c7ce"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/fix-copy-image-crash.py",
+        "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/thin3d_gl.cpp",
+            "before_sha256": "1e2be089d47b897374aae6ace94a9fa0b2e992d1f2711a04fd1adcaf643d8613",
+            "after_sha256": "d76c136b1e70b2984b31590a08eb9d3fb94d857596611e82e8b17c5bd7a38ac8"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/fix-glgetstringi-crash.py",
+        "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/GLFeatures.cpp",
+            "before_sha256": "3b27ba5ab833aa6937a37b822892d630445b3e45d67bb6d518ad77dc5b9d1462",
+            "after_sha256": "f85f4dfc73ad2dfd4b0d3cee74578fdd9bb357982eaabd0bac6f6f703a0b2007"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+        "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "Common/GPU/OpenGL/gl3stub.c",
+            "before_sha256": "a32a6d94753d19350f8cfe21fcf9e3def2e9df2d9293bac6e1a057536bdfc663",
+            "after_sha256": "17c85aff70dac00d1e91268e4745d9bf4e911759e93072968378d5942cc4901e"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/no-alpha-channel.py",
+        "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLMain.cpp",
+            "before_sha256": "1984ce104abaabce5ab8dc45f3fb7a1d7b8716e63bdce7390190be7e41a1c7ce",
+            "after_sha256": "37fac91d2e8ccab9b22122fee6333249899e2a7bc61873e3998b2a909df6693e"
+          }
+        ]
+      },
+      {
+        "path": "patches/pvr/vulkan-display-fallback.py",
+        "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0",
+        "exit_code": 0,
+        "changed_files": [
+          {
+            "path": "SDL/SDLVulkanGraphicsContext.cpp",
+            "before_sha256": "9e6392e81f693dcab8629c04d84ad952f17ec02b33f45a405db51248ef93808f",
+            "after_sha256": "b84cfcbf170afc2ce36bd8f26a1ed76ffc7d30ba5f3df4bc5998aeab620fa212"
+          }
+        ]
+      }
+    ],
+    "final_source_files": {
+      "Common/GPU/OpenGL/GLFeatures.cpp": "f85f4dfc73ad2dfd4b0d3cee74578fdd9bb357982eaabd0bac6f6f703a0b2007",
+      "Common/GPU/OpenGL/gl3stub.c": "17c85aff70dac00d1e91268e4745d9bf4e911759e93072968378d5942cc4901e",
+      "Common/GPU/OpenGL/thin3d_gl.cpp": "d76c136b1e70b2984b31590a08eb9d3fb94d857596611e82e8b17c5bd7a38ac8",
+      "Core/Config.cpp": "8d74015cf35cc9c29870fd65f30c67678d84c3b53e7b9fd55f9160119c504088",
+      "Core/Config.h": "a14626ea42d549f1a370a0c5878438f4da48abf219277e23f64025c5d84d774b",
+      "Core/KeyMap.cpp": "cd908573ddc65e710f61ae88ce1d897533e9040fa23e9aba6aa5a6b646fb982b",
+      "Core/ProjectNativeMenuControls.h": "007d472681cbb685fd4311f7c5f9773d67bf498288ffb8d3db956da439cd134c",
+      "SDL/SDLJoystick.cpp": "cdcf5551648075f3d42e1d42276d5d22d5d255c8c949d061eace988df927c78d",
+      "SDL/SDLMain.cpp": "37fac91d2e8ccab9b22122fee6333249899e2a7bc61873e3998b2a909df6693e",
+      "SDL/SDLVulkanGraphicsContext.cpp": "b84cfcbf170afc2ce36bd8f26a1ed76ffc7d30ba5f3df4bc5998aeab620fa212",
+      "UI/GameSettingsScreen.cpp": "683cf0247a11e0968fefef7a6af0d9968887699a1988973a78cdf523acf9d637",
+      "UI/NativeApp.cpp": "fb0c376f81319dac9893ae80f71efa81d1627101705da87959df1086896f28bb"
+    },
+    "manifest_sha256": "6426f2eb5158cb7525efc38759739de53765dd13e445b301f3fb621eaa733e5f",
+    "combined_tracked_source_patch_sha256": "7241f81185290ba486087af874209ba0bc4a6f3214479b424c4f170d3240c6ad"
+  },
+  "candidate_elf": {
+    "name": "PPSSPPSDL_TrimUI",
+    "size": 19909952,
+    "sha256": "1f0980edcf4ddd2550a050d9159658046827d37165a80d283647c504226a77df",
+    "needed": [
+      "libz.so.1",
+      "libm.so.6",
+      "libgcc_s.so.1",
+      "libc.so.6",
+      "ld-linux-aarch64.so.1",
+      "libpthread.so.0",
+      "librt.so.1",
+      "libSDL2-2.0.so.0",
+      "libGLESv2.so.2",
+      "libEGL.so.1",
+      "libdl.so.2"
+    ],
+    "machine": "AArch64",
+    "interpreter": "/lib/ld-linux-aarch64.so.1",
+    "interpreter_present_in_sysroot": true,
+    "required_versions": {
+      "ld-linux-aarch64.so.1": [
+        "GLIBC_2.17"
+      ],
+      "libdl.so.2": [
+        "GLIBC_2.17"
+      ],
+      "librt.so.1": [
+        "GLIBC_2.17"
+      ],
+      "libgcc_s.so.1": [
+        "GCC_3.0",
+        "GCC_3.3",
+        "GCC_3.3.1",
+        "GCC_4.2.0"
+      ],
+      "libm.so.6": [
+        "GLIBC_2.17"
+      ],
+      "libpthread.so.0": [
+        "GLIBC_2.17"
+      ],
+      "libc.so.6": [
+        "GLIBC_2.17"
+      ]
+    }
+  },
+  "sdk_abi_inventory": {
+    "method": "readelf only; SDK basename inventory and symbol-version comparison",
+    "inventory_pass": true,
+    "inspected_object_count": 16,
+    "missing_libraries": [],
+    "missing_symbol_versions": [],
+    "recursive_required_versions": {
+      "PPSSPPSDL_TrimUI": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "librt.so.1": [
+          "GLIBC_2.17"
+        ],
+        "libgcc_s.so.1": [
+          "GCC_3.0",
+          "GCC_3.3",
+          "GCC_3.3.1",
+          "GCC_4.2.0"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "ld-linux-aarch64.so.1": {},
+      "libEGL.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libGLESv2.so.2": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libSDL2-2.0.so.0": {
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libc.so.6": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libdl.so.2": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libgcc_s.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libm.so.6": {
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libpthread.so.0": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "librt.so.1": {
+        "ld-linux-aarch64.so.1": [
+          "GLIBC_PRIVATE"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17",
+          "GLIBC_PRIVATE"
+        ]
+      },
+      "libz.so.1": {
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libIMGegl.so": {
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libglslcompiler.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libsrv_um.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libdl.so.2": [
+          "GLIBC_2.17"
+        ],
+        "libpthread.so.0": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      },
+      "libusc.so": {
+        "libm.so.6": [
+          "GLIBC_2.17"
+        ],
+        "libc.so.6": [
+          "GLIBC_2.17"
+        ]
+      }
+    },
+    "ambiguous_basename_count": 16,
+    "ambiguities": [
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "PPSSPPSDL_TrimUI",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libGLESv2.so.2",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libGLESv2.so.2",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libSDL2-2.0.so.0",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "librt.so.1",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libIMGegl.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libIMGegl.so",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libglslcompiler.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libdl.so.2",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libdl.so.2",
+          "/opt/sysroot/usr/lib/libdl.so.2"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libdl.so.2"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      },
+      {
+        "requester": "libsrv_um.so",
+        "library": "libpthread.so.0",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libpthread.so.0",
+          "/opt/sysroot/usr/lib/libpthread.so.0"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libpthread.so.0"
+      },
+      {
+        "requester": "libusc.so",
+        "library": "libm.so.6",
+        "all_inventory_candidates": [
+          "/opt/sysroot/lib/libm.so.6",
+          "/opt/sysroot/usr/lib/libm.so.6"
+        ],
+        "selected_inventory_path": "/opt/sysroot/lib/libm.so.6"
+      }
+    ],
+    "selected_and_alternative_sdk_c_library_hashes": {
+      "/opt/sysroot/lib/libc.so.6": {
+        "resolved": "/opt/sysroot/lib/libc-2.25.so",
+        "sha256": "e622f03c3423ec9b5152511054e7017579e24d1f7b4371c5e9c97a25480e7eb1",
+        "definitions": {
+          "": [
+            "GLIBC_2.17",
+            "GLIBC_2.18",
+            "GLIBC_2.22",
+            "GLIBC_2.23",
+            "GLIBC_2.24",
+            "GLIBC_2.25",
+            "GLIBC_PRIVATE",
+            "libc.so.6"
+          ]
+        }
+      },
+      "/opt/sysroot/usr/lib/libc.so": {
+        "resolved": "/opt/sysroot/usr/lib/libc.so",
+        "sha256": "9c0a2f80388ecb4a584809db8e2a5815e29d0f734404ca89efd654f34254196f",
+        "linker_script": "/* GNU ld script\n   Use the shared library, but some functions are only in\n   the static library, so try that secondarily.  */\nOUTPUT_FORMAT(elf64-littleaarch64)\nGROUP ( /lib/libc.so.6 /usr/lib/libc_nonshared.a  AS_NEEDED ( /lib/ld-linux-aarch64.so.1 ) )\n"
+      },
+      "/opt/sysroot/lib/libm.so.6": {
+        "resolved": "/opt/sysroot/lib/libm-2.25.so",
+        "sha256": "b76529d6110ac09f83dcfc88855411de8735fc552488930c9a0dc7d807002930",
+        "definitions": {
+          "": [
+            "GLIBC_2.17",
+            "GLIBC_2.18",
+            "GLIBC_2.23",
+            "GLIBC_2.24",
+            "GLIBC_2.25",
+            "libm.so.6"
+          ]
+        }
+      },
+      "/opt/sysroot/usr/lib/libm.so.6": {
+        "resolved": "/opt/sysroot/usr/lib/libm-2.23.so",
+        "sha256": "a06df160727739b4761a265c4cd3f9494e578ef65d775053604f353e9ab23cb7",
+        "definitions": {
+          "": [
+            "GLIBC_2.17",
+            "GLIBC_2.18",
+            "GLIBC_2.23",
+            "libm.so.6"
+          ]
+        }
+      }
+    },
+    "raw_abi_report_sha256": "c6f8ceff4b09c118d112aa8704f6d5a5ca5dd781085cd685f945ad1d3218ae87",
+    "limitations": [
+      "SDK basename selection is inventory only; actual device loader order is untested.",
+      "SDK has distinct libm2.25 and usr/lib libm2.23 candidates; both paths/hashes are retained.",
+      "Runtime dlopen dependencies, PowerVR/SDL drivers, physical controls and rendering require device evidence."
+    ]
+  },
+  "ffmpeg_source_build": {
+    "schema_version": 1,
+    "status": "complete",
+    "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+    "script_path": "linux_arm64.sh",
+    "script_sha256": "f96e671253bcca1939f2adaff20d15aca799d04144605948e4a9d3bd9d7f7cf5",
+    "configure_sha256": "1b63d74a8b3efa782cec00d57e693dd1ddf20ab31e461871d8177f584e3a9588",
+    "original_configure_args": [
+      "--target-os=linux",
+      "--prefix=./linux/aarch64",
+      "--enable-cross-compile",
+      "--extra-libs=-lgcc",
+      "--arch=aarch64",
+      "--cc=aarch64-linux-gnu-gcc",
+      "--cross-prefix=aarch64-linux-gnu-",
+      "--nm=aarch64-linux-gnu-gcc-nm",
+      "--extra-cflags= -O3 -fasm -Wno-psabi -fno-short-enums -fno-strict-aliasing -finline-limit=300 ",
+      "--disable-shared",
+      "--enable-static",
+      "--enable-zlib",
+      "--enable-pic",
+      "--disable-everything",
+      "--disable-avdevice",
+      "--disable-filters",
+      "--disable-programs",
+      "--disable-network",
+      "--disable-avfilter",
+      "--disable-postproc",
+      "--disable-encoders",
+      "--disable-protocols",
+      "--disable-hwaccels",
+      "--disable-doc",
+      "--enable-decoder=h264",
+      "--enable-decoder=mpeg4",
+      "--enable-decoder=mpeg2video",
+      "--enable-decoder=mjpeg",
+      "--enable-decoder=mjpegb",
+      "--enable-decoder=aac",
+      "--enable-decoder=aac_latm",
+      "--enable-decoder=atrac3",
+      "--enable-decoder=atrac3p",
+      "--enable-decoder=mp3",
+      "--enable-decoder=pcm_s16le",
+      "--enable-decoder=pcm_s8",
+      "--enable-encoder=huffyuv",
+      "--enable-encoder=ffv1",
+      "--enable-encoder=mjpeg",
+      "--enable-encoder=pcm_s16le",
+      "--enable-demuxer=h264",
+      "--enable-demuxer=m4v",
+      "--enable-demuxer=mpegvideo",
+      "--enable-demuxer=mpegps",
+      "--enable-demuxer=mp3",
+      "--enable-demuxer=avi",
+      "--enable-demuxer=aac",
+      "--enable-demuxer=pmp",
+      "--enable-demuxer=oma",
+      "--enable-demuxer=pcm_s16le",
+      "--enable-demuxer=pcm_s8",
+      "--enable-demuxer=wav",
+      "--enable-muxer=avi",
+      "--enable-parser=h264",
+      "--enable-parser=mpeg4video",
+      "--enable-parser=mpegaudio",
+      "--enable-parser=mpegvideo",
+      "--enable-parser=aac",
+      "--enable-parser=aac_latm"
+    ],
+    "configure_args": [
+      "--target-os=linux",
+      "--prefix=/ffmpeg-sdk",
+      "--enable-cross-compile",
+      "--extra-libs=-lgcc",
+      "--arch=aarch64",
+      "--cc=aarch64-linux-gnu-gcc",
+      "--cross-prefix=aarch64-linux-gnu-",
+      "--nm=aarch64-linux-gnu-gcc-nm",
+      "--extra-cflags=-O3 -fasm -Wno-psabi -fno-short-enums -fno-strict-aliasing -finline-limit=300 -nostdinc -I/usr/lib/gcc-cross/aarch64-linux-gnu/9/include -I/opt/sysroot/usr/include",
+      "--disable-shared",
+      "--enable-static",
+      "--enable-zlib",
+      "--enable-pic",
+      "--disable-everything",
+      "--disable-avdevice",
+      "--disable-filters",
+      "--disable-programs",
+      "--disable-network",
+      "--disable-avfilter",
+      "--disable-postproc",
+      "--disable-encoders",
+      "--disable-protocols",
+      "--disable-hwaccels",
+      "--disable-doc",
+      "--enable-decoder=h264",
+      "--enable-decoder=mpeg4",
+      "--enable-decoder=mpeg2video",
+      "--enable-decoder=mjpeg",
+      "--enable-decoder=mjpegb",
+      "--enable-decoder=aac",
+      "--enable-decoder=aac_latm",
+      "--enable-decoder=atrac3",
+      "--enable-decoder=atrac3p",
+      "--enable-decoder=mp3",
+      "--enable-decoder=pcm_s16le",
+      "--enable-decoder=pcm_s8",
+      "--enable-encoder=huffyuv",
+      "--enable-encoder=ffv1",
+      "--enable-encoder=mjpeg",
+      "--enable-encoder=pcm_s16le",
+      "--enable-demuxer=h264",
+      "--enable-demuxer=m4v",
+      "--enable-demuxer=mpegvideo",
+      "--enable-demuxer=mpegps",
+      "--enable-demuxer=mp3",
+      "--enable-demuxer=avi",
+      "--enable-demuxer=aac",
+      "--enable-demuxer=pmp",
+      "--enable-demuxer=oma",
+      "--enable-demuxer=pcm_s16le",
+      "--enable-demuxer=pcm_s8",
+      "--enable-demuxer=wav",
+      "--enable-muxer=avi",
+      "--enable-parser=h264",
+      "--enable-parser=mpeg4video",
+      "--enable-parser=mpegaudio",
+      "--enable-parser=mpegvideo",
+      "--enable-parser=aac",
+      "--enable-parser=aac_latm",
+      "--sysroot=/opt/sysroot",
+      "--extra-ldflags=-L/usr/lib/gcc-cross/aarch64-linux-gnu/9 -L/opt/sysroot/lib -L/opt/sysroot/usr/lib"
+    ],
+    "jobs": 4,
+    "target_executed": false,
+    "source_and_prebuilt_files_modified": false,
+    "raw_config_log": "private build directory only; environment dump excluded from retained source metadata",
+    "archives": [
+      {
+        "path": "lib/libavcodec.a",
+        "size": 40456168,
+        "sha256": "46326ab853d38ef62d933d69f05aab3c0a392b31be2fea78d96b7ed0a665c65a"
+      },
+      {
+        "path": "lib/libavformat.a",
+        "size": 4898370,
+        "sha256": "4732471416e773e7efe695fe1edb00db36f50c8a7d0c612ce634c46f0faaa04a"
+      },
+      {
+        "path": "lib/libavutil.a",
+        "size": 2844810,
+        "sha256": "885c9ba1a1f00778f518b97fe633a4752d35b3b282f0316217f123c9f85e2e92"
+      },
+      {
+        "path": "lib/libswresample.a",
+        "size": 657696,
+        "sha256": "a1ee44c6fcac102fe51e6a0b68c6c6a48c94dc72edb9f45bcf7b2d354e1a6cad"
+      },
+      {
+        "path": "lib/libswscale.a",
+        "size": 6540242,
+        "sha256": "7d3e046b818c058a17aed30dcb013eacbf9ad4907f48496547eb835202c0b1a7"
+      }
+    ],
+    "libavutil_fcntl_refs": [
+      "/ffmpeg-sdk/lib/libavutil.a:file_open.o:                 U fcntl"
+    ],
+    "generated_ffversion_header": "/* Automatically generated by version.sh, do not manually edit! */\n#ifndef AVUTIL_FFVERSION_H\n#define AVUTIL_FFVERSION_H\n#define FFMPEG_VERSION \"1e3b496\"\n#endif /* AVUTIL_FFVERSION_H */\n",
+    "source_git_description": "1e3b496",
+    "raw_config_log_sha256": "0e8260651bc0156cd00313284f61f95fcbe9415c56dfcd47a043ca52b118841f",
+    "metadata_manifest_sha256": "0f71ed3f9db6ff36bd4b6165aaa2d81c9e2f607244e025826638d944307450a7",
+    "archive_omission_count": 116,
+    "omitted_old_archive_bytes": 1289817128,
+    "omission_manifest_sha256": "7fba2942138df39b79027d2344b94ad66495b0bfeb8c43abd01f7522928e29af",
+    "source_tree_and_old_prebuilt_archives_unchanged": true
+  },
+  "failed_strict_prebuilt_ffmpeg_attempt": {
+    "status": "strict-source engine final link failed",
+    "reason": "bundled prebuilt FFmpeg libavutil file_open.o requires fcntl64 absent from SDK glibc2.25",
+    "prebuilt_archive": {
+      "path": "ffmpeg/linux/aarch64/lib/libavutil.a",
+      "size": 2213522,
+      "sha256": "2b1f0845fc744831dba4bd357a0e8ead9d5fdcabd92ea59e7eabf893e9e305f7"
+    },
+    "undefined_symbols": [
+      {
+        "member": "/workspace/scratch/ppsspp-build-sdk-search/source/ffmpeg/linux/aarch64/lib/libavutil.a(file_open.o)",
+        "symbol": "23: 0000000000000000     0 NOTYPE  GLOBAL DEFAULT  UND fcntl64"
+      }
+    ],
+    "source_commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+    "pinned_build_script_sha256": "f96e671253bcca1939f2adaff20d15aca799d04144605948e4a9d3bd9d7f7cf5",
+    "engine_log_sha256": "849091858bcaec8cadd99ebfb8a68fcac1eac73877c7a54c0d8683f81252d78e",
+    "all_ppsspp_source_units_compiled": true,
+    "candidate_elf_accepted": false
+  },
+  "source_retention": {
+    "name": "candidate-corresponding-source.tar.gz",
+    "size": 177998866,
+    "sha256": "0f7ae3efe45efaacc646d1e90de8c3ebbe7b40c5d8581abbf4f7c78829448010",
+    "gzip_compression_level": 6,
+    "status": "pass",
+    "checked_input_members": 168,
+    "archive_member_count": 26944,
+    "notice_filename_match_count": 78,
+    "notice_count_is_not_a_licence_audit": true,
+    "git_build_sdk_archive_exclusions_pass": true,
+    "includes": [
+      "complete patched PPSSPP and initialized submodule source with notices",
+      "exact FFmpeg source/config/headers and new static archive hashes; compiler runtime notices",
+      "exact project/recipe patches, input locks and generated build scripts/Dockerfile",
+      "actual executed helpers and local staged invocation",
+      "strict header/link preflight and actual FileDescriptor preprocessor/object evidence",
+      "CMake flags, generated version source, exact toolchain, compiler package inventory and local rebuild instructions"
+    ],
+    "excludes": [
+      "Git metadata",
+      "root compiled build directory",
+      "unused old FFmpeg prebuilt*.a with exact omission manifest",
+      "raw FFmpeg environment config.log",
+      "SDK archives and extracted vendor sysroot",
+      "session CA and credentials"
+    ],
+    "version_rebuild_control": "restore PPSSPP git-version.cpp with NO_UPDATE1; rebuild FFmpeg from retained configure_args with revision=1e3b496; preserve exact originals separately",
+    "publication": "private scratch only pending recipe/SDK rights clearance"
+  },
+  "rights_and_qualification": {
+    "ppsspp_license": "GPL-2.0-or-later; upstream LICENSE.TXT and third-party notices retained",
+    "recipe_missing_root_license": "spruceUI/PPSSPP-spruce@9f770cb984fd8ffcc8f91d24fcbca859439c2e9b/LICENSE",
+    "recipe_missing_explicit_header_grants": [
+      "build-pvr.sh",
+      "Dockerfile.pvr",
+      "patches/common/*.py",
+      "patches/pvr/*.py"
+    ],
+    "sdk_redistribution_rights": "not audited or cleared for vendor runtime libraries",
+    "binary_distribution": "not cleared; no executable, source archive or SDK blob published from this checkpoint",
+    "installed_executable_sha256": null,
+    "installed_profile_supported": false,
+    "outstanding": [
+      "exact installed writer/input inventory and device dependency resolution",
+      "physical controls and widget behavior",
+      "PowerVR rendering, save-state compatibility, suspend/return and measured performance",
+      "applicable recipe/SDK distribution rights and source/notice completeness review"
+    ],
+    "outreach_sent": false
+  },
+  "local_work_directory": "/workspace/scratch/ppsspp-build-sdk-search"
+}

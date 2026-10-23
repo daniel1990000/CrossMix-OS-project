@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/hrydgard/ppsspp",
+  "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "inputs": [
+    {
+      "path": "Core/Config.cpp",
+      "sha256": "e0c4d36ef8ccad3b4fbdc3bff7e831e397f7b82a9e4e250df93ee3602b298f69",
+      "observation": "Config::LoadGameConfig loops every settings entry and ReadFromIniSection(..., false) reads present keys without a PER_GAME filter."
+    },
+    {
+      "path": "Core/Util/PathUtil.cpp",
+      "sha256": "68a90e4e8f8c8dedd66240a53d11323d01fe6dd55e461626ec42585a121b1278",
+      "observation": "GetGameConfigFilePath uses game ID + _ppsspp.ini on the non-VR target."
+    }
+  ],
+  "installed_behavior_qualified": false
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "prerequisite_locks": [
+    "source-lock.json",
+    "state-evidence.lock.json"
+  ],
+  "scope": "Explicit private session caller/export, independently retained completed save/load identities and native state-load acknowledgement; no installed profile activation",
+  "patch": {
+    "path": "patches/0003-project-state-session.patch",
+    "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e",
+    "license": "GPL-2.0-or-later"
+  },
+  "source_files": [
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "e92ebdaf1f627041d183614b7a734333732c4e91a3fb5304f4c5b665dd7540d1"
+    },
+    {
+      "path": "Core/SaveState.h",
+      "sha256": "e51f0e32e532412a994c937b37f102caaf00bf6ec4492f1b212f8357b304797d"
+    },
+    {
+      "path": "UI/NativeApp.cpp",
+      "sha256": "dbd04cbf5679dce46ff6a931cfa3d460a4d77ea21b1e856fbf856a8970ea07d8"
+    },
+    {
+      "path": "UI/EmuScreen.cpp",
+      "sha256": "37a6e272e8925a0d7f06c45b85a98e8971871588b145be846c468b57c5bcd78c"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "beb5ca0f0d44231b418ecff611f9a323a095f4553cd2e7fbcc51d215a2f12cb6"
+    },
+    {
+      "path": "Core/SaveState.h",
+      "sha256": "151e059b384f35b724258ec90f426c370c52fe7b51ff747d2253e1427ddd48c7"
+    },
+    {
+      "path": "UI/NativeApp.cpp",
+      "sha256": "b31680a17b87edf6d06b0bd1e861f1d529780fd096f02f429697a2f8fdf46323"
+    },
+    {
+      "path": "UI/EmuScreen.cpp",
+      "sha256": "1c36109a7bd4e3809490f45b8c037967e74b8c34949bf1236d20666e5b882daf"
+    }
+  ],
+  "verification_translation_units": [
+    "Core/SaveState.cpp",
+    "UI/NativeApp.cpp",
+    "UI/EmuScreen.cpp"
+  ],
+  "qualification": {
+    "full_engine_build": false,
+    "device_tested": false,
+    "resume_enabled": false,
+    "protocol": "TPSE1Q/TPSE1R fixed netstrings; private 0700 session/0600 files; final result bounds save-completed/load-completed sequences; exact in-process launch capability required"
+  }
+}

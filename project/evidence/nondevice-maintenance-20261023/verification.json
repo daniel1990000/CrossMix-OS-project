@@ -1,0 +1,108 @@
+{
+  "O03_full_row_complete": false,
+  "candidate_executed": false,
+  "cli_readbacks": [
+    {
+      "candidate_commit": "cb6210aa19c5cb61e404d4029444972448cac9f9",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "8ca00a6cb491f1318d0552df525da07f40d557709014eec28651661e7e611a49",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 917,
+        "changed_paths": 604,
+        "report_sha256": "8ca00a6cb491f1318d0552df525da07f40d557709014eec28651661e7e611a49"
+      },
+      "returncode": 0,
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "ad330bfdef34f871130dac1212a6b090cd6560e758f556480c23885c50a58cec",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 917,
+        "changed_paths": 635,
+        "report_sha256": "ad330bfdef34f871130dac1212a6b090cd6560e758f556480c23885c50a58cec"
+      },
+      "returncode": 0,
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "candidate_commit": "902e5ccd8c1400b4387b73942491cded655e5f9c",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "959c2413e5372a20386a254ece8b1ebc2f1727115bc2981482935be0b548d827",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 800,
+        "changed_paths": 1699,
+        "report_sha256": "959c2413e5372a20386a254ece8b1ebc2f1727115bc2981482935be0b548d827"
+      },
+      "returncode": 0,
+      "source": "PPSSPP_SOURCE_ROOT"
+    },
+    {
+      "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "bfdf845d03b286eb949dbf417afe33f864e950de1f97a22d0f677bd5b824f7df",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 760,
+        "changed_paths": 111,
+        "report_sha256": "bfdf845d03b286eb949dbf417afe33f864e950de1f97a22d0f677bd5b824f7df"
+      },
+      "returncode": 0,
+      "source": "PORTS_SOURCE_ROOT"
+    },
+    {
+      "candidate_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "806d7cff2c4ba09bc2508164123f3403ba522a194e9b5c248da0e99180828e5b",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 712,
+        "changed_paths": 0,
+        "report_sha256": "806d7cff2c4ba09bc2508164123f3403ba522a194e9b5c248da0e99180828e5b"
+      },
+      "returncode": 0,
+      "source": "SPRUCE_RA_SOURCE_ROOT"
+    },
+    {
+      "candidate_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "output_matches_saved_validation_bytes": true,
+      "output_sha256": "501fd2d93e0d7fce29deae0e695326e0151edec74c72a0a4f36321046527eaf3",
+      "receipt": {
+        "adoption_authorized": false,
+        "bytes": 713,
+        "changed_paths": 0,
+        "report_sha256": "501fd2d93e0d7fce29deae0e695326e0151edec74c72a0a4f36321046527eaf3"
+      },
+      "returncode": 0,
+      "source": "PORTMASTER_SOURCE_ROOT"
+    }
+  ],
+  "current_changed_paths": 2445,
+  "date_utc": "2026-10-23",
+  "focused_tests": {
+    "errors": 0,
+    "failures": 0,
+    "log": "focused-tests.txt",
+    "passed": 10,
+    "run": 10,
+    "skipped": 0
+  },
+  "full_certification_and_clean_rebuild": "Recorded separately by integrating continuation; this focused report does not certify the final combined tree",
+  "native_binaries_selected": false,
+  "no_device_testing": true,
+  "pins_updated": false,
+  "previous_and_current_spruce_overlap": true,
+  "previous_spruce_changed_paths": 604,
+  "remaining_O03_requirements": [
+    "First physical core pilot and resulting maintenance/requalification experience",
+    "Accepted ongoing maintenance ownership and support policy for actual supported device release"
+  ],
+  "runtime_gates_enabled": false,
+  "schema": 1,
+  "scope": "Complete current upstream hold decisions and no-device maintenance procedure; first pilot and ongoing ownership acceptance remain pending",
+  "task": "O03"
+}

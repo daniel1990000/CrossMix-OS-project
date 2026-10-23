@@ -1,0 +1,97 @@
+[
+  {
+    "path": "ppsspp/assets/Inconsolata-Regular.ttf",
+    "sha256": "e0267abf9d734e2b9f766f8cb7a496b552c57cdfeacfa0efdc5bfd21940ae145",
+    "size_bytes": 101748,
+    "embedded_name_records": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2006 The Inconsolata Project Authors (https://github.com/cyrealtype/Inconsolata)"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL"
+      },
+      {
+        "name_id": 14,
+        "text": "http://scripts.sil.org/OFL"
+      }
+    ]
+  },
+  {
+    "path": "ppsspp/assets/Roboto_Condensed-Bold.ttf",
+    "sha256": "da69d6f3193e279c892451c17f7e4926aecd4aeaf7300171ddb44c70551260ca",
+    "size_bytes": 146580,
+    "embedded_name_records": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+      },
+      {
+        "name_id": 14,
+        "text": "https://openfontlicense.org"
+      }
+    ]
+  },
+  {
+    "path": "ppsspp/assets/Roboto_Condensed-Italic.ttf",
+    "sha256": "9fe1c2390bbce960ebba517eec37659fdd1c7a59dd256da6274b5b4d88509575",
+    "size_bytes": 152248,
+    "embedded_name_records": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+      },
+      {
+        "name_id": 14,
+        "text": "https://openfontlicense.org"
+      }
+    ]
+  },
+  {
+    "path": "ppsspp/assets/Roboto_Condensed-Light.ttf",
+    "sha256": "3f1a3f85852fafc3a198904f6efc1fce5ae1013775ac40da35bd52ec82d38e41",
+    "size_bytes": 145952,
+    "embedded_name_records": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+      },
+      {
+        "name_id": 14,
+        "text": "https://openfontlicense.org"
+      }
+    ]
+  },
+  {
+    "path": "ppsspp/assets/Roboto_Condensed-Regular.ttf",
+    "sha256": "d8e6f7c5a1356d41dd82b0c00219febd21c791cc5cd1ecf8a0323cbeafe6496c",
+    "size_bytes": 145908,
+    "embedded_name_records": [
+      {
+        "name_id": 0,
+        "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+      },
+      {
+        "name_id": 13,
+        "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+      },
+      {
+        "name_id": 14,
+        "text": "https://openfontlicense.org"
+      }
+    ]
+  }
+]

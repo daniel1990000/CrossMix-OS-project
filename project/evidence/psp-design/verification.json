@@ -1,0 +1,219 @@
+{
+  "base_implementation_commit": "0dedeb8fb75a316cb4bccc6b5d055c0730f43afc",
+  "date": "2026-10-22",
+  "development_build": {
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "byte_identical_overlay_rebuild_with_same_key": true,
+    "byte_identical_unsigned_zip_rebuild": true,
+    "development_key_id": "e200a4d33b26dcaccf7c5fd361cd14d060ff1d66785c2188893acf2ce5603561",
+    "device_activation_qualified": false,
+    "device_gates": {
+      "hardware_qualified": false,
+      "runtime_verified": false,
+      "source_use_verified": false
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "payload_files": 55,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "release_id": "smartpro-psp-0.1.0-dev5",
+    "schema": 1,
+    "signature_hash_inventory_verified": true,
+    "signer": "ephemeral development",
+    "smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "source_date_epoch": 1792659237,
+    "status": "host-development-preview"
+  },
+  "emulator_binaries_replaced": false,
+  "implementation": [
+    "classic azure crossbar and vertical selection",
+    "original cached SDL pictograms",
+    "two broad translucent wave folds",
+    "short bounded category/item glides",
+    "flat options sheet and clean search workspace",
+    "real coordinator clock and physical-position hints",
+    "matching supported PPSSPP azure palette",
+    "bounded asynchronous cover loading with reduced-motion repaint"
+  ],
+  "kind": "psp-visual-overhaul-host-evidence",
+  "physical_device_verified": false,
+  "references": {
+    "emucorea": {
+      "applied": "flat, aspect-fit artwork and quiet missing-cover treatment",
+      "revision": "16c1bfb244e9359b242e410e468032cae0c111ef"
+    },
+    "playfieldportal": {
+      "applied": "anchored filmstrip, selected label, inactive alpha and bounded row motion policies; original Python implementation",
+      "revision": "5ee271ea9545685417aecdd13b5ace033cdb7806"
+    },
+    "ppsspp": {
+      "applied": "supported native theme schema and existing native wave/fonts/menu machinery",
+      "revision": "d357e6a32934800d3d80b49f910a603e1b069751"
+    },
+    "sony_psp_game": {
+      "dimensions": [
+        240,
+        136
+      ],
+      "sha256": "315185765485ccc49d1e8b0929942b5fe8d20efde9bd320411377d3d89888163",
+      "source_page": "https://manuals.playstation.net/document/en/psp/current/game/game.html",
+      "url": "https://manuals.playstation.net/document/en/psp/current/img/game001.jpg",
+      "use": "comparison evidence only; excluded from runtime/source development payload"
+    }
+  },
+  "runtime_gates_changed": false,
+  "schema": 1,
+  "screenshot_capture": {
+    "backend": "SDL2 software, dummy video/audio",
+    "comparison_and_gallery": "SVG documentation compositions using the exact source images, rasterized with CairoSVG; not replacement app renders",
+    "frames": 3,
+    "screens": {
+      "continue": "--screen continue",
+      "home": "default",
+      "library": "--actions down,down,down,down,confirm",
+      "options": "--screen library --actions confirm",
+      "search": "--screen search",
+      "settings": "--screen settings --actions down,down,down,down,down,down,down,down"
+    },
+    "size": [
+      1280,
+      720
+    ],
+    "source": "PYTHONPATH=project python -m psp_shell --demo --headless --frames 3 --screenshot <path> --state-dir <outside-source>"
+  },
+  "screenshots": {
+    "comparison.png": {
+      "bytes": 212636,
+      "sha256": "a0d6fa2490ac7051cd6bedd4f7be83be6c168fd44ec3363c744e7553b8f650d5"
+    },
+    "continue.png": {
+      "bytes": 155792,
+      "sha256": "93673a45239b2706f78ce2e67d1f20af6a7fb3bb5118d9591a236d2943167a8c"
+    },
+    "gallery.png": {
+      "bytes": 226682,
+      "sha256": "d4dbb3033bb37f66fed84b84e1da7597182fdaff72c9ecc01c12eefc0ce2c8a1"
+    },
+    "home.png": {
+      "bytes": 146651,
+      "sha256": "aba6003790112ff2a4599916858d46b7e0b3916a49619e9ee9de5dc01055ba1c"
+    },
+    "library.png": {
+      "bytes": 157131,
+      "sha256": "46e7556b14f7a52d321debe9d22dab596d2592a3572280668ea26d9e8a7e7404"
+    },
+    "options.png": {
+      "bytes": 132566,
+      "sha256": "2b5ac129add6a99849430889bad6be02fc6f8df0ecf4a22721fbf89cb627ba10"
+    },
+    "search.png": {
+      "bytes": 127622,
+      "sha256": "e69ed689c0fc1c9d0dd71fbbaf48dd2c013c859940442514202e595398ec2ae0"
+    },
+    "settings.png": {
+      "bytes": 160202,
+      "sha256": "0aedd7565c232b95d3bcdc341bca2b60842fe165c5bc321518c14669c25f04b2"
+    }
+  },
+  "validation": {
+    "final_ci": {
+      "artifact": {
+        "bytes": 4701605,
+        "id": 12443392152,
+        "sha256": "0da80fe550c8ab7829952798a88f9c766a42757e60303b67b807be0e1acb0b32",
+        "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902/artifacts/12443392152"
+      },
+      "artifact_upload": "passed",
+      "development_packaging": "passed",
+      "errors": 0,
+      "failures": 0,
+      "host_source_checks": 481,
+      "implementation_commit": "86509e12ccccc3df4d69c95257efabb294752f03",
+      "job_id": 119964782008,
+      "ppsspp_checks": 61,
+      "run_id": 39818966902,
+      "skips": 0,
+      "status": "success",
+      "total_checks": 542,
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39818966902"
+    },
+    "final_integration_suite": {
+      "coverage": [
+        "all UI modules mandatory",
+        "new modules match signed payload and retained candidate",
+        "tamper rejection after private inventory rewrite",
+        "real one-use source closure consumption with deterministic preflight reads"
+      ],
+      "errors": 0,
+      "failures": 0,
+      "log": "/workspace/scratch/trimui-final-integration-tests-fixed.log",
+      "skips": 0,
+      "tests": 40
+    },
+    "final_package": {
+      "checksums_read_back": true,
+      "current_source_hashes_verified": true,
+      "overlay_sha256": "f5a766c9b175b3837aeb0ecfe457681b80c8ccc04160f4d6444708126a893d9d",
+      "path": "/workspace/scratch/trimui-design-development-final"
+    },
+    "final_renderer_suite": {
+      "covers": [
+        "clean keyboard workspace",
+        "old SDL version guards",
+        "unsupported renderer geometry fallback",
+        "deterministic software frame",
+        "bounded text",
+        "large dialog choices",
+        "embedded state restoration without Pillow"
+      ],
+      "errors": 0,
+      "failures": 0,
+      "includes_two_cases_added_after_full_run": true,
+      "skips": 0,
+      "tests": 8
+    },
+    "final_ui_suite": {
+      "errors": 0,
+      "failures": 0,
+      "log": "/workspace/scratch/psp-final-scale-tests.log",
+      "skips": 0,
+      "tests": 44
+    },
+    "full_host_source_run": {
+      "errors": 0,
+      "failures": 0,
+      "log": "/workspace/scratch/trimui-overhaul-check.log",
+      "skips": 0,
+      "tests": 479
+    },
+    "full_ppsspp_run": {
+      "errors": 0,
+      "failures": 0,
+      "skips": 0,
+      "tests": 61
+    },
+    "git_diff_check": "pass",
+    "initial_ci_attempt": {
+      "failure": "test_private_source_closure_can_be_consumed_by_only_one_competing_helper",
+      "implementation_commit": "db92f36f8bc13f67ae4b2ecf36aca4976bf01529",
+      "reason": "One helper correctly returned BUSY_HEALTH before the mocked barrier, stranding the other. The test now serializes only its real foreground health reads before the unchanged consumption barrier; production locks and exact outcomes are unchanged.",
+      "result": "failed one preexisting race fixture",
+      "run_id": 39817701406
+    },
+    "intermediate_fixture_error": {
+      "error": "FrontendHealth import missing from subprocess fixture",
+      "result": "corrected before final rerun; failed run excluded from passing counts"
+    }
+  }
+}

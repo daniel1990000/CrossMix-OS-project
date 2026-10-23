@@ -1,0 +1,644 @@
+{
+  "R06_complete": false,
+  "audit": {
+    "component_classifications": {
+      "device-dynamic-libraries": "target-dynamic-dependency",
+      "ffmpeg-five-static-libraries": "static-library",
+      "ffmpeg-jpeg-code": "compiled-code-notices",
+      "gcc9-static-cxx-runtime-and-headers": "incorporated-runtime-and-headers",
+      "native-assets-and-adjacent-data": "runtime-assets",
+      "original-build-helpers": "build-tools",
+      "ppsspp-engine-and-project-patches": "compiled-engine",
+      "ppsspp-glslang-and-spirv-cross": "static-library",
+      "ppsspp-inline-licence-components": "inline-source-notices",
+      "ppsspp-other-embedded-components": "compiled-component-backlog",
+      "ppsspp-spruce-recipe": "build-recipe-and-inserted-code",
+      "ppsspp-zstd-and-libchdr": "static-library",
+      "retroarch-engine-and-project-patch": "compiled-engine",
+      "retroarch-spruce-igm-and-recipe": "build-recipe-and-inserted-code",
+      "retroarch-static-filters-and-thirdparty": "static-library",
+      "vendor-sdk-and-linaro-sysroot": "sdk-headers-startup-and-libraries"
+    },
+    "fresh_remote_retrieval_performed": false,
+    "hardware_qualified": false,
+    "kind": "native-component-record-consistency",
+    "limits": [
+      "Consistency of prior receipts does not freshly retrieve or authenticate their claims.",
+      "Source bytes and licence observations do not settle combined-distribution permission.",
+      "Exact recipe/IGM/SDK grants, component membership and notice/source review remain open."
+    ],
+    "native_binary_distribution_cleared": false,
+    "native_distribution_requested": false,
+    "project_patch_checks": [
+      {
+        "path": "project/ppsspp/patches/0001-independent-native-menu-controls.patch",
+        "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a"
+      },
+      {
+        "path": "project/ppsspp/patches/0002-save-slot-completion-evidence.patch",
+        "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3"
+      },
+      {
+        "path": "project/ppsspp/patches/0003-project-state-session.patch",
+        "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e"
+      },
+      {
+        "path": "project/ppsspp/patches/0004-checked-spruce-save-and-quit.patch",
+        "sha256": "06f648921f13d57475a507cdbd6c082b31dc125e2f1f00ba6adf107b85f6c3ab"
+      },
+      {
+        "path": "project/retroarch/patches/0001-independent-igm-menu-controls.patch",
+        "sha256": "39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6"
+      }
+    ],
+    "records_consistent": true,
+    "reviewed_candidates": [
+      {
+        "component_scope": [
+          {
+            "classification": "build-tools",
+            "id": "original-build-helpers",
+            "open_evidence_items": 1
+          },
+          {
+            "classification": "compiled-engine",
+            "id": "ppsspp-engine-and-project-patches",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "build-recipe-and-inserted-code",
+            "id": "ppsspp-spruce-recipe",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "static-library",
+            "id": "ffmpeg-five-static-libraries",
+            "open_evidence_items": 3
+          },
+          {
+            "classification": "compiled-code-notices",
+            "id": "ffmpeg-jpeg-code",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "incorporated-runtime-and-headers",
+            "id": "gcc9-static-cxx-runtime-and-headers",
+            "open_evidence_items": 3
+          },
+          {
+            "classification": "static-library",
+            "id": "ppsspp-glslang-and-spirv-cross",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "static-library",
+            "id": "ppsspp-zstd-and-libchdr",
+            "open_evidence_items": 1
+          },
+          {
+            "classification": "inline-source-notices",
+            "id": "ppsspp-inline-licence-components",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "compiled-component-backlog",
+            "id": "ppsspp-other-embedded-components",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "sdk-headers-startup-and-libraries",
+            "id": "vendor-sdk-and-linaro-sysroot",
+            "open_evidence_items": 3
+          },
+          {
+            "classification": "target-dynamic-dependency",
+            "id": "device-dynamic-libraries",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "runtime-assets",
+            "id": "native-assets-and-adjacent-data",
+            "open_evidence_items": 2
+          }
+        ],
+        "distribution_cleared": false,
+        "generation": "r04-replacement",
+        "id": "ppsspp-state-r04-rebuild",
+        "matching_prior_custody_records": true,
+        "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "selected": false,
+        "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+        "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "status": "blocked-on-component-review"
+      },
+      {
+        "component_scope": [
+          {
+            "classification": "build-tools",
+            "id": "original-build-helpers",
+            "open_evidence_items": 1
+          },
+          {
+            "classification": "incorporated-runtime-and-headers",
+            "id": "gcc9-static-cxx-runtime-and-headers",
+            "open_evidence_items": 3
+          },
+          {
+            "classification": "compiled-engine",
+            "id": "retroarch-engine-and-project-patch",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "build-recipe-and-inserted-code",
+            "id": "retroarch-spruce-igm-and-recipe",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "static-library",
+            "id": "retroarch-static-filters-and-thirdparty",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "sdk-headers-startup-and-libraries",
+            "id": "vendor-sdk-and-linaro-sysroot",
+            "open_evidence_items": 3
+          },
+          {
+            "classification": "target-dynamic-dependency",
+            "id": "device-dynamic-libraries",
+            "open_evidence_items": 2
+          },
+          {
+            "classification": "runtime-assets",
+            "id": "native-assets-and-adjacent-data",
+            "open_evidence_items": 2
+          }
+        ],
+        "distribution_cleared": false,
+        "generation": "r04-replacement",
+        "id": "retroarch-igm-r04-rebuild",
+        "matching_prior_custody_records": true,
+        "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "selected": false,
+        "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+        "source_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+        "status": "blocked-on-component-review"
+      }
+    ],
+    "runtime_gates_enabled": false,
+    "schema": 1,
+    "source_checks": [
+      {
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "id": "ffmpeg-configure",
+        "path": "configure",
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "id": "ffmpeg-license",
+        "path": "LICENSE.md",
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "id": "ffmpeg-makefile",
+        "path": "libavcodec/Makefile",
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "13c83c4cc679ad5383ed57f359e53e8d518b7842",
+        "id": "gcc-cxx-source-header",
+        "path": "libstdc++-v3/libsupc++/eh_alloc.cc",
+        "repository": "gcc-mirror/gcc",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "13c83c4cc679ad5383ed57f359e53e8d518b7842",
+        "id": "gcc-runtime",
+        "path": "COPYING.RUNTIME",
+        "repository": "gcc-mirror/gcc",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "id": "ppsspp-cmake",
+        "path": "CMakeLists.txt",
+        "repository": "hrydgard/ppsspp",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+        "id": "ppsspp-ffmpeg-ijg",
+        "path": "libavcodec/jfdctfst.c",
+        "repository": "hrydgard/ppsspp-ffmpeg",
+        "scope": "lines 1-80",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "id": "ppsspp-gitmodules",
+        "path": ".gitmodules",
+        "repository": "hrydgard/ppsspp",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "50e0708ec3a5c16020c4f845c654b80b8edb80bd",
+        "id": "ppsspp-glslang-license",
+        "path": "LICENSE.txt",
+        "repository": "hrydgard/glslang",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "8bba7745d758627258b315997a860039244cedaf",
+        "id": "ppsspp-libchdr-license",
+        "path": "LICENSE.txt",
+        "repository": "rtissera/libchdr",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "id": "ppsspp-png-header",
+        "path": "ext/libpng17/png.h",
+        "repository": "hrydgard/ppsspp",
+        "scope": "lines 1-130",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "4212eef67ed0ca048cb726a6767185504e7695e5",
+        "id": "ppsspp-spv-license",
+        "path": "LICENSE",
+        "repository": "KhronosGroup/SPIRV-Cross",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "id": "ppsspp-xbrz",
+        "path": "ext/xbrz/xbrz.h",
+        "repository": "hrydgard/ppsspp",
+        "scope": "lines 1-110",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "f8745da6ff1ad1e7bab384bd1f9d742439278e99",
+        "id": "ppsspp-zstd-license",
+        "path": "LICENSE",
+        "repository": "facebook/zstd",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+        "id": "ra-copying",
+        "path": "COPYING",
+        "repository": "libretro/RetroArch",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/Dockerfile.pvr",
+        "path": "Dockerfile.pvr",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/README.md",
+        "path": "README.md",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/build-pvr.sh",
+        "path": "build-pvr.sh",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/hide-cursor.py",
+        "path": "patches/common/hide-cursor.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/no-mute-secondary.py",
+        "path": "patches/common/no-mute-secondary.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/remap-pause-menu.py",
+        "path": "patches/common/remap-pause-menu.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/sigusr1-save-and-quit.py",
+        "path": "patches/common/sigusr1-save-and-quit.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/common/sigusr2-toggle-pause-menu.py",
+        "path": "patches/common/sigusr2-toggle-pause-menu.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/fix-copy-image-crash.py",
+        "path": "patches/pvr/fix-copy-image-crash.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/fix-glgetstringi-crash.py",
+        "path": "patches/pvr/fix-glgetstringi-crash.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/gl3stub-use-sdl-proc.py",
+        "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/no-alpha-channel.py",
+        "path": "patches/pvr/no-alpha-channel.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+        "id": "recipe/spruceUI/PPSSPP-spruce/patches/pvr/vulkan-display-fallback.py",
+        "path": "patches/pvr/vulkan-display-fallback.py",
+        "repository": "spruceUI/PPSSPP-spruce",
+        "scope": "whole file",
+        "status": "reference-not-supplied"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/Dockerfile",
+        "path": "Dockerfile",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/README.md",
+        "path": "README.md",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/build.sh",
+        "path": "build.sh",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "whole-file-identity-matched"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_platform.h",
+        "path": "common_src/spruce_igm_platform.h",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_theme.c",
+        "path": "common_src/spruce_igm_theme.c",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "whole-file-identity-matched"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/common_src/spruce_igm_theme.h",
+        "path": "common_src/spruce_igm_theme.h",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "whole-file-identity-matched"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/patches/common/0001-spruce-igm.patch",
+        "path": "patches/common/0001-spruce-igm.patch",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "whole-file-identity-matched"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "path": "patches/common/0002-portrait-panel-landscape-rotation.patch",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/patches/common/0003-sysfs-rumble-fallback.patch",
+        "path": "patches/common/0003-sysfs-rumble-fallback.patch",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      },
+      {
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "id": "recipe/spruceUI/RA/patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "path": "patches/common/0004-sdl-gl-reapply-es-profile.patch",
+        "repository": "spruceUI/RA",
+        "scope": "whole file",
+        "status": "file-not-in-sparse-reference"
+      }
+    ],
+    "source_use_verified": false
+  },
+  "author_contact_sent": false,
+  "captured_at_utc": "2026-10-23T00:10:37.583578+00:00",
+  "distribution_cleared": false,
+  "focused_tests": {
+    "command": "PYTHONPATH=project /workspace/smartpro-venv/bin/python -m unittest discover -s project/tests -p test_component_audit.py -v",
+    "errors": 0,
+    "failures": 0,
+    "passed": 22,
+    "run": 22,
+    "skipped": 0
+  },
+  "hardware_qualified": false,
+  "input_records": {
+    "ledger": {
+      "path": "project/docs/native-component-ledger.json",
+      "sha256": "8997fb76bd2e6eb5a793e4bbec98ac77a27157508523a77716e39257e8fe0f96",
+      "size_bytes": 50705
+    },
+    "ppsspp_lock": {
+      "path": "project/ppsspp/source-lock.json",
+      "sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "size_bytes": 6916
+    },
+    "rebuild": {
+      "path": "project/evidence/artifact-custody/native-rebuild.json",
+      "sha256": "1342029790b507b7179340af16d456bc483d04ca337aa37b8fcaa0293685cddd",
+      "size_bytes": 18445
+    },
+    "release": {
+      "path": "project/packaging/current-release.json",
+      "sha256": "c307fc601b7252de59e697544cb833f6598210c11d04028634f18e97e55cdca5",
+      "size_bytes": 4643
+    },
+    "retention": {
+      "path": "project/evidence/artifact-custody/native-retention.json",
+      "sha256": "d2906fb6118b7e989d599ac7def14817098ee4e2ba13ab60f5662bf965fb9c54",
+      "size_bytes": 17007
+    },
+    "retroarch_lock": {
+      "path": "project/retroarch/source-lock.json",
+      "sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+      "size_bytes": 2899
+    }
+  },
+  "kind": "r06-component-audit-host-preparation",
+  "native_executed": false,
+  "new_primary_source_inspection": {
+    "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "method": "Read-only connected GitHub whole-file fetch; SHA-256 and complete Git blob identity recheck; no target execution.",
+    "observations": [
+      {
+        "actual_binary_link_membership_review_complete": false,
+        "component": "gason",
+        "source_selection": "CMakeLists.txt lines 972-974 defines static gason; line 1697 links native to gason.",
+        "terms": "MIT at ext/gason/LICENSE"
+      },
+      {
+        "actual_binary_link_membership_review_complete": false,
+        "component": "CityHash",
+        "source_selection": "CMakeLists.txt lines 1097-1100 defines static cityhash; line 2585 lists Core linkage.",
+        "terms": "MIT-style grant at ext/cityhash/COPYING"
+      },
+      {
+        "actual_binary_link_membership_review_complete": false,
+        "component": "minimp3",
+        "source_selection": "minimp3.cpp defines MINIMP3_IMPLEMENTATION and includes both headers; component CMake defines static target; root CMake line 2585 lists Core linkage.",
+        "terms": "Public-domain dedication/CC0 reference and no-warranty notices in minimp3.h and minimp3_ex.h."
+      }
+    ],
+    "repository": "hrydgard/ppsspp",
+    "sources": [
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "0c4133a47ed3866e2ef3f2fbb682c8901338f232",
+        "path": "ext/gason/LICENSE",
+        "scope": "whole file",
+        "sha256": "a9a5c0646d67d9cc2596fab2ee1cac35bdcd4057d9dea7745425bd3cfcab40f0",
+        "size_bytes": 1086,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/gason/LICENSE"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "bf15194dd5a08b1a9bdac71ae19a3271d600089e",
+        "path": "ext/cityhash/COPYING",
+        "scope": "whole file",
+        "sha256": "3ed00dd93c75655599456c83cba2f69c6824fd53f24fc24206ba27b65057709d",
+        "size_bytes": 1110,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/cityhash/COPYING"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "3220ae1a85b858a95af5766155ada91304344465",
+        "path": "ext/minimp3/minimp3.h",
+        "scope": "whole file",
+        "sha256": "5fb296a790734772b65a5514438cc06d14f24e539c13475ff2a7f737681c82c0",
+        "size_bytes": 76802,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/minimp3/minimp3.h"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "4b347f350993ffd220447a805b7e9dd1ade9cbdd",
+        "path": "ext/minimp3/CMakeLists.txt",
+        "scope": "whole file",
+        "sha256": "f3f684a86b1751948b874d04d131b3fd07377c2c833747cab4efd2c6095dd975",
+        "size_bytes": 187,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/minimp3/CMakeLists.txt"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "070f49bd9e59389fc372c233de1633555cc8a4d4",
+        "path": "CMakeLists.txt",
+        "scope": "whole file",
+        "sha256": "3897cbc3c4576e0a783e52039b9410c7684b4c76dcbc96d456f1423b8b2830ea",
+        "size_bytes": 96770,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/CMakeLists.txt"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "f4b41e090439318fac5a3b1e064c2f25475519be",
+        "path": "ext/minimp3/minimp3.cpp",
+        "scope": "whole file",
+        "sha256": "964ad86ae55387ea1b6a1220d84b68963f83f08d4b185d219d277a8e63e5c933",
+        "size_bytes": 216,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/minimp3/minimp3.cpp"
+      },
+      {
+        "complete_returned_text_matches_git_blob": true,
+        "git_blob_sha": "2871705df3e79ad8f659217ec14e9731b2fb42fd",
+        "path": "ext/minimp3/minimp3_ex.h",
+        "scope": "whole file",
+        "sha256": "bb001301b8666ea7a45ae057b62b17074483213b0d410555d97cc4d076e110df",
+        "size_bytes": 49511,
+        "url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/ext/minimp3/minimp3_ex.h"
+      }
+    ]
+  },
+  "new_remote_artifact_retrieval": false,
+  "reference_check_counts": {
+    "file-not-in-sparse-reference": 10,
+    "reference-not-supplied": 24,
+    "whole-file-identity-matched": 4
+  },
+  "reviewed_frontend_head": "18d159712795471eb245ff913336d026cdf0ad5e",
+  "runtime_gates_enabled": false,
+  "schema": 1,
+  "source_use_verified": false
+}

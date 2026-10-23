@@ -1,0 +1,1385 @@
+{
+  "schema": 1,
+  "kind": "exact-selected-native-notice-packet",
+  "archive_inputs": {
+    "ppsspp-source": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+    "ra-source": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+  },
+  "notices": [
+    {
+      "archive_id": "ppsspp-source",
+      "path": "build/project-notices/PPSSPP-GPL-AND-PSPSDK.txt",
+      "source_file_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+      "source_file_size_bytes": 19740,
+      "offset_bytes": 0,
+      "length_bytes": 19740,
+      "notice_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "build/project-notices/PPSSPP-PROJECT-NOTICE.md",
+      "source_file_sha256": "1fb0acc22c9b9bd42b430a9204b3a86dbdd99b29bd13900bec3f243990ddf53c",
+      "source_file_size_bytes": 3307,
+      "offset_bytes": 0,
+      "length_bytes": 3307,
+      "notice_sha256": "1fb0acc22c9b9bd42b430a9204b3a86dbdd99b29bd13900bec3f243990ddf53c",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/LICENSE.TXT",
+      "source_file_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+      "source_file_size_bytes": 19740,
+      "offset_bytes": 0,
+      "length_bytes": 19740,
+      "notice_sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/assets/debugger/static/js/main.fe87e942.js.LICENSE.txt",
+      "source_file_sha256": "9cc2775972449bbb33c699aed95a492eb54855299be5f698b9917d90c4817ddf",
+      "source_file_size_bytes": 1759,
+      "offset_bytes": 0,
+      "length_bytes": 1759,
+      "notice_sha256": "9cc2775972449bbb33c699aed95a492eb54855299be5f698b9917d90c4817ddf",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/SPIRV-Cross/LICENSE",
+      "source_file_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_file_size_bytes": 11358,
+      "offset_bytes": 0,
+      "length_bytes": 11358,
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/armips/LICENSE.txt",
+      "source_file_sha256": "791ff46884cdf62188f17cabf0f099b462e92ec68986033bab243b26573b7573",
+      "source_file_size_bytes": 1079,
+      "offset_bytes": 0,
+      "length_bytes": 1079,
+      "notice_sha256": "791ff46884cdf62188f17cabf0f099b462e92ec68986033bab243b26573b7573",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/armips/ext/filesystem/LICENSE",
+      "source_file_sha256": "1b265537c97cfb422ffb52492c96979943f54fab8746a6dd38d8329953d487cc",
+      "source_file_size_bytes": 1086,
+      "offset_bytes": 0,
+      "length_bytes": 1086,
+      "notice_sha256": "1b265537c97cfb422ffb52492c96979943f54fab8746a6dd38d8329953d487cc",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/cityhash/COPYING",
+      "source_file_sha256": "3ed00dd93c75655599456c83cba2f69c6824fd53f24fc24206ba27b65057709d",
+      "source_file_size_bytes": 1110,
+      "offset_bytes": 0,
+      "length_bytes": 1110,
+      "notice_sha256": "3ed00dd93c75655599456c83cba2f69c6824fd53f24fc24206ba27b65057709d",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/cpu_features/LICENSE",
+      "source_file_sha256": "af272c1b4dd08dd61d43e001d3134119d03ca7a2b057a64f7355fdf27fbea3dd",
+      "source_file_size_bytes": 12876,
+      "offset_bytes": 0,
+      "length_bytes": 12876,
+      "notice_sha256": "af272c1b4dd08dd61d43e001d3134119d03ca7a2b057a64f7355fdf27fbea3dd",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/freetype/LICENSE.TXT",
+      "source_file_sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b",
+      "source_file_size_bytes": 2149,
+      "offset_bytes": 0,
+      "length_bytes": 2149,
+      "notice_sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/freetype/src/tools/no-copyright",
+      "source_file_sha256": "3e2c8db4e09e12e9a138ba7ba8c0b762eff36802c6c1273d73ac049d4949a298",
+      "source_file_size_bytes": 1282,
+      "offset_bytes": 0,
+      "length_bytes": 1282,
+      "notice_sha256": "3e2c8db4e09e12e9a138ba7ba8c0b762eff36802c6c1273d73ac049d4949a298",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/freetype/src/tools/update-copyright",
+      "source_file_sha256": "ae5b05f1d3f5235eb91ce41518be95022443f68bce5d200b6e1cc1fb57a5017e",
+      "source_file_size_bytes": 383,
+      "offset_bytes": 0,
+      "length_bytes": 383,
+      "notice_sha256": "ae5b05f1d3f5235eb91ce41518be95022443f68bce5d200b6e1cc1fb57a5017e",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/freetype/src/tools/update-copyright-year",
+      "source_file_sha256": "cd958efaceec3658336c44513983cedea58c63c467f8affe207af8bb6647c8cf",
+      "source_file_size_bytes": 4272,
+      "offset_bytes": 0,
+      "length_bytes": 4272,
+      "notice_sha256": "cd958efaceec3658336c44513983cedea58c63c467f8affe207af8bb6647c8cf",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/freetype/subprojects/dlg/LICENSE",
+      "source_file_sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "source_file_size_bytes": 1338,
+      "offset_bytes": 0,
+      "length_bytes": 1338,
+      "notice_sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/gason/LICENSE",
+      "source_file_sha256": "a9a5c0646d67d9cc2596fab2ee1cac35bdcd4057d9dea7745425bd3cfcab40f0",
+      "source_file_size_bytes": 1086,
+      "offset_bytes": 0,
+      "length_bytes": 1086,
+      "notice_sha256": "a9a5c0646d67d9cc2596fab2ee1cac35bdcd4057d9dea7745425bd3cfcab40f0",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/glslang/LICENSE.txt",
+      "source_file_sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+      "source_file_size_bytes": 54705,
+      "offset_bytes": 0,
+      "length_bytes": 54705,
+      "notice_sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/glslang/license-checker.cfg",
+      "source_file_sha256": "e6ead88c5894007be86546cfd24d6c0b9fafcbf832fc27d8330eb7d46cedc84a",
+      "source_file_size_bytes": 1731,
+      "offset_bytes": 0,
+      "length_bytes": 1731,
+      "notice_sha256": "e6ead88c5894007be86546cfd24d6c0b9fafcbf832fc27d8330eb7d46cedc84a",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libadrenotools/LICENSE",
+      "source_file_sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "source_file_size_bytes": 1299,
+      "offset_bytes": 0,
+      "length_bytes": 1299,
+      "notice_sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libadrenotools/lib/linkernsbypass/LICENSE",
+      "source_file_sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "source_file_size_bytes": 1299,
+      "offset_bytes": 0,
+      "length_bytes": 1299,
+      "notice_sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/LICENSE.txt",
+      "source_file_sha256": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539",
+      "source_file_size_bytes": 1493,
+      "offset_bytes": 0,
+      "length_bytes": 1493,
+      "notice_sha256": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/deps/lzma-24.05/LICENSE",
+      "source_file_sha256": "06721414a6decad6d6677feb470f01f47126e154d895d85bc1e17628697715e5",
+      "source_file_size_bytes": 261,
+      "offset_bytes": 0,
+      "length_bytes": 261,
+      "notice_sha256": "06721414a6decad6d6677feb470f01f47126e154d895d85bc1e17628697715e5",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/deps/zlib-1.3.1/LICENSE",
+      "source_file_sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "source_file_size_bytes": 1002,
+      "offset_bytes": 0,
+      "length_bytes": 1002,
+      "notice_sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/deps/zlib-1.3.1/contrib/dotzlib/LICENSE_1_0.txt",
+      "source_file_sha256": "36266a8fd073568394cb81cdb2b124f7fdae2c64c1a7ed09db34b4d22efa2951",
+      "source_file_size_bytes": 1359,
+      "offset_bytes": 0,
+      "length_bytes": 1359,
+      "notice_sha256": "36266a8fd073568394cb81cdb2b124f7fdae2c64c1a7ed09db34b4d22efa2951",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/deps/zstd-1.5.6/COPYING",
+      "source_file_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "source_file_size_bytes": 18091,
+      "offset_bytes": 0,
+      "length_bytes": 18091,
+      "notice_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libchdr/deps/zstd-1.5.6/LICENSE",
+      "source_file_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "source_file_size_bytes": 1549,
+      "offset_bytes": 0,
+      "length_bytes": 1549,
+      "notice_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/miniupnp/LICENSE",
+      "source_file_sha256": "7480ae23b082c05ad9823896163d78f3a96f1beadce51f29c96cf898545c27e5",
+      "source_file_size_bytes": 1527,
+      "offset_bytes": 0,
+      "length_bytes": 1527,
+      "notice_sha256": "7480ae23b082c05ad9823896163d78f3a96f1beadce51f29c96cf898545c27e5",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/naett/LICENSE",
+      "source_file_sha256": "48b79daf8988912a6c2dadffdbbba99f514817dddf11cebf3605a5f0dbfafa94",
+      "source_file_size_bytes": 1068,
+      "offset_bytes": 0,
+      "length_bytes": 1068,
+      "notice_sha256": "48b79daf8988912a6c2dadffdbbba99f514817dddf11cebf3605a5f0dbfafa94",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/nanosvg/LICENSE.txt",
+      "source_file_sha256": "e82bc3dd03400aecabe12201219ba14750dbc4b36faab58663a7a6068548d372",
+      "source_file_size_bytes": 880,
+      "offset_bytes": 0,
+      "length_bytes": 880,
+      "notice_sha256": "e82bc3dd03400aecabe12201219ba14750dbc4b36faab58663a7a6068548d372",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/portable-file-dialogs/COPYING",
+      "source_file_sha256": "d20ad7990610153b563c52681da860b8302afcf0778f75237f8815c07d05141f",
+      "source_file_size_bytes": 466,
+      "offset_bytes": 0,
+      "length_bytes": 466,
+      "notice_sha256": "d20ad7990610153b563c52681da860b8302afcf0778f75237f8815c07d05141f",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/bin/jsonschema/LICENSE",
+      "source_file_sha256": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a",
+      "source_file_size_bytes": 1057,
+      "offset_bytes": 0,
+      "length_bytes": 1057,
+      "notice_sha256": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/contrib/natvis/LICENSE",
+      "source_file_sha256": "394faaedb93c1da8ecbd61322518834908fee64381117e01a611bf9fac20baa6",
+      "source_file_size_bytes": 2175,
+      "offset_bytes": 0,
+      "length_bytes": 2175,
+      "notice_sha256": "394faaedb93c1da8ecbd61322518834908fee64381117e01a611bf9fac20baa6",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/license.txt",
+      "source_file_sha256": "a140e5d46fe734a1c78f1a3c3ef207871dd75648be71fdda8e309b23ab8b1f32",
+      "source_file_size_bytes": 5152,
+      "offset_bytes": 0,
+      "length_bytes": 5152,
+      "notice_sha256": "a140e5d46fe734a1c78f1a3c3ef207871dd75648be71fdda8e309b23ab8b1f32",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googlemock/LICENSE",
+      "source_file_sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "source_file_size_bytes": 1475,
+      "offset_bytes": 0,
+      "length_bytes": 1475,
+      "notice_sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googlemock/scripts/generator/LICENSE",
+      "source_file_sha256": "5e0df8c845c742e76f2f64d2d9ce1b7e74a2422fddbc577ae6a56319083de0bf",
+      "source_file_size_bytes": 11386,
+      "offset_bytes": 0,
+      "length_bytes": 11386,
+      "notice_sha256": "5e0df8c845c742e76f2f64d2d9ce1b7e74a2422fddbc577ae6a56319083de0bf",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googletest/LICENSE",
+      "source_file_sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "source_file_size_bytes": 1475,
+      "offset_bytes": 0,
+      "length_bytes": 1475,
+      "notice_sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/rcheevos/LICENSE",
+      "source_file_sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+      "source_file_size_bytes": 1078,
+      "offset_bytes": 0,
+      "length_bytes": 1078,
+      "notice_sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/snappy/AUTHORS",
+      "source_file_sha256": "710c0a3a4681c8c40f5a59eb794f61093fa142935c647c92f46ea595f0591833",
+      "source_file_size_bytes": 22,
+      "offset_bytes": 0,
+      "length_bytes": 22,
+      "notice_sha256": "710c0a3a4681c8c40f5a59eb794f61093fa142935c647c92f46ea595f0591833",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/snappy/COPYING",
+      "source_file_sha256": "5221a36a801b981fbdfda7b87db64cff231a3b88223a066c325411b539df796f",
+      "source_file_size_bytes": 1475,
+      "offset_bytes": 0,
+      "length_bytes": 1475,
+      "notice_sha256": "5221a36a801b981fbdfda7b87db64cff231a3b88223a066c325411b539df796f",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/udis86/LICENSE",
+      "source_file_sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+      "source_file_size_bytes": 1337,
+      "offset_bytes": 0,
+      "length_bytes": 1337,
+      "notice_sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/zlib/LICENSE",
+      "source_file_sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "source_file_size_bytes": 1002,
+      "offset_bytes": 0,
+      "length_bytes": 1002,
+      "notice_sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/zstd/COPYING",
+      "source_file_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "source_file_size_bytes": 18091,
+      "offset_bytes": 0,
+      "length_bytes": 18091,
+      "notice_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/zstd/LICENSE",
+      "source_file_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "source_file_size_bytes": 1549,
+      "offset_bytes": 0,
+      "length_bytes": 1549,
+      "notice_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/COPYING.GPLv2",
+      "source_file_sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "source_file_size_bytes": 18092,
+      "offset_bytes": 0,
+      "length_bytes": 18092,
+      "notice_sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/COPYING.GPLv3",
+      "source_file_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_file_size_bytes": 35147,
+      "offset_bytes": 0,
+      "length_bytes": 35147,
+      "notice_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/COPYING.LGPLv2.1",
+      "source_file_sha256": "b634ab5640e258563c536e658cad87080553df6f34f62269a21d554844e58bfe",
+      "source_file_size_bytes": 26526,
+      "offset_bytes": 0,
+      "length_bytes": 26526,
+      "notice_sha256": "b634ab5640e258563c536e658cad87080553df6f34f62269a21d554844e58bfe",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/COPYING.LGPLv3",
+      "source_file_sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "source_file_size_bytes": 7651,
+      "offset_bytes": 0,
+      "length_bytes": 7651,
+      "notice_sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/LICENSE.md",
+      "source_file_sha256": "2e06d5375e3ec10363d38f4ba0680d311ff4f2024ee7f9ddb1c7a2e2bb8a5585",
+      "source_file_size_bytes": 3940,
+      "offset_bytes": 0,
+      "length_bytes": 3940,
+      "notice_sha256": "2e06d5375e3ec10363d38f4ba0680d311ff4f2024ee7f9ddb1c7a2e2bb8a5585",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ffmpeg/doc/authors.texi",
+      "source_file_sha256": "4b10a5ff9464f9e8f5b9ae7341134be99dec9a051d061c653c58cfc73141b4b6",
+      "source_file_size_bytes": 399,
+      "offset_bytes": 0,
+      "length_bytes": 399,
+      "notice_sha256": "4b10a5ff9464f9e8f5b9ae7341134be99dec9a051d061c653c58cfc73141b4b6",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/aac_defines.h",
+      "source_file_sha256": "bed26cf5fedd3bbeabe16ee7e33e437b7b27f29ee7cfd96b26e843ec861ae407",
+      "source_file_size_bytes": 4860,
+      "offset_bytes": 0,
+      "length_bytes": 780,
+      "notice_sha256": "53a43b00db1cb0a9cd717f9fb82aba63b248fd915b9e49e20980925bc6571535",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac.cpp",
+      "source_file_sha256": "909bae48dcf366f1fc5f17e6cf49e996076f780e2c1fe147de5fb2b06ea59dd0",
+      "source_file_size_bytes": 5006,
+      "offset_bytes": 0,
+      "length_bytes": 910,
+      "notice_sha256": "bd3d1b56c3171b833b9da43644c1eb3bfd97b37673cc458ac4fb930a29adbc21",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac.h",
+      "source_file_sha256": "d3af304148aac3c638ca66414f15288ae74719a5e931da8ba927e1814766df19",
+      "source_file_size_bytes": 3391,
+      "offset_bytes": 0,
+      "length_bytes": 905,
+      "notice_sha256": "a78ce4a502993eef7df0ebad21c6786114d24f210bfb475ac7d45ed8458ce7e3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3.cpp",
+      "source_file_sha256": "cb620e9d80c8093cfef598e4df3ea339a02c1dc644c2f63b769575e4d8bf2465",
+      "source_file_size_bytes": 29927,
+      "offset_bytes": 0,
+      "length_bytes": 883,
+      "notice_sha256": "077f92d77a9d9f3d80d25a1e97597b7a3fac2aa603049568b06a5e812fb6fd9c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3data.h",
+      "source_file_sha256": "7f333b5652e24d6234469745b2b2ac7cb6df50343d9c7c9af009b5c6eb3fb8c9",
+      "source_file_size_bytes": 4245,
+      "offset_bytes": 0,
+      "length_bytes": 888,
+      "notice_sha256": "eb73bd5d410b056395efe75da2bffaa9a0b5d92ecc93d98632b80335c889b47c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3plus.cpp",
+      "source_file_sha256": "109c0329b47278be638f02426a562d43351366ef464d63253dc73cdd10534422",
+      "source_file_size_bytes": 70559,
+      "offset_bytes": 0,
+      "length_bytes": 843,
+      "notice_sha256": "65f3ccd7fe38a556cc775c8c68fb333040ce47b643beb1a03d924584e41136c3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3plus.h",
+      "source_file_sha256": "555b9a0b5c176a9364b29bfc7761476ef1189c5a7bbba9907d7ae8e71b46325b",
+      "source_file_size_bytes": 9683,
+      "offset_bytes": 0,
+      "length_bytes": 843,
+      "notice_sha256": "65f3ccd7fe38a556cc775c8c68fb333040ce47b643beb1a03d924584e41136c3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3plus_data.h",
+      "source_file_sha256": "d6aaff5c1bb5351f5294fbc288ad1b199534c99621c68c587b1254566631a018",
+      "source_file_size_bytes": 93362,
+      "offset_bytes": 0,
+      "length_bytes": 843,
+      "notice_sha256": "65f3ccd7fe38a556cc775c8c68fb333040ce47b643beb1a03d924584e41136c3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3plusdec.cpp",
+      "source_file_sha256": "fb38cb1b2f0b67aa79e536fcf26371f83529b30622496889fd9bf1846a94a7e9",
+      "source_file_size_bytes": 14083,
+      "offset_bytes": 0,
+      "length_bytes": 843,
+      "notice_sha256": "65f3ccd7fe38a556cc775c8c68fb333040ce47b643beb1a03d924584e41136c3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/atrac3plusdsp.cpp",
+      "source_file_sha256": "3c89356b15dd4bab3b3a4897dd213d720a7d3b8348dda06c88bcd55cf8b61294",
+      "source_file_size_bytes": 40303,
+      "offset_bytes": 0,
+      "length_bytes": 843,
+      "notice_sha256": "65f3ccd7fe38a556cc775c8c68fb333040ce47b643beb1a03d924584e41136c3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/fft.cpp",
+      "source_file_sha256": "1f356f7f583806cf1a925aa96db1d9248ce828b4e7340565aedc45cc2f62e3ce",
+      "source_file_size_bytes": 9498,
+      "offset_bytes": 0,
+      "length_bytes": 910,
+      "notice_sha256": "2f983480599f231ecdbf597e03592af984606e0402129b97f82b4e1c164740a3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/fft.h",
+      "source_file_sha256": "261e06b21bce15c4ace6b5b915ab0205f541fff5987c6d7e1706653cbf298850",
+      "source_file_size_bytes": 3002,
+      "offset_bytes": 0,
+      "length_bytes": 881,
+      "notice_sha256": "019d56c3cbb9f493ffe913071032d7bce0143b3f8b6f5b44764cde066e4158ee",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/float_dsp.h",
+      "source_file_sha256": "a422fd31275acaaca2f5dec122a8d9aa1f8ece507e45f6b1433463a668598903",
+      "source_file_size_bytes": 1826,
+      "offset_bytes": 0,
+      "length_bytes": 762,
+      "notice_sha256": "5c1b5a651349a779ed30fee21db964c8424809742b80083a58a5dd2a0bf0de52",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/get_bits.cpp",
+      "source_file_sha256": "52d330db740ceb3f409f0624e5f4f3f7b1dc2bec614a696da315fbdff3fd1e5b",
+      "source_file_size_bytes": 13190,
+      "offset_bytes": 0,
+      "length_bytes": 1021,
+      "notice_sha256": "e05e8bd70bd9f26b574acce02e859b5e4dee5b5bd593e94133a87f9553cf83f5",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/get_bits.h",
+      "source_file_sha256": "a7b7607394aad6af221c01c2b37ad1d12b64d15bf6554cdcbaf8510dcb4dc747",
+      "source_file_size_bytes": 16010,
+      "offset_bytes": 0,
+      "length_bytes": 826,
+      "notice_sha256": "d5f7fd34a3bcec1a3a0f3ae86a8faf7174e3041194c46b0de39021f07e958d97",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/intreadwrite.h",
+      "source_file_sha256": "554b87abca170dcf3bf0d56d12112aefd7be61f1218dc6190f59bf5dfef00a72",
+      "source_file_size_bytes": 9989,
+      "offset_bytes": 0,
+      "length_bytes": 762,
+      "notice_sha256": "5c1b5a651349a779ed30fee21db964c8424809742b80083a58a5dd2a0bf0de52",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/mem.cpp",
+      "source_file_sha256": "5899087c84397db946fa91d737a70ba6589449ea74115b0e438f48bebd030cad",
+      "source_file_size_bytes": 2266,
+      "offset_bytes": 0,
+      "length_bytes": 845,
+      "notice_sha256": "0d8179bc68a5b96eb124dc4ce9be43965ad89ffe1b53597e98effb4b339ca5bf",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/at3_standalone/mem.h",
+      "source_file_sha256": "3b4c78a4ba926548300f67d2a860417d5c2ef6a4d8d13c92c320205f07223602",
+      "source_file_size_bytes": 4559,
+      "offset_bytes": 0,
+      "length_bytes": 826,
+      "notice_sha256": "79734ead9e8a28a1f9769c825bb363e90e4ac488b01ee40ebffecebfad9dd3bb",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libkirk/kirk_engine.c",
+      "source_file_sha256": "74e363f78fdec5c0fc82842a21c11c3b0363996a931805cec9fd11231a3e7763",
+      "source_file_size_bytes": 35664,
+      "offset_bytes": 0,
+      "length_bytes": 1032,
+      "notice_sha256": "ac86e28c1fcb8aa454d7725ebabc6ff8f7bf3d5c3012e32d8830fe0560ffc355",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libpng17/png.h",
+      "source_file_sha256": "45e97298116680435abf20bc5efdb68126229aa9d0e0fff6ed607f3865766b52",
+      "source_file_size_bytes": 195232,
+      "offset_bytes": 1,
+      "length_bytes": 5708,
+      "notice_sha256": "748540b80ecee7cd932e3109ba6b841d2be515b1a114b1f46647aeec3d792862",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/libzip/zip.h",
+      "source_file_sha256": "b4eeca1fc7af953f7eda5d0bde38d1e2ddfcdf36949c44322affa3ae001f2e46",
+      "source_file_size_bytes": 26491,
+      "offset_bytes": 39,
+      "length_bytes": 1613,
+      "notice_sha256": "35bd9f951844baae48cbf3a379269249f449c799899e6d8f3b5c78b240748ab4",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/lua/lua.h",
+      "source_file_sha256": "341014ee8b49570fc01c1fb2afc6a7decc853525636c74e7a6a9507a933aa62e",
+      "source_file_size_bytes": 15949,
+      "offset_bytes": 14677,
+      "length_bytes": 1262,
+      "notice_sha256": "20584b66351c900fd72b27ae60cabdd23d5ad547a3de8d909da35fac46e81bd6",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/minimp3/minimp3.h",
+      "source_file_sha256": "5fb296a790734772b65a5514438cc06d14f24e539c13475ff2a7f737681c82c0",
+      "source_file_size_bytes": 76802,
+      "offset_bytes": 36,
+      "length_bytes": 323,
+      "notice_sha256": "c831d0537fe88d344bf5f51ef5ddf627421598b6bb036c6dca53b738cbfea07f",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/minimp3/minimp3_ex.h",
+      "source_file_sha256": "bb001301b8666ea7a45ae057b62b17074483213b0d410555d97cc4d076e110df",
+      "source_file_size_bytes": 49511,
+      "offset_bytes": 44,
+      "length_bytes": 323,
+      "notice_sha256": "c831d0537fe88d344bf5f51ef5ddf627421598b6bb036c6dca53b738cbfea07f",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/sfmt19937/SFMT.h",
+      "source_file_sha256": "5d026d75cc47a16a7d68ed928fb0b84aabf68e6ac3666b54c157f72fc8463d5e",
+      "source_file_size_bytes": 7745,
+      "offset_bytes": 13,
+      "length_bytes": 1152,
+      "notice_sha256": "89f0b97da0d4f296f1ed26950ba77ce4abe433ff17e5b686b70709f8377907fa",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/xxhash.h",
+      "source_file_sha256": "992f40a6ad6f08e6d9f3c59b2b080389a42bcc1fc2a49e14c0123447c3c584c6",
+      "source_file_size_bytes": 209774,
+      "offset_bytes": 0,
+      "length_bytes": 1660,
+      "notice_sha256": "680ae7d3902bd5235334f2bb1f7102671a5b957bcc70f6e986e8c848eac542a2",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/vma/vk_mem_alloc.h",
+      "source_file_sha256": "9c90df285f77f631b3e3fdacf3e70aeb6e90af9e4f6b5b7bc6ce66abcd61889e",
+      "source_file_size_bytes": 752809,
+      "offset_bytes": 0,
+      "length_bytes": 1158,
+      "notice_sha256": "0d96525c2ff8cec1115655f4d77b87c3236afc55c7cef14e32ac4345eee07dcc",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/basis_universal/basisu_transcoder.cpp",
+      "source_file_sha256": "185f626f3f11ef304dd1f7993bb90e702e5f71f77acf093f87f9e2e7b6d7de1a",
+      "source_file_size_bytes": 635957,
+      "offset_bytes": 0,
+      "length_bytes": 643,
+      "notice_sha256": "4a2652e98f3b640146b6ddbb514b82733409139d702cac05c45475fff9a6f331",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/xbrz/xbrz.h",
+      "source_file_sha256": "f0c59293edf8268abe7e749f017fe84c9ae38303aef2afc3244b2fdba9aeb69c",
+      "source_file_size_bytes": 4610,
+      "offset_bytes": 0,
+      "length_bytes": 1119,
+      "notice_sha256": "de6f8f8c483772fd4ccbde0edc6cd2ac71c86868e8bf0b6c0bc354638b57e359",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ppsspp-source",
+      "path": "ppsspp/ext/imgui/imgui.cpp",
+      "source_file_sha256": "ef0ad08dbfe2357aec9e80af020fb9019c05aadc2ae692fddecbe9884da5358f",
+      "source_file_size_bytes": 1176683,
+      "offset_bytes": 1912,
+      "length_bytes": 203,
+      "notice_sha256": "6d39c7d2343bff790e407e68ef5a346fdbcd1a42a06d1759a78852f358ff8347",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/COPYING",
+      "source_file_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "source_file_size_bytes": 35147,
+      "offset_bytes": 0,
+      "length_bytes": 35147,
+      "notice_sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/SPIRV-Cross/LICENSE",
+      "source_file_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "source_file_size_bytes": 11358,
+      "offset_bytes": 0,
+      "length_bytes": 11358,
+      "notice_sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/ibxm/licence.txt",
+      "source_file_sha256": "64534ac3cabcb39c1386a1c98876b0fa25a8fc61ac9120e017dfe54d2969df1d",
+      "source_file_size_bytes": 1551,
+      "offset_bytes": 0,
+      "length_bytes": 1551,
+      "notice_sha256": "64534ac3cabcb39c1386a1c98876b0fa25a8fc61ac9120e017dfe54d2969df1d",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/libFLAC/AUTHORS",
+      "source_file_sha256": "a94c7269d91073b1e1675dd2006481dee1a9cd1d81e8f7ac3e735f28ef31daec",
+      "source_file_size_bytes": 2155,
+      "offset_bytes": 0,
+      "length_bytes": 2155,
+      "notice_sha256": "a94c7269d91073b1e1675dd2006481dee1a9cd1d81e8f7ac3e735f28ef31daec",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/libFLAC/COPYING.Xiph",
+      "source_file_sha256": "fa27cb11f13f97b0c5f3ff363b1e2610c6efe87ed175779cb2a78e44eb19d34c",
+      "source_file_size_bytes": 1509,
+      "offset_bytes": 0,
+      "length_bytes": 1509,
+      "notice_sha256": "fa27cb11f13f97b0c5f3ff363b1e2610c6efe87ed175779cb2a78e44eb19d34c",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/rcheevos/LICENSE",
+      "source_file_sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+      "source_file_size_bytes": 1078,
+      "offset_bytes": 0,
+      "length_bytes": 1078,
+      "notice_sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/xdelta3/LICENSE",
+      "source_file_sha256": "6cf63d87586c7c25c3ab8e62eef5c75bbaa982b0a6f9c00c59e2720255aac9ec",
+      "source_file_size_bytes": 9156,
+      "offset_bytes": 0,
+      "length_bytes": 9156,
+      "notice_sha256": "6cf63d87586c7c25c3ab8e62eef5c75bbaa982b0a6f9c00c59e2720255aac9ec",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/xxHash/LICENSE",
+      "source_file_sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "source_file_size_bytes": 1389,
+      "offset_bytes": 0,
+      "length_bytes": 1389,
+      "notice_sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/zstd/COPYING",
+      "source_file_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "source_file_size_bytes": 18091,
+      "offset_bytes": 0,
+      "length_bytes": 18091,
+      "notice_sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/zstd/LICENSE",
+      "source_file_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "source_file_size_bytes": 1549,
+      "offset_bytes": 0,
+      "length_bytes": 1549,
+      "notice_sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "project/retroarch/NOTICE.md",
+      "source_file_sha256": "e0ff59a664ad3923312567a6438f9c58f3b314e7d8f7fb6cf3c058eea5f9b672",
+      "source_file_size_bytes": 1484,
+      "offset_bytes": 0,
+      "length_bytes": 1484,
+      "notice_sha256": "e0ff59a664ad3923312567a6438f9c58f3b314e7d8f7fb6cf3c058eea5f9b672",
+      "kind": "exact-source-text"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/deps/mbedtls/aes.c",
+      "source_file_sha256": "6c25002f0231a5608b5ff362276aa46664d126dab38166354d3b0fde74175210",
+      "source_file_size_bytes": 21785,
+      "offset_bytes": 0,
+      "length_bytes": 776,
+      "notice_sha256": "c4b67a5ae3771b1912f9bd33edc69e53104b66fde06a3ed5f9262d1498663235",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/2xbr.c",
+      "source_file_sha256": "d5b2d5aa8807ff90775502f5bb8e7f4097c8e2bed011cf4a75cccab3da2ce29f",
+      "source_file_size_bytes": 26480,
+      "offset_bytes": 0,
+      "length_bytes": 1603,
+      "notice_sha256": "c5519dcb6f55412d81b0228f0de114690f059174e2cb7e9a30c0b1c294bdec76",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/2xsai.c",
+      "source_file_sha256": "c7603c9b141704db3b2e06907acf48afd826d0a5a0ee6b40e7b82ec6108f4a81",
+      "source_file_size_bytes": 13168,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/blargg_ntsc_snes.c",
+      "source_file_sha256": "c8d1b6d82b13032268858ceffdfeaba205cc4c83061cebb88f3cbb2dc3b0d89c",
+      "source_file_size_bytes": 10109,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/darken.c",
+      "source_file_sha256": "12b73bfcfd51603141b93f0e09e439e338122efa9822c088bff552cf7b5a9dc9",
+      "source_file_size_bytes": 5681,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/dot_matrix_3x.c",
+      "source_file_sha256": "7d00c399de12f1c3b690a4f709865ccf0a5e35bde7c8f35c49e0f190abcb2d29",
+      "source_file_size_bytes": 10936,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/dot_matrix_4x.c",
+      "source_file_sha256": "8a791d76686fad9c7e620a8c1712b7cbd85703e7ce5c848c5fb6e5f8de9fd9fb",
+      "source_file_size_bytes": 12077,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/epx.c",
+      "source_file_sha256": "d8d6e93ac2970d15efeacd31c5448db9c129061a3f3ed7dcef9fcd809d264f56",
+      "source_file_size_bytes": 7538,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/gameboy3x.c",
+      "source_file_sha256": "dc210c7677ca58ad958571cab1d631896125d600597088e16d59d203c38990f0",
+      "source_file_size_bytes": 12746,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/gameboy4x.c",
+      "source_file_sha256": "797f31802725832883feae23d3dc78fd6eacdbdbac41f106fe3785803faab694",
+      "source_file_size_bytes": 15079,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/grid2x.c",
+      "source_file_sha256": "8779336dfdf285a515b2d04c0727ace0c2832b17e8960cb3345786b3f8dbc8de",
+      "source_file_size_bytes": 7805,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/grid3x.c",
+      "source_file_sha256": "3fe90988645892b9304b910c53edba3b74d5d8750804c4b3a11f55854d959197",
+      "source_file_size_bytes": 8369,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/lq2x.c",
+      "source_file_sha256": "1b01f91c2f588c1c6839276fea5e81af7976ac84e50c3492732536f44e71f587",
+      "source_file_size_bytes": 8598,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/normal2x.c",
+      "source_file_sha256": "bfd45f1e733cf2214c37315b06df6b09a5d21b379631f63b2a67127c7ff54241",
+      "source_file_size_bytes": 6928,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/normal2x_height.c",
+      "source_file_sha256": "e3a21966892a30663193e3d5bafc3c4c255081b5de761d105b6c507258c71a3f",
+      "source_file_size_bytes": 6590,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/normal2x_width.c",
+      "source_file_sha256": "0517c9071f0aa88b168dca59858957ff5d93a7e1b7b7978d3bff5e6a01ebaac3",
+      "source_file_size_bytes": 6627,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/normal4x.c",
+      "source_file_sha256": "a02ea3da06e571e1514e7ba1b74597162605bc8533d0669d905951a10c31892e",
+      "source_file_size_bytes": 7671,
+      "offset_bytes": 0,
+      "length_bytes": 801,
+      "notice_sha256": "2efcb593110027b4fddc75dd36d782e390de9b366d68f00ccd9db1d4a0184a83",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/phosphor2x.c",
+      "source_file_sha256": "b2ff7dc60866192ea9c602b5b7f6cf64a13ba705bdcafecf39d06282ff975d3c",
+      "source_file_size_bytes": 14808,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/picoscale_256x_320x240.c",
+      "source_file_sha256": "3e058bb4b05d2e07bae1989f2a22e87b86017d8d521bc4cc33b5f4c275b3332c",
+      "source_file_size_bytes": 19242,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/scale2x.c",
+      "source_file_sha256": "5a30e19a67c9af5c2d011c25ff0303644a877bdc6cebee78b65581ec7ba01044",
+      "source_file_size_bytes": 8027,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/scanline2x.c",
+      "source_file_sha256": "756e3820c9481e3afea7c772ab826023efaca32aa4c15e5db19f23d77543d9c6",
+      "source_file_size_bytes": 7802,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/snes_ntsc/snes_ntsc.c",
+      "source_file_sha256": "4b8454188988cac6177a6119dc5d4fa5b913c7600bf1880add4bad13ec142d3d",
+      "source_file_size_bytes": 8616,
+      "offset_bytes": 161,
+      "length_bytes": 737,
+      "notice_sha256": "90dfb35b97d8599292c2945bca179b1e1d662e3c34665a2548fba094a644e318",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/snes_ntsc/snes_ntsc_impl.h",
+      "source_file_sha256": "40e4220bf4da10b1e214a6577e5343e18dcd403a7d11c459cd06589b9bbb1f89",
+      "source_file_size_bytes": 12230,
+      "offset_bytes": 203,
+      "length_bytes": 732,
+      "notice_sha256": "4033797e0dc0577b17002cd0ccd4b894b3ecb90d93f2e6d72e0af56e33b373da",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/softfilter.h",
+      "source_file_sha256": "04a4ef52fbcc5413dc5c8405963098f3d175dcd038b2155651b48d90d1af5405",
+      "source_file_size_bytes": 7009,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/super2xsai.c",
+      "source_file_sha256": "d27f4d506aab57ac4ffca1da8979bb17cd0509523aa9f8c4e1cba5a6546da165",
+      "source_file_size_bytes": 12886,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "badadd24f8373a6a36c97559cb2ceddb41e4f0f5b2e66441466dc17bf35bb888",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/supereagle.c",
+      "source_file_sha256": "d38d74674ea061cfeafe4a8a32683bc9d24623e7bbe065735d25457bde1063f0",
+      "source_file_size_bytes": 12150,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d67bc9b4cf47b85ef43f63f068793981a7d793bd2ba0158a90ff76683459518c",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/upscale_1_5x.c",
+      "source_file_sha256": "a36f505314415115bdfc982bd90a42ee35b07739097f975a5cb02555f4f52582",
+      "source_file_size_bytes": 9342,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/upscale_1_66x_fast.c",
+      "source_file_sha256": "1579cc14b0a9376da733898636d0d255d6daff8a1a47dc5135fa8faa4897f8d4",
+      "source_file_size_bytes": 10739,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/upscale_240x160_320x240.c",
+      "source_file_sha256": "32104e0e89d748cf00d0607a2469eb9b960506c13f1daf136690960a7894ebac",
+      "source_file_size_bytes": 14485,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/upscale_256x_320x240.c",
+      "source_file_sha256": "04d0fece0208b0492fc4522222ae41a08d65d78d6388b62a3a339c8c08844c87",
+      "source_file_size_bytes": 26549,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/gfx/video_filters/upscale_mix_240x160_320x240.c",
+      "source_file_sha256": "2939dceb77a2e6fb62a91147a6eb3c65e63d7570b065948133c313841d825b0f",
+      "source_file_size_bytes": 15955,
+      "offset_bytes": 0,
+      "length_bytes": 787,
+      "notice_sha256": "d9249900a3aacb9be095ddc36b24e281bf6626461731bfc5510be36dd31c5fc3",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/chorus.c",
+      "source_file_sha256": "96d7481ae04dbd690c6c2a74aeeb0e13a7eb6f7d8e89e78b0715a3f2d2276091",
+      "source_file_size_bytes": 5324,
+      "offset_bytes": 0,
+      "length_bytes": 1374,
+      "notice_sha256": "d2b816a4e77da3b08900d0d347f949c99dc8de57bb81ddf7b6d23516b2f33b07",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/crystalizer.c",
+      "source_file_sha256": "cc7cb369bfb29afb359bcb057275e99d0922abcbdc65771cbc8fa7b9c2ec4352",
+      "source_file_size_bytes": 2931,
+      "offset_bytes": 0,
+      "length_bytes": 1372,
+      "notice_sha256": "aa1b507d1b0865c9a6982820df3b6fb5e4f17e1c0d0fbea554d883d702dc83fd",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/echo.c",
+      "source_file_sha256": "2da706b3c664ffad4f9925a5f7a0a51b92bb86e267fbe75290828e80d18a98e9",
+      "source_file_size_bytes": 5430,
+      "offset_bytes": 0,
+      "length_bytes": 1372,
+      "notice_sha256": "aa1b507d1b0865c9a6982820df3b6fb5e4f17e1c0d0fbea554d883d702dc83fd",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/eq.c",
+      "source_file_sha256": "36c0897151198009392a8e1c8a9e13c7b9cf4e3db83d012a0b1d4cb9a014aa37",
+      "source_file_size_bytes": 10129,
+      "offset_bytes": 0,
+      "length_bytes": 1370,
+      "notice_sha256": "b6db1ab93a9e47d32a298d7499d01116d02643c23d75e3dbe2efccc8ca578853",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/fft/fft.c",
+      "source_file_sha256": "b3307eda7fcc1edf99d823775783524e37d526465760e75ed4855db5aaf1c8ab",
+      "source_file_size_bytes": 5942,
+      "offset_bytes": 0,
+      "length_bytes": 1371,
+      "notice_sha256": "13e9733c6b694186523a29e45c0d32f4a541fb325f592ee24f84cfc458b05486",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/fft/fft.h",
+      "source_file_sha256": "5e82df60ca1c6c6eb6b0b13123df4396e751253a17b70a92804db5dc6a1924d4",
+      "source_file_size_bytes": 1883,
+      "offset_bytes": 0,
+      "length_bytes": 1371,
+      "notice_sha256": "dda620d1cd9bc4739ea635d2cf45ad5500d1b0ca1f66fcc1884682ba1993c402",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/iir.c",
+      "source_file_sha256": "cf745028c9fa8fea91c9e0d669157e8099262bee1b88186576f5adc43ea4a35f",
+      "source_file_size_bytes": 10980,
+      "offset_bytes": 0,
+      "length_bytes": 1371,
+      "notice_sha256": "bd877b23a91512688b1c38b4f63abb4492f88b691efcf79f09fc7812f4b15447",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/panning.c",
+      "source_file_sha256": "c03a8a4cb9db31e0be18a51359417f3883ad8e9751b264494d432e7cf827882b",
+      "source_file_size_bytes": 3596,
+      "offset_bytes": 0,
+      "length_bytes": 1375,
+      "notice_sha256": "06bc0c146657d264978c9056b21519fe2872e5e853594aae24c9bbd2fed7e3ce",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/phaser.c",
+      "source_file_sha256": "277e7639f5d64978a84c7c489b7d4448316041bf4de2672e2775719e404eb959",
+      "source_file_size_bytes": 4403,
+      "offset_bytes": 0,
+      "length_bytes": 1374,
+      "notice_sha256": "b3a0b2529b8d64ff781c24c742d253f62998f46657f5b628209c2fb069cfb764",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/reverb.c",
+      "source_file_sha256": "23d505d3f50dbe519fbb6fd12f97630352b02968d14c8d55a76213e05fc306b7",
+      "source_file_size_bytes": 8663,
+      "offset_bytes": 0,
+      "length_bytes": 1374,
+      "notice_sha256": "62648d89a85eedde832221b78af4087b27a8ce8ed611f61a003294ba7eb3867e",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/tremolo.c",
+      "source_file_sha256": "f65c96deaa88ebd50eeeae3d4ba0eadebf5fc9626acdcfa930b4592c3e058af9",
+      "source_file_size_bytes": 4151,
+      "offset_bytes": 0,
+      "length_bytes": 1375,
+      "notice_sha256": "d460e253823f6852c9025bc68bc26d2a249ca11948a0d4002899f38712306749",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/vibrato.c",
+      "source_file_sha256": "e59c80dac4be8cce46e672513980f382ee34199774a067fbb6150174b741dcc4",
+      "source_file_size_bytes": 5792,
+      "offset_bytes": 0,
+      "length_bytes": 1375,
+      "notice_sha256": "a0bd0a13f21f4c29af9ece766584a86c27abf883d33742fb36f4a0fc2e812f2a",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "ra-source",
+      "path": "modified/libretro-common/audio/dsp_filters/wahwah.c",
+      "source_file_sha256": "7dd61447cc31c917e61142eba1d0eeb47e194c37cf0878416dd29b459c4a65c5",
+      "source_file_size_bytes": 4892,
+      "offset_bytes": 0,
+      "length_bytes": 1374,
+      "notice_sha256": "a408b59c520876f3d5005cfe74b4ad2b7e94a42e83f2a424e3f0dd20751bcf68",
+      "kind": "exact-inline-notice"
+    },
+    {
+      "archive_id": "supplemental-primary",
+      "path": "imgui-LICENSE.txt",
+      "source_file_sha256": "0ebf8feb061536bdebd7c6a365b64808ae3479048b1c44113e19037680c5f2be",
+      "source_file_size_bytes": 1083,
+      "offset_bytes": 0,
+      "length_bytes": 1083,
+      "notice_sha256": "0ebf8feb061536bdebd7c6a365b64808ae3479048b1c44113e19037680c5f2be",
+      "kind": "supplemental-not-in-R04-archive"
+    },
+    {
+      "archive_id": "supplemental-primary",
+      "path": "sfmt-LICENSE.txt",
+      "source_file_sha256": "9d6db9b6702bf80c926b36d61f6282bf48d0a9a8044db2bd31e524aa08ccac0f",
+      "source_file_size_bytes": 1706,
+      "offset_bytes": 0,
+      "length_bytes": 1706,
+      "notice_sha256": "9d6db9b6702bf80c926b36d61f6282bf48d0a9a8044db2bd31e524aa08ccac0f",
+      "kind": "supplemental-not-in-R04-archive"
+    },
+    {
+      "archive_id": "supplemental-primary",
+      "path": "glibc-COPYING.LIB",
+      "source_file_sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "source_file_size_bytes": 26530,
+      "offset_bytes": 0,
+      "length_bytes": 26530,
+      "notice_sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "kind": "supplemental-not-in-R04-archive"
+    },
+    {
+      "archive_id": "project-reference",
+      "path": "project/assets/fonts/OFL.txt",
+      "source_file_sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "source_file_size_bytes": 4396,
+      "offset_bytes": 327,
+      "length_bytes": 4069,
+      "notice_sha256": "f19c674290e5dc79f02e8efe16139ab56a06a7128876f5b1579ffd0db5bc897e",
+      "kind": "full-standard-OFL-text; actual-native-font-copyrights-in-native-font-notices.json"
+    }
+  ],
+  "packet_sha256": "88463b6395cbb499ffd9448712577062d911df8e21cd08fc1148b811c4409ee4",
+  "packet_size_bytes": 543710,
+  "entries": 137,
+  "complete_native_notice_packet": false,
+  "distribution_cleared": false
+}

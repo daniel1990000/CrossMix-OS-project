@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+  "scope": "Optional checked completion adaptation after exact selected spruce recipe scripts; signal handlers still set atomic requests only; quit request is atomic across emulator completion and SDL event threads",
+  "source_files": [
+    {
+      "path": "SDL/SDLMain.cpp",
+      "sha256": "37fac91d2e8ccab9b22122fee6333249899e2a7bc61873e3998b2a909df6693e"
+    }
+  ],
+  "patches": [
+    {
+      "path": "patches/0004-checked-spruce-save-and-quit.patch",
+      "sha256": "06f648921f13d57475a507cdbd6c082b31dc125e2f1f00ba6adf107b85f6c3ab",
+      "license": "GPL-2.0-or-later"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "SDL/SDLMain.cpp",
+      "sha256": "e5550c1925e6ca331b4835689fff6b2c975232c3dd1753255582d94026f203af"
+    }
+  ],
+  "qualification": {
+    "full_engine_build": false,
+    "device_tested": false,
+    "installed_engine_changed": false
+  }
+}

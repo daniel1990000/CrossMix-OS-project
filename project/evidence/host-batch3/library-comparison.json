@@ -1,0 +1,59 @@
+{
+  "snapshot": {
+    "metrics": {
+      "startup": {
+        "baseline_ms": 5299.145239,
+        "candidate_ms": 5664.111767,
+        "limit_ms": 6623.931548750001,
+        "passed": true,
+        "status": "measured"
+      },
+      "page_p95": {
+        "baseline_ms": 29.180034,
+        "candidate_ms": 33.411477,
+        "limit_ms": 36.4750425,
+        "passed": true,
+        "status": "measured"
+      },
+      "search_p95": {
+        "baseline_ms": 11.629383,
+        "candidate_ms": 12.253615,
+        "limit_ms": 16.629383,
+        "passed": true,
+        "status": "measured"
+      }
+    },
+    "passed": true
+  },
+  "injected_live": {
+    "metrics": {
+      "startup": {
+        "baseline_ms": 5974.577317,
+        "candidate_ms": 4773.021764,
+        "limit_ms": 7468.22164625,
+        "passed": true,
+        "status": "measured"
+      },
+      "page_p95": {
+        "baseline_ms": 6175.740313,
+        "candidate_ms": 17.126697,
+        "limit_ms": 7719.675391250001,
+        "passed": true,
+        "status": "measured"
+      },
+      "search_p95": {
+        "baseline_ms": 6520.978409,
+        "candidate_ms": 10.168424,
+        "limit_ms": 8151.22301125,
+        "passed": true,
+        "status": "measured"
+      }
+    },
+    "passed": true
+  },
+  "live_warm_query_targets": {
+    "page": true,
+    "search": true
+  },
+  "passed": true
+}

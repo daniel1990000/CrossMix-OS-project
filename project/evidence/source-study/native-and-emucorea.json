@@ -1,0 +1,261 @@
+{
+  "schema": 1,
+  "scope": "Read selected frontend text, game-list presentation and image pipeline implementations; this is not a full repository or binary reverse-engineering claim.",
+  "sources": {
+    "ppsspp": {
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "inspected_files": [
+        {
+          "path": "Common/Render/Text/draw_text.cpp",
+          "sha256": "8d5259e6fc0eb3814baf561a9fd61db487522bebf5441aaf39a08a214ac6b516"
+        },
+        {
+          "path": "Common/Data/Text/WrapText.cpp",
+          "sha256": "30dab93bccc37c99997c7f3cebec94550088226c01b8362ca7a3670dcf00693a"
+        },
+        {
+          "path": "Common/UI/Context.cpp",
+          "sha256": "01b9d1c2257a4512104fff059ea1accd73c895eb9329cb5cc853f0d7cc58f22a"
+        },
+        {
+          "path": "Common/UI/View.cpp",
+          "sha256": "7ef0fe96cfe084bf7a6ed74a8e6e328e8d8441dff758117ad3636a2773a9944e"
+        },
+        {
+          "path": "Common/UI/AsyncImageFileView.h",
+          "sha256": "9b3103c7ba6c31f050a3304398464179228bff3cf77f63098f740e3b79694f59"
+        },
+        {
+          "path": "Common/UI/AsyncImageFileView.cpp",
+          "sha256": "5cfb9a3e7e3ef5f3f98fd95fd5ef221e035bad5ef073a0397b1ab2d8aa3adcc9"
+        },
+        {
+          "path": "UI/MainScreen.cpp",
+          "sha256": "6e7cb22bfd9569f5a540a324897410a083568218ee874167f49c09fa373f950a"
+        },
+        {
+          "path": "UI/GameInfoCache.cpp",
+          "sha256": "34740736bcf3f6d2475e4d42b0cfda92421583c21b746279f231a659119e5bd1"
+        },
+        {
+          "path": "UI/GameInfoCache.h",
+          "sha256": "8b444f6069aa2e8c6ccdb993f3ecbb796b4d442157a8a86f24f95dd8889488c8"
+        }
+      ]
+    },
+    "emucorea": {
+      "repository": "https://github.com/sashkinbro/EmuCoreA",
+      "commit": "16c1bfb244e9359b242e410e468032cae0c111ef",
+      "inspected_files": [
+        {
+          "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeScreen.kt",
+          "sha256": "6f7b6ace5d0a5bea529fc9a48ad9dc8461f9d09b6390c2a06abd5f8159aab77e"
+        },
+        {
+          "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeViewModel.kt",
+          "sha256": "b77c6d729c7fba0112d6363ecb75fc694072239892296376c9924e7a6dc2fbe2"
+        },
+        {
+          "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeShelfMode.kt",
+          "sha256": "d8fc81cee5fa8459d05f0a6b4f115acbd55878eaa41fb0f89d58f0fa66bb059e"
+        },
+        {
+          "path": "app/src/main/java/com/sbro/emucorea/core/PspImageSource.kt",
+          "sha256": "cd7ae94882103a7210ab834f96d1a3e4f686091e2766bcc350f1aa3237d4a91c"
+        }
+      ]
+    }
+  },
+  "coverage": [
+    {
+      "topic": "Color-independent text caching",
+      "source": "ppsspp",
+      "path": "Common/Render/Text/draw_text.cpp",
+      "lines": [
+        46,
+        122
+      ],
+      "observed": "DrawString keys the raster texture by text and fontStyle, then passes color to DrawTexRect. This avoids baking transient focus/dimming colors into glyph texture keys.",
+      "adoption": "Independent original Python change in Renderer._label: opaque white glyph raster keyed by text/font pixels/width; SDL RGB/alpha modulation per draw."
+    },
+    {
+      "topic": "Wrapping and ellipsis",
+      "source": "ppsspp",
+      "path": "Common/Data/Text/WrapText.cpp",
+      "lines": [
+        1,
+        210
+      ],
+      "observed": "WordWrapper tracks input indices/line positions, respects hard newlines, recognizes CJK and punctuation, and separately marks ellipsis. It does not infer unconsumed input by comparing repeated paragraph values.",
+      "adoption": "Fixed project repeated-paragraph and empty-paragraph cutoff handling using paragraph position; retained project width/line budgets and existing inherited SDL text wrapper."
+    },
+    {
+      "topic": "Text squeeze and bounds",
+      "source": "ppsspp",
+      "path": "Common/UI/Context.cpp",
+      "lines": [
+        335,
+        356
+      ],
+      "observed": "CalculateTextScale clamps shrinkage to a minimum and DrawTextRectSqueeze measures inside a known rectangle, restoring the previous font scale afterward.",
+      "adoption": "Design reference only; keep existing explicit text-scale preference and bounded ellipsis instead of importing the C++ rendering stack."
+    },
+    {
+      "topic": "Long list labels",
+      "source": "ppsspp",
+      "path": "UI/MainScreen.cpp",
+      "lines": [
+        131,
+        182
+      ],
+      "observed": "DrawIconWithText measures available list-label width, applies a sine offset when text overflows, and scissors only the label rectangle.",
+      "adoption": "Potential bounded focused-title reveal; not implemented in this change."
+    },
+    {
+      "topic": "Focus and image arrival",
+      "source": "ppsspp",
+      "path": "UI/MainScreen.cpp",
+      "lines": [
+        292,
+        416
+      ],
+      "observed": "GameButton asks the shared info cache for PARAM_SFO and ICON; icon alpha fades based on timeLoaded, aspect ratio is retained, and focused art uses an independently drawn pulse.",
+      "adoption": "Existing original artwork worker/main-thread upload split retained; image-arrival fade is optional future presentation work, with reduced-motion bypass required."
+    },
+    {
+      "topic": "Demand-based image work and thread boundary",
+      "source": "ppsspp",
+      "path": "UI/GameInfoCache.cpp",
+      "lines": [
+        416,
+        446,
+        1063,
+        1121
+      ],
+      "observed": "GetInfo is main-thread-only for images, subtracts loaded and pending flags before enqueuing work; FinishPendingTextureLoads finishes texture work with the render context. SetupTexture records failed attempts so failed images do not retry every frame.",
+      "adoption": "Project already follows a stronger split for its constrained use: one bounded decode worker, explicit admission/result acknowledgements, main-thread SDL uploads, bounded negative cache, selected-cover priority and reduced-motion completion repaint."
+    },
+    {
+      "topic": "Named async component limitation",
+      "source": "ppsspp",
+      "path": "Common/UI/AsyncImageFileView.h",
+      "lines": [
+        9,
+        10
+      ],
+      "observed": "The source explicitly says TODO: Actually make async. AsyncImageFileView.cpp constructs ManagedTexture in Draw.",
+      "adoption": "Do not import this path or claim it supplies asynchronous IO for the shell."
+    },
+    {
+      "topic": "Readable background overlays",
+      "source": "emucorea",
+      "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeScreen.kt",
+      "lines": [
+        377,
+        405
+      ],
+      "observed": "Home background media is covered by a theme-background layer whose alpha is homeBackgroundDim/100.",
+      "adoption": "Reference for any future readable-overlay adjustment; existing high-contrast mode remains available. No new setting or wallpaper owner introduced."
+    },
+    {
+      "topic": "List text and short press feedback",
+      "source": "emucorea",
+      "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeScreen.kt",
+      "lines": [
+        1685,
+        1759
+      ],
+      "observed": "GameListCard uses a 100 ms pressed-scale animation, ContentScale.Fit for covers, theme onSurface text, and title/fileName bounded to two lines with ellipsis.",
+      "adoption": "Current shell preserves real cover aspect ratio and short bounded row motion; optional two-line selected-title layout is a plausible alternative to clipped title motion."
+    },
+    {
+      "topic": "Bounded cover jobs and cancellation",
+      "source": "emucorea",
+      "path": "app/src/main/java/com/sbro/emucorea/ui/home/HomeViewModel.kt",
+      "lines": [
+        804,
+        840
+      ],
+      "observed": "Cover sync limits work with Semaphore(3), checks emulator activity and coroutine cancellation, retries at most three times with backoff, then publishes the updated visible state.",
+      "adoption": "Keep existing library/source authority and bounded decoder; do not add a second downloader/scanner or parse owner ROM containers in the renderer."
+    }
+  ],
+  "bounded_improvements": [
+    {
+      "id": "glyph-tint-cache",
+      "status": "implemented",
+      "project_paths": [
+        "project/psp_shell/ui/renderer.py:Renderer._label"
+      ],
+      "defect": "RGBA in the text texture cache key caused transient alpha changes and text shadow passes to rasterize/upload identical glyph shapes repeatedly.",
+      "tests": [
+        "test_ui_rendering.RenderTests.test_text_reuses_glyph_texture_across_tints_shadows_and_alpha",
+        "existing deterministic static frame/no render tick IO and embedded ownership tests"
+      ],
+      "host_measurement_before": {
+        "scenario": "100 alpha changes, same glyph text/font/width; _text shadow and foreground",
+        "backend": "software",
+        "raster_calls": 165,
+        "texture_uploads": 165,
+        "cache_entries": 165,
+        "cache_bytes": 7470540,
+        "elapsed_host_ms": 714.2006809999657,
+        "device_performance_claim": false
+      },
+      "host_measurement_after": {
+        "scenario": "100 alpha changes, same glyph text/font/width; _text shadow and foreground",
+        "backend": "software",
+        "raster_calls": 1,
+        "texture_uploads": 1,
+        "cache_entries": 1,
+        "cache_bytes": 45276,
+        "elapsed_host_ms": 13.768230000096082,
+        "device_performance_claim": false
+      },
+      "measurement_limits": "One unbenchmarked host software-renderer sample; counts are deterministic for this scenario, timings are not a target-device result."
+    },
+    {
+      "id": "paragraph-overflow",
+      "status": "implemented",
+      "project_paths": [
+        "project/psp_shell/ui/text.py:TextRasterizer.wrap"
+      ],
+      "defect": "wrap(\"same\\nsame\\nsame\", max_lines=2) returned two unmarked same lines because it compared paragraph text with the final paragraph value. Blank remaining paragraphs also escaped the overflow marker.",
+      "tests": [
+        "test_ui_text.TextWrappingTests.test_repeated_paragraphs_mark_hidden_remainder",
+        "test_ui_text.TextWrappingTests.test_empty_paragraphs_preserve_breaks_and_mark_truncation",
+        "test_ui_text.TextWrappingTests.test_word_and_long_token_wraps_stay_inside_width_and_line_budget"
+      ]
+    },
+    {
+      "id": "focused-long-title-reveal",
+      "status": "candidate_not_implemented",
+      "defect_or_limit": "Focused game titles are still single-line ellipsized, so games sharing a long prefix may be indistinguishable on the list without another detail surface.",
+      "bounded_choices": [
+        "PPSSPP-style measured, clipped selected-title reveal only; reset on focus/page changes; reduced motion keeps static ellipsis.",
+        "EmuCoreA-style selected-title block limited to two measured lines; move subtitle below actual title height so large text cannot overlap."
+      ],
+      "tests_needed": [
+        "same-prefix different-suffix titles expose useful distinguishing text",
+        "large-text title/subtitle rectangles do not overlap",
+        "if motion is used: focus reset, clipping, reduced motion, static determinism and no per-frame new raster uploads"
+      ]
+    }
+  ],
+  "verification": {
+    "text_tests": 3,
+    "renderer_tests": 9,
+    "skips": 0,
+    "failures": 0,
+    "new_runtime_modules": false,
+    "copied_upstream_code_or_assets": false,
+    "device_or_emulator_binary_changed": false,
+    "device_performance_claim": false
+  },
+  "not_claimed": [
+    "Full PPSSPP or EmuCoreA repository audit",
+    "A new native emulator build or installed theme activation",
+    "Hardware FPS, memory, battery or PowerVR measurements"
+  ]
+}

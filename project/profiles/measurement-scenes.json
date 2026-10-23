@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "spruce_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "profiles": [
+    {"id": "frontend-classic", "enabled": true, "scenes": ["cold-home", "library-10000", "settings-navigation"]},
+    {"id": "frontend-psp", "enabled": true, "scenes": ["cold-home", "library-10000", "settings-navigation"]}
+  ],
+  "conditions": ["Record exact source/binary/settings/data hashes, firmware and filesystem.", "Keep emulator versions, content, radios, brightness, clocks and scene actions identical.", "Choose numerical regression budgets from classic baseline before candidate comparison."],
+  "device_qualified": false
+}

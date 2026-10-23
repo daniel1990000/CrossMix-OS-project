@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "evidence_class": "synthetic-host-budget",
+  "chosen_after_exploration": true,
+  "scope": "Same 10000-entry fixture, five measured page/search repetitions on the same host. No TG5040 budget is established.",
+  "regression": {
+    "startup": {
+      "ratio": 1.25,
+      "noise_ms": 250
+    },
+    "page_p95": {
+      "ratio": 1.25,
+      "noise_ms": 5
+    },
+    "search_p95": {
+      "ratio": 1.25,
+      "noise_ms": 5
+    }
+  },
+  "live_query_p95_target_ms": 100,
+  "formal_candidate": "library-final.json"
+}

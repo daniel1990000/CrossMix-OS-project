@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "current-handover-consistency",
+  "status": "passed",
+  "implementation_commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+  "strict_tests": 974,
+  "new_tests": 141,
+  "completed_scoped_rows": 14,
+  "host_engineering_rows": 13,
+  "owner_attested_rows": 1,
+  "pending_rows": 11,
+  "physical_areas_run": 0,
+  "physical_areas_total": 13,
+  "current_evidence_references_exist": true,
+  "reviewed_runtime_tool_bytes_unchanged": true,
+  "all_current_json_parsed": true,
+  "owner_private_artifacts_retained_and_freshly_retrieved": 3,
+  "source_permission_attestation_also_retained_and_retrieved": true,
+  "later_changes_documentation_and_evidence_only": true,
+  "versioned_handover_files_sha256": {
+    "HANDOVER.md": "885ae0c334900de7d1fe53352cd6c0697d80eb8d6643d50dc97a46e00521b1b6",
+    "NEXT_CHAT_PROMPT.txt": "53789195d2713230784c51f99e259101ce95294c05abb479d26157c3dee18a4a",
+    "project/handover/LATEST.json": "fb368747fa59cfc73012b0abcaf6b5952a903f43004135aaea01f98bccc0f2a0"
+  },
+  "pr_draft": true,
+  "pr_merged": false,
+  "production_gates_enabled": false
+}

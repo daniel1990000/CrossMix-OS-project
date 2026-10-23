@@ -1,0 +1,432 @@
+{
+  "schema": 1,
+  "device": "TrimUI Smart Pro (original A133 / PowerVR)",
+  "spruce_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "catalog_commit": "e7353407e4d6f72631c279b88d01fe3281ee61ca",
+  "catalog_sha256": "ef1998c81b6f1a505d3cd3fdf98ceb331e4ae9ce7f0cdc5d7b3142f2c6347ff4",
+  "ports": [
+    {
+      "id": "gta3",
+      "title": "Grand Theft Auto III",
+      "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/gta3",
+      "layout": "classic_gta",
+      "required_files": [
+        "models/gta3.img",
+        "models/gta3.dir",
+        "data/gta3.dat"
+      ],
+      "allowed_roots": [
+        "anim",
+        "audio",
+        "data",
+        "models",
+        "text",
+        "txd"
+      ],
+      "settings": [
+        "re3.ini"
+      ],
+      "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/gta3",
+      "owner_files": "Classic PC GTA III data, not Definitive Edition. Copy game data only; the installed PortMaster engine stays in place.",
+      "warnings": [
+        "Structural validation cannot certify a complete or licensed game copy.",
+        "Upstream README contains Vice City copy/paste details; use the GTA III port metadata and verify in game."
+      ],
+      "scenes": [
+        "fixed-save-city-route",
+        "dense-traffic-route"
+      ],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false,
+      "installation": {
+        "launcher": "Roms/ports/Grand Theft Auto 3.sh",
+        "launcher_source_sha256": "49fc8590edf6d3c2109b4a7f6a07714e1475da213b41908ea2e6c9b499f6df0f",
+        "engine_alternatives": [
+          "Roms/ports/gta3/re3",
+          "Roms/ports/gta3/re3_gl"
+        ],
+        "support_files": [],
+        "runtime_files": [],
+        "notes": "Script chooses re3_gl when glxinfo reports OpenGL; that choice is not inferred during inventory.",
+        "library_directories": [
+          "Roms/ports/gta3/libs"
+        ]
+      },
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/gta3/*.b",
+          "Roms/ports/gta3/*.sav"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
+    },
+    {
+      "id": "gtavc",
+      "title": "Grand Theft Auto: Vice City",
+      "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/gtavc",
+      "layout": "classic_gta",
+      "required_files": [
+        "models/gta3.img",
+        "models/gta3.dir",
+        "data/gta_vc.dat"
+      ],
+      "allowed_roots": [
+        "anim",
+        "audio",
+        "data",
+        "models",
+        "text",
+        "txd"
+      ],
+      "settings": [
+        "reVC.ini"
+      ],
+      "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/gtavc",
+      "owner_files": "Classic PC Vice City data, not Definitive Edition. The installed PortMaster engine stays in place.",
+      "warnings": [
+        "Structural validation cannot certify a complete or licensed game copy."
+      ],
+      "scenes": [
+        "fixed-save-city-route",
+        "dense-traffic-route"
+      ],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false,
+      "installation": {
+        "launcher": "Roms/ports/Grand Theft Auto Vice City.sh",
+        "launcher_source_sha256": "365a3ff50740fd0330089d6d50798a6b5349f17597927f6fd9f0cefd8fc06eca",
+        "engine_alternatives": [
+          "Roms/ports/gtavc/reVC",
+          "Roms/ports/gtavc/reVC_gl"
+        ],
+        "support_files": [],
+        "runtime_files": [],
+        "notes": "Script chooses reVC_gl when glxinfo reports OpenGL; that choice is not inferred during inventory.",
+        "library_directories": [
+          "Roms/ports/gtavc/libs"
+        ]
+      },
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/gtavc/*.b",
+          "Roms/ports/gtavc/*.sav"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
+    },
+    {
+      "id": "sonic_mania",
+      "title": "Sonic Mania",
+      "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/sonicmania",
+      "layout": "single_file",
+      "import_name": "Data.rsdk",
+      "required_files": [
+        "Data.rsdk"
+      ],
+      "settings": [
+        "Settings.ini"
+      ],
+      "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster/PortMaster-New/tree/444778f3ae29facbd97b823dc3ca7270b3ebe499/ports/sonic.mania",
+      "owner_files": "Your own base-game Data.rsdk. Plus is a separate custom-build track; this tool does not download or patch DLC.",
+      "warnings": [
+        "Filename and hash inventory identify the selected file; no published official game-data digest is assumed."
+      ],
+      "scenes": [
+        "green-hill-act-1-fixed-route",
+        "special-stage"
+      ],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false,
+      "installation": {
+        "launcher": "Roms/ports/Sonic Mania.sh",
+        "launcher_source_sha256": "d4aff70b119f6d612149964d5e9500d28f262845161e16881f7130b1579f7af9",
+        "engine_alternatives": [
+          "Roms/ports/sonicmania/sonicmania"
+        ],
+        "support_files": [
+          "Roms/ports/sonicmania/Game.so",
+          "Roms/ports/sonicmania/libs/libogg.so.0"
+        ],
+        "runtime_files": [],
+        "notes": "The base game requires sonicmania and Game.so plus its shipped libs. Plus remains a separate, non-distributed build. Static inventory does not resolve system loader dependencies.",
+        "library_directories": [
+          "Roms/ports/sonicmania/libs"
+        ]
+      },
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [],
+        "file_patterns": [
+          "Roms/ports/sonicmania/*.bin"
+        ],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
+    },
+    {
+      "id": "render96ex",
+      "title": "Super Mario 64 / Render96ex",
+      "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/render96ex",
+      "layout": "single_file",
+      "import_name": "baserom.us.z64",
+      "required_files": [
+        "baserom.us.z64"
+      ],
+      "md5": "20b854b239203baf6c961b850a4a51a2",
+      "sha1": "9bef1128717f958171a4afac3ed78ee2bb4e86ce",
+      "settings": [
+        "conf/sm64config.txt",
+        "conf/DynOS.1.1.alpha.config.txt"
+      ],
+      "workspace_bytes": 1073741824,
+      "source": "https://github.com/PortsMaster-MV/PortMaster-MV-New/tree/981df31d3eedd77c7636f0589ed02bc3989698cd/ports/render96ex",
+      "owner_files": "Legally owned US Super Mario 64 ROM. Only the documented US digest is accepted.",
+      "warnings": [
+        "First launch needs about 1 GB extra space for extraction.",
+        "Upstream's 60 fps default is a setting, not a measured guarantee; model packs may cause choppiness."
+      ],
+      "scenes": [
+        "bob-omb-battlefield-fixed-route",
+        "castle-courtyard"
+      ],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false,
+      "installation": {
+        "launcher": "Roms/ports/render96ex.sh",
+        "launcher_source_sha256": "905e230ac580d61166acc3cb92bd8f8c10f6f6678a57f8caf843fc4d9e482e6f",
+        "engine_alternatives": [
+          "Roms/ports/render96ex/sm64.us.f3dex2e.aarch64"
+        ],
+        "support_files": [
+          "Roms/ports/render96ex/tools/install_mario64",
+          "Roms/ports/render96ex/bin.aarch64/text_viewer"
+        ],
+        "runtime_files": [],
+        "notes": "After successful extraction the existing launcher can remove the input ROM; input absence alone does not establish an unusable installed game.",
+        "preparation": {
+          "files": [
+            "Roms/ports/render96ex/res/base.zip"
+          ],
+          "directories": [
+            "Roms/ports/render96ex/res/demos",
+            "Roms/ports/render96ex/res/texts"
+          ],
+          "marker_is_runtime_proof": false,
+          "replaces_owner_input": true
+        },
+        "library_directories": [
+          "Roms/ports/render96ex/libs.aarch64"
+        ]
+      },
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [
+          "Roms/ports/render96ex/conf"
+        ],
+        "file_patterns": [],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
+    },
+    {
+      "id": "celeste",
+      "title": "Celeste",
+      "enabled": true,
+      "status": "candidate; catalogue lists original Smart Pro; device testing pending",
+      "directory": "Roms/ports/celeste/gamedata",
+      "layout": "celeste",
+      "required_files": [
+        "Celeste.exe"
+      ],
+      "required_directories": [
+        "Content"
+      ],
+      "settings_directory": "Roms/ports/celeste",
+      "settings": [
+        "savedata/settings.celeste"
+      ],
+      "workspace_bytes": 0,
+      "source": "https://github.com/PortsMaster/PortMaster-New/tree/444778f3ae29facbd97b823dc3ca7270b3ebe499/ports/celeste",
+      "runtime": "mono-6.12.0.122-aarch64.squashfs",
+      "owner_files": "Supported DRM-free itch.io Linux or EGS files. Copy the original game folder; the source is never changed.",
+      "warnings": [
+        "First launch performs texture repacking and modifies the imported copy; keep the original owner files untouched.",
+        "Install the Mono runtime through the existing PortMaster manager first."
+      ],
+      "scenes": [
+        "forsaken-city-fixed-room-route",
+        "particles-and-transition-route"
+      ],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false,
+      "installation": {
+        "launcher": "Roms/ports/Celeste.sh",
+        "launcher_source_sha256": "aaa2e217d6dc8a2d67a60263de59e16b7cca822e7ecb38999fdeb1febacdd1d0",
+        "engine_alternatives": [],
+        "support_files": [
+          "Roms/ports/celeste/libs/Celeste.exe.config",
+          "Roms/ports/celeste/dlls/CelestePatches.dll",
+          "Roms/ports/celeste/celeste-repacker",
+          "Roms/ports/celeste/progressor",
+          "Roms/ports/celeste/repack.src",
+          "Roms/ports/celeste/common.src",
+          "Roms/ports/celeste/FiraCode-Regular.ttf"
+        ],
+        "runtime_files": [
+          "Persistent/portmaster/PortMaster/libs/mono-6.12.0.122-aarch64.squashfs"
+        ],
+        "notes": "The existing launcher mounts Mono and runs the owner Celeste.exe. It repacks imported textures and changes imported dependency files; originals remain outside the card.",
+        "library_directories": [
+          "Roms/ports/celeste/libs",
+          "Roms/ports/celeste/dlls"
+        ],
+        "preparation": {
+          "files": [
+            "Roms/ports/celeste/gamedata/.astc_done"
+          ],
+          "directories": [],
+          "marker_is_runtime_proof": false,
+          "replaces_owner_input": false
+        }
+      },
+      "source_binary_correspondence_verified": false,
+      "resume_capability": "in-game-save",
+      "save_registry": {
+        "directories": [
+          "Roms/ports/celeste/savedata"
+        ],
+        "file_patterns": [],
+        "device_paths_verified": false,
+        "coverage": "Source-derived preservation scope; verify the actual installed engine save paths before uninstall. Unknown save paths remain an explicit device gate."
+      }
+    },
+    {
+      "id": "gtasa",
+      "title": "Grand Theft Auto: San Andreas",
+      "enabled": false,
+      "status": "experimental; no verified original-Smart-Pro package or import contract",
+      "directory": "Roms/ports/gtasa",
+      "layout": "unsupported",
+      "settings": [],
+      "workspace_bytes": 0,
+      "owner_files": "No supported import recipe is declared.",
+      "warnings": [
+        "No performance, compatibility, save or distribution claim is made."
+      ],
+      "scenes": [],
+      "measured_fps": null,
+      "runtime_qualified": false,
+      "distribution_cleared": false
+    }
+  ],
+  "portmaster_surface": {
+    "tool_id": "app:PortMaster",
+    "system_id": "PORTS",
+    "runtime_qualified": false,
+    "files": [
+      {
+        "path": "App/PortMaster/launch.sh",
+        "source_sha256": "793912a46ce5749996f5da3fc36ed5df5aa8813b1562a133c5314379413a7135"
+      },
+      {
+        "path": "App/PortMaster/control.txt",
+        "source_sha256": "ac3083b4ce2237e628781436ec7307a22936c89b742da3143882b66446b1c836"
+      },
+      {
+        "path": "spruce/portmaster/control.txt",
+        "source_sha256": "14c778e9368dca33c1a6c8baaa3b958a6b3213b22b6135660d9b229aa3849f93"
+      },
+      {
+        "path": "spruce/scripts/emu/lib/ports_functions.sh",
+        "source_sha256": "5c3942e78cd81a168b28c893d12ca113a25b4f12b6e8308db43905d1c29a3404"
+      },
+      {
+        "path": "Emu/PORTS/config.json",
+        "source_sha256": "c0c85233eec6ad8130aea521f5033125ad1a68ae1b4381d9c347dcbeb4f0ae25"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/control.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/device_info.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs/harbourmaster/platform.py"
+      },
+      {
+        "path": "Saves/flip/home/.local/share/PortMaster/control.txt"
+      },
+      {
+        "path": "App/PortMaster/PortMaster.txt",
+        "source_sha256": "b868a2820f559addcbc27d25f7cc784197f97f60d77b340bd784eeedb272f78e"
+      },
+      {
+        "path": "App/PortMaster/mod_spruce.txt",
+        "source_sha256": "f81357cfbebc99b0c18d51ad0de770dd2b82c7bba3dca6b56ac10cae910d8d60"
+      },
+      {
+        "path": "spruce/portmaster/portmaster.txt",
+        "source_sha256": "167edccdd12b36c21661367e88b5c263fb5b3e0024291f7ae77e1e96b4204c9b"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs/harbourmaster/platform/__init__.py"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs/harbourmaster/platform/miyoo.py"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/funcs.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/tasksetter"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/PortMaster.sh"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/spruce/control.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/spruce/PortMaster.txt"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/gptokeyb"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/gptokeyb2"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/pylibs.zip"
+      },
+      {
+        "path": "Persistent/portmaster/PortMaster/.pugwash-reboot"
+      }
+    ]
+  }
+}

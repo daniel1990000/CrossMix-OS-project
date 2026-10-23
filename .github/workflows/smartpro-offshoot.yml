@@ -1,0 +1,174 @@
+name: Smart Pro offshoot host checks
+on:
+  workflow_dispatch:
+    inputs:
+      publish_verified_dev14:
+        description: 'Publish the exact previously certified original-only dev14 host artifacts'
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
+  pull_request:
+    paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
+permissions:
+  contents: read
+concurrency:
+  group: smartpro-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /project/
+            /docs/spruce-source-lock.json
+            /.github/workflows/smartpro-offshoot.yml
+            /.gitattributes
+            /AGENTS.md
+            /HANDOVER.md
+            /TRIMUI_PLAN.md
+            /README.md
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: spruceUI/spruceOS
+          ref: d45ff8dfe5756147522b04ae5863d17a90e88b54
+          path: upstream-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            App/PyUI/main-ui/**/*.py
+            App/PyUI/main-ui/LICENSE.md
+            App/PyUI/LICENSE.md
+            App/PyUI/launch.sh
+            App/PyUI/py-ui-config.json
+            App/-OTA/downloader.sh
+            App/USBStorageMode/launch.sh
+            RetroArch/igm/README.md
+            RetroArch/igm/spruce.json
+            spruce/scripts/
+            LICENSE
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: hrydgard/ppsspp
+          ref: d357e6a32934800d3d80b49f910a603e1b069751
+          path: ppsspp-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            Core/
+            Common/
+            SDL/
+            UI/
+            LICENSE.TXT
+            assets/themes
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: spruceUI/RA
+          ref: 71d84da4dc88945177a3eb34268013355c705dbd
+          path: spruce-ra-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            patches/common/0001-spruce-igm.patch
+            common_src/spruce_igm_theme.c
+            common_src/spruce_igm_theme.h
+            build.sh
+      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsdl2-image-2.0-0 libsodium23 binutils
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: PortsMaster/PortMaster-New
+          ref: 444778f3ae29facbd97b823dc3ca7270b3ebe499
+          path: ports-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            ports/celeste/Celeste.sh
+            ports/celeste/celeste/repack.src
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: PortsMaster/PortMaster-GUI
+          ref: ccea6b746827d0ae3a1cad744f6e8ccc5a032041
+          path: portmaster-reference
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            PortMaster/pylibs/harbourmaster/platform.py
+            PortMaster/pylibs/harbourmaster/platform/__init__.py
+            PortMaster/pylibs/harbourmaster/platform/miyoo.py
+            PortMaster/device_info.txt
+            PortMaster/control.txt
+            PortMaster/funcs.txt
+      - run: python -m pip install -r project/requirements-dev.txt
+      - run: sh project/dev/check.sh
+        env:
+          SDL_VIDEODRIVER: dummy
+          SDL_AUDIODRIVER: dummy
+          SPRUCE_SOURCE_ROOT: ${{ github.workspace }}/upstream-reference
+          PPSSPP_SOURCE_ROOT: ${{ github.workspace }}/ppsspp-reference
+          SPRUCE_RA_SOURCE_ROOT: ${{ github.workspace }}/spruce-ra-reference
+          PORTS_SOURCE_ROOT: ${{ github.workspace }}/ports-reference
+          PORTMASTER_SOURCE_ROOT: ${{ github.workspace }}/portmaster-reference
+      - run: python project/packaging/dev_release.py --output dist/development --include-source --smoke-python "$(command -v python)"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: host-preview-evidence
+          path: dist/
+  provenance:
+    # A manually selected repository revision can receive publisher provenance.
+    # PR validation keeps its read-only token and cannot enter this job.
+    if: github.event_name == 'workflow_dispatch'
+    needs: host
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          name: host-preview-evidence
+          path: dist/
+      - name: Attest original host artifacts and certification
+        id: attest
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a
+        with:
+          subject-path: |
+            dist/development/*
+            dist/certification.json
+      - name: Retain independently verifiable provenance bundle
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: host-preview-provenance
+          path: ${{ steps.attest.outputs.bundle-path }}
+          if-no-files-found: error
+  deliver-verified-host:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_verified_dev14
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /project/packaging/
+            /project/evidence/artifact-custody/verify-host-artifacts.py
+            /project/evidence/nondevice-completion-20261023/publish_verified_host.py
+      - name: Install host signature verifier dependency
+        run: sudo apt-get update && sudo apt-get install -y libsodium23
+      - name: Verify retained CI identities, upload and read back before publication
+        run: python3 project/evidence/nondevice-completion-20261023/publish_verified_host.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dev14-host-delivery-readback
+          path: host-delivery-receipt.json
+          if-no-files-found: error

@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-22T23:04:36.617873Z",
+  "task": "D01",
+  "status": "design_prepared; implementation and physical rehearsal remain open",
+  "reviewed_repository_commit": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+  "repository_head_at_collection": "bc80ff272a5c851f3c0dc1ad1832b33ca74148bc",
+  "branch": "build/spruce-psp-experience",
+  "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
+  "design": {
+    "path": "project/docs/experimental-device-route.md",
+    "sha256": "430eed0db58e4975c8b4b1b965a9659d45094126fecd7e4cf4d8b02ce520a5cd"
+  },
+  "source_findings": [
+    {
+      "path": "project/bridge/qualified_runtime.py",
+      "symbol": "configuration",
+      "observed": "returns None; no shipped device runtime"
+    },
+    {
+      "path": "project/bridge/process_source.py",
+      "symbol": "ProcessSourceConfiguration.assert_safe",
+      "observed": "production qualification gates required; host fixtures reject /mnt/SDCARD"
+    },
+    {
+      "path": "project/psp_shell/embedded.py",
+      "symbol": "qualification",
+      "observed": "separate embedded device qualification gate; only device/host-fixture environments accepted"
+    },
+    {
+      "path": "project/bridge/principal.py",
+      "symbol": "run_owned_tree",
+      "observed": "blocking waitpid until ECHILD; no descendant kill or bounded exit deadline"
+    },
+    {
+      "path": "project/bridge/principal_integration.py",
+      "symbol": "REQUIRED_PROJECT_MODULES",
+      "observed": "fixed payload module inventory",
+      "module_count_at_review": 35
+    },
+    {
+      "path": "project/bridge/resident.py",
+      "symbol": "PrincipalLease",
+      "observed": "private boot-bound lifetime and dirty guard; retained shared-service authority"
+    },
+    {
+      "path": "project/bridge/pyui_entry.py",
+      "symbol": "maybe_run_main_menu",
+      "observed": "foreground guards and resource restoration control classic fallback"
+    },
+    {
+      "path": "project/integration/release.py",
+      "symbol": "assemble_private_candidate",
+      "observed": "requires real source-use review; produces private new-output candidate, no automatic installation/activation"
+    }
+  ],
+  "proposed_route": {
+    "implemented": false,
+    "entrypoint_available": false,
+    "separate_experimental_admission_required": true,
+    "production_gate_overrides_allowed": false,
+    "first_stage": "view-only using existing initialized PyUI authorities; unchanged engines",
+    "limits_are_proposals_not_measured": true,
+    "admission_start_window_seconds": 60,
+    "view_observation_seconds": 120,
+    "cooperative_return_observation_seconds": 5,
+    "later_launch_return_observation_seconds": 600,
+    "deadline_proves_descendant_exit": false,
+    "uncertain_exit": "retain principal/foreground/dirty ownership; block new actions; use separately rehearsed operator recovery",
+    "resume_in_first_pilot": false
+  },
+  "activation_prerequisites": [
+    "Actual R05 delivery/scope review retained privately; notice remains unsent",
+    "D02 verified card/save/necessary internal-file backups and actual restore rehearsal",
+    "D03 actual original TG5040 firmware/filesystem/runtime, kernel and probe-tool observations",
+    "Reviewed and tested separate experimental entry/admission at principal and embedded boundaries",
+    "Actual independent exit/recovery channel and durable evidence retrieval",
+    "R04 native artifact/source/build custody if native candidates are selected",
+    "Applicable R06 component/recipe/IGM/SDK review for selected native scope"
+  ],
+  "validation": {
+    "kind": "read-only source and documentation validation; no device or behavioral acceptance run",
+    "design_relative_links_checked": 11,
+    "design_links_exist_or_target_this_receipt": true,
+    "configuration_none_checked_via_ast": true,
+    "principal_blocking_wait_and_absent_kill_checked_via_ast": true,
+    "required_original_modules_exist": true,
+    "release_descriptor_original_only_and_qualification_false": true,
+    "new_runtime_tests_added": false,
+    "hardware_attempts": 0
+  },
+  "qualification": {
+    "hardware_qualified": false,
+    "runtime_verified": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "automatic_activation": false
+  },
+  "files_reviewed": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "33eec146ef67dc62cc6d70bd7f66c3a16b5f1cf42168148c758a1de322743c24"
+    },
+    {
+      "path": "HANDOVER.md",
+      "sha256": "ec1dcfe5fc634e7caba6de31ba365b151541aa5e11659e9ca6cbdff245d22fa5"
+    },
+    {
+      "path": "project/handover/LATEST.json",
+      "sha256": "4b2f041047de2640565c8380062619b50513eba4060da7dfb19d45be59e1f8f6"
+    },
+    {
+      "path": "project/README.md",
+      "sha256": "cf080eb63ef07f6c6dbf3e65015ee358665cdb1e7957fa5a60368678dc023d18"
+    },
+    {
+      "path": "project/docs/master-plan-2026-10-22.md",
+      "sha256": "a43f870b5b3af1cbb6a4f8cb14e79814cba7a7f73efa897a3f820e9c454e4f34"
+    },
+    {
+      "path": "TRIMUI_PLAN.md",
+      "sha256": "e0094648ef2cc005a9a866394299ec049ccf467b7635944ab5b446d79d389afb"
+    },
+    {
+      "path": "project/bridge/README.md",
+      "sha256": "5e9429690e35932507db1c3ee8576f36a0fb2f45a73cca290260912b8f583d54"
+    },
+    {
+      "path": "project/bridge/qualified_runtime.py",
+      "sha256": "37cfbbc6efbf68d73270ecc04b03df78bb90c4b624ffd464b76751b0229279cf"
+    },
+    {
+      "path": "project/bridge/process_source.py",
+      "sha256": "ed49e7402f450fae3deb7804ff08f1842b72a77973e9b6ae6190b2f63ab3cc9c"
+    },
+    {
+      "path": "project/bridge/principal.py",
+      "sha256": "ce4a9125d3d4e4648f31b342babd1b9a166f8dffc05494d65b5faa1b266ab4b0"
+    },
+    {
+      "path": "project/bridge/principal_integration.py",
+      "sha256": "66f1e16355ecf9306fdaa272fbc0d009f18714d3ea065576ad530fb229e0c49f"
+    },
+    {
+      "path": "project/bridge/resident.py",
+      "sha256": "e6bae6eacf62d2477d55fc62ff7789f855cde237f09b9f4159f1fa2934f562fd"
+    },
+    {
+      "path": "project/bridge/pyui_entry.py",
+      "sha256": "6625ad91be68baa25d7d649b4b33768b540f22b87f709aa4434eb2620409e638"
+    },
+    {
+      "path": "project/bridge/bootstrap.py",
+      "sha256": "4baa532567622f9077d0b350da6cfb49f1a2698f2d39a18797223f3adeab1d2a"
+    },
+    {
+      "path": "project/psp_shell/embedded.py",
+      "sha256": "313640f837f567503e68118c54346d4e2e9ea6f4d93e4a33f368d319a0ef5eb8"
+    },
+    {
+      "path": "project/psp_shell/runtime.py",
+      "sha256": "b45acb85268658ee41ae4acea9249a0f5379c340431e1e95f59e6d47b40c147c"
+    },
+    {
+      "path": "project/psp_shell/health.py",
+      "sha256": "f05d73897bef16b8f9a55fa8cf72cbe1797acda650b4efa9388dba25f7b88929"
+    },
+    {
+      "path": "project/integration/release.py",
+      "sha256": "df7b52260d889c95eb01bb151943e0fa0a0f0e2c92f71aabae4bcfca4c66883e"
+    },
+    {
+      "path": "project/docs/release-qualification.md",
+      "sha256": "fba718220e4710cc7d551245dd3fa84d580394db5abb69115b6f4d85bf924fbf"
+    },
+    {
+      "path": "project/docs/device-test-runbook.md",
+      "sha256": "70b04c243bc0bdd9bf4883c67872ba8a6cc32a04747b5aa6becb1a56a91703c7"
+    },
+    {
+      "path": "project/docs/recovery.md",
+      "sha256": "a99d75db7eba2ac82c88ea4c27c943eec770ea7e1509f7d7dd6e0509497366a6"
+    },
+    {
+      "path": "project/docs/continuation-rights-review.md",
+      "sha256": "98d95e20667953dba65159b75f193980dbbee5e6361974e9f7f264d23d526b19"
+    },
+    {
+      "path": "project/docs/distribution-register.json",
+      "sha256": "ec668ebc7e2147173092d3b4fa2c3b020f5806189d328a390c9ca3ab29ec75b5"
+    },
+    {
+      "path": "project/packaging/current-release.json",
+      "sha256": "4af4683084fc1b4a19c06878381bff1de3c036dd6b45d6ae1a59d71374a35e3a"
+    },
+    {
+      "path": "project/tools/installed_runtime.py",
+      "sha256": "f141688db2755a2df4c8b367bc7bf79a21ae67bde5ef95dfd362eef306d83537"
+    }
+  ]
+}

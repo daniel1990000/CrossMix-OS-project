@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "id": "retroarch-standard-unqualified",
+  "device": "TRIMUI_SMART_PRO",
+  "engine": "retroarch",
+  "surface": "standard_menu",
+  "template": true,
+  "qualified": false,
+  "base_release": "v4.5.4",
+  "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "executable": "RetroArch/ra64.universal",
+  "executable_sha256": null,
+  "config": "Saves/ra-configs/retroarch-SmartPro.cfg",
+  "writer_inventory_verified": false,
+  "writer_executables": ["RetroArch/ra64.universal"],
+  "supported_keys": ["menu_swap_ok_cancel_buttons"],
+  "confirm_values": null,
+  "qualification_gaps": [
+    "Hash the installed executable; do not invent a fingerprint.",
+    "Verify config-writer inventory and the idle write window.",
+    "Measure physical Confirm/Back mapping with the installed input driver.",
+    "Qualify spruce IGM separately; this profile covers only the standard RetroArch menu."
+  ],
+  "source": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ra_functions.sh"
+}

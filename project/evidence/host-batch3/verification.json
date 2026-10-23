@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-22",
+  "tasks_completed_host": [
+    "U04",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "master_plan_completed_tasks": 11,
+  "master_plan_total_tasks": 25,
+  "release_id": "smartpro-psp-0.1.0-dev9",
+  "base_checkpoint": "89210619ec30fd5dc30d6267a22945c98f6ff9fa",
+  "certification": {
+    "path": "certification.json",
+    "sha256": "ee84f87f1f31319c7c542a59067d99a61f28ef607bd34afb361ccf1bed4df85e",
+    "successful": true,
+    "totals": {
+      "tests_run": 690,
+      "passed": 690,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "pinned_source_count": 5
+  },
+  "retained_previous_results": [
+    "baseline-certification.json",
+    "failed-attempt1.json",
+    "failed-attempt1.txt",
+    "pre-review-certification.json"
+  ],
+  "independent_review": "independent-review.txt",
+  "measurements": {
+    "baseline": "library-baseline.json",
+    "exploratory": "library-exploratory.json",
+    "final": "library-final.json",
+    "policy": "measurement-policy.json",
+    "comparison": "library-comparison.json",
+    "sdl_presentation_samples": "sdl-frame-samples.json",
+    "device_performance_claim": false
+  },
+  "packaging": {
+    "status": "passed",
+    "report": "local-build-report.json",
+    "built_from_clean_commit": {
+      "commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
+      "working_tree_modified": false
+    },
+    "source_inventory_sha256": "627251e9c22a6b37740b8d3bfd223540969806c4add1deaf33ba6e19402385eb",
+    "artifact_sha256": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "7f206f6b8af6d27466d301ecf6fce8957bceeabca607d4e7cb53298e3afe7041",
+      "development-verification.pub": "fd685fd18d94c11b950449aa48519db83077d679a17dd184877b19eb116d4d24",
+      "host-preview.png": "83c83d77105d1f8c5b2a981764b4d2bdb7733a5ff0c52f1a243586e293029d9e",
+      "release-source.json": "e1414bf0143152a8033e6b51539a8069822d5471ba3fe91961cf2d42cbaedf37",
+      "smartpro-psp-0.1.0-dev9-host-preview.zip": "73d9ebd98a04307c0614d02670e7956d043122ccf12dd66232a0fd22cf2c9638",
+      "smartpro-psp-0.1.0-dev9-original-source.zip": "45cb9913f79643cc1cf241752a9ae9cc096da875dbedec5c88c3a994b4a9e964",
+      "smartpro-psp-0.1.0-dev9.tar": "5b4f1f92c1fb6ef0d3866fcd433aad058e539f088a8748ff6f94e45b4369af01"
+    },
+    "no_git_export_zip_rebuilds_identical": {
+      "smartpro-psp-0.1.0-dev9-host-preview.zip": true,
+      "smartpro-psp-0.1.0-dev9-original-source.zip": true
+    },
+    "changed_payload_bytes_read_back": true,
+    "original_only": true,
+    "generated_private_key_deleted": true,
+    "temporary_local_output": "/workspace/scratch/trimui-host-batch3-dev9"
+  },
+  "qualification": {
+    "hardware_tested": false,
+    "physical_areas_tested": 0,
+    "physical_areas_total": 13,
+    "runtime_gates_enabled": false,
+    "native_binaries_replaced": false,
+    "owner_data_changed": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "optional_celeste_patch_selected": false
+  },
+  "next_tasks": [
+    "R04",
+    "D01",
+    "D02",
+    "D03"
+  ],
+  "external_dependencies": [
+    "R05 actual PyUI notice delivery/scope evidence",
+    "R06 exact native terms/corresponding sources"
+  ],
+  "pr": "https://github.com/daniel1990000/CrossMix-OS-project/pull/1",
+  "pr_remains_draft": true,
+  "implementation_commit": "02999f4aa16b08c028e61861b8721c3905b7086e",
+  "ci": {
+    "receipt": "ci-readback.json",
+    "certification": "ci-certification.json",
+    "build_report": "ci-build-report.json",
+    "release_source": "ci-release-source.json",
+    "run_id": 39864873828,
+    "source_head": "e030677199884441096d90382121b86cfef81796",
+    "clean_merge_checkout": "6b4b59cfbdb0597c0dd2c23dea5d904256eeda70",
+    "conclusion": "success",
+    "covers_later_documentation_commit": false
+  }
+}

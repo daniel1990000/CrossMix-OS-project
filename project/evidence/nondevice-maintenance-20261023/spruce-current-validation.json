@@ -1,0 +1,28 @@
+{
+  "adoption_authorized": false,
+  "all_changed_paths_bound_to_hold": true,
+  "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+  "candidate_executed": false,
+  "changed_in_scope": 244,
+  "changed_outside_scope": 391,
+  "changed_paths": 635,
+  "decision_groups": {
+    "assets-and-notices": 28,
+    "frontend": 91,
+    "lifecycle": 60,
+    "native-engines": 239,
+    "optional-apps": 86,
+    "other-platforms": 113,
+    "portmaster": 3,
+    "upstream-release": 15
+  },
+  "device_qualified": false,
+  "distribution_cleared": false,
+  "kind": "upstream-hold-review-validation",
+  "pins_updated": false,
+  "review_coverage": "metadata identity and explained hold; no full behavioral audit or adoption",
+  "review_sha256": "ca275ea011d32118b4af2ceea1c98db550dc78e698d0d33f50104e51dcea219a",
+  "schema": 1,
+  "source": "SPRUCE_SOURCE_ROOT"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "checked_at_utc": "2026-10-22T23:11:37.491469+00:00",
+  "scope": "Independent read-only review of offline recovery preflight, no hardware",
+  "initial_review": {
+    "focused_tests_passed": 13,
+    "reproduced_findings": [
+      "Selected internal root mode/uid/gid omitted",
+      "Source-to-backup root rename could defeat independent-root check between scans",
+      "A failed fsync could leave success JSON at final report name"
+    ]
+  },
+  "resolution": {
+    "focused_tests_passed": 20,
+    "new_regression_tests": 7,
+    "independent_diagnostics_passed": 5,
+    "root_metadata_change_reported": true,
+    "source_backup_rename_rejected": true,
+    "file_fsync_failure_leaves_no_report_or_stage": true,
+    "parent_fsync_failure_leaves_no_report_or_stage": true,
+    "existing_report_bytes_inode_mtime_preserved": true,
+    "offline_stopped_tree_assumption_retained": true
+  },
+  "files": {
+    "project/tools/recovery_preflight.py": "645213185f079cdc733bb3327953d831dfb6fd5097fafa4eef913f33a2af3ce4",
+    "project/tests/test_recovery_preflight.py": "7b8d7486425d3c8ccdbd18168ba02b1675551be0c6498db206b5c98539dfb86e",
+    "project/docs/device-recovery-preflight.md": "356eb2572358f8404fd44296fa969c363f3a9ab9d442cc27d67d1c9cc6d13487"
+  },
+  "physical_restore_tested": false,
+  "hardware_qualified": false,
+  "runtime_gates_enabled": false,
+  "production_authorization": false
+}

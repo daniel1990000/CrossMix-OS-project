@@ -1,0 +1,201 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "checked_at_utc": "2026-10-22T23:34:25.814945+00:00",
+  "reviewer": "independent d01_design agent; read-only audit before recording this file",
+  "scope": "Current handover consistency, task counts, exact local/CI provenance, pinned locks, packaged-source bytes, native source/build/retrieval receipt pairing, local links and disabled qualification. No new remote retrieval, target execution or physical acceptance.",
+  "reviewed_implementation_commit": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+  "current_branch": "build/spruce-psp-experience",
+  "completed_host_tasks": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "completed_host_task_count": 12,
+  "pending_tasks": [
+    "R05",
+    "R06",
+    "D01",
+    "D02",
+    "D03",
+    "D05",
+    "D06",
+    "N01",
+    "N02",
+    "P04",
+    "O01",
+    "O02",
+    "O03"
+  ],
+  "pending_task_count": 13,
+  "master_plan_task_count": 25,
+  "master_plan_rows_match_status_sets": true,
+  "physical_areas_run": 0,
+  "physical_areas_total": 13,
+  "all_physical_cases_not_run": true,
+  "current_ci": {
+    "source_head": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+    "clean_merge_checkout": "1609c5358ee04010f8e5e873064d53e5fc03eccc",
+    "run_id": 39871706495,
+    "artifact_id": 12466212738,
+    "conclusion": "success",
+    "totals": {
+      "tests_run": 710,
+      "passed": 710,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "suite_counts": [
+      649,
+      61
+    ],
+    "artifact_sha256": "9a6c7650bd49bfa2ed868ac57e656d7224968de98c438b5be2f60cc752d91305",
+    "artifact_size_bytes": 4882634,
+    "local_and_ci_totals_agree": true,
+    "actual_exported_source_inventory_matches_current_bytes": true,
+    "original_source_inventory_files": 158,
+    "original_source_inventory_sha256": "f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d",
+    "source_inventory_includes_embedded_spruce_lock": true,
+    "outer_and_inventory_digests_distinguished": true,
+    "later_handover_evidence_edits_change_packaged_source_inventory": false,
+    "retained_report_hashes_verified": 3,
+    "private_host_retrieval_receipt_consistent": true,
+    "reported_private_permissions": [
+      "owner"
+    ]
+  },
+  "source_pins": {
+    "SPRUCE_SOURCE_ROOT": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "PPSSPP_SOURCE_ROOT": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "SPRUCE_RA_SOURCE_ROOT": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "PORTS_SOURCE_ROOT": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+    "PORTMASTER_SOURCE_ROOT": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041"
+  },
+  "five_ci_source_pins_and_lock_hashes_verified_before_and_after_tests": true,
+  "historical_preservation": {
+    "dev9_source_identities_and_690_check_totals_preserved": true,
+    "dev9_150_file_inventory_and_distinct_outer_digest_preserved": true,
+    "historical_evidence_build_lock_and_validation_files_byte_identical_to_bc80ff2": 10,
+    "original_dev9_validation_path": "project/handover/validation.json",
+    "current_validation_path": "project/handover/current-validation.json",
+    "latest_points_to_current_independent_audit": true
+  },
+  "native_custody": {
+    "artifacts_paired_across_actual_build_independent_source_review_and_retrieval_receipts": 7,
+    "ordered_private_parts_checked_in_receipt": 18,
+    "all_part_sizes_orders_owner_only_permissions_and_full_stream_digests_consistent": true,
+    "paired_artifacts": [
+      {
+        "role": "ppsspp-binary",
+        "size_bytes": 19934560,
+        "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773"
+      },
+      {
+        "role": "ppsspp-corresponding-source",
+        "size_bytes": 177963111,
+        "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556"
+      },
+      {
+        "role": "ppsspp-build-records",
+        "size_bytes": 291510,
+        "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1"
+      },
+      {
+        "role": "retroarch-binary",
+        "size_bytes": 15182848,
+        "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349"
+      },
+      {
+        "role": "retroarch-corresponding-source",
+        "size_bytes": 144576907,
+        "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36"
+      },
+      {
+        "role": "retroarch-build-records",
+        "size_bytes": 595274,
+        "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446"
+      },
+      {
+        "role": "compiler-image-private-sdk-containing",
+        "size_bytes": 471632780,
+        "sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2"
+      }
+    ],
+    "compiler_image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "historical_ra_repository_lock_preserved": true,
+    "private_ra_lock_only_semantic_delta_is_compiler_image_pin": true,
+    "historical_native_binary_hashes_recovered": false,
+    "empty_daemon_compiler_restore_tested": false,
+    "target_executed": false,
+    "retrieval_repeated_by_this_audit": false
+  },
+  "local_document_links_checked": 162,
+  "missing_local_links": [],
+  "reviewed_recovery_tool_and_test_hashes_match_independent_review": true,
+  "shipped_fixed_configuration_returns_none": true,
+  "selected_upstream_patches": [],
+  "selected_native_binaries": [],
+  "qualification": {
+    "hardware_qualified": false,
+    "runtime_verified": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "production_activation": false,
+    "physical_restore_tested": false,
+    "notice_sent": false
+  },
+  "pr_state": {
+    "draft": true,
+    "merged": false,
+    "open": true
+  },
+  "remaining_work": [
+    "D02 actual backup payloads/readback/restore rehearsal on expendable media",
+    "D03 actual TG5040 firmware/filesystem/runtime/process/kernel/tool observations",
+    "D01 separate trusted experimental admission and bounded stop implementation/review; real R05/D02/D03 prerequisites before pilot",
+    "R05 actual owner-authorized notice delivery/scope evidence; prepared notice remains unsent",
+    "R06 exact recipe/IGM/SDK grants and remaining linked component/source-notice review"
+  ],
+  "issues_found_and_resolved": [
+    "LATEST originally pointed at old dev9 validation as current. Root preserved original bytes, added current-validation.json, and pointed current handover_validation at this independent audit."
+  ],
+  "unresolved_issues": [],
+  "software_tests_rerun_for_this_documentation_audit": false,
+  "hardware_or_communication_actions_performed": false,
+  "reviewed_file_sha256": {
+    "AGENTS.md": "33eec146ef67dc62cc6d70bd7f66c3a16b5f1cf42168148c758a1de322743c24",
+    "HANDOVER.md": "b32dd424aea6fa53ebe1bb9ebb5b62e6df26baa19154b9030bae84d9a35e1ddf",
+    "NEXT_CHAT_PROMPT.txt": "051e895404f0cbb3a94809a9f3f8cca0eb2d15a3be8cb10e3d521780988f1718",
+    "project/handover/LATEST.json": "32bab481b88c76aa716a33342cfee1affb03d3e0e6dc5c48cbad7b849598f208",
+    "project/handover/validation.json": "e412dd6c0c614e8be707adac93782c9c23a3482a8a62d2ba9044253565e9738f",
+    "project/handover/current-validation.json": "966d251b91566d09e3619f97edc917faa4ce57d7571c6b387bcd0acbde434a8c",
+    "project/README.md": "43703c6ff33cb176c3813d426a4b9cd157273da7017b197be372e3ee4d1721e3",
+    "project/docs/master-plan-2026-10-22.md": "3f6496fb7f41581d7487f0a0bdf937be8a29b8da0be259cb00a2685325b0e9f6",
+    "TRIMUI_PLAN.md": "28038d2a45723fbb1d86e470f43aedb72101f1b36c6888595690982907da4a14",
+    "project/evidence/device-preparation/verification.json": "058c7148eb83efd859fa56192c98b5a4d3bdd9f80406176cc13d470dd5881c49",
+    "project/evidence/device-preparation/certification.json": "0486265700a2525d13af664fb0c50dc68b033dc90eb466a41f8356443a2058e4",
+    "project/evidence/device-preparation/ci-readback.json": "d46e2cff519a92207f3a1d6bf24099f4fc1e5fe5c1ce82b8c3353bde8700d85b",
+    "project/evidence/device-preparation/ci-certification.json": "3c2d9130a8941c8e7d13ec422fc22aa121d0672ee82e84e6c269e63ba5b9fc6b",
+    "project/evidence/device-preparation/ci-build-report.json": "f2ef611ff3420131f384b4d6e9981e1f2f0e43f3ee9d036ddf9d4a6527227dbd",
+    "project/evidence/device-preparation/ci-release-source.json": "87d86c6d5bb21d9245f5ab8ba334492191018ab3e7f8f219c934b36998ce6848",
+    "project/evidence/device-preparation/dev10-build-report.json": "d56dd3b3325f79855e2ffe34a52f168f8448da4e0c77cc2b4b218d4fa39487c0",
+    "project/evidence/device-preparation/dev10-release-source.json": "0b60b7fd83add4b65005e4211457b03f5571b9308112bf44547008983690ffcd",
+    "project/evidence/device-preparation/review.json": "c718d2e8e294f6fd3a82a0bc3de17624536ef667d9cec868772ec2a4c72b0cd5",
+    "project/evidence/artifact-custody/native-rebuild.json": "1342029790b507b7179340af16d456bc483d04ca337aa37b8fcaa0293685cddd",
+    "project/evidence/artifact-custody/native-source-review.json": "f829b212d3743213a75da04388a2165c4d8bc40ba73705d7384eabb89777c919",
+    "project/evidence/artifact-custody/native-retention.json": "d2906fb6118b7e989d599ac7def14817098ee4e2ba13ab60f5662bf965fb9c54",
+    "project/evidence/artifact-custody/host-retention.json": "128bb5f18a6970de4d2eb47cef14a983084b4caf5fb3f81ec21310fe6d7fa7b7"
+  }
+}

@@ -1,0 +1,652 @@
+{
+  "schema": 1,
+  "evidence_class": "synthetic-SDL-host-render",
+  "scene": "demo-home-four-down-four-up-motion-off",
+  "warmup_frames": 20,
+  "host": {
+    "machine": "x86_64",
+    "python": "3.12.14",
+    "video_driver": "dummy",
+    "software": true
+  },
+  "frame_timing": {
+    "schema": 1,
+    "boundary": "standalone-SDL_RenderPresent-return",
+    "clock": "monotonic_ns",
+    "samples": [
+      {
+        "timestamp_ns": 787909363619,
+        "render_ns": 39877752,
+        "present_ns": 1852597
+      },
+      {
+        "timestamp_ns": 787940854757,
+        "render_ns": 30372182,
+        "present_ns": 1098146
+      },
+      {
+        "timestamp_ns": 787971864887,
+        "render_ns": 29928309,
+        "present_ns": 1062623
+      },
+      {
+        "timestamp_ns": 788003346281,
+        "render_ns": 29994926,
+        "present_ns": 1470794
+      },
+      {
+        "timestamp_ns": 788034310474,
+        "render_ns": 29719711,
+        "present_ns": 1231102
+      },
+      {
+        "timestamp_ns": 788064480588,
+        "render_ns": 29045629,
+        "present_ns": 1111566
+      },
+      {
+        "timestamp_ns": 788101800225,
+        "render_ns": 36283000,
+        "present_ns": 1022896
+      },
+      {
+        "timestamp_ns": 788132537894,
+        "render_ns": 27826534,
+        "present_ns": 2897004
+      },
+      {
+        "timestamp_ns": 788165662857,
+        "render_ns": 32082369,
+        "present_ns": 1029284
+      },
+      {
+        "timestamp_ns": 788196184269,
+        "render_ns": 29402825,
+        "present_ns": 1105047
+      },
+      {
+        "timestamp_ns": 788226062733,
+        "render_ns": 28920144,
+        "present_ns": 946503
+      },
+      {
+        "timestamp_ns": 788256804529,
+        "render_ns": 29740502,
+        "present_ns": 987664
+      },
+      {
+        "timestamp_ns": 788286163499,
+        "render_ns": 28264900,
+        "present_ns": 1079389
+      },
+      {
+        "timestamp_ns": 788318320317,
+        "render_ns": 31056679,
+        "present_ns": 1088011
+      },
+      {
+        "timestamp_ns": 788348733659,
+        "render_ns": 29234827,
+        "present_ns": 1165325
+      },
+      {
+        "timestamp_ns": 788377953855,
+        "render_ns": 28268906,
+        "present_ns": 937640
+      },
+      {
+        "timestamp_ns": 788409567664,
+        "render_ns": 30457597,
+        "present_ns": 1144104
+      },
+      {
+        "timestamp_ns": 788438878634,
+        "render_ns": 28168438,
+        "present_ns": 1103785
+      },
+      {
+        "timestamp_ns": 788468880430,
+        "render_ns": 28924510,
+        "present_ns": 1064918
+      },
+      {
+        "timestamp_ns": 788498213392,
+        "render_ns": 28238681,
+        "present_ns": 1080080
+      },
+      {
+        "timestamp_ns": 788530424745,
+        "render_ns": 31159385,
+        "present_ns": 1038819
+      },
+      {
+        "timestamp_ns": 788562650815,
+        "render_ns": 31177987,
+        "present_ns": 1032560
+      },
+      {
+        "timestamp_ns": 788592063274,
+        "render_ns": 28354111,
+        "present_ns": 1043616
+      },
+      {
+        "timestamp_ns": 788622258645,
+        "render_ns": 29082082,
+        "present_ns": 1099959
+      },
+      {
+        "timestamp_ns": 788652648172,
+        "render_ns": 29228979,
+        "present_ns": 1147258
+      },
+      {
+        "timestamp_ns": 788684191287,
+        "render_ns": 30460852,
+        "present_ns": 1069324
+      },
+      {
+        "timestamp_ns": 788714598470,
+        "render_ns": 29284881,
+        "present_ns": 1108832
+      },
+      {
+        "timestamp_ns": 788749902680,
+        "render_ns": 34103503,
+        "present_ns": 1185314
+      },
+      {
+        "timestamp_ns": 788782206194,
+        "render_ns": 31257695,
+        "present_ns": 1031768
+      },
+      {
+        "timestamp_ns": 788811868150,
+        "render_ns": 28557580,
+        "present_ns": 1090034
+      },
+      {
+        "timestamp_ns": 788842486725,
+        "render_ns": 29574087,
+        "present_ns": 1030277
+      },
+      {
+        "timestamp_ns": 788871982957,
+        "render_ns": 28503842,
+        "present_ns": 978961
+      },
+      {
+        "timestamp_ns": 788902316551,
+        "render_ns": 29139667,
+        "present_ns": 1180417
+      },
+      {
+        "timestamp_ns": 788933655656,
+        "render_ns": 30369948,
+        "present_ns": 955096
+      },
+      {
+        "timestamp_ns": 788965099675,
+        "render_ns": 30451257,
+        "present_ns": 978040
+      },
+      {
+        "timestamp_ns": 788994530601,
+        "render_ns": 28477824,
+        "present_ns": 939382
+      },
+      {
+        "timestamp_ns": 789031108406,
+        "render_ns": 35566597,
+        "present_ns": 996306
+      },
+      {
+        "timestamp_ns": 789059712075,
+        "render_ns": 27627602,
+        "present_ns": 959823
+      },
+      {
+        "timestamp_ns": 789088593272,
+        "render_ns": 27770142,
+        "present_ns": 1096554
+      },
+      {
+        "timestamp_ns": 789123818320,
+        "render_ns": 34014046,
+        "present_ns": 1196641
+      },
+      {
+        "timestamp_ns": 789154636999,
+        "render_ns": 29780491,
+        "present_ns": 1023957
+      },
+      {
+        "timestamp_ns": 789184677062,
+        "render_ns": 29028083,
+        "present_ns": 997638
+      },
+      {
+        "timestamp_ns": 789214932041,
+        "render_ns": 29264271,
+        "present_ns": 976347
+      },
+      {
+        "timestamp_ns": 789245525027,
+        "render_ns": 29546607,
+        "present_ns": 1033951
+      },
+      {
+        "timestamp_ns": 789276048001,
+        "render_ns": 29460750,
+        "present_ns": 1047712
+      },
+      {
+        "timestamp_ns": 789306768164,
+        "render_ns": 29647695,
+        "present_ns": 1059429
+      },
+      {
+        "timestamp_ns": 789346881343,
+        "render_ns": 39125345,
+        "present_ns": 973693
+      },
+      {
+        "timestamp_ns": 789380118726,
+        "render_ns": 32053902,
+        "present_ns": 1169401
+      },
+      {
+        "timestamp_ns": 789413529499,
+        "render_ns": 32172340,
+        "present_ns": 1224342
+      },
+      {
+        "timestamp_ns": 789446485815,
+        "render_ns": 31867913,
+        "present_ns": 1075754
+      },
+      {
+        "timestamp_ns": 789481186426,
+        "render_ns": 33367630,
+        "present_ns": 1317439
+      },
+      {
+        "timestamp_ns": 789515313324,
+        "render_ns": 33049792,
+        "present_ns": 1063095
+      },
+      {
+        "timestamp_ns": 789547686020,
+        "render_ns": 31167312,
+        "present_ns": 1190993
+      },
+      {
+        "timestamp_ns": 789578565317,
+        "render_ns": 29909600,
+        "present_ns": 954685
+      },
+      {
+        "timestamp_ns": 789607641241,
+        "render_ns": 27770312,
+        "present_ns": 1277290
+      },
+      {
+        "timestamp_ns": 789642565261,
+        "render_ns": 33947304,
+        "present_ns": 961885
+      },
+      {
+        "timestamp_ns": 789671186125,
+        "render_ns": 27586452,
+        "present_ns": 974684
+      },
+      {
+        "timestamp_ns": 789699244672,
+        "render_ns": 27058915,
+        "present_ns": 985771
+      },
+      {
+        "timestamp_ns": 789725778414,
+        "render_ns": 25556033,
+        "present_ns": 964890
+      },
+      {
+        "timestamp_ns": 789752282132,
+        "render_ns": 25511758,
+        "present_ns": 978921
+      },
+      {
+        "timestamp_ns": 789780018103,
+        "render_ns": 26755067,
+        "present_ns": 967464
+      },
+      {
+        "timestamp_ns": 789807352424,
+        "render_ns": 26372405,
+        "present_ns": 947765
+      },
+      {
+        "timestamp_ns": 789834805408,
+        "render_ns": 26490739,
+        "present_ns": 948906
+      },
+      {
+        "timestamp_ns": 789861967215,
+        "render_ns": 26126192,
+        "present_ns": 1021664
+      },
+      {
+        "timestamp_ns": 789889819668,
+        "render_ns": 26807966,
+        "present_ns": 1031508
+      },
+      {
+        "timestamp_ns": 789916767520,
+        "render_ns": 25963613,
+        "present_ns": 969137
+      },
+      {
+        "timestamp_ns": 789943547534,
+        "render_ns": 25830807,
+        "present_ns": 935567
+      },
+      {
+        "timestamp_ns": 789970453394,
+        "render_ns": 25867081,
+        "present_ns": 1025449
+      },
+      {
+        "timestamp_ns": 789998462597,
+        "render_ns": 27044855,
+        "present_ns": 949837
+      },
+      {
+        "timestamp_ns": 790025139550,
+        "render_ns": 25717781,
+        "present_ns": 945592
+      },
+      {
+        "timestamp_ns": 790051505215,
+        "render_ns": 25391662,
+        "present_ns": 961044
+      },
+      {
+        "timestamp_ns": 790078858894,
+        "render_ns": 26323112,
+        "present_ns": 1016997
+      },
+      {
+        "timestamp_ns": 790107920757,
+        "render_ns": 28016324,
+        "present_ns": 1031348
+      },
+      {
+        "timestamp_ns": 790134936559,
+        "render_ns": 26047736,
+        "present_ns": 954035
+      },
+      {
+        "timestamp_ns": 790164486810,
+        "render_ns": 27951779,
+        "present_ns": 1584111
+      },
+      {
+        "timestamp_ns": 790193221782,
+        "render_ns": 27684096,
+        "present_ns": 1036445
+      },
+      {
+        "timestamp_ns": 790220947749,
+        "render_ns": 26734708,
+        "present_ns": 976377
+      },
+      {
+        "timestamp_ns": 790248055756,
+        "render_ns": 26125371,
+        "present_ns": 966633
+      },
+      {
+        "timestamp_ns": 790274554136,
+        "render_ns": 25397801,
+        "present_ns": 1086769
+      },
+      {
+        "timestamp_ns": 790301774148,
+        "render_ns": 26256275,
+        "present_ns": 950478
+      },
+      {
+        "timestamp_ns": 790328523828,
+        "render_ns": 25693105,
+        "present_ns": 1043616
+      },
+      {
+        "timestamp_ns": 790355282040,
+        "render_ns": 25792000,
+        "present_ns": 953653
+      },
+      {
+        "timestamp_ns": 790382431098,
+        "render_ns": 26063280,
+        "present_ns": 1071517
+      },
+      {
+        "timestamp_ns": 790410162273,
+        "render_ns": 26778502,
+        "present_ns": 939964
+      },
+      {
+        "timestamp_ns": 790438322839,
+        "render_ns": 27194775,
+        "present_ns": 954024
+      },
+      {
+        "timestamp_ns": 790465533187,
+        "render_ns": 26126222,
+        "present_ns": 1069785
+      },
+      {
+        "timestamp_ns": 790492304068,
+        "render_ns": 25784359,
+        "present_ns": 973743
+      },
+      {
+        "timestamp_ns": 790518371394,
+        "render_ns": 25108544,
+        "present_ns": 945462
+      },
+      {
+        "timestamp_ns": 790544788334,
+        "render_ns": 25432130,
+        "present_ns": 971170
+      },
+      {
+        "timestamp_ns": 790574327920,
+        "render_ns": 28538804,
+        "present_ns": 987423
+      },
+      {
+        "timestamp_ns": 790602089589,
+        "render_ns": 26798752,
+        "present_ns": 949127
+      },
+      {
+        "timestamp_ns": 790628720414,
+        "render_ns": 25636741,
+        "present_ns": 981685
+      },
+      {
+        "timestamp_ns": 790655550583,
+        "render_ns": 25889534,
+        "present_ns": 926734
+      },
+      {
+        "timestamp_ns": 790681963667,
+        "render_ns": 25455275,
+        "present_ns": 943458
+      },
+      {
+        "timestamp_ns": 790708919401,
+        "render_ns": 25974980,
+        "present_ns": 967454
+      },
+      {
+        "timestamp_ns": 790735337292,
+        "render_ns": 25443407,
+        "present_ns": 961105
+      },
+      {
+        "timestamp_ns": 790762281298,
+        "render_ns": 25975521,
+        "present_ns": 954615
+      },
+      {
+        "timestamp_ns": 790788948036,
+        "render_ns": 25677653,
+        "present_ns": 975185
+      },
+      {
+        "timestamp_ns": 790816562178,
+        "render_ns": 26630964,
+        "present_ns": 969718
+      },
+      {
+        "timestamp_ns": 790843982625,
+        "render_ns": 26364133,
+        "present_ns": 1025920
+      },
+      {
+        "timestamp_ns": 790870783720,
+        "render_ns": 25829235,
+        "present_ns": 956567
+      },
+      {
+        "timestamp_ns": 790898400336,
+        "render_ns": 26515896,
+        "present_ns": 1086679
+      },
+      {
+        "timestamp_ns": 790925633939,
+        "render_ns": 26262693,
+        "present_ns": 956208
+      },
+      {
+        "timestamp_ns": 790952512558,
+        "render_ns": 25816166,
+        "present_ns": 1046971
+      },
+      {
+        "timestamp_ns": 790978775001,
+        "render_ns": 25302039,
+        "present_ns": 946984
+      },
+      {
+        "timestamp_ns": 791005447948,
+        "render_ns": 25717491,
+        "present_ns": 942387
+      },
+      {
+        "timestamp_ns": 791034040821,
+        "render_ns": 27626971,
+        "present_ns": 952432
+      },
+      {
+        "timestamp_ns": 791061465093,
+        "render_ns": 26396781,
+        "present_ns": 1013381
+      },
+      {
+        "timestamp_ns": 791090124173,
+        "render_ns": 27691616,
+        "present_ns": 952932
+      },
+      {
+        "timestamp_ns": 791118716415,
+        "render_ns": 27483930,
+        "present_ns": 1093049
+      },
+      {
+        "timestamp_ns": 791145900925,
+        "render_ns": 26212890,
+        "present_ns": 957649
+      },
+      {
+        "timestamp_ns": 791172516157,
+        "render_ns": 25633988,
+        "present_ns": 967324
+      },
+      {
+        "timestamp_ns": 791199733145,
+        "render_ns": 26174264,
+        "present_ns": 1029465
+      },
+      {
+        "timestamp_ns": 791227781867,
+        "render_ns": 27087448,
+        "present_ns": 947925
+      },
+      {
+        "timestamp_ns": 791254617813,
+        "render_ns": 25878437,
+        "present_ns": 943599
+      },
+      {
+        "timestamp_ns": 791280654474,
+        "render_ns": 25068055,
+        "present_ns": 955867
+      },
+      {
+        "timestamp_ns": 791307236257,
+        "render_ns": 25627138,
+        "present_ns": 942417
+      },
+      {
+        "timestamp_ns": 791335085124,
+        "render_ns": 26881273,
+        "present_ns": 955326
+      },
+      {
+        "timestamp_ns": 791361972487,
+        "render_ns": 25928190,
+        "present_ns": 945292
+      },
+      {
+        "timestamp_ns": 791388465749,
+        "render_ns": 25517086,
+        "present_ns": 962346
+      }
+    ],
+    "dropped_samples": 0,
+    "interval": {
+      "count": 119,
+      "median_ms": 28.620864,
+      "p95_ms": 34.92402,
+      "worst_ms": 40.113179
+    },
+    "render_call": {
+      "count": 120,
+      "median_ms": 27.655849,
+      "p95_ms": 33.947304,
+      "worst_ms": 39.877752
+    },
+    "present_call": {
+      "count": 120,
+      "median_ms": 0.996972,
+      "p95_ms": 1.231102,
+      "worst_ms": 2.897004
+    },
+    "panel_fps": null,
+    "input_latency_ms": null,
+    "limits": [
+      "Intervals include caller work, scheduling and presentation wait.",
+      "A returned present call does not prove display scanout.",
+      "Internal timestamps do not measure physical input latency."
+    ]
+  },
+  "hardware_qualified": false,
+  "audio_faults": null,
+  "battery_energy_wh": null,
+  "limits": [
+    "No deliberate frame pacing; this is host render-call throughput.",
+    "Not a physical-device game FPS, battery or input-latency benchmark."
+  ]
+}

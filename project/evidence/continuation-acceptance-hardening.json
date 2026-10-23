@@ -1,0 +1,80 @@
+{
+  "automatic_activation": false,
+  "ci": {
+    "artifact_id": 12441400284,
+    "artifact_sha256": "4fa98d8ec5d17850e885122adaf851e31a675cc574666d25a75b3ab5ddcfbc91",
+    "errors": 0,
+    "failures": 0,
+    "host_tests": 473,
+    "job_id": 119942691297,
+    "ppsspp_tests": 61,
+    "run_id": 39812635602,
+    "skips": 0,
+    "status": "success",
+    "total_tests": 534
+  },
+  "date": "2026-10-22",
+  "development_packaging": {
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "byte_identical_overlay_rebuild_with_same_key": true,
+    "byte_identical_unsigned_zip_rebuild": true,
+    "development_key_id": "54a70d020d8cf2fdcf2bbb1377714782ea0fc1a477ebed8dc98d93813b0d9d8e",
+    "device_activation_qualified": false,
+    "device_gates": {
+      "hardware_qualified": false,
+      "runtime_verified": false,
+      "source_use_verified": false
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "payload_files": 53,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "release_id": "smartpro-psp-0.1.0-dev4",
+    "schema": 1,
+    "signature_hash_inventory_verified": true,
+    "signer": "ephemeral development",
+    "smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "executed": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "source_date_epoch": 1792659237,
+    "status": "host-development-preview"
+  },
+  "hardware_qualified": false,
+  "historical_private_native_outputs_available": false,
+  "implementation_commit": "37c330c6ebf8dd2e846003ee072eb2e0cf7f1bb1",
+  "kind": "continuation-host-evidence",
+  "local": {
+    "acceptance_tests_passed": 21,
+    "full_host_attempt": {
+      "errors": 22,
+      "failures": 14,
+      "limitation": "Sandbox numeric PIDs do not match mounted /proc namespace; process identity checks fail closed.",
+      "passed": false,
+      "tests": 473
+    },
+    "inventory_support_tests_passed": 13,
+    "standalone_ppsspp_attempt": "Exited before unittest summary; not counted as a passing local run."
+  },
+  "native_builds_rerun": false,
+  "notification_sent": false,
+  "physical_cases": {
+    "not_run": 13,
+    "total": 13
+  },
+  "schema": 1,
+  "source_review_kit": {
+    "distribution_cleared": false,
+    "manifest_sha256": "a80ff16b5fc15d1115071ea574b2911502fca832fffe6546dd2a60d5509445f9",
+    "source_use_reviewed": false,
+    "verified": true
+  }
+}

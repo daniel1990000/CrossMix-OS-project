@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "repository": "spruceUI/spruceOS",
+  "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "release": "v4.5.4",
+  "patches": [
+    {
+      "patch": "0001-pyui-quote-game-launch.patch",
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py",
+      "base_sha256": "6701285e87122a7cc5ab0c509e9d6140640da929ba07bafbdd80c350687e0745",
+      "patched_sha256": "1e5576544bec71821fea17861b5bf2de032060ca2250bcc8d1a15378e68f619a"
+    },
+    {
+      "patch": "0002-ota-require-verified-tls.patch",
+      "path": "App/-OTA/downloader.sh",
+      "base_sha256": "934632845d6f6f9ba64fe071231bde345f2f5fe39c0acfb86fcdaaaac3c88268",
+      "patched_sha256": "df2e831c8ef9e6c4742d9c38385ad1f05f93a30201e09a91cfd528e83f2e6436"
+    },
+    {
+      "patch": "0003-preserve-archive-extraction-status.patch",
+      "path": "spruce/scripts/helperFunctions.sh",
+      "base_sha256": "c0ca1a98e1ddd2e52cfe9a3aaca5637a24263913703c9825f636b59d4a25d0cf",
+      "patched_sha256": "b97805f2f98c0110817c80a2f3a2051c0d7611e6f51cbbe447d8e120c17d642d"
+    },
+    {
+      "patch": "0004-usb-refuse-unstaged-export.patch",
+      "path": "App/USBStorageMode/launch.sh",
+      "base_sha256": "c28b684665a51d5b9208d6b4042538190e07f1f093f34b5dc212e856841dc849",
+      "patched_sha256": "1bb86c230524d91ce96c2fd195a4c479b8f634ee12f64db047e327af175e99a6"
+    }
+  ]
+}

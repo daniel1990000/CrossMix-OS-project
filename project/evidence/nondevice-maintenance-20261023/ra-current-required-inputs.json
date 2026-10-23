@@ -1,0 +1,34 @@
+{
+  "baseline_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "candidate_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "changed_required_inputs": 0,
+  "files": [
+    {
+      "baseline_tree_entry": "100644 blob b969c2745ccd9f17f2ce9fee3f14d2dcd4788af8\tpatches/common/0001-spruce-igm.patch",
+      "candidate_tree_entry": "100644 blob b969c2745ccd9f17f2ce9fee3f14d2dcd4788af8\tpatches/common/0001-spruce-igm.patch",
+      "changed": false,
+      "path": "patches/common/0001-spruce-igm.patch"
+    },
+    {
+      "baseline_tree_entry": "100644 blob fb44adbc7e97c7f922d75f3acea7712e2fb54671\tcommon_src/spruce_igm_theme.c",
+      "candidate_tree_entry": "100644 blob fb44adbc7e97c7f922d75f3acea7712e2fb54671\tcommon_src/spruce_igm_theme.c",
+      "changed": false,
+      "path": "common_src/spruce_igm_theme.c"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 514398b12355ea01fa17e94f57f4a7a432853a56\tcommon_src/spruce_igm_theme.h",
+      "candidate_tree_entry": "100644 blob 514398b12355ea01fa17e94f57f4a7a432853a56\tcommon_src/spruce_igm_theme.h",
+      "changed": false,
+      "path": "common_src/spruce_igm_theme.h"
+    },
+    {
+      "baseline_tree_entry": "100644 blob ab82bc06a770217b9e15632a65f461ae25ec1fe0\tbuild.sh",
+      "candidate_tree_entry": "100644 blob ab82bc06a770217b9e15632a65f461ae25ec1fe0\tbuild.sh",
+      "changed": false,
+      "path": "build.sh"
+    }
+  ],
+  "schema": 1,
+  "source": "SPRUCE_RA_SOURCE_ROOT",
+  "source_pin_updated": false
+}

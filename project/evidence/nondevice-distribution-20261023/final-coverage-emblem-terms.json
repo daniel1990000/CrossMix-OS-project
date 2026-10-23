@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "kind": "official-european-emblem-terms-and-exact-native-asset-scope",
+  "captured_at_utc": "2026-10-23T03:35:18.026577+00:00",
+  "terms_available_and_reviewed": true,
+  "retrieval": "Connected web tool retrieved actual official Council of Europe and EU legal-notice pages after direct EUR-Lex shell requests yielded empty responses. The earlier access failure is historical, not a missing-terms blocker.",
+  "primary_sources": [
+    {
+      "title": "Council of Europe: The European flag",
+      "url": "https://www.coe.int/en/web/about-us/the-european-flag",
+      "section": "Copyright; Conditions of use; Trade mark and related issues",
+      "observed_lines": [
+        94,
+        107
+      ],
+      "supports": [
+        "Nonprofit and commercial use are covered by the published conditional permission",
+        "Avoid false institutional affiliation or support and incompatible/unlawful uses",
+        "Permission to use does not authorize trademark or other IP registration"
+      ]
+    },
+    {
+      "title": "European Union: Legal notice",
+      "url": "https://european-union.europa.eu/legal-notice_en",
+      "section": "Use of the EU emblem by third parties",
+      "observed_lines": [
+        62,
+        74
+      ],
+      "supports": [
+        "The official page identifies administrative agreement2012/C271/04",
+        "No written permission is required when the stated conditions are met",
+        "Emblem or heraldic-imitation trademark/IP registration is unacceptable"
+      ]
+    }
+  ],
+  "conditions_summary": {
+    "nonprofit_and_commercial_use_included": true,
+    "must_not_imply_nonexistent_institutional_connection": true,
+    "must_not_falsely_imply_institutional_support_sponsorship_approval_or_consent": true,
+    "must_not_support_unlawful_or_EU_CoE_incompatible_activity": true,
+    "trademark_or_other_IP_registration_not_authorized": true,
+    "written_permission_not_required_when_conditions_met": true,
+    "blanket_CC_BY_grant_not_applied_to_emblem": true
+  },
+  "exact_affected_asset": {
+    "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+    "source_archive_sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+    "path": "assets/ui_images/images.svg",
+    "sha256": "5346f91c938d58c66bfd7929d8e086a9bb6990241a9dfe8b43dc61bdb187adfe",
+    "svg_group_id": "I_FLAG_EU",
+    "exact_group_offset_bytes": 168074,
+    "exact_group_length_bytes": 3143,
+    "exact_group_sha256": "aecdd0569b78aa6cb7e3f6b91c9e8643dba28c0b2a37ef1215d53d4706773231",
+    "source_acknowledgement_path": "assets/ui_images/svg_sources.txt",
+    "source_acknowledgement_sha256": "05ad599de5e5921b051b62faf337e0e4b758659666657239ae91e192609aec15",
+    "native_asset_selected_for_public_distribution": false
+  },
+  "decision": {
+    "missing_published_terms_blocker_resolved": true,
+    "further_permission_request_or_message_required_for_conditions_compliant_use": false,
+    "future_exact_release_branding_and_support_claims_must_satisfy_conditions": true,
+    "approval_for_any_future_use_inferred": false,
+    "other_font_recipe_IGM_grants_changed": false,
+    "overall_public_native_distribution_cleared": false,
+    "device_runtime_gates_changed": false
+  }
+}

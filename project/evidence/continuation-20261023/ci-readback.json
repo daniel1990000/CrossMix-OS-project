@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "kind": "github-ci-artifact-readback",
+  "ci_run_id": 39877124999,
+  "ci_run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999",
+  "conclusion": "success",
+  "source_branch_head": "0585e1de62b1e38b291a96eed7793464c4f272e1",
+  "actual_clean_merge_checkout": "71d2c19dcdaa78782ccfaa98c464801c00dd98a5",
+  "artifact_id": 12469330647,
+  "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39877124999/artifacts/12469330647",
+  "artifact_bytes": 4970680,
+  "artifact_sha256": "7e6cbbf345417d97f2390ae424a285001f943de75fa4f5284e60ef08428f1110",
+  "artifact_expires_at_utc": "2027-01-21T00:16:26Z",
+  "complete_archive_retrieved": true,
+  "inner_checksums": [
+    {
+      "path": "START-HERE.txt",
+      "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "bytes": 859
+    },
+    {
+      "path": "build-report.json",
+      "sha256": "87947ac6fb1ed07c881a43a3c097bc557502f44b7853cd11088168f99680df74",
+      "bytes": 5307
+    },
+    {
+      "path": "development-verification.pub",
+      "sha256": "b6a03875808929bb11366caea85f5822507fd5b6a5c23837962a1e1da144bbca",
+      "bytes": 32
+    },
+    {
+      "path": "host-preview.png",
+      "sha256": "c1021140435047c50a74c2240b44229ecca7a0b9a88b7a1d73050153421cde35",
+      "bytes": 152914
+    },
+    {
+      "path": "release-source.json",
+      "sha256": "ce437034c8cf9e3986dcd5c983b47a4ac12752d29a8be38cb995473280a18cf5",
+      "bytes": 22746
+    },
+    {
+      "path": "smartpro-psp-0.1.0-dev11-host-preview.zip",
+      "sha256": "a3319be32ea7c95a42a82b65da13054fc19ebf6505bef468db75a0cf39ea278d",
+      "bytes": 1419964
+    },
+    {
+      "path": "smartpro-psp-0.1.0-dev11-original-source.zip",
+      "sha256": "2b3174c6ec9e592f0bae257f4e98ff9917e59de3cf2cc3b1f0fdbc257bc6a49f",
+      "bytes": 1845531
+    },
+    {
+      "path": "smartpro-psp-0.1.0-dev11.tar",
+      "sha256": "721d9049f1d7a6c97a7694273024fc5667ec5a9a97c8a306dadd4d963183fcab",
+      "bytes": 2918400
+    }
+  ],
+  "strict_tests": {
+    "tests_run": 833,
+    "passed": 833,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "development_signature_and_payload_verified": true,
+  "payload_files": 59,
+  "actual_source_files_compared": 177,
+  "source_inventory_sha256": "179b85ec30396c3031431fe59da0a588fe9311d717f8350c622c994e2ca04df9",
+  "matches_local_source_inventory": true,
+  "private_permanent_retention_performed": false,
+  "hardware_tested": false,
+  "production_trust_established": false
+}

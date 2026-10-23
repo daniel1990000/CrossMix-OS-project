@@ -1,0 +1,3632 @@
+{
+  "R06_complete": false,
+  "captured_at_utc": "2026-10-23T01:09:56.520465+00:00",
+  "complete_native_notice_packet_assembled": false,
+  "focused_inventory_tests": {
+    "errors": 0,
+    "failures": 0,
+    "passed": 12,
+    "run": 12,
+    "skipped": 0
+  },
+  "fresh_r04_retrieval": [
+    {
+      "fresh_download_complete_hash_verified": true,
+      "id": "ra-source",
+      "parts": [
+        {
+          "fresh_part_hash_verified": true,
+          "order": 0,
+          "sha256": "b4f6511ad67b8c40fa2838f87b0c78b4ecd6035d47f8b8181ad4ece580e91a8c",
+          "size_bytes": 67108864
+        },
+        {
+          "fresh_part_hash_verified": true,
+          "order": 1,
+          "sha256": "80c3e0d363f3d10f0369150d5231975a68804bd462c4d8236bc573e8391ac9fe",
+          "size_bytes": 67108864
+        },
+        {
+          "fresh_part_hash_verified": true,
+          "order": 2,
+          "sha256": "505953b8808bc58ac07fdbf3a3494abc6d5e347cf4483d4c3e11c9671a600872",
+          "size_bytes": 10359179
+        }
+      ],
+      "sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+      "size_bytes": 144576907
+    },
+    {
+      "fresh_download_complete_hash_verified": true,
+      "id": "ra-build-records",
+      "parts": [
+        {
+          "fresh_part_hash_verified": true,
+          "order": 0,
+          "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+          "size_bytes": 595274
+        }
+      ],
+      "sha256": "70d1cb17690cd78a74f08e9f1efe8d03048d58499e75e7470c648f0e58a05446",
+      "size_bytes": 595274
+    },
+    {
+      "fresh_download_complete_hash_verified": true,
+      "id": "ppsspp-source",
+      "parts": [
+        {
+          "fresh_part_hash_verified": true,
+          "order": 0,
+          "sha256": "2f52ca079ff608a409de293c295ccdd38705f0eb490f7eaa999fc5026ce24fea",
+          "size_bytes": 67108864
+        },
+        {
+          "fresh_part_hash_verified": true,
+          "order": 1,
+          "sha256": "d1616c6309f77d696c90eaf0c8ebe3b7e67590face51ce475f60b622ead95dc6",
+          "size_bytes": 67108864
+        },
+        {
+          "fresh_part_hash_verified": true,
+          "order": 2,
+          "sha256": "423f4fc4894b017612c7b44510c8e1c1d09dc73a0eea0946a1a896712daff033",
+          "size_bytes": 43745383
+        }
+      ],
+      "sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+      "size_bytes": 177963111
+    },
+    {
+      "fresh_download_complete_hash_verified": true,
+      "id": "ppsspp-build-records",
+      "parts": [
+        {
+          "fresh_part_hash_verified": true,
+          "order": 0,
+          "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+          "size_bytes": 291510
+        }
+      ],
+      "sha256": "ba2e68c6d0d5e0101f1f8491e4330ab93475b6aec1216ef2a514fa20154384d1",
+      "size_bytes": 291510
+    }
+  ],
+  "full_archives_binaries_SDK_committed": false,
+  "gcc_runtime_resolution": {
+    "changes_checksums_verified": true,
+    "changes_openpgp_signature_verified": false,
+    "evidence_files": [
+      {
+        "name": "gcc-9-cross_21ubuntu7_amd64.changes",
+        "sha256": "f03e9cf09126d4790ffa0d6542a265720720d480d77c8d4ebfa00ecdfdc30f2c",
+        "size_bytes": 134716
+      },
+      {
+        "name": "libstdc++-9-dev-arm64-cross_9.4.0-1ubuntu1~20.04.2cross2_all.deb",
+        "sha256": "17b0294c70127eeeaa38a334f4fd13971bdf9c6a26a26489f9ea3e049a0fc848",
+        "size_bytes": 1667040
+      },
+      {
+        "name": "gcc-9-cross-base_9.4.0-1ubuntu1~20.04.2cross2_all.deb",
+        "sha256": "ff94669c131bdca8c9dfd43e2dd8b6ba84a429f181bac9b8dedad26336d26dc6",
+        "size_bytes": 14416
+      },
+      {
+        "name": "gcc9-cross-base-copyright",
+        "sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035",
+        "size_bytes": 75285
+      }
+    ],
+    "matching_package_copyright_terms": "GPL-3.0-or-later with GCC Runtime Library Exception 3.1 for covered libstdc++-v3/libgcc/runtime/header scope; exception eligibility and independent module terms remain separate.",
+    "package_copyright_scope_lines": [
+      102,
+      114,
+      242,
+      244,
+      294,
+      307
+    ],
+    "public_build_files_base_url": "https://launchpad.net/~ubuntu-toolchain-r/+archive/ubuntu/ppa/+build/24568796/+files/",
+    "published_binary_package": {
+      "binary_package_name": "libstdc++-9-dev-arm64-cross",
+      "binary_package_version": "9.4.0-1ubuntu1~20.04.2cross2",
+      "build_link": "https://api.launchpad.net/1.0/~ubuntu-toolchain-r/+archive/ubuntu/ppa/+build/24568796",
+      "distro_arch_series_link": "https://api.launchpad.net/1.0/ubuntu/focal/amd64",
+      "self_link": "https://api.launchpad.net/1.0/ubuntu/+archive/primary/+binarypub/196273429",
+      "source_package_name": "gcc-9-cross",
+      "source_package_version": "21ubuntu7"
+    },
+    "runtime_archive_bytes_match_R04_linked_digest": true,
+    "runtime_archive_sha256": "c6e9d9e3a4965a811e3281aa593a14d3d6c56897ee2e62812eae9fb1ac2f1c4d",
+    "runtime_archive_size_bytes": 5947852,
+    "source_package_correspondence_resolved_to": "gcc-9-cross 21ubuntu7; retained binary package copyright identifies GCC source with Debian/Ubuntu packaging"
+  },
+  "hardware_qualified": false,
+  "kind": "substantive-r06-source-notice-and-package-review",
+  "method": "Fresh owner-only Drive build/source retrieval, every part and complete hash comparison; streaming no-extraction native archive inventory; selected complete source/header/end-of-file notice inspection; exact public SDK/package retrieval; no target code execution.",
+  "native_assets": {
+    "actual_ppsspp_asset_bytes": 22290281,
+    "actual_ppsspp_asset_files": 179,
+    "all_artwork_shader_data_terms_review_complete": false,
+    "debugger_notice_path": "ppsspp/assets/debugger/static/js/main.fe87e942.js.LICENSE.txt",
+    "font_terms_from_actual_embedded_name_records": "SIL Open Font License 1.1",
+    "fonts": [
+      {
+        "embedded_name_records": [
+          {
+            "name_id": 0,
+            "text": "Copyright 2006 The Inconsolata Project Authors (https://github.com/cyrealtype/Inconsolata)"
+          },
+          {
+            "name_id": 13,
+            "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL"
+          },
+          {
+            "name_id": 14,
+            "text": "http://scripts.sil.org/OFL"
+          }
+        ],
+        "path": "ppsspp/assets/Inconsolata-Regular.ttf",
+        "sha256": "e0267abf9d734e2b9f766f8cb7a496b552c57cdfeacfa0efdc5bfd21940ae145",
+        "size_bytes": 101748
+      },
+      {
+        "embedded_name_records": [
+          {
+            "name_id": 0,
+            "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+          },
+          {
+            "name_id": 13,
+            "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+          },
+          {
+            "name_id": 14,
+            "text": "https://openfontlicense.org"
+          }
+        ],
+        "path": "ppsspp/assets/Roboto_Condensed-Bold.ttf",
+        "sha256": "da69d6f3193e279c892451c17f7e4926aecd4aeaf7300171ddb44c70551260ca",
+        "size_bytes": 146580
+      },
+      {
+        "embedded_name_records": [
+          {
+            "name_id": 0,
+            "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+          },
+          {
+            "name_id": 13,
+            "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+          },
+          {
+            "name_id": 14,
+            "text": "https://openfontlicense.org"
+          }
+        ],
+        "path": "ppsspp/assets/Roboto_Condensed-Italic.ttf",
+        "sha256": "9fe1c2390bbce960ebba517eec37659fdd1c7a59dd256da6274b5b4d88509575",
+        "size_bytes": 152248
+      },
+      {
+        "embedded_name_records": [
+          {
+            "name_id": 0,
+            "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+          },
+          {
+            "name_id": 13,
+            "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+          },
+          {
+            "name_id": 14,
+            "text": "https://openfontlicense.org"
+          }
+        ],
+        "path": "ppsspp/assets/Roboto_Condensed-Light.ttf",
+        "sha256": "3f1a3f85852fafc3a198904f6efc1fce5ae1013775ac40da35bd52ec82d38e41",
+        "size_bytes": 145952
+      },
+      {
+        "embedded_name_records": [
+          {
+            "name_id": 0,
+            "text": "Copyright 2011 The Roboto Project Authors (https://github.com/googlefonts/roboto-classic)"
+          },
+          {
+            "name_id": 13,
+            "text": "This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org"
+          },
+          {
+            "name_id": 14,
+            "text": "https://openfontlicense.org"
+          }
+        ],
+        "path": "ppsspp/assets/Roboto_Condensed-Regular.ttf",
+        "sha256": "d8e6f7c5a1356d41dd82b0c00219febd21c791cc5cd1ecf8a0323cbeafe6496c",
+        "size_bytes": 145908
+      }
+    ],
+    "full_font_notice_packet_already_assembled": false
+  },
+  "native_binary_distribution_cleared": false,
+  "native_source_notice_inventories": {
+    "ppsspp-source": {
+      "archive_sha256": "2575f85be69acab16a6e4b015dda72f3e13b355b3609894fc3d58b059ae18556",
+      "archive_size_bytes": 177963111,
+      "compiled_membership_established": false,
+      "distribution_cleared": false,
+      "expected_archive_hash_matched": true,
+      "file_inventory_sha256": "0cd03ea5786a4380581994d54ce0b8a7399106cb6b35bfea14ca51f4ed7cc620",
+      "header_scan_limit_bytes": 8192,
+      "header_signal_file_counts": {
+        "all-rights-reserved": 1445,
+        "copyright": 8547,
+        "gnu-license-reference": 1040,
+        "permission-grant": 428,
+        "public-domain-reference": 154,
+        "spdx": 275
+      },
+      "kind": "archive-notice-candidate-inventory",
+      "limits": [
+        "Notice names and header signals are discovery aids, not licence decisions.",
+        "Inline terms outside the scanned prefix and differently named notices can remain undiscovered.",
+        "An archive inventory does not establish binary link membership or corresponding-source completeness."
+      ],
+      "members_seen": 26937,
+      "named_notice_candidates": [
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "build/project-notices/PPSSPP-PROJECT-NOTICE.md",
+          "sha256": "1fb0acc22c9b9bd42b430a9204b3a86dbdd99b29bd13900bec3f243990ddf53c",
+          "size_bytes": 3307
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/LICENSE.TXT",
+          "sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+          "size_bytes": 19740
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/SDL/macOS/SDL2.framework/Versions/A/Resources/License.txt",
+          "sha256": "77edc2b8cb8d4eebe362cf87383cf8e1bde7b0e1f0c09aa573240eabbaa100f7",
+          "size_bytes": 909
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/assets/debugger/static/js/main.fe87e942.js.LICENSE.txt",
+          "sha256": "9cc2775972449bbb33c699aed95a492eb54855299be5f698b9917d90c4817ddf",
+          "size_bytes": 1759
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/.github/scripts/CMakePresets.json.license",
+          "sha256": "2c5d83f0db3bc1b96a7b6d4faecdec13f021aa0250ac57f90e27073892c4b648",
+          "size_bytes": 77
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/COPYING.adoc",
+          "sha256": "56e17fd90cc5ff1d930db979bfbfcffeb7f311a57068f435e14e4f0548b3a4fc",
+          "size_bytes": 5472
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/OpenXR-SDK/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/LICENSES/LicenseRef-Khronos-Free-Use-License-for-Software-and-Documentation.txt",
+          "sha256": "631caf35cb7a21e2fa4e36617551d72566cc272619003857fe79b82399e8e8fa",
+          "size_bytes": 1036
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/LICENSES/OFL-1.1-RFN.txt",
+          "sha256": "797832eda5ff4360a10fee3be94a3250995e76423b79675c9c44204c37ca492d",
+          "size_bytes": 4292
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/include/generated_header_list.txt.license",
+          "sha256": "616795144590feb087f40096156b31f5c589133c0cb3567cac51c4f7af7fb9e5",
+          "size_bytes": 184
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/external/jnipp/LICENSE",
+          "sha256": "3f46b895fbd843c7abe5b49fa0b699a5093fc8b345940a7c587948c57cc8f270",
+          "size_bytes": 1070
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/OpenXR-SDK/src/external/jsoncpp/AUTHORS",
+          "sha256": "0b21b1d9c90421380d30e8b55a02204949cd737535d98bf56076d661816deec4",
+          "size_bytes": 4200
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant",
+            "public-domain-reference"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/external/jsoncpp/LICENSE",
+          "sha256": "cec0db5f6d7ed6b3a72647bd50aed02e13c3377fd44382b96dc2915534c042ad",
+          "size_bytes": 2714
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/loader/abi.json.license",
+          "sha256": "4ba061a04ea45819f91e828ddb663a16663cceac1d3b47f1bcd65e9554083af9",
+          "size_bytes": 92
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/loader/additional_manifest.mf.in.license",
+          "sha256": "fc7a2a0d746bb81a2ded96bae0aebe36a96977cad476349f4722fb3f4e8d82ac",
+          "size_bytes": 91
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/loader/module.json.license",
+          "sha256": "4ba061a04ea45819f91e828ddb663a16663cceac1d3b47f1bcd65e9554083af9",
+          "size_bytes": 92
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "spdx",
+            "copyright"
+          ],
+          "path": "ppsspp/ext/OpenXR-SDK/src/loader/prefab.json.license",
+          "sha256": "4ba061a04ea45819f91e828ddb663a16663cceac1d3b47f1bcd65e9554083af9",
+          "size_bytes": 92
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/SPIRV-Cross/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/armips/LICENSE.txt",
+          "sha256": "791ff46884cdf62188f17cabf0f099b462e92ec68986033bab243b26573b7573",
+          "size_bytes": 1079
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/armips/ext/filesystem/LICENSE",
+          "sha256": "1b265537c97cfb422ffb52492c96979943f54fab8746a6dd38d8329953d487cc",
+          "size_bytes": 1086
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/cityhash/COPYING",
+          "sha256": "3ed00dd93c75655599456c83cba2f69c6824fd53f24fc24206ba27b65057709d",
+          "size_bytes": 1110
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/cpu_features/LICENSE",
+          "sha256": "af272c1b4dd08dd61d43e001d3134119d03ca7a2b057a64f7355fdf27fbea3dd",
+          "size_bytes": 12876
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/discord-rpc/LICENSE",
+          "sha256": "12054cc15e274c9a10966fd7d8740c12dbd679dec2468e370818d899f9a3a634",
+          "size_bytes": 1053
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "public-domain-reference"
+          ],
+          "path": "ppsspp/ext/freetype/LICENSE.TXT",
+          "sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b",
+          "size_bytes": 2149
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/freetype/src/tools/no-copyright",
+          "sha256": "3e2c8db4e09e12e9a138ba7ba8c0b762eff36802c6c1273d73ac049d4949a298",
+          "size_bytes": 1282
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/freetype/src/tools/update-copyright",
+          "sha256": "ae5b05f1d3f5235eb91ce41518be95022443f68bce5d200b6e1cc1fb57a5017e",
+          "size_bytes": 383
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/ext/freetype/src/tools/update-copyright-year",
+          "sha256": "cd958efaceec3658336c44513983cedea58c63c467f8affe207af8bb6647c8cf",
+          "size_bytes": 4272
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/freetype/subprojects/dlg/LICENSE",
+          "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+          "size_bytes": 1338
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/gason/LICENSE",
+          "sha256": "a9a5c0646d67d9cc2596fab2ee1cac35bdcd4057d9dea7745425bd3cfcab40f0",
+          "size_bytes": 1086
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/glslang/LICENSE.txt",
+          "sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+          "size_bytes": 54705
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/glslang/license-checker.cfg",
+          "sha256": "e6ead88c5894007be86546cfd24d6c0b9fafcbf832fc27d8330eb7d46cedc84a",
+          "size_bytes": 1731
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/ext/libadrenotools/LICENSE",
+          "sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+          "size_bytes": 1299
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/ext/libadrenotools/lib/linkernsbypass/LICENSE",
+          "sha256": "7ea796e199e46093c2f5c391697bce5abeacd02b7216aa0a84e5839afb5584f3",
+          "size_bytes": 1299
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/libchdr/LICENSE.txt",
+          "sha256": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539",
+          "size_bytes": 1493
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "public-domain-reference"
+          ],
+          "path": "ppsspp/ext/libchdr/deps/lzma-24.05/LICENSE",
+          "sha256": "06721414a6decad6d6677feb470f01f47126e154d895d85bc1e17628697715e5",
+          "size_bytes": 261
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/libchdr/deps/zlib-1.3.1/LICENSE",
+          "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+          "size_bytes": 1002
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/libchdr/deps/zlib-1.3.1/contrib/dotzlib/LICENSE_1_0.txt",
+          "sha256": "36266a8fd073568394cb81cdb2b124f7fdae2c64c1a7ed09db34b4d22efa2951",
+          "size_bytes": 1359
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ext/libchdr/deps/zstd-1.5.6/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "size_bytes": 18091
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/libchdr/deps/zstd-1.5.6/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": true,
+          "header_signals": [],
+          "path": "ppsspp/ext/libchdr/deps/zstd-1.5.6/build/LICENSE",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/miniupnp/LICENSE",
+          "sha256": "7480ae23b082c05ad9823896163d78f3a96f1beadce51f29c96cf898545c27e5",
+          "size_bytes": 1527
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/naett/LICENSE",
+          "sha256": "48b79daf8988912a6c2dadffdbbba99f514817dddf11cebf3605a5f0dbfafa94",
+          "size_bytes": 1068
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/ext/nanosvg/LICENSE.txt",
+          "sha256": "e82bc3dd03400aecabe12201219ba14750dbc4b36faab58663a7a6068548d372",
+          "size_bytes": 880
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "ppsspp/ext/portable-file-dialogs/COPYING",
+          "sha256": "d20ad7990610153b563c52681da860b8302afcf0778f75237f8815c07d05141f",
+          "size_bytes": 466
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/rapidjson/bin/jsonschema/LICENSE",
+          "sha256": "837402bd25fad9b704265801ca3f92566a98157c1f9a7acd6f446299ba1c305a",
+          "size_bytes": 1057
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/rapidjson/contrib/natvis/LICENSE",
+          "sha256": "394faaedb93c1da8ecbd61322518834908fee64381117e01a611bf9fac20baa6",
+          "size_bytes": 2175
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/rapidjson/license.txt",
+          "sha256": "a140e5d46fe734a1c78f1a3c3ef207871dd75648be71fdda8e309b23ab8b1f32",
+          "size_bytes": 5152
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googlemock/LICENSE",
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+          "size_bytes": 1475
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googlemock/scripts/generator/LICENSE",
+          "sha256": "5e0df8c845c742e76f2f64d2d9ce1b7e74a2422fddbc577ae6a56319083de0bf",
+          "size_bytes": 11386
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/rapidjson/thirdparty/gtest/googletest/LICENSE",
+          "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+          "size_bytes": 1475
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "ppsspp/ext/rcheevos/LICENSE",
+          "sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+          "size_bytes": 1078
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/snappy/AUTHORS",
+          "sha256": "710c0a3a4681c8c40f5a59eb794f61093fa142935c647c92f46ea595f0591833",
+          "size_bytes": 22
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/snappy/COPYING",
+          "sha256": "5221a36a801b981fbdfda7b87db64cff231a3b88223a066c325411b539df796f",
+          "size_bytes": 1475
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/udis86/LICENSE",
+          "sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+          "size_bytes": 1337
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ext/zlib/LICENSE",
+          "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+          "size_bytes": 1002
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ext/zstd/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "size_bytes": 18091
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/ext/zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": true,
+          "header_signals": [],
+          "path": "ppsspp/ext/zstd/build/LICENSE",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ffmpeg/COPYING.GPLv2",
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size_bytes": 18092
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ffmpeg/COPYING.GPLv3",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ffmpeg/COPYING.LGPLv2.1",
+          "sha256": "b634ab5640e258563c536e658cad87080553df6f34f62269a21d554844e58bfe",
+          "size_bytes": 26526
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ffmpeg/COPYING.LGPLv3",
+          "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+          "size_bytes": 7651
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/ffmpeg/LICENSE.md",
+          "sha256": "2e06d5375e3ec10363d38f4ba0680d311ff4f2024ee7f9ddb1c7a2e2bb8a5585",
+          "size_bytes": 3940
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/ffmpeg/doc/authors.texi",
+          "sha256": "4b10a5ff9464f9e8f5b9ae7341134be99dec9a051d061c653c58cfc73141b4b6",
+          "size_bytes": 399
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "ppsspp/pspautotests/LICENSE.txt",
+          "sha256": "ebf65fdbbc6f7c1891d57e98e8c7b8d2c990fcc04a9b4741ff3cf3d4a81f9ef0",
+          "size_bytes": 53
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "ppsspp/pspautotests/common/ext/zstd/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "size_bytes": 18091
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "ppsspp/pspautotests/common/ext/zstd/LICENSE",
+          "sha256": "2c1a7fa704df8f3a606f6fc010b8b5aaebf403f3aeec339a12048f1ba7331a0b",
+          "size_bytes": 1530
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": true,
+          "header_signals": [],
+          "path": "ppsspp/pspautotests/common/ext/zstd/build/LICENSE",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size_bytes": 0
+        }
+      ],
+      "regular_file_bytes": 592106456,
+      "regular_files": 24849,
+      "schema": 1,
+      "source_use_verified": false,
+      "unfollowed_links": 13
+    },
+    "ra-source": {
+      "archive_sha256": "61e03dde636297a5dc6556464513c6d22a063113e4327be82637aa755c9b2f36",
+      "archive_size_bytes": 144576907,
+      "compiled_membership_established": false,
+      "distribution_cleared": false,
+      "expected_archive_hash_matched": true,
+      "file_inventory_sha256": "c489df1bf5ceb117f9b4baa84e97d402a61d9123b3f1e37b17a3b46fabca0d0a",
+      "header_scan_limit_bytes": 8192,
+      "header_signal_file_counts": {
+        "all-rights-reserved": 2402,
+        "copyright": 5973,
+        "gnu-license-reference": 1484,
+        "permission-grant": 1475,
+        "public-domain-reference": 138,
+        "spdx": 394
+      },
+      "kind": "archive-notice-candidate-inventory",
+      "limits": [
+        "Notice names and header signals are discovery aids, not licence decisions.",
+        "Inline terms outside the scanned prefix and differently named notices can remain undiscovered.",
+        "An archive inventory does not establish binary link membership or corresponding-source completeness."
+      ],
+      "members_seen": 25132,
+      "named_notice_candidates": [
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/COPYING",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/cores/libretro-imageviewer/LICENSE",
+          "sha256": "3461e105359fe4e24ca575ac799476f31a042edf5759cbdc9be71e0afc9aa7d1",
+          "size_bytes": 1063
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/cores/libretro-mpv/LICENSE",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "modified/cores/libretro-video-processor/LICENSE",
+          "sha256": "fba7111eaa50dd02eb70f910c5ef5adb7acdaaabf4ce4cbdfd7b9fe25d875af2",
+          "size_bytes": 1319
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/deps/Pigs-In-A-Blanket/LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "size_bytes": 35149
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "modified/deps/SPIRV-Cross/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/deps/bearssl-0.6/LICENSE.txt",
+          "sha256": "771bf18c8633ea69ec9b07d2e604c4b99b7bef41b0f5ce6385d24df4448f61ca",
+          "size_bytes": 1080
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/deps/discord-rpc/LICENSE",
+          "sha256": "12054cc15e274c9a10966fd7d8740c12dbd679dec2468e370818d899f9a3a634",
+          "size_bytes": 1053
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "modified/deps/ibxm/licence.txt",
+          "sha256": "64534ac3cabcb39c1386a1c98876b0fa25a8fc61ac9120e017dfe54d2969df1d",
+          "size_bytes": 1551
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "modified/deps/libFLAC/AUTHORS",
+          "sha256": "a94c7269d91073b1e1675dd2006481dee1a9cd1d81e8f7ac3e735f28ef31daec",
+          "size_bytes": 2155
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "modified/deps/libFLAC/COPYING.Xiph",
+          "sha256": "fa27cb11f13f97b0c5f3ff363b1e2610c6efe87ed175779cb2a78e44eb19d34c",
+          "size_bytes": 1509
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/deps/libShake/LICENSE.txt",
+          "sha256": "c6712b4aae835682324c2f0effcdb0843178db8b234817a0f7f82ed8de10be04",
+          "size_bytes": 1119
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "modified/deps/libgo2/LICENSE",
+          "sha256": "a619c43b767de59121d8d9094a94925fe07d245f213994ffafd0cf28db6c3ec3",
+          "size_bytes": 793
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/deps/libvita2d/LICENSE",
+          "sha256": "bfcd754f76d4c3746c58b62e838becc8f36555b409cd0c1b9b6d665b9d184b68",
+          "size_bytes": 1110
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/deps/rcheevos/LICENSE",
+          "sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+          "size_bytes": 1078
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant"
+          ],
+          "path": "modified/deps/wayland-protocols/COPYING",
+          "sha256": "f1a2b233e8a9a71c40f4aa885be08a0842ac85bb8588703c1dd7e6e6502e3124",
+          "size_bytes": 1502
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "modified/deps/xdelta3/LICENSE",
+          "sha256": "6cf63d87586c7c25c3ab8e62eef5c75bbaa982b0a6f9c00c59e2720255aac9ec",
+          "size_bytes": 9156
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "modified/deps/xxHash/LICENSE",
+          "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+          "size_bytes": 1389
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/deps/xxHash/tests/bench/LICENSE",
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size_bytes": 18092
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/deps/xxHash/tests/collisions/LICENSE",
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size_bytes": 18092
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/deps/zstd/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "size_bytes": 18091
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "modified/deps/zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "modified/gfx/include/userland/LICENCE",
+          "sha256": "5b994f6429c6b60fcb1bb414cc2193214ed424a6bb28137867e128a39f58feb6",
+          "size_bytes": 1573
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant",
+            "gnu-license-reference"
+          ],
+          "path": "modified/gfx/include/userland/host_applications/linux/apps/hello_pi/hello_tiger/license.txt",
+          "sha256": "56f5602e7429eb3fff023177844c4cb04425abdf60bd4b48a35adbfcb10ce259",
+          "size_bytes": 2544
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "modified/media/icons/LICENSE/LICENSE.CC_BY_NC_3.txt",
+          "sha256": "bc7319c86c160a972d4036d87bfc4e170c6b632f39cde2140cd3da68f077dfd9",
+          "size_bytes": 17719
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "modified/media/icons/LICENSE/LICENSE.txt",
+          "sha256": "840de2528a612bc0ae6241fa4817ade2b5c389071f3b22c93ca0cde5dc9ecd24",
+          "size_bytes": 1027
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant",
+            "gnu-license-reference"
+          ],
+          "path": "modified/pkg/debian/copyright",
+          "sha256": "fba268602239aa95e096fa6766a0b5687b0da7c9449ad19d378ba328a3aaedee",
+          "size_bytes": 2866
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "modified/tools/ps3/ps3py/LICENSE",
+          "sha256": "61fc255a4be73a0603ec1c664d277a038333df45db408379aa2a885ac1e4d560",
+          "size_bytes": 1084
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "modified/wii/libogc/libogc_license.txt",
+          "sha256": "8be3bc1cad868fae35498ce049c60b4263e57184a7d23df99ea1f7ba2d338a2f",
+          "size_bytes": 942
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "modified/wii/libogc/wiiuse/license_libogc.txt",
+          "sha256": "c2d57113b7e3df8ea52c5fc96541a2b50d4e7bbba3ad16aeac376fb6b6479183",
+          "size_bytes": 33494
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "project/LICENSE",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+          "size_bytes": 1402
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "project/retroarch/COPYING",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "gnu-license-reference"
+          ],
+          "path": "project/retroarch/NOTICE.md",
+          "sha256": "e0ff59a664ad3923312567a6438f9c58f3b314e7d8f7fb6cf3c058eea5f9b672",
+          "size_bytes": 1484
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/COPYING",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/cores/libretro-imageviewer/LICENSE",
+          "sha256": "3461e105359fe4e24ca575ac799476f31a042edf5759cbdc9be71e0afc9aa7d1",
+          "size_bytes": 1063
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/cores/libretro-mpv/LICENSE",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "upstream/cores/libretro-video-processor/LICENSE",
+          "sha256": "fba7111eaa50dd02eb70f910c5ef5adb7acdaaabf4ce4cbdfd7b9fe25d875af2",
+          "size_bytes": 1319
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/deps/Pigs-In-A-Blanket/LICENSE",
+          "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+          "size_bytes": 35149
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "upstream/deps/SPIRV-Cross/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/deps/bearssl-0.6/LICENSE.txt",
+          "sha256": "771bf18c8633ea69ec9b07d2e604c4b99b7bef41b0f5ce6385d24df4448f61ca",
+          "size_bytes": 1080
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/deps/discord-rpc/LICENSE",
+          "sha256": "12054cc15e274c9a10966fd7d8740c12dbd679dec2468e370818d899f9a3a634",
+          "size_bytes": 1053
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "upstream/deps/ibxm/licence.txt",
+          "sha256": "64534ac3cabcb39c1386a1c98876b0fa25a8fc61ac9120e017dfe54d2969df1d",
+          "size_bytes": 1551
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "upstream/deps/libFLAC/AUTHORS",
+          "sha256": "a94c7269d91073b1e1675dd2006481dee1a9cd1d81e8f7ac3e735f28ef31daec",
+          "size_bytes": 2155
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "upstream/deps/libFLAC/COPYING.Xiph",
+          "sha256": "fa27cb11f13f97b0c5f3ff363b1e2610c6efe87ed175779cb2a78e44eb19d34c",
+          "size_bytes": 1509
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/deps/libShake/LICENSE.txt",
+          "sha256": "c6712b4aae835682324c2f0effcdb0843178db8b234817a0f7f82ed8de10be04",
+          "size_bytes": 1119
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "upstream/deps/libgo2/LICENSE",
+          "sha256": "a619c43b767de59121d8d9094a94925fe07d245f213994ffafd0cf28db6c3ec3",
+          "size_bytes": 793
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/deps/libvita2d/LICENSE",
+          "sha256": "bfcd754f76d4c3746c58b62e838becc8f36555b409cd0c1b9b6d665b9d184b68",
+          "size_bytes": 1110
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/deps/rcheevos/LICENSE",
+          "sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+          "size_bytes": 1078
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant"
+          ],
+          "path": "upstream/deps/wayland-protocols/COPYING",
+          "sha256": "f1a2b233e8a9a71c40f4aa885be08a0842ac85bb8588703c1dd7e6e6502e3124",
+          "size_bytes": 1502
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "upstream/deps/xdelta3/LICENSE",
+          "sha256": "6cf63d87586c7c25c3ab8e62eef5c75bbaa982b0a6f9c00c59e2720255aac9ec",
+          "size_bytes": 9156
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "upstream/deps/xxHash/LICENSE",
+          "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+          "size_bytes": 1389
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/deps/xxHash/tests/bench/LICENSE",
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size_bytes": 18092
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/deps/xxHash/tests/collisions/LICENSE",
+          "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+          "size_bytes": 18092
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/deps/zstd/COPYING",
+          "sha256": "f9c375a1be4a41f7b70301dd83c91cb89e41567478859b77eef375a52d782505",
+          "size_bytes": 18091
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "upstream/deps/zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "all-rights-reserved"
+          ],
+          "path": "upstream/gfx/include/userland/LICENCE",
+          "sha256": "5b994f6429c6b60fcb1bb414cc2193214ed424a6bb28137867e128a39f58feb6",
+          "size_bytes": 1573
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/gfx/include/userland/host_applications/linux/apps/hello_pi/hello_tiger/license.txt",
+          "sha256": "56f5602e7429eb3fff023177844c4cb04425abdf60bd4b48a35adbfcb10ce259",
+          "size_bytes": 2544
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "upstream/media/icons/LICENSE/LICENSE.CC_BY_NC_3.txt",
+          "sha256": "bc7319c86c160a972d4036d87bfc4e170c6b632f39cde2140cd3da68f077dfd9",
+          "size_bytes": 17719
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [],
+          "path": "upstream/media/icons/LICENSE/LICENSE.txt",
+          "sha256": "840de2528a612bc0ae6241fa4817ade2b5c389071f3b22c93ca0cde5dc9ecd24",
+          "size_bytes": 1027
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "permission-grant",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/pkg/debian/copyright",
+          "sha256": "fba268602239aa95e096fa6766a0b5687b0da7c9449ad19d378ba328a3aaedee",
+          "size_bytes": 2866
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "upstream/tools/ps3/ps3py/LICENSE",
+          "sha256": "61fc255a4be73a0603ec1c664d277a038333df45db408379aa2a885ac1e4d560",
+          "size_bytes": 1084
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright"
+          ],
+          "path": "upstream/wii/libogc/libogc_license.txt",
+          "sha256": "8be3bc1cad868fae35498ce049c60b4263e57184a7d23df99ea1f7ba2d338a2f",
+          "size_bytes": 942
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "gnu-license-reference"
+          ],
+          "path": "upstream/wii/libogc/wiiuse/license_libogc.txt",
+          "sha256": "c2d57113b7e3df8ea52c5fc96541a2b50d4e7bbba3ad16aeac376fb6b6479183",
+          "size_bytes": 33494
+        }
+      ],
+      "regular_file_bytes": 488181581,
+      "regular_files": 22396,
+      "schema": 1,
+      "source_use_verified": false,
+      "unfollowed_links": 6
+    }
+  },
+  "original_only_dev11_archive_review": {
+    "host-preview": {
+      "archive_sha256": "459d3c426ab04ffd6eab9523e2f41f909c16a044220d8dfb584e1ff8aad01c5d",
+      "archive_size_bytes": 1419967,
+      "compiled_membership_established": false,
+      "contains_native_elf": false,
+      "distribution_cleared": false,
+      "expected_archive_hash_matched": true,
+      "file_inventory_sha256": "427e4d8ae0ec8272ec3436bc3b5f6ba57063d5d31aa1c63646065d446f08b410",
+      "files": [
+        {
+          "path": "smartpro-host-preview/RUN.txt",
+          "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+          "size_bytes": 859
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/__init__.py",
+          "sha256": "2747fbbd37e9a9f3ace1e59badd1c39cfa07f87f5c555ff130284b923b2032bc",
+          "size_bytes": 78
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/bootstrap.py",
+          "sha256": "4baa532567622f9077d0b350da6cfb49f1a2698f2d39a18797223f3adeab1d2a",
+          "size_bytes": 12187
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/experimental.py",
+          "sha256": "79599db9f2ea8f4b2a8975123fb61bcfcb85e84a18ce0d617bb50b84e542e272",
+          "size_bytes": 17095
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/experimental_journal.py",
+          "sha256": "f66e2afb41d9a0263abf6495fe50efcc692d8c17ec5ea006cece258bf99d1f9b",
+          "size_bytes": 10910
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/frontend.py",
+          "sha256": "d71c6f886b18433c4bce01aed1e9055b48338f30e145e14df9908ad8a34d6581",
+          "size_bytes": 2865
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/lifecycle.py",
+          "sha256": "4c3b20a62cb9a0884e71a4338ec133279404a3ea2287d45760e14814a0170979",
+          "size_bytes": 11411
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/principal.py",
+          "sha256": "4ab276d1357e7576d1b264843c22221d18aefe7a27600454a870844d086f4e30",
+          "size_bytes": 21553
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/principal_integration.py",
+          "sha256": "ea193cc721aeead84b871e1ee416d2ff98beef4d67dcbf73c9db74f7d3af439a",
+          "size_bytes": 18529
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/process_source.py",
+          "sha256": "ed49e7402f450fae3deb7804ff08f1842b72a77973e9b6ae6190b2f63ab3cc9c",
+          "size_bytes": 23327
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/pyui_entry.py",
+          "sha256": "6625ad91be68baa25d7d649b4b33768b540f22b87f709aa4434eb2620409e638",
+          "size_bytes": 8468
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/qualified_runtime.py",
+          "sha256": "37cfbbc6efbf68d73270ecc04b03df78bb90c4b624ffd464b76751b0229279cf",
+          "size_bytes": 404
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/resident.py",
+          "sha256": "e6bae6eacf62d2477d55fc62ff7789f855cde237f09b9f4159f1fa2934f562fd",
+          "size_bytes": 30943
+        },
+        {
+          "path": "smartpro-host-preview/app/bridge/source_integration.py",
+          "sha256": "e819c811fd35669a23e0ee2b37803cb448296ccacc7337cda254105573196ff6",
+          "size_bytes": 7826
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/LICENSE",
+          "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+          "size_bytes": 1321
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/README.md",
+          "sha256": "d75c4c8f257be834ef7cc4d4daae05813b99a581c00ca6e34e9c8ee0a7636c5d",
+          "size_bytes": 6448
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/compatibility-profile.example.json",
+          "sha256": "3344e55b21f8926152da3dd91bf2a7890c11a1cddd88682655c3ca533dbdd054",
+          "size_bytes": 1375
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/manifest.json",
+          "sha256": "251d81767c3a4fafa60f67b3f7f731aa710180b4621e4881fae11acccf86dd73",
+          "size_bytes": 760
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/per-game-source-lock.json",
+          "sha256": "a7b434f842a1b18d15f1d454da609c9013ab715111fc154e878c4ab33ba1885e",
+          "size_bytes": 702
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/preview.svg",
+          "sha256": "d13004446a32d72e9a652718bb7a820fc9dadbc13f2a88c5fd1726801c4db6a8",
+          "size_bytes": 2396
+        },
+        {
+          "path": "smartpro-host-preview/app/ppsspp/theme/spruce-midnight.ini",
+          "sha256": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a",
+          "size_bytes": 1830
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/controls/ppsspp-native-unqualified.json",
+          "sha256": "eb6719b82404582917a0da32aea85aa26c941da250c190e6a6ecf52870317512",
+          "size_bytes": 1721
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/controls/retroarch-standard-unqualified.json",
+          "sha256": "3b14a89330e9e265dc1356474232b4af866021583878146c469907406bffbd27",
+          "size_bytes": 1046
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/controls/spruce-igm-unqualified.json",
+          "sha256": "d5254e774d197e95198310db26d7fc7a4255db24e1d13d5f4c844ce212bf7276",
+          "size_bytes": 1966
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/measurement-scenes.json",
+          "sha256": "92e26091c42649ad36221f8f6994b8cef347f1a2b1e5624936e761bfc1be1dc0",
+          "size_bytes": 631
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/ports-sources.lock.json",
+          "sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+          "size_bytes": 11122
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/ports.json",
+          "sha256": "affd3bd2e19c175ccc6af028982b488edbebd56524601b21394695b31abb3aec",
+          "size_bytes": 16000
+        },
+        {
+          "path": "smartpro-host-preview/app/profiles/spruce-4.5.4-tg5040.json",
+          "sha256": "6686dae8de3738f5d7038e3c7857555360029c9640bda539e3e16416c693c2cc",
+          "size_bytes": 2089
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/__init__.py",
+          "sha256": "a3774dfd02a7162185263cb00d9abe901c63a510d3021c5626037e5326d5f198",
+          "size_bytes": 168
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/__main__.py",
+          "sha256": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+          "size_bytes": 48
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/adapters/spruce.py",
+          "sha256": "377088bc831dad39ace06894e7fe67436dc66435e473c96b9cb25b4a09553fbc",
+          "size_bytes": 56667
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/app.py",
+          "sha256": "8f1b0867bba2c1db504d09c1926661f6c65837a4450e8ea43a7f6fb4f00253f0",
+          "size_bytes": 26566
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/controls.py",
+          "sha256": "eec8eceb89ec394fb8ba76b4cbf5b1703e62e1447a87be604058bcbd3e441926",
+          "size_bytes": 53891
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/demo.py",
+          "sha256": "2cf44bd71bd1494b7592b731c0454659c055b51a20d73d481236958bc4c9725e",
+          "size_bytes": 5195
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/embedded.py",
+          "sha256": "313640f837f567503e68118c54346d4e2e9ea6f4d93e4a33f368d319a0ef5eb8",
+          "size_bytes": 25680
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/hardware_settings.py",
+          "sha256": "7eaace0392a1bed27c8c54b506425320728820ebb3909ec3c714ec29ad2f2312",
+          "size_bytes": 15805
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/health.py",
+          "sha256": "f05d73897bef16b8f9a55fa8cf72cbe1797acda650b4efa9388dba25f7b88929",
+          "size_bytes": 23274
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/library.py",
+          "sha256": "d2ac643dcc682e8bb75f917f6604aa605f8fde2b7b646ed439dfb69cc9fe87bd",
+          "size_bytes": 298
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ports.py",
+          "sha256": "65b7b2c39a40edabd68f44538e1d71541a11f54b9cfc62199512454ec90b3468",
+          "size_bytes": 45181
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ppsspp.py",
+          "sha256": "bc6623129439c626afb1ee74a632189de742bc27892f14f93d5136194ba95356",
+          "size_bytes": 43312
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/runtime.py",
+          "sha256": "b45acb85268658ee41ae4acea9249a0f5379c340431e1e95f59e6d47b40c147c",
+          "size_bytes": 20795
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/settings.py",
+          "sha256": "c9760f7544bcdee32d1c6569eea2b97f72d97325b36204d40a5cd79b04d6767e",
+          "size_bytes": 36216
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/state_evidence.py",
+          "sha256": "6b4d00a5c35f471cbca428c10faeff901e01350ef24ea8698bddce2bbc2986d9",
+          "size_bytes": 42760
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/__init__.py",
+          "sha256": "62e9654a19eb35a46b946ae4a41d1df2a26641582c4d6c756f921705b9df0693",
+          "size_bytes": 322
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/artwork.py",
+          "sha256": "c0aabc0d6ee5e65ab3c8e90c4a9af21c32395232f7e40365b9e271fc5de03c8c",
+          "size_bytes": 17372
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/input.py",
+          "sha256": "5d14a181a52d85dc784deaad5f2bb3b068a16295a245f9de504e95fe59888e0d",
+          "size_bytes": 10018
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/keyboard.py",
+          "sha256": "7f057986b18e259771a9c5e953f8e29d9050ce0a1b921c555d4a366aee63bdf1",
+          "size_bytes": 5263
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/model.py",
+          "sha256": "1a145d83fa75d5431881edd3c1fbb2fc36b827147d523b3a6478ffc3fd214ba7",
+          "size_bytes": 58282
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/motion.py",
+          "sha256": "a881ccfa38030d800f82c5a53ca21d94b44c30a104afa95aa6408208dd5db622",
+          "size_bytes": 1568
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/pictograms.py",
+          "sha256": "cb9480c311cd16670d6e8b6526da45d2e6670b99eccc6e576e7aa295eb3b3c3c",
+          "size_bytes": 5493
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/renderer.py",
+          "sha256": "a809c6335aeb865042ab7fb4df4cdf6e1535e1bdff015fa3e01705ed6fb27c3a",
+          "size_bytes": 49395
+        },
+        {
+          "path": "smartpro-host-preview/app/psp_shell/ui/text.py",
+          "sha256": "dfa8dcaaa87833f9c57b099c9865d1fd00693b8c14efefea33aef1a0610e2471",
+          "size_bytes": 9085
+        },
+        {
+          "path": "smartpro-host-preview/assets/fonts/NotoSans.ttf",
+          "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+          "size_bytes": 2049096
+        },
+        {
+          "path": "smartpro-host-preview/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "path": "smartpro-host-preview/metadata/development-release.json",
+          "sha256": "fff6139fd58ce9ff3233e493469fa2952be23af6ebbefbbf52d8b08a3611c4a2",
+          "size_bytes": 4648
+        },
+        {
+          "path": "smartpro-host-preview/metadata/original-payload.json",
+          "sha256": "12129f86280ed30f04c11c8ee137eda3352671ba65f6d8f721c3d4a5d0b38efa",
+          "size_bytes": 8185
+        },
+        {
+          "path": "smartpro-host-preview/metadata/source-provenance.json",
+          "sha256": "b34b66e1072c74e6183d167c62c8e1a13890c018388634958230b12a05c5c8f2",
+          "size_bytes": 11561
+        },
+        {
+          "path": "smartpro-host-preview/notices/DEPENDENCIES.txt",
+          "sha256": "5e2c123235a8f13f18e0cd093219a89aabbbbe746bdd4fd9e25a5b89634c1ae4",
+          "size_bytes": 539
+        },
+        {
+          "path": "smartpro-host-preview/notices/NotoSans-OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "path": "smartpro-host-preview/notices/ORIGINAL-PROJECT-LICENSE.txt",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+          "size_bytes": 1402
+        }
+      ],
+      "header_scan_limit_bytes": 8192,
+      "header_signal_file_counts": {
+        "copyright": 4,
+        "permission-grant": 4,
+        "spdx": 18
+      },
+      "kind": "archive-notice-candidate-inventory",
+      "limits": [
+        "Notice names and header signals are discovery aids, not licence decisions.",
+        "Inline terms outside the scanned prefix and differently named notices can remain undiscovered.",
+        "An archive inventory does not establish binary link membership or corresponding-source completeness."
+      ],
+      "members_seen": 60,
+      "named_notice_candidates": [
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-host-preview/app/ppsspp/theme/LICENSE",
+          "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+          "size_bytes": 1321
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-host-preview/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-host-preview/notices/NotoSans-OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-host-preview/notices/ORIGINAL-PROJECT-LICENSE.txt",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+          "size_bytes": 1402
+        }
+      ],
+      "regular_file_bytes": 2852739,
+      "regular_files": 60,
+      "schema": 1,
+      "source_use_verified": false,
+      "unfollowed_links": 0,
+      "verified_required_notice_and_font_bytes": [
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-host-preview/notices/ORIGINAL-PROJECT-LICENSE.txt",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018"
+        },
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-host-preview/notices/NotoSans-OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+        },
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-host-preview/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+        },
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-host-preview/assets/fonts/NotoSans.ttf",
+          "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d"
+        }
+      ]
+    },
+    "original-source": {
+      "archive_sha256": "a6d1c0df900a3cb34adaecafce46cb7877c975cba466dbbbe6362bb49dc28644",
+      "archive_size_bytes": 1845532,
+      "compiled_membership_established": false,
+      "contains_native_elf": false,
+      "distribution_cleared": false,
+      "expected_archive_hash_matched": true,
+      "file_inventory_sha256": "ed6ea3b641aaa9ddc7dde6aa927ea692ea0124ed91bc55920bfb55829bbb0e52",
+      "files": [
+        {
+          "path": "smartpro-original-source/LICENSE",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+          "size_bytes": 1402
+        },
+        {
+          "path": "smartpro-original-source/README.md",
+          "sha256": "43703c6ff33cb176c3813d426a4b9cd157273da7017b197be372e3ee4d1721e3",
+          "size_bytes": 9547
+        },
+        {
+          "path": "smartpro-original-source/assets/fonts/NotoSans.ttf",
+          "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+          "size_bytes": 2049096
+        },
+        {
+          "path": "smartpro-original-source/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "path": "smartpro-original-source/assets/fonts/source.json",
+          "sha256": "9c393d53ef707cc8d599468f95eddf447a60eaadccaef842df97aada95b53bf3",
+          "size_bytes": 403
+        },
+        {
+          "path": "smartpro-original-source/bridge/README.md",
+          "sha256": "6dccee6eefb1885f5d2d8fcfb8b2b9da65bc76b301a895df39bbda96c6c45b41",
+          "size_bytes": 15487
+        },
+        {
+          "path": "smartpro-original-source/bridge/__init__.py",
+          "sha256": "2747fbbd37e9a9f3ace1e59badd1c39cfa07f87f5c555ff130284b923b2032bc",
+          "size_bytes": 78
+        },
+        {
+          "path": "smartpro-original-source/bridge/bootstrap.py",
+          "sha256": "4baa532567622f9077d0b350da6cfb49f1a2698f2d39a18797223f3adeab1d2a",
+          "size_bytes": 12187
+        },
+        {
+          "path": "smartpro-original-source/bridge/experimental.py",
+          "sha256": "79599db9f2ea8f4b2a8975123fb61bcfcb85e84a18ce0d617bb50b84e542e272",
+          "size_bytes": 17095
+        },
+        {
+          "path": "smartpro-original-source/bridge/experimental_journal.py",
+          "sha256": "f66e2afb41d9a0263abf6495fe50efcc692d8c17ec5ea006cece258bf99d1f9b",
+          "size_bytes": 10910
+        },
+        {
+          "path": "smartpro-original-source/bridge/frontend.py",
+          "sha256": "d71c6f886b18433c4bce01aed1e9055b48338f30e145e14df9908ad8a34d6581",
+          "size_bytes": 2865
+        },
+        {
+          "path": "smartpro-original-source/bridge/lifecycle.py",
+          "sha256": "4c3b20a62cb9a0884e71a4338ec133279404a3ea2287d45760e14814a0170979",
+          "size_bytes": 11411
+        },
+        {
+          "path": "smartpro-original-source/bridge/principal.py",
+          "sha256": "4ab276d1357e7576d1b264843c22221d18aefe7a27600454a870844d086f4e30",
+          "size_bytes": 21553
+        },
+        {
+          "path": "smartpro-original-source/bridge/principal_integration.py",
+          "sha256": "ea193cc721aeead84b871e1ee416d2ff98beef4d67dcbf73c9db74f7d3af439a",
+          "size_bytes": 18529
+        },
+        {
+          "path": "smartpro-original-source/bridge/process_source.py",
+          "sha256": "ed49e7402f450fae3deb7804ff08f1842b72a77973e9b6ae6190b2f63ab3cc9c",
+          "size_bytes": 23327
+        },
+        {
+          "path": "smartpro-original-source/bridge/pyui_entry.py",
+          "sha256": "6625ad91be68baa25d7d649b4b33768b540f22b87f709aa4434eb2620409e638",
+          "size_bytes": 8468
+        },
+        {
+          "path": "smartpro-original-source/bridge/qualified_runtime.py",
+          "sha256": "37cfbbc6efbf68d73270ecc04b03df78bb90c4b624ffd464b76751b0229279cf",
+          "size_bytes": 404
+        },
+        {
+          "path": "smartpro-original-source/bridge/resident.py",
+          "sha256": "e6bae6eacf62d2477d55fc62ff7789f855cde237f09b9f4159f1fa2934f562fd",
+          "size_bytes": 30943
+        },
+        {
+          "path": "smartpro-original-source/bridge/source_integration.py",
+          "sha256": "e819c811fd35669a23e0ee2b37803cb448296ccacc7337cda254105573196ff6",
+          "size_bytes": 7826
+        },
+        {
+          "path": "smartpro-original-source/dev/audit_release.py",
+          "sha256": "1665b2f90f28457484ffa78b17e5907146c2764044e2eeab695dfd5f01088797",
+          "size_bytes": 3887
+        },
+        {
+          "path": "smartpro-original-source/dev/certify.py",
+          "sha256": "332bc4400f088a7126ebee85a8b967090e56633e32acb467493deeeea8f39560",
+          "size_bytes": 12374
+        },
+        {
+          "path": "smartpro-original-source/dev/check.sh",
+          "sha256": "c9c7571b96ff0b576f5bbf7462968cbab777fecdd87f45cbce920fd39dfb5dba",
+          "size_bytes": 253
+        },
+        {
+          "path": "smartpro-original-source/docs/artifact-custody.md",
+          "sha256": "6b6204b5c2363be84aecfab1b5b2703eaaaf0e7a38c07b355b73da08eb634eac",
+          "size_bytes": 5277
+        },
+        {
+          "path": "smartpro-original-source/docs/artwork-formats.md",
+          "sha256": "6920dcdba69b8116fac442c0bee9b0c8d8089353ee388acb763de9d39b8f81b9",
+          "size_bytes": 3269
+        },
+        {
+          "path": "smartpro-original-source/docs/component-audit.md",
+          "sha256": "5c9ad861fce8b8e21ff299346e2f040bc58cd678fde32dbb6869b2cfb8a79038",
+          "size_bytes": 5402
+        },
+        {
+          "path": "smartpro-original-source/docs/continuation-rights-review.md",
+          "sha256": "98d95e20667953dba65159b75f193980dbbee5e6361974e9f7f264d23d526b19",
+          "size_bytes": 5982
+        },
+        {
+          "path": "smartpro-original-source/docs/development-release.md",
+          "sha256": "fec3bba57d86a8033f36451f6acc5a18577f500ecb534f767bf4af083274b3b8",
+          "size_bytes": 7229
+        },
+        {
+          "path": "smartpro-original-source/docs/device-probe.md",
+          "sha256": "0d56af6aed4248ae23e6470dbf6b215142374747e9c06d125ffb1c31be605d26",
+          "size_bytes": 6247
+        },
+        {
+          "path": "smartpro-original-source/docs/device-recovery-preflight.md",
+          "sha256": "356eb2572358f8404fd44296fa969c363f3a9ab9d442cc27d67d1c9cc6d13487",
+          "size_bytes": 11557
+        },
+        {
+          "path": "smartpro-original-source/docs/device-test-runbook.md",
+          "sha256": "722b300b7a3d3cdfcf8584ffeaaba49f1f4c7551450286e41f062927f452e07f",
+          "size_bytes": 5458
+        },
+        {
+          "path": "smartpro-original-source/docs/distribution-register.json",
+          "sha256": "ec668ebc7e2147173092d3b4fa2c3b020f5806189d328a390c9ca3ab29ec75b5",
+          "size_bytes": 5127
+        },
+        {
+          "path": "smartpro-original-source/docs/experimental-admission-host.md",
+          "sha256": "2c911f9d218c1801100414192cdfc5fde99537034bb92a3a2e05ad1e75c13a5d",
+          "size_bytes": 6298
+        },
+        {
+          "path": "smartpro-original-source/docs/experimental-device-route.md",
+          "sha256": "430eed0db58e4975c8b4b1b965a9659d45094126fecd7e4cf4d8b02ce520a5cd",
+          "size_bytes": 16421
+        },
+        {
+          "path": "smartpro-original-source/docs/feature-coverage.md",
+          "sha256": "b496394a65636af4cfac8aab53f8db2ae4fdf3042255cef3adeb441b37a358ca",
+          "size_bytes": 6772
+        },
+        {
+          "path": "smartpro-original-source/docs/host-measurement.md",
+          "sha256": "0985a6ad6b1ac8e201f5b2347e47e9b73249679ebfd5313074a5435b76c3cbd0",
+          "size_bytes": 4959
+        },
+        {
+          "path": "smartpro-original-source/docs/installed-runtime-evidence.md",
+          "sha256": "689707e6ff13816cfceb445f61fd43d777847f0ccdbb268dcef9cd72de55d43c",
+          "size_bytes": 3063
+        },
+        {
+          "path": "smartpro-original-source/docs/interface-accessibility.md",
+          "sha256": "7d4c38771338bfd823a1fb19bcd1db6732f768c4565e819a546f2a51deca2a3f",
+          "size_bytes": 3184
+        },
+        {
+          "path": "smartpro-original-source/docs/master-plan-2026-10-22.md",
+          "sha256": "3f6496fb7f41581d7487f0a0bdf937be8a29b8da0be259cb00a2685325b0e9f6",
+          "size_bytes": 37565
+        },
+        {
+          "path": "smartpro-original-source/docs/native-component-ledger.json",
+          "sha256": "8997fb76bd2e6eb5a793e4bbec98ac77a27157508523a77716e39257e8fe0f96",
+          "size_bytes": 50705
+        },
+        {
+          "path": "smartpro-original-source/docs/native-component-review.md",
+          "sha256": "1c677c4df4c64c4df70f0f58c5695c5bb7212f5e4f5733b6fbd09e96e5819f2e",
+          "size_bytes": 7179
+        },
+        {
+          "path": "smartpro-original-source/docs/native-recovery-status.md",
+          "sha256": "75f3dbd059535aae095dbda35b7de54ccd3d49e5bac6c67a8edd9333f25a23c9",
+          "size_bytes": 4819
+        },
+        {
+          "path": "smartpro-original-source/docs/ports-preparation-and-saves.md",
+          "sha256": "33b8927f65e5396abf7f783a25004d6e3e07fd6916db0349c1616510df4dcbf6",
+          "size_bytes": 5702
+        },
+        {
+          "path": "smartpro-original-source/docs/principal-deadlines.md",
+          "sha256": "d89d2ad5252086a205a897deff8f34c70da68c3c5ab0e848b89897ca2353b40a",
+          "size_bytes": 3436
+        },
+        {
+          "path": "smartpro-original-source/docs/psp-source-study.md",
+          "sha256": "e9b1059f27d69a1dfe1832209ad7564f9bf31c4277bcc50283415b858b3b4c65",
+          "size_bytes": 5194
+        },
+        {
+          "path": "smartpro-original-source/docs/psp-visual-design.md",
+          "sha256": "e5cba0a8fb3e1ad00e1d0948dd023dff02c672b4fa6c999031b58a24e28b0a05",
+          "size_bytes": 5153
+        },
+        {
+          "path": "smartpro-original-source/docs/recovery.md",
+          "sha256": "492c68afbf862c9dc071310319ec8d9c435f08551400d17fe51b62b8caa3074a",
+          "size_bytes": 9371
+        },
+        {
+          "path": "smartpro-original-source/docs/release-qualification.md",
+          "sha256": "fba718220e4710cc7d551245dd3fa84d580394db5abb69115b6f4d85bf924fbf",
+          "size_bytes": 7306
+        },
+        {
+          "path": "smartpro-original-source/docs/release-rights.md",
+          "sha256": "a7a800e8a58fb5f7ba3f85d5f4c8e495f7e1285f7f846b371c810f553fd5a7af",
+          "size_bytes": 2937
+        },
+        {
+          "path": "smartpro-original-source/docs/trust-rehearsal.md",
+          "sha256": "83971d89e190b02e01f316b39d9d959da1ce53a24a7c7252c8336c3fe0abc0cf",
+          "size_bytes": 3254
+        },
+        {
+          "path": "smartpro-original-source/docs/upstream-maintenance.md",
+          "sha256": "e373a7c2d0a70274eee121ee751846919784ed09356fd4e502052dff7fcfc2ad",
+          "size_bytes": 3055
+        },
+        {
+          "path": "smartpro-original-source/integration/__init__.py",
+          "sha256": "b8ea7c954d52e10e274cb12625a51805d399721684690bce0046a47df52012db",
+          "size_bytes": 93
+        },
+        {
+          "path": "smartpro-original-source/integration/host_flow_fixture.py",
+          "sha256": "32abe3fa4b2b8e91d7419cb367674152c4445b487c7e591fb83b8c91524b951a",
+          "size_bytes": 14871
+        },
+        {
+          "path": "smartpro-original-source/integration/release.py",
+          "sha256": "df7b52260d889c95eb01bb151943e0fa0a0f0e2c92f71aabae4bcfca4c66883e",
+          "size_bytes": 38499
+        },
+        {
+          "path": "smartpro-original-source/metadata/release-source.json",
+          "sha256": "8ae4a656f5306aaacd12732c2acc8384b310274004574800f0752eed6337f568",
+          "size_bytes": 22746
+        },
+        {
+          "path": "smartpro-original-source/metadata/spruce-source-lock.json",
+          "sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+          "size_bytes": 10905
+        },
+        {
+          "path": "smartpro-original-source/packaging/README.md",
+          "sha256": "40bde240ead90253b6058e24a47e27acf7862f05011d8e34d083c2ccf8f923da",
+          "size_bytes": 5643
+        },
+        {
+          "path": "smartpro-original-source/packaging/current-release.json",
+          "sha256": "c307fc601b7252de59e697544cb833f6598210c11d04028634f18e97e55cdca5",
+          "size_bytes": 4643
+        },
+        {
+          "path": "smartpro-original-source/packaging/dev_release.py",
+          "sha256": "fd38ed47d28e5b7005bc685e09ac98f219cd0bcd096bef46558ae4d60eff130c",
+          "size_bytes": 19004
+        },
+        {
+          "path": "smartpro-original-source/packaging/overlay.py",
+          "sha256": "91d48c0828f8ddedf4087d9bfc02850c878a372000069ea15409b882142b2b42",
+          "size_bytes": 41350
+        },
+        {
+          "path": "smartpro-original-source/packaging/profiles/spruce454-tg5040-development.json",
+          "sha256": "c602c35266a2abaac67a2a583a0593e0f7407a854d356aacf334d4201c86640b",
+          "size_bytes": 3412
+        },
+        {
+          "path": "smartpro-original-source/packaging/release_descriptor.py",
+          "sha256": "77135aa4cff88b082b20c12b8cc348e76c08df039ba48bcc6984dae08b9a4535",
+          "size_bytes": 6141
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/LICENSE",
+          "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+          "size_bytes": 1321
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/README.md",
+          "sha256": "d75c4c8f257be834ef7cc4d4daae05813b99a581c00ca6e34e9c8ee0a7636c5d",
+          "size_bytes": 6448
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/compatibility-profile.example.json",
+          "sha256": "3344e55b21f8926152da3dd91bf2a7890c11a1cddd88682655c3ca533dbdd054",
+          "size_bytes": 1375
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/manifest.json",
+          "sha256": "251d81767c3a4fafa60f67b3f7f731aa710180b4621e4881fae11acccf86dd73",
+          "size_bytes": 760
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/per-game-source-lock.json",
+          "sha256": "a7b434f842a1b18d15f1d454da609c9013ab715111fc154e878c4ab33ba1885e",
+          "size_bytes": 702
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/preview.svg",
+          "sha256": "d13004446a32d72e9a652718bb7a820fc9dadbc13f2a88c5fd1726801c4db6a8",
+          "size_bytes": 2396
+        },
+        {
+          "path": "smartpro-original-source/ppsspp/theme/spruce-midnight.ini",
+          "sha256": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a",
+          "size_bytes": 1830
+        },
+        {
+          "path": "smartpro-original-source/profiles/controls/ppsspp-native-unqualified.json",
+          "sha256": "eb6719b82404582917a0da32aea85aa26c941da250c190e6a6ecf52870317512",
+          "size_bytes": 1721
+        },
+        {
+          "path": "smartpro-original-source/profiles/controls/retroarch-standard-unqualified.json",
+          "sha256": "3b14a89330e9e265dc1356474232b4af866021583878146c469907406bffbd27",
+          "size_bytes": 1046
+        },
+        {
+          "path": "smartpro-original-source/profiles/controls/spruce-igm-unqualified.json",
+          "sha256": "d5254e774d197e95198310db26d7fc7a4255db24e1d13d5f4c844ce212bf7276",
+          "size_bytes": 1966
+        },
+        {
+          "path": "smartpro-original-source/profiles/measurement-scenes.json",
+          "sha256": "92e26091c42649ad36221f8f6994b8cef347f1a2b1e5624936e761bfc1be1dc0",
+          "size_bytes": 631
+        },
+        {
+          "path": "smartpro-original-source/profiles/ports-sources.lock.json",
+          "sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+          "size_bytes": 11122
+        },
+        {
+          "path": "smartpro-original-source/profiles/ports.json",
+          "sha256": "affd3bd2e19c175ccc6af028982b488edbebd56524601b21394695b31abb3aec",
+          "size_bytes": 16000
+        },
+        {
+          "path": "smartpro-original-source/profiles/ports.md",
+          "sha256": "35ef1af0e444e5a38042a20323470b95f16f5a6ca81dfc27774c190b2faa0124",
+          "size_bytes": 4842
+        },
+        {
+          "path": "smartpro-original-source/profiles/spruce-4.5.4-tg5040.json",
+          "sha256": "6686dae8de3738f5d7038e3c7857555360029c9640bda539e3e16416c693c2cc",
+          "size_bytes": 2089
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/__init__.py",
+          "sha256": "a3774dfd02a7162185263cb00d9abe901c63a510d3021c5626037e5326d5f198",
+          "size_bytes": 168
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/__main__.py",
+          "sha256": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+          "size_bytes": 48
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/adapters/spruce.py",
+          "sha256": "377088bc831dad39ace06894e7fe67436dc66435e473c96b9cb25b4a09553fbc",
+          "size_bytes": 56667
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/app.py",
+          "sha256": "8f1b0867bba2c1db504d09c1926661f6c65837a4450e8ea43a7f6fb4f00253f0",
+          "size_bytes": 26566
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/controls.py",
+          "sha256": "eec8eceb89ec394fb8ba76b4cbf5b1703e62e1447a87be604058bcbd3e441926",
+          "size_bytes": 53891
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/demo.py",
+          "sha256": "2cf44bd71bd1494b7592b731c0454659c055b51a20d73d481236958bc4c9725e",
+          "size_bytes": 5195
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/embedded.py",
+          "sha256": "313640f837f567503e68118c54346d4e2e9ea6f4d93e4a33f368d319a0ef5eb8",
+          "size_bytes": 25680
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/hardware_settings.py",
+          "sha256": "7eaace0392a1bed27c8c54b506425320728820ebb3909ec3c714ec29ad2f2312",
+          "size_bytes": 15805
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/health.py",
+          "sha256": "f05d73897bef16b8f9a55fa8cf72cbe1797acda650b4efa9388dba25f7b88929",
+          "size_bytes": 23274
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/library.py",
+          "sha256": "d2ac643dcc682e8bb75f917f6604aa605f8fde2b7b646ed439dfb69cc9fe87bd",
+          "size_bytes": 298
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ports.py",
+          "sha256": "65b7b2c39a40edabd68f44538e1d71541a11f54b9cfc62199512454ec90b3468",
+          "size_bytes": 45181
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ppsspp.py",
+          "sha256": "bc6623129439c626afb1ee74a632189de742bc27892f14f93d5136194ba95356",
+          "size_bytes": 43312
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/runtime.py",
+          "sha256": "b45acb85268658ee41ae4acea9249a0f5379c340431e1e95f59e6d47b40c147c",
+          "size_bytes": 20795
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/settings.py",
+          "sha256": "c9760f7544bcdee32d1c6569eea2b97f72d97325b36204d40a5cd79b04d6767e",
+          "size_bytes": 36216
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/state_evidence.py",
+          "sha256": "6b4d00a5c35f471cbca428c10faeff901e01350ef24ea8698bddce2bbc2986d9",
+          "size_bytes": 42760
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/__init__.py",
+          "sha256": "62e9654a19eb35a46b946ae4a41d1df2a26641582c4d6c756f921705b9df0693",
+          "size_bytes": 322
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/artwork.py",
+          "sha256": "c0aabc0d6ee5e65ab3c8e90c4a9af21c32395232f7e40365b9e271fc5de03c8c",
+          "size_bytes": 17372
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/input.py",
+          "sha256": "5d14a181a52d85dc784deaad5f2bb3b068a16295a245f9de504e95fe59888e0d",
+          "size_bytes": 10018
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/keyboard.py",
+          "sha256": "7f057986b18e259771a9c5e953f8e29d9050ce0a1b921c555d4a366aee63bdf1",
+          "size_bytes": 5263
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/model.py",
+          "sha256": "1a145d83fa75d5431881edd3c1fbb2fc36b827147d523b3a6478ffc3fd214ba7",
+          "size_bytes": 58282
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/motion.py",
+          "sha256": "a881ccfa38030d800f82c5a53ca21d94b44c30a104afa95aa6408208dd5db622",
+          "size_bytes": 1568
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/pictograms.py",
+          "sha256": "cb9480c311cd16670d6e8b6526da45d2e6670b99eccc6e576e7aa295eb3b3c3c",
+          "size_bytes": 5493
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/renderer.py",
+          "sha256": "a809c6335aeb865042ab7fb4df4cdf6e1535e1bdff015fa3e01705ed6fb27c3a",
+          "size_bytes": 49395
+        },
+        {
+          "path": "smartpro-original-source/psp_shell/ui/text.py",
+          "sha256": "dfa8dcaaa87833f9c57b099c9865d1fd00693b8c14efefea33aef1a0610e2471",
+          "size_bytes": 9085
+        },
+        {
+          "path": "smartpro-original-source/pyproject.toml",
+          "sha256": "4cd9e06a4d07368e9bc912440ccc5d53d92426960f6d98e9784df924df5f2944",
+          "size_bytes": 637
+        },
+        {
+          "path": "smartpro-original-source/requirements-dev.txt",
+          "sha256": "e1ccaf6fe141eb5e8a7b781360f894e3129930969a2d17199341ce47a9c1494c",
+          "size_bytes": 30
+        },
+        {
+          "path": "smartpro-original-source/tests/resident_fixture.py",
+          "sha256": "3fccefb0cb999cfa0c3f0c41c2acbcc5bb0085135f2165c3ad55e6f83d9b9efc",
+          "size_bytes": 9527
+        },
+        {
+          "path": "smartpro-original-source/tests/test_app.py",
+          "sha256": "dadbea54e4a9136b3fa57b220e9e7f0ee1fa761b009b7c7472f0cb1629c76937",
+          "size_bytes": 5791
+        },
+        {
+          "path": "smartpro-original-source/tests/test_appearance_flow.py",
+          "sha256": "2712b73eda9e51627ddd728dc16627ae736fda9360d7fbe36209311a8f429e33",
+          "size_bytes": 8281
+        },
+        {
+          "path": "smartpro-original-source/tests/test_artwork_formats.py",
+          "sha256": "dbc34c0c443bfb8f6d558b641c58d4cdd0184de604f4390cbf8b6f5f1da2bee1",
+          "size_bytes": 15887
+        },
+        {
+          "path": "smartpro-original-source/tests/test_artwork_refresh.py",
+          "sha256": "6a1b7dafcbd68c39fb47c7a33a8d6f716511c0ef5c32ec2e095729ea7e2762fe",
+          "size_bytes": 10963
+        },
+        {
+          "path": "smartpro-original-source/tests/test_bootstrap.py",
+          "sha256": "fc89dd73daaddc7a070f46c82c21fbb1aec2d060ca64e1a9b8f6e07927525e0e",
+          "size_bytes": 14011
+        },
+        {
+          "path": "smartpro-original-source/tests/test_celeste_preparation.py",
+          "sha256": "97a822e6dcef60e705436ac3b9acc4de229c9dc71dabbbff249b76c963ed3f5e",
+          "size_bytes": 10587
+        },
+        {
+          "path": "smartpro-original-source/tests/test_certification.py",
+          "sha256": "eaa3afee93d27424fbf50ad46410f93d0bc6f5c9da621cbd402fdbd88626552c",
+          "size_bytes": 8699
+        },
+        {
+          "path": "smartpro-original-source/tests/test_common_emulator_transaction.py",
+          "sha256": "b43552ce1da8d6680c858b71e15bb94701fc2f8107f57e30f8c95931250f7f88",
+          "size_bytes": 15184
+        },
+        {
+          "path": "smartpro-original-source/tests/test_component_audit.py",
+          "sha256": "23679503a5045ebccb720746886b6f1f93ef1602a932d9328686acd2bac9994b",
+          "size_bytes": 11468
+        },
+        {
+          "path": "smartpro-original-source/tests/test_controls_adapters.py",
+          "sha256": "314c745894477278dc93f3bcc2c8e639c6741a75fc6366e260345fd9d4cbfb94",
+          "size_bytes": 26197
+        },
+        {
+          "path": "smartpro-original-source/tests/test_device_acceptance.py",
+          "sha256": "e8a32b902702915be8dc9b74b9083297d36b9f45e042bebb3b734b604c15e518",
+          "size_bytes": 15038
+        },
+        {
+          "path": "smartpro-original-source/tests/test_device_probe.py",
+          "sha256": "2ec2fd93dfb7c2fc574ddacf61e310b9a168c89d090dd9c31255f1ff951118a5",
+          "size_bytes": 17086
+        },
+        {
+          "path": "smartpro-original-source/tests/test_embedded.py",
+          "sha256": "600a4f1634dc047fd37b74e9f2f7d7806304990161bda329da30ba704e15ad73",
+          "size_bytes": 25203
+        },
+        {
+          "path": "smartpro-original-source/tests/test_experimental_admission.py",
+          "sha256": "5974fda72b6cc782be09141b815aa639d3324e907c1ccab0fc8b1bd757f14167",
+          "size_bytes": 16111
+        },
+        {
+          "path": "smartpro-original-source/tests/test_experimental_journal.py",
+          "sha256": "7bf6063c299feac164f7b6a585a170d2bcfb89614400f922db5f7015d592a132",
+          "size_bytes": 10249
+        },
+        {
+          "path": "smartpro-original-source/tests/test_hardware_settings.py",
+          "sha256": "52b7806c7318cdfc613fe2f747e4391898efcb381cd3e9f5caae414e8accd1e2",
+          "size_bytes": 17278
+        },
+        {
+          "path": "smartpro-original-source/tests/test_health.py",
+          "sha256": "233e3d12499782f731b68d0c27d1d8af729a7fdd6d945eecccbf4375d3ee28a7",
+          "size_bytes": 9699
+        },
+        {
+          "path": "smartpro-original-source/tests/test_installed_runtime.py",
+          "sha256": "ebba07a804cddf505c4bd9abe7d3241b814c17ec8e70623ec1bd9b14b6489b14",
+          "size_bytes": 13060
+        },
+        {
+          "path": "smartpro-original-source/tests/test_inventory_tools.py",
+          "sha256": "38e6570a4d31f2491daff3f2e274c3d32ff4d8c7d620619ad569f56faacf9a11",
+          "size_bytes": 9189
+        },
+        {
+          "path": "smartpro-original-source/tests/test_keyboard_accessibility.py",
+          "sha256": "3ac00440d9f37bb8fa05700380302faa16d258926fb15dd8f6e6c47d7273c7a4",
+          "size_bytes": 11289
+        },
+        {
+          "path": "smartpro-original-source/tests/test_keyboard_rendering.py",
+          "sha256": "0cd0be7a19aebcf40e194d4628e634330e5fa5f21460e4fb008fa632ebc94f96",
+          "size_bytes": 4376
+        },
+        {
+          "path": "smartpro-original-source/tests/test_large_library.py",
+          "sha256": "419911278bfc068a498ce3865ef5f1eb602bcec45678c9d2166543e89ac1f204",
+          "size_bytes": 11685
+        },
+        {
+          "path": "smartpro-original-source/tests/test_measurement_tools.py",
+          "sha256": "075e4e4b87c6a2d493c19538696df15bddb9d1d8e5bca79f009c6e439ee55337",
+          "size_bytes": 7412
+        },
+        {
+          "path": "smartpro-original-source/tests/test_migration_offline.py",
+          "sha256": "fbeb23bcc89b49239e71c858a05851faf45e8df63d380d2c993cb1e32336c0b1",
+          "size_bytes": 9151
+        },
+        {
+          "path": "smartpro-original-source/tests/test_package_overlay.py",
+          "sha256": "bba117c6b209d9065fbd3a1a11f586359684d46313eecbe7f831568731c73e2f",
+          "size_bytes": 17856
+        },
+        {
+          "path": "smartpro-original-source/tests/test_port_inventory_cli.py",
+          "sha256": "652feb2fb1882ce2a6086b0f2cfb410bbf0d86a98e5bfbc5b303f0b246139798",
+          "size_bytes": 2467
+        },
+        {
+          "path": "smartpro-original-source/tests/test_port_readiness.py",
+          "sha256": "7f6f1847db2e4a6de0f5fe759ddfc905527509c90a3cad9ba1f07823d07908b8",
+          "size_bytes": 6372
+        },
+        {
+          "path": "smartpro-original-source/tests/test_port_runtime_inventory.py",
+          "sha256": "01c12d9793fdfb4f8c1395d3fe7752e45f0e79a804722eae1fb1e1807c612587",
+          "size_bytes": 9917
+        },
+        {
+          "path": "smartpro-original-source/tests/test_port_saves.py",
+          "sha256": "d0a7b227cbb3799be6c55ebd77cea03168a6f6fbe937ebd8e3e5f1dd32911fff",
+          "size_bytes": 9789
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ppsspp_state_wrapper.py",
+          "sha256": "f009536fa9432e02d6bd0a9e02c52924c1692be8cf50e2c6da7dcea870c33221",
+          "size_bytes": 5838
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ppsspp_theme.py",
+          "sha256": "7cdbff2ef8e6680ee05b8928e666d1d67eefcd64f71abf4d477cf96763b7cbac",
+          "size_bytes": 13998
+        },
+        {
+          "path": "smartpro-original-source/tests/test_principal_deadlines.py",
+          "sha256": "eb0cdfd61243660c3bffc3f7b95589fc5e32555cf4636063d5222dd0db4e6aff",
+          "size_bytes": 10977
+        },
+        {
+          "path": "smartpro-original-source/tests/test_principal_integration.py",
+          "sha256": "77ab10ab70507e20bef499508fa19173d9b2fe5c3883f46172fb01e537c1ffdd",
+          "size_bytes": 39873
+        },
+        {
+          "path": "smartpro-original-source/tests/test_pyui_lifecycle.py",
+          "sha256": "d3b82e259e40a5241b55b83a78972d4220d739376b7be3d2f0a61bd69b519198",
+          "size_bytes": 19765
+        },
+        {
+          "path": "smartpro-original-source/tests/test_recovery_preflight.py",
+          "sha256": "7b8d7486425d3c8ccdbd18168ba02b1675551be0c6498db206b5c98539dfb86e",
+          "size_bytes": 14397
+        },
+        {
+          "path": "smartpro-original-source/tests/test_release_descriptor.py",
+          "sha256": "eacc67685bc50a91f83040ae1b28f70bbcd20e10c28f941c402d6384a93f03fd",
+          "size_bytes": 4777
+        },
+        {
+          "path": "smartpro-original-source/tests/test_release_integration.py",
+          "sha256": "b768b2e1e51c2e37d8d565a22eab0b87a346babb4cedd5b57fbe7cf986b78749",
+          "size_bytes": 27882
+        },
+        {
+          "path": "smartpro-original-source/tests/test_retroarch_build_candidate.py",
+          "sha256": "f318cbfb93a4337196511d62ad8c474f0cf3b0f1b04c6da8dfb557dbaed882c4",
+          "size_bytes": 11874
+        },
+        {
+          "path": "smartpro-original-source/tests/test_runtime.py",
+          "sha256": "2e18717fe320f024e11b1dcc936745baa67febc909c8f1c291688cf70e0b1123",
+          "size_bytes": 10999
+        },
+        {
+          "path": "smartpro-original-source/tests/test_settings_transactions.py",
+          "sha256": "6c9b48be1ad976b5427abb2ab6610faef887d39c795e566b7630d750de8b5926",
+          "size_bytes": 17966
+        },
+        {
+          "path": "smartpro-original-source/tests/test_spruce_backend.py",
+          "sha256": "a97f08c69df9cdddfd854cad27977541170ed9b8d7ea9b81f2d85a366f65341b",
+          "size_bytes": 21473
+        },
+        {
+          "path": "smartpro-original-source/tests/test_spruce_igm_appearance.py",
+          "sha256": "7c72719f09f833a32d73b17a0f25c9e7a0891f93b3ba11967d59c081f41691b3",
+          "size_bytes": 7797
+        },
+        {
+          "path": "smartpro-original-source/tests/test_spruce_igm_controls.py",
+          "sha256": "b6ec116999804c004194d0d56af199a0b1e294829884c3e71fa94bc74e239afd",
+          "size_bytes": 7738
+        },
+        {
+          "path": "smartpro-original-source/tests/test_spruce_igm_source.py",
+          "sha256": "14d46050491c2d22955d0afcd194bccf4fa64c7929052c378de3ac17d4d31487",
+          "size_bytes": 4783
+        },
+        {
+          "path": "smartpro-original-source/tests/test_state_evidence.py",
+          "sha256": "51568bbef956a1b758253bdc2b699a41a58cec88ef2357c5dce9467b5e401ffc",
+          "size_bytes": 22056
+        },
+        {
+          "path": "smartpro-original-source/tests/test_trust_rehearsal.py",
+          "sha256": "47ad59d0de78afd415dac3b41c1cc545545a73b92eef7fe2b62d19b96167998d",
+          "size_bytes": 8049
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_artwork_async.py",
+          "sha256": "83123c2b6200d956fd18e65b0107a3987588d7d65913f5f40dadb8aa713bcde2",
+          "size_bytes": 5793
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_dialog_layout.py",
+          "sha256": "16424774bd7d1b9b143f9a81a43398d5d404b75392d6711865f1102fba4c43bd",
+          "size_bytes": 3671
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_input.py",
+          "sha256": "0b20ed87d1aa8fe6711815a5706438c42c1660419ce063a87c8fe5dc2f2ecab0",
+          "size_bytes": 4841
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_model.py",
+          "sha256": "8baf363780279e2f18429552eae34d1661924b78897704a6f8c5bbdbd2326cf0",
+          "size_bytes": 25995
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_motion.py",
+          "sha256": "99e93b294c21e42421696ea6253576d7701cfeb13554280df4a08b2b9194796c",
+          "size_bytes": 5598
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_rendering.py",
+          "sha256": "deaa87e063d69b799e11f4e32c36e6f8c6234297518de2c54a8bd01d9105ee50",
+          "size_bytes": 14004
+        },
+        {
+          "path": "smartpro-original-source/tests/test_ui_text.py",
+          "sha256": "d319d0686236ee57282ad37d31f79f995936baffbcfb1777025ff630479c22bc",
+          "size_bytes": 1810
+        },
+        {
+          "path": "smartpro-original-source/tests/test_upstream_benchmark.py",
+          "sha256": "f1ba1123cf88c1a110db38ed47b0ece990ac4df7b916f18e313fa915f8d19511",
+          "size_bytes": 2331
+        },
+        {
+          "path": "smartpro-original-source/tests/test_upstream_drift.py",
+          "sha256": "fd40ea262ec26c0e7e4b432cb92e3541fcd16c8ad070b25843a582abc6812c2b",
+          "size_bytes": 10385
+        },
+        {
+          "path": "smartpro-original-source/tests/test_upstream_ports.py",
+          "sha256": "da37f640989674fa4f77bd9fa02c94c77d3b85c3dd751f8c241dd3d66973a2f8",
+          "size_bytes": 10727
+        },
+        {
+          "path": "smartpro-original-source/tests/test_upstream_reliability.py",
+          "sha256": "cc310a51f4dcce101de09f30c33a464b72058befed573812271108269f4842e5",
+          "size_bytes": 9576
+        },
+        {
+          "path": "smartpro-original-source/tests/test_usb_storage_patch.py",
+          "sha256": "8ce55169301be25068f99bc186071993fe08d85227bde07fe43521573561d273",
+          "size_bytes": 7508
+        },
+        {
+          "path": "smartpro-original-source/tools/benchmark.py",
+          "sha256": "e1947a24fcbf631f55aa44ef6d7d4404bb3101ce7713574679e44eb1f675210f",
+          "size_bytes": 10219
+        },
+        {
+          "path": "smartpro-original-source/tools/build_payload.py",
+          "sha256": "ce32089060a4c4d046d8e04ee2ef612f713977bbc2385725520f146c2c0e3e9b",
+          "size_bytes": 5390
+        },
+        {
+          "path": "smartpro-original-source/tools/component_audit.py",
+          "sha256": "39d0303bf0b8d4c0a330a772c201a4bbd9194b1c39375fa48e9a2ad76c792cb8",
+          "size_bytes": 23690
+        },
+        {
+          "path": "smartpro-original-source/tools/device_acceptance.py",
+          "sha256": "5f13364a462dd562036b71bba74ee6319758216357a82eed9def92c1663fd8ad",
+          "size_bytes": 24809
+        },
+        {
+          "path": "smartpro-original-source/tools/device_probe.py",
+          "sha256": "4807ac82de91b7b81974ff84feb7c1615e1167d0311381a2dece6560aee7ca27",
+          "size_bytes": 21033
+        },
+        {
+          "path": "smartpro-original-source/tools/fixture_card.py",
+          "sha256": "8ca5f23ff16141f64d957735628d2f9b0f12fbd5aac0706d1a515b24ced27b75",
+          "size_bytes": 2689
+        },
+        {
+          "path": "smartpro-original-source/tools/frame_timing.py",
+          "sha256": "5a05378bed132de7fdc1d943e02a2b1b5e81bf6ed35b8b6af53ad195a72e99bc",
+          "size_bytes": 3631
+        },
+        {
+          "path": "smartpro-original-source/tools/installed_runtime.py",
+          "sha256": "f141688db2755a2df4c8b367bc7bf79a21ae67bde5ef95dfd362eef306d83537",
+          "size_bytes": 17465
+        },
+        {
+          "path": "smartpro-original-source/tools/inventory.py",
+          "sha256": "a0d12f196773138675453e299bdbbd53f84cc6041af45584627a77fbe3bdf9a9",
+          "size_bytes": 14585
+        },
+        {
+          "path": "smartpro-original-source/tools/library_benchmark.py",
+          "sha256": "b3ab6a2a1dd4297022371a23ebcf3d9fef9c3a9a5c6c48ea3cd6451f313198ea",
+          "size_bytes": 5425
+        },
+        {
+          "path": "smartpro-original-source/tools/migrate_crossmix.py",
+          "sha256": "3137af3dd53a71206859a804e9694fa1e5b204dd7b8fd6a8d2d1cb3e7c1b4b5b",
+          "size_bytes": 18307
+        },
+        {
+          "path": "smartpro-original-source/tools/port_inventory.py",
+          "sha256": "0e0e82836221f843048241306c80f8378e27c2e2eea6e2f01a3db24866f5b579",
+          "size_bytes": 1440
+        },
+        {
+          "path": "smartpro-original-source/tools/recovery_preflight.py",
+          "sha256": "645213185f079cdc733bb3327953d831dfb6fd5097fafa4eef913f33a2af3ce4",
+          "size_bytes": 19583
+        },
+        {
+          "path": "smartpro-original-source/tools/support_bundle.py",
+          "sha256": "2d1f797e8297ee551456fa9f33a139ccf14484d1563d2701b1780c9ad3374c8d",
+          "size_bytes": 4334
+        },
+        {
+          "path": "smartpro-original-source/tools/trust_rehearsal.py",
+          "sha256": "8f54eb8331368c53907fb5f16ac4d01fe75d62d91289218fe04638c7bc998867",
+          "size_bytes": 14629
+        },
+        {
+          "path": "smartpro-original-source/tools/ui_benchmark.py",
+          "sha256": "bbd63dfd71a6ff820ecdeaf28bc732579502d8b1c6383429fca77bacefa324c0",
+          "size_bytes": 2623
+        },
+        {
+          "path": "smartpro-original-source/tools/upstream_drift.py",
+          "sha256": "7f6eea5be4e86972663adfab4fe4331d2a825abce118994339b16c82aa694373",
+          "size_bytes": 16046
+        }
+      ],
+      "header_scan_limit_bytes": 8192,
+      "header_signal_file_counts": {
+        "copyright": 3,
+        "permission-grant": 3,
+        "spdx": 80
+      },
+      "kind": "archive-notice-candidate-inventory",
+      "limits": [
+        "Notice names and header signals are discovery aids, not licence decisions.",
+        "Inline terms outside the scanned prefix and differently named notices can remain undiscovered.",
+        "An archive inventory does not establish binary link membership or corresponding-source completeness."
+      ],
+      "members_seen": 178,
+      "named_notice_candidates": [
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-original-source/LICENSE",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+          "size_bytes": 1402
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-original-source/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+          "size_bytes": 4396
+        },
+        {
+          "classification": "named-notice-candidate",
+          "empty": false,
+          "header_signals": [
+            "copyright",
+            "permission-grant"
+          ],
+          "path": "smartpro-original-source/ppsspp/theme/LICENSE",
+          "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+          "size_bytes": 1321
+        }
+      ],
+      "regular_file_bytes": 4197440,
+      "regular_files": 178,
+      "schema": 1,
+      "source_use_verified": false,
+      "unfollowed_links": 0,
+      "verified_required_notice_and_font_bytes": [
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-original-source/LICENSE",
+          "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018"
+        },
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-original-source/assets/fonts/OFL.txt",
+          "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a"
+        },
+        {
+          "matches_reviewed_repository_bytes": true,
+          "path": "smartpro-original-source/assets/fonts/NotoSans.ttf",
+          "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d"
+        }
+      ]
+    }
+  },
+  "owner_author_permission": {
+    "correspondence_inspected_by_this_review": false,
+    "exact_public_recipe_IGM_SDK_scope_inferred": false,
+    "send_performed_by_this_review": false,
+    "status": "owner-confirmed prior notification and permission for private noncommercial source integration"
+  },
+  "ppsspp_actual_recorded_link": {
+    "archive_selection_does_not_prove_every_member_survives_LTO": true,
+    "distinct_static_archive_inputs": [
+      "libCommon.a",
+      "libCore.a",
+      "libGenericCodeGen.a",
+      "libMachineIndependent.a",
+      "libOGLCompiler.a",
+      "libOSDependent.a",
+      "libSPIRV.a",
+      "libarmips.a",
+      "libat3_standalone.a",
+      "libavcodec.a",
+      "libavformat.a",
+      "libavutil.a",
+      "libbasis_universal.a",
+      "libchdr.a",
+      "libcityhash.a",
+      "libcpu_features.a",
+      "libgason.a",
+      "libglslang.a",
+      "libimgui.a",
+      "libkirk.a",
+      "liblibzip.a",
+      "liblibzstd_static.a",
+      "liblua.a",
+      "libminimp3.a",
+      "libnative.a",
+      "libpng17.a",
+      "librcheevos.a",
+      "libsfmt19937.a",
+      "libsnappy.a",
+      "libspirv-cross-core.a",
+      "libspirv-cross-glsl.a",
+      "libswresample.a",
+      "libswscale.a",
+      "libudis86.a",
+      "libvma.a",
+      "libxbrz.a",
+      "libxxhash.a"
+    ],
+    "ijg_retained_final_defined_symbol_evidence": {
+      "generated_actual_link_command_sha256": "e0865e50364b64efdd8a96b590c783d9eac100669188121f3d783c7dedf1e2bd",
+      "kind": "final-engine-static-link-evidence",
+      "retained_ijg_mjpeg_defined_symbols": [
+        "0000000000e0e528 T ff_fdct_ifast",
+        "0000000000e0e760 T ff_fdct_ifast248",
+        "0000000000e0f498 T ff_j_rev_dct",
+        "0000000000e10970 T ff_j_rev_dct1",
+        "0000000000e10910 T ff_j_rev_dct2",
+        "0000000000e10170 T ff_j_rev_dct4",
+        "0000000000e0eed0 T ff_jpeg_fdct_islow_10",
+        "0000000000e0e968 T ff_jpeg_fdct_islow_8",
+        "0000000000e109d0 T ff_jref_idct_add",
+        "0000000000e10988 T ff_jref_idct_put",
+        "0000000000e0f438 T ff_mjpeg_build_huffman_codes",
+        "0000000000d3afc0 T ff_mjpeg_decode_dht",
+        "0000000000d3ad58 T ff_mjpeg_decode_dqt",
+        "00000000000f9534 T ff_mjpeg_decode_end",
+        "0000000000d40188 T ff_mjpeg_decode_frame",
+        "00000000000f9914 T ff_mjpeg_decode_init",
+        "0000000000d3b6b0 T ff_mjpeg_decode_sof",
+        "0000000000d3cac0 T ff_mjpeg_decode_sos",
+        "0000000001310730 D ff_mjpeg_decoder",
+        "00000000000f9ce4 T ff_mjpeg_encode_close",
+        "0000000000d48e60 T ff_mjpeg_encode_dc",
+        "00000000000f9bac T ff_mjpeg_encode_init",
+        "0000000000d41d08 T ff_mjpeg_encode_mb",
+        "0000000000d45548 T ff_mjpeg_encode_picture_header",
+        "0000000000d48d38 T ff_mjpeg_encode_picture_trailer",
+        "0000000000d48b28 T ff_mjpeg_encode_stuffing",
+        "00000000013107f8 D ff_mjpeg_encoder",
+        "0000000000d48678 T ff_mjpeg_escape_FF",
+        "0000000000d3fbe8 T ff_mjpeg_find_marker",
+        "0000000000d45440 T ff_mjpeg_init_hvsample"
+      ],
+      "scope": "Actual completed engine link command plus defined symbols in the resulting unstripped ELF; target never executed.",
+      "selected_ffmpeg_archive_inputs": [
+        "/ffmpeg-sdk/lib/libavformat.a",
+        "/ffmpeg-sdk/lib/libavcodec.a",
+        "/ffmpeg-sdk/lib/libswresample.a",
+        "/ffmpeg-sdk/lib/libswscale.a",
+        "/ffmpeg-sdk/lib/libavutil.a"
+      ],
+      "unstripped_binary_sha256": "e865e4166af883e7012c66282beff143657454484873f0d5e69b4062be992822"
+    },
+    "libkirk_exact_notice": {
+      "archive_path": "ppsspp/ext/libkirk/kirk_engine.c",
+      "implication": "Future combined binary requires a compatible GPLv3-or-later route; original Python/PyUI retain their separate licence scopes.",
+      "terms": "GPL-3.0-or-later"
+    },
+    "member_path": "build-configuration/final-PPSSPPSDL-link.txt",
+    "sha256": "e0865e50364b64efdd8a96b590c783d9eac100669188121f3d783c7dedf1e2bd",
+    "size_bytes": 4143,
+    "static_archive_count": 37
+  },
+  "ppsspp_recipe_scope": {
+    "actual_recorded_affected_paths": [
+      "Common/GPU/OpenGL/GLFeatures.cpp",
+      "Common/GPU/OpenGL/gl3stub.c",
+      "Common/GPU/OpenGL/thin3d_gl.cpp",
+      "Core/Config.cpp",
+      "SDL/SDLJoystick.cpp",
+      "SDL/SDLMain.cpp",
+      "SDL/SDLVulkanGraphicsContext.cpp"
+    ],
+    "commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+    "exact_public_grant_verified": false,
+    "private_owner_confirmed_permission_not_converted_to_public_grant": true,
+    "repository": "spruceUI/PPSSPP-spruce",
+    "selected_script_records": [
+      {
+        "path": "patches/common/hide-cursor.py",
+        "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d"
+      },
+      {
+        "path": "patches/common/no-mute-secondary.py",
+        "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641"
+      },
+      {
+        "path": "patches/common/remap-pause-menu.py",
+        "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5"
+      },
+      {
+        "path": "patches/common/sigusr1-save-and-quit.py",
+        "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8"
+      },
+      {
+        "path": "patches/common/sigusr2-toggle-pause-menu.py",
+        "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c"
+      },
+      {
+        "path": "patches/pvr/fix-copy-image-crash.py",
+        "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556"
+      },
+      {
+        "path": "patches/pvr/fix-glgetstringi-crash.py",
+        "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5"
+      },
+      {
+        "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+        "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f"
+      },
+      {
+        "path": "patches/pvr/no-alpha-channel.py",
+        "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4"
+      },
+      {
+        "path": "patches/pvr/vulkan-display-fallback.py",
+        "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0"
+      }
+    ]
+  },
+  "remaining_minimum_evidence": [
+    "Exact public distribution terms covering the ten external PPSSPP recipe insertions and selected IGM external source/patch scope, or an independently authored equivalent replacement followed by rebuild and qualification.",
+    "Native component notice packet with chosen compatible GPLv3-or-later route, LGPL/FFmpeg/ATRAC handling, all relevant inline and nested notices, font OFL texts/copyrights and source/build provision.",
+    "Exact incorporated libc nonshared/startup/header source and terms mapping; actual installed target loader/libraries and supported system-library scope remain D03.",
+    "Complete actual RetroArch per-object/component review and all native artwork/shader/data provenance."
+  ],
+  "retroarch_recorded_scope": {
+    "complete_per_object_link_map_available": false,
+    "config_features": {
+      "HAVE_BUILTINBEARSSL": "0",
+      "HAVE_BUILTINFLAC": "1",
+      "HAVE_BUILTINGLSLANG": "1",
+      "HAVE_BUILTINMBEDTLS": "1",
+      "HAVE_BUILTINZLIB": "1",
+      "HAVE_DSP_FILTER": "1",
+      "HAVE_GLSLANG": "1",
+      "HAVE_GLSLANG_GENERICCODEGEN": "0",
+      "HAVE_GLSLANG_HLSL": "0",
+      "HAVE_GLSLANG_MACHINEINDEPENDENT": "0",
+      "HAVE_GLSLANG_OGLCOMPILER": "0",
+      "HAVE_GLSLANG_OSDEPENDENT": "0",
+      "HAVE_GLSLANG_SPIRV": "0",
+      "HAVE_GLSLANG_SPIRV_TOOLS": "0",
+      "HAVE_GLSLANG_SPIRV_TOOLS_OPT": "0",
+      "HAVE_NO_VULKAN": "1",
+      "HAVE_SSL": "1",
+      "HAVE_SYSTEMMBEDCRYPTO": "0",
+      "HAVE_SYSTEMMBEDTLS": "0",
+      "HAVE_SYSTEMMBEDX509": "0",
+      "HAVE_VIDEO_FILTER": "1",
+      "HAVE_VULKAN": "0",
+      "HAVE_VULKAN_DISPLAY": "1"
+    },
+    "exact_external_IGM_recipe_public_grant_verified": false,
+    "recorded_link_input_paths": [
+      "/opt/sysroot/lib/ld-linux-aarch64.so.1",
+      "/opt/sysroot/lib/libc.so.6",
+      "/opt/sysroot/lib/libgcc_s.so.1",
+      "/opt/sysroot/lib/libpthread.so.0",
+      "/opt/sysroot/usr//lib/libEGL.so",
+      "/opt/sysroot/usr//lib/libGLESv2.so",
+      "/opt/sysroot/usr//lib/libSDL2.so",
+      "/opt/sysroot/usr//lib/libUMP.so",
+      "/opt/sysroot/usr//lib/libasound.so",
+      "/opt/sysroot/usr//lib/libc.so",
+      "/opt/sysroot/usr//lib/libdl.so",
+      "/opt/sysroot/usr//lib/libfontconfig.so",
+      "/opt/sysroot/usr//lib/libfreetype.so",
+      "/opt/sysroot/usr//lib/libm.so",
+      "/opt/sysroot/usr//lib/libpthread.so",
+      "/opt/sysroot/usr//lib/librt.so",
+      "/opt/sysroot/usr//lib/libudev.so",
+      "/opt/sysroot/usr//lib/libv4l2.so",
+      "/opt/sysroot/usr/lib/libc_nonshared.a",
+      "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crti.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crtn.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc_s.so",
+      "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a"
+    ],
+    "selected_link_trace_sha256": "42e753eb5b2f21076fe1df47ab639e732b6381bf4947b5bca0c5a147a74aba50"
+  },
+  "reviewed_frontend_commit": "0574d9f1bfd7ebf8565a57b41c701583680d1ffe",
+  "runtime_gates_enabled": false,
+  "schema": 1,
+  "sdk_scoped_review": {
+    "blanket_SDK_redistribution_grant_inferred": false,
+    "bounded_general_inventory_status": "refused 142846072-byte unrelated usr/lib/libQt5WebEngineCore.so.5.12.9 above 128 MiB member budget; no full per-file SDK digest inventory claimed",
+    "dynamic_libraries_selected_for_public_bundling": [],
+    "fresh_hash_verified": true,
+    "incorporated_nonshared_startup_header_source_review_complete": false,
+    "metadata_scan_regular_file_bytes": 567703605,
+    "metadata_scan_regular_files": 11351,
+    "name": "SDK_usr_tg5040_a133p.tgz",
+    "selected_file_hashes": [
+      {
+        "path": "usr/mkspecs/common/uikit/GLES2/gl2.h",
+        "sha256": "617f7a78f42662a7e35822f078a2042a99dd4d5af45c269eed22419320ab1359",
+        "size_bytes": 1979
+      },
+      {
+        "path": "usr/include/GLES2/gl2.h",
+        "sha256": "a8cc3e5d09538daeceb0ae9255039bb5736c14655325031aab178261552eb6d5",
+        "size_bytes": 43972
+      },
+      {
+        "path": "usr/include/SDL2/SDL_stdinc.h",
+        "sha256": "300b014d9bd0a4f0a572886ddff9f3a46a438b73bba919b567380444acf297eb",
+        "size_bytes": 29523
+      },
+      {
+        "path": "usr/include/SDL2/SDL.h",
+        "sha256": "53afe4b59f9081a4f6b2889bd219d399ff506345168937c62c6fa8dc92d9461d",
+        "size_bytes": 8084
+      },
+      {
+        "path": "usr/include/KHR/khrplatform.h",
+        "sha256": "db7c710879bae9d4163c30a523c21fb8afe85588e385f4725bc4ba17dedbe62e",
+        "size_bytes": 10021
+      },
+      {
+        "path": "usr/include/EGL/egl.h",
+        "sha256": "93a889840d36a71ea051752c47931abf69263312f1bffa6c845f5fa0cadff9c4",
+        "size_bytes": 15361
+      },
+      {
+        "path": "usr/include/EGL/eglplatform.h",
+        "sha256": "48cfce9e73089b0c65112e5bdcc2bf8acd470db3f794662c96ca75bfb063d31b",
+        "size_bytes": 4993
+      }
+    ],
+    "selected_header_terms": {
+      "usr/include/EGL/egl.h": "MIT-style Khronos grant",
+      "usr/include/GLES2/gl2.h": "MIT-style Khronos grant",
+      "usr/include/KHR/khrplatform.h": "MIT-style Khronos grant",
+      "usr/include/SDL2/SDL.h": "zlib-style source notice",
+      "usr/mkspecs/common/uikit/GLES2/gl2.h": "Unselected Qt header; do not apply its terms to selected GLES2 header"
+    },
+    "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+    "size_bytes": 185049621,
+    "standalone_licence_grant_found_in_metadata_scan": false,
+    "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+  },
+  "selected_complete_source_files": {
+    "ppsspp-source": {
+      "not_found": [],
+      "selected_source_files": [
+        {
+          "git_blob_sha1": "1c3210d9d1eaf47cc33a1e0c451f4704a765852d",
+          "path": "ppsspp/LICENSE.TXT",
+          "sha256": "ff265754cbb2e0d3b674f90a79ef5bbaa1f7f1075aec9f5e241524520e5049fa",
+          "size_bytes": 19740
+        },
+        {
+          "git_blob_sha1": "3818b908feaa21b04c02a3bedc7ba5c02b65aafa",
+          "path": "ppsspp/assets/debugger/static/js/main.fe87e942.js.LICENSE.txt",
+          "sha256": "9cc2775972449bbb33c699aed95a492eb54855299be5f698b9917d90c4817ddf",
+          "size_bytes": 1759
+        },
+        {
+          "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "path": "ppsspp/ext/SPIRV-Cross/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "git_blob_sha1": "349712e3fbad40dc780a1fd07de31dc32a49e9d3",
+          "path": "ppsspp/ext/armips/LICENSE.txt",
+          "sha256": "791ff46884cdf62188f17cabf0f099b462e92ec68986033bab243b26573b7573",
+          "size_bytes": 1079
+        },
+        {
+          "git_blob_sha1": "8c3f7f5664db4f72db6cc99988097f57eed28b34",
+          "path": "ppsspp/ext/at3_standalone/atrac3.cpp",
+          "sha256": "cb620e9d80c8093cfef598e4df3ea339a02c1dc644c2f63b769575e4d8bf2465",
+          "size_bytes": 29927
+        },
+        {
+          "git_blob_sha1": "c698861f3b9f412192ba68563a525c3f56487ac2",
+          "path": "ppsspp/ext/basis_universal/basisu_transcoder.cpp",
+          "sha256": "185f626f3f11ef304dd1f7993bb90e702e5f71f77acf093f87f9e2e7b6d7de1a",
+          "size_bytes": 635957
+        },
+        {
+          "git_blob_sha1": "bf15194dd5a08b1a9bdac71ae19a3271d600089e",
+          "path": "ppsspp/ext/cityhash/COPYING",
+          "sha256": "3ed00dd93c75655599456c83cba2f69c6824fd53f24fc24206ba27b65057709d",
+          "size_bytes": 1110
+        },
+        {
+          "git_blob_sha1": "a7043c6fdedacc991803384333201058ea1a8865",
+          "path": "ppsspp/ext/cpu_features/LICENSE",
+          "sha256": "af272c1b4dd08dd61d43e001d3134119d03ca7a2b057a64f7355fdf27fbea3dd",
+          "size_bytes": 12876
+        },
+        {
+          "git_blob_sha1": "0c4133a47ed3866e2ef3f2fbb682c8901338f232",
+          "path": "ppsspp/ext/gason/LICENSE",
+          "sha256": "a9a5c0646d67d9cc2596fab2ee1cac35bdcd4057d9dea7745425bd3cfcab40f0",
+          "size_bytes": 1086
+        },
+        {
+          "git_blob_sha1": "054e68a4614e3ee255f13730319b8c7a1fe10182",
+          "path": "ppsspp/ext/glslang/LICENSE.txt",
+          "sha256": "adb783e734e906d1f46db5df29991dbde84bdb0ceab502ac2febb44fe3c2b5f4",
+          "size_bytes": 54705
+        },
+        {
+          "git_blob_sha1": "c7b84cc6ce6e7bd451c175005056ffa9bb576e3b",
+          "path": "ppsspp/ext/imgui/imgui.cpp",
+          "sha256": "ef0ad08dbfe2357aec9e80af020fb9019c05aadc2ae692fddecbe9884da5358f",
+          "size_bytes": 1176683
+        },
+        {
+          "git_blob_sha1": "1c36e5b593498866a8ea21aa968c180acac3b967",
+          "path": "ppsspp/ext/libchdr/LICENSE.txt",
+          "sha256": "e3989a7aee74a91b8cdbdfe204a6b8d03288863ec7533a21c51f1a987ba73539",
+          "size_bytes": 1493
+        },
+        {
+          "git_blob_sha1": "59e2aff2bd751ed82e757259465890676d9102df",
+          "path": "ppsspp/ext/libkirk/kirk_engine.c",
+          "sha256": "74e363f78fdec5c0fc82842a21c11c3b0363996a931805cec9fd11231a3e7763",
+          "size_bytes": 35664
+        },
+        {
+          "git_blob_sha1": "5a5dd576478b82e467302bd25b33935f522a32a8",
+          "path": "ppsspp/ext/libpng17/png.h",
+          "sha256": "45e97298116680435abf20bc5efdb68126229aa9d0e0fff6ed607f3865766b52",
+          "size_bytes": 195232
+        },
+        {
+          "git_blob_sha1": "eda150aea0cd6bacf2a459b86a8cfdfde1507549",
+          "path": "ppsspp/ext/libzip/zip.h",
+          "sha256": "b4eeca1fc7af953f7eda5d0bde38d1e2ddfcdf36949c44322affa3ae001f2e46",
+          "size_bytes": 26491
+        },
+        {
+          "git_blob_sha1": "f050dac0913175c9d01f3ccb6a47ca0e9ab5c06a",
+          "path": "ppsspp/ext/lua/lua.h",
+          "sha256": "341014ee8b49570fc01c1fb2afc6a7decc853525636c74e7a6a9507a933aa62e",
+          "size_bytes": 15949
+        },
+        {
+          "git_blob_sha1": "3220ae1a85b858a95af5766155ada91304344465",
+          "path": "ppsspp/ext/minimp3/minimp3.h",
+          "sha256": "5fb296a790734772b65a5514438cc06d14f24e539c13475ff2a7f737681c82c0",
+          "size_bytes": 76802
+        },
+        {
+          "git_blob_sha1": "2871705df3e79ad8f659217ec14e9731b2fb42fd",
+          "path": "ppsspp/ext/minimp3/minimp3_ex.h",
+          "sha256": "bb001301b8666ea7a45ae057b62b17074483213b0d410555d97cc4d076e110df",
+          "size_bytes": 49511
+        },
+        {
+          "git_blob_sha1": "5f1faf3dc4e00f66418bd1f67fb5b55f8d932faa",
+          "path": "ppsspp/ext/rcheevos/LICENSE",
+          "sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+          "size_bytes": 1078
+        },
+        {
+          "git_blob_sha1": "2652df7de2df517b10e2250743d71fd40d522bbb",
+          "path": "ppsspp/ext/sfmt19937/SFMT.c",
+          "sha256": "59bc82673dc8ea27c35aac9bc5501128689ceed1eb5f476e0b4df2cfc12352f5",
+          "size_bytes": 12876
+        },
+        {
+          "git_blob_sha1": "5449ef646fd35b107af568ea45710744165bf360",
+          "path": "ppsspp/ext/sfmt19937/SFMT.h",
+          "sha256": "5d026d75cc47a16a7d68ed928fb0b84aabf68e6ac3666b54c157f72fc8463d5e",
+          "size_bytes": 7745
+        },
+        {
+          "git_blob_sha1": "8d6bd9fed4e437af46e342ff161cb2bc11fa0c61",
+          "path": "ppsspp/ext/snappy/COPYING",
+          "sha256": "5221a36a801b981fbdfda7b87db64cff231a3b88223a066c325411b539df796f",
+          "size_bytes": 1475
+        },
+        {
+          "git_blob_sha1": "580f35987f661f49431120ffaa66ab7448ef79b9",
+          "path": "ppsspp/ext/udis86/LICENSE",
+          "sha256": "1070640aab24327354da44507627d1db6c67482a6facc8375a758796a05e3dff",
+          "size_bytes": 1337
+        },
+        {
+          "git_blob_sha1": "d857b9ad8f4095690d4341555682100b0940cea3",
+          "path": "ppsspp/ext/vma/vk_mem_alloc.h",
+          "sha256": "9c90df285f77f631b3e3fdacf3e70aeb6e90af9e4f6b5b7bc6ce66abcd61889e",
+          "size_bytes": 752809
+        },
+        {
+          "git_blob_sha1": "e1e57930bb9776e02d8f7724269608ec943cfe86",
+          "path": "ppsspp/ext/xbrz/xbrz.h",
+          "sha256": "f0c59293edf8268abe7e749f017fe84c9ae38303aef2afc3244b2fdba9aeb69c",
+          "size_bytes": 4610
+        },
+        {
+          "git_blob_sha1": "aeecc38b7134f6c7e5e3c9c547518e6b400d7ed2",
+          "path": "ppsspp/ext/xxhash.h",
+          "sha256": "992f40a6ad6f08e6d9f3c59b2b080389a42bcc1fc2a49e14c0123447c3c584c6",
+          "size_bytes": 209774
+        },
+        {
+          "git_blob_sha1": "75800288cc243f164b9d130f125e2ffae28f8e39",
+          "path": "ppsspp/ext/zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "git_blob_sha1": "58af0d3787aec7d6f8d833535d64879156e7ec23",
+          "path": "ppsspp/ffmpeg/COPYING.LGPLv2.1",
+          "sha256": "b634ab5640e258563c536e658cad87080553df6f34f62269a21d554844e58bfe",
+          "size_bytes": 26526
+        },
+        {
+          "git_blob_sha1": "0c53d0f5a9a71b0e85e5192bd6d6d513881455d5",
+          "path": "ppsspp/ffmpeg/LICENSE.md",
+          "sha256": "2e06d5375e3ec10363d38f4ba0680d311ff4f2024ee7f9ddb1c7a2e2bb8a5585",
+          "size_bytes": 3940
+        }
+      ]
+    },
+    "ra-source": {
+      "not_found": [],
+      "selected_source_files": [
+        {
+          "git_blob_sha1": "94a9ed024d3859793618152ea559a168bbcbb5e2",
+          "path": "modified/COPYING",
+          "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+          "size_bytes": 35147
+        },
+        {
+          "git_blob_sha1": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+          "path": "modified/deps/SPIRV-Cross/LICENSE",
+          "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+          "size_bytes": 11358
+        },
+        {
+          "git_blob_sha1": "d8295f0ed7dfa373a4024ce111c636ed3466c6c9",
+          "path": "modified/deps/libFLAC/COPYING.Xiph",
+          "sha256": "fa27cb11f13f97b0c5f3ff363b1e2610c6efe87ed175779cb2a78e44eb19d34c",
+          "size_bytes": 1509
+        },
+        {
+          "git_blob_sha1": "5f1faf3dc4e00f66418bd1f67fb5b55f8d932faa",
+          "path": "modified/deps/rcheevos/LICENSE",
+          "sha256": "bf820c034966a3b6be050bb85f94ec841a0b972bd5d477e362337d0574b5c219",
+          "size_bytes": 1078
+        },
+        {
+          "git_blob_sha1": "e4c5da7234eca7baad9a46f0b144e49ccad2e500",
+          "path": "modified/deps/xxHash/LICENSE",
+          "sha256": "6ffedbc0f7878612d2b23589f1ff2ab15633e1df7963a5d9fc750ec5500c7e7a",
+          "size_bytes": 1389
+        },
+        {
+          "git_blob_sha1": "75800288cc243f164b9d130f125e2ffae28f8e39",
+          "path": "modified/deps/zstd/LICENSE",
+          "sha256": "7055266497633c9025b777c78eb7235af13922117480ed5c674677adc381c9d8",
+          "size_bytes": 1549
+        },
+        {
+          "git_blob_sha1": "6a1e3a9d1019aee55cfccf6bb269b812b708061d",
+          "path": "recipe/README.md",
+          "sha256": "933b8a54aaadb372a4c5e342ca16628be0daf06e64ffacd9d821ecd6b7311da9",
+          "size_bytes": 179
+        },
+        {
+          "git_blob_sha1": "ab82bc06a770217b9e15632a65f461ae25ec1fe0",
+          "path": "recipe/build.sh",
+          "sha256": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50",
+          "size_bytes": 2525
+        },
+        {
+          "git_blob_sha1": "0f70f8fc97ef48df5c6c0bc7781e8d116dec943d",
+          "path": "recipe/common_src/spruce_igm_platform.h",
+          "sha256": "05da6e4b74433ec69cbdaa57b7d115f3f7f6aa4e3bc5e2d68cfca8e19a3d671f",
+          "size_bytes": 2311
+        },
+        {
+          "git_blob_sha1": "fb44adbc7e97c7f922d75f3acea7712e2fb54671",
+          "path": "recipe/common_src/spruce_igm_theme.c",
+          "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097",
+          "size_bytes": 16566
+        },
+        {
+          "git_blob_sha1": "514398b12355ea01fa17e94f57f4a7a432853a56",
+          "path": "recipe/common_src/spruce_igm_theme.h",
+          "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff",
+          "size_bytes": 3807
+        },
+        {
+          "git_blob_sha1": "46fe159b49ce45449ec807b29065e3d220c5f089",
+          "path": "modified/deps/glslang/glslang/glslang/Include/BaseTypes.h",
+          "sha256": "0dd5f1a3812fd0f9764fc42313fd0e5a1592a55b70f01b1a457af4635aee60ac",
+          "size_bytes": 15529
+        },
+        {
+          "git_blob_sha1": "7cfb79766fb1758c9a4975030024de8260945a1f",
+          "path": "modified/deps/glslang/glslang/glslang/MachineIndependent/glslang_tab.cpp.h",
+          "sha256": "acca81cef8379dbbb8bcefd716dc4cbfee28955e6b4555936d47cb525a43f84b",
+          "size_bytes": 11720
+        },
+        {
+          "git_blob_sha1": "cff9c6a48b4a9c9b084ab22e7efd0f9be042724a",
+          "path": "modified/deps/mbedtls/aes.c",
+          "sha256": "6c25002f0231a5608b5ff362276aa46664d126dab38166354d3b0fde74175210",
+          "size_bytes": 21785
+        },
+        {
+          "git_blob_sha1": "b3e7190e7ae10f7f713c492ce408440f1164498b",
+          "path": "modified/spruce_igm.c",
+          "sha256": "ec05820e0b79c515e6b4379e88bb967127c0fa280c59420794f5c6d0b7a57eaf",
+          "size_bytes": 25356
+        },
+        {
+          "git_blob_sha1": "83ab21b7c8baf971fff431a8d3c3e83cdf1c5f60",
+          "path": "modified/spruce_igm.h",
+          "sha256": "e7d8d482e53cbdbda77bd758499cfb0334c79d7af65690ca9cbde7c44d860489",
+          "size_bytes": 390
+        }
+      ]
+    }
+  },
+  "supplemental_primary_notice_sources": [
+    {
+      "commit": "993fa347495860ed44b83574254ef2a317d0c14f",
+      "component": "imgui",
+      "exact_bundled_fork_source_correspondence_established": false,
+      "git_blob_sha1": "3282f5b5b105440af25c030c29bea5a24fddf496",
+      "path": "LICENSE.txt",
+      "repository": "ocornut/imgui",
+      "sha256": "0ebf8feb061536bdebd7c6a365b64808ae3479048b1c44113e19037680c5f2be",
+      "size_bytes": 1083,
+      "supplement_already_in_r04_archive": false,
+      "url": "https://github.com/ocornut/imgui/blob/993fa347495860ed44b83574254ef2a317d0c14f/LICENSE.txt"
+    },
+    {
+      "commit": "2b8202239c90d0b21c6125070d76ca44c70342be",
+      "component": "sfmt",
+      "exact_bundled_fork_source_correspondence_established": false,
+      "git_blob_sha1": "6f9c4a6d6a13aaf4a3cd667b484c591949d57e0a",
+      "path": "LICENSE.txt",
+      "repository": "MersenneTwister-Lab/SFMT",
+      "sha256": "9d6db9b6702bf80c926b36d61f6282bf48d0a9a8044db2bd31e524aa08ccac0f",
+      "size_bytes": 1706,
+      "supplement_already_in_r04_archive": false,
+      "url": "https://github.com/MersenneTwister-Lab/SFMT/blob/2b8202239c90d0b21c6125070d76ca44c70342be/LICENSE.txt"
+    }
+  ],
+  "target_executed": false
+}

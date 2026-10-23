@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23T08:47:22.580840+00:00",
+  "repository": "daniel1990000/CrossMix-OS-project",
+  "branch": "build/spruce-psp-experience",
+  "release_id": "smartpro-psp-0.1.0-dev16",
+  "starting_handover_head": "2d4a43dbc8eb472fbdeb98bc8e09b5432c3ef69b",
+  "implementation_commit": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
+  "implementation_tree": "3d202165e9182adcbcb24cb6eeb944aceaf1dbfd",
+  "working_tree_clean_at_certification_and_build": true,
+  "strict_tests": {
+    "tests_run": 1099,
+    "passed": 1099,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "strict_source_roots": 5,
+  "preview_passed": true,
+  "source_inventory_files": 223,
+  "source_inventory_sha256": "5058e82140dc25e5d0b7ff429845b90566865cd804e25b92078192f953fcbd4d",
+  "payload_files": 66,
+  "artifacts": {
+    "SHA256SUMS": {
+      "bytes": 743,
+      "sha256": "46e815d8defb3a87bf4ef7ee0baa87ed41188657e6dd785355101fc5e7d4c9c6"
+    },
+    "START-HERE.txt": {
+      "bytes": 859,
+      "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402"
+    },
+    "build-report.json": {
+      "bytes": 5494,
+      "sha256": "cd1577d9c9779423084e65b94927561dc5b8b9a363262aa185081f5e5788e4d9"
+    },
+    "development-verification.pub": {
+      "bytes": 32,
+      "sha256": "57dad070a93a6a27ff32ab86152c7f9195c6781a66d5ca2b7f79251b6ce16e9d"
+    },
+    "host-preview.png": {
+      "bytes": 153485,
+      "sha256": "d6c36eead42ddc9da1b3b4ca877df78c73221e0f056ac2a0f4c22f43ca237a70"
+    },
+    "release-source.json": {
+      "bytes": 28805,
+      "sha256": "f6caae9178b1ea9bae26974201a8b4bbc6017c1b873f87334af90a2b4fc40694"
+    },
+    "smartpro-psp-0.1.0-dev16-host-preview.zip": {
+      "bytes": 1460421,
+      "sha256": "6f4ae5ceefcf22bea6ce15f8aa60eaac7f8625cdf31c86691b0da8b1853ba452"
+    },
+    "smartpro-psp-0.1.0-dev16-original-source.zip": {
+      "bytes": 2046919,
+      "sha256": "8b637e616ce32f32a2d9408b34cc47005a52a62a7fd3d2322658baee5cb593e0"
+    },
+    "smartpro-psp-0.1.0-dev16.tar": {
+      "bytes": 3082240,
+      "sha256": "edd519bdb46203d3bd5e14b11a1d7c8a05b9638d3b43b2d12e5c0db14f1f45c4"
+    }
+  },
+  "packaging": {
+    "signature_and_payload_verified": true,
+    "same_key_overlay_rebuild": true,
+    "unsigned_zip_rebuild": true,
+    "checksums_verified": {
+      "START-HERE.txt": true,
+      "build-report.json": true,
+      "development-verification.pub": true,
+      "host-preview.png": true,
+      "release-source.json": true,
+      "smartpro-psp-0.1.0-dev16-host-preview.zip": true,
+      "smartpro-psp-0.1.0-dev16-original-source.zip": true,
+      "smartpro-psp-0.1.0-dev16.tar": true
+    },
+    "installed_smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "combined_filters": true,
+      "executed": true,
+      "fresh_backup_readback": true,
+      "game_information": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "no_git_export_rebuild": {
+      "status": "passed",
+      "preview_and_source_zip_matches": {
+        "smartpro-psp-0.1.0-dev16-original-source.zip": true,
+        "smartpro-psp-0.1.0-dev16-host-preview.zip": true
+      },
+      "independent_ephemeral_signer": true,
+      "signed_tar_digest_expected_to_differ_with_new_signer": true
+    }
+  },
+  "defects": [
+    {
+      "id": "gameplay-output-collision",
+      "fix": "Reject outputs resolving to record/compare input documents and all raw observations, including sustained/unselected evidence and aliases.",
+      "evidence": "gameplay-review.json"
+    },
+    {
+      "id": "gameplay-repeat-protocol",
+      "fix": "Require one duration and per-metric method/window across all five matched pairs.",
+      "evidence": "gameplay-review.json"
+    },
+    {
+      "id": "disc-inspection-path-swap",
+      "fix": "Use descriptor-relative no-follow traversal for resolved card/root/parent/file paths and preserve existing in-card symlinks.",
+      "evidence": "disc-review.json"
+    }
+  ],
+  "new_regression_test_methods": 7,
+  "review": {
+    "focused_passed": 40,
+    "independent_review": "independent-review.json",
+    "hardware_evidence": false,
+    "handover_consistency": {
+      "status": "passed",
+      "read_only_independent_review": true,
+      "test_suites_rerun": false,
+      "checked": [
+        "1099 = 1038 host/source + 61 PPSSPP with zero skips/errors/failures",
+        "All five pinned sources clean before/after tests",
+        "Clean local a8ba317 and CI933a1a identities and223-file inventories",
+        "Local/CI report and source receipt hashes",
+        "Build/smoke/rollback/no-Git/signing boundaries",
+        "Public dev14 and historical dev15 snapshots unchanged",
+        "14/25 rows and0/13 physical areas; gates false",
+        "Later documentation/evidence source boundary"
+      ],
+      "corrected_finding": "LATEST current_snapshot.ci.readback uses the full repository-relative receipt path."
+    }
+  },
+  "historical_preservation": {
+    "dev15_clean_build_commit": "65fdc58cb502d187b2259cec1691ad22482f07da",
+    "dev15_strict_passed": 1092,
+    "dev15_evidence_unchanged": true,
+    "published_dev14_preview_unchanged": true,
+    "native_sources_and_binaries_unchanged": true,
+    "implementation_changed_paths": [
+      "project/README.md",
+      "project/docs/gameplay-performance.md",
+      "project/docs/release-preflight-fixes-2026-10-23.md",
+      "project/packaging/current-release.json",
+      "project/psp_shell/game_information.py",
+      "project/tests/test_game_information.py",
+      "project/tests/test_gameplay_benchmark.py",
+      "project/tools/gameplay_benchmark.py"
+    ]
+  },
+  "qualification": {
+    "completed_register_rows": 14,
+    "register_rows_total": 25,
+    "physical_areas_run": 0,
+    "physical_areas_total": 13,
+    "hardware_qualified": false,
+    "runtime_gates_enabled": false,
+    "native_device_binaries_rebuilt": false,
+    "native_device_binaries_replaced": false,
+    "owner_files_changed": false,
+    "public_device_release": false,
+    "recommended_presets_measured": false
+  },
+  "snapshot_boundary": "Clean tested/build source is a8ba317. Later evidence/handover/docs commits retain their own frontend/source identities; they do not inherit this inventory or its package hashes. Dev14 public downloads and all historical dev15 evidence remain unchanged.",
+  "remaining": [
+    "Actual Smart Pro recovery/inventory and 13-area qualification",
+    "Five matched game-scene runs and 30-minute demanding-profile runs, then recommended presets",
+    "Exact public native distribution decisions",
+    "Operational production signing/recovery custody",
+    "Accepted ongoing maintenance ownership"
+  ],
+  "ci": {
+    "verified_at_utc": "2026-10-23T08:47:55.627566+00:00",
+    "artifact_sha256": "96a1426c9201e8b3f27e57d531e6476c702a264749ebe6c4fa5cc6785bdc8c9a",
+    "artifact_size_bytes": 5246728,
+    "frontend": {
+      "commit": "933a1a5367552804cca8a78725e4c87779f9ce9b",
+      "working_tree_modified": false
+    },
+    "totals": {
+      "tests_run": 1099,
+      "passed": 1099,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "inner_artifact_sha256": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "108200ad8d7835fbd4f07d88813a62879d0dd8aafb4adf6532c30672bd6f62f6",
+      "development-verification.pub": "c76392841f6a62d2cba0707ba05a52c834d2ca18b409578d2167ec0140af2b6f",
+      "host-preview.png": "a72ec6601c047a03716c75e2cd262801cabd6ebc864ba7410fe0477524252ebc",
+      "release-source.json": "abfe6e97134115a68b9a29d45bde96b5d5e29a1bf842c737db18348c54d3f20f",
+      "smartpro-psp-0.1.0-dev16-host-preview.zip": "1a40841729977c94719eede2d8e27a99775e77303f0f304223e838c770a152a4",
+      "smartpro-psp-0.1.0-dev16-original-source.zip": "aafdb2f7ae93f5b0f219184c3f5edbc40243da48a79b2b453cadb4aac30ad3f3",
+      "smartpro-psp-0.1.0-dev16.tar": "07c4fd51758fe8d1f9bf2358055f0ee11a79e3aea3da9402c205ca4f4ed2d684"
+    },
+    "source_inventory_files": 223,
+    "source_inventory_sha256": "5058e82140dc25e5d0b7ff429845b90566865cd804e25b92078192f953fcbd4d",
+    "payload_files": 66,
+    "signature_and_payload_inventory_verified": true,
+    "source_export_bytes_verified": true,
+    "hardware_qualified": false,
+    "production_authenticity_claim": false,
+    "private_native_artifact_custody_verified": false,
+    "schema": 1,
+    "run_id": 39926662133,
+    "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39926662133",
+    "status": "success",
+    "branch_source_commit": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
+    "actual_clean_checkout": "933a1a5367552804cca8a78725e4c87779f9ce9b",
+    "event": "pull_request",
+    "artifact_id": 12490006540,
+    "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39926662133/artifacts/12490006540",
+    "artifact_expires_at_utc": "2027-01-21T08:43:21Z",
+    "independent_private_storage_retention_performed": false,
+    "public_release_created": false,
+    "readback": "ci-readback.json"
+  }
+}

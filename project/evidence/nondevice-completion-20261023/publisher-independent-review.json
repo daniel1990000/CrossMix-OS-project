@@ -1,0 +1,84 @@
+{
+  "files": [
+    {
+      "path": "project/evidence/nondevice-completion-20261023/publish_verified_host.py",
+      "sha256": "35cf77620d010aee319c5a372f4a15c60cedd1c30d0d7721033d9fe1eaba782a"
+    },
+    {
+      "path": ".github/workflows/smartpro-offshoot.yml",
+      "sha256": "3127ccd0bee25edcf07c299d14fe6eabe3d62adfc5c3b6cc714870e706462a6d"
+    },
+    {
+      "path": "project/evidence/artifact-custody/verify-host-artifacts.py",
+      "sha256": "3994996f2d10b3389dc1ab21523b236b038503cfcc0e78ba3d9b1041ce8b89b6"
+    }
+  ],
+  "final_code_command_path_simulations": [
+    {
+      "case": "success-create-tag",
+      "passed": true,
+      "publication_simulated": true,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "correct-existing-tag",
+      "passed": true,
+      "publication_simulated": true,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "wrong-existing-tag",
+      "passed": true,
+      "publication_simulated": false,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "corrupt-readback",
+      "passed": true,
+      "publication_simulated": false,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "existing-assets",
+      "passed": true,
+      "publication_simulated": false,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "provider-digest-mismatch",
+      "passed": true,
+      "publication_simulated": false,
+      "remote_mutations_performed": false
+    },
+    {
+      "case": "attestation-failure",
+      "passed": true,
+      "publication_simulated": false,
+      "remote_mutations_performed": false
+    }
+  ],
+  "findings": [],
+  "independent_real_attestation_verifications": {
+    "method": "Real gh verification with retained bundle and actual retained CI artifact files; all remote write commands replaced in memory.",
+    "repository": "daniel1990000/CrossMix-OS-project",
+    "self_hosted_runners_denied": true,
+    "source_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+    "source_ref": "refs/heads/build/spruce-psp-experience",
+    "subjects_verified": 10,
+    "workflow": ".github/workflows/smartpro-offshoot.yml"
+  },
+  "kind": "independent-fixed-host-publisher-review",
+  "live_release_upload_or_publication_performed_by_reviewer": false,
+  "reviewed_at_utc": "2026-10-23T03:17:17.808395+00:00",
+  "schema": 1,
+  "scope": "Original-only attached host assets; no native distribution clearance, operational Ed25519 custody or physical qualification established.",
+  "simulated_remote_mutations_only": true,
+  "static_review": [
+    "Manual-dispatch-only boolean defaults false; publisher GITHUB_TOKEN permissions limited to contents write and Actions read.",
+    "Fixed prior source commit/run/artifact digests independently revalidated; publisher does not substitute new head build identity.",
+    "Existing helper checks signed payload, exact source export, strict certification, inventory and all false qualification gates.",
+    "Ten exact-workflow/ref/source-digest attestation verifications precede any upload; actual asset readback comparison precedes publication.",
+    "Actual release tag is atomically created when absent and checked before and after publication.",
+    "Release notes distinguish attached original-only artifacts from excluded GitHub automatic inherited repository archives."
+  ]
+}

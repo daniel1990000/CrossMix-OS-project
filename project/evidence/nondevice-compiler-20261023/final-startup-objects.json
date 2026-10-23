@@ -1,0 +1,401 @@
+{
+  "schema": 1,
+  "kind": "restored-compiler-incorporated-inputs-static-inspection",
+  "image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+  "target_executed": false,
+  "device_qualification": false,
+  "toolchain_compiler": {
+    "exit_code": 0,
+    "stdout": "aarch64-linux-gnu-gcc (Ubuntu 9.4.0-1ubuntu1~20.04.2) 9.4.0\nCopyright (C) 2019 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n",
+    "stderr": ""
+  },
+  "compiler_selected_files": {
+    "Scrt1.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o\n",
+      "stderr": ""
+    },
+    "crt1.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crt1.o\n",
+      "stderr": ""
+    },
+    "crti.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crti.o\n",
+      "stderr": ""
+    },
+    "crtn.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crtn.o\n",
+      "stderr": ""
+    },
+    "crtbeginS.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o\n",
+      "stderr": ""
+    },
+    "crtendS.o": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o\n",
+      "stderr": ""
+    },
+    "libgcc.a": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a\n",
+      "stderr": ""
+    },
+    "libstdc++.a": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a\n",
+      "stderr": ""
+    },
+    "libc_nonshared.a": {
+      "exit_code": 0,
+      "stdout": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/libc_nonshared.a\n",
+      "stderr": ""
+    },
+    "libpthread_nonshared.a": {
+      "exit_code": 0,
+      "stdout": "/opt/sysroot/usr/lib/../lib/libpthread_nonshared.a\n",
+      "stderr": ""
+    }
+  },
+  "objects": [
+    {
+      "path": "/usr/aarch64-linux-gnu/lib/Scrt1.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/Scrt1.o",
+      "exists": true,
+      "bytes": 1704,
+      "sha256": "675ad19366cdfa1a9fed8e499d44a10608d886ac4c9610f9b7558319627e33fd",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross: /usr/aarch64-linux-gnu/lib/Scrt1.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/aarch64-linux-gnu/lib/crt1.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crt1.o",
+      "exists": true,
+      "bytes": 1872,
+      "sha256": "65b48d1f38c68289f55e60302b84ef3564298bf834bbdeb9abf7d755a9aa9f19",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross: /usr/aarch64-linux-gnu/lib/crt1.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/aarch64-linux-gnu/lib/crti.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crti.o",
+      "exists": true,
+      "bytes": 1440,
+      "sha256": "5e999dd076731ecfd30d1cc572e64c81343d3a878a90af4652cc4f649a56c797",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross: /usr/aarch64-linux-gnu/lib/crti.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/aarch64-linux-gnu/lib/crtn.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crtn.o",
+      "exists": true,
+      "bytes": 1016,
+      "sha256": "4d3f1d1f9707d07815dbf691d6b0a16d2567dce2d95c1e841fe0a6f34b437ad2",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross: /usr/aarch64-linux-gnu/lib/crtn.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o",
+      "resolved_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o",
+      "exists": true,
+      "bytes": 3488,
+      "sha256": "bb72e3e6acfbcf97dc9dfbeef7141cc64813e8e9c92bf3dbdca5b5e287d26244",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libgcc-9-dev-arm64-cross: /usr/lib/gcc-cross/aarch64-linux-gnu/9/crtbeginS.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o",
+      "resolved_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o",
+      "exists": true,
+      "bytes": 1248,
+      "sha256": "7aef4c70ff650937ea434e6b965618d0e9ad5a860552f4d66b326757eb1010d9",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libgcc-9-dev-arm64-cross: /usr/lib/gcc-cross/aarch64-linux-gnu/9/crtendS.o\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "resolved_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a",
+      "exists": true,
+      "bytes": 349622,
+      "sha256": "e77264f6b5a99884f31feb0f5a902046c8d9d9fe790b6aad0a231c6beb2a9079",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libgcc-9-dev-arm64-cross: /usr/lib/gcc-cross/aarch64-linux-gnu/9/libgcc.a\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+      "resolved_path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a",
+      "exists": true,
+      "bytes": 5947852,
+      "sha256": "c6e9d9e3a4965a811e3281aa593a14d3d6c56897ee2e62812eae9fb1ac2f1c4d",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libstdc++-9-dev-arm64-cross: /usr/lib/gcc-cross/aarch64-linux-gnu/9/libstdc++.a\n",
+        "stderr": ""
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/libc_nonshared.a",
+      "resolved_path": "/opt/sysroot/usr/lib/libc_nonshared.a",
+      "exists": true,
+      "bytes": 80518,
+      "sha256": "19a48e2db48587db67299cb6369ff2f72975b33c7870bfac654bede3ce34b3f6",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/libc_nonshared.a\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "resolved_path": "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "exists": true,
+      "bytes": 28340,
+      "sha256": "81cc52b0a9ba8b5cf989dc25766fa777e5600343d0d7be1735d2e0448e3a6edb",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/libpthread_nonshared.a\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/Scrt1.o",
+      "resolved_path": "/opt/sysroot/usr/lib/Scrt1.o",
+      "exists": true,
+      "bytes": 4472,
+      "sha256": "d046157d6600ff3d2234b75a627e492ae1a2ff6ecc8dec709c6641a7368c03c4",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/Scrt1.o\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/crti.o",
+      "resolved_path": "/opt/sysroot/usr/lib/crti.o",
+      "exists": true,
+      "bytes": 3080,
+      "sha256": "b9f182ed8d45f17d3f71c892215ffd413d027e4e631d434483fe4bc7ea38af21",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/crti.o\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/crtn.o",
+      "resolved_path": "/opt/sysroot/usr/lib/crtn.o",
+      "exists": true,
+      "bytes": 2504,
+      "sha256": "58890acba7e58311d58475b9a999e9f32110f2740e60c5a986a41a82dfbafed2",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/crtn.o\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/lib/Scrt1.o",
+      "exists": false
+    },
+    {
+      "path": "/opt/sysroot/lib/crti.o",
+      "exists": false
+    },
+    {
+      "path": "/opt/sysroot/lib/crtn.o",
+      "exists": false
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/Scrt1.o",
+      "exists": true,
+      "bytes": 1704,
+      "sha256": "675ad19366cdfa1a9fed8e499d44a10608d886ac4c9610f9b7558319627e33fd",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/Scrt1.o\n"
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crt1.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crt1.o",
+      "exists": true,
+      "bytes": 1872,
+      "sha256": "65b48d1f38c68289f55e60302b84ef3564298bf834bbdeb9abf7d755a9aa9f19",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crt1.o\n"
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crti.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crti.o",
+      "exists": true,
+      "bytes": 1440,
+      "sha256": "5e999dd076731ecfd30d1cc572e64c81343d3a878a90af4652cc4f649a56c797",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crti.o\n"
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crtn.o",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/crtn.o",
+      "exists": true,
+      "bytes": 1016,
+      "sha256": "4d3f1d1f9707d07815dbf691d6b0a16d2567dce2d95c1e841fe0a6f34b437ad2",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/crtn.o\n"
+      }
+    },
+    {
+      "path": "/usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/libc_nonshared.a",
+      "resolved_path": "/usr/aarch64-linux-gnu/lib/libc_nonshared.a",
+      "exists": true,
+      "bytes": 22972,
+      "sha256": "77c6bc3f4a0367c4c0c28539af2e51cdc9d84a7c977501a2fcc726c3798f144d",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/lib/gcc-cross/aarch64-linux-gnu/9/../../../../aarch64-linux-gnu/lib/../lib/libc_nonshared.a\n"
+      }
+    },
+    {
+      "path": "/opt/sysroot/usr/lib/../lib/libpthread_nonshared.a",
+      "resolved_path": "/opt/sysroot/usr/lib/libpthread_nonshared.a",
+      "exists": true,
+      "bytes": 28340,
+      "sha256": "81cc52b0a9ba8b5cf989dc25766fa777e5600343d0d7be1735d2e0448e3a6edb",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /opt/sysroot/usr/lib/../lib/libpthread_nonshared.a\n"
+      }
+    }
+  ],
+  "package_notices": [
+    {
+      "path": "/usr/share/doc/gcc-9-cross-base/copyright",
+      "resolved_path": "/usr/share/doc/gcc-9-cross-base/copyright",
+      "exists": true,
+      "bytes": 75285,
+      "sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "gcc-9-cross-base: /usr/share/doc/gcc-9-cross-base/copyright\n",
+        "stderr": ""
+      },
+      "package_metadata": {
+        "exit_code": 0,
+        "stdout": "gcc-9-cross-base\n9.4.0-1ubuntu1~20.04.2cross2\ngcc-9-cross (21ubuntu7)\ngcc-9-cross-base\n",
+        "stderr": ""
+      },
+      "text_sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035"
+    },
+    {
+      "path": "/usr/share/doc/libstdc++-9-dev-arm64-cross/copyright",
+      "resolved_path": "/usr/share/doc/gcc-9-cross-base/copyright",
+      "exists": true,
+      "bytes": 75285,
+      "sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/share/doc/libstdc++-9-dev-arm64-cross/copyright\n"
+      },
+      "package_metadata": {
+        "exit_code": 0,
+        "stdout": "libstdc++-9-dev-arm64-cross\n9.4.0-1ubuntu1~20.04.2cross2\ngcc-9-cross (21ubuntu7)\nlibstdc++-9-dev-arm64-cross\n",
+        "stderr": ""
+      },
+      "text_sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035"
+    },
+    {
+      "path": "/usr/share/doc/libgcc-9-dev-arm64-cross/copyright",
+      "resolved_path": "/usr/share/doc/gcc-9-cross-base/copyright",
+      "exists": true,
+      "bytes": 75285,
+      "sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035",
+      "package_owner": {
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "dpkg-query: no path found matching pattern /usr/share/doc/libgcc-9-dev-arm64-cross/copyright\n"
+      },
+      "package_metadata": {
+        "exit_code": 0,
+        "stdout": "libgcc-9-dev-arm64-cross\n9.4.0-1ubuntu1~20.04.2cross2\ngcc-9-cross (21ubuntu7)\nlibgcc-9-dev-arm64-cross\n",
+        "stderr": ""
+      },
+      "text_sha256": "0122839ddca455eb169542587ae16197e41ed70618bb7f0f6a5dd9b16fa27035"
+    },
+    {
+      "path": "/usr/share/doc/libc6-dev-arm64-cross/copyright",
+      "resolved_path": "/usr/share/doc/libc6-dev-arm64-cross/copyright",
+      "exists": true,
+      "bytes": 25467,
+      "sha256": "40c7e1f2118531f038ca22999bd976901254e1bc5cd1b0f0211bdd064c599987",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross: /usr/share/doc/libc6-dev-arm64-cross/copyright\n",
+        "stderr": ""
+      },
+      "package_metadata": {
+        "exit_code": 0,
+        "stdout": "libc6-dev-arm64-cross\n2.31-0ubuntu9.9cross1\ncross-toolchain-base (43ubuntu3.2)\nlibc6-dev-arm64-cross\n",
+        "stderr": ""
+      },
+      "text_sha256": "40c7e1f2118531f038ca22999bd976901254e1bc5cd1b0f0211bdd064c599987"
+    },
+    {
+      "path": "/usr/share/doc/libc6-arm64-cross/copyright",
+      "resolved_path": "/usr/share/doc/libc6-arm64-cross/copyright",
+      "exists": true,
+      "bytes": 25467,
+      "sha256": "40c7e1f2118531f038ca22999bd976901254e1bc5cd1b0f0211bdd064c599987",
+      "package_owner": {
+        "exit_code": 0,
+        "stdout": "libc6-arm64-cross: /usr/share/doc/libc6-arm64-cross/copyright\n",
+        "stderr": ""
+      },
+      "package_metadata": {
+        "exit_code": 0,
+        "stdout": "libc6-arm64-cross\n2.31-0ubuntu9.9cross1\ncross-toolchain-base (43ubuntu3.2)\nlibc6-arm64-cross\n",
+        "stderr": ""
+      },
+      "text_sha256": "40c7e1f2118531f038ca22999bd976901254e1bc5cd1b0f0211bdd064c599987"
+    }
+  ],
+  "full_private_static_inspection_sha256": "58afc0b74f1b81fa1f7e63acfdc9eb296af826ad2fa308fc62dce2ea1556f057",
+  "recorded_at_utc": "2026-10-23T03:11:13.517494+00:00",
+  "inspection_container_exit_code": 0
+}

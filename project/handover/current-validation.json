@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "scope": "Current handover/task/pin/link and custody consistency; no hardware or production authority",
+  "checked_at_utc": "2026-10-22T23:32:00.988465+00:00",
+  "master_plan_tasks": 25,
+  "complete_host": 12,
+  "pending": 13,
+  "physical_areas_run": 0,
+  "pinned_sources": 5,
+  "local_links_checked": 144,
+  "historical_batch3_files_unchanged": 18,
+  "current_source_inventory_files": 158,
+  "current_source_inventory_sha256": "f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d",
+  "ci_source_head": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+  "ci_clean_merge_checkout": "1609c5358ee04010f8e5e873064d53e5fc03eccc",
+  "ci_tests_passed": 710,
+  "native_artifacts_retrieved": 7,
+  "native_parts_retrieved": 18,
+  "gates_enabled": false,
+  "independent_review": "project/handover/final-audit.json",
+  "historical_dev9_identities_preserved": true
+}

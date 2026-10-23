@@ -1,0 +1,121 @@
+--- a/spruce_igm.c
++++ b/spruce_igm.c
+@@ -346,10 +346,30 @@
+ 
+ /* ── Input handling (called every frame while active) ──────── */
+ 
++/* Independent IGM controls are separate from the RetroArch standard menu
++ * and gameplay remaps. Raw libretro B is south and A is east; installed pad
++ * correspondence still requires the device profile's physical acceptance. */
++static void igm_project_menu_keys(const spruce_igm_theme_t *theme, unsigned *confirm, unsigned *back)
++{
++   *confirm = RETRO_DEVICE_ID_JOYPAD_A;
++   *back    = RETRO_DEVICE_ID_JOYPAD_B;
++   if (!theme || !theme->project_independent_menu_controls)
++      return;
++   if (strcmp(theme->project_menu_confirm, "south") == 0 && strcmp(theme->project_menu_back, "east") == 0)
++   {
++      *confirm = RETRO_DEVICE_ID_JOYPAD_B;
++      *back    = RETRO_DEVICE_ID_JOYPAD_A;
++   }
++   /* The complete east/south pair selects the legacy keys explicitly.
++    * Every invalid/incomplete pair falls back to those same legacy keys. */
++}
++
+ static void igm_handle_input(void)
+ {
+    uint16_t cur  = igm_read_buttons();
+    uint16_t prev = igm.prev_buttons;
++   unsigned confirm_key, back_key;
++   igm_project_menu_keys(igm.theme, &confirm_key, &back_key);
+    igm.prev_buttons = cur;
+ 
+    /* Wait for A/B release before executing a close action.
+@@ -390,15 +410,15 @@
+          command_event(CMD_EVENT_SAVE_STATE_INCREMENT, NULL);
+    }
+ 
+-   /* B button — close (resume), deferred until released */
+-   if (IGM_PRESSED(cur, prev, RETRO_DEVICE_ID_JOYPAD_B))
++   /* Physical Back closes; still deferred until both face buttons release. */
++   if (IGM_PRESSED(cur, prev, back_key))
+    {
+       igm.deferred_close = IGM_RESUME;
+       return;
+    }
+ 
+-   /* A button — activate selected item */
+-   if (IGM_PRESSED(cur, prev, RETRO_DEVICE_ID_JOYPAD_A))
++   /* Physical Confirm activates the selected item. */
++   if (IGM_PRESSED(cur, prev, confirm_key))
+    {
+       switch (igm.selected)
+       {
+--- a/spruce_igm_theme.c
++++ b/spruce_igm_theme.c
+@@ -23,6 +23,7 @@
+    SEC_FONT,
+    SEC_TEXT,
+    SEC_LABELS,
++   SEC_PROJECT_CONTROLS,
+    SEC_UNKNOWN
+ };
+ 
+@@ -221,6 +222,7 @@
+       else if (string_is_equal(c->member, "font"))   c->section = SEC_FONT;
+       else if (string_is_equal(c->member, "text"))   c->section = SEC_TEXT;
+       else if (string_is_equal(c->member, "labels")) c->section = SEC_LABELS;
++      else if (string_is_equal(c->member, "project_menu_controls")) c->section = SEC_PROJECT_CONTROLS;
+       else                                           c->section = SEC_UNKNOWN;
+    }
+    c->member[0] = '\0';
+@@ -263,6 +265,21 @@
+                      c->path, s, igm_color_keys[i].key);
+             }
+             return true;
++         }
++         break;
++
++      case SEC_PROJECT_CONTROLS:
++         if (c->depth == 2 && (string_is_equal(c->member, "confirm") || string_is_equal(c->member, "back")))
++         {
++            char *target = string_is_equal(c->member, "confirm") ? t->project_menu_confirm : t->project_menu_back;
++            target[0] = '\0';
++            if ((len == 5 && memcmp(s, "south", 5) == 0) || (len == 4 && memcmp(s, "east", 4) == 0))
++            {
++               memcpy(target, s, len);
++               target[len] = '\0';
++               c->applied++;
++            }
++            else c->rejected++;
+          }
+          break;
+ 
+@@ -374,6 +391,13 @@
+    igm_parse_ctx      *c = (igm_parse_ctx*)data;
+    spruce_igm_theme_t *t = c->t;
+ 
++   if (c->section == SEC_PROJECT_CONTROLS && c->depth == 2 && string_is_equal(c->member, "enabled"))
++   {
++      t->project_independent_menu_controls = value;
++      c->applied++;
++      return true;
++   }
++
+    if (c->section != SEC_LAYOUT)
+       return true;
+ 
+--- a/spruce_igm_theme.h
++++ b/spruce_igm_theme.h
+@@ -84,6 +84,11 @@
+    char  arrow_left[8];
+    char  arrow_right[8];
+ 
++   /* Project extension; disabled unless enabled plus an exact opposite pair. */
++   bool  project_independent_menu_controls;
++   char  project_menu_confirm[6];
++   char  project_menu_back[6];
++
+    char  source_path[PATH_MAX_LENGTH];   /* "" when nothing was loaded */
+ } spruce_igm_theme_t;
+ 

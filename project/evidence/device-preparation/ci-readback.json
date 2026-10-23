@@ -1,0 +1,65 @@
+{
+  "verified_at_utc": "2026-10-22T23:28:32.007575+00:00",
+  "artifact_sha256": "9a6c7650bd49bfa2ed868ac57e656d7224968de98c438b5be2f60cc752d91305",
+  "artifact_size_bytes": 4882634,
+  "frontend": {
+    "commit": "1609c5358ee04010f8e5e873064d53e5fc03eccc",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 710,
+    "passed": 710,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "f2ef611ff3420131f384b4d6e9981e1f2f0e43f3ee9d036ddf9d4a6527227dbd",
+    "development-verification.pub": "5c6c2548a46aba604c7d4b13e859b1b5a6aacc03340f0c7ee3c39ac9e1ecce23",
+    "host-preview.png": "bb7e87350fabb7e263d28cdd5e5ebc8c92e5c15e32d1c2d8248999d31201586a",
+    "release-source.json": "87d86c6d5bb21d9245f5ab8ba334492191018ab3e7f8f219c934b36998ce6848",
+    "smartpro-psp-0.1.0-dev10-host-preview.zip": "a1864e49dc678f67b5c1f79f77a8303a3aeacb7a72b16f5546d3f562076d4a09",
+    "smartpro-psp-0.1.0-dev10-original-source.zip": "5275d58a1834eda68a95c2fe2817a772ebb7266156a79f8c07cc28ae88ccf8b7",
+    "smartpro-psp-0.1.0-dev10.tar": "6adb542812f7c206ac97a537e031cfec969da1b7496e5c49c18442fcaaddea2d"
+  },
+  "source_inventory_files": 158,
+  "source_inventory_sha256": "f05a5036a04fa3291bfb230b68c81a853096d1d6143d93504288ec53d2f9789d",
+  "payload_files": 57,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false,
+  "schema": 1,
+  "run_id": 39871706495,
+  "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495",
+  "source_head": "a0e6f8af7fe3354c1c82a662b3969e2824717bf3",
+  "conclusion": "success",
+  "artifact_id": 12466212738,
+  "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39871706495/artifacts/12466212738",
+  "artifact_expires_at_utc": "2027-01-20T23:25:44Z",
+  "all_eight_inner_checksums_verified": true,
+  "source_inventory_matches_local_clean_build": true,
+  "private_retained_storage": {
+    "provider": "Google Drive",
+    "file_id": "1o59LsdnMjuSM9zTjKDQcC8m5cK2FPnsD",
+    "url": "https://drive.google.com/file/d/1o59LsdnMjuSM9zTjKDQcC8m5cK2FPnsD/view?usp=drivesdk",
+    "shared": false,
+    "observed_permission_roles": [
+      "owner"
+    ],
+    "metadata_readback": true,
+    "fresh_download_readback": true,
+    "download_sha256": "9a6c7650bd49bfa2ed868ac57e656d7224968de98c438b5be2f60cc752d91305",
+    "download_size_bytes": 4882634
+  },
+  "scope": "Verified dev10 CI and actual private host-artifact retrieval. Host archive excludes native artifacts; their independently verified private retrieval is in artifact-custody/native-retention.json.",
+  "retained_report_sha256": {
+    "ci-certification.json": "3c2d9130a8941c8e7d13ec422fc22aa121d0672ee82e84e6c269e63ba5b9fc6b",
+    "ci-build-report.json": "f2ef611ff3420131f384b4d6e9981e1f2f0e43f3ee9d036ddf9d4a6527227dbd",
+    "ci-release-source.json": "87d86c6d5bb21d9245f5ab8ba334492191018ab3e7f8f219c934b36998ce6848"
+  }
+}

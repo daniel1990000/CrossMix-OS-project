@@ -1,0 +1,308 @@
+diff --git a/Core/SaveState.cpp b/Core/SaveState.cpp
+index a830054..202d49f 100644
+--- a/Core/SaveState.cpp
++++ b/Core/SaveState.cpp
+@@ -16,6 +16,15 @@
+ // https://github.com/hrydgard/ppsspp and http://www.ppsspp.org/.
+ 
+ #include <algorithm>
++#include <atomic>
++#include <memory>
++#if defined(SDL) && defined(__linux__)
++#include <sys/stat.h>
++#include <fcntl.h>
++#include <unistd.h>
++#endif
++
++#include "Common/Crypto/sha256.h"
+ #include <vector>
+ #include <thread>
+ #include <mutex>
+@@ -75,6 +84,8 @@ namespace SaveState {
+ double g_lastSaveTime = -1.0;
+ 
+ static bool needsProcess = false;
++// Invalidates evidence across shutdown, restart and reinitialization.
++static std::atomic<uint64_t> projectEvidenceGeneration{0};
+ static bool needsRestart = false;
+ static std::mutex mutex;
+ static bool hasLoadedState = false;
+@@ -199,6 +210,8 @@ int g_screenshotFailures;
+ 
+ 	void Enqueue(const SaveState::Operation &op) {
+ 		if (!NetworkAllowSaveState()) {
++			if (op.callback)
++				op.callback(Status::FAILURE, "Save state operation blocked by networking");
+ 			return;
+ 		}
+ 		if (Achievements::HardcoreModeActive()) {
+@@ -206,6 +219,8 @@ int g_screenshotFailures;
+ 				// We allow saving in hardcore mode if this setting is on.
+ 			} else {
+ 				// Operation not allowed
++				if (op.callback)
++					op.callback(Status::FAILURE, "Save state operation blocked by hardcore mode");
+ 				return;
+ 			}
+ 		}
+@@ -231,6 +246,8 @@ int g_screenshotFailures;
+ 
+ 	void Save(const Path &filename, int slot, Callback callback) {
+ 		if (!NetworkAllowSaveState()) {
++			if (callback)
++				callback(Status::FAILURE, "Save state operation blocked by networking");
+ 			return;
+ 		}
+ 
+@@ -471,6 +488,8 @@ int g_screenshotFailures;
+ 
+ 	void SaveSlot(std::string_view gamePrefix, int slot, Callback callback) {
+ 		if (!NetworkAllowSaveState()) {
++			if (callback)
++				callback(Status::FAILURE, "Save state operation blocked by networking");
+ 			return;
+ 		}
+ 
+@@ -491,7 +510,10 @@ int g_screenshotFailures;
+ 					} else {
+ 						DeleteIfExists(fn);
+ 					}
+-					File::Rename(fn.WithExtraExtension(".tmp"), fn);
++					if (!File::Rename(fn.WithExtraExtension(".tmp"), fn)) {
++						status = Status::FAILURE;
++						message = "State finalization failed";
++					}
+ 				}
+ 				if (callback) {
+ 					callback(status, message);
+@@ -514,6 +536,163 @@ int g_screenshotFailures;
+ 		Rescan(gamePrefix);
+ 	}
+ 
++	// Qualification-only API: call from the emulator owner, never a signal handler.
++	// Full ROM hashing is deliberately opt-in and may pause emulation for large ISOs.
++	struct ProjectFileFingerprint {
++		std::string sha256;
++		uint64_t size = 0;
++		bool operator==(const ProjectFileFingerprint &other) const {
++			return sha256 == other.sha256 && size == other.size;
++		}
++	};
++
++	static bool ProjectFingerprintFile(const Path &path, uint64_t limit, ProjectFileFingerprint *output) {
++#if defined(SDL) && defined(__linux__)
++		if (path.Type() != PathType::NATIVE || !path.IsAbsolute() || path.size() > 4096 ||
++			path.ToString().find('\0') != std::string::npos)
++			return false;
++		int descriptor = open(path.c_str(), O_RDONLY | O_NONBLOCK | O_CLOEXEC);
++		if (descriptor < 0)
++			return false;
++		FILE *file = fdopen(descriptor, "rb");
++		if (!file) {
++			close(descriptor);
++			return false;
++		}
++		struct stat before{}, after{}, named{};
++		auto sameFile = [](const struct stat &a, const struct stat &b) {
++			return a.st_dev == b.st_dev && a.st_ino == b.st_ino && a.st_size == b.st_size &&
++				a.st_mtim.tv_sec == b.st_mtim.tv_sec && a.st_mtim.tv_nsec == b.st_mtim.tv_nsec &&
++				a.st_ctim.tv_sec == b.st_ctim.tv_sec && a.st_ctim.tv_nsec == b.st_ctim.tv_nsec;
++		};
++		if (fstat(fileno(file), &before) != 0 || !S_ISREG(before.st_mode) ||
++			before.st_size <= 0 || (uint64_t)before.st_size > limit) {
++			fclose(file);
++			return false;
++		}
++		sha256_context hash;
++		sha256_starts(&hash);
++		uint8_t data[65536];
++		uint64_t bytes = 0;
++		while (bytes < (uint64_t)before.st_size) {
++			size_t count = fread(data, 1, std::min<uint64_t>(sizeof(data), (uint64_t)before.st_size - bytes), file);
++			if (count == 0)
++				break;
++			sha256_update(&hash, data, (uint32_t)count);
++			bytes += count;
++		}
++		bool ok = bytes == (uint64_t)before.st_size && !ferror(file) &&
++			fstat(fileno(file), &after) == 0 && stat(path.c_str(), &named) == 0 &&
++			sameFile(before, after) && sameFile(after, named);
++		if (fclose(file) != 0)
++			ok = false;
++		if (!ok)
++			return false;
++		uint8_t digest[32];
++		sha256_finish(&hash, digest);
++		static const char hex[] = "0123456789abcdef";
++		output->sha256.clear();
++		for (uint8_t byte : digest) {
++			output->sha256 += hex[byte >> 4];
++			output->sha256 += hex[byte & 15];
++		}
++		output->size = bytes;
++		return true;
++#else
++		return false;
++#endif
++	}
++
++	static bool ProjectEvidenceID(std::string_view value, size_t max, bool dot) {
++		if (value.empty() || value.size() > max)
++			return false;
++		for (unsigned char ch : value) {
++			if (!((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') ||
++				(ch >= '0' && ch <= '9') || ch == '_' || ch == '-' || (dot && ch == '.')))
++				return false;
++		}
++		return true;
++	}
++
++	void SaveSlotWithEvidence(int slot, std::string requestID, SlotEvidenceCallback callback) {
++		if (!callback)
++			return;
++		auto reject = [&callback](const char *reason) { callback(Status::FAILURE, reason, nullptr); };
++		if (!ProjectEvidenceID(requestID, 96, false) || slot < 0 || slot >= g_Config.iSaveStateSlotCount || slot > 99) {
++			reject("Invalid state evidence request");
++			return;
++		}
++		if (!PSP_IsInited() || !__KernelIsRunning()) {
++			reject("No active game for state evidence");
++			return;
++		}
++		SlotEvidence evidence;
++		evidence.requestID = std::move(requestID);
++		evidence.slot = slot;
++		evidence.discID = g_paramSFO.GetValueString("DISC_ID");
++		evidence.discVersion = g_paramSFO.GetValueString("DISC_VERSION");
++		evidence.gamePath = PSP_CoreParameter().fileToStart;
++		if (!ProjectEvidenceID(evidence.discID, 32, false) || !ProjectEvidenceID(evidence.discVersion, 32, true) ||
++			evidence.gamePath.empty() || evidence.gamePath.ToString().size() > 4096) {
++			reject("Unsupported game identity for state evidence");
++			return;
++		}
++		evidence.gamePrefix = GetGamePrefix(g_paramSFO);
++		evidence.statePath = GenerateSaveSlotPath(evidence.gamePrefix, slot, STATE_EXTENSION);
++		evidence.upstreamCommit = "d357e6a32934800d3d80b49f910a603e1b069751";
++		evidence.extensionID = "trimui-slot-evidence-v1";
++		evidence.engineVersion = PPSSPP_GIT_VERSION;
++		evidence.stateFormatID = "ppsspp:d357e6a32934800d3d80b49f910a603e1b069751:chunk5-savestart3";
++#if defined(__aarch64__)
++		evidence.architecture = "aarch64";
++#elif defined(__x86_64__)
++		evidence.architecture = "x86_64";
++#else
++		reject("Unsupported state evidence architecture");
++		return;
++#endif
++		const uint64_t maxGameBytes = 8ULL * 1024 * 1024 * 1024;
++		const uint64_t maxEngineBytes = 512ULL * 1024 * 1024;
++		ProjectFileFingerprint gameBefore, engineBefore;
++		if (evidence.statePath.empty() || evidence.statePath.size() > 4096 || !ProjectFingerprintFile(evidence.gamePath, maxGameBytes, &gameBefore) ||
++			!ProjectFingerprintFile(Path("/proc/self/exe"), maxEngineBytes, &engineBefore)) {
++			reject("Cannot fingerprint active game and engine");
++			return;
++		}
++		const uint64_t generation = projectEvidenceGeneration.load();
++		auto delivered = std::make_shared<std::atomic<bool>>(false);
++		SaveSlot(evidence.gamePrefix, slot, [evidence, gameBefore, engineBefore, generation, delivered, callback](Status status, std::string_view message) mutable {
++			if (delivered->exchange(true))
++				return;
++			auto fail = [&callback](const char *reason) { callback(Status::FAILURE, reason, nullptr); };
++			if (status != Status::SUCCESS) {
++				callback(Status::FAILURE, message, nullptr);
++				return;
++			}
++			if (projectEvidenceGeneration.load() != generation || !PSP_IsInited() || !__KernelIsRunning() ||
++				PSP_CoreParameter().fileToStart != evidence.gamePath || GetGamePrefix(g_paramSFO) != evidence.gamePrefix ||
++				g_paramSFO.GetValueString("DISC_ID") != evidence.discID || g_paramSFO.GetValueString("DISC_VERSION") != evidence.discVersion) {
++				fail("Game session changed before state evidence completed");
++				return;
++			}
++			ProjectFileFingerprint gameAfter, engineAfter, state;
++			if (!ProjectFingerprintFile(evidence.gamePath, 8ULL * 1024 * 1024 * 1024, &gameAfter) ||
++				!ProjectFingerprintFile(Path("/proc/self/exe"), 512ULL * 1024 * 1024, &engineAfter) ||
++				!(gameBefore == gameAfter) || !(engineBefore == engineAfter) ||
++				!ProjectFingerprintFile(evidence.statePath, 512ULL * 1024 * 1024, &state)) {
++				fail("State, game or engine fingerprint failed");
++				return;
++			}
++			evidence.gameSHA256 = gameAfter.sha256;
++			evidence.gameSize = gameAfter.size;
++			evidence.engineSHA256 = engineAfter.sha256;
++			evidence.engineSize = engineAfter.size;
++			evidence.stateSHA256 = state.sha256;
++			evidence.stateSize = state.size;
++			callback(Status::SUCCESS, message, &evidence);
++		});
++	}
++
+ 	bool UndoSaveSlot(std::string_view gamePrefix, int slot) {
+ 		if (!NetworkAllowSaveState()) {
+ 			return false;
+@@ -963,6 +1142,7 @@ int g_screenshotFailures;
+ 	}
+ 
+ 	void Init() {
++		++projectEvidenceGeneration;
+ 		// Make sure there's a directory for save slots
+ 		File::CreateFullPath(GetSysDirectory(DIRECTORY_SAVESTATE));
+ 
+@@ -979,6 +1159,7 @@ int g_screenshotFailures;
+ 	}
+ 
+ 	void Shutdown() {
++		++projectEvidenceGeneration;
+ 		std::lock_guard<std::mutex> guard(mutex);
+ 		rewindStates.Clear();
+ 	}
+diff --git a/Core/SaveState.h b/Core/SaveState.h
+index c8400ba..3e2f0fd 100644
+--- a/Core/SaveState.h
++++ b/Core/SaveState.h
+@@ -18,6 +18,7 @@
+ #pragma once
+ 
+ #include <functional>
++#include <cstdint>
+ #include <string>
+ #include <string_view>
+ #include <vector>
+@@ -49,6 +50,38 @@ namespace SaveState {
+ 
+ 	// Run the various actions directly.
+ 	void SaveSlot(std::string_view gamePrefix, int slot, Callback callback);
++
++	// Optional in-process qualification API. No file exporter, external command,
++	// save-and-quit behavior or clean-shutdown proof is implied. This hashes the
++	// complete ROM before/after the asynchronous save and may block for large ISOs.
++	// Call only from the existing emulator owner on the emulation thread. Linux SDL
++	// only; other platforms reject. Unsupported/missing DISC_ID or DISC_VERSION,
++	// directory-based games, and unavailable completion cannot produce evidence.
++	struct SlotEvidence {
++		std::string requestID;
++		std::string gamePrefix;
++		std::string discID;
++		std::string discVersion;
++		Path gamePath;
++		Path statePath;
++		std::string upstreamCommit;
++		std::string extensionID;
++		std::string engineVersion;
++		std::string architecture;
++		std::string stateFormatID;
++		std::string engineSHA256;
++		std::string gameSHA256;
++		std::string stateSHA256;
++		uint64_t engineSize = 0;
++		uint64_t gameSize = 0;
++		uint64_t stateSize = 0;
++		int slot = -1;
++	};
++	// Copy evidence during the callback; its pointer is valid only for that call.
++	// FAILURE always has a null evidence pointer. Callbacks may run synchronously
++	// for rejection or on the existing asynchronous SaveState completion thread.
++	using SlotEvidenceCallback = std::function<void(Status, std::string_view, const SlotEvidence *)>;
++	void SaveSlotWithEvidence(int slot, std::string requestID, SlotEvidenceCallback callback);
+ 	void LoadSlot(std::string_view gamePrefix, int slot, Callback callback);
+ 	bool UndoSaveSlot(std::string_view gamePrefix, int slot);
+ 	bool UndoLastSave(std::string_view gamePrefix);

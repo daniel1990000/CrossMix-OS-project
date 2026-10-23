@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "id": "ppsspp-1-20-3-smartpro-theme",
+  "engine": "ppsspp",
+  "device": "TRIMUI_SMART_PRO",
+  "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "source_version": "v1.20.3",
+  "theme_schema_sha256": "c2c3910f9bcda69c073dcd6bb4a3ca5b84438632e87ff5aebcea1a0d5d07ffcd",
+  "qualified": false,
+  "writer_inventory_verified": false,
+  "installed_version": null,
+  "executable": "Emu/PSP/PPSSPPSDL_TrimUI",
+  "executable_sha256": null,
+  "writer_executables": [
+    "Emu/PSP/PPSSPPSDL_TrimUI"
+  ],
+  "config": "Saves/.config/ppsspp/PSP/SYSTEM/ppsspp-SmartPro.ini",
+  "theme_directory": "Saves/.config/ppsspp/PSP/themes",
+  "path_contract_verified": false,
+  "release_archive_observation": {
+    "release": "spruceOS v4.5.4",
+    "path": "Emu/PSP/PPSSPPSDL_TrimUI",
+    "size_bytes": 19885376,
+    "sha256": "d0635cdb73e046cf8c62a92a4c59194cf9a80dfabbe08a0c9a0cb4628a1c96d7",
+    "embedded_version_hint": "v1.20.3",
+    "corresponding_source_verified": false,
+    "theme_extension_qualified": false
+  },
+  "evidence": "The verified stable release archive supplies the observed binary identity and version hint above. They do not establish corresponding source, the installed device binary, memstick root, theme support or complete writer inventory. This profile remains unqualified.",
+  "per_game_inventory_verified": false,
+  "per_game_configs": []
+}

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-23T08:42:14.161613+00:00",
+  "repository": "daniel1990000/CrossMix-OS-project",
+  "branch": "build/spruce-psp-experience",
+  "historical_head_sha": "2d4a43dbc8eb472fbdeb98bc8e09b5432c3ef69b",
+  "source_path": "project/psp_shell/game_information.py",
+  "historical_source_sha256": "2ba127ed9316f653f557665bc68d9c2177afaf5f72aed9f769768ddb7692ed52",
+  "fixed_source_sha256": "efda8a605bc6af38e2365e6a4b3e639d15626aafb38629fcd91de7c5c388e4c4",
+  "regression_tests_path": "project/tests/test_game_information.py",
+  "fixed_tests_sha256": "7423f166036f0180d86056c346fa23374ee7affffd2937b540fd413a571d4793",
+  "receipt_basis": "Retained tool outputs from this review; no test rerun was needed to construct this receipt.",
+  "scope": "Host-only deterministic filesystem races; no hardware, device qualification, emulator change or production gate change.",
+  "baseline_regressions": {
+    "scope": "New regression tests applied to the historical game_information.py, with private helper wrappers adapting only the added root argument. This is separate from the original successful 1092-check certification.",
+    "tests": [
+      "project.tests.test_game_information.GameInformationTests.test_parent_symlink_swap_cannot_read_external_cue_or_playlist",
+      "project.tests.test_game_information.GameInformationTests.test_disc_symlink_swap_cannot_report_external_file_as_available"
+    ],
+    "tests_run": 2,
+    "failures": 3,
+    "errors": 0,
+    "skips": 0,
+    "explanation": "One test contains .cue and .m3u subtests, each failing against the historical implementation; the final-component disc race also fails.",
+    "exact_assertion_output": [
+      "AssertionError: 'CUE_UNREADABLE' not found in ['DISC_PATH_OUTSIDE_CARD', 'CUE_HAS_NO_TRACK_FILES', 'DISC_SET_REQUIRES_REVIEW']",
+      "AssertionError: 'PLAYLIST_UNREADABLE' not found in ['DISC_PATH_OUTSIDE_CARD', 'DISC_SET_REQUIRES_REVIEW']",
+      "AssertionError: True is not false"
+    ],
+    "exact_summary_output": "Ran 2 tests in 0.007s\n\nFAILED (failures=3)\nhistorical rejection: 3 failures 0 errors",
+    "original_standalone_reproduction_output": "outside CUE bytes read: ['FILE \"Private.bin\" BINARY\\n']\nreturned warnings: ['DISC_PATH_OUTSIDE_CARD', 'CUE_HAS_NO_TRACK_FILES', 'DISC_SET_REQUIRES_REVIEW']"
+  },
+  "fixed_regressions": {
+    "command": "PYTHONPATH=project /workspace/smartpro-venv/bin/python -m unittest project.tests.test_game_information -v",
+    "tests_run": 17,
+    "passed": 17,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "new_tests": [
+      "test_parent_symlink_swap_cannot_read_external_cue_or_playlist",
+      "test_disc_symlink_swap_cannot_report_external_file_as_available",
+      "test_existing_in_card_symlinks_keep_resolved_disc_references"
+    ],
+    "exact_summary_output": "Ran 17 tests in 0.071s\n\nOK"
+  },
+  "descriptor_experiment": {
+    "inspection_calls": 600,
+    "iterations": 200,
+    "cases_per_iteration": [
+      "bad.m3u containing invalid UTF-8",
+      "set.m3u referencing a CUE with a missing track and a missing CHD",
+      "missing.chd"
+    ],
+    "measurement": "len(os.listdir('/proc/self/fd')) before and after repeated inspect_disc_set calls within a temporary root",
+    "descriptors_before": 4,
+    "descriptors_after": 4,
+    "passed": true,
+    "exact_output": "{'inspection_calls': 600, 'descriptors_before': 4, 'descriptors_after': 4}"
+  }
+}

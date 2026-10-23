@@ -1,0 +1,35 @@
+--- a/App/USBStorageMode/launch.sh
++++ b/App/USBStorageMode/launch.sh
+@@ -93,26 +93,9 @@
+     sync
+     exec "$SAVE_POWEROFF" --usb-storage-export
+ fi
+-log_message "USB Storage Mode: session staging failed, falling back to the mounted export"
+-
+-log_and_display_message "Connecting USB Mass Storage Mode..."
+-configure_usb_gadget
+-log_and_display_message "" # Clear the "Connecting" message
+-
+-# 4b. Legacy loop (mounted export)
+-while true; do
+-    if ! usb_host_connected; then
+-        log_and_display_message "USB Cable Disconnected."
+-        exit_usb_storage_mode "cable disconnected"
+-    fi
+-
+-    log_and_display_message "USB Mode Active.\nPress A to exit and reboot your device."
+-    if confirm; then
+-        exit_usb_storage_mode "A pressed"
+-    fi
+-    # Add a small sleep to prevent the loop from overwhelming the CPU
+-    sleep 1
+-done
+-
+-exit 0
+-
++# A failed RAM stage must never expose the still-mounted SD card to the PC.
++# Return to principal.sh, which restores its existing UI/services lifecycle.
++log_message "USB Storage Mode: session staging failed; refusing to export the mounted SD card"
++log_and_display_message "USB storage could not be prepared.\nThe SD card was not exported."
++sleep 3
++exit 1

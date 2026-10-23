@@ -1,0 +1,22 @@
+{
+  "baseline_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+  "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+  "changed_required_inputs": 0,
+  "files": [
+    {
+      "baseline_tree_entry": "100644 blob 6092f48178c116032eb01b30f6b884379f4c1c76\tports/celeste/celeste/repack.src",
+      "candidate_tree_entry": "100644 blob 6092f48178c116032eb01b30f6b884379f4c1c76\tports/celeste/celeste/repack.src",
+      "changed": false,
+      "path": "ports/celeste/celeste/repack.src"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 32620f2267a3ae7055820a07386ee21e40bc4f55\tports/celeste/Celeste.sh",
+      "candidate_tree_entry": "100644 blob 32620f2267a3ae7055820a07386ee21e40bc4f55\tports/celeste/Celeste.sh",
+      "changed": false,
+      "path": "ports/celeste/Celeste.sh"
+    }
+  ],
+  "schema": 1,
+  "source": "PORTS_SOURCE_ROOT",
+  "source_pin_updated": false
+}

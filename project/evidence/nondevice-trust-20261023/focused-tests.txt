@@ -1,0 +1,17 @@
+test_challenge_substitution_cannot_be_accepted_from_its_own_checksum (test_operational_trust.OperationalTrustTests.test_challenge_substitution_cannot_be_accepted_from_its_own_checksum) ... ok
+test_existing_report_is_preserved_and_errors_do_not_echo_private_path (test_operational_trust.OperationalTrustTests.test_existing_report_is_preserved_and_errors_do_not_echo_private_path) ... ok
+test_modified_signed_challenge_fails_even_when_local_checksum_is_changed (test_operational_trust.OperationalTrustTests.test_modified_signed_challenge_fails_even_when_local_checksum_is_changed) ... ok
+test_new_challenge_rejects_replay_of_an_older_possession_proof (test_operational_trust.OperationalTrustTests.test_new_challenge_rejects_replay_of_an_older_possession_proof) ... ok
+test_private_file_changed_during_read_cannot_receive_proof (test_operational_trust.OperationalTrustTests.test_private_file_changed_during_read_cannot_receive_proof) ... ok
+test_private_file_modes_hardlinks_and_shared_parent_are_refused (test_operational_trust.OperationalTrustTests.test_private_file_modes_hardlinks_and_shared_parent_are_refused) ... ok
+test_proof_of_another_key_fails_even_with_the_expected_public_suffix (test_operational_trust.OperationalTrustTests.test_proof_of_another_key_fails_even_with_the_expected_public_suffix) ... ok
+test_public_key_and_fingerprint_are_independent_inputs (test_operational_trust.OperationalTrustTests.test_public_key_and_fingerprint_are_independent_inputs) ... ok
+test_real_recovered_key_proves_possession_without_claiming_custody (test_operational_trust.OperationalTrustTests.test_real_recovered_key_proves_possession_without_claiming_custody) ... ok
+test_report_cannot_claim_production_or_retained_storage_authority (test_operational_trust.OperationalTrustTests.test_report_cannot_claim_production_or_retained_storage_authority) ... ok
+test_subprocess_commands_produce_independently_verifiable_public_proof (test_operational_trust.OperationalTrustTests.test_subprocess_commands_produce_independently_verifiable_public_proof) ... ok
+test_symlink_key_or_parent_and_repository_private_key_are_refused (test_operational_trust.OperationalTrustTests.test_symlink_key_or_parent_and_repository_private_key_are_refused) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.267s
+
+OK

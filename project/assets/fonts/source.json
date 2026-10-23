@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "Noto Sans variable",
+  "file": "NotoSans.ttf",
+  "repository": "https://github.com/google/fonts",
+  "commit": "8b0a1d0f5983c89bc2b93f1b5fb55f9e252744b5",
+  "path": "ofl/notosans/NotoSans[wdth,wght].ttf",
+  "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+  "size": 2049096,
+  "license": "SIL Open Font License 1.1",
+  "license_file": "OFL.txt"
+}

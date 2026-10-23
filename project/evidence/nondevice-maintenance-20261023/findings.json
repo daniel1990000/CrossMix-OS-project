@@ -1,0 +1,517 @@
+{
+  "applied_to_selected_base": false,
+  "date_utc": "2026-10-23",
+  "device_testing_performed": false,
+  "findings": [
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M01",
+      "observation": "Principal adds CPU-lock polling and asynchronous LED work; runtime changes device-init, display, watchdog and swap/zram ordering. These are the same owners bound by the private experimental route.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "86339a2f6b278a0487d0b5ba61877ed431ff5465",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/principal.sh",
+          "before": {
+            "git_object": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/principal.sh",
+          "path": "spruce/scripts/principal.sh"
+        },
+        {
+          "after": {
+            "git_object": "42d50f967a4d152d49d1da8f3369c1a3cc5458ff",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/runtime.sh",
+          "before": {
+            "git_object": "48953144c9482bd398a0c487c78801777024c79f",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/runtime.sh",
+          "path": "spruce/scripts/runtime.sh"
+        },
+        {
+          "after": {
+            "git_object": "7c4c0b03064f897fc7a65a612fce7284d78a9a6e",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/runtimeHelper.sh",
+          "before": {
+            "git_object": "0257f8503bb21fb8c192f2b663e35aa3b6424fa9",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/runtimeHelper.sh",
+          "path": "spruce/scripts/runtimeHelper.sh"
+        }
+      ],
+      "required_action_if_adopted": "Rebase and independently test source/embedded/principal/resident composition and affected real boot/launch/return/recovery cases.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M02",
+      "observation": "Controller adds idle redraw timeouts, wake signalling and revised held-input repetition through last_input(); display adds frame-change/fallback-font work and device-created windows; in-game menu waits explicitly use 0.1 seconds.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "146b103c2ac0f54e618c708c836a0b387cafa569",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/controller/controller.py",
+          "before": {
+            "git_object": "a26e784c04ee259106d6a91184863be6f5a44d74",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/PyUI/main-ui/controller/controller.py",
+          "path": "App/PyUI/main-ui/controller/controller.py"
+        },
+        {
+          "after": {
+            "git_object": "3aeeb98e84579997b6171807fe73a01fa074617b",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/controller/key_watcher_controller.py",
+          "before": {
+            "git_object": "57066c5026bc07b84f755389bf3aed7264b364a5",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/PyUI/main-ui/controller/key_watcher_controller.py",
+          "path": "App/PyUI/main-ui/controller/key_watcher_controller.py"
+        },
+        {
+          "after": {
+            "git_object": "b3f9e21603d651862b6e1e6c9e0866b609f0fc5e",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/display/display.py",
+          "before": {
+            "git_object": "8237bb3f7f7154b2289544c417ca91a46c3914cd",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/PyUI/main-ui/display/display.py",
+          "path": "App/PyUI/main-ui/display/display.py"
+        },
+        {
+          "after": {
+            "git_object": "d7cdaa3d6e1a7565242fc396aab3d64bc0c2fab2",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PyUI/main-ui/menus/games/in_game_menu_listener.py",
+          "before": {
+            "git_object": "e74162bdfa4938b00bfc3bbc60122f18e5abd57a",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/PyUI/main-ui/menus/games/in_game_menu_listener.py",
+          "path": "App/PyUI/main-ui/menus/games/in_game_menu_listener.py"
+        }
+      ],
+      "required_action_if_adopted": "Repeat shared input/display/audio owner, menu return and sustained resource tests against the new source; use physical controls and rendered-frame observations before qualification.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M03",
+      "observation": "TrimUI OSD startup/hotkey is removed; musicserver leaves startup blobs. New glibc binding copies runtime libraries and helpers to RAM; SmartPro setsid changes from a native file to a wrapper selecting /tmp/glibc/setsid or BusyBox.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "ccf11fd51420e59ae90124cb8095498693c47f50",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/platform/SmartPro.cfg",
+          "before": {
+            "git_object": "3d271678195b5fb547db1a0d31e11afe3086cce9",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/platform/SmartPro.cfg",
+          "path": "spruce/scripts/platform/SmartPro.cfg"
+        },
+        {
+          "after": {
+            "git_object": "b991f12a775ac06d529dcc66f5e4ebda27485fa8",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/platform/device_functions/SmartPro.sh",
+          "before": {
+            "git_object": "5ed8fd031247840cf7c14585b934b9c1de192723",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/platform/device_functions/SmartPro.sh",
+          "path": "spruce/scripts/platform/device_functions/SmartPro.sh"
+        },
+        {
+          "after": {
+            "git_object": "288fda55dcdb7a0a2379abf48d35b182e4997a53",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/platform/device_functions/trimui_a133p.sh",
+          "before": {
+            "git_object": "c295050b419776df00b737858bdd214bd43f9e6c",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/platform/device_functions/trimui_a133p.sh",
+          "path": "spruce/scripts/platform/device_functions/trimui_a133p.sh"
+        },
+        {
+          "after": {
+            "git_object": "37f8487f605897b308be2234f556f7bf2b01a31f",
+            "kind": "blob",
+            "mode": "100755"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/brick/glibc/bind.sh",
+          "before": null,
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/brick/glibc/bind.sh",
+          "path": "spruce/brick/glibc/bind.sh"
+        },
+        {
+          "after": {
+            "git_object": "defab2b09abebc4ba1680698c168bb2fe0074aed",
+            "kind": "blob",
+            "mode": "100755"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/smartpro/bin/setsid",
+          "before": {
+            "git_object": "07b1d131995f34a08871cfabd3cc524b61bf3a07",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/smartpro/bin/setsid",
+          "path": "spruce/smartpro/bin/setsid"
+        }
+      ],
+      "required_action_if_adopted": "Repeat exact installed helper/loader/library and input/audio/display/mount/writer inventory. Old executable hashes cannot establish the new executed helper chain.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M04",
+      "observation": "Power teardown adds card-dependent mount IDs, mapped-file/loop and swap handling, static-shell restart and uptime waits. USB gadget adds rejection of an empty storage device.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "5662f635b90eb933f29bbc2b297f69bfe5f9f014",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/save_poweroff.sh",
+          "before": {
+            "git_object": "9ba32194ea5c9d0341e646c7a72959e45767e218",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/save_poweroff.sh",
+          "path": "spruce/scripts/save_poweroff.sh"
+        },
+        {
+          "after": {
+            "git_object": "0f718c413a60b1a672f8cf530d7b1530676d58cc",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/save_poweroff_stage2.sh",
+          "before": {
+            "git_object": "fa3902cee20dfebac0ab7f803ec5b4c7d0fbbd97",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/save_poweroff_stage2.sh",
+          "path": "spruce/scripts/save_poweroff_stage2.sh"
+        },
+        {
+          "after": {
+            "git_object": "0b2403c0670ed5bf1e824e097992f4af7acbf1ba",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/USBStorageMode/usb_gadget.sh",
+          "before": {
+            "git_object": "2ae57b59bd089bd6ea29f1259b8f252052f3f03e",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/USBStorageMode/usb_gadget.sh",
+          "path": "App/USBStorageMode/usb_gadget.sh"
+        }
+      ],
+      "required_action_if_adopted": "Run real clean-unmount, USB export, full/read-only storage, interrupted session and classic restoration cases; retain raw failure evidence and exact mounts/processes.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M05",
+      "observation": "SmartPro PPSSPP changes anisotropy and tessellation defaults; RetroArch changes menu scale, history paths and further audio/input/display settings.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "d919e9550a4bed687e0ce79612193ebc3b80d841",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/Emu/PSP/default_configs/SYSTEM/ppsspp-SmartPro.ini",
+          "before": {
+            "git_object": "a82b628688bdfc91f025609cdfd0b38ccb7f545f",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/Emu/PSP/default_configs/SYSTEM/ppsspp-SmartPro.ini",
+          "path": "Emu/PSP/default_configs/SYSTEM/ppsspp-SmartPro.ini"
+        },
+        {
+          "after": {
+            "git_object": "295fcea4cb09f500532a39c9adeab586e688d8b0",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/RetroArch/platform/retroarch-SmartPro.cfg.bak",
+          "before": {
+            "git_object": "38cfd98240d610e6958376e33b916e7f2b72b10b",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/RetroArch/platform/retroarch-SmartPro.cfg.bak",
+          "path": "RetroArch/platform/retroarch-SmartPro.cfg.bak"
+        }
+      ],
+      "required_action_if_adopted": "Bind new baselines/config/save identities and repeat appropriate native controls, saves and device measurement scenes.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+      "decision": "hold-current-pin",
+      "id": "M06",
+      "observation": "Port launch sets XDG_DATA_HOME and uses persistent PortMaster/Python bind layout across more cases; shared platform helper environments also change.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "db1202aa6ae9a843110e1314507fd3fab99e8ba0",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ports_functions.sh",
+          "before": {
+            "git_object": "c47be4edb9d60371b9d067bcbf25080ed2613573",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/scripts/emu/lib/ports_functions.sh",
+          "path": "spruce/scripts/emu/lib/ports_functions.sh"
+        },
+        {
+          "after": {
+            "git_object": "f7a99c1e06516324873caa3d30dad3bf09dea19b",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/App/PortMaster/launch.sh",
+          "before": {
+            "git_object": "9ef2503fda9e3871fef776b7f5dda7bf8f6c68e9",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/App/PortMaster/launch.sh",
+          "path": "App/PortMaster/launch.sh"
+        },
+        {
+          "after": {
+            "git_object": "431a289f0682f68e8cc43e11a6d8882bed866f40",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/portmaster/portmaster.txt",
+          "before": {
+            "git_object": "70750c4b427478d052dac38e74cc1290497afb4b",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/spruceUI/spruceOS/blob/4a9754c2076b4ff48cbb4b24fc7a96988c48d805/spruce/portmaster/portmaster.txt",
+          "path": "spruce/portmaster/portmaster.txt"
+        }
+      ],
+      "required_action_if_adopted": "Repeat installed-generation/self-update/runtime/helper inventory and per-title preparation/save/reload/failure/cleanup checks.",
+      "source": "SPRUCE_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "candidate_commit": "902e5ccd8c1400b4387b73942491cded655e5f9c",
+      "decision": "hold-current-pin",
+      "id": "M07",
+      "observation": "Native development delta changes selected patch seam files. Config migrates legacy frame-rate fields toward alternate-speed percentages and adds state-load confirmation options. The submodule declaration drops naett and adds frametests and oboe.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "edcb81421d4790287988d47d80fa89d07e87f0d2",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/Core/Config.cpp",
+          "before": {
+            "git_object": "4380e8036b69b7520ff4fe6ade7578b6a4a215fb",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/Core/Config.cpp",
+          "path": "Core/Config.cpp"
+        },
+        {
+          "after": {
+            "git_object": "dffde2d7a9188e4ac0b06884c098627d0c46239e",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/Core/SaveState.cpp",
+          "before": {
+            "git_object": "a8300543d97babf230c8fe2147aee7f8b19c3d7d",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/Core/SaveState.cpp",
+          "path": "Core/SaveState.cpp"
+        },
+        {
+          "after": {
+            "git_object": "16f8c4ff8088163db6323224af5dacc42428d18c",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/Core/KeyMap.cpp",
+          "before": {
+            "git_object": "032678226a47fb6bbdf55d933f9cf2a20f7f99ae",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/Core/KeyMap.cpp",
+          "path": "Core/KeyMap.cpp"
+        },
+        {
+          "after": {
+            "git_object": "19d6bb1ffb27d0f794a7fa3bb2421935ca61d83a",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/SDL/SDLMain.cpp",
+          "before": {
+            "git_object": "5eea6e537d3ae1f53160376599beecd4ceff7e4c",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/SDL/SDLMain.cpp",
+          "path": "SDL/SDLMain.cpp"
+        },
+        {
+          "after": {
+            "git_object": "bbbf6cf3867fd7cb34206d069c98791c096c4179",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/UI/NativeApp.cpp",
+          "before": {
+            "git_object": "cf2b0974da2d9f4210487ae1229294eeab201d12",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/UI/NativeApp.cpp",
+          "path": "UI/NativeApp.cpp"
+        },
+        {
+          "after": {
+            "git_object": "c41007aceec9b55ea27b2f775eca1da8d45d5cd6",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/hrydgard/ppsspp/blob/d357e6a32934800d3d80b49f910a603e1b069751/.gitmodules",
+          "before": {
+            "git_object": "fb5d0def50941c57f9400e3f12ff2465b3de0e04",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/hrydgard/ppsspp/blob/902e5ccd8c1400b4387b73942491cded655e5f9c/.gitmodules",
+          "path": ".gitmodules"
+        }
+      ],
+      "required_action_if_adopted": "Select a deliberate stable update candidate; port/retest patches; repeat full cross-build, recursive dependencies/SDK/source/notices review and N01/N02 physical qualification.",
+      "source": "PPSSPP_SOURCE_ROOT"
+    },
+    {
+      "baseline_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+      "decision": "hold-current-pin",
+      "id": "M08",
+      "observation": "Neither Celeste launcher nor repack source changes; outside-scope registry and new runtime add .NET 3.1.32 for aarch64. Other changed paths belong to seven unrelated titles.",
+      "observation_kind": "focused static source review; candidate not executed",
+      "primary_sources": [
+        {
+          "after": {
+            "git_object": "0c9b400e358e2cf166ba24858a573a0f8ea3bf6f",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/PortsMaster/PortMaster-New/blob/444778f3ae29facbd97b823dc3ca7270b3ebe499/runtimes/runtimes.json",
+          "before": {
+            "git_object": "1e04420b668f96ee06d053a57e57a279c47438cb",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "candidate_url": "https://github.com/PortsMaster/PortMaster-New/blob/c987872a65daf42ea1dacab6a5eed3a70f174fe2/runtimes/runtimes.json",
+          "path": "runtimes/runtimes.json"
+        },
+        {
+          "after": {
+            "git_object": "0eb172461b616cf155b960cd88291075d0f55b27",
+            "kind": "blob",
+            "mode": "100644"
+          },
+          "baseline_url": "https://github.com/PortsMaster/PortMaster-New/blob/444778f3ae29facbd97b823dc3ca7270b3ebe499/runtimes/dotnet-3.1.32.aarch64.squashfs",
+          "before": null,
+          "candidate_url": "https://github.com/PortsMaster/PortMaster-New/blob/c987872a65daf42ea1dacab6a5eed3a70f174fe2/runtimes/dotnet-3.1.32.aarch64.squashfs",
+          "path": "runtimes/dotnet-3.1.32.aarch64.squashfs"
+        }
+      ],
+      "required_action_if_adopted": "Keep the existing Celeste patch pin. Review source/licences/runtime/data and qualify a specific title before any separate runtime or title selection.",
+      "source": "PORTS_SOURCE_ROOT"
+    }
+  ],
+  "schema": 1,
+  "upstream_bug_filed": false
+}

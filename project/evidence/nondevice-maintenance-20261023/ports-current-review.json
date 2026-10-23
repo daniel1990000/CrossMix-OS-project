@@ -1,0 +1,1184 @@
+{
+  "baseline_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+  "candidate_commit": "c987872a65daf42ea1dacab6a5eed3a70f174fe2",
+  "groups": [
+    {
+      "decision": "hold-current-pin",
+      "id": "ports-new",
+      "reason": "Changed titles are outside the selected Celeste preparation scope; neither current Celeste launcher nor repack source changed. No port update is needed for that scope.",
+      "required_before_adoption": [
+        "Review each title data/runtime/rights and actual launcher scope before selection",
+        "P01/P03 new helper/runtime/save inventory",
+        "P04 actual selected-title lifecycle and save qualification"
+      ]
+    },
+    {
+      "decision": "hold-current-pin",
+      "id": "ports-runtime",
+      "reason": "A new .NET 3.1.32 aarch64 runtime and its registry entry change managed-runtime supply outside the Celeste path scope. It remains unselected.",
+      "required_before_adoption": [
+        "Exact runtime bytes, source/licence/dependency and update compatibility review",
+        "Check applicable engine/data/preparation and writer authority",
+        "Physical tests only for a deliberately selected title/runtime"
+      ]
+    }
+  ],
+  "paths": [
+    {
+      "after": {
+        "git_object": "0dff3f0ecd88fbdf8a6ea8aea5f597de48d735f6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/Cash Cow DX.sh"
+    },
+    {
+      "after": {
+        "git_object": "040d880534ccf5da6a59aa64d115e3c66a9589fd",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/README.md"
+    },
+    {
+      "after": {
+        "git_object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/cashcowdx/gamedata/place CashCowDX.pck here"
+    },
+    {
+      "after": {
+        "git_object": "8c1c8319e5e620038eb6080177fc536d2ecf14fb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/cashcowdx/libcrusty.so"
+    },
+    {
+      "after": {
+        "git_object": "4ae4b6a1e82760951e57f9266af4e411d99bb189",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/cashcowdx/patch.xdelta"
+    },
+    {
+      "after": {
+        "git_object": "948d96120e2ecabf373f5e3da5aae3d16e6399c3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/cover.png"
+    },
+    {
+      "after": {
+        "git_object": "4313a989b28af691414ad092e1cb8f82dcfe3b01",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/gameinfo.xml"
+    },
+    {
+      "after": {
+        "git_object": "bdca4cd38ced039979fda770aa6d6ad9344bbfed",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/port.json"
+    },
+    {
+      "after": {
+        "git_object": "00bd1cdaa993669097568dfb030de3c5028ed659",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cashcowdx/screenshot.png"
+    },
+    {
+      "after": {
+        "git_object": "5817edb1c253ae9e52a00c56c9c83c01decbb688",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/Cortex Command.sh"
+    },
+    {
+      "after": {
+        "git_object": "07cd49ecdd9d11400f9825c46208f2e246343469",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/README.md"
+    },
+    {
+      "after": {
+        "git_object": "fec2efe9db00ad0e7002f69b8897277aad1ff3e3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/CortexCommand"
+    },
+    {
+      "after": {
+        "git_object": "9df3bffdb510569a114d88ea20bfd2d29a7dee57",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/Userdata/Settings.ini"
+    },
+    {
+      "after": {
+        "git_object": "0ec4c28ca1c328cc6ec5bd6dee08f767ff76130b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/data-part1.tar.gz"
+    },
+    {
+      "after": {
+        "git_object": "8bb42543b565c37aca9e0582c971c0d7886a2284",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/data-part2.tar.gz"
+    },
+    {
+      "after": {
+        "git_object": "ee0e380d3a10fd6c23f7c7e7a482a1d8d8ea21ee",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/libs.aarch64/libSDL3.so.0"
+    },
+    {
+      "after": {
+        "git_object": "d78ff1cf3bc7bb0aba83566fa0e109a8afb7c68d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/libs.aarch64/libfmod.so.13"
+    },
+    {
+      "after": {
+        "git_object": "d14dfea7a42b6bd68179829c1f65331801441aff",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/libs.aarch64/libminizip.so.1"
+    },
+    {
+      "after": {
+        "git_object": "65441e0c6653b9d9f9fc89053c485fedc72ef6de",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/libs.aarch64/libtbb.so.12"
+    },
+    {
+      "after": {
+        "git_object": "8de2b16a697ab35308a3731f7539c24bf7b048c7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/Allegro-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "0ad25db4bd1d86c452db3f9602ccdbe172438f52",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/CortexCommand-AGPL-3.0.txt"
+    },
+    {
+      "after": {
+        "git_object": "dd1f28d9e99d4428b6513b05f8ad628158b2f526",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/FMOD-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "955d0d1e7526706d0cc778ed91bc24089f6b7ee4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/LuaJIT-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "29dfb0e73b4191560ee3062c8c215057c46f48e6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/RakNet-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "e9adee4484511b4b1730461679fed21d9b13d88e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/SDL3-sdl2backend-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "52d0ed38b843709d0d103d55bfb75715ec60550d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/SDL3_image-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "00ae473abe62bf1c53b333613bd9e05aa72e2ca0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/imgui-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "799cd87c138f39d3f6ec52df1881369faa94269f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/luabind-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "f07593420571699ed01b66d654049952c4c50460",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/minizip-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "d69627321427c119f26c721f48cf89806b1bd6c1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/oneTBB-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "1c74ae30210cd43114107ecc924e8e04b9d59af1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/licenses/raylib-LICENSE.txt"
+    },
+    {
+      "after": {
+        "git_object": "3fde626adf416d44822a69c0c0785ae6135b0684",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/patches/convert-audio"
+    },
+    {
+      "after": {
+        "git_object": "ea9d936b637d04d103c7fb6b8af7da945f4a0fbc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/patches/cortexcommand-portmaster.patch"
+    },
+    {
+      "after": {
+        "git_object": "c7584f3262ad804fce3d81d0dbfbb591ad9e7600",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/patches/glibc-compat.h"
+    },
+    {
+      "after": {
+        "git_object": "b07c2f489ca178f7712f3edabd1502f6d88b60c9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/cortexcommand/patches/sdl3-sdl2-backend-fixes.patch"
+    },
+    {
+      "after": {
+        "git_object": "0705e9c702a2cfc8d67d2acb8090cd46f5aa08c5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/gameinfo.xml"
+    },
+    {
+      "after": {
+        "git_object": "fd5899600665e99ac496e998e0b3a53e866895cc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/port.json"
+    },
+    {
+      "after": {
+        "git_object": "c3cb9047a825553e5571235c5f69f5315d1c7cc4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/cortexcommand/screenshot.png"
+    },
+    {
+      "after": {
+        "git_object": "7db5d494a687ad9d1945fcfa9ab3ff35d1493b5e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8372d5b90436fb80f35fff8e04c10560c6927e03",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/cubes/cover.png"
+    },
+    {
+      "after": {
+        "git_object": "0db3e5e4628175256a91ca3eca1923b01cfa8398",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1b2448a13e6934de664ff7312d8a661191011c80",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/cubes/cubes/cubes.pck"
+    },
+    {
+      "after": {
+        "git_object": "7884c485eca232ac22fcc71d86102fbf94e54478",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "86a378efeb04019d39b1ddf06e83665aa6f55ce3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/cubes/port.json"
+    },
+    {
+      "after": {
+        "git_object": "3ea7cfe89b0ed6cd1dd41252d368af1fedbc9af0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e25638e008621b3db6270a1f4b95137d150615a7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/cubes/screenshot.png"
+    },
+    {
+      "after": {
+        "git_object": "82e56343c059add1b99138e70907d27e7e9aca5f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "75a2ed0dd827e17054f69b7fe53712cb165bfae6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/gunslugs2/port.json"
+    },
+    {
+      "after": {
+        "git_object": "8a8fe410a774b692e7184061cad5ccc78244b2b7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/Jetboard Joust.sh"
+    },
+    {
+      "after": {
+        "git_object": "fb698af28c5f5da869cd9355d6df495722f44c7e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/README.md"
+    },
+    {
+      "after": {
+        "git_object": "8ee1f5638af186eef0161eb0ad9042ac90156e17",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/cover.png"
+    },
+    {
+      "after": {
+        "git_object": "4dfdb6c4fe67528364011c6e00baa584b9e013ba",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/gameinfo.xml"
+    },
+    {
+      "after": {
+        "git_object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/gamedata/gamedata_here"
+    },
+    {
+      "after": {
+        "git_object": "e5f36f53c77db732bf9e12cae2db00f980839bc0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/gl4es/libEGL.so.1"
+    },
+    {
+      "after": {
+        "git_object": "c1bac1a63a9fcbefef845c850e47e3d2e0e5076b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/gl4es/libGL.so.1"
+    },
+    {
+      "after": {
+        "git_object": "b7250454e71cddfbd141dbdb0f1713c210c5263d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/libs/libcrypto.so.1.1"
+    },
+    {
+      "after": {
+        "git_object": "a71e2240b5530cd98bd282391f1a26697a624055",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/libs/libssl.so.1.1"
+    },
+    {
+      "after": {
+        "git_object": "a629db8e8b360b2180d2929b1f97e6cd9528f0ab",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/libs/libsteam_api.so"
+    },
+    {
+      "after": {
+        "git_object": "d7f105139782ab695d86613e343916f7372f4ac0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/licenses/libcrypto.LICENSE"
+    },
+    {
+      "after": {
+        "git_object": "e47d101f1025e8b8a3b595031bd5e1e2727f3ad7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/licenses/libssl.LICENSE"
+    },
+    {
+      "after": {
+        "git_object": "9251a04cf166a4d3bb91fa9b6c911927593856b8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/licenses/mono.LICENSE"
+    },
+    {
+      "after": {
+        "git_object": "53877e3b61ae05f0d9631ed99a312713861d8619",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/licenses/steamworks.net.LICENSE"
+    },
+    {
+      "after": {
+        "git_object": "c397928700ae38cf1b642afba8bc0cea9c145440",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/MonoGame.Framework.dll"
+    },
+    {
+      "after": {
+        "git_object": "a34af1048e10b74b2759f69bbfb841cd59a935b4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/Steamworks.NET.dll"
+    },
+    {
+      "after": {
+        "git_object": "de6d88f1baf7cd5c8b0a7c8299c07d8e8731af52",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/Steamworks.NET.dll.config"
+    },
+    {
+      "after": {
+        "git_object": "ecccb372980c85ff4c4bb1b3bb69b21b3b2eab5e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/gog/JetboardJoust.Cpda.deps.json"
+    },
+    {
+      "after": {
+        "git_object": "e71e741f086a4732e67701543c1a24877f460b98",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/gog/JetboardJoust.Cpda.dll"
+    },
+    {
+      "after": {
+        "git_object": "96322b907bb46aec8867b9e782f93ce9a9b2ff63",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/gog/JetboardJoust.Cpda.runtimeconfig.json"
+    },
+    {
+      "after": {
+        "git_object": "dfd2d3d9475859e14af4cafec19e134b2966c8ce",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/gog/gog.xdelta"
+    },
+    {
+      "after": {
+        "git_object": "ab58c9efef4bd68d4f702868ba37d047cf9f17fc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/patchscript.bash"
+    },
+    {
+      "after": {
+        "git_object": "47c4668d6e43be04ca761874bf6f2bc87062251e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/steam/JetboardJoust.Cpda.Steam.deps.json"
+    },
+    {
+      "after": {
+        "git_object": "438fbf70e196f51a0aff9357c7e0031883f600a6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/steam/JetboardJoust.Cpda.Steam.dll"
+    },
+    {
+      "after": {
+        "git_object": "96322b907bb46aec8867b9e782f93ce9a9b2ff63",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/steam/JetboardJoust.Cpda.Steam.runtimeconfig.json"
+    },
+    {
+      "after": {
+        "git_object": "3c4b039df2a03f29ac7bee4dcb0426688f1e1890",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/patch/steam/steam.xdelta"
+    },
+    {
+      "after": {
+        "git_object": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/jetboardjoust/savedata/savedata_here"
+    },
+    {
+      "after": {
+        "git_object": "63bf653502c8cb7048a2b7e1f6f19f1b7332c95f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/port.json"
+    },
+    {
+      "after": {
+        "git_object": "967103f90e8cbc9d9ba8c99e1de3eab5a5156695",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/jetboardjoust/screenshot.png"
+    },
+    {
+      "after": {
+        "git_object": "6512eb50116af8e064f81f7e12aa3ccb6e3e5385",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0f42983bc544edb966f3b62ac31be68fb9ac2909",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/linovictus/linovictus/linovictus.love"
+    },
+    {
+      "after": {
+        "git_object": "e38c5d5c2711754b32c535f10079148f59a7822a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ff1d40c920e9192e8847ebe77ac62cecc0dfcbbf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/README.md"
+    },
+    {
+      "after": {
+        "git_object": "c083ced2003dbff8bc04d4fd920c46fa24049858",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "724df442ed88c4337bfdf4ed81c1fb172d38a591",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/SNKRX.sh"
+    },
+    {
+      "after": {
+        "git_object": "95c77360a72b7dbf255b2d74b057863dbdb410c7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/snkrx/cover.png"
+    },
+    {
+      "after": {
+        "git_object": "7a0d98a62d34de0312678d964aa1219e341e30e4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ed3b3ce548c020da3c212e75431c9627aa10638d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/gameinfo.xml"
+    },
+    {
+      "after": {
+        "git_object": "55cb220845060af0ed45c708a7233ba3ff335d58",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "529406ab6dd638196dc62ea607559953cd43a015",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/port.json"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "bc51c78523865462f16d05400fe6183e9de1b60d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/bin/7za"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "5ac7cbb737a981a25883b10ff1383f69807adfb2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/bin/ffmpeg"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "ff48fa29b3f318203100127b95964aacdad3ef4a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/bin/love"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "9b141aa799b695a8b7b95cdeffbc7f0c87e89de2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/ffmpeg.LICENSE.txt"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "f28fbe1f41b32708a4d80ed58a92f12cdfd8f0da",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/libs/liblove-11.5.so"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "729a3cda1900dc4211f51bb3e15dd62045a3fd5f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/libs/libluajit-5.1.so.2"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "03ca8e1f8ba45707950a083f377688438e08dd47",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/libs/libmodplug.so.1"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "1559d8e0752d87a70b76b20701f2cc70a4169e55",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/libs/libogg.so.0"
+    },
+    {
+      "after": {
+        "git_object": "b512d588487dd22085910a8af439494f88dd0bd7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/licenses/LICENSE.assets.txt"
+    },
+    {
+      "after": {
+        "git_object": "ec751226221c398413f556f124d131b1c953ec61",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/licenses/LICENSE.snkrx.txt"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "f4964a2ef91c60b3dbefb04006a52bb94b3459f6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/love2d.LICENSE.txt"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "160753d8a1405a03ca25cde455ba831ffd8d9de9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/arena.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "e080eafbfe684aa5ef19fe290eb9e58e95a9379a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/enemies.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "458da2d8fd30969196009c2dede74676d15f3785",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/game/group.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "ae0568c67fbfcc8aab532bc2d5a775bffd7800b5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/graphics/camera.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "637d2ea4704adf449c4e8031044a2fdf1b4e69f2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/graphics/graphics.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "b1bc0cae782bfeb1d09cd8f3859a74ce3b4a8171",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/init.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "95cda6cb7ad43fa9d8c8d4c0c2540bc11558cd4e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/math/math.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "1d0b497499a9ab6425cb0ac1c012cc62118ab483",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/math/rectangle.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "8a40a3f499982b61abf3ce535f085ca1fe949d64",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/math/triangle.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "8dc13a9f074415d1c973b7a8c59655152a3a7b97",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/engine/math/vector.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "96509695a3808bb61df13e46c5bfa29b020e514c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/left_ptr.png"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "3983f45a90b518cf185bbddac81af1eb50860452",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/luasteam.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "cc22d58469458c315f236de6e2b46f609c7555ad",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/main.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "7b4ae63a1ce3f788c4c28d08a736cf410d6dd776",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/mainmenu.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "155d76b43ad2a8d47d6fc82ad4e4586dabfb263d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/objects.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "2d885e6178a567c487bf111112061a855e17a5b3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/player.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "65ece396b968b2e4fc8e028d90b5895747c9f232",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/patch/shared.lua"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "ec751226221c398413f556f124d131b1c953ec61",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/snkrx.LICENSE.txt"
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "b678f333f172857f8c7a0332a2d5f42a7796895a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/snkrx.gptk"
+    },
+    {
+      "after": {
+        "git_object": "cf93a6a91bf2473c5fb75ff4ffff3c94ee390002",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-new",
+      "path": "ports/snkrx/snkrx/snkrx.love"
+    },
+    {
+      "after": {
+        "git_object": "0eb172461b616cf155b960cd88291075d0f55b27",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "group": "ports-runtime",
+      "path": "runtimes/dotnet-3.1.32.aarch64.squashfs"
+    },
+    {
+      "after": {
+        "git_object": "0c9b400e358e2cf166ba24858a573a0f8ea3bf6f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1e04420b668f96ee06d053a57e57a279c47438cb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "group": "ports-runtime",
+      "path": "runtimes/runtimes.json"
+    }
+  ],
+  "schema": 1,
+  "source": "PORTS_SOURCE_ROOT"
+}

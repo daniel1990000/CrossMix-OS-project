@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "recipe": {
+    "repository": "https://github.com/spruceUI/RA",
+    "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+    "upstream_tag": "v1.22.2",
+    "upstream_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576"
+  },
+  "inputs": [
+    {
+      "path": "patches/common/0001-spruce-igm.patch",
+      "sha256": "ae2ae6c567f15ba96a23d1ad62fe074f14e48aace71ed9c8e287b258f84b7479"
+    },
+    {
+      "path": "common_src/spruce_igm_theme.c",
+      "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+    },
+    {
+      "path": "common_src/spruce_igm_theme.h",
+      "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+    },
+    {
+      "path": "build.sh",
+      "sha256": "3390430e9d684919068573ae761845e13aabc182138acb366f85eb5db4ae0e50"
+    }
+  ],
+  "staged_source": [
+    {
+      "path": "spruce_igm.c",
+      "sha256": "c24336d6c37f7b0ff271298d31763f1d9949adf23fd205f7b9e99e73c531c879"
+    },
+    {
+      "path": "spruce_igm_theme.c",
+      "sha256": "27ea0f5c384fbec935a5b15957ed817091aa449791fc13f43d6cb517bbdce097"
+    },
+    {
+      "path": "spruce_igm_theme.h",
+      "sha256": "25ad36531f3539b4306305f080f8dc85db80cdc904e3f6d51f7a3325295c82ff"
+    }
+  ],
+  "patch": {
+    "path": "patches/0001-independent-igm-menu-controls.patch",
+    "sha256": "39ecc22a4b43bf210132df9d30c6a7c8869b19afca4953ec9585807bcbbec5a6",
+    "modifications_license": "GPL-3.0-or-later; external recipe/source grants remain separately audited"
+  },
+  "patched_source": [
+    {
+      "path": "spruce_igm.c",
+      "sha256": "ec05820e0b79c515e6b4379e88bb967127c0fa280c59420794f5c6d0b7a57eaf"
+    },
+    {
+      "path": "spruce_igm_theme.c",
+      "sha256": "a0fde89e9dd84572055e01a042615718407d743d63fbd8ebbd63df15c912efaa"
+    },
+    {
+      "path": "spruce_igm_theme.h",
+      "sha256": "593528da32d1ab1bbace0b6bbc35ce6c91a71ac9296631d4fca03cd9030e3ce1"
+    }
+  ],
+  "bundled_reference": {
+    "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "path": "RetroArch/ra64.universal",
+    "size": 14850952,
+    "sha256": "bd96dd8f10c479d17ff4a5db943a6828ccb0b74c6eb463faeb99d941fa16d550",
+    "embedded_version_hint": "1.22.2",
+    "exact_source_correspondence_verified": false,
+    "project_extension_present": false
+  },
+  "extension": {
+    "id": "trimui-igm-native-menu-v1",
+    "section": "project_menu_controls",
+    "enabled_default": false,
+    "keys": [
+      "enabled",
+      "confirm",
+      "back"
+    ],
+    "values": [
+      "south",
+      "east"
+    ],
+    "physical_source_contract": {
+      "south": "RETRO_DEVICE_ID_JOYPAD_B",
+      "east": "RETRO_DEVICE_ID_JOYPAD_A"
+    },
+    "scope": "IGM only; no gameplay/remap or standard RetroArch menu change"
+  },
+  "qualification": {
+    "full_engine_build": false,
+    "device_tested": false,
+    "installed_engine_changed": false,
+    "distribution_cleared": false
+  }
+}

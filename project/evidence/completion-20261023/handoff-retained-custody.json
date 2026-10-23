@@ -1,0 +1,17 @@
+{
+  "actual_key_recovery_verified": false,
+  "actual_private_key_custody_verified": false,
+  "evidence_reference": "drive-retained:1CzKFzADIB06m5dhcHErGtHyFrhvutmTS:9cc207e783c208862b01c5cd8eec65f111fe7bdfd05c5c604a53a8c993a0285d",
+  "index_sha256": "3b8a2c16dd713810bc216098742964ccca6317c6a745a0a7c3fc899e5af08c98",
+  "kind": "release-handoff-custody-observation",
+  "operator_statement_authentication": "not-signed-by-this-tool",
+  "package_signer_fingerprint": "3eb2d988435bfd104fc35b6e3c1ad422e8139922de4818a348dfa417720a2e45",
+  "previous_receipt_sha256": null,
+  "primary_fingerprint": "3eb2d988435bfd104fc35b6e3c1ad422e8139922de4818a348dfa417720a2e45",
+  "production_trust_established": false,
+  "registry_sha256": null,
+  "result": "exact-bundle-readback-verified",
+  "schema": 1,
+  "step": "readback",
+  "trust_review_reference": "github-ci-39883665932-artifact-12471113691-reviewed"
+}

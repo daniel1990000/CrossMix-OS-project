@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23",
+  "kind": "owner-private-artifact-retention-readback",
+  "storage": "Connected owner-only Google Drive; shared=false; sole owner permission on each file; no permission added.",
+  "artifacts": [
+    {
+      "role": "private-source",
+      "drive_file_id": "1jhS0UQQAllTz4e-Rz_n8uD58JJNrG_UK",
+      "archive_sha256": "86e3b70e51113b613cedfa270cfca19db1379c87d0210458d18be519324db52e",
+      "bytes": 5978372,
+      "archive_entries": 189,
+      "owner_only_metadata_verified": true,
+      "fresh_retained_retrieval_hash_verified": true,
+      "all_archive_members_read_back": true
+    },
+    {
+      "role": "ci-host",
+      "drive_file_id": "1ofH2LxOM5rPPNVl_gbngdTCbLBbl58GM",
+      "archive_sha256": "6be0bd6d136011af623254fdc1d9b6840886a8eeb166ce07f12fb2ef5e5d75cf",
+      "bytes": 5091243,
+      "archive_entries": 12,
+      "owner_only_metadata_verified": true,
+      "fresh_retained_retrieval_hash_verified": true,
+      "all_archive_members_read_back": true
+    },
+    {
+      "role": "handoff",
+      "drive_file_id": "1CzKFzADIB06m5dhcHErGtHyFrhvutmTS",
+      "archive_sha256": "9cc207e783c208862b01c5cd8eec65f111fe7bdfd05c5c604a53a8c993a0285d",
+      "bytes": 4919665,
+      "archive_entries": 14,
+      "owner_only_metadata_verified": true,
+      "fresh_retained_retrieval_hash_verified": true,
+      "all_archive_members_read_back": true
+    }
+  ],
+  "private_source_candidate_and_restoration_verified": true,
+  "source_preimages_compared": 11,
+  "original_only_handoff_fresh_verification": "verified-original-only-review",
+  "handoff_index_sha256": "3b8a2c16dd713810bc216098742964ccca6317c6a745a0a7c3fc899e5af08c98",
+  "development_keys_are_not_operational_trust": true,
+  "actual_private_signing_key_custody_verified": false,
+  "guaranteed_permanent_availability": false,
+  "physical_device_tested": false,
+  "published_public_device_release": false,
+  "raw_private_source_or_correspondence_committed": false
+}

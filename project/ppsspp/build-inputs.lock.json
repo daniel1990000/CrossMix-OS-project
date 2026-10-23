@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+  "base_image": "ubuntu:20.04@sha256:8feb4d8ca5354def3d8fce243717141ce31e2c428701f6682bd2fafe15388214",
+  "recipe_files": [
+    {
+      "path": "Dockerfile.pvr",
+      "sha256": "fd047c16737fb4d04185f51c4172811c261a8ccf4abcfcf38fa333bc07675781"
+    },
+    {
+      "path": "build-pvr.sh",
+      "sha256": "727936cddd205adf47abc4b3f41008e507d4a857c8d5e1e3e9938ea1ad3de9bd"
+    },
+    {
+      "path": "patches/common/fullscreen.py",
+      "sha256": "3aae9b3457c2c304a5d529accc630a96ccc130dc931c5cb6ff00e9e5eb184326"
+    },
+    {
+      "path": "patches/common/hide-cursor.py",
+      "sha256": "6eaa8198bbc91b5b0f5e513291b3d518ef206b4a44c33c7c99f73b0e4503327d"
+    },
+    {
+      "path": "patches/common/no-mute-secondary.py",
+      "sha256": "265b7a26aee16fc5112d6410eb95afb30d28decb771731ea213cafdf38afa641"
+    },
+    {
+      "path": "patches/common/remap-pause-menu.py",
+      "sha256": "7d6446319e2835becc20c22a1d7dbf27c70971f7eb14c172a8ff830505f96bd5"
+    },
+    {
+      "path": "patches/common/sigusr1-save-and-quit.py",
+      "sha256": "c599b1aa8e7cf1b996e78a7592d373b8202c403bd4a6a3c0860da93debab41c8"
+    },
+    {
+      "path": "patches/common/sigusr2-toggle-pause-menu.py",
+      "sha256": "fa03d9bc9b804ba6856b9547dfa9f8a1464624d2b51913a6a9311cb82f6ef35c"
+    },
+    {
+      "path": "patches/common/skip-vulkan-probe.py",
+      "sha256": "fec9047b38a7843099725737e4c742cf415a1e7e3e7c0969567ffdd2c635f084"
+    },
+    {
+      "path": "patches/pvr/debug-gl-init.py",
+      "sha256": "f66db4d455b889936f8fc743734bc39f82595924916872eadec09de940816a9e"
+    },
+    {
+      "path": "patches/pvr/fix-copy-image-crash.py",
+      "sha256": "8a2afd1c0ce9b9799d0d9c7643811628d65b1e938b24ccdc48fbf7c746b8f556"
+    },
+    {
+      "path": "patches/pvr/fix-glgetstringi-crash.py",
+      "sha256": "1f9ae0c7c62237582a6bb81e3771779b51a565d61180d253fa6851d735513cc5"
+    },
+    {
+      "path": "patches/pvr/gl3stub-use-sdl-proc.py",
+      "sha256": "b0a46d61e7186ba7f2a4ec925128bc6fa7fb9f30fdfe4c920fa3073e15915f1f"
+    },
+    {
+      "path": "patches/pvr/glfinish-before-swap.py",
+      "sha256": "119b9f65469f1aad1345fabdfa2e29ba90e9f1f6b651e88e2986c563cd8f9d6a"
+    },
+    {
+      "path": "patches/pvr/no-alpha-channel.py",
+      "sha256": "737cbe6660176bf70ffcc725ea29842593d6945939fdb489a002f8f5fc7740f4"
+    },
+    {
+      "path": "patches/pvr/revert-fullscreen.py",
+      "sha256": "43e8538a8565ebfafce2fcb592ebe2a23162fc61a919b7bf87828b31876b80b0"
+    },
+    {
+      "path": "patches/pvr/vulkan-display-fallback.py",
+      "sha256": "d843615c8934d8d80f8965356ad58c34adf81930b51e044e0edb068f44bc2ad0"
+    }
+  ],
+  "sdk_assets": [
+    {
+      "name": "aarch64-linux-gnu-7.5.0-linaro.tgz",
+      "size": 213977008,
+      "sha256": "604d97c1f5fadc88d6ebff577ea648d0fbc650411af98a3bd8783dbe4e3ed154",
+      "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/aarch64-linux-gnu-7.5.0-linaro.tgz"
+    },
+    {
+      "name": "SDK_usr_tg5040_a133p.tgz",
+      "size": 185049621,
+      "sha256": "b6b615d03204e9d9bb1a91c31de0c3402434f6b8fc780743fa88a5f1da6f3c79",
+      "url": "https://github.com/spruceUI/PPSSPP-spruce/releases/download/sdk-toolchains/SDK_usr_tg5040_a133p.tgz"
+    }
+  ],
+  "notes": [
+    "SDK asset digests were read from the GitHub release API and independently matched by complete downloads on 2026-10-22.",
+    "Ubuntu package repository updates are not frozen; each build records installed package versions. This is a source-reproducible candidate recipe, not a bit-identical binary claim.",
+    "SDK/sysroot files are build inputs only; no right to redistribute vendor runtime libraries is assumed."
+  ],
+  "ffmpeg": {
+    "commit": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+    "script_path": "linux_arm64.sh",
+    "script_sha256": "f96e671253bcca1939f2adaff20d15aca799d04144605948e4a9d3bd9d7f7cf5",
+    "configure_sha256": "1b63d74a8b3efa782cec00d57e693dd1ddf20ab31e461871d8177f584e3a9588"
+  }
+}

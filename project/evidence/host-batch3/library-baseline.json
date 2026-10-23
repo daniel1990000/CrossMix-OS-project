@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "evidence_class": "synthetic-host-library",
+  "host": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "python": "3.12.14"
+  },
+  "fixture_count": 10000,
+  "repetitions": 5,
+  "snapshot": {
+    "total": 10000,
+    "startup_ms": 5299.145239,
+    "page": {
+      "count": 5,
+      "median_ms": 13.307791,
+      "p95_ms": 29.180034,
+      "worst_ms": 29.180034
+    },
+    "search": {
+      "count": 5,
+      "median_ms": 7.953387,
+      "p95_ms": 11.629383,
+      "worst_ms": 11.629383
+    }
+  },
+  "injected_live": {
+    "total": 10000,
+    "startup_ms": 5974.577317,
+    "page": {
+      "count": 5,
+      "median_ms": 5927.280473,
+      "p95_ms": 6175.740313,
+      "worst_ms": 6175.740313
+    },
+    "search": {
+      "count": 5,
+      "median_ms": 6125.940666,
+      "p95_ms": 6520.978409,
+      "worst_ms": 6520.978409
+    }
+  },
+  "hardware_qualified": false,
+  "limits": [
+    "Fixtures contain no playable ROMs or owner data.",
+    "Injected-manager and snapshot timings are separate workloads.",
+    "Host timing is not a TG5040 startup or input-latency result."
+  ]
+}

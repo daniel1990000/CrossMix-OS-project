@@ -1,0 +1,204 @@
+{
+  "schema": 1,
+  "kind": "empty-daemon-private-compiler-recovery",
+  "recorded_at_utc": "2026-10-23T03:05:51.544331+00:00",
+  "image_id": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+  "compiler_empty_daemon_restore_tested": true,
+  "empty_daemon_observed_before_load": true,
+  "same_daemon_after_load": true,
+  "parts_freshly_retrieved": 8,
+  "archive_verification": {
+    "compressed_sha256": "a2b16906420ee85a64d80bd1f5b5a294b094337b58828948b7d8c176f01b40e2",
+    "compressed_bytes": 471632780,
+    "raw_sha256": "53af6bbcce2b3ad494d51f02de98c5682b91c73b5725df101039d678e7255889",
+    "raw_bytes": 1516103168,
+    "config_sha256": "15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b",
+    "all_content_addressed_blobs_verified": 8
+  },
+  "retained_parts": [
+    {
+      "part": 0,
+      "drive_file_id": "1no2SoOp33xNsZy0Ebt1S_GQoqconSZvi",
+      "mime_type": "application/x-gzip",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 1,
+      "drive_file_id": "1qiP9cXbZPGJXydJJYzldslLO1cB9NsG6",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 2,
+      "drive_file_id": "1gbEqdVgANPiemrz0TBghh3BGbhDplEil",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 3,
+      "drive_file_id": "15NHxgQV35tb5_mJ0O6LzGcw8JeG5WUTz",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 4,
+      "drive_file_id": "1lJnziUq1FCqk1kXN_F3hgGDwAj4-aMPW",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 5,
+      "drive_file_id": "1_Hf5PtO4R02y_ofgVJrQ6SWN-uDzdgUl",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 6,
+      "drive_file_id": "11Vv3h2KbYwbyoaBV4E0mFUODiZfEUuXB",
+      "mime_type": "application/octet-stream",
+      "bytes": 67108864,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    },
+    {
+      "part": 7,
+      "drive_file_id": "1flVg6vSa3n1nxo-5k9sLsRmvKrRouDWt",
+      "mime_type": "application/octet-stream",
+      "bytes": 1870732,
+      "shared": false,
+      "observed_permission_roles": [
+        "owner"
+      ],
+      "metadata_freshly_read": true,
+      "raw_download_freshly_retrieved": true
+    }
+  ],
+  "docker_load_exit_code": 0,
+  "offline_smoke_exit_code": 0,
+  "actual_compiler": "aarch64-linux-gnu-gcc/g++ 9.4.0 Ubuntu 9.4.0-1ubuntu1~20.04.2",
+  "container_controls": [
+    "network=none",
+    "read-only root",
+    "cap-drop=ALL",
+    "no-new-privileges",
+    "uid=1000 gid=1000",
+    "read-only input mount",
+    "temporary writable /tmp and selected output mount"
+  ],
+  "smoke_binaries": [
+    {
+      "name": "smoke-c",
+      "sha256": "ff85833c4cedebf12bac6cdbc65b8edb525da7e88dac4f4171ef7ff853975534",
+      "bytes": 9296,
+      "machine": "AArch64",
+      "target_executed": false
+    },
+    {
+      "name": "smoke-cpp",
+      "sha256": "314c1eb12f83da79fdd8034b92e3bf981d326a277d03eff3175ce6e96b6e37a1",
+      "bytes": 250112,
+      "machine": "AArch64",
+      "target_executed": false
+    }
+  ],
+  "cross_binaries_executed": false,
+  "native_engines_rebuilt": false,
+  "native_engines_executed": false,
+  "device_tested": false,
+  "sdk_runtime_redistribution_cleared": false,
+  "gates_changed": false,
+  "unrelated_images_or_workloads_removed": false,
+  "initial_probe_issue": "Initial script probed an unused GCC7 executable path absent from retained image. Its version pipeline masked that optional failure. The retained sysroot is from Linaro GCC7; the active compiler is GCC9. Removed irrelevant executable probe and removed version pipelines; reran checked smoke with exit 0. Initial log retained separately.",
+  "records": [
+    {
+      "path": "archive-verification.json",
+      "sha256": "93eba249b96e82f9c77ee3e7184c5c5dba8c61713b14d446f95f1509ea33ecc4",
+      "bytes": 370
+    },
+    {
+      "path": "compiler-smoke.txt",
+      "sha256": "7ff86e2b6c6d627f8b59349b6f1f42c4a1c10f8630fa2766f8d69fe3c925e832",
+      "bytes": 3248
+    },
+    {
+      "path": "docker-after.json",
+      "sha256": "b880b6bfd751c6ebc5c08ed3cc3eb3bf3773f165ae2b3ac1e861094b247325b1",
+      "bytes": 146
+    },
+    {
+      "path": "docker-before.json",
+      "sha256": "26d77810270dc2dd13a27c19052c567612f43b9cca420542352e22440a1ab506",
+      "bytes": 146
+    },
+    {
+      "path": "docker-image.json",
+      "sha256": "d986fb8913e6d3d0a3560c80405574fe83688f18ccfb0d5d114febdf58f7d9bd",
+      "bytes": 135
+    },
+    {
+      "path": "initial-optional-legacy-probe.txt",
+      "sha256": "c58c96c40b6e883737c795c37cdd10d8e726ba86709230529c8e444885d41025",
+      "bytes": 2582
+    },
+    {
+      "path": "part-verification.json",
+      "sha256": "88e3877c819144b7c67abb3475c18222c6f30a7a412d0352801836a6b29c2c67",
+      "bytes": 322
+    },
+    {
+      "path": "run-smoke.sh",
+      "sha256": "9f14eac124992fa364b96a7793cd936f5bace5ce76dcb6f1f02b1d8dce57afdd",
+      "bytes": 678
+    },
+    {
+      "path": "smoke.c",
+      "sha256": "4b0b9a8f11deaa47f766e8f2f32a3d2b6f3a9fff6afd8616ddb4fa693ddca876",
+      "bytes": 111
+    },
+    {
+      "path": "smoke.cpp",
+      "sha256": "440ce9cf8cdd14957ed93d1f0c33c07815fae56db7438303c8bad8dc8ad6148e",
+      "bytes": 139
+    }
+  ]
+}

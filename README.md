@@ -1,3 +1,6 @@
+> **Active TrimUI Smart Pro offshoot:** spruceOS v4.5.4 + its shipped PyUI, with a PSP-inspired interface and PPSSPP source integration. Start with [the handover](HANDOVER.md), [implementation and run instructions](project/README.md), and [the complete plan](TRIMUI_PLAN.md). Development source and host checks are saved on `build/spruce-psp-experience`; physical-device qualification is pending. The CrossMix source/README below is historical reference.
+
+
 <div align="center">
     <img src="_assets/readme/TSP-Logo.png">
     

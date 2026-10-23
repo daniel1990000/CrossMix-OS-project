@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "kind": "dev13-handover-consistency",
+  "checks": {
+    "release_id_agrees": true,
+    "scoped_count_14_of_25": true,
+    "no_physical_results": true,
+    "no_release_promotion": true,
+    "review_document_links_exist": true
+  },
+  "checked_links": [
+    {
+      "document": "project/docs/software-hardening-2026-10-23.md",
+      "target": "../evidence/software-hardening-20261023/verification.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "../HANDOVER.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "../TRIMUI_PLAN.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/psp-design/gallery.png"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/psp-design/comparison.png"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/psp-visual-design.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/software-hardening-2026-10-23.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/completion-2026-10-23.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/completion-20261023/verification.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/artwork-formats.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/interface-accessibility.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/ui-polish/"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/host-measurement.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/ports-preparation-and-saves.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "ppsspp/state-session.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "retroarch/README.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/installed-runtime-evidence.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/device-test-runbook.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/feature-coverage.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "../docs/spruce-source-lock.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "ppsspp/source-lock.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "retroarch/source-lock.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "ports/celeste-fix.lock.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "profiles/ports-sources.lock.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "packaging/current-release.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/ppsspp-complete-state-build.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/retroarch-igm-build.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/development-release.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/feature-coverage.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "bridge/README.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/recovery.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "packaging/README.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/"
+    },
+    {
+      "document": "project/README.md",
+      "target": "LICENSE"
+    },
+    {
+      "document": "project/README.md",
+      "target": "ppsspp/NOTICE.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "retroarch/NOTICE.md"
+    },
+    {
+      "document": "project/README.md",
+      "target": "assets/fonts/OFL.txt"
+    },
+    {
+      "document": "project/README.md",
+      "target": "evidence/completion-20261023/owner-permission.json"
+    },
+    {
+      "document": "project/README.md",
+      "target": "docs/release-rights.md"
+    }
+  ],
+  "historical_dev12_snapshot_preserved": true,
+  "hardware_tested": false,
+  "release_ready": false
+}

@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "kind": "pinned-source-host-certification",
+  "started_at": "2026-10-22T21:56:00.298052+00:00",
+  "successful": true,
+  "sources": [
+    {
+      "environment_variable": "SPRUCE_SOURCE_ROOT",
+      "lock": "docs/spruce-source-lock.json",
+      "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+      "root": "/workspace/spruce-baseline",
+      "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 451,
+      "subtree": {
+        "path": "App/PyUI/main-ui",
+        "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+        "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+      }
+    },
+    {
+      "environment_variable": "PPSSPP_SOURCE_ROOT",
+      "lock": "project/ppsspp/source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "root": "/workspace/ppsspp-reference",
+      "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tracked_content_clean": true,
+      "required_files_checked": 21,
+      "materialized_files_checked": 1102
+    },
+    {
+      "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+      "lock": "project/retroarch/source-lock.json",
+      "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+      "root": "/workspace/spruce-ra-reference",
+      "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "tracked_content_clean": true,
+      "required_files_checked": 4,
+      "materialized_files_checked": 4
+    }
+  ],
+  "suites": [
+    {
+      "directory": "/workspace/CrossMix-OS-project/project/tests",
+      "successful": true,
+      "tests_run": 560,
+      "passed": 560,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "skip_details": [],
+      "process_exit_code": 0
+    },
+    {
+      "directory": "/workspace/CrossMix-OS-project/project/ppsspp/tests",
+      "successful": true,
+      "tests_run": 61,
+      "passed": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "skip_details": [],
+      "process_exit_code": 0
+    }
+  ],
+  "preview_passed": true,
+  "device_qualified": false,
+  "phase": "complete",
+  "totals": {
+    "tests_run": 621,
+    "passed": 621,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "sources_after_tests": [
+    {
+      "environment_variable": "SPRUCE_SOURCE_ROOT",
+      "lock": "docs/spruce-source-lock.json",
+      "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+      "root": "/workspace/spruce-baseline",
+      "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 451,
+      "subtree": {
+        "path": "App/PyUI/main-ui",
+        "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+        "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+      }
+    },
+    {
+      "environment_variable": "PPSSPP_SOURCE_ROOT",
+      "lock": "project/ppsspp/source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "root": "/workspace/ppsspp-reference",
+      "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tracked_content_clean": true,
+      "required_files_checked": 21,
+      "materialized_files_checked": 1102
+    },
+    {
+      "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+      "lock": "project/retroarch/source-lock.json",
+      "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+      "root": "/workspace/spruce-ra-reference",
+      "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "tracked_content_clean": true,
+      "required_files_checked": 4,
+      "materialized_files_checked": 4
+    }
+  ],
+  "finished_at": "2026-10-22T21:56:30.681473+00:00"
+}

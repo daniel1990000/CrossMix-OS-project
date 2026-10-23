@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "kind": "original-only-host-publication-and-fresh-public-readback",
+  "release_id": 421412257,
+  "tag": "smartpro-host-0.1.0-dev14",
+  "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev14",
+  "published_at": "2026-10-23T03:20:02Z",
+  "actual_tag_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+  "asset_sha256": {
+    "development-verification.pub": "cda197a7dee48062b06fbcfd745511c248937c6a71cb1b322d143160de680602",
+    "host-preview.png": "06fdf405fc90ae7c3ad55c2dcb11d65e48892973950369dbe1da93ac8b2ebbfd",
+    "build-report.json": "397f8c1f12d694c37760619c97800bda4c89e54222031c7616a24db0b412ed7f",
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "SHA256SUMS": "ecdacd61221c2ca587019e56e98ef0e8fed9ea9c70bef6e00326dcb653b6beb0",
+    "smartpro-psp-0.1.0-dev14-original-source.zip": "29340597a5117a4743bb6f76174c092485bd46a1f32bc0bae777a32ea890db37",
+    "smartpro-psp-0.1.0-dev14.tar": "ac2fcb69a834dffa9bd49263c8d3f04bd8426bfaa9ec0fa8ae5eb94ebc8791a1",
+    "smartpro-psp-0.1.0-dev14-host-preview.zip": "59e04d36d7a9b9f091b4d6db255c2a65caef3b7c1a4ce6557a9a8233c37df528",
+    "release-source.json": "f3e19a4016583d69549b6e1e8181b66be8703ef17bf7261377aa12766d12f81a",
+    "certification.json": "4291a71c1702f82b0cce47bfdb5b0a7ddf46ad99ed4c46d36ca31a82ab83d45f",
+    "host-preview-provenance.jsonl": "dab4aba910cc3eeb78224c1f85dca21737072bbb923d9809143271e6ab64d697"
+  },
+  "all_11_assets_freshly_read_back_before_and_after_publication": true,
+  "all_10_host_subjects_exact_source_and_workflow_attested": true,
+  "automatic_repository_archives_excluded_from_verified_scope": true,
+  "publication_credential_path": "Repository workflow uploaded and read back exact assets. Its tag POST was denied403 and stopped before publication. Connected repository application created exact tag and published metadata after another full independent fresh readback.",
+  "initial_upload_workspace_credential_failed": true,
+  "initial_delivery_run_id": 39894170401,
+  "initial_delivery_job_id": 120220612619,
+  "initial_delivery_failure": "Tag ref creation denied403 after verified upload and readback; no unverified bytes were published.",
+  "production_ed25519_trust_established": false,
+  "hardware_qualified": false
+}

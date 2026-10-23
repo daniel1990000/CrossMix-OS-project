@@ -1,0 +1,13 @@
+{
+  "kind": "no-git-export-rebuild",
+  "frontend": {
+    "commit": "b8a5fd665076ecde1cd42c54aa232ffb757f583b",
+    "working_tree_modified": false
+  },
+  "byte_identical_zips": {
+    "smartpro-psp-0.1.0-dev12-host-preview.zip": true,
+    "smartpro-psp-0.1.0-dev12-original-source.zip": true
+  },
+  "private_signers_reused": false,
+  "hardware_tested": false
+}

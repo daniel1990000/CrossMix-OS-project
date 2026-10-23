@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "kind": "selected-native-notice-replay",
+  "first_and_second_outputs_byte_identical": [
+    "selected-native-notices.txt",
+    "notice-packet-manifest.json",
+    "native-font-notices.json"
+  ],
+  "corrupt_input_rejected_before_packet_publication": true,
+  "entries": 137,
+  "packet_sha256": "88463b6395cbb499ffd9448712577062d911df8e21cd08fc1148b811c4409ee4",
+  "font_records": 5,
+  "contains_font_binary_native_ELF_private_recipe_source": false,
+  "host_suite_test_count_not_incremented": true
+}

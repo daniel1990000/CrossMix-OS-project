@@ -1,0 +1,46 @@
+{
+  "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "candidate_commit": "4a9754c2076b4ff48cbb4b24fc7a96988c48d805",
+  "changed_required_inputs": 4,
+  "files": [
+    {
+      "baseline_tree_entry": "100644 blob 358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7\tApp/PyUI/main-ui/mainui.py",
+      "candidate_tree_entry": "100644 blob a2a1b54f8b7adc7078d1084ef356e0bf21717bca\tApp/PyUI/main-ui/mainui.py",
+      "changed": true,
+      "path": "App/PyUI/main-ui/mainui.py"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 9c91591999e6049bb99dc191ffebc0608e28fa85\tApp/PyUI/main-ui/LICENSE.md",
+      "candidate_tree_entry": "100644 blob 9c91591999e6049bb99dc191ffebc0608e28fa85\tApp/PyUI/main-ui/LICENSE.md",
+      "changed": false,
+      "path": "App/PyUI/main-ui/LICENSE.md"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 3e98034103df4771210012e478d792b2a361d856\tApp/PyUI/LICENSE.md",
+      "candidate_tree_entry": "100644 blob 3e98034103df4771210012e478d792b2a361d856\tApp/PyUI/LICENSE.md",
+      "changed": false,
+      "path": "App/PyUI/LICENSE.md"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 8e23351cdfbf28069b30bc3a3e58c2badb7bfcce\tApp/PyUI/launch.sh",
+      "candidate_tree_entry": "100644 blob 28a0d203bd8a8d2d76a224a472187070835eb40d\tApp/PyUI/launch.sh",
+      "changed": true,
+      "path": "App/PyUI/launch.sh"
+    },
+    {
+      "baseline_tree_entry": "100644 blob cfee3badaed8606121635d9ebbfb3dfc2d5dc25e\tspruce/scripts/principal.sh",
+      "candidate_tree_entry": "100644 blob 86339a2f6b278a0487d0b5ba61877ed431ff5465\tspruce/scripts/principal.sh",
+      "changed": true,
+      "path": "spruce/scripts/principal.sh"
+    },
+    {
+      "baseline_tree_entry": "100644 blob 48953144c9482bd398a0c487c78801777024c79f\tspruce/scripts/runtime.sh",
+      "candidate_tree_entry": "100644 blob 42d50f967a4d152d49d1da8f3369c1a3cc5458ff\tspruce/scripts/runtime.sh",
+      "changed": true,
+      "path": "spruce/scripts/runtime.sh"
+    }
+  ],
+  "schema": 1,
+  "source": "SPRUCE_SOURCE_ROOT",
+  "source_pin_updated": false
+}

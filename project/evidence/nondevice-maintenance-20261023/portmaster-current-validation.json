@@ -1,0 +1,19 @@
+{
+  "adoption_authorized": false,
+  "all_changed_paths_bound_to_hold": true,
+  "baseline_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+  "candidate_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+  "candidate_executed": false,
+  "changed_in_scope": 0,
+  "changed_outside_scope": 0,
+  "changed_paths": 0,
+  "decision_groups": {},
+  "device_qualified": false,
+  "distribution_cleared": false,
+  "kind": "upstream-hold-review-validation",
+  "pins_updated": false,
+  "review_coverage": "metadata identity and explained hold; no full behavioral audit or adoption",
+  "review_sha256": "6fabd121108710195c7399ada0ad6267e6a7f07aaa7cf2e16164ccd56859f39b",
+  "schema": 1,
+  "source": "PORTMASTER_SOURCE_ROOT"
+}

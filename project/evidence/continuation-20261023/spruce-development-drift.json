@@ -1,0 +1,4054 @@
+{
+  "baseline_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "baseline_materialized_files": 437,
+  "candidate_commit": "cb6210aa19c5cb61e404d4029444972448cac9f9",
+  "candidate_executed": false,
+  "candidate_materialized_files": 463,
+  "changed_in_scope": 230,
+  "changed_outside_scope": 374,
+  "changes": [
+    {
+      "after": {
+        "git_object": "ecf2b529ea8999ab4683b0a052fec2f796426128",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3f73b06416333c9423220d8e5a76671bc3350b47",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/-OTA/downloader.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "6a775d0daa3b2dace27606d83718c12f8e0348dd",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "89bf1afb5190469dfeddd8fad567d49407f7ef90",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/about-entries/get-ra-version.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5ec4b5c6936285ed24066d41bd45ca9170dab597",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/docs/desktop_readme.txt",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "bbbb4bd5c1213ca32636389e6335c04e7bed981a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "eefdaa17681f5eeab09e4e6a621ca55a79bd480b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Bosnian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "331b60a231ea0137b72f7b6689faa529b1f1bd96",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "04bfa754e2edad4ff4ecd734468e82d8a89642fd",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Catalan.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cd13c4687de6a1d3dff8572215002fbf64022bab",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "94fe1cd3e01aaabca49489607706445df5e0c4fb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Chinese (S).json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "948403af220d9faec662f453e73e22858952c593",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "4e26f413e0a0a9ea658a1409ef2b9d9f3ca1a4d4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Chinese (T).json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4bde409c2a0a7ff6210c5c15ce165387ae142ad9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "19bdc701fb578fd3337ba7d53a723d1afb6cdad3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Croatian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "300c8eb05a6fbd1366fe2cbce774aabda15e5899",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "22368c5e313d7ebd0079239c9ccb391859b9424b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/English.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3c090a760227245fcaa44fe579abfb918e414809",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a163cd194397ec5d305a9408afb759167f13b98c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/French.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b12d5e436567129a03f6e96557a2c7065dfcc209",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "485b079ed2358bc1dd563b889f1d79e3132d2cd4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/German.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3a2e9de68a582aaa32013ad672f14ea67f8626d6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ab1d06a2ca48c4cf68c3d0164bcfd6966d70f413",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Greek.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "535efd607002a5fffa79e6d5ab632d659a43fa5f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a3bdd6cbdd81129c2c13deb16176b0446724a032",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Hindi.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d389e2a26f081743cb545d4094e96b639ef68c3b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e4d7bb3b21784a0a22c8a571072435a00c8fbda7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Italian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8f472066d420756a54746acb8f095d9f41b2f1e3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "2797ffd690c14e89d5300d466d324772f071d32b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Japanese.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9456dddd1227d90510797f690bcbeccc1d19c118",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8d14319b6d70031e36af6fbbe5ed0b75b8286781",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Khmer.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "210c04f82b517fb86969445f145e60e54a90955f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "4f76594da3b1865aada38e15882f32d27c4e5cbe",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Korean.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "28334038521a3a3c16f83876ff793d0471ccdfb3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "d70f3ed72d20bd4cb857c54024c3c1f971a9a758",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Lao.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "166ce9029579d944ba20e048077bca3be3236f74",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "19469d0c31bf6ec0c8a4172821964aede7372c71",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Polish.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1231a78622c1d0da570973ddaa195d3a09a252d0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "10a93b008d8bbe6362ed7b45d25c7c90e40a3fce",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Portuguese (BR).json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "75c8f6394252f5efba9e049cc8bbc72f3c980f56",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0465b6f984a4db3c05c6af6c02681bfa7563ea46",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Portuguese (Eur).json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "53ece34d420b29bb6ef0f1fddd7bd80af9fa2c83",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ec7c52ab032bbefa8d2ec724316ddec1fc6023ea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Romanian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ccfe837f2744923a2debea32b8512be330c4aa80",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1f1dece5f4d4ae0a289740f24f067d448bea81ff",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Russian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d8eee12f52fefdf98b80bca02f60a030d258ce3a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "53b6cc5ecc3e8164b4bbb8dd2167f037113b3a4e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Serbian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ab65f96673895d78e4cc3c067f660260e64e40f8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b6958f91959f387a9df20a02d7c6d12f610842f2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Spanish.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "fb893d6b31e72b89c378b424ca984832e3621f52",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "2306915729161e33255e0090359ad42ef674ca00",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Tagalog.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f126a2f3268ed9587c939cb0bec82437e4be1bec",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "cdbf7de54f6dac221f39d749e2542d0e40f80d49",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Thai.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ce820629a7af07d3b763e123e347811c5076bef3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "daaa9769469b99ed2c2a651d152ab7c38f132be7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Toki Pona.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "6ed0e041ae14f473251c541f9b94168b5d9ad262",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0f5477f653964d2d11ca934b78880e39c088913c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Turkish.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c39351d2407991bbd2e44ae8b2a26ccee432f192",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "fdbb9c7b4530d926e856e98c88737ae74d98380d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Ukrainian.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c498b4c088bf8b757f62c20b0a3f9e3e767b6e85",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3d01b5486aec7a0a0ed9d5c3fc441bf0884f68da",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/lang/Vietnamese.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d98cbcdf6892982882d15dbbecd37219b667b05d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8e23351cdfbf28069b30bc3a3e58c2badb7bfcce",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/launch.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "146b103c2ac0f54e618c708c836a0b387cafa569",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a26e784c04ee259106d6a91184863be6f5a44d74",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/controller/controller.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "25baa1815ac1c180a4f17fb04fc5752c4158fdef",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "93aa3df9f95abf368204505078fa5f6531df68c9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/controller/controller_interface.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3aeeb98e84579997b6171807fe73a01fa074617b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "57066c5026bc07b84f755389bf3aed7264b364a5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/controller/key_watcher_controller.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4ecfca1ec5e66f2305567653c2907c6558efedb8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6276f672a0b7013b8e2d5752cc306a2ae959a3cf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/controller/sdl/sdl2_controller_interface.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "200c1b91b57ef7e57c71059f40b1578236c6c625",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/desktop.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/a10mini/a10mini-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "04b48877b2db1554a72b8411e7fb0258138ed1f8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/a10mini/a10mini.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f023d096f2dce14f90661a523e11b8976fbaaff0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8067ffe4ab88e6949a93c79aab4e038773b50a63",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/anbernic/anbernic_rgcubexx.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "bd7c1e6f525181ffda5af3c29b53e04b878e335a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "274b92494b9636634b657355e7bb0700fa331fd5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/anbernic/anbernic_xx_640_x_480.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "440ce9292fdee5e23eddc209f96d9c645799b94b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "33bf97f48308d1e01f85c36e52dc75e68d68186e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/anbernic/anbernic_xx_720_x_480.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "bc3d4cef260bb1d928c00c70d3fa23526bbfef84",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6c19192e631f2b7545d59d48d18553a379b9f3a9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/anbernic/anbernic_xx_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1e3bf7d26b84954e8051bf23bb0e5b58a3652a9b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/a10mini.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "47b51c094bc0f2db237c5f163fe1737d5ebf1c18",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/darkmoss_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cc3eb53fa9d4fdb91e1a8dcac2342e58521cde5a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/darkmoss_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "81d13c982853bf596b8cfcb32e86dca5ff59c459",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/darkmoss_key_mapping_provider.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "7ca6745378d77894c9e04f2674218a6f9296b70a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/g350.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/a10mini-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/g350-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "6931e3ef1ccf608ddd7263ab8d6d7f7e5102f88d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/miniloong-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/rgb20sx-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/rgb30-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "da2418667559d6e1e4885c3223bec3e56744ea4e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/v10-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/json/xumini-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1b47f54859257956283524680d57622b7d04b471",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/miniloong_key_mapping_provider.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cbe32984088a6077c28e412d8f005abc51bb4969",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/miniloong_pocket1.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "650ef41fdc070099546c71b408de1878318c3a84",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/rgb20sx.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "883c18c8c17a430259a27bab06c0cae2e8257716",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/rgb30.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4e1b0769ca5ca35282769302f29fe8705d9d6602",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/v10.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "767485fcbf05136a0c8f9faa37276aee9d4c67a0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/darkmoss/xumini.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "568827fc82838bdc69f545fb990581546528057d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/darkmoss_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8b05ccc57b90ba4409dfd30e050000dd4e78a4d3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5b35dd77c12cdfbb9cd7930dc6de23bb161a7028",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop_capture.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "45a6a6005f3c1aad58b3ab03cb1228e07d25e778",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop_controller_interface.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3bf7c86356bf3fe2c5a5ee5343d4d251f2cf5dc7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a3b2ba3bf2f5dc75364927f92cc5f1fc4a19e04b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop_options.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "2c04f29416bcc560f5f3afaca41988304aa4a020",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/desktop/desktop_script.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "70194e2100c393aac74b3021468505c6e6fda846",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "50dddb739842a94ea95818541e7ea7e6a581063e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c2225d0552743aad5372b7c57af475548bb3ce1b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "2a557b1637370ae8da2d78551ffd7a96e9c118d6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/device_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a1748fbe72f4a8f856dd74c826128ea1d7e4ff65",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/device_factory.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "93b52403cdff87dbf4936819cc4b84bbeea8bc54",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/gkd/connman_wifi_menu.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "35b4c58b93fc059cf8ec36e444d6ba3e55f564a8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/gkd/connman_wifi_scanner.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ca7b6aacb41c07733288f248b611071e85b2bbd1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a525b2281af4db9ea467b73df65059046ad8fb58",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/gkd/gkd_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4db4c52562d598916a6cf753af2f894c265a673b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6b3b1cd5d17d9620494f0343695cfe83fc9fb066",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/gkd/gkd_pixel2.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0e8dce79b35a946a98e13a8209d34bd7b1aff753",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/gkd/usb_wifi_menu.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0c87e66081f9e80472e70d427710efa8eafc9a3a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "7176c4f1a9d13a7edc766a4503e49f61ebba0af2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/magicx/magicx_a133p_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "6931e3ef1ccf608ddd7263ab8d6d7f7e5102f88d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/miniloong/miniloong-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "1b47f54859257956283524680d57622b7d04b471",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/miniloong/miniloong_key_mapping_provider.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "be7aaa4762b486c5a1fd70606eaf27b488baf755",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/miniloong/miniloong_pocket1.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1688613f712690f4337d16de83be4d45e35de022",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b18c0ba8096bdf252aee43018e9de9f9d7b678a1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/a30/miyoo_a30.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "23c2747686dc517b7fd700b4a254bcf120e96cea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3b8fc888bf33136be92710f0d55d34ab08d89537",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/flip/miyoo_flip.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "957413cfde0af162b28745207cdfe504fdd47399",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "52b0d1e4b92b9fbfcb17d8919054f564b999c437",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/flip/miyoo_flip_poller.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "1e8e8ce24010ce9a0950d9563d9304f04889d969",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/mini-flip-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1e8e8ce24010ce9a0950d9563d9304f04889d969",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/miyoo-mini-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e7b194a3dc7f69e16c6d481187766b03b4630712",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a0117f78cad082e533d549c8e5e2e0cd55f6f7e6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/miyoo_mini_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "069cbc5150ce5172794a14cbc0463effb19cf5cc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5c80d3e7f1d8ea0ec16e0be3a945e6fd783accbf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/miyoo_mini_flip_specific_model_variables.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "371345358df9ef338393aafd81e2f8463f57496f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1fc5019d9fea085a2e0038ccb08cf42aeaa3f1a5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/og_mini_methods.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ba3663fc6568475067935e0d6177bc22130abd81",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0e90c953102f5092074201511daf7ed8963437e4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/mini/sprig_miyoo_mini_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9421b32a1ba737e2790a58d60f8de2c089c0b8b0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "443e215210fea9e89483823ba9d77f1390c0b253",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/trim_ui_joystick.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3a9a49083727054e6aeb5390b43345f333e41ba9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "71b8486df9f31fdd23f3738fa3726730db7e5509",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo/user_config.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "fb990820b3b0d4b7398c8dd12d7bcd7970792e4b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "63467b26b5b8e1cb7b5508f448be8f200311fbce",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/miyoo_trim_common.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9f7b581e3222a9fe103288654f28a63dccfba896",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c92d4c612e3d80cd3ca7e0874a3ab2b3a1984d49",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/muos/muos_anbernic_rgxx.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9a2f3d97e1486c7d23445058ab845b0f1297a33d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a518a3a588f24a7949209f54c3b9097e35724479",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/muos/muos_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/rgb30/rgb20sx-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "647d31bdee55a8b4828b26417630a95800c2cf4a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/rgb30/rgb20sx.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "05fc7de71a01fb46834f0558edf28364edc37c8e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/rgb30/rgb30-system.json",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": null,
+      "before": {
+        "git_object": "6530b96fc0fe803d5d1d882cf572237aa6b21521",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "removed",
+      "path": "App/PyUI/main-ui/devices/rgb30/rgb30.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8db51eb0a5f460922845880737b284af42a21c97",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "49012dd1a888be57838b27bc9ef824a0ad031ff2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_brick.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "51d5e220ade33f8976125dcc251ed65de295a438",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "677ff4737e0f320e9e67f95f34540cb6d587f4a7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_brick_pro.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "89a0fe810e8713400d3a01bd8a1f0c53d46434a7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "10ca3d8a31a9444bd32d2a7f1f4564c22588077c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_device.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "59eb33d5fa7b150467d49a98a1fbcbae168d8386",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "deadf503c2f73188d47b18d790d57821169ce101",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "23359ce0b554c1c20ce9fdceb705ff65cfe5dd32",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ab80ba0107213e6d9b9e7b52e42dbcf6ae1e354f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/devices/trimui/trim_ui_smart_pro_s.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b3f9e21603d651862b6e1e6c9e0866b609f0fc5e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8237bb3f7f7154b2289544c417ca91a46c3914cd",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/display/display.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5136f53dc76ec4d478b2df2b00e554774ce60fcc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "f46b40b0422ff20a120234a5206fd39f5d97924f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/display/screensaver.py",
+      "review_areas": [
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e94cf26ed1f96698eaa9baf72f4f464129b1c4ba",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "d34afb10c6c1808cd37b8eb82579129336f743f1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/games/game_system_utils.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b5b28ec5ef9c1f1fc865bcf73cb91153b9338407",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "455e42d016366baaf6ee2cb933aecfae353a5faf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/games/utils/box_art_resizer.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f353bc1f9be610e30fdd7d0b99f887543c074c23",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "f0dec621bc6d3b689ebff0a28c9952d3903b4569",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/games/utils/device_specific/miyoo_trim_game_system_utils.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a2a1b54f8b7adc7078d1084ef356e0bf21717bca",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "358d6a6885f69725c6db6d1ccbd6e0dbb8c192e7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/mainui.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9512c3823184ffee713e48be1c1242af981fdf4a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "92dbc05ae3adb1babe36d1a012dca776d84ba98e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/app/app_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "fbbfe413aaab249b8748a9b86fa038a78b4f5ffb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0ad2c2e06642f7ed7e0e9e3d4557dcc788713b26",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/common/bottom_bar.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "25cb9b6deafa4b66c6b6d64ee2fca235632e7657",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "f025ba0102571958791ac8e3eeda80ef3fb52f5b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/common/top_bar.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8d10862f7e39e8888e91d28f5c92bc33c2a1cc2d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "2ee83a37ed50a4c9eaef09ebd1273e23e59810a5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/collections_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f9ec8785192227e3c4c99bc4c4a6a8941ff80ff7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "7a838c5feef10e5c4315f73e6e73c2013c9834dd",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/game_select_menu_popup.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "69cc5c3424af5c3a5819b2aefd6c4f5e7f063c27",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0607378a2bddf9c556097329b90be61c84c2e223",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/game_system_select_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9b34758b58d7ecc4683e168bfbb80fe98a2b0354",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "865de6a729b4f7575b20443d3d42ca76f7380b48",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/game_system_select_menu_popup.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d7cdaa3d6e1a7565242fc396aab3d64bc0c2fab2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e74162bdfa4938b00bfc3bbc60122f18e5abd57a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/in_game_menu_listener.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "43d5124d6300b8e4aae039f9ca9e906e805f8ad9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b2dac7d021d3ded329f54f17c8c958c3d9354765",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/roms_menu_common.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3f43863b4593d0f636608cc733155552d78bfb5a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "605ed8ef84df0ffd8d7da9866cdcdfc1f48d1a77",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/utils/cheevos_cache_manager.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3020178bdfc2dcb89ec86b24144dc1c86baffb5b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/menus/games/utils/cheevos_progress.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "090cd7cbcfaf041d4528474938f55649a3223e0b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8b3783f76e3a7f9d643db0f38990e5cba819f386",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/utils/miyoo_game_list.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e7bfa63761c7fd82eb9705af9f5d2b1425446197",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a989d731efb60d5c239cd7b173aa47b346ad46e7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/utils/rom_info.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4f51a9bbe5e76adf2e7bd226d111e28d96a9a7e9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b8a4fbeba67f8d5479a33670dd09d9cb7a6d2fa9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/utils/rom_select_options_builder.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5c3d7bb8ce8e9d24d3388436a1863c8798f3e736",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "11a07582d7259863022c31272e41607e081969b6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/games/utils/roms_list_manager.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0b4aa53fbd572e02cd5c529ed78b77f673f7ce61",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "86ba5ccdba0be3453b6bddf1c24e9e91cec5c706",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/main_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "faaddfea8b6a16e259fb9f735307e8d55147f1f7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "cca401f5281b5eb9b2fb148b5e1ee35cc0594f21",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/main_menu_popup.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "12376a12e2eb711473fd5d8963d6536f53aeea01",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "12f5f7ed271333760324c548db8c57906b44b689",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/settings/animation_settings_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "419059f44b2bcac6a67f1ed8c9259a194bf512cc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "cc4d8cb75a527d1a4dbbacfdfd9bd06d5adc234a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/settings/basic_settings_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a50027525f9315e45278b94d04446d94d4457db3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "efef4cc97709645d0d037e72077df66a2c3f558a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/settings/list_of_options_selection_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e5d3118d314f589d8e467978a0f4f81ebeddee6e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e52888fc563049960c4aed8930b91195eaec613c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/settings/theme/theme_settings_misc.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "eca2e23f04e6aebda0a096a075c0dff9770dba2c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "d16847881283ee3211732ebb7160491ccd7aa6f8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/menus/settings/wifi_menu.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e684410c5167f06e21ef395e2f869ecc51a254b8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "d137e34a82f75133c83a437b173230d6377982e1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/option_select_ui.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "fd6dd9ad0361a858bfde8030619dc0979a0245ca",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/themes/default_theme_patcher.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "54dca5198d27a5ccba5032aa4096ea40a5dac093",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "432402ecd4606c1febd37c48ddc0203496cf6a52",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/themes/theme_patcher.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e3d38c65258fa1a7176ff1b70efd37d99f3c3a18",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "700f323178d8b0a232919cb89b885439f53c45cf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/utils/boxart/box_art_scraper.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1148b9a1fae0df54c889aa1531bb477ca6fc5f74",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "55f2b65bed27ce07932af7d656007ac7305a36eb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/utils/logger.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f9b162e04131a9e7475c8fa259a0311aedc9d4d9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/main-ui/utils/promptfont.ttf",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c1e54ed56aa5428e8efcd7287244e1a0d88f3aaf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "9de7d3859064e8eee22f71f7b6ee65ec0cc2a9c6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/utils/py_ui_config.py",
+      "review_areas": [
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d5434efdc0faf07a2ec967d42925b31e72b6ef18",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b78a891f2d8b6fade4475fa665f5db2fd1514a64",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/utils/realtime_message_network_listener.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8d732530ac3ff032a98472c99ee226be0a3b213f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "52d4f3b22d3c6cc5ed39480c4aee49e1296e44c6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/utils/time_logger.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b0c96ce8ec66bf4ced15ba5063e6d5567924a9a6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "f90f4e868157da4aba0cfd48f71a99d561312e7d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/carousel_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3d511cada62e85e62db1d1e62631b670afd48ee6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3c856e81bb7c831b49c32a23d9e2a13b8eb9c04b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/descriptive_list_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "93d9356a9c43e86a63307d3f42b5ce4e189a39e7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "afce5d188e0c28715dde7faf1813b5a56ae47a56",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/full_screen_grid_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "76b4cc57bc152874160ba2e6d85e0465219124d8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "12ea0eeef7bfdafc8e969ade97e9f519b0ae3913",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/grid_or_list_entry.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "2109c781c1793fd6a5881a55b3d17431afc8074a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "d0e585a25f71c81b9f8512b7dea0e30c6db80971",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/grid_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "feff986e8c9d3fdc5fef87f7ae24e1955e168e76",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3a4aac37f50da4dce2186b1bef14d7021baaa355",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/image_list_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a4edb89858567e55de88c0ba5ed92382265764f5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e0a464db3368063ba7da1d6d2054522f360403aa",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/list_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4d79fb12f84b9f51c658900201eff848d35eb18b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "502e3586a3b8a400ae536e62254254f0da5b4854",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/rom_grid_or_list_entry.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "418715e2c2e7a389f55aee73adf8da5c7b34f410",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8c98ea3e402d82e02b6e5bd52cb9bbcfe6c151ea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/main-ui/views/text_list_view.py",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c1532704f42a79b7720d55abdce11fa3876b29df",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "8dac198b5e4bceb38b7ff6e4b5b8f1170658d287",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/py-ui-config.json",
+      "review_areas": [
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4b0ebd02f7b30dd4d28db4152e9f699926445382",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "App/PyUI/set-volume.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f5c724ad172e6688877671b509cbc2b8a4a5e085",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "70ce138211ba9e1d82027b7da10c65861619c114",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "App/PyUI/spruce-tasks.json",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8f8bbae0e9905d2aa059bc6da17bdfe3185cf639",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "03f83c98bcb05b3ee72f7906667438ea3f417ce0",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/FN_Button/apply-switch-action",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c8411060bb59fca4b688654306eadc70213b1f82",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/FN_Button/scene-fan.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "96e9fd7fc308d98b8ca9f5a35fd5859adc0f0410",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5a95fd6bfe0c8ca958190c9da68620dbf21c9dbc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/applySetting/rgbLed.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "715f469f50f1d758f031541ee0d86eed59f0d587",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5e7cc94e4e51dfd72a6bc83c31e47c5dc1ae031e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/bluetooth.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "beedf1d2c2d243a7e1ac727f895248c26b4bd0b1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "67c546c94373341cade4b377802ced55b13ffbe4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/button_actions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3b26d14011a4d52ec1fac1610a6bea005570b77b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b586c5512a0beb186b887d9f3ce64a2961aca5ea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/core_mappings.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cb36acc5bd9b8f1c9096e734bc81403a9d464e87",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "33353fdf08a462eefe1d177c41b5a60be5884a49",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/drastic_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "7a32b1ac5aac6d98b857496fe189fbd210dc3601",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "01afcf9b7e71d65a613278761192699fec0f57ea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/dsperate_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d3029dfae33b369738ccfe8b4daa1c862d912268",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "e57b21d88b4d90f8519caf114c5f690d8f61dd00",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/flycast_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0c54ff7e94fe5ed62e4f991fc2d19b20711b53f7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "42e6c02162ade322cd91b7c7e7a7589130cdf852",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/general_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "2887a23a9642fa4efc2b6a750235102561ebab95",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "94c67239a5c4b2e2924b731ec8ce64a64779f6ab",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/mupen_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ef824bea01d388ce3e5de0a9a87acf1079c50eca",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6b460274284419720a6f3435b9a34293a6b1196c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/network_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "db1202aa6ae9a843110e1314507fd3fab99e8ba0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c47be4edb9d60371b9d067bcbf25080ed2613573",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/ports_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "04c69bdfa388385a9794d74deb7a2d47d097b5c6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c09123863f5ca047a65ea7abb9b8808ca0779757",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/ra_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "eed85e666499b2ac34b358e820c8032f675ce65a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "76f04f6a4cfaac224981c292480f03ea06141311",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/lib/yaba_functions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a3ed4262457db3c7057d938a37ab3cfa80af4790",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "456503f9589785ed98102599a72c92ed3cd84ac1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/emu/standard_launch.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "bd7d43272c628735021c0e83374ccedda9f9be7a",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "7de3fcd6c6efbd0fb44c7e8e425dd091ed6794a4",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/enable_zram.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "41750ca8771e5ed703efd12cf9f9786a312c90d3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a415b749900c4a936093985639347ac1674d042d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/helperFunctions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3c0831a7a377f65d14499e7033180bbf6fe4eb5f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a62b8f1dc14501215eb21708500e888048a10b5a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/leds_manager.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "2286ac2f9eee2402cb1250dcad105e2da02a90df",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "7213c5f3b8e6d718f80d6ad52c2ee90479de0a9e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/network/raproxyFunctions.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a798165c7847420f652e5f8a150904ffcf014daf",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ac78423d85b61ec84ce307241160feba0729fc4f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/A10Mini.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "78fafbfa3b9ab80f14631f48fadb977138d62e1d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "02d7948d15cfecffe686fc4b9156a129a581f51e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/A30.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cf345985a97530ee7c56c3d2aa3fde4aa32ea4e3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "19cf2c0f8e19e0e99145d4e2e49e7adfaf6598ec",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/AnbernicXXCommon.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f1d15418498960a0988b2af5954324ad9648d2f2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5b58b998a42b6553c24b7e850981c722112c6930",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Brick.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9c607207d122a6bd260c6c5606366c3f89ea9123",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "7bad7213713a95fe8968edb99d6171dc5f5dd6a1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/BrickPro.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ad3263edefd0d16a8a5b2a05d875b324473bbf09",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "a5b07e2daafce96d43da757d96bab023a4cd49b7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Flip.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "fb87eb3c3256c03b4b12b386b069aa79a626b927",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/G350.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "cde29cf69d6b7cff8b73a0db9a90c2ef07065131",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1d52868dc55691e438439c61b6396419b59ee00d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Miniloong.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f89ba2b79e95a1178aa90c5dc8c9024514049d85",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "4b4a17290520096972e4192336c6b746cc0bbc64",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/MiyooMini.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "25f8e13ec9b1daef52d9b4d1d9dc152d481004d3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c8921f182c1d82a3370b5b5592571c51e5c8c4a5",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Pixel2.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b59648aa00816216e283f95d21d4a9e60b76bfeb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6c92864d942520cd4529221a9cfc9383e6482308",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/RGB20SX.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "9128fbbef5057631752561b1becde9bd2359cedc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "63ade77d5b9865f135d70b31797ab8456146106f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/RGB30.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ccf11fd51420e59ae90124cb8095498693c47f50",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "3d271678195b5fb547db1a0d31e11afe3086cce9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/SmartPro.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ca30f9faf6376655ef8d56fcf700baeec0ed1a7b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b912bfad2bbc896cca59147378f6f89bd4aa50de",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/SmartProS.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3bd470673c2dd86aa69768ff52add2ba9cdb8386",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/V10.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "4012da4fb5089309c97589222b3ea184949c2ff7",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6921ab49f78048e1496853ac56a5a86049ef1a4f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/XU20.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c420fa2a82da7750d763c14bc0028a81d4a17c0b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/XUMiniM.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "be75d40870d0de03a2412f4e4602fac34088f4da",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c565de16e283cebf238b10bac9486420fbb90463",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Zero28.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "dba0219ae7575f1b9645e4eeeb3366870731ca59",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "685a2486b342b6a33ebddd3712e2462bb5614ea2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/Zero40.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d7a8495c14cd34a2411a72435d00badcf1a47eff",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/baseos/my355.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b65bbdc2276de1064d79e2fac173e8ac5a4eaa1b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "082791c1738de26a54c8f44f905156d14a9dd0ac",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/dArkMossCommon.cfg",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c1d036e43343990221d6a706ec2e571010f4f724",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5ee69f3f6b5c2113ee5b9b0c5e5c133380fc49c9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/A30.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "2dfef8189c6db8c95d44934cd87044a6cc1a3fe4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "544adc43b9a1fb395b0b93c87958b81d0fa643f3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/AnbernicXXCommon.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c431dd33d50bbbe86773b59c6a6b09bdf49c37d4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "b5b5d244204aeb6d8fe023c2b990b6b706b809e1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/Brick.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "15445be519103e2d963d84d3c50d7e44cb2aa9c1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "1dcfd5a9ac4560baa32a44c6da5e3a173534d670",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/BrickPro.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "6f4698109d2a25bb72add8ab6b1bfdd071bf17d9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "2ccbed91971638fabe5b11f757402ce5743ea81f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/Flip.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "26b20db79f88b0297958fae176a4b96ea027ee2a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/G350.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "719fb5694fac063a433f84d8c3f79a2748c8417d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "f074b39370a67f7408902c61a9472f37318b75fb",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/MiyooMini.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0a8082fa02e293d150411ae27ee442e7d2ab122e",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "29734d04d4d8e078cd8cbbfea6ae6ead0925720d",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/Pixel2.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b991f12a775ac06d529dcc66f5e4ebda27485fa8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "5ed8fd031247840cf7c14585b934b9c1de192723",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/SmartPro.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1dee9889b5ef0c024d255e2f40306b77fbc5cfc8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c302da86903310cee367bb4ae1cc021a4f8c61ab",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/SmartProS.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f1bb5899481090c06936a84528bc7a70957917b9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/V10.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5ca605fedc6c891e8d580929f220eb34ec85dfb6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/XUMiniM.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "294fe6e5c804fc12add7c6b897b416d2b476cea1",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "7f786ef5bb03c9be60c985680125ce8b1e9d06cf",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/Zero28.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "142d6b9050a5e78e8dee0487dfeeb2932742434a",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "de6b074edfb2f5bc4315a3a7cdabb85dc4bb1b7f",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/a133p.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "a18e103f16b07489bda5523b90145da93251cbd3",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/baseos/my355.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "1257a4eb91ce61bcc409ce819f29eb0de22c08e8",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c0fa4a4e1bb918ce1060e617a7178e603a1f5338",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/dArkMossCommon.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d21e8fe7563c9391fad8d4d9b298d1b9fa0a5e86",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "add5170737557d571fe63176667878caefe3638e",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/magicx_a133p.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "288fda55dcdb7a0a2379abf48d35b182e4997a53",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "c295050b419776df00b737858bdd214bd43f9e6c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/trimui_a133p.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "e5aa7bbd254f881ac3f74b51d5c977ea19232d27",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "235739974fa302f1fbddf9c82edae4914e1447f1",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/trimui_delegate.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "13ec7964e8d8f7170133b888f1bf7483ebc43f12",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/utils/baseos_session_shield.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "f4c56c2a1a400a1c089ed7fafbc875ffb167b68a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "65a01f5382c8bea05b772fd732eb4af7e141a92c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/utils/cpu_control_functions.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "002b69aa3115e266980f26889d13d39b9b497158",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/utils/smartpros/early_panel_modeset.py",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "06e1ced88e1542b562596c0950753b7ebab011d4",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "94e2bbf5c1493c0b60d66e819815d1d525f4b7b2",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/device_functions/utils/watchdog_launcher.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "022b670590366362587e7b3a74acad7fa73df4b6",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/platform/device_functions/utils/xx_lid_wake.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c45abda08962f92a5fffc42704ae7cac0eb15565",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "277c72d8f6a0674f120d134611be4ce04fadaa82",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/platform/miyoo_mini_startup.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "3e8e5d19ac9c16670dd46cdf26ba2eefea5c1a2e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "cfee3badaed8606121635d9ebbfb3dfc2d5dc25e",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/principal.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "96ccbab1e2df973e2e351b07758736179b926e90",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": null,
+      "change": "added",
+      "path": "spruce/scripts/random_theme.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "91c6d81de4269b9263719839a633d0a48826161a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "48953144c9482bd398a0c487c78801777024c79f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/runtime.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "d45893d0ca3d9bfc588647005d9d027091653559",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0257f8503bb21fb8c192f2b663e35aa3b6424fa9",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/runtimeHelper.sh",
+      "review_areas": [
+        "device-lifecycle-and-recovery",
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "5662f635b90eb933f29bbc2b297f69bfe5f9f014",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "9ba32194ea5c9d0341e646c7a72959e45767e218",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/save_poweroff.sh",
+      "review_areas": [
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "0f718c413a60b1a672f8cf530d7b1530676d58cc",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "fa3902cee20dfebac0ab7f803ec5b4c7d0fbbd97",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/save_poweroff_stage2.sh",
+      "review_areas": [
+        "host-regression",
+        "save-config-and-controls",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "ccc373c8a34ef6c5dedc253a7c7a97d656dd098b",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "77fc8c8156307e71120ed9ed50a7cc9157b70b93",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/tasks/bugReport.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "faed0d15bf6730898edb742a26bf13d96f60f3ee",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "0658d981050a788b645a10f4a9e705ec3ec45b8a",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/tasks/resetFlycast.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "8c261771c6feaf9d1c7f1de4d88c80cce38bf1d0",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "6534186fc525ab44bb9cd0a14bd062ff16494c6d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/tasks/resetMupen.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "b7cf05399b027457eb678a788c6d1f15437a6e5d",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "74a669186f741a101b3bd7a52c9567783899e70f",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/tasks/resetPPSSPP.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "c86f9ff81a78337fed7aace9aaf7eec5c1d6d6ea",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "before": {
+        "git_object": "ed0bdb01c3668665d5847dc6f7f94aa1d630b24c",
+        "kind": "blob",
+        "mode": "100644"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/tasks/resetYabaSanshiro.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    },
+    {
+      "after": {
+        "git_object": "6faec5fc92bc9c8607911e0686ac25f1ebb2e491",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "before": {
+        "git_object": "00fca2203865dc9254fb307222fd2ea4c87c8cdd",
+        "kind": "blob",
+        "mode": "100755"
+      },
+      "change": "modified",
+      "path": "spruce/scripts/wifi_watchdog.sh",
+      "review_areas": [
+        "host-regression",
+        "source-contract"
+      ]
+    }
+  ],
+  "device_qualified": false,
+  "distribution_cleared": false,
+  "kind": "local-upstream-drift-review",
+  "limitations": [
+    "Metadata comparison cannot establish behavioral compatibility.",
+    "New transitive dependencies outside these scopes need a separate scope review.",
+    "A no-change result does not qualify an untested device or grant source-use rights."
+  ],
+  "lock": "docs/spruce-source-lock.json",
+  "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+  "pins_updated": false,
+  "review_required": true,
+  "schema": 1,
+  "scope_expansion_review_required": true,
+  "scopes": [
+    "App/PyUI/",
+    "spruce/scripts/",
+    "App/-OTA/downloader.sh",
+    "App/USBStorageMode/launch.sh",
+    "RetroArch/igm/",
+    ".tmp_update/updater",
+    "trimui/app/",
+    "LICENSE",
+    ".gitmodules"
+  ],
+  "source": "SPRUCE_SOURCE_ROOT",
+  "unchanged_in_scope": 437
+}

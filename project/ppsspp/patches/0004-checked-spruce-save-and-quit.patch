@@ -1,0 +1,35 @@
+--- a/SDL/SDLMain.cpp
++++ b/SDL/SDLMain.cpp
+@@ -97,7 +97,7 @@
+ GlobalUIState lastUIState = UISTATE_MENU;
+ GlobalUIState GetUIState();
+ 
+-static bool g_QuitRequested = false;
++static std::atomic<bool> g_QuitRequested{false};
+ static bool g_RestartRequested = false;
+ 
+ static volatile sig_atomic_t g_saveAndQuit = 0;
+@@ -1832,7 +1832,10 @@
+ 				g_saveAndQuit = 0;
+ 				if (PSP_IsInited() && (GetUIState() == UISTATE_INGAME || GetUIState() == UISTATE_PAUSEMENU)) {
+ 					SaveState::SaveSlot(SaveState::GetGamePrefix(g_paramSFO), g_Config.iCurrentStateSlot,
+-						[](auto, auto) { g_QuitRequested = true; });
++						[](SaveState::Status status, std::string_view) {
++							if (status == SaveState::Status::SUCCESS)
++								g_QuitRequested = true;
++						});
+ 				} else {
+ 					g_QuitRequested = true;
+ 				}
+@@ -1866,7 +1869,10 @@
+ 			g_saveAndQuit = 0;
+ 			if (PSP_IsInited() && (GetUIState() == UISTATE_INGAME || GetUIState() == UISTATE_PAUSEMENU)) {
+ 				SaveState::SaveSlot(SaveState::GetGamePrefix(g_paramSFO), g_Config.iCurrentStateSlot,
+-					[](auto, auto) { g_QuitRequested = true; });
++					[](SaveState::Status status, std::string_view) {
++							if (status == SaveState::Status::SUCCESS)
++								g_QuitRequested = true;
++						});
+ 			} else {
+ 				g_QuitRequested = true;
+ 			}
