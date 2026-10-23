@@ -23,9 +23,35 @@ class _InspectionError(ValueError):
     pass
 
 
-def _read_text(path: Path) -> str:
-    """Never follow a swapped last-component symlink or block on a device/FIFO."""
-    fd = os.open(path, os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK)
+def _open_regular(root: Path, path: Path) -> int:
+    """Open a resolved card path without following swapped ancestor symlinks."""
+    relative = path.relative_to(root)
+    directory_flags = os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_DIRECTORY
+    directory_fd = os.open(root.anchor, directory_flags)
+    try:
+        # Root and reference paths were resolved before inspection. Walk every
+        # component through held descriptors so a later rename/symlink swap
+        # cannot redirect a read outside that tree.
+        for component in (*root.parts[1:], *relative.parts[:-1]):
+            child_fd = os.open(component, directory_flags, dir_fd=directory_fd)
+            os.close(directory_fd)
+            directory_fd = child_fd
+        fd = os.open(relative.name, os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW | os.O_NONBLOCK,
+                     dir_fd=directory_fd)
+        try:
+            if not stat.S_ISREG(os.fstat(fd).st_mode):
+                raise _InspectionError("DISC_REFERENCE_TOO_LARGE_OR_SPECIAL")
+        except BaseException:
+            os.close(fd)
+            raise
+        return fd
+    finally:
+        os.close(directory_fd)
+
+
+def _read_text(root: Path, path: Path) -> str:
+    """Never follow swapped symlinks or block on a device/FIFO."""
+    fd = _open_regular(root, path)
     with os.fdopen(fd, "rb") as stream:
         info = os.fstat(stream.fileno())
         if not stat.S_ISREG(info.st_mode) or info.st_size > MAX_PLAYLIST_BYTES:
@@ -60,18 +86,21 @@ def _path(root: Path, parent: Path, raw: str) -> tuple[Path, str]:
     return resolved, relative
 
 
-def _regular(path: Path) -> bool:
+def _regular(root: Path, path: Path) -> bool:
     try:
-        info = path.stat()
-        return stat.S_ISREG(info.st_mode) and info.st_size > 0
-    except OSError:
+        fd = _open_regular(root, path)
+        try:
+            return os.fstat(fd).st_size > 0
+        finally:
+            os.close(fd)
+    except (OSError, _InspectionError):
         return False
 
 
 def _cue_status(root: Path, cue: Path) -> tuple[bool, list[dict], list[str]]:
     files, warnings = [], []
     try:
-        text = _read_text(cue)
+        text = _read_text(root, cue)
         for line in text.splitlines():
             if not re.match(r"^\s*FILE(?:\s|$)", line, re.IGNORECASE):
                 continue
@@ -84,7 +113,7 @@ def _cue_status(root: Path, cue: Path) -> tuple[bool, list[dict], list[str]]:
                 break
             try:
                 track, relative = _path(root, cue.parent, match.group(1) or match.group(2))
-                files.append({"relative_path": relative, "available": _regular(track)})
+                files.append({"relative_path": relative, "available": _regular(root, track)})
             except _InspectionError as error:
                 warnings.append(str(error))
         if not files:
@@ -112,7 +141,7 @@ def inspect_disc_set(root: Path, rom: Path, system_id: str) -> dict:
     references = []
     if extension == ".m3u":
         try:
-            text = _read_text(rom)
+            text = _read_text(root, rom)
             for line in text.splitlines():
                 raw = line.strip()
                 if not raw or raw.startswith("#"):
@@ -133,7 +162,7 @@ def inspect_disc_set(root: Path, rom: Path, system_id: str) -> dict:
         try:
             path, disc_relative = _path(root, rom.parent, raw)
             entry["relative_path"] = disc_relative
-            entry["available"] = _regular(path)
+            entry["available"] = _regular(root, path)
             if path.suffix.casefold() not in DISC_EXTENSIONS:
                 entry["available"] = False
                 entry["warnings"].append("UNSUPPORTED_DISC_REFERENCE")

@@ -125,7 +125,9 @@ PYTHONPATH=project python project/tools/gameplay_benchmark.py compare --baseline
 Add `--metric native_fps`, `--metric frame_time_p95_ms` or other actually measured
 metrics as appropriate. A selected metric missing from any run rejects the
 comparison. Mismatched content, scene, device, conditions, settings, method,
-observation windows or run identities also reject it. Demanding profiles require
+observation windows or run identities also reject it. All five repeats use one
+duration and the same method/window for each selected metric, including across
+different matched pairs. Demanding profiles require
 `--sustained-baseline` and `--sustained-candidate`. Full retained evidence still
 needs independent review: metadata and hashes do not authenticate a device.
 The comparison rechecks each raw file's digest and rejects identical raw evidence
@@ -134,6 +136,11 @@ raw observation file, including its time/run identity, for each run; split a sha
 capture into distinct retained run slices before importing it. Settings use flat
 scalar `Section.NativeKey` entries so that nested preset bundles cannot masquerade
 as one changed setting.
+
+Record and compare reject an output path that resolves to an input document or
+raw observation, including sustained-run and unselected metric evidence. Use a
+separate output filename to preserve the retained evidence. Existing path aliases
+are checked before publication.
 
 Report the individual paired differences and spread, intended speed, frame
 pacing, audio and image-quality tradeoffs. A higher FPS number alone is not a

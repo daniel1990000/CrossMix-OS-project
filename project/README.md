@@ -11,18 +11,23 @@ extends existing per-game performance controls, gameplay reports, game informati
 combined library filters, Continue/backup status and PS1 disc presentation. Use
 Start (desktop Tab) for system filters. Game information leads to native
 performance and existing emulator options. The current development descriptor
-selects **smartpro-psp-0.1.0-dev15**; the published dev14 preview retains its own
+selects **smartpro-psp-0.1.0-dev16**; the published dev14 preview retains its own
 exact artifact identity and 1,011-check evidence. Candidate presets remain
 untested, and no Smart Pro performance improvement is claimed.
-The clean dev15 implementation passes **1,092 strict checks** with zero skips,
+The historical clean dev15 implementation passes **1,092 strict checks** with zero skips,
 errors or failures. Packaging, installed smoke/rollback and the no-Git source
 export rebuild pass; [exact snapshot evidence](evidence/release-continuation-20261023/verification.json)
 keeps later documentation edits separate from those build identities.
 
+Dev16 fixes reproduced gameplay-report output collisions, mixed repeat protocols
+and PS1 disc-reference path swaps. [The fix report](docs/release-preflight-fixes-2026-10-23.md)
+records their scope; new checks and build identities are recorded separately
+from dev15. The public dev14 preview remains unchanged.
+
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,
 revocation receipts and trust report readback. The current descriptor selects
-**smartpro-psp-0.1.0-dev15**, an original-only host preview. Dev14 remains the
+**smartpro-psp-0.1.0-dev16**, an original-only host preview. Dev14 remains the
 previously published and independently retained computer preview.
 
 The [work completed without hardware](docs/nondevice-completion-2026-10-23.md)

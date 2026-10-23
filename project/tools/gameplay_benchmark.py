@@ -182,6 +182,13 @@ def _changed_settings(before, after):
     return {key for key in set(before) | set(after) if before.get(key) != after.get(key)}
 
 
+def _protect_output(output, inputs):
+    """Do not replace any retained source document or raw observation."""
+    destination = Path(output).resolve()
+    _need(all(Path(path).resolve() != destination for path in inputs),
+          'Report output must not overwrite input reports or observation evidence')
+
+
 def compare(baseline, candidate, *, metrics, comparison='frontend', sustained_baseline=(), sustained_candidate=()):
     """Reject incomplete/mismatched evidence; return measurements without marketing claims."""
     _need(comparison in ('frontend', 'setting', 'emulator'), 'Select frontend, setting or emulator comparison')
@@ -204,6 +211,8 @@ def compare(baseline, candidate, *, metrics, comparison='frontend', sustained_ba
               'Incompatible game, scene, environment, intended speed or device')
     for runs, reference in ((baseline, first_before), (candidate, first_after)):
         _need(all(run['identity'] == reference for run in runs), 'Each arm must use identical emulator/settings/frontend identities')
+    _need(all(run['duration_seconds'] == baseline[0]['duration_seconds'] for run in all_runs),
+          'Five scene repeats must use the same gameplay duration')
     if comparison == 'frontend':
         _need(first_before['emulator'] == first_after['emulator'] and
               first_before['settings'] == first_after['settings'] and
@@ -245,6 +254,9 @@ def compare(baseline, candidate, *, metrics, comparison='frontend', sustained_ba
             old, new = independent_observation(left, name), independent_observation(right, name)
             _need(all(old[field] == new[field] for field in ('unit', 'method', 'start_seconds', 'end_seconds')),
                   f'Incompatible {name} observation method/window')
+            reference = baseline[0]['observations'][name]
+            _need(all(old[field] == reference[field] for field in ('method', 'start_seconds', 'end_seconds')),
+                  f'Incompatible {name} repeated observation method/window')
             measured[name] = {'baseline': old['value'], 'candidate': new['value'],
                               'difference': new['value'] - old['value'], 'unit': old['unit']}
         pairs.append({'pair_id': pair_id, 'baseline_run_id': left['run_id'],
@@ -310,13 +322,22 @@ def main():
         return json.loads(path.read_text())
     try:
         if args.command == 'record':
+            _protect_output(args.output, [args.manifest, args.observations] +
+                            ([args.resources] if args.resources else []))
             result = record(read(args.manifest), read(args.observations), args.output,
                             resources=read(args.resources) if args.resources else None)
         else:
-            result = compare([read(p) for p in args.baseline], [read(p) for p in args.candidate],
+            inputs = args.baseline + args.candidate + args.sustained_baseline + args.sustained_candidate
+            _protect_output(args.output, inputs)
+            baseline, candidate = [read(p) for p in args.baseline], [read(p) for p in args.candidate]
+            sustained_baseline = [read(p) for p in args.sustained_baseline]
+            sustained_candidate = [read(p) for p in args.sustained_candidate]
+            result = compare(baseline, candidate,
                              metrics=args.metric, comparison=args.comparison,
-                             sustained_baseline=[read(p) for p in args.sustained_baseline],
-                             sustained_candidate=[read(p) for p in args.sustained_candidate])
+                             sustained_baseline=sustained_baseline, sustained_candidate=sustained_candidate)
+            _protect_output(args.output, [observation['evidence_file']
+                            for run in baseline + candidate + sustained_baseline + sustained_candidate
+                            for observation in run['observations'].values() if observation is not None])
             _write_report(args.output, result)
     except (BenchmarkError, OSError, ValueError, TypeError) as error:
         parser.error(str(error))

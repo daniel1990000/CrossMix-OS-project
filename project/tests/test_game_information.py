@@ -4,7 +4,9 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
+from psp_shell import game_information
 from psp_shell.adapters.spruce import SpruceBackend, SpruceError
 from psp_shell.demo import DemoBackend
 from psp_shell.game_information import inspect_disc_set, MAX_PLAYLIST_BYTES, MAX_PLAYLIST_ENTRIES
@@ -139,6 +141,63 @@ class GameInformationTests(unittest.TestCase):
         self.assertEqual(status["missing_count"], 3)
         self.assertEqual(status["warnings"], ["DISC_PATH_OUTSIDE_CARD", "DISC_SET_REQUIRES_REVIEW"])
         self.assertTrue(all(not row["relative_path"] for row in status["discs"]))
+
+    def test_parent_symlink_swap_cannot_read_external_cue_or_playlist(self):
+        for extension, warning in ((".cue", "CUE_UNREADABLE"), (".m3u", "PLAYLIST_UNREADABLE")):
+            with self.subTest(extension=extension), tempfile.TemporaryDirectory() as outside:
+                folder = self.root / "Roms/PS" / extension[1:]
+                folder.mkdir()
+                reference = folder / ("Disc" + extension)
+                reference.write_text('FILE "Safe.bin" BINARY\n' if extension == ".cue" else "Safe.chd\n")
+                (folder / "Safe.bin").write_bytes(b"inside track fixture")
+                (folder / "Safe.chd").write_bytes(b"inside disc fixture")
+                external = Path(outside) / reference.name
+                external_bytes = b'FILE "Private.bin" BINARY\n' if extension == ".cue" else b"Private.chd\n"
+                external.write_bytes(external_bytes)
+                original_read = game_information._read_text
+
+                def read_after_parent_swap(root, path):
+                    folder.rename(folder.with_name(folder.name + "-original"))
+                    folder.symlink_to(outside, target_is_directory=True)
+                    return original_read(root, path)
+
+                with patch.object(game_information, "_read_text", side_effect=read_after_parent_swap):
+                    status = inspect_disc_set(self.root, reference, "PS")
+                self.assertIn(warning, status["warnings"])
+                self.assertEqual(external.read_bytes(), external_bytes)
+                if extension == ".cue":
+                    self.assertFalse(status["discs"][0]["available"])
+                    self.assertNotIn("DISC_PATH_OUTSIDE_CARD", status["warnings"])
+                else:
+                    self.assertEqual(status["discs"], [])
+
+    def test_disc_symlink_swap_cannot_report_external_file_as_available(self):
+        disc = self.root / "Roms/PS/Café Disc 1.chd"
+        original_regular = game_information._regular
+        with tempfile.TemporaryDirectory() as outside:
+            external = Path(outside) / "External.chd"
+            external.write_bytes(b"outside disc fixture")
+
+            def check_after_swap(root, path):
+                disc.unlink()
+                disc.symlink_to(external)
+                return original_regular(root, path)
+
+            with patch.object(game_information, "_regular", side_effect=check_after_swap):
+                status = inspect_disc_set(self.root, disc, "PS")
+        self.assertFalse(status["discs"][0]["available"])
+        self.assertIn("MISSING_DISC_FILE", status["warnings"])
+
+    def test_existing_in_card_symlinks_keep_resolved_disc_references(self):
+        cue = self.write("Roms/PS/discs/Real.cue", 'FILE "Track.bin" BINARY\n')
+        self.write("Roms/PS/discs/Track.bin", "inside track fixture")
+        link = self.root / "Roms/PS/Linked.cue"
+        link.symlink_to(cue)
+        playlist = self.write("Roms/PS/Set.m3u", "Linked.cue\n")
+        status = inspect_disc_set(self.root, playlist, "PS")
+        self.assertEqual(status["missing_count"], 0)
+        self.assertEqual(status["warnings"], [])
+        self.assertEqual(status["discs"][0]["relative_path"], "Roms/PS/discs/Real.cue")
 
     def test_unreadable_empty_and_oversize_playlists_remain_truthful(self):
         for content, warning in ((b"\xff", "PLAYLIST_UNREADABLE"),

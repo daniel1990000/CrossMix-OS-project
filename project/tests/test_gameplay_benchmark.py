@@ -100,6 +100,92 @@ class GameplayBenchmarkTests(unittest.TestCase):
         with self.assertRaises(BenchmarkError):
             compare(before, after, metrics=['native_fps'])
 
+    def test_repeated_scene_runs_need_one_duration(self):
+        before, after = self.arms()
+        for value in (before[1], after[1]):
+            value['duration_seconds'] = 10
+            value['observations']['native_fps']['end_seconds'] = 10
+        with self.assertRaisesRegex(BenchmarkError, 'duration'):
+            compare(before, after, metrics=['native_fps'])
+
+    def test_repeated_observations_cannot_mix_methods_or_windows(self):
+        for changed_field, changed_value in (('method', 'video-analysis'), ('end_seconds', 10)):
+            before, after = self.arms()
+            for value in before + after:
+                observation = value['observations'].pop('native_fps')
+                observation.update(value=17, unit='ms', method='native-frame-log')
+                value['observations']['frame_time_p95_ms'] = observation
+            for value in (before[1], after[1]):
+                value['observations']['frame_time_p95_ms'][changed_field] = changed_value
+            with self.subTest(field=changed_field), self.assertRaisesRegex(BenchmarkError, 'method/window'):
+                compare(before, after, metrics=['frame_time_p95_ms'])
+
+    def test_comparison_cli_preserves_input_reports_and_all_raw_evidence(self):
+        before, after = self.arms()
+        extra_evidence = self.root / 'unselected-loading.log'
+        extra_evidence.write_text('Synthetic unselected load-time observation')
+        extra = copy.deepcopy(before[0]['observations']['native_fps'])
+        extra.update(value=10, unit='ms', method='native-log', evidence_file=str(extra_evidence),
+                     evidence_sha256=hashlib.sha256(extra_evidence.read_bytes()).hexdigest())
+        before[0]['observations']['load_time_ms'] = extra
+        sustained = [self.run_fixture('sustained'), self.run_fixture('sustained', frontend='project')]
+        for value in sustained:
+            value.update(sustained=True, duration_seconds=1800)
+            value['observations']['native_fps']['end_seconds'] = 1800
+        paths = []
+        for value in before + after + sustained:
+            path = self.root / (value['run_id'] + '.json')
+            path.write_text(json.dumps(value))
+            paths.append(path)
+        command = [sys.executable, str(Path(__file__).resolve().parents[1] / 'tools/gameplay_benchmark.py'),
+                   'compare', '--baseline', *map(str, paths[:5]), '--candidate', *map(str, paths[5:10]),
+                   '--sustained-baseline', str(paths[10]), '--sustained-candidate', str(paths[11]),
+                   '--metric', 'native_fps', '--output']
+        alias = self.root / 'raw-evidence-alias'
+        alias.symlink_to(extra_evidence)
+        for target in (paths[0], paths[10], Path(before[0]['observations']['native_fps']['evidence_file']),
+                       Path(sustained[0]['observations']['native_fps']['evidence_file']), extra_evidence, alias):
+            original = target.read_bytes()
+            result = subprocess.run(command + [str(target)], capture_output=True, text=True)
+            actual = target.read_bytes()
+            target.write_bytes(original)
+            with self.subTest(target=target.name):
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('must not overwrite', result.stderr)
+                self.assertEqual(actual, original)
+        output = self.root / 'comparison.json'
+        result = subprocess.run(command + [str(output)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads(output.read_text())['measurement_domain'], 'gameplay-comparison')
+
+    def test_record_cli_preserves_input_documents(self):
+        value = self.run_fixture(0)
+        manifest = {key: entry for key, entry in value.items()
+                    if key not in ('schema', 'measurement_domain', 'observations')}
+        documents = {
+            'manifest': manifest,
+            'observations': value['observations'],
+            'resources': {'samples': [], 'summary': {'fps': None},
+                          'measurement_domain': 'gameplay-resources', 'gameplay_identity': value['identity'],
+                          'requested_seconds': 30, 'stop_reason': 'duration-reached'},
+        }
+        command = [sys.executable, str(Path(__file__).resolve().parents[1] / 'tools/gameplay_benchmark.py'), 'record']
+        paths = []
+        for name, document in documents.items():
+            path = self.root / (name + '.json')
+            path.write_text(json.dumps(document))
+            paths.append(path)
+            command.extend(['--' + name, str(path)])
+        for target in paths:
+            original = target.read_bytes()
+            result = subprocess.run(command + ['--output', str(target)], capture_output=True, text=True)
+            actual = target.read_bytes()
+            target.write_bytes(original)
+            with self.subTest(target=target.name):
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn('must not overwrite', result.stderr)
+                self.assertEqual(actual, original)
+
     def test_unavailable_selected_metric_is_rejected(self):
         before, after = self.arms()
         with self.assertRaises(BenchmarkError):
