@@ -1,6 +1,11 @@
 name: Smart Pro offshoot host checks
 on:
   workflow_dispatch:
+    inputs:
+      publish_verified_dev14:
+        description: 'Publish the exact previously certified original-only dev14 host artifacts'
+        type: boolean
+        default: false
   push:
     branches: [main]
     paths: ['project/**', 'docs/spruce-source-lock.json', '.github/workflows/smartpro-offshoot.yml']
@@ -140,4 +145,30 @@ jobs:
         with:
           name: host-preview-provenance
           path: ${{ steps.attest.outputs.bundle-path }}
+          if-no-files-found: error
+  deliver-verified-host:
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_verified_dev14
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /project/packaging/
+            /project/evidence/artifact-custody/verify-host-artifacts.py
+            /project/evidence/nondevice-completion-20261023/publish_verified_host.py
+      - name: Install host signature verifier dependency
+        run: sudo apt-get update && sudo apt-get install -y libsodium23
+      - name: Verify retained CI identities, upload and read back before publication
+        run: python3 project/evidence/nondevice-completion-20261023/publish_verified_host.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: dev14-host-delivery-readback
+          path: host-delivery-receipt.json
           if-no-files-found: error

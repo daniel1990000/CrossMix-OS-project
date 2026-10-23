@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "kind": "owner-private-dev14-retention-readback",
+  "artifacts": [
+    {
+      "role": "ci-host",
+      "drive_file_id": "1Ob_2VHUpDf6n5kAJyM9OfPNbm1zcrL5V",
+      "sha256": "e7a4be34153ac6135c3920a7bfbf238ae52ecd368ef098c4fa7b14dab0feab4a",
+      "bytes": 5124897,
+      "archive_members": 12
+    },
+    {
+      "role": "original-only-review-handoff",
+      "drive_file_id": "1tZGptD-Vk9BFSwF7_OJO3uMWDb6GHsjs",
+      "sha256": "c02daf00d450b2bd85890d097cd7e975b8b0f941e360a567f785d525bf632bd4",
+      "bytes": 4952857,
+      "archive_members": 14
+    }
+  ],
+  "storage": "Owner-only connected Drive; shared=false and owner-only permission observed; no permission added",
+  "all_archives_freshly_retrieved": true,
+  "all_archive_members_read_back": true,
+  "ci_verification": {
+    "verified_at_utc": "2026-10-23T03:16:46.871976+00:00",
+    "artifact_sha256": "e7a4be34153ac6135c3920a7bfbf238ae52ecd368ef098c4fa7b14dab0feab4a",
+    "artifact_size_bytes": 5124897,
+    "frontend": {
+      "commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+      "working_tree_modified": false
+    },
+    "totals": {
+      "tests_run": 1011,
+      "passed": 1011,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "inner_artifact_sha256": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "397f8c1f12d694c37760619c97800bda4c89e54222031c7616a24db0b412ed7f",
+      "development-verification.pub": "cda197a7dee48062b06fbcfd745511c248937c6a71cb1b322d143160de680602",
+      "host-preview.png": "06fdf405fc90ae7c3ad55c2dcb11d65e48892973950369dbe1da93ac8b2ebbfd",
+      "release-source.json": "f3e19a4016583d69549b6e1e8181b66be8703ef17bf7261377aa12766d12f81a",
+      "smartpro-psp-0.1.0-dev14-host-preview.zip": "59e04d36d7a9b9f091b4d6db255c2a65caef3b7c1a4ce6557a9a8233c37df528",
+      "smartpro-psp-0.1.0-dev14-original-source.zip": "29340597a5117a4743bb6f76174c092485bd46a1f32bc0bae777a32ea890db37",
+      "smartpro-psp-0.1.0-dev14.tar": "ac2fcb69a834dffa9bd49263c8d3f04bd8426bfaa9ec0fa8ae5eb94ebc8791a1"
+    },
+    "source_inventory_files": 207,
+    "source_inventory_sha256": "b796a5e796e1de1cb180bf8769e4a45f34b551e418b389c70fd0750ba9e79eda",
+    "payload_files": 60,
+    "signature_and_payload_inventory_verified": true,
+    "source_export_bytes_verified": true,
+    "hardware_qualified": false,
+    "production_authenticity_claim": false,
+    "private_native_artifact_custody_verified": false
+  },
+  "handoff_verification": {
+    "candidate": {
+      "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "device_gates": {
+        "hardware_qualified": false,
+        "runtime_verified": false,
+        "source_use_verified": false
+      },
+      "device_ready": false,
+      "distribution_cleared": false,
+      "frontend": {
+        "commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+        "working_tree_modified": false
+      },
+      "manifest_sha256": "7a6bf90ce72341433b67082ac7eb625a7a214d965bd8f824b4829afd613a98b2",
+      "original_only": true,
+      "package_signer_fingerprint": "cda197a7dee48062b06fbcfd745511c248937c6a71cb1b322d143160de680602",
+      "payload_files": 60,
+      "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+      "release_id": "smartpro-psp-0.1.0-dev14",
+      "selected_native_binaries": [],
+      "selected_upstream_patches": [],
+      "source_files": 207,
+      "source_inventory_sha256": "b796a5e796e1de1cb180bf8769e4a45f34b551e418b389c70fd0750ba9e79eda"
+    },
+    "index_sha256": "08f1de2f3731863730ce6d39b2f772874c1c57717d7c3a3b8c5bd1883737fdd6",
+    "production_trust_established": false,
+    "published": false,
+    "status": "verified-original-only-review"
+  },
+  "index_sha256": "08f1de2f3731863730ce6d39b2f772874c1c57717d7c3a3b8c5bd1883737fdd6",
+  "guaranteed_permanent_availability": false,
+  "operational_production_key_custody_established": false,
+  "hardware_tested": false
+}

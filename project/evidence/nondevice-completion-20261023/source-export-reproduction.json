@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "kind": "clean-source-export-reproduction",
+  "frontend_commit": "ab644b93a463fe71d10cd32bb9f7fa113b30c771",
+  "artifacts": [
+    {
+      "artifact": "smartpro-psp-0.1.0-dev14.tar",
+      "bytes": 2959360,
+      "sha256": "156ed28b02cd12f6f465887f5cacf3489563661a31531fa7bdd6a77291eada9b",
+      "same_bytes": true
+    },
+    {
+      "artifact": "smartpro-psp-0.1.0-dev14-host-preview.zip",
+      "bytes": 1430276,
+      "sha256": "59e04d36d7a9b9f091b4d6db255c2a65caef3b7c1a4ce6557a9a8233c37df528",
+      "same_bytes": true
+    },
+    {
+      "artifact": "smartpro-psp-0.1.0-dev14-original-source.zip",
+      "bytes": 1983326,
+      "sha256": "29340597a5117a4743bb6f76174c092485bd46a1f32bc0bae777a32ea890db37",
+      "same_bytes": true
+    }
+  ],
+  "export_has_git": false,
+  "disposable_development_private_key_deleted": true,
+  "operational_trust_established": false,
+  "physical_device_tested": false
+}
