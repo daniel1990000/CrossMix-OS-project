@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import copy
 import random
+import unicodedata
 
 
 class DemoBackend:
@@ -43,6 +44,7 @@ class DemoBackend:
                     "subtitle": subtitle, "availability": "available", "artwork": "",
                     "relative_path": f"{slug}.sample", "resume_available": slug in ("skyline", "echo"),
                     "resume_reason": "Synthetic fixture, not a real emulator state",
+                    "selected_preset": "PPSSPP-SA" if system == "PSP" else "Existing emulator (sample)",
                 })
         self._favorites = {"sample:PSP:skyline", "sample:PS:echo", "sample:PORTS:summit"}
 
@@ -54,9 +56,10 @@ class DemoBackend:
         return copy.deepcopy(self._systems)
 
     def games(self, system_id=None, search="", offset=0, limit=50):
+        search = unicodedata.normalize("NFC", search).casefold()
         records = [self._record(g) for g in self._games
                    if (not system_id or g["system_id"] == system_id)
-                   and search.casefold() in (g["label"] + " " + g["system_id"]).casefold()]
+                   and search in unicodedata.normalize("NFC", g["label"]).casefold()]
         records.sort(key=lambda g: (g["label"].casefold(), g["id"]))
         return {"items": records[offset:offset + limit], "total": len(records), "offset": offset, "limit": limit}
 
@@ -65,12 +68,37 @@ class DemoBackend:
         result["favorite"] = result["id"] in self._favorites
         return result
 
-    def favorites(self):
-        return [self._record(g) for g in self._games if g["id"] in self._favorites]
+    @staticmethod
+    def _matches(game, system_id, search):
+        return (not system_id or game["system_id"] == system_id) and (
+            unicodedata.normalize("NFC", search).casefold() in unicodedata.normalize("NFC", game["label"]).casefold())
 
-    def recent(self):
+    def favorites(self, system_id=None, search=""):
+        return [self._record(g) for g in self._games if g["id"] in self._favorites and self._matches(g, system_id, search)]
+
+    def recent(self, system_id=None, search=""):
         wanted = ("sample:PSP:skyline", "sample:PS:echo", "sample:PORTS:summit", "sample:GBA:wild")
-        return [self._record(next(g for g in self._games if g["id"] == key)) for key in wanted]
+        records = [self._record(next(g for g in self._games if g["id"] == key)) for key in wanted]
+        return [g for g in records if self._matches(g, system_id, search)]
+
+    def game_info(self, game_id):
+        game = next((g for g in self._games if g["id"] == game_id), None)
+        if game is None:
+            raise ValueError("Unknown sample game")
+        system = next(row for row in self._systems if row["id"] == game["system_id"])
+        result = dict(self._record(game), system_label=system["label"],
+                      selected_emulator=game["selected_preset"],
+                      disc_set={"kind": "none", "discs": [], "warnings": [], "disc_count": 0, "missing_count": 0})
+        if game["system_id"] == "PS":
+            # Explicit synthetic presentation data; no game or playlist exists.
+            result["disc_set"] = {"kind": "playlist", "disc_count": 2, "missing_count": 1,
+                                  "warnings": ["MISSING_DISC_FILE"], "sample": True,
+                                  "discs": [{"number": 1, "label": "Disc 1 (sample)", "available": True},
+                                            {"number": 2, "label": "Disc 2 (sample)", "available": False}]}
+            result["disc_management"] = {"route": "native_menu", "game_options_route": "game.options",
+                                         "description": "In a real game, use the existing emulator's native menu for disc switching. "
+                                                        "This is sample metadata; no emulator or game is running."}
+        return result
 
     def random(self):
         return self._record(random.choice(self._games))

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "repository": "https://github.com/hrydgard/ppsspp",
+  "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "inputs": [
+    {
+      "path": "Core/Config.cpp",
+      "sha256": "e0c4d36ef8ccad3b4fbdc3bff7e831e397f7b82a9e4e250df93ee3602b298f69"
+    },
+    {
+      "path": "Core/Util/PathUtil.cpp",
+      "sha256": "68a90e4e8f8c8dedd66240a53d11323d01fe6dd55e461626ec42585a121b1278"
+    },
+    {
+      "path": "UI/GameSettingsScreen.cpp",
+      "sha256": "20ea8f565adba1b15a80ff2a54d5ef4c0743f25314e26ed5ce599b8e48a441d2"
+    }
+  ],
+  "observations": [
+    "Graphics InternalResolution, FrameSkip and AutoFrameSkip are native per-game settings.",
+    "Manual frameskip is inactive while automatic frameskip is on.",
+    "Enabling automatic frameskip can turn off SkipBufferEffects; the shell rejects that conflict without editing the owner setting.",
+    "Resolution is inactive with SoftwareRenderer or SkipBufferEffects; the shell reports that conflict.",
+    "Non-VR per-game configuration filenames use PPSSPP game IDs, never shell path hashes or ROM basenames."
+  ],
+  "device_qualified": false,
+  "performance_measured": false
+}

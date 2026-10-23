@@ -38,6 +38,13 @@ def build_payload(project, output, source_lock=None):
             name = destination + "/" + path.relative_to(root).as_posix()
             relative_path(name)
             sources.append((path, name))
+    # The backup screen reuses the existing fresh readback implementation.
+    # Keep this narrow: no arbitrary tool, command or auto-restore endpoint.
+    for name in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+        path = project / "tools" / name
+        if path.is_symlink() or not path.is_file():
+            raise OverlayError("existing recovery verifier source missing")
+        sources.append((path, "app/tools/" + name))
     output.mkdir(parents=True)
     try:
         for path, name in sources:

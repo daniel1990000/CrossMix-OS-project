@@ -385,6 +385,12 @@ class EmbeddedTests(unittest.TestCase):
         with self.assertRaises(ContractError):
             logical_action(Buttons.X, preferences, device, text_mode=True)
 
+    def test_start_routes_existing_controller_input_to_library_filters(self):
+        class Buttons(Enum):
+            START = 1
+        preferences = SimpleNamespace(confirm="south")
+        self.assertEqual(logical_action(Buttons.START, preferences, self.device), "menu")
+
     def test_existing_controller_deletes_and_submits_the_open_keyboard(self):
         class Buttons(Enum):
             A = 1

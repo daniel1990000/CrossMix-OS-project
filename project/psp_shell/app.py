@@ -59,7 +59,8 @@ def guard_snapshot_outputs(sd_root, paths):
 class Dispatcher:
     """Fixed operation table. No shell endpoint or caller-supplied command."""
     def __init__(self, backend, settings, state_dir, *, launch_bridge=None, control_adapter=None,
-                 theme_manager=None, hardware_adapter=None, experience_manager=None, game_options_handler=None):
+                 theme_manager=None, hardware_adapter=None, experience_manager=None, game_options_handler=None,
+                 performance_manager=None, backup_adapter=None):
         self.backend, self.settings = backend, settings
         self.state_dir = Path(state_dir)
         self.launch_bridge = launch_bridge
@@ -67,6 +68,8 @@ class Dispatcher:
         self.theme_manager = theme_manager
         self.hardware_adapter = hardware_adapter
         self.experience_manager = experience_manager
+        self.performance_manager = performance_manager
+        self.backup_adapter = backup_adapter
         # Trusted source callback schedules the existing foreground menu. It
         # must not be a raw popup callable executed on a data-worker thread.
         self.game_options_handler = game_options_handler
@@ -107,6 +110,7 @@ class Dispatcher:
                     "physical_device_verified": False, "demo": demo,
                     "game_launch": self.launch_bridge is not None,
                     "game_options": callable(self.game_options_handler),
+                    "game_information": callable(getattr(self.backend, "game_info", None)),
                     "power": {"supported": False, "reason": "Use the verified spruce device backend"},
                     "usb": {"supported": False, "reason": "Requires the qualified staged export/reboot route"},
                     "menu_controls": {"gameplay_is_separate": True, "live_emulator_changes": False}}
@@ -122,6 +126,38 @@ class Dispatcher:
                 return self.hardware_adapter.status()
             from .hardware_settings import unavailable_status
             return unavailable_status()
+        if method == "backup.status":
+            self._fields(params, ())
+            if self.backup_adapter is not None:
+                return self.backup_adapter.status()
+            from .recovery import unavailable_status
+            return unavailable_status()
+        if method == "backup.action":
+            self._fields(params, ("action_id",), ("action_id",))
+            action = self._text(params, "action_id", limit=32)
+            if action == "recheck":
+                return self._dispatch("backup.status", {})
+            if action == "recovery_guide":
+                from .recovery import RECOVERY_GUIDE
+                return {"message": RECOVERY_GUIDE}
+            if action == "support_export":
+                return self._dispatch("support.export", {})
+            raise AppError("UNKNOWN_RECOVERY_ACTION", "This recovery action is not supported.")
+        if method == "performance.status":
+            self._fields(params, ("game_id",), ("game_id",))
+            game_id = self._text(params, "game_id")
+            info = self.backend.game_info(game_id)
+            if self.performance_manager is not None and info.get("system_id") == "PSP":
+                return self.performance_manager.status(game_id)
+            from .performance import unavailable_status
+            return unavailable_status(game_id, info.get("system_id", ""))
+        if method.startswith("performance."):
+            action = method.split(".", 1)[1]
+            if action not in ("preview", "apply", "undo"):
+                raise AppError("UNKNOWN_METHOD", "This performance action is not supported.")
+            if self.performance_manager is None:
+                raise AppError("UNQUALIFIED_PERFORMANCE", "Use this game's existing native emulator options until its settings identity is verified.")
+            return getattr(self.performance_manager, action)(params)
         if method.startswith("hardware."):
             action = method.split(".", 1)[1]
             if action not in ("preview", "apply", "route"):
@@ -208,9 +244,15 @@ class Dispatcher:
             if type(offset) is not int or type(limit) is not int or offset < 0 or not 1 <= limit <= 100:
                 raise AppError("INVALID_PARAMS", "Page size must be 1–100 and offset must be nonnegative.")
             return self.backend.games(system or None, search=search, offset=offset, limit=limit)
-        if method in ("library.recent", "library.favorites", "tools.list"):
+        if method in ("library.recent", "library.favorites"):
+            self._fields(params, ("system_id", "search"))
+            system = self._text(params, "system_id", limit=128)
+            search = self._text(params, "search", limit=128)
+            callback = getattr(self.backend, "recent" if method == "library.recent" else "favorites")
+            return callback(system_id=system or None, search=search) if system or search else callback()
+        if method == "tools.list":
             self._fields(params, ())
-            return getattr(self.backend, {"library.recent": "recent", "library.favorites": "favorites", "tools.list": "tools"}[method])()
+            return self.backend.tools()
         if method == "library.random":
             self._fields(params, ())
             if hasattr(self.backend, "random"):
@@ -230,6 +272,12 @@ class Dispatcher:
             else:
                 result = self.backend.set_favorite(game_id, params["enabled"])
             return result if result is not None else {"game_id": game_id, "enabled": params["enabled"]}
+        if method == "game.info":
+            self._fields(params, ("game_id",), ("game_id",))
+            callback = getattr(self.backend, "game_info", None)
+            if not callable(callback):
+                raise AppError("UNAVAILABLE_GAME_INFO", "This library cannot provide game information.")
+            return callback(self._text(params, "game_id"))
         if method == "game.options":
             self._fields(params, ("game_id",), ("game_id",))
             game_id = self._text(params, "game_id")
@@ -377,7 +425,7 @@ def run_preview(args, backend=None):
         select_category(0)
         synchronous(model.handle("confirm"))
     for action in filter(None, (args.actions or "").split(",")):
-        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search"):
+        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search", "menu"):
             raise AppError("INVALID_ACTION", "The scripted preview contains an unknown navigation action.")
         synchronous(model.handle(action))
 

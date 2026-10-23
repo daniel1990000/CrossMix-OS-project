@@ -1,0 +1,169 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-23T08:11:24.503444+00:00",
+  "evidence_class": "stock-desktop-native-save-load",
+  "status": "passed-observed-native-paths",
+  "emulator": {
+    "name": "PPSSPP SDL",
+    "observed_version": "v1.20.3",
+    "release_url": "https://github.com/hrydgard/ppsspp/releases/tag/v1.20.3",
+    "asset_url": "https://github.com/hrydgard/ppsspp/releases/download/v1.20.3/PPSSPP-v1.20.3-anylinux-x86_64.AppImage",
+    "appimage": {
+      "bytes": 54369507,
+      "sha256": "f6c7c399adfad19476b0fd20216132046b84242c6679b6822d10d124bb1c5366"
+    },
+    "executed_elf": {
+      "bytes": 23808656,
+      "sha256": "796ca9c36e6e898db7391ccce79e3efa4b8fce435cd669d3b1cd57b7cc10db8a"
+    },
+    "native_project_patches_applied": false,
+    "target_candidate_rebuilt": false,
+    "source_binary_correspondence_independently_proven": false
+  },
+  "software": {
+    "name": "BlockOut II PSP",
+    "release": "v1.0",
+    "release_url": "https://github.com/bomblik/BlockOut_II_PSP/releases/tag/v1.0",
+    "publisher": "bomblik",
+    "package": {
+      "bytes": 4141984,
+      "sha256": "52236b9de9eefa2e3d0bb40791fac2e87ed46de11b9cf20e59ecc7ba4bdaad7c"
+    },
+    "eboot": {
+      "bytes": 1479585,
+      "sha256": "665f249aa8df61d4024c6d9f1c9b34a701dd057416b01bf59f9442b5b1bedec4"
+    },
+    "license_url": "https://github.com/bomblik/BlockOut_II_PSP/blob/master/LICENCE.md",
+    "license": "GPL-2.0 repository licence",
+    "license_observation": {
+      "bytes": 18039,
+      "sha256": "9886ed32a8478bca95e6323bb08ca5df0f3eb7cb7dadbda64d17ae34b79e645f"
+    },
+    "distribution_in_project": false,
+    "new_test_game_developed": false
+  },
+  "host": {
+    "platform": "Linux x86_64",
+    "video_driver": "SDL offscreen",
+    "audio_driver": "SDL dummy",
+    "graphics": "Requested --graphics=software; rendered output not verified",
+    "physical_display_or_audio_observed": false,
+    "rendered_gameplay_visually_verified": false,
+    "observed_graphics_limits": [
+      "Vulkan physical-device initialization was unavailable.",
+      "The offscreen run selected PPSSPP software rendering; stdout also printed OpenGL 2.0 or higher. No framebuffer/display rendering correctness was independently verified."
+    ]
+  },
+  "input": {
+    "method": "LD-preloaded SDL_PollEvent test harness, without modifying the emulator executable",
+    "sequence": [
+      {
+        "elapsed_seconds": 5,
+        "key": "F2",
+        "native_action": "Save State"
+      },
+      {
+        "elapsed_seconds": 10,
+        "key": "F4",
+        "native_action": "Load State"
+      },
+      {
+        "elapsed_seconds": 13,
+        "key": "F3",
+        "native_action": "Next Slot"
+      },
+      {
+        "elapsed_seconds": 18,
+        "event": "SDL_QUIT"
+      }
+    ],
+    "harness": "sdl-key-harness.c",
+    "native_controls": {
+      "Save State": "1-132",
+      "Load State": "1-134",
+      "Next Slot": "1-133"
+    }
+  },
+  "observed_paths": [
+    "Real native game boot",
+    "Native SaveState serialization and compressed file completion",
+    "Native load-undo serialization",
+    "Native state deserialization completion",
+    "Continued native execution and normal SDL quit"
+  ],
+  "native_log_evidence": {
+    "save_completion": "Serialize/Serializer.cpp:522 ChunkReader: Done writing ... EBOO00649__0.ppst.tmp",
+    "load_completion": "Serialize/Serializer.h:272 ChunkReader: Done loading ... EBOO00649__0.ppst",
+    "native_save_state_error_lines": 0,
+    "normal_process_exit_code": 0
+  },
+  "retained_state_identity_only": {
+    "bytes": 1667057,
+    "sha256": "7f1188148414af09b002fe213c405efb30cf8014ab53e6d56e9fb756e1fc1296"
+  },
+  "post_run_configuration_identity": {
+    "bytes": 18921,
+    "sha256": "aec337c2ea0562262e20376e936651360c751670cbd5d93fa8510adfccc58a3e"
+  },
+  "post_run_controls_identity": {
+    "bytes": 595,
+    "sha256": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845"
+  },
+  "configuration_notes": [
+    "The configuration before launch was not independently snapshotted, so byte preservation before/after is not claimed.",
+    "SAVESTATELevel=5 enabled native diagnostics; StateSlot=0 selected the save slot; real native shutdown rewrote its configuration.",
+    "An empty-path Failed to open log file diagnostic appeared at shutdown; the explicitly selected native log was written and contains the completed operations.",
+    "Vulkan probing reported no working physical device and remained unavailable.",
+    "Stdout printed OpenGL 2.0 or higher before native boot; host graphics initialization/rendered gameplay correctness is not established by the subsequent native serialization success."
+  ],
+  "evidence_files": {
+    "native-save-load.log": {
+      "bytes": 1844,
+      "sha256": "57b0b30f906fc0af19abed0e50e4b9b8299e5f1ce3b6ae600edb11698743c587"
+    },
+    "desktop-stdout.log": {
+      "bytes": 4692,
+      "sha256": "b6671de2e9aede9b0ecd50d1ae95366a4f45ef479821b6d079d4acd18308c596"
+    },
+    "sdl-key-harness.c": {
+      "bytes": 1062,
+      "sha256": "1f9ca92632afac9b6e464c0e2163191691f3479d4e000963cebaa85ef8ed2175"
+    }
+  },
+  "not_exercised": [
+    "Custom Smart Pro save-completion export",
+    "Custom native load acknowledgement",
+    "Exact spruce integration",
+    "Authenticated Resume admission",
+    "Device filesystem durability",
+    "Power-off Resume",
+    "Native failed-save/error recovery",
+    "Real display/audio/input timing",
+    "Commercial game compatibility"
+  ],
+  "hardware_qualified": false,
+  "runtime_gates_enabled": false,
+  "native_device_binaries_replaced": false,
+  "gameplay_measurements": {
+    "native_speed_percent": null,
+    "native_fps": null,
+    "frame_time_p95_ms": null,
+    "audio_faults": null,
+    "input_latency_ms": null,
+    "battery_energy_wh": null
+  },
+  "command": "XDG_CONFIG_HOME=/workspace/scratch/ppsspp-desktop/desktop-config SDL_VIDEODRIVER=offscreen SDL_AUDIODRIVER=dummy timeout 25 /workspace/scratch/ppsspp-desktop/squashfs-root/shared/lib/ld-linux-x86-64.so.2 --library-path /workspace/scratch/ppsspp-desktop/squashfs-root/shared/lib --preload /workspace/scratch/ppsspp-desktop/key_events.so /workspace/scratch/ppsspp-desktop/squashfs-root/shared/bin/PPSSPPSDL --graphics=software --log=/workspace/scratch/ppsspp-desktop/blockout-confirmed-native.log /workspace/scratch/ppsspp-desktop/blockout/BlockOut_II/EBOOT.PBP",
+  "working_directory": "/workspace/scratch/ppsspp-desktop/squashfs-root/bin",
+  "custody": "Small original harness and observational logs retained in Git; downloaded app/game/state binaries remain outside the repository. Scratch paths are ephemeral.",
+  "scope": "CPU/native SaveState serialization/deserialization paths in a headless stock desktop executable; no rendered gameplay, graphics quality, FPS or audio result.",
+  "earlier_attempts": [
+    {
+      "method": "AppImage wrapper with LD_PRELOAD",
+      "result": "Native boot observed; wrapper did not retain key-event interposition; external 25-second timeout, no save/load claim."
+    },
+    {
+      "method": "Direct bundled loader with key injection and default log level",
+      "result": "Native save and load-undo files appeared; repeated with SaveState diagnostics to obtain the retained explicit completion log."
+    }
+  ]
+}

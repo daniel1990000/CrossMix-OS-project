@@ -97,6 +97,14 @@ class ReleaseDescriptorTest(unittest.TestCase):
         (self.project / "dev/certify.py").write_text("print('certify')\n")
         self.assertIn("smartpro-original-source/dev/certify.py", dict(self.entries()))
 
+    def test_original_performance_lock_is_exported_without_native_sources(self):
+        (self.project / "ppsspp").mkdir()
+        (self.project / "ppsspp/performance-source-lock.json").write_text('{"schema":1}\n')
+        (self.project / "ppsspp/native.c").write_text("/* excluded upstream fixture */\n")
+        entries = dict(self.entries())
+        self.assertIn("smartpro-original-source/ppsspp/performance-source-lock.json", entries)
+        self.assertNotIn("smartpro-original-source/ppsspp/native.c", entries)
+
 
 if __name__ == "__main__":
     unittest.main()

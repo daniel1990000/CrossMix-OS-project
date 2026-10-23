@@ -619,6 +619,8 @@ class Renderer:
         if snapshot.selected_item and snapshot.selected_item.kind == "game":
             self._button("north", 680, 681, muted)
             self._text("Favorite", 699, 674, 15, muted, 140)
+        if snapshot.category in (0, 1):
+            self._text("Start  Filters", 866, 674, 15, muted, 180)
         number = snapshot.offset + snapshot.selected + 1 if snapshot.items else 0
         text = f"{number} / {snapshot.total}"
         self._text(text, 1157 - self.text.measure(text, 14), 675, 14, muted, 110)
@@ -684,6 +686,14 @@ class Renderer:
         self._rect(left, 0, LOGICAL_WIDTH - left, LOGICAL_HEIGHT,
                    (2, 20, 54, 242) if preferences.high_contrast else (3, 26, 65, 222))
         self._line(left, 0, left, LOGICAL_HEIGHT, (230, 245, 255, 40))
+        if dialog.system_id or dialog.artwork:
+            art_width = 180 if expanded else 270
+            art_x = max(24, (left - art_width) // 2)
+            self._rect(0, 0, left, LOGICAL_HEIGHT, (3, 26, 65, 255))
+            self._artwork(UIItem("dialog-art", "", system_id=dialog.system_id, artwork=dialog.artwork),
+                          art_x, 250, art_width, round(art_width * 0.67), preferences)
+            self._text("PS1" if dialog.system_id in ("PS", "PS1", "PSX") else dialog.system_id,
+                       art_x, 268 + round(art_width * 0.67), 17, primary, art_width)
         rows = min(4, len(dialog.choices))
         row_height = max(48, round(38 * scale))
         bottom = 626
@@ -710,8 +720,10 @@ class Renderer:
         page = dialog.message_page % page_count
         for index, line in enumerate(lines[page * max_lines:(page + 1) * max_lines]):
             self._label(line, content_x, body_y + index * (body_size + 7), 18, muted, width, scale)
-        for index, choice in enumerate(dialog.choices[:4]):
-            y = first_y + index * (row_height + 8)
+        choice_offset = max(0, min(dialog.selected - rows + 1, len(dialog.choices) - rows))
+        for visible_index, choice in enumerate(dialog.choices[choice_offset:choice_offset + rows]):
+            index = choice_offset + visible_index
+            y = first_y + visible_index * (row_height + 8)
             selected = index == dialog.selected
             if selected:
                 self._rect(content_x - 18, y - 1, width + 30, row_height + 2, (255, 255, 255, 18))
@@ -723,6 +735,8 @@ class Renderer:
             self._label(choice.title, content_x, y + 12, 21, primary if selected else (*muted[:3], 180), width, scale)
         if page_count > 1:
             self._label(f"X  More text     {page + 1} / {page_count}", content_x, 646, 15, primary, width)
+        elif len(dialog.choices) > rows:
+            self._label(f"Options {choice_offset + 1}–{choice_offset + rows} / {len(dialog.choices)} · Up / Down", content_x, 646, 15, primary, width)
         self._button(preferences.confirm, content_x + 4, 686, primary)
         self._label("Enter", content_x + 23, 679, 15, primary, 100)
         self._button("east" if preferences.confirm == "south" else "south", content_x + 143, 686, primary)

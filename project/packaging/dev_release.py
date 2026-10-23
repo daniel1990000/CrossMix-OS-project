@@ -62,7 +62,8 @@ def original_source_entries(project):
             continue
         if relative.parts[0] not in SOURCE_FOLDERS and relative.as_posix() not in SOURCE_ROOT_FILES:
             continue
-        if relative.parts[0] == "ppsspp" and (len(relative.parts) < 2 or relative.parts[1] != "theme"):
+        if (relative.parts[0] == "ppsspp" and relative.as_posix() != "ppsspp/performance-source-lock.json"
+                and (len(relative.parts) < 2 or relative.parts[1] != "theme")):
             continue
         if any(x in {"__pycache__", ".git", ".venv", "state", "transactions", "previews", "migrations", "fixtures"}
                for x in relative.parts):
@@ -101,17 +102,29 @@ def host_smoke(python, release, scratch):
         "import json,tempfile; from pathlib import Path; "
         "from psp_shell.demo import DemoBackend; from psp_shell.settings import SettingsStore; "
         "from psp_shell.app import Dispatcher; "
+        "from psp_shell.recovery import BackupStatusAdapter; "
+        "from tools.recovery_payload import backup; "
         "root=Path(tempfile.mkdtemp()); d=Dispatcher(DemoBackend(),SettingsStore(str(root/'preferences')),root/'reports'); "
         "assert d.dispatch('settings.get')['generation']>=0; "
+        "g=d.dispatch('library.query',{'system_id':'PSP','search':'Skyline'})['items'][0]; "
+        "assert d.dispatch('game.info',{'game_id':g['game_id']})['game_id']==g['game_id']; "
+        "assert all(x['system_id']=='PSP' for x in d.dispatch('library.recent',{'system_id':'PSP'})); "
+        "assert d.dispatch('backup.status')['status']=='unavailable'; "
+        "src=root/'stopped-saves'; src.mkdir(mode=0o700); (src/'fixture.sav').write_bytes(b'original'); "
+        "backup(src,root/'backup','saves'); d.backup_adapter=BackupStatusAdapter({'saves':root/'backup'}); "
+        "assert d.dispatch('backup.status')['status']=='verified'; "
+        "(root/'backup/data/fixture.sav').write_bytes(b'changed'); "
+        "assert d.dispatch('backup.status')['status']=='unavailable'; "
         "r=d.dispatch('interface.switch',{'interface':'classic'}); "
         "assert r['interface']=='classic' and r['state']=='releasing_ui'; "
-        "print(json.dumps({'settings':True,'classic_delegation_contract':True}))"
+        "print(json.dumps({'settings':True,'game_information':True,'combined_filters':True,'fresh_backup_readback':True,'classic_delegation_contract':True}))"
     )
     contract = subprocess.run([str(python), "-c", probe], env=environment, cwd=release,
                               capture_output=True, text=True, timeout=30)
     overlay.require(contract.returncode == 0, "packaged settings/classic contract failed: " + contract.stderr[-2000:])
     return {"rendered_frames": observed["frames"], "navigation_actions_exercised": True,
             "settings_dispatch": True, "classic_delegation_contract": True, "clean_process_exit": True,
+            "game_information": True, "combined_filters": True, "fresh_backup_readback": True,
             "physical_device_verified": False, "real_game_launches": 0}, screenshot
 
 

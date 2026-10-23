@@ -85,3 +85,27 @@ lifecycle evidence. These files cannot turn arbitrary card JSON into authority.
 Source-use notification and redistribution review remain separate from this
 device session. The independent host preview can be checked before those steps;
 they are not replaced by synthetic test results.
+
+## Continuation screens and gameplay cases
+
+Use the same recovery prerequisites and 13-area casebook. Add these observations
+to its existing areas; they do not create a new OS/emulator qualification track:
+
+| Existing area | Additional cases |
+|---|---|
+| Library | Selected-system search; PSP/PS1 favorites and recents; pagination/focus after refresh; long titles and missing covers; PS1 M3U disc-set information, malformed playlist and missing-disc warnings. Confirm no generator runs or game files move. |
+| Settings | Preview and apply each native per-game performance option; preserve global settings and unrelated overrides; stale preview, stopped writers, interrupted writes and Undo; PS1 routes to its existing options and retains the selected emulator and memory cards. |
+| Save/Resume | Continue distinguishes authenticated Resume available from Recently played; unavailable reasons and original verification timestamps remain accurate after failure, settings changes and reboot. |
+| Restore | Backup status reflects verified payload/readback receipts and their actual scope; supported recovery routes remain distinct from a whole-card or internal-system restore. |
+| Native controls | Game information exposes existing PS1 disc management; verify next-disc behavior and memory-card preservation through the actual engine menu. |
+| Appearance | Game information, artwork fallback, warning text and performance explanations remain readable with controller focus, largest text and high contrast. |
+
+For gameplay, follow [the matched PSP/PS1 measurement procedure](gameplay-performance.md).
+Compare current spruce/current engine/settings, then our interface with those
+identical engine/settings, then isolated individual setting or emulator changes.
+Use five matched runs for each selected game/scene and a separate 30-minute
+sustained run for demanding release profiles. Record intended speed, native
+speed/FPS where available, frame pacing, audio, resolution and frameskip. Keep
+menu measurements separate. Unavailable observations stay unavailable; select
+recommended presets and any marketing figures only from the reviewed Smart Pro
+results. Resume after power-off and a richer state gallery remain follow-on work.

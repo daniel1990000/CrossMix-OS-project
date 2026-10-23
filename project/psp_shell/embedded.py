@@ -52,6 +52,8 @@ class EmbeddedContext:
     restore_background_tasks: Callable[[], None] | None = None
     assert_owners: Callable[[], None] | None = None
     experimental_session: Any = None
+    performance_manager: Any = None
+    backup_adapter: Any = None
 
 
 @dataclass
@@ -137,7 +139,7 @@ def logical_action(value: Any, preferences: Any, device: Any, *, text_mode: bool
         confirm = "B" if getattr(preferences, "confirm", "south") == "south" else "A"
         return "confirm" if name == confirm else "back"
     return {"Y": "submit_text" if text_mode else "favorite",
-            "X": "delete_text" if text_mode else "search", "SELECT": "search"}.get(name)
+            "X": "delete_text" if text_mode else "search", "SELECT": "search", "START": "menu"}.get(name)
 
 
 def _existing_font_provider(display: Any) -> Callable[[int], Any]:
@@ -344,6 +346,8 @@ class EmbeddedRunner:
                                              theme_manager=self.context.theme_manager if experimental is None else None,
                                              hardware_adapter=self.context.hardware_adapter if experimental is None else None,
                                              experience_manager=self.context.experience_manager if experimental is None else None,
+                                             performance_manager=self.context.performance_manager if experimental is None else None,
+                                             backup_adapter=self.context.backup_adapter if experimental is None else None,
                                              game_options_handler=self._schedule_game_options
                                              if experimental is None and self.context.game_options_handler is not None else None)
         self._commands(self.model.initial_commands())

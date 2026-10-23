@@ -17,7 +17,10 @@ from pathlib import Path
 import stat
 import sys
 
-import recovery_preflight as verifier
+if __package__:
+    from . import recovery_preflight as verifier
+else:
+    import recovery_preflight as verifier
 
 MAX_RECORD = 64 * 1024
 FALSE_FLAGS = {"physical_restore_tested": False, "hardware_qualified": False,

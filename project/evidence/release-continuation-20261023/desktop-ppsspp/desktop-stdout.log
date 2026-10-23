@@ -1,0 +1,47 @@
+08:40:228 Vulkan/VulkanLoader.cpp:462 I[G3D]: VulkanMayBeAvailable: Device allowed ('SDL:Linux')
+08:40:228 Vulkan/VulkanLoader.cpp:401 I[G3D]: Vulkan library loaded ('libvulkan.so')
+08:40:228 Vulkan/VulkanLoader.cpp:511 I[G3D]: VulkanMayBeAvailable: Enumerating instance extensions
+08:40:228 Vulkan/VulkanLoader.cpp:522 I[G3D]: VulkanMayBeAvailable: Instance extension count: 4
+08:40:228 Vulkan/VulkanLoader.cpp:530 I[G3D]: VulkanMaybeAvailable: Instance extension found: VK_EXT_debug_report (0000000a)
+08:40:228 Vulkan/VulkanLoader.cpp:530 I[G3D]: VulkanMaybeAvailable: Instance extension found: VK_EXT_debug_utils (00000002)
+08:40:228 Vulkan/VulkanLoader.cpp:530 I[G3D]: VulkanMaybeAvailable: Instance extension found: VK_KHR_portability_enumeration (00000001)
+08:40:228 Vulkan/VulkanLoader.cpp:530 I[G3D]: VulkanMaybeAvailable: Instance extension found: VK_LUNARG_direct_driver_loading (00000001)
+08:40:228 Vulkan/VulkanLoader.cpp:548 E[G3D]: Surface extension not found
+08:40:228 Vulkan/VulkanLoader.cpp:649 W[G3D]: Vulkan with working device not detected.
+DEBUG: Vulkan is not available, not using Vulkan.
+Info: We compiled against SDL version 2.32.8 and we are linking against SDL version 2.32.8. :)
+08:40:231 Thread/ThreadManager.cpp:228 I[SYSTEM]: ThreadManager::Init(compute threads: 5, all: 10)
+08:40:231 Util/PortManager.cpp:475 I[SCENET]: UPnPService: Begin of UPnPService Thread
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /usr/local/share/ppsspp/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /workspace/scratch/ppsspp-desktop/AppDir/shared/lib/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /workspace/scratch/ppsspp-desktop/AppDir/shared/lib
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /usr/local/share/ppsspp/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /usr/local/share/games/ppsspp/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /usr/share/ppsspp/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /usr/share/games/ppsspp/assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : assets
+08:40:232 VFS/VFS.cpp:14 D[IO]: Registered VFS for prefix : /home/agent
+08:40:232 File/FileUtil.cpp:716 E[IO]: CreateFullPath(): Not yet supported
+08:40:232 File/FileUtil.cpp:207 E[IO]: OpenCFile(): PathType not yet supported
+OpenGL 2.0 or higher.
+08:40:314 Core/System.cpp:620 N[BOOT]: PPSSPP v1.20.3
+08:40:439 user_main    N[BOOT]: UI/EmuScreen.cpp:392 Booted /workspace/scratch/ppsspp-desktop/blockout/BlockOut_II/EBOOT.PBP...
+DESKTOP_HARNESS event step=0 type=300 scancode=59 at=5.106
+DESKTOP_HARNESS event step=1 type=301 scancode=59 at=5.106
+08:45:515 idle0        I[SAVESTATE]: Core/SaveState.cpp:863 Saving state to '/workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/EBOO00649__0.ppst.tmp'
+08:45:543 idle0        I[SAVESTATE]: Serialize/Serializer.cpp:418 ChunkReader: Writing /workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/EBOO00649__0.ppst.tmp
+08:45:672 idle0        I[SAVESTATE]: Serialize/Serializer.cpp:518 Savestate: Compressed 40483270 bytes into 1666881
+08:45:673 idle0        I[SAVESTATE]: Serialize/Serializer.cpp:522 ChunkReader: Done writing /workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/EBOO00649__0.ppst.tmp
+DESKTOP_HARNESS event step=2 type=300 scancode=61 at=10.122
+DESKTOP_HARNESS event step=3 type=301 scancode=61 at=10.122
+08:50:559 user_main    I[SAVESTATE]: Core/SaveState.cpp:863 Saving state to '/workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/load_undo.ppst.tmp'
+08:50:575 user_main    I[SAVESTATE]: Serialize/Serializer.cpp:418 ChunkReader: Writing /workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/load_undo.ppst.tmp
+08:50:626 user_main    I[SAVESTATE]: Serialize/Serializer.cpp:518 Savestate: Compressed 40485668 bytes into 2025217
+08:50:627 user_main    I[SAVESTATE]: Serialize/Serializer.cpp:522 ChunkReader: Done writing /workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/load_undo.ppst.tmp
+08:50:687 user_main    I[SAVESTATE]: Core/SaveState.cpp:827 Loading state from '/workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/EBOO00649__0.ppst'
+08:50:722 idle0        I[SAVESTATE]: Serialize/Serializer.h:272 ChunkReader: Done loading '/workspace/scratch/ppsspp-desktop/desktop-config/ppsspp/PSP/PPSSPP_STATE/EBOO00649__0.ppst'
+DESKTOP_HARNESS event step=4 type=300 scancode=60 at=13.142
+DESKTOP_HARNESS event step=5 type=301 scancode=60 at=13.142
+DESKTOP_HARNESS event step=6 type=100 scancode=0 at=18.081
+Leaving main
+Failed to open log file 

@@ -297,6 +297,10 @@ class PackageTest(unittest.TestCase):
         project = self.root / "source-project"
         (project / "psp_shell").mkdir(parents=True)
         (project / "psp_shell/__main__.py").write_text("print('demo')\n")
+        (project / "tools").mkdir()
+        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+            (project / "tools" / tool).write_bytes((PROJECT / "tools" / tool).read_bytes())
+        (project / "tools/unselected.py").write_text("raise RuntimeError('must not ship')\n")
         (project / "psp_shell/__pycache__").mkdir()
         (project / "psp_shell/__pycache__/private.pyc").write_bytes(b"ignored")
         (project / "assets/fonts").mkdir(parents=True)
@@ -308,6 +312,9 @@ class PackageTest(unittest.TestCase):
         build_payload(project, output)
         names = [x.relative_to(output).as_posix() for x in output.rglob("*") if x.is_file()]
         self.assertIn(ov.ENTRYPOINT, names)
+        self.assertIn("app/tools/recovery_payload.py", names)
+        self.assertIn("app/tools/__init__.py", names)
+        self.assertNotIn("app/tools/unselected.py", names)
         self.assertFalse(any("private" in x for x in names))
         self.assertTrue((output / "notices/ORIGINAL-PROJECT-LICENSE.txt").exists())
 
@@ -317,6 +324,9 @@ class PackageTest(unittest.TestCase):
         project = self.root / "mini-project"
         (project / "psp_shell").mkdir(parents=True)
         (project / "psp_shell/__main__.py").write_text("print('host fixture')\n")
+        (project / "tools").mkdir()
+        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+            (project / "tools" / tool).write_bytes((PROJECT / "tools" / tool).read_bytes())
         (project / "assets/fonts").mkdir(parents=True)
         (project / "assets/fonts/OFL.txt").write_text("font notice")
         (project / "LICENSE").write_text("original code license")

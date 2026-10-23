@@ -77,3 +77,13 @@ production measurement hook is enabled by this work.
 
 Unmeasured panel FPS, audio faults, latency, temperature and energy remain null.
 The existing device acceptance programme and qualification gates still apply.
+
+## PSP and PS1 gameplay reports
+
+The [gameplay reporting procedure](gameplay-performance.md) extends this sampler
+with exact game/scene/emulator/settings identities and separately imported native
+observations. It enforces five matched scene runs, rejects incompatible or missing
+selected metrics, and requires separate 30-minute sustained observations for
+demanding release profiles. Native gameplay counters remain separate from these
+host menu/presentation measurements. No recommended preset or device gain is
+established by adding the reporting tool.

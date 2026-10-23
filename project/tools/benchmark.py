@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Read-only process sampler for repeatable, operator-run port scenes.
+"""Read-only process sampler for repeatable, operator-run port/gameplay scenes.
 
 Attach to an already running emulator/port PID. This tool never launches,
 signals, suspends or terminates a game and never changes clocks or settings.
@@ -100,16 +100,24 @@ def _write_report(path, value):
 
 
 def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
-            metadata=None, profiles_file=PROFILES, proc_root='/proc'):
+            metadata=None, profiles_file=PROFILES, proc_root='/proc', gameplay_identity=None):
     if type(pid) is not int or pid <= 0:
         raise BenchmarkError('Select a positive running PID')
     if not (math.isfinite(seconds) and math.isfinite(interval)
             and 0 < seconds <= 3600 and 0.02 <= interval <= 60):
         raise BenchmarkError('Use a duration of 0–3600 seconds and an interval of 0.02–60 seconds')
-    profiles = json.loads(Path(profiles_file).read_text())
-    profile = next((p for p in profiles.get('ports', profiles.get('profiles', [])) if p['id'] == port_id), None)
-    if not profile or not profile.get('enabled') or scene not in profile.get('scenes', []):
-        raise BenchmarkError('Select an enabled port and one of its declared repeatable scenes')
+    if gameplay_identity is None:
+        profiles = json.loads(Path(profiles_file).read_text())
+        profile = next((p for p in profiles.get('ports', profiles.get('profiles', [])) if p['id'] == port_id), None)
+        if not profile or not profile.get('enabled') or scene not in profile.get('scenes', []):
+            raise BenchmarkError('Select an enabled port and one of its declared repeatable scenes')
+    else:
+        from tools.gameplay_benchmark import validate_identity
+        gameplay_identity = validate_identity(gameplay_identity)
+        if port_id != gameplay_identity['game_id'] or scene != gameplay_identity['scene_id']:
+            raise BenchmarkError('Game and scene must match the declared gameplay identity')
+        profiles = {'spruce_commit': None}
+        profile = {'source': 'operator-declared-gameplay-identity'}
     metadata = dict(metadata or {})
     if len(json.dumps(metadata, allow_nan=False)) > 65536:
         raise BenchmarkError('Benchmark metadata is too large')
@@ -189,6 +197,10 @@ def capture(pid, output, *, port_id, scene, seconds=30.0, interval=0.2,
             'Compare identical firmware, owner data, settings, brightness and supported CPU profiles.',
         ],
     }
+    if gameplay_identity is not None:
+        report['measurement_domain'] = 'gameplay-resources'
+        report['gameplay_identity'] = gameplay_identity
+        report['evidence_class'] = gameplay_identity['evidence_class']
     _write_report(output, report)
     return report
 
@@ -204,6 +216,8 @@ def main():
     parser.add_argument('--metadata', type=Path, help='Local JSON with firmware, data/settings hashes and scene conditions')
     parser.add_argument('--output', type=Path)
     parser.add_argument('--profiles-file', type=Path, default=PROFILES)
+    parser.add_argument('--gameplay-identity', type=Path,
+                        help='Exact PSP/PS1 identity JSON; records process resources, never native FPS')
     args = parser.parse_args()
     if args.list_scenes:
         data = json.loads(args.profiles_file.read_text())
@@ -213,8 +227,10 @@ def main():
         parser.error('--profile, --scene, --pid and --output are required')
     try:
         metadata = json.loads(args.metadata.read_text()) if args.metadata else {}
+        gameplay_identity = json.loads(args.gameplay_identity.read_text()) if args.gameplay_identity else None
         result = capture(args.pid, args.output, port_id=args.profile, scene=args.scene,
-                         seconds=args.seconds, interval=args.interval, metadata=metadata, profiles_file=args.profiles_file)
+                         seconds=args.seconds, interval=args.interval, metadata=metadata, profiles_file=args.profiles_file,
+                         gameplay_identity=gameplay_identity)
     except (BenchmarkError, OSError, ValueError) as error:
         parser.error(str(error))
     print(json.dumps({'output': str(args.output), 'samples': len(result['samples']),

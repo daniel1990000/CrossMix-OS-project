@@ -92,6 +92,14 @@ class InputTests(unittest.TestCase):
         event.text.text = "é".encode("utf-8")
         self.assertEqual(self.mapper.process(event, text_mode=True)[0].text, "é")
 
+    def test_start_and_tab_open_filters_without_changing_face_button_actions(self):
+        self.assertEqual(self.mapper.process(self.key(sdl2.SDLK_TAB))[0].action, "menu")
+        self.mapper.process(self.key(sdl2.SDLK_TAB, False))
+        self.assertEqual(self.mapper.process(self.button(sdl2.SDL_CONTROLLER_BUTTON_START))[0].action, "menu")
+        self.mapper.process(self.button(sdl2.SDL_CONTROLLER_BUTTON_START, False))
+        self.assertEqual(self.mapper.process(self.button(sdl2.SDL_CONTROLLER_BUTTON_START), text_mode=True), [])
+        self.assertEqual(self.mapper.process(self.button(sdl2.SDL_CONTROLLER_BUTTON_Y))[0].action, "favorite")
+
     def test_removed_controller_cannot_leave_a_held_navigation_repeat(self):
         self.mapper.process(self.button(sdl2.SDL_CONTROLLER_BUTTON_DPAD_DOWN), now=0)
         self.mapper.block_held()

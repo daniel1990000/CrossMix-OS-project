@@ -106,6 +106,15 @@ def _hash_id(kind: str, system: str, relative: str) -> str:
     return kind + ":" + hashlib.sha256((system + "\0" + relative).encode("utf-8")).hexdigest()
 
 
+def _filter_records(rows: Iterable[dict], system_id: str | None = None, search: str = "") -> list[dict]:
+    """Share the same normalized filters without changing the source order/IDs."""
+    if system_id is not None:
+        _text(system_id, "system_id", 256)
+    query = unicodedata.normalize("NFC", _text(search, "search", 1024)).casefold()
+    return [row for row in rows if (not system_id or row["system_id"] == system_id)
+            and query in unicodedata.normalize("NFC", row["label"]).casefold()]
+
+
 def _option_value(option: Any, basename: str) -> Any:
     if not isinstance(option, dict):
         return None
@@ -423,6 +432,7 @@ class SourceSnapshotProvider:
         rendered_label = _text(label or metadata_label or rom.stem, "game label", 1024)
         empty = rom.stat().st_size == 0
         return {"id": game_id, "game_id": game_id, "system_id": system,
+                "system_label": config.get("label", system), "selected_emulator": selected["stored_preset"],
                 "relative_path": relative, "rom_path": str(rom),
                 "label": rendered_label, "display_name": rendered_label,
                 "metadata_label": bool(metadata_label),
@@ -842,11 +852,10 @@ class SpruceBackend:
     def games(self, system_id: str | None = None, search: str = "", offset: int = 0, limit: int = 50) -> dict:
         if type(offset) is not int or type(limit) is not int or offset < 0 or offset > MAX_ENTRIES or not 1 <= limit <= 200:
             raise SpruceError("INVALID_QUERY", "Pagination exceeds its bounds")
-        search = unicodedata.normalize("NFC", _text(search, "search", 1024)).casefold()
         if system_id is not None:
             _text(system_id, "system_id", 256)
-        rows = self.provider.game_records(system_id)
-        rows = [row for row in rows if search in unicodedata.normalize("NFC", row["label"]).casefold()]
+        _text(search, "search", 1024)
+        rows = _filter_records(self.provider.game_records(system_id), system_id, search)
         rows.sort(key=lambda row: (row["label"].casefold(), row["id"]))
         return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset, "limit": limit}
 
@@ -860,11 +869,39 @@ class SpruceBackend:
                 return row
         raise SpruceError("GAME_NOT_FOUND", "Game is no longer in the current library")
 
-    def favorites(self) -> list[dict]:
-        return [dict(row, favorite=True) for row in self.provider.histories("favorites")]
+    def favorites(self, system_id: str | None = None, search: str = "") -> list[dict]:
+        return [dict(row, favorite=True) for row in _filter_records(self.provider.histories("favorites"), system_id, search)]
 
-    def recent(self) -> list[dict]:
-        return [dict(row, **self._resume_status(row)) for row in self.provider.histories("recent")]
+    def recent(self, system_id: str | None = None, search: str = "") -> list[dict]:
+        return [dict(row, **self._resume_status(row))
+                for row in _filter_records(self.provider.histories("recent"), system_id, search)]
+
+    def game_info(self, game_id: str) -> dict:
+        """Inspect current metadata; do not mint actions or run a launcher."""
+        from ..game_information import inspect_disc_set, PS1_SYSTEMS
+        game = self._game(game_id)
+        config = self.provider._descriptor(self.provider.root / "Emu" / game["system_id"] / "config.json")
+        rom = self.provider.path(game["rom_path"], exists=False)
+        selected = _preset(config, rom.name)
+        discs = inspect_disc_set(self.provider.root, rom, game["system_id"])
+        result = dict(game, system_label=config.get("label", game["system_id"]),
+                      selected_emulator=selected["stored_preset"], selected_preset=selected["preset_id"],
+                      stored_preset=selected["stored_preset"],
+                      preset_repair_required=selected["preset_repair_required"],
+                      emulator_choices=list(selected["choices"]), governor=selected["governor"],
+                      disc_set=discs, **self._resume_status(dict(game, selected_preset=selected["preset_id"])))
+        result["warnings"] = list(dict.fromkeys(game.get("warnings", []) + selected["warnings"] + discs["warnings"]))
+        if not rom.is_file():
+            result["availability"] = "unavailable"
+            result["warnings"].append("ROM_UNAVAILABLE")
+        if game["system_id"].upper() in PS1_SYSTEMS:
+            result["disc_management"] = {
+                "route": "native_menu", "game_options_route": "game.options",
+                "description": "Launch this game, then open the selected emulator's native menu for disc switching. "
+                               "Game options keeps the existing emulator and per-game settings routes. "
+                               "Memory-card locations stay with the existing emulator.",
+            }
+        return result
 
     def set_resume_evidence(self, records: Mapping[str, dict], engine_profiles: Mapping[str, dict]) -> None:
         """Install trusted lifecycle evidence/profile mappings; never ROM metadata."""

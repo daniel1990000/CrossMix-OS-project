@@ -35,7 +35,8 @@ def resolve(project, descriptor_path, entries, source_lock):
                     descriptor.get("selected_native_binaries") == [],
                     "original-only preview cannot select upstream patches or native binaries")
     overlay.require(descriptor.get("selected_original_payload") == [
-        "psp_shell", "bridge", "profiles", "ppsspp/theme", "assets"],
+        "psp_shell", "bridge", "profiles", "ppsspp/theme", "assets",
+        "tools/__init__.py", "tools/recovery_payload.py", "tools/recovery_preflight.py"],
         "release descriptor differs from the original payload builder scope")
     overlay.require(descriptor.get("qualification") == {
         "hardware_qualified": False, "runtime_verified": False, "source_use_verified": False},

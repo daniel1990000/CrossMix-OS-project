@@ -6,10 +6,20 @@ See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparis
 
 This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
 
+The [dev14 to release continuation](docs/release-continuation-2026-10-23.md)
+extends existing per-game performance controls, gameplay reports, game information,
+combined library filters, Continue/backup status and PS1 disc presentation. Use
+Start (desktop Tab) for system filters. Game information leads to native
+performance and existing emulator options. The current development descriptor
+selects **smartpro-psp-0.1.0-dev15**; the published dev14 preview retains its own
+exact artifact identity and 1,011-check evidence. Candidate presets remain
+untested, and no Smart Pro performance improvement is claimed.
+
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,
 revocation receipts and trust report readback. The current descriptor selects
-**smartpro-psp-0.1.0-dev14**, an original-only host preview.
+**smartpro-psp-0.1.0-dev15**, an original-only host preview. Dev14 remains the
+previously published and independently retained computer preview.
 
 The [work completed without hardware](docs/nondevice-completion-2026-10-23.md)
 adds exact recovered-key possession verification, current upstream maintenance

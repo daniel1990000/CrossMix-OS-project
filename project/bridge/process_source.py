@@ -427,7 +427,8 @@ def bind_initialized_source(main_menu, tasks: ProcessExitSourceTasks, builder):
     tasks.assert_owners = binding._assert_owners
     adapters = config.adapters(tasks.device, tasks) if config.adapters is not None else {}
     if not isinstance(adapters, Mapping) or set(adapters) - {
-            "control_adapter", "theme_manager", "hardware_adapter", "experience_manager"}:
+            "control_adapter", "theme_manager", "hardware_adapter", "experience_manager",
+            "performance_manager", "backup_adapter"}:
         raise ContractError("INVALID_CONTEXT", "Source adapters must use the fixed initialized adapter slots")
     binding.options.update(adapters)
     if config.experimental_session is not None:

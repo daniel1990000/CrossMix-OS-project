@@ -53,7 +53,7 @@ class InputMapper:
             state = sdl2.SDL_GetKeyboardState(ctypes.byref(count))
             for scan in (sdl2.SDL_SCANCODE_RETURN, sdl2.SDL_SCANCODE_KP_ENTER,
                          sdl2.SDL_SCANCODE_ESCAPE, sdl2.SDL_SCANCODE_UP, sdl2.SDL_SCANCODE_DOWN,
-                         sdl2.SDL_SCANCODE_LEFT, sdl2.SDL_SCANCODE_RIGHT, sdl2.SDL_SCANCODE_X, sdl2.SDL_SCANCODE_Y):
+                         sdl2.SDL_SCANCODE_LEFT, sdl2.SDL_SCANCODE_RIGHT, sdl2.SDL_SCANCODE_X, sdl2.SDL_SCANCODE_Y, sdl2.SDL_SCANCODE_TAB):
                 if state and scan < count.value and state[scan]:
                     self._held[("keyboard", int(sdl2.SDL_GetKeyFromScancode(scan)))] = ("held_at_start", time.monotonic())
                     self._gate = True
@@ -142,7 +142,7 @@ class InputMapper:
                        sdl2.SDLK_RETURN: "submit_text" if text_mode else "confirm", sdl2.SDLK_KP_ENTER: "submit_text" if text_mode else "confirm",
                        sdl2.SDLK_ESCAPE: "back", sdl2.SDLK_BACKSPACE: "delete_text" if text_mode else "back",
                        sdl2.SDLK_DELETE: "delete_text" if text_mode else None,
-                       sdl2.SDLK_F5: "refresh"}
+                       sdl2.SDLK_F5: "refresh", sdl2.SDLK_TAB: None if text_mode else "menu"}
             if not text_mode:
                 mapping.update({sdl2.SDLK_f: "search", sdl2.SDLK_SLASH: "search", sdl2.SDLK_x: "search", sdl2.SDLK_y: "favorite"})
             return self._press(key, mapping.get(symbol), now)
@@ -154,7 +154,7 @@ class InputMapper:
                 return []
             confirm = sdl2.SDL_CONTROLLER_BUTTON_A if preferences.confirm == "south" else sdl2.SDL_CONTROLLER_BUTTON_B
             back = sdl2.SDL_CONTROLLER_BUTTON_B if preferences.confirm == "south" else sdl2.SDL_CONTROLLER_BUTTON_A
-            mapping = {confirm: "confirm", back: "back", sdl2.SDL_CONTROLLER_BUTTON_X: "delete_text" if text_mode else "search",
+            mapping = {confirm: "confirm", back: "back", sdl2.SDL_CONTROLLER_BUTTON_START: None if text_mode else "menu", sdl2.SDL_CONTROLLER_BUTTON_X: "delete_text" if text_mode else "search",
                        sdl2.SDL_CONTROLLER_BUTTON_Y: "submit_text" if text_mode else "favorite",
                        sdl2.SDL_CONTROLLER_BUTTON_DPAD_LEFT: "left", sdl2.SDL_CONTROLLER_BUTTON_DPAD_RIGHT: "right",
                        sdl2.SDL_CONTROLLER_BUTTON_DPAD_UP: "up", sdl2.SDL_CONTROLLER_BUTTON_DPAD_DOWN: "down"}

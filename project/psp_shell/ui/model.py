@@ -25,6 +25,8 @@ def _text(value: Any, limit: int = 512) -> str:
 
 def _checkpoint_utc(value: str) -> str:
     """Format the backend's original signed observation; never invent an age."""
+    if not isinstance(value, str):
+        return ""
     try:
         recorded = datetime.fromisoformat(value.replace("Z", "+00:00"))
         if recorded.utcoffset() != timedelta(0):
@@ -32,6 +34,33 @@ def _checkpoint_utc(value: str) -> str:
         return recorded.strftime("%Y-%m-%d %H:%M:%S UTC")
     except (ValueError, TypeError, OverflowError):
         return ""
+
+
+def _warning_message(value: str) -> str:
+    return {
+        "MISSING_DISC_FILE": "A referenced disc file is missing or empty.",
+        "MISSING_DISC": "A referenced disc file is missing.",
+        "MISSING_TRACK_FILE": "A disc's referenced track file is missing or empty.",
+        "MALFORMED_CUE_FILE": "A disc track description is malformed.",
+        "CUE_HAS_NO_TRACK_FILES": "A disc description contains no track files.",
+        "CUE_UNREADABLE": "A disc track description could not be read.",
+        "EMPTY_PLAYLIST": "The playlist contains no disc entries.",
+        "PLAYLIST_UNREADABLE": "The playlist could not be read.",
+        "UNSUPPORTED_DISC_REFERENCE": "A playlist entry uses an unsupported disc format.",
+        "DISC_PATH_OUTSIDE_CARD": "A disc reference points outside this card.",
+        "INVALID_DISC_PATH": "A disc reference contains an invalid path.",
+        "INVALID_DISC_REFERENCE_TEXT": "A disc reference contains invalid text.",
+        "DISC_REFERENCE_TOO_LARGE_OR_SPECIAL": "A disc reference cannot be safely inspected.",
+        "DISC_REFERENCE_LIMIT": "This disc set exceeds the inspection limit; review the complete playlist.",
+        "DISC_SET_REQUIRES_REVIEW": "Review the disc set before launching.",
+        "SAVED_PRESET_UNAVAILABLE": "The saved emulator choice is unavailable; review existing Game options.",
+        "ROM_UNAVAILABLE": "The game file is unavailable.",
+        "EMPTY_ROM": "The game file is empty.",
+        "FILENAME_COLLISION": "Some game names share the same existing per-game settings.",
+        "REQUIRED_FILES_MISSING": "Required system files are missing.",
+        "ARTWORK_OUTSIDE_SNAPSHOT": "The artwork is outside the inspected collection.",
+        "EXISTING_SPRUCE_ROUTE_REQUIRED": "Open this entry through the existing spruce interface.",
+    }.get(value, "This entry needs review in the existing game or emulator options.")
 
 
 @dataclass(frozen=True)
@@ -72,6 +101,10 @@ class UIItem:
     reason: str = ""
     favorite: bool = False
     state_recorded_at: str = ""
+    system_label: str = ""
+    selected_emulator: str = ""
+    selected_preset: str = ""
+    availability: str = "available"
 
     @classmethod
     def from_record(cls, value: Mapping[str, Any], kind: str = "game") -> "UIItem":
@@ -90,6 +123,10 @@ class UIItem:
             reason=_text(value.get("resume_reason", value.get("reason", "")), 2048),
             favorite=value.get("favorite", False) is True,
             state_recorded_at=_text(value.get("state_recorded_at", ""), 64),
+            system_label=_text(value.get("system_label", ""), 128),
+            selected_emulator=_text(value.get("selected_emulator", ""), 256),
+            selected_preset=_text(value.get("selected_preset", ""), 256),
+            availability=_text(availability, 128),
         )
 
 
@@ -121,6 +158,8 @@ class Dialog:
     selected: int = 0
     error: bool = False
     message_page: int = 0
+    artwork: str = ""
+    system_id: str = ""
 
 
 @dataclass(frozen=True)
@@ -205,6 +244,14 @@ class NavigationModel:
         self._system_id = ""
         self._system_label = ""
         self._search = ""
+        self._history_filters = {"recent": "", "favorites": ""}
+        self._history_records: dict[str, tuple[UIItem, ...]] = {}
+        self._history_serial: dict[str, int] = {}
+        self._game_information: Mapping[str, Any] = {}
+        self._performance_status: Mapping[str, Any] = {}
+        self._performance_generation = 0
+        self._performance_transaction = ""
+        self._performance_transaction_game = ""
         self._keyboard: Keyboard | None = None
         self._artwork_generation = 0
         self._dialog: Dialog | None = None
@@ -249,6 +296,9 @@ class NavigationModel:
             self._system_id = _text(restored_state.get("system_id", ""), 128)
             self._system_label = _text(restored_state.get("system_label", ""), 512)
             self._search = _text(restored_state.get("search", ""), 128).replace("\n", "")
+            filters = restored_state.get("history_filters", {})
+            if isinstance(filters, Mapping):
+                self._history_filters = {key: _text(filters.get(key, ""), 128) for key in self._history_filters}
             if self._games_view == "system" and not self._system_id:
                 self._games_view = "systems"
 
@@ -263,10 +313,11 @@ class NavigationModel:
                                   context=context) for method, context in (
             ("settings.get", "settings"), ("system.capabilities", "capabilities"),
             ("system.snapshot", "snapshot"), ("library.systems", "systems"),
-            ("library.recent", "recent"), ("library.favorites", "favorites_cache"),
+            ("library.favorites", "favorites_cache"),
             ("tools.list", "tools"), ("hardware.status", "hardware_cache"))]
+        commands.append(self._history_query("recent"))
         if self._games_view == "favorites":
-            commands.append(self._request("library.favorites", context="favorites"))
+            commands.append(self._history_query("favorites"))
         elif self._games_view != "systems":
             commands.append(self._query(self._pages[0].offset if preserve_focus else 0,
                                         keep_focus=preserve_focus))
@@ -292,7 +343,8 @@ class NavigationModel:
                 focus[key] = page.items[page.selected].id
         return {"schema": 1, "category": self.category, "focus": focus,
                 "games_view": self._games_view, "system_id": self._system_id,
-                "system_label": self._system_label, "search": self._search}
+                "system_label": self._system_label, "search": self._search,
+                "history_filters": dict(self._history_filters)}
 
     def set_category_items(self, category: int | str, items: Iterable[UIItem | Mapping[str, Any]],
                            *, offset: int = 0, total: int | None = None) -> None:
@@ -321,6 +373,7 @@ class NavigationModel:
             items.append(UIItem(identifier, _text(value.get("label", identifier)),
                                 f"{count} games", "system", identifier,
                                 available=value.get("availability", "available") == "available"))
+        items.append(_menu("library_filters", "Library filters", "Combine a system with search, favorites or recents"))
         items.append(_menu("refresh_library", "Refresh library", "Reload game lists and changed artwork"))
         self._systems.replace(items)
         self._restore_focus(self._systems, "systems")
@@ -328,15 +381,48 @@ class NavigationModel:
     def _query(self, offset: int = 0, *, keep_focus: bool = False,
                last_focus: bool = False) -> UICommand:
         params: dict[str, Any] = {"offset": offset, "limit": self.PAGE_SIZE}
-        if self._games_view == "system":
+        if self._system_id:
             params["system_id"] = self._system_id
-        if self._games_view == "search":
+        if self._search and self._games_view in ("system", "search", "all"):
             params["search"] = self._search
         command = self._request("library.query", params, "games")
         self._query_serial = command.serial
         self._query_keep_focus = keep_focus
         self._query_last_focus = last_focus
         return command
+
+    def _history_query(self, kind: str) -> UICommand:
+        params = {"system_id": self._history_filters[kind]} if self._history_filters[kind] else {}
+        command = self._request("library." + kind, params, kind)
+        self._history_serial[kind] = command.serial
+        return command
+
+    def _show_history_page(self, kind: str, offset: int = 0, *, keep_focus: bool = True,
+                           last_focus: bool = False) -> None:
+        items = self._history_records.get(kind, ())
+        page = self._pages[1 if kind == "recent" else 0]
+        previous = page.items[page.selected].id if keep_focus and 0 <= page.selected < len(page.items) else None
+        absolute_focus = next((index for index, item in enumerate(items) if item.id == previous), None) if previous else None
+        if absolute_focus is not None:
+            offset = (absolute_focus // self.PAGE_SIZE) * self.PAGE_SIZE
+        offset = min(max(0, offset), ((len(items) - 1) // self.PAGE_SIZE) * self.PAGE_SIZE) if items else 0
+        page.replace(items[offset:offset + self.PAGE_SIZE], offset=offset,
+                     total=len(items), keep_focus=keep_focus)
+        if absolute_focus is not None:
+            page.selected = absolute_focus - offset
+        if last_focus and page.items:
+            page.selected = len(page.items) - 1
+
+    def _filter_dialog(self) -> None:
+        target = "recent" if self.category == 1 else "favorites" if self._games_view == "favorites" else "games"
+        selected = self._history_filters.get(target, self._system_id)
+        choices = tuple(DialogChoice(label, "set_filter", params={"target": target, "system_id": system,
+                                                                   "label": label})
+                        for system, label in (("", "All systems"), ("PSP", "PSP"), ("PS", "PS1")))
+        self._dialog = Dialog("Filter " + ("Continue Playing" if target == "recent" else "Favorites" if target == "favorites" else "Games"),
+            "Current system: " + ({"": "All systems", "PSP": "PSP", "PS": "PS1"}.get(selected, selected)) +
+            ("\nYour search stays combined with the selected system." if target == "games" else "\nExisting game identities and history order stay in place."),
+            choices + (DialogChoice("Cancel"),))
 
     def receive(self, command: UICommand, result: Any) -> list[UICommand]:
         self._pending.discard(command.serial)
@@ -389,6 +475,44 @@ class NavigationModel:
         elif context == "hardware_route":
             if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
                 self.notice("Opening the existing spruce screen…")
+        elif context == "game_info":
+            if isinstance(result, Mapping):
+                self._game_info_dialog(result)
+        elif context == "performance_status":
+            if isinstance(result, Mapping):
+                self._performance_dialog(result)
+        elif context == "performance_preview":
+            rows = ["Candidate performance setting · untested."]
+            for change in result.get("diff", [])[:8]:
+                if isinstance(change, Mapping):
+                    label = _text(change.get("label", change.get("option_id", "Setting")), 128)
+                    before, after = change.get("before"), change.get("after")
+                    rows.append(label + ": " + ("Use global setting" if before is None else str(before)) +
+                                " → " + ("Use global setting" if after is None else str(after)))
+            rows.extend(_text(warning, 512) for warning in result.get("warnings", [])[:8] if isinstance(warning, str))
+            rows.append("Only the selected per-game options change. Review image quality and motion tradeoffs before applying.")
+            self._dialog = Dialog("Review performance change", "\n".join(rows), (
+                DialogChoice("Apply per-game change", "request", "performance.apply", {
+                    "preview_id": result["preview_id"], "request_id": f"ui-{self._session_id}-performance-{command.serial}",
+                    "expected_generation": self._performance_generation}, "performance_apply"), DialogChoice("Cancel")), selected=1)
+        elif context in ("performance_apply", "performance_undo"):
+            if result.get("applied") is not True:
+                raise ValueError("The performance change was not confirmed")
+            self._performance_transaction = _text(result.get("transaction_id"), 256) if context == "performance_apply" else ""
+            self._performance_transaction_game = _text(result.get("game_id", self._performance_status.get("game_id", "")), 1024) if context == "performance_apply" else ""
+            self.notice("Per-game performance setting updated. Candidate remains untested." if context == "performance_apply" else "The previous per-game settings were restored.")
+            return [self._request("performance.status", {"game_id": result.get("game_id", self._performance_status.get("game_id", ""))}, "performance_status")]
+        elif context == "backup_status":
+            if isinstance(result, Mapping):
+                self._backup_dialog(result)
+        elif context == "backup_action":
+            if isinstance(result, Mapping):
+                if "status" in result:
+                    self._backup_dialog(result)
+                elif result.get("path"):
+                    self._dialog = Dialog("Diagnostic report saved", _text(result["path"], 2048))
+                else:
+                    self._dialog = Dialog("Recovery instructions", _text(result.get("message"), 8192) or "Use the existing verified recovery tools and expendable media.")
         elif context == "game_options":
             if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
                 self.notice("Opening this game's existing spruce options…")
@@ -460,12 +584,17 @@ class NavigationModel:
             self._query_keep_focus = False
             self._restore_focus(self._pages[0], "0")
         elif context in ("recent", "favorites", "favorites_cache"):
-            items = [UIItem.from_record(value) for value in result if isinstance(value, Mapping)]
-            if context != "recent":
+            if context != "favorites_cache" and command.serial != self._history_serial.get(context, command.serial):
+                return []
+            items = tuple(UIItem.from_record(value) for value in result if isinstance(value, Mapping))
+            if context == "favorites_cache" or (context == "favorites" and not self._history_filters["favorites"]):
                 self._favorites = {item.id for item in items}
+            elif context == "favorites":
+                self._favorites.update(item.id for item in items)
             if context != "favorites_cache":
+                self._history_records[context] = items
                 page = self._pages[1 if context == "recent" else 0]
-                page.replace(items)
+                self._show_history_page(context, page.offset)
                 self._restore_focus(page, "1" if context == "recent" else "0")
         elif context == "tools":
             self._pages[2].replace(UIItem.from_record(value, "tool") for value in result if isinstance(value, Mapping))
@@ -481,7 +610,7 @@ class NavigationModel:
                 self._favorites.discard(identifier)
                 self.notice("Removed from Favorites.")
             if self._games_view == "favorites":
-                return [self._request("library.favorites", context="favorites")]
+                return [self._history_query("favorites")]
         elif context == "preview":
             key = next(iter(command.params["changes"]))
             diff = result.get("diff", [])
@@ -628,6 +757,7 @@ class NavigationModel:
                       _menu("hardware_network", "Network", "Wi-Fi, Bluetooth and existing pairing screens"),
                       _menu("hardware_controllers", "Controllers", "Existing input and calibration authorities"),
                       _menu("hardware_power", "Power & USB", "Save-aware power and clean-unmount storage routes"),
+                      _menu("backup", "Backups & recovery", "Verified backup readbacks and supported recovery actions"),
                       _menu("device", "System status", "Capabilities and firmware availability"),
                       _menu("support", "Save diagnostic report", "Redacted component and failure information"),
                       _menu("about", "About & credits", "Version, source credits and license information")))
@@ -663,30 +793,179 @@ class NavigationModel:
         items.append(_menu("hardware_refresh", "Refresh status", "Read current values from the existing authority"))
         self._pages[3].replace(items, keep_focus=keep_focus)
 
+    def _game_info_dialog(self, value: Mapping[str, Any]) -> None:
+        self._game_information = value
+        item = UIItem.from_record(value)
+        rows = ["System: " + (item.system_label or item.system_id or "Unavailable"),
+                "Emulator: " + (item.selected_emulator or "Current system emulator"),
+                "Preset: " + (item.selected_preset or "Current system setting"),
+                "Availability: " + item.availability.replace("_", " ")]
+        if value.get("preset_repair_required") is True:
+            rows.append("The saved emulator choice is unavailable. Review existing Game options before launching.")
+        if item.resume_available and not self.demo:
+            rows.append("Resume available for this boot.")
+            recorded = _checkpoint_utc(item.state_recorded_at)
+            if recorded:
+                rows.append("Checkpoint verified " + recorded)
+        else:
+            rows.append("Sample Resume card" if self.demo and item.resume_available else "Recently played · Resume unavailable" if self.category == 1 else "Resume unavailable")
+            rows.append(item.reason or "No authenticated compatible checkpoint is available. Start normally to use in-game saves.")
+        disc_set = value.get("disc_set", {})
+        if isinstance(disc_set, Mapping) and disc_set.get("kind") not in (None, "none"):
+            count = disc_set.get("disc_count")
+            if type(count) is int:
+                rows.append(f"Disc set: {count} disc(s)")
+            discs = disc_set.get("discs", [])
+            if isinstance(discs, list):
+                for number, disc in enumerate(discs[:20], 1):
+                    if isinstance(disc, Mapping):
+                        rows.append(f"Disc {number}: " + _text(disc.get("label", disc.get("relative_path", "")), 256) +
+                                    (" · available" if disc.get("available") is True else " · missing"))
+                if len(discs) > 20:
+                    rows.append(f"{len(discs) - 20} further disc entries; inspect the existing playlist for the complete set.")
+            warnings = disc_set.get("warnings", [])
+            if isinstance(warnings, list):
+                rows.extend("Disc warning: " + _warning_message(warning) for warning in warnings[:12] if isinstance(warning, str))
+            management = value.get("disc_management", {})
+            if isinstance(management, Mapping):
+                rows.append(_text(management.get("description"), 1024) or "Change discs in the selected emulator's existing in-game menu.")
+        warnings = value.get("warnings", [])
+        disc_warnings = disc_set.get("warnings", []) if isinstance(disc_set, Mapping) else []
+        if isinstance(warnings, list):
+            rows.extend("Warning: " + _warning_message(warning) for warning in warnings[:8]
+                        if isinstance(warning, str) and warning not in disc_warnings)
+        choices = []
+        if item.available and not value.get("preset_repair_required"):
+            if item.resume_available:
+                choices.append(DialogChoice("Resume", "demo_launch" if self.demo else "request", "game.launch",
+                    {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
+            choices.append(DialogChoice("Fresh start" if item.resume_available or self.category == 1 else "Start game",
+                "demo_launch" if self.demo else "request", "game.launch",
+                {"game_id": item.id, "preset_id": "", "mode": "fresh" if item.resume_available or self.category == 1 else "normal"}, "launch"))
+        if item.system_id.casefold() == "psp":
+            choices.append(DialogChoice("Performance options", "request", "performance.status", {"game_id": item.id}, "performance_status"))
+        if self._capabilities.get("game_options") is True:
+            choices.append(DialogChoice("Existing emulator options", "demo_launch" if self.demo else "request", "game.options",
+                {"game_id": item.id}, "game_options"))
+        choices.append(DialogChoice("Back"))
+        self._dialog = Dialog(item.title, "\n".join(row for row in rows if row), tuple(choices),
+                              artwork=item.artwork, system_id=item.system_id)
+
+    def _performance_dialog(self, value: Mapping[str, Any]) -> None:
+        self._performance_status = value
+        generation = value.get("generation", 0)
+        self._performance_generation = generation if type(generation) is int and generation >= 0 else 0
+        rows = ["Per-game settings · candidate presets untested.",
+                "No measured gameplay improvement is claimed. Native settings apply the next time this game starts."]
+        choices = []
+        if value.get("writable") is True:
+            for option in value.get("options", [])[:8]:
+                if not isinstance(option, Mapping):
+                    continue
+                label = _text(option.get("label", option.get("id", "")), 128)
+                current = option.get("value")
+                current_label = "Use global setting" if current is None else str(current)
+                for choice in option.get("choices", []):
+                    if isinstance(choice, Mapping) and choice.get("value") == current:
+                        current_label = _text(choice.get("label")) or current_label
+                        break
+                rows.append(label + ": " + current_label)
+                choices.append(DialogChoice(label, "performance_option", params={"option_id": option.get("id", "")}))
+            if self._performance_transaction and self._performance_transaction_game == value.get("game_id"):
+                choices.append(DialogChoice("Undo last performance change", "request", "performance.undo",
+                    {"transaction_id": self._performance_transaction,
+                     "request_id": f"ui-{self._session_id}-performance-undo-{self._serial + 1}",
+                     "expected_generation": self._performance_generation}, "performance_undo"))
+        else:
+            rows.append(_text(value.get("reason"), 2048) or "This installed emulator profile is not qualified for settings changes. Use its existing options.")
+        choices.append(DialogChoice("Back"))
+        self._dialog = Dialog("Per-game performance", "\n".join(rows), tuple(choices))
+
+    def _performance_option_dialog(self, identifier: str) -> None:
+        option = next((value for value in self._performance_status.get("options", [])
+                       if isinstance(value, Mapping) and value.get("id") == identifier), None)
+        if option is None:
+            return
+        game_id = _text(self._performance_status.get("game_id"), 1024)
+        choices = []
+        descriptions = [_text(option.get("description"), 2048), "Candidate setting · untested on this device."]
+        for value in option.get("choices", [])[:12]:
+            if not isinstance(value, Mapping):
+                continue
+            label = _text(value.get("label"), 128)
+            explanation = _text(value.get("description"), 512)
+            if explanation:
+                descriptions.append(label + ": " + explanation)
+            choices.append(DialogChoice(label, "request", "performance.preview",
+                {"game_id": game_id, "changes": {identifier: value.get("value")},
+                 "expected_generation": self._performance_generation}, "performance_preview"))
+        choices.append(DialogChoice("Cancel"))
+        self._dialog = Dialog(_text(option.get("label", identifier)), "\n".join(descriptions), tuple(choices))
+
+    def _backup_dialog(self, value: Mapping[str, Any]) -> None:
+        status = _text(value.get("status", "unavailable"), 64)
+        rows = ["Verified backup bytes" if status == "verified" else "Some backup scopes verified" if status == "partial" else "Verified backup unavailable"]
+        timestamp = _checkpoint_utc(value.get("verified_at_utc", ""))
+        if timestamp and status in ("verified", "partial"):
+            rows.append("Backup readback verified " + timestamp)
+        scope = value.get("scope", "")
+        scope_labels = {"card-files": "Card files", "saves": "Saves", "internal-files": "Internal files"}
+        if isinstance(scope, list):
+            scope = ", ".join(scope_labels.get(entry, _text(entry, 128)) for entry in scope if isinstance(entry, str))
+        if isinstance(scope, str) and scope:
+            rows.append("Scope: " + _text(scope, 1024))
+        for readback in value.get("readbacks", [])[:8]:
+            if isinstance(readback, Mapping):
+                label = scope_labels.get(readback.get("scope"), "Selected scope")
+                rows.append(label + ": " + ("backup bytes verified" if readback.get("status") == "verified" else "backup unavailable"))
+                if readback.get("status") != "verified" and readback.get("reason"):
+                    rows.append(_text(readback["reason"], 512))
+        rows.append(_text(value.get("reason"), 2048))
+        rows.append("Backup byte verification does not establish independent-media retention or physical restoration.")
+        choices = []
+        for action in value.get("supported_actions", [])[:8]:
+            if isinstance(action, Mapping) and action.get("available") is True:
+                identifier = action.get("id", action.get("action_id"))
+                if identifier in ("recheck", "recovery_guide", "support_export"):
+                    choices.append(DialogChoice(_text(action.get("label", identifier), 128), "request", "backup.action",
+                                                {"action_id": identifier}, "backup_action"))
+        choices.append(DialogChoice("Back"))
+        self._dialog = Dialog("Backups & recovery", "\n".join(row for row in rows if row), tuple(choices))
+
     def _launch_dialog(self, item: UIItem) -> None:
         if not item.available:
-            self._dialog = Dialog(item.title, item.reason or "This entry needs a reviewed launcher or dependency. Your files remain unchanged.", error=True)
+            choices = ((DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"), DialogChoice("Back"))
+                       if self._capabilities.get("game_information") is True else (DialogChoice("Back"),))
+            self._dialog = Dialog(item.title, item.reason or "This entry needs a reviewed launcher or dependency. Your files remain unchanged.",
+                                  choices, error=True, artwork=item.artwork, system_id=item.system_id)
             return
         choices: list[DialogChoice] = []
-        message = item.system_id
+        message = "System: " + (item.system_label or item.system_id)
+        if item.selected_emulator:
+            message += "\nEmulator: " + item.selected_emulator
+        if item.selected_preset:
+            message += "\nPreset: " + item.selected_preset
+        message += "\nAvailability: " + item.availability.replace("_", " ")
         if item.resume_available:
             choices.append(DialogChoice("Resume", "demo_launch" if self.demo else "request", "game.launch",
                                          {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
             message += ("\nSample resume card. This demonstration is not an emulator state." if self.demo else
-                        "\nA compatible, verified state is available.")
+                        "\nResume available · verified for this boot.")
             recorded = _checkpoint_utc(item.state_recorded_at) if not self.demo else ""
             if recorded:
                 message += "\nCheckpoint verified " + recorded
         elif self.category == 1:
-            message += "\nNo verified resume state is available. Start normally to use your in-game saves."
+            message += "\nRecently played · Resume unavailable.\n" + (item.reason or "No verified resume state is available. Start normally to use your in-game saves.")
         fresh = self.category == 1 or item.resume_available
         choices.append(DialogChoice("Fresh start" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
                                      {"game_id": item.id, "preset_id": "", "mode": "fresh" if fresh else "normal"}, "launch"))
-        if self._capabilities.get("game_options") is True:
+        if self._capabilities.get("game_information") is True:
+            choices.append(DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"))
+        elif self._capabilities.get("game_options") is True:
             choices.append(DialogChoice("Game options", "demo_launch" if self.demo else "request", "game.options",
                                         {"game_id": item.id}, "game_options"))
         choices.append(DialogChoice("Cancel"))
-        self._dialog = Dialog(item.title, message, tuple(choices))
+        self._dialog = Dialog(item.title, message, tuple(choices), artwork=item.artwork, system_id=item.system_id)
 
     def _activate(self, item: UIItem) -> list[UICommand]:
         if self.category == 3 and self._settings_view == "root":
@@ -762,17 +1041,22 @@ class NavigationModel:
                 value = 1.15 if value < 1.1 else 1.3 if value < 1.25 else 1.5 if value < 1.45 else 1.0
             return [self._request("settings.preview", {"changes": {item.id: value}, "expected_generation": self.generation}, "preview")]
         elif item.id == "all":
+            self._system_id, self._system_label, self._search = "", "", ""
             self._games_view = "all"
             self._pages[0] = _Page()
             return [self._query()]
         elif item.id == "favorites":
             self._games_view = "favorites"
             self._pages[0] = _Page()
-            return [self._request("library.favorites", context="favorites")]
+            return [self._history_query("favorites")]
         elif item.id == "search":
             self._keyboard = Keyboard(self._search, 0)
         elif item.id == "random":
             return [self._request("library.random", context="random")]
+        elif item.id == "library_filters":
+            self._filter_dialog()
+        elif item.id == "backup":
+            return [self._request("backup.status", context="backup_status")]
         elif item.id == "refresh_library":
             return self.handle("refresh")
         elif item.id == "undo":
@@ -826,6 +1110,21 @@ class NavigationModel:
 
     def _activate_choice(self, choice: DialogChoice) -> list[UICommand]:
         self._dialog = None
+        if choice.action == "set_filter":
+            target = choice.params.get("target", "games")
+            system = _text(choice.params.get("system_id"), 128)
+            if target in self._history_filters:
+                self._history_filters[target] = system
+                self._pages[1 if target == "recent" else 0] = _Page()
+                return [self._history_query(target)]
+            self._system_id = system
+            self._system_label = _text(choice.params.get("label")) if system else ""
+            self._games_view = "search" if self._search else "system" if system else "all"
+            self._pages[0] = _Page()
+            return [self._query()]
+        if choice.action == "performance_option":
+            self._performance_option_dialog(choice.params.get("option_id", ""))
+            return []
         if choice.action == "request":
             return [self._request(choice.method, choice.params, choice.context)]
         if choice.action == "demo_launch":
@@ -883,13 +1182,14 @@ class NavigationModel:
                 self._dialog = None
             elif action in ("up", "left", "down", "right"):
                 delta = -1 if action in ("up", "left") else 1
-                self._dialog = Dialog(dialog.title, dialog.message, dialog.choices,
-                                      (dialog.selected + delta) % max(1, len(dialog.choices)), dialog.error, dialog.message_page)
+                self._dialog = replace(dialog, selected=(dialog.selected + delta) % max(1, len(dialog.choices)))
             elif action in ("search", "favorite"):
-                self._dialog = Dialog(dialog.title, dialog.message, dialog.choices, dialog.selected,
-                                      dialog.error, dialog.message_page + (1 if action == "search" else -1))
+                self._dialog = replace(dialog, message_page=dialog.message_page + (1 if action == "search" else -1))
             elif action == "confirm" and dialog.choices:
                 return self._activate_choice(dialog.choices[dialog.selected])
+            return []
+        if action == "menu" and self.category in (0, 1):
+            self._filter_dialog()
             return []
         if action in ("left", "right"):
             self.category = (self.category + (-1 if action == "left" else 1)) % 4
@@ -913,12 +1213,16 @@ class NavigationModel:
         if action == "up" and page.items:
             if page.selected > 0:
                 page.selected -= 1
-            elif self.category == 0 and self._games_view not in ("systems", "favorites") and page.offset >= self.PAGE_SIZE:
+            elif (self.category == 1 or self.category == 0 and self._games_view == "favorites") and page.offset >= self.PAGE_SIZE:
+                self._show_history_page("recent" if self.category == 1 else "favorites", page.offset - self.PAGE_SIZE, keep_focus=False, last_focus=True)
+            elif self.category == 0 and self._games_view != "systems" and page.offset >= self.PAGE_SIZE:
                 return [self._query(page.offset - self.PAGE_SIZE, last_focus=True)]
         elif action == "down" and page.items:
             if page.selected + 1 < len(page.items):
                 page.selected += 1
-            elif self.category == 0 and self._games_view not in ("systems", "favorites") and page.offset + len(page.items) < page.total:
+            elif (self.category == 1 or self.category == 0 and self._games_view == "favorites") and page.offset + len(page.items) < page.total:
+                self._show_history_page("recent" if self.category == 1 else "favorites", page.offset + len(page.items), keep_focus=False)
+            elif self.category == 0 and self._games_view != "systems" and page.offset + len(page.items) < page.total:
                 return [self._query(page.offset + len(page.items))]
         elif action == "confirm" and page.items:
             return self._activate(page.items[page.selected])
@@ -937,6 +1241,8 @@ class NavigationModel:
         page = self._page()
         if self.category == 1:
             title, breadcrumb = "Pick up where you left off", "Continue Playing"
+            if self._history_filters["recent"]:
+                breadcrumb += "  /  " + ("PS1" if self._history_filters["recent"] == "PS" else self._history_filters["recent"])
             empty = "Your recently played games will appear here. A compatible state is required for Resume."
         elif self.category == 2:
             title, breadcrumb = "Your tools, together", "Tools"
@@ -951,12 +1257,19 @@ class NavigationModel:
             empty = "No emulator menu profile is qualified." if self._settings_view == "controls" else "Settings are unavailable. Return to the classic interface to check your configuration."
         else:
             title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results"}.get(self._games_view, self._system_label)
-            breadcrumb = "Games  /  " + ("Collection" if self._games_view == "systems" else self._search if self._games_view == "search" else title)
+            breadcrumb = "Games  /  " + ("Collection" if self._games_view == "systems" else title)
+            if self._games_view == "favorites" and self._history_filters["favorites"]:
+                breadcrumb += "  /  " + ("PS1" if self._history_filters["favorites"] == "PS" else self._history_filters["favorites"])
+            elif self._games_view != "systems":
+                if self._system_id and self._games_view != "system":
+                    breadcrumb += "  /  " + (self._system_label or self._system_id)
+                if self._search:
+                    breadcrumb += "  /  " + self._search
             empty = {"favorites": "Save a game with Favorite to keep it here.", "search": "No games match this search. Try another title."}.get(self._games_view,
                      "No available games were found. Keep ROMs in their existing spruce folders and refresh the library.")
-        items = tuple(UIItem(item.id, item.title, item.subtitle, item.kind, item.system_id, item.artwork,
-                             item.available, item.resume_available, item.reason, item.id in self._favorites or item.favorite,
-                             item.state_recorded_at)
+        items = tuple(replace(item, favorite=item.id in self._favorites or item.favorite,
+                              subtitle=("Resume available" if item.resume_available and not self.demo else "Recently played")
+                              if self.category == 1 and item.kind == "game" else item.subtitle)
                       for item in page.items)
         return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
