@@ -1,0 +1,36 @@
+{
+  "verified_at_utc": "2026-10-23T23:54:01.786655+00:00",
+  "artifact_sha256": "0f57972e96f34700c3b5642dce064fe91e2cd859a1e4f85703ad1ffeec491524",
+  "artifact_size_bytes": 5247188,
+  "frontend": {
+    "commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 1099,
+    "passed": 1099,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "f55cf5d826def98855b4b05712e8b500c97396e4c597e2fa8886430a224e287e",
+    "development-verification.pub": "5e8c7a421132dca5424c370dd2c65bc363dbc7895eddfa2cbc93235cb675160d",
+    "host-preview.png": "2f759e35da4299492b835bb5f44ee387751c4ea5b1fa14778289789634fedf15",
+    "release-source.json": "e557f9d06bed8d555e89709dbef9e9862edb515887ff0fb3163ae948dd2d7f8b",
+    "smartpro-psp-0.1.0-dev16-host-preview.zip": "43aeebb57353f510b945ebcdeb5d8924b7e13ce37f9ce6f210c8c68a3f29d62b",
+    "smartpro-psp-0.1.0-dev16-original-source.zip": "b8c714e58439f36d013eef8707a82cf6f6a991669b65a0e602127d1933562d82",
+    "smartpro-psp-0.1.0-dev16.tar": "6097f3560d51a3b0d3b13d2919bef2381fedc78557d3208c1fe0ef44c82db311"
+  },
+  "source_inventory_files": 223,
+  "source_inventory_sha256": "a0c9c9179528ddc0e9316a6aef2bda9c6f4d4ef24f70c91296d49c18a6ea834a",
+  "payload_files": 66,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false
+}

@@ -1,4 +1,4 @@
-> **Active TrimUI Smart Pro offshoot:** spruceOS v4.5.4 + its shipped PyUI, with a PSP-inspired interface and PPSSPP source integration. Start with [the handover](HANDOVER.md), [implementation and run instructions](project/README.md), and [the complete plan](TRIMUI_PLAN.md). Development source and host checks are saved on `build/spruce-psp-experience`; physical-device qualification is pending. The CrossMix source/README below is historical reference.
+> **Active Smart Pro PSP project:** source is merged into `main`; [dev16 computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16) is published with matching original source and verified provenance. Start with [the handover](HANDOVER.md), [run instructions](project/README.md) and [publication evidence](project/docs/host-publication-2026-10-23.md). Physical-device qualification remains pending and device activation stays disabled. The CrossMix README below is historical reference.
 
 
 <div align="center">

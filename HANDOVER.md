@@ -1,6 +1,52 @@
 # TrimUI Smart Pro implementation handover
 
-## Active continuation — dev16 reproduced host defects fixed
+## Current state — merged source and published dev16 computer preview
+
+The owner explicitly instructed merging and publishing the completed work.
+That instruction supersedes the earlier draft/unmerged hold for this host
+software release. PR #1 is merged into `main` at
+`87264629735e179c81c2ad360516665c1e7fd5cd`. Continue on `main`; the retained
+`build/spruce-psp-experience` branch is the exact public source snapshot.
+Earlier draft/unmerged statements below are historical.
+
+[Dev16 is published](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16)
+as an original-only computer-preview prerelease. Its tag and matching attached
+source select `99336f6525efbd1b790a15c7de54acca3eacd1ec`, with 223 source files,
+inventory `a0c9c9179528ddc0e9316a6aef2bda9c6f4d4ef24f70c91296d49c18a6ea834a`
+and 66 signed payload files. This differs from the earlier a8ba317/933a1a
+fix-build inventory because later documentation changed; those receipts remain
+unchanged. Later main/workflow/evidence commits have separate source identities.
+
+All **1,099 strict checks pass**, zero skips/errors/failures, against five pinned
+sources. Source/provenance run 40041273891 and delivery run 40042094364 pass.
+All ten provenance subjects and all eleven attached files were verified; full
+uploaded bytes were read back before publication and freshly downloaded after
+publication. A no-Git export reproduces both release ZIPs byte for byte, with
+installed smoke and rollback passing. Development keys were deleted; GitHub
+workflow provenance supplies host-download verification. Production device key
+custody remains open. The shell upload limitation was resolved through the
+existing Actions delivery route with a separate manual dev16 job and fixed
+packet; the historical dev14 helper and release are unchanged.
+
+See [publication report](project/docs/host-publication-2026-10-23.md),
+[verification](project/evidence/host-publication-20261023/verification.json),
+[receipt](project/evidence/host-publication-20261023/publication-receipt.json)
+and [public readback](project/evidence/host-publication-20261023/public-readback.json).
+Use the attached original-source ZIP for the matching preview source. GitHub's
+automatic repository archives include inherited mixed runtime/history and are
+outside the verified attached-asset scope. Native patches/engines, SDKs, games,
+saves and private keys are excluded from these attached downloads.
+
+The register remains **14/25 complete and 0/13 physical areas run**. All device/
+profile gates stay disabled. Actual recovery/inventory, physical qualification,
+five matched game-scene runs, 30-minute demanding profiles and measured presets
+remain pending, together with precise public native distribution decisions,
+production signing/custody and accepted maintenance ownership. Candidate presets
+are untested; unavailable figures remain unavailable. PPSSPP/current PS1 routes,
+games and memory-card locations are preserved. State galleries, named save
+history and power-off Resume remain later enhancements. No author message was sent.
+
+## Historical dev16 pre-publication fix snapshot
 
 This continuation starts at `2d4a43dbc8eb472fbdeb98bc8e09b5432c3ef69b`.
 Hardware remains unavailable. It fixes gameplay-report outputs overwriting

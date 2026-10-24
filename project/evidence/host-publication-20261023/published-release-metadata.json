@@ -1,0 +1,90 @@
+{
+  "id": 422401559,
+  "tag_name": "smartpro-host-0.1.0-dev16",
+  "target_commitish": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+  "name": "Smart Pro PSP dev16 \u2014 computer preview",
+  "draft": false,
+  "prerelease": true,
+  "created_at": "2026-10-23T08:52:35Z",
+  "published_at": "2026-10-23T23:56:19Z",
+  "html_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16",
+  "assets": [
+    {
+      "id": 670756344,
+      "name": "build-report.json",
+      "size": 5494,
+      "digest": "sha256:f55cf5d826def98855b4b05712e8b500c97396e4c597e2fa8886430a224e287e",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/build-report.json"
+    },
+    {
+      "id": 670756368,
+      "name": "certification.json",
+      "size": 7108,
+      "digest": "sha256:94608756a0eaba28f0ee1116535808f7e81a7eef773800508079d0e09c5f6e1c",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/certification.json"
+    },
+    {
+      "id": 670756342,
+      "name": "development-verification.pub",
+      "size": 32,
+      "digest": "sha256:5e8c7a421132dca5424c370dd2c65bc363dbc7895eddfa2cbc93235cb675160d",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/development-verification.pub"
+    },
+    {
+      "id": 670756375,
+      "name": "host-preview-provenance.jsonl",
+      "size": 13554,
+      "digest": "sha256:5471344a019d831e423a1ec8c40e19222bc9ba3e938aee712b56ea43ef58418b",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/host-preview-provenance.jsonl"
+    },
+    {
+      "id": 670756345,
+      "name": "host-preview.png",
+      "size": 153209,
+      "digest": "sha256:2f759e35da4299492b835bb5f44ee387751c4ea5b1fa14778289789634fedf15",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/host-preview.png"
+    },
+    {
+      "id": 670756361,
+      "name": "release-source.json",
+      "size": 28805,
+      "digest": "sha256:e557f9d06bed8d555e89709dbef9e9862edb515887ff0fb3163ae948dd2d7f8b",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/release-source.json"
+    },
+    {
+      "id": 670756346,
+      "name": "SHA256SUMS",
+      "size": 743,
+      "digest": "sha256:82362e30209bca05a540541f0b7ffa7e1a37174ca8dad208f92ab55e0871b4fd",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/SHA256SUMS"
+    },
+    {
+      "id": 670756362,
+      "name": "smartpro-psp-0.1.0-dev16-host-preview.zip",
+      "size": 1460422,
+      "digest": "sha256:43aeebb57353f510b945ebcdeb5d8924b7e13ce37f9ce6f210c8c68a3f29d62b",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/smartpro-psp-0.1.0-dev16-host-preview.zip"
+    },
+    {
+      "id": 670756363,
+      "name": "smartpro-psp-0.1.0-dev16-original-source.zip",
+      "size": 2048102,
+      "digest": "sha256:b8c714e58439f36d013eef8707a82cf6f6a991669b65a0e602127d1933562d82",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/smartpro-psp-0.1.0-dev16-original-source.zip"
+    },
+    {
+      "id": 670756365,
+      "name": "smartpro-psp-0.1.0-dev16.tar",
+      "size": 3082240,
+      "digest": "sha256:6097f3560d51a3b0d3b13d2919bef2381fedc78557d3208c1fe0ef44c82db311",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/smartpro-psp-0.1.0-dev16.tar"
+    },
+    {
+      "id": 670756343,
+      "name": "START-HERE.txt",
+      "size": 859,
+      "digest": "sha256:a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "browser_download_url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/download/smartpro-host-0.1.0-dev16/START-HERE.txt"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "source_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+  "original_git_checkout_used": false,
+  "zip_results": {
+    "smartpro-psp-0.1.0-dev16-host-preview.zip": {
+      "byte_identical": true,
+      "bytes": 1460422,
+      "sha256": "43aeebb57353f510b945ebcdeb5d8924b7e13ce37f9ce6f210c8c68a3f29d62b"
+    },
+    "smartpro-psp-0.1.0-dev16-original-source.zip": {
+      "byte_identical": true,
+      "bytes": 2048102,
+      "sha256": "b8c714e58439f36d013eef8707a82cf6f6a991669b65a0e602127d1933562d82"
+    }
+  },
+  "installed_smoke": {
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "game_information": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 3,
+    "settings_dispatch": true
+  },
+  "fixture_stage_activate_rollback": true,
+  "generated_private_key_deleted": true,
+  "new_independent_signer": true,
+  "signed_tar_expected_to_differ_with_new_signer": true,
+  "hardware_qualified": false
+}

@@ -1,5 +1,19 @@
 # TrimUI master plan — 22 October 2026
 
+## Host merge and publication — 23 October 2026
+
+The owner instructed merging and publishing the completed host work, superseding
+the earlier draft/unmerged hold. PR #1 is merged into `main` at `8726462` and
+[dev16 is published](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16)
+from exact source `99336f6`. All 1,099 strict checks, 10 provenance subjects,
+11 public asset readbacks and byte-identical no-Git ZIP rebuilds pass.
+[The publication report](host-publication-2026-10-23.md) and
+[exact verification](../evidence/host-publication-20261023/verification.json)
+preserve the separate implementation, public build, merge and later main identities.
+The register remains 14/25 complete and 0/13 physical areas run. All device gates
+remain disabled; native distribution, production custody and maintenance ownership
+criteria remain open. Older draft/unmerged requirements below are historical.
+
 ## Dev16 host defect fixes — 23 October 2026
 
 The [release preparation fix report](release-preflight-fixes-2026-10-23.md)

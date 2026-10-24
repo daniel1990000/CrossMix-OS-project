@@ -4,7 +4,17 @@ Updated 22 October 2026. **Active direction: build on spruceOS and its existing 
 
 The repository's existing name is retained only as the document's location. It does not select CrossMix as the software base. The old CrossMix/C++ blueprint is preserved in a collapsed historical appendix for provenance; its architecture, paths, estimates and implementation instructions are superseded wherever they conflict with this active plan. Do not implement from that appendix without revalidation.
 
-## Current implementation checkpoint — 22 October 2026
+## Current host release — 23 October 2026
+
+PR #1 is merged; development continues on `main`. The owner authorized merging
+and publishing the completed host software. The original-only dev16 computer
+preview is published with matching source and verified provenance. See
+[the current handover](HANDOVER.md) and [publication report](project/docs/host-publication-2026-10-23.md).
+All 1,099 strict checks pass; the register stays 14/25 complete and 0/13 physical
+areas run. Device/profile gates remain disabled. Earlier dated merge holds and
+checkpoint counts below are historical.
+
+## Historical implementation checkpoint — 22 October 2026
 
 Current continuation: **R04 private artifact custody is complete**, bringing
 host completion to 12 of 25 tasks. Two new native builds, matching source/build

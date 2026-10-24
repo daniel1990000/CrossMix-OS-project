@@ -4,7 +4,7 @@ Development source for an original TrimUI Smart Pro **TG5040** offshoot of spruc
 
 See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparison](evidence/psp-design/comparison.png), and [visual design/source notes](docs/psp-visual-design.md). All new captures are actual SDL host renders. PlayFieldPortal informed category positioning and bounded row motion; EmuCoreA informed cover presentation. The matching PPSSPP palette uses its pinned official theme parser.
 
-This checkpoint runs on a computer and has injected-runtime tests. It is not a device-ready SD image. Device activation remains blocked by the shipped profiles.
+[Download the published dev16 computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16). PR #1 is merged into `main`. The release includes matching original source, checksums and verified workflow provenance; [publication evidence](docs/host-publication-2026-10-23.md) records all 11 asset readbacks. This runs on a computer; physical-device qualification remains pending and device activation stays disabled.
 
 The [dev14 to release continuation](docs/release-continuation-2026-10-23.md)
 extends existing per-game performance controls, gameplay reports, game information,
@@ -30,8 +30,8 @@ binds those results to their build snapshots. The public dev14 preview remains u
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,
 revocation receipts and trust report readback. The current descriptor selects
-**smartpro-psp-0.1.0-dev16**, an original-only host preview. Dev14 remains the
-previously published and independently retained computer preview.
+**smartpro-psp-0.1.0-dev16**, an original-only host preview. Dev14 remains available with its historical evidence; dev16 is the current
+published computer preview.
 
 The [work completed without hardware](docs/nondevice-completion-2026-10-23.md)
 adds exact recovered-key possession verification, current upstream maintenance
