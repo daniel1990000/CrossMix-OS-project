@@ -565,7 +565,9 @@ class NavigationModel:
         elif context == "systems":
             self._set_systems(value for value in result if isinstance(value, Mapping))
         elif context == "games":
-            if command.serial != self._query_serial:
+            # Games and Favorites share a page. A background query can finish
+            # after navigation has selected Favorites or returned to systems.
+            if command.serial != self._query_serial or self._games_view not in ("all", "system", "search"):
                 return []
             values = result.get("items", []) if isinstance(result, Mapping) else []
             items = [UIItem.from_record(value) for value in values if isinstance(value, Mapping)]
@@ -593,9 +595,10 @@ class NavigationModel:
                 self._favorites.update(item.id for item in items)
             if context != "favorites_cache":
                 self._history_records[context] = items
-                page = self._pages[1 if context == "recent" else 0]
-                self._show_history_page(context, page.offset)
-                self._restore_focus(page, "1" if context == "recent" else "0")
+                if context == "recent" or self._games_view == "favorites":
+                    page = self._pages[1 if context == "recent" else 0]
+                    self._show_history_page(context, page.offset)
+                    self._restore_focus(page, "1" if context == "recent" else "0")
         elif context == "tools":
             self._pages[2].replace(UIItem.from_record(value, "tool") for value in result if isinstance(value, Mapping))
             self._restore_focus(self._pages[2], "2")

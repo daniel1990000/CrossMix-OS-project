@@ -28,11 +28,8 @@ sys.path.insert(0, str(PROJECT / "tools"))
 import overlay
 from build_payload import build_payload
 from fixture_card import create_fixture
-from release_descriptor import resolve as resolve_descriptor
-
-SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp"}
-SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
-SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
+from release_descriptor import (resolve as resolve_descriptor, original_source_scope, original_source_file,
+                                SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS)
 
 
 def put_json(path, value):
@@ -58,22 +55,11 @@ def original_source_entries(project):
     entries = []
     for path in sorted(project.rglob("*")):
         relative = path.relative_to(project)
-        if not relative.parts:
+        if not original_source_scope(relative):
             continue
-        if relative.parts[0] not in SOURCE_FOLDERS and relative.as_posix() not in SOURCE_ROOT_FILES:
-            continue
-        if (relative.parts[0] == "ppsspp" and relative.as_posix() != "ppsspp/performance-source-lock.json"
-                and (len(relative.parts) < 2 or relative.parts[1] != "theme")):
-            continue
-        if any(x in {"__pycache__", ".git", ".venv", "state", "transactions", "previews", "migrations", "fixtures"}
-               for x in relative.parts):
-            continue
-        if relative.name == "author-notification-draft.txt":
-            continue  # private, unsent work-in-progress communication stays local
         if path.is_symlink():
             raise overlay.OverlayError("source archive refuses symlinks")
-        if not path.is_file() or (path.suffix.lower() not in SOURCE_EXTENSIONS and
-                                  relative.as_posix() not in SOURCE_ROOT_FILES and relative.name != "LICENSE"):
+        if not path.is_file() or not original_source_file(relative):
             continue
         overlay.relative_path(relative.as_posix())
         overlay.require(path.stat().st_size <= overlay.MAX_FILE, "source artifact file too large")

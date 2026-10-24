@@ -153,9 +153,11 @@ def copy_tree(source, destination, scope, expected, *, max_entries, max_bytes,
               expected_source_identity=None, expected_destination_identity=None):
     """Copy from anchored descriptors, with per-file and whole-tree checks."""
     supported_tree(expected)
-    source_fd, destination_fd = verifier.directory_fd(source), verifier.directory_fd(destination)
-    owned_dirs = {"": identity(os.fstat(destination_fd))}
+    source_fd = verifier.directory_fd(source)
+    destination_fd = None
     try:
+        destination_fd = verifier.directory_fd(destination)
+        owned_dirs = {"": identity(os.fstat(destination_fd))}
         if expected_source_identity is not None and identity(os.fstat(source_fd)) != (
                 expected_source_identity["device"], expected_source_identity["inode"]):
             raise ValueError("source root changed since the initial inventory")
@@ -166,8 +168,9 @@ def copy_tree(source, destination, scope, expected, *, max_entries, max_bytes,
             relative = verifier.relative_name(entry["path"])
             parent_name, _, leaf = relative.rpartition("/")
             parent_source = open_directory(source_fd, parent_name)
-            parent_target = open_directory(destination_fd, parent_name, owned_dirs)
+            parent_target = None
             try:
+                parent_target = open_directory(destination_fd, parent_name, owned_dirs)
                 before_name = os.stat(leaf, dir_fd=parent_source, follow_symlinks=False)
                 if entry["type"] == "directory":
                     if not stat.S_ISDIR(before_name.st_mode):
@@ -225,7 +228,8 @@ def copy_tree(source, destination, scope, expected, *, max_entries, max_bytes,
                     os.close(source_file)
             finally:
                 os.close(parent_source)
-                os.close(parent_target)
+                if parent_target is not None:
+                    os.close(parent_target)
         # Directories stay traversable throughout copying, then receive exact
         # internal metadata bottom-up, including the selected source root.
         for entry in sorted((row for row in expected["entries"] if row["type"] == "directory"),
@@ -242,7 +246,8 @@ def copy_tree(source, destination, scope, expected, *, max_entries, max_bytes,
         same_root(destination, destination_fd)
     finally:
         os.close(source_fd)
-        os.close(destination_fd)
+        if destination_fd is not None:
+            os.close(destination_fd)
     source_after = verifier.scan_tree(source, scope, max_entries=max_entries, max_bytes=max_bytes)
     if verifier.tree_differences(expected, source_after, scope):
         raise ValueError("source contents or scoped metadata changed across copy")

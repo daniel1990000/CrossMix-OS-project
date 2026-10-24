@@ -103,6 +103,35 @@ class CombinedFilterTests(unittest.TestCase):
         self.assertEqual(model.snapshot().offset, 0)
         self.assertEqual(model.snapshot().selected, 39)
 
+    def test_pending_game_query_cannot_populate_favorites(self):
+        model = NavigationModel()
+        old_games = model.handle("confirm")[0]
+        model.handle("back")
+        model.handle("down")
+        favorites = model.handle("confirm")[0]
+        self.assertEqual(model.snapshot().title, "Favorites")
+        model.receive(old_games, {"items": [game("not-a-favorite")], "offset": 0, "total": 1})
+        self.assertEqual(model.snapshot().items, ())
+        model.receive(favorites, [game("favorite")])
+        self.assertEqual(model.snapshot().selected_item.id, "favorite")
+
+    def test_pending_favorites_reply_cannot_populate_all_games(self):
+        model = NavigationModel()
+        model.handle("down")
+        old_favorites = model.handle("confirm")[0]
+        model.handle("back")
+        model.handle("up")
+        games = model.handle("confirm")[0]
+        self.assertEqual(model.snapshot().title, "All games")
+        model.receive(old_favorites, [game("favorite")])
+        self.assertEqual(model.snapshot().items, ())
+        model.receive(games, {"items": [game("ordinary")], "offset": 0, "total": 1})
+        self.assertEqual(model.snapshot().selected_item.id, "ordinary")
+        # The response still updates favorite badges while its old view is closed.
+        model.set_category_items(1, [game("favorite")])
+        model.handle("right")
+        self.assertTrue(model.snapshot().selected_item.favorite)
+
     def test_restore_retains_filters_and_current_system_search(self):
         state = {"schema": 1, "games_view": "search", "system_id": "PSP", "system_label": "PSP", "search": "Circuit",
                  "history_filters": {"recent": "PS", "favorites": "PSP"}}

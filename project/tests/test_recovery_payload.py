@@ -321,6 +321,47 @@ class RecoveryPayloadTests(unittest.TestCase):
             payload.restore(self.backup, self.restored)
         self.assertFalse(self.restored.exists())
 
+    def test_unavailable_copy_destination_closes_already_opened_source(self):
+        expected = verifier.scan_tree(self.source, "saves")
+        opened = []
+        real_directory = verifier.directory_fd
+        def capture(path):
+            fd = real_directory(path)
+            opened.append(fd)
+            return fd
+        with patch.object(verifier, "directory_fd", side_effect=capture), self.assertRaises(FileNotFoundError):
+            payload.copy_tree(self.source, self.base / "missing-destination", "saves", expected,
+                              max_entries=verifier.MAX_ENTRIES, max_bytes=verifier.MAX_BYTES)
+        self.assertEqual(len(opened), 1)
+        try:
+            os.fstat(opened[0])
+        except OSError as exc:
+            self.assertEqual(exc.errno, errno.EBADF)
+        else:
+            os.close(opened[0])
+            self.fail("failed destination open leaked the source descriptor")
+
+    def test_failed_target_parent_open_closes_already_opened_source_parent(self):
+        opened = []
+        real_open = payload.open_directory
+        def unavailable(root_fd, relative, expected=None):
+            if expected is not None:
+                raise PermissionError("destination parent became unavailable")
+            fd = real_open(root_fd, relative, expected)
+            opened.append(fd)
+            return fd
+        with patch.object(payload, "open_directory", side_effect=unavailable), self.assertRaises(PermissionError):
+            self.copy()
+        self.incomplete()
+        self.assertEqual(len(opened), 1)
+        try:
+            os.fstat(opened[0])
+        except OSError as exc:
+            self.assertEqual(exc.errno, errno.EBADF)
+        else:
+            os.close(opened[0])
+            self.fail("failed target parent open leaked the source parent descriptor")
+
     def test_source_file_replacement_during_copy_is_refused(self):
         real_read = os.read
         changed = False

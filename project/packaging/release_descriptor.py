@@ -2,17 +2,71 @@
 """Resolve current preview selection and bind it to the source bytes being built."""
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import subprocess
 
 import overlay
 
+SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp"}
+SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
+SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
+
+
+def original_source_scope(relative):
+    relative = Path(relative)
+    if not relative.parts:
+        return False
+    if relative.parts[0] not in SOURCE_FOLDERS and relative.as_posix() not in SOURCE_ROOT_FILES:
+        return False
+    if (relative.parts[0] == "ppsspp" and relative.as_posix() != "ppsspp/performance-source-lock.json"
+            and (len(relative.parts) < 2 or relative.parts[1] != "theme")):
+        return False
+    return (not any(part in {"__pycache__", ".git", ".venv", "state", "transactions", "previews", "migrations", "fixtures"}
+                    for part in relative.parts) and relative.name != "author-notification-draft.txt")
+
+
+def original_source_file(relative):
+    relative = Path(relative)
+    return original_source_scope(relative) and (relative.suffix.lower() in SOURCE_EXTENSIONS or
+           relative.as_posix() in SOURCE_ROOT_FILES or relative.name == "LICENSE")
+
 
 def source_inventory(entries):
     return [{"path": name.removeprefix("smartpro-original-source/"),
              "sha256": overlay.digest(data), "size": len(data)}
             for name, data in sorted(entries)]
+
+
+def matches_committed_inventory(project, entries, source_lock, git):
+    """Compare consumed bytes with HEAD even when local index flags hide edits."""
+    repository = project.parent.resolve()
+    try:
+        lock_relative = Path(source_lock).resolve().relative_to(repository).as_posix()
+    except ValueError:
+        return False
+    committed = {}
+    for entry in git("ls-tree", "-rz", "--full-tree", "HEAD", "--",
+                     project.name, lock_relative).split("\0"):
+        if not entry:
+            continue
+        metadata, name = entry.split("\t", 1)
+        _, kind, object_id = metadata.split()
+        if kind == "blob":
+            committed[name] = object_id
+    expected = {name for name in committed if name.startswith(project.name + "/") and
+                original_source_file(name[len(project.name) + 1:])} | {lock_relative}
+    consumed = set()
+    for name, data in entries:
+        relative = name.removeprefix("smartpro-original-source/")
+        source = (lock_relative if relative == "metadata/spruce-source-lock.json" else
+                  project.name + "/" + relative)
+        consumed.add(source)
+        object_id = hashlib.sha1(b"blob " + str(len(data)).encode("ascii") + b"\0" + data).hexdigest()
+        if committed.get(source) != object_id:
+            return False
+    return consumed == expected
 
 
 def resolve(project, descriptor_path, entries, source_lock):
@@ -82,8 +136,9 @@ def resolve(project, descriptor_path, entries, source_lock):
                             "frontend must be the project's repository checkout")
             commit = git("rev-parse", "HEAD")
             overlay.require(overlay.BASELINE.fullmatch(commit), "invalid frontend Git revision")
-            frontend = {"commit": commit, "working_tree_modified": bool(
-                git("status", "--porcelain", "--untracked-files=all", "--", "."))}
+            modified = bool(git("status", "--porcelain", "--untracked-files=all", "--", "."))
+            frontend = {"commit": commit, "working_tree_modified": modified or not
+                        matches_committed_inventory(project, entries, source_lock, git)}
         except subprocess.SubprocessError as exc:
             raise overlay.OverlayError("frontend Git identity unavailable; use a verified original-source export") from exc
         snapshot = {"schema": 1, "descriptor_sha256": descriptor_sha, "frontend": frontend,

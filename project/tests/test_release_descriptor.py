@@ -58,6 +58,61 @@ class ReleaseDescriptorTest(unittest.TestCase):
         self.assertTrue(changed["frontend"]["working_tree_modified"])
         self.assertNotEqual(selection["source_inventory_sha256"], changed["source_inventory_sha256"])
 
+    def test_git_index_flags_cannot_hide_modified_exported_source(self):
+        for flag in ("--assume-unchanged", "--skip-worktree"):
+            with self.subTest(flag=flag):
+                source = self.project / "psp_shell/__main__.py"
+                original = source.read_bytes()
+                self.git("update-index", flag, "project/psp_shell/__main__.py")
+                try:
+                    source.write_text("print('hidden change')\n")
+                    self.assertEqual(self.git("status", "--porcelain"), "")
+                    selection, _ = self.resolve()
+                    self.assertTrue(selection["frontend"]["working_tree_modified"])
+                finally:
+                    source.write_bytes(original)
+                    self.git("update-index", "--no-" + flag[2:], "project/psp_shell/__main__.py")
+        self.assertFalse(self.resolve()[0]["frontend"]["working_tree_modified"])
+
+    def test_git_index_flags_cannot_hide_missing_exported_source(self):
+        for flag in ("--assume-unchanged", "--skip-worktree"):
+            with self.subTest(flag=flag):
+                source = self.project / "psp_shell/__main__.py"
+                original = source.read_bytes()
+                self.git("update-index", flag, "project/psp_shell/__main__.py")
+                try:
+                    source.unlink()
+                    self.assertEqual(self.git("status", "--porcelain"), "")
+                    selection, _ = self.resolve()
+                    self.assertTrue(selection["frontend"]["working_tree_modified"])
+                finally:
+                    source.write_bytes(original)
+                    self.git("update-index", "--no-" + flag[2:], "project/psp_shell/__main__.py")
+        self.assertFalse(self.resolve()[0]["frontend"]["working_tree_modified"])
+
+    def test_sparse_exclusions_outside_export_scope_do_not_mark_source_modified(self):
+        excluded = ("inherited-runtime/not-exported.bin", "project/ppsspp/native.c",
+                    "project/evidence/retained.json", "project/assets/ignored.bin")
+        for name in excluded:
+            path = self.root / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("excluded fixture\n")
+        self.git("add", ".")
+        self.git("-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
+                 "commit", "-qm", "excluded source fixture")
+        for name in excluded:
+            self.git("update-index", "--skip-worktree", name)
+            (self.root / name).unlink()
+        self.assertEqual(self.git("status", "--porcelain"), "")
+        self.assertFalse(self.resolve()[0]["frontend"]["working_tree_modified"])
+
+    def test_changed_consumed_source_lock_marks_frontend_modified(self):
+        lock = json.loads(self.lock.read_bytes())
+        lock["additional_context"] = "changed outside the project directory"
+        self.lock.write_text(json.dumps(lock))
+        selection, _ = self.resolve()
+        self.assertTrue(selection["frontend"]["working_tree_modified"])
+
     def test_source_export_rebuild_preserves_identity_and_rejects_changed_bytes(self):
         selection, snapshot = self.resolve()
         (self.project / "metadata").mkdir()
