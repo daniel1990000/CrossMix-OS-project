@@ -1,0 +1,12 @@
+test_pending_game_query_cannot_populate_favorites (tests.test_ui_continuation.CombinedFilterTests.test_pending_game_query_cannot_populate_favorites) ... ok
+test_pending_favorites_reply_cannot_populate_all_games (tests.test_ui_continuation.CombinedFilterTests.test_pending_favorites_reply_cannot_populate_all_games) ... ok
+test_unavailable_copy_destination_closes_already_opened_source (tests.test_recovery_payload.RecoveryPayloadTests.test_unavailable_copy_destination_closes_already_opened_source) ... ok
+test_failed_target_parent_open_closes_already_opened_source_parent (tests.test_recovery_payload.RecoveryPayloadTests.test_failed_target_parent_open_closes_already_opened_source_parent) ... ok
+test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) ... ok
+test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) ... ok
+test_changed_consumed_source_lock_marks_frontend_modified (tests.test_release_descriptor.ReleaseDescriptorTest.test_changed_consumed_source_lock_marks_frontend_modified) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.209s
+
+OK

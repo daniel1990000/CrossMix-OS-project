@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "date_utc": "2026-10-23",
+  "date_utc": "2026-10-24",
   "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
   "branch": "main",
   "pull_request": {
@@ -13,12 +13,13 @@
   },
   "implementation_root": "project",
   "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
-  "project_stage": "PR #1 is merged and the exact original-only dev16 computer preview is published. All 11 public assets and 10 provenance subjects are verified; 1,099 strict checks pass. Device qualification and native/operational criteria remain open.",
+  "project_stage": "Dev17 host correctness fixes verified: 1,107 strict checks pass. Dev16 remains the published computer preview. Hardware qualification and native/operational criteria remain open.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
     "project/handover/LATEST.json",
     "project/README.md",
+    "project/docs/host-fixes-2026-10-24.md",
     "project/docs/host-publication-2026-10-23.md",
     "project/evidence/host-publication-20261023/verification.json",
     "project/docs/master-plan-2026-10-22.md"
@@ -62,7 +63,7 @@
     "P03",
     "R04"
   ],
-  "release_id": "smartpro-psp-0.1.0-dev16",
+  "release_id": "smartpro-psp-0.1.0-dev17",
   "delivery": "original-only-host-preview",
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -154,7 +155,7 @@
     "proposed_qualification_matrix": "firmware 1.1.1 / FAT32; inventory actual device first",
     "automatic_firmware_flash_authorized": false,
     "connected_or_probed_in_this_continuation": false,
-    "latest_availability_reply": "2026-10-23: Complete all remaining items not needing my Smart Pro."
+    "latest_availability_reply": "2026-10-24: device unavailable for days; continue useful work without human testing."
   },
   "next_work": [
     {
@@ -259,7 +260,7 @@
     "Development package signatures are not an operational production trust root.",
     "Historical private native outputs were not recovered. New replacement/source/build/compiler archives have actual private retrieval proof; the retained compiler was restored into an observed empty daemon and passed offline C/C++ link smoke; target execution remains untested."
   ],
-  "handover_validation": "project/evidence/host-publication-20261023/verification.json",
+  "handover_validation": "project/evidence/host-fixes-20261024/verification.json",
   "latest_completed_host_task": "D01",
   "previous_five_task_batch": [
     "U04",
@@ -275,57 +276,118 @@
     "R06"
   ],
   "current_snapshot": {
-    "release_id": "smartpro-psp-0.1.0-dev16",
+    "schema": 1,
+    "verified_at_utc": "2026-10-24T02:15:33.079902+00:00",
+    "kind": "dev17-host-correctness-fixes",
+    "baseline_commit": "17339c0575791914cf5c869addc034ae5c90a745",
+    "implementation_commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+    "implementation_tree": "1cf06e297c178788fbcf821fbed49a83ac5604e7",
+    "release_id": "smartpro-psp-0.1.0-dev17",
     "strict_tests": {
-      "tests_run": 1099,
-      "passed": 1099,
+      "tests_run": 1107,
+      "passed": 1107,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "clean_implementation_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
-    "runtime_implementation_commit": "a8ba3176e78d248162d3d40b91ec1d8b854491a9",
-    "original_source_inventory_files": 223,
-    "original_source_inventory_sha256": "a0c9c9179528ddc0e9316a6aef2bda9c6f4d4ef24f70c91296d49c18a6ea834a",
-    "payload_files": 66,
-    "build_status": "passed",
-    "ci_certification": "project/evidence/host-publication-20261023/publication-source-certification.json",
-    "ci_build_report": "project/evidence/host-publication-20261023/publication-source-build-report.json",
-    "ci_release_source": "project/evidence/host-publication-20261023/publication-source-release-source.json",
-    "evidence": "project/evidence/host-publication-20261023/verification.json",
-    "source_export_zip_rebuild_byte_identical": true,
-    "later_evidence_edits": "Later workflow/evidence/docs commits have separate frontend/source identities; the public tag and attached bytes remain fixed at99336f6.",
-    "ci": {
-      "run_id": 40041273891,
-      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40041273891",
-      "event": "workflow_dispatch",
-      "source_branch_head": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
-      "actual_clean_checkout": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
-      "status": "success",
-      "artifact_id": 12538738783,
-      "artifact_sha256": "0f57972e96f34700c3b5642dce064fe91e2cd859a1e4f85703ad1ffeec491524",
-      "artifact_bytes": 5247188,
-      "artifact_expires_at_utc": "2027-01-21T23:43:43Z",
-      "readback": "project/evidence/host-publication-20261023/publication-source-readback.json",
-      "signature_payload_and_source_export_bytes_verified": true,
-      "public_workflow_provenance_verified": true,
-      "independent_private_retention_performed": false
+    "source_checkouts": 5,
+    "test_snapshot": "Tests ran on the identical implementation tree before committing; clean packaging binds the same bytes to de9ecf0.",
+    "regressions": {
+      "methods": 7,
+      "baseline_assertion_failures": 9,
+      "fixed_failures": 0,
+      "additional_sparse_scope_compatibility_test": true
     },
-    "host_publication": {
-      "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16",
-      "release_id": 422401559,
-      "tag": "smartpro-host-0.1.0-dev16",
-      "attached_assets": 11,
-      "attested_subjects": 10,
-      "fresh_public_readback_verified": true,
-      "public_device_release": false,
-      "automatic_inherited_repository_archives_excluded": true,
-      "delivery_run_id": 40042094364,
-      "delivery_status": "success",
-      "production_ed25519_key_custody_established": false
-    }
+    "independent_review": {
+      "ui": "Pass: asynchronous desktop and synchronous embedded callers; filter serial guards preserved.",
+      "recovery": "Pass: root and parent acquisition failures close owned descriptors; 1,000 injected failures keep descriptor count stable.",
+      "packaging": "Pass after independent reviewer reproduced hidden deletion; complete committed/consumed allowlist comparison covers it."
+    },
+    "payload_files": 66,
+    "source_inventory_files": 224,
+    "source_inventory_sha256": "bd52faec9e9e08c0b1ffaf2603a907409017835bf8bc3eae44a4797d6ac81f91",
+    "frontend": {
+      "commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+      "working_tree_modified": false
+    },
+    "signature_and_payload_verified": true,
+    "same_key_overlay_rebuild_byte_identical": true,
+    "installed_smoke": {
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "combined_filters": true,
+      "executed": true,
+      "fresh_backup_readback": true,
+      "game_information": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 3,
+      "settings_dispatch": true
+    },
+    "fixture_rollback_passed": true,
+    "no_git_export_rebuild_both_zips_byte_identical": true,
+    "generated_development_keys_deleted": true,
+    "public_release_created": false,
+    "published_dev16_changed": false,
+    "ci": {
+      "verified_at_utc": "2026-10-24T02:16:36.499425+00:00",
+      "artifact_sha256": "332fa7260c0d67024306fefb46cf1580df23d7dd301927780821cdbc0db540fb",
+      "artifact_size_bytes": 5251166,
+      "frontend": {
+        "commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+        "working_tree_modified": false
+      },
+      "totals": {
+        "tests_run": 1107,
+        "passed": 1107,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0
+      },
+      "inner_artifact_sha256": {
+        "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+        "build-report.json": "fd2970ff9f075e5a94abf873100e1d9b24e87b7f92b2ff21ffbf5e6ebc393975",
+        "development-verification.pub": "331f778495ac86066b17c9acba8425db2a1002531156b72a7323e7ca16affb1c",
+        "host-preview.png": "8e18ed1eba437b54c98a152a4e469a0dd4184c89e58f8f09ed4cc49c982e20f6",
+        "release-source.json": "70e840cd1ebffcd081ea971a5426fb9a9f7a938df0752cb09182188d35d1b432",
+        "smartpro-psp-0.1.0-dev17-host-preview.zip": "cfb24aab8977cc6342c79af0d922d147b783f7ca96b7a959bfb2316324326454",
+        "smartpro-psp-0.1.0-dev17-original-source.zip": "1efb4549b3dd3189278c58b0caf5d885fec2adbbd28bf492298fe75f6bbbe40a",
+        "smartpro-psp-0.1.0-dev17.tar": "99dcffe5342c6f5cd4aac1625689304858cf7550c34221a1c02a725d30ae4c3a"
+      },
+      "source_inventory_files": 224,
+      "source_inventory_sha256": "bd52faec9e9e08c0b1ffaf2603a907409017835bf8bc3eae44a4797d6ac81f91",
+      "payload_files": 66,
+      "signature_and_payload_inventory_verified": true,
+      "source_export_bytes_verified": true,
+      "hardware_qualified": false,
+      "production_authenticity_claim": false,
+      "private_native_artifact_custody_verified": false,
+      "schema": 1,
+      "run_id": 40053305796,
+      "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40053305796",
+      "status": "success",
+      "artifact_id": 12544371913,
+      "artifact_expires_at_utc": "2027-01-22T02:14:00Z",
+      "independent_private_storage_retention_performed": false,
+      "local_and_ci_zip_bytes_identical": {
+        "smartpro-psp-0.1.0-dev17-host-preview.zip": true,
+        "smartpro-psp-0.1.0-dev17-original-source.zip": true
+      }
+    },
+    "device_activation_enabled": false,
+    "hardware_qualified": false,
+    "physical_areas_run": 0,
+    "physical_areas_total": 13,
+    "native_binaries_replaced": false,
+    "owner_data_changed": false,
+    "register_completed": 14,
+    "register_total": 25,
+    "later_documentation_identity": "Later evidence and handover commits have separate inventories; build receipts bind only de9ecf0."
   },
   "artifact_custody": {
     "R04": "complete as private host engineering; historical outputs not recovered, replacements rebuilt and retrieved",
@@ -921,6 +983,15 @@
       "Five matched game-scene runs and 30-minute demanding profiles, then recommended presets",
       "Precise public native distribution decisions",
       "Production signing/custody and accepted maintenance ownership"
+    ]
+  },
+  "host_fixes": {
+    "report": "project/docs/host-fixes-2026-10-24.md",
+    "evidence": "project/evidence/host-fixes-20261024/verification.json",
+    "scope": [
+      "async library views",
+      "recovery copy cleanup",
+      "release source identity"
     ]
   }
 }

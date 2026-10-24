@@ -3,6 +3,17 @@ PR #1 is merged at 87264629735e179c81c2ad360516665c1e7fd5cd.
 The owner explicitly authorized merging and publishing the completed host work;
 older draft/unmerged instructions are historical for this release.
 
+Latest development checkpoint: dev17 host correctness fixes at exact implementation
+de9ecf099a305f2623086c9d78b808fe4d14197c. All 1,107 strict checks pass with zero
+skips/errors/failures, plus installed smoke/rollback and byte-identical no-Git ZIP
+rebuilds. Fixed async library view mix-ups, failed-copy fd leaks and hidden
+changed/deleted release source inputs. No new public release; dev16 below remains
+the latest public download. Read project/docs/host-fixes-2026-10-24.md and
+project/evidence/host-fixes-20261024/verification.json before older snapshots.
+Later handover/evidence edits have their own source inventories.
+CI 40053305796 passes all 1,107 checks; artifact 12544371913 passes complete
+downloaded signature/source/checksum readback. Both CI ZIPs match local bytes.
+
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
 project/docs/host-publication-2026-10-23.md,
 project/evidence/host-publication-20261023/verification.json and the master plan.

@@ -1,5 +1,14 @@
 # TrimUI master plan — 22 October 2026
 
+## Host correctness fixes, 24 October 2026
+
+[Dev17 fixes](host-fixes-2026-10-24.md) cover delayed library view responses,
+recovery copy file-handle cleanup and complete release source identity checks.
+All 1,107 strict checks pass without skips, errors or failures. Installed smoke,
+fixture rollback and no-Git ZIP rebuilds pass; exact build source is `de9ecf0`.
+The published dev16 packet remains unchanged. The register remains 14/25 complete
+and 0/13 physical areas run; all device gates remain disabled.
+
 ## Host merge and publication — 23 October 2026
 
 The owner instructed merging and publishing the completed host work, superseding

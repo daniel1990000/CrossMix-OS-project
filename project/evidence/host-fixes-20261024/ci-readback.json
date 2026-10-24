@@ -1,0 +1,47 @@
+{
+  "verified_at_utc": "2026-10-24T02:16:36.499425+00:00",
+  "artifact_sha256": "332fa7260c0d67024306fefb46cf1580df23d7dd301927780821cdbc0db540fb",
+  "artifact_size_bytes": 5251166,
+  "frontend": {
+    "commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 1107,
+    "passed": 1107,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "fd2970ff9f075e5a94abf873100e1d9b24e87b7f92b2ff21ffbf5e6ebc393975",
+    "development-verification.pub": "331f778495ac86066b17c9acba8425db2a1002531156b72a7323e7ca16affb1c",
+    "host-preview.png": "8e18ed1eba437b54c98a152a4e469a0dd4184c89e58f8f09ed4cc49c982e20f6",
+    "release-source.json": "70e840cd1ebffcd081ea971a5426fb9a9f7a938df0752cb09182188d35d1b432",
+    "smartpro-psp-0.1.0-dev17-host-preview.zip": "cfb24aab8977cc6342c79af0d922d147b783f7ca96b7a959bfb2316324326454",
+    "smartpro-psp-0.1.0-dev17-original-source.zip": "1efb4549b3dd3189278c58b0caf5d885fec2adbbd28bf492298fe75f6bbbe40a",
+    "smartpro-psp-0.1.0-dev17.tar": "99dcffe5342c6f5cd4aac1625689304858cf7550c34221a1c02a725d30ae4c3a"
+  },
+  "source_inventory_files": 224,
+  "source_inventory_sha256": "bd52faec9e9e08c0b1ffaf2603a907409017835bf8bc3eae44a4797d6ac81f91",
+  "payload_files": 66,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false,
+  "schema": 1,
+  "run_id": 40053305796,
+  "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40053305796",
+  "status": "success",
+  "artifact_id": 12544371913,
+  "artifact_expires_at_utc": "2027-01-22T02:14:00Z",
+  "independent_private_storage_retention_performed": false,
+  "local_and_ci_zip_bytes_identical": {
+    "smartpro-psp-0.1.0-dev17-host-preview.zip": true,
+    "smartpro-psp-0.1.0-dev17-original-source.zip": true
+  }
+}

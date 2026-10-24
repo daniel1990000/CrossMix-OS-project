@@ -6,12 +6,18 @@ See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparis
 
 [Download the published dev16 computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16). PR #1 is merged into `main`. The release includes matching original source, checksums and verified workflow provenance; [publication evidence](docs/host-publication-2026-10-23.md) records all 11 asset readbacks. This runs on a computer; physical-device qualification remains pending and device activation stays disabled.
 
+The current development descriptor selects **dev17**. [Host correctness fixes](docs/host-fixes-2026-10-24.md)
+address delayed library responses, failed-copy file-handle leaks and incomplete
+release source identity checks. All **1,107 strict checks** pass, with installed
+package smoke/rollback and byte-identical no-Git ZIP rebuilds. The published
+dev16 download and its historical evidence keep their own exact scope.
+
 The [dev14 to release continuation](docs/release-continuation-2026-10-23.md)
 extends existing per-game performance controls, gameplay reports, game information,
 combined library filters, Continue/backup status and PS1 disc presentation. Use
 Start (desktop Tab) for system filters. Game information leads to native
-performance and existing emulator options. The current development descriptor
-selects **smartpro-psp-0.1.0-dev16**; the published dev14 preview retains its own
+performance and existing emulator options. That historical development descriptor
+selected **smartpro-psp-0.1.0-dev16**; the published dev14 preview retains its own
 exact artifact identity and 1,011-check evidence. Candidate presets remain
 untested, and no Smart Pro performance improvement is claimed.
 The historical clean dev15 implementation passes **1,092 strict checks** with zero skips,
@@ -29,7 +35,7 @@ binds those results to their build snapshots. The public dev14 preview remains u
 
 The [software validation fixes](docs/software-hardening-2026-10-23.md)
 address source certification, disposable probe cleanup, device evidence chronology,
-revocation receipts and trust report readback. The current descriptor selects
+revocation receipts and trust report readback. The historical descriptor selected
 **smartpro-psp-0.1.0-dev16**, an original-only host preview. Dev14 remains available with its historical evidence; dev16 is the current
 published computer preview.
 

@@ -1,0 +1,130 @@
+test_pending_game_query_cannot_populate_favorites (tests.test_ui_continuation.CombinedFilterTests.test_pending_game_query_cannot_populate_favorites) ... FAIL
+test_pending_favorites_reply_cannot_populate_all_games (tests.test_ui_continuation.CombinedFilterTests.test_pending_favorites_reply_cannot_populate_all_games) ... FAIL
+test_unavailable_copy_destination_closes_already_opened_source (tests.test_recovery_payload.RecoveryPayloadTests.test_unavailable_copy_destination_closes_already_opened_source) ... FAIL
+test_failed_target_parent_open_closes_already_opened_source_parent (tests.test_recovery_payload.RecoveryPayloadTests.test_failed_target_parent_open_closes_already_opened_source_parent) ... FAIL
+test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) ... 
+  test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) (flag='--assume-unchanged') ... FAIL
+  test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) (flag='--skip-worktree') ... FAIL
+test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) ... 
+  test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) (flag='--assume-unchanged') ... FAIL
+  test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) (flag='--skip-worktree') ... FAIL
+test_changed_consumed_source_lock_marks_frontend_modified (tests.test_release_descriptor.ReleaseDescriptorTest.test_changed_consumed_source_lock_marks_frontend_modified) ... FAIL
+
+======================================================================
+FAIL: test_pending_game_query_cannot_populate_favorites (tests.test_ui_continuation.CombinedFilterTests.test_pending_game_query_cannot_populate_favorites)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_ui_continuation.py", line 114, in test_pending_game_query_cannot_populate_favorites
+    self.assertEqual(model.snapshot().items, ())
+AssertionError: Tuples differ: (UIItem(id='not-a-favorite', title='Skylin[240 chars]e'),) != ()
+
+First tuple contains 1 additional elements.
+First extra element 0:
+UIItem(id='not-a-favorite', title='Skyline Circuit', subtitle='PSP', kind='game', system_id='PSP', artwork='', available=True, resume_available=False, reason='', favorite=False, state_recorded_at='', system_label='', selected_emulator='', selected_preset='', availability='available')
+
++ ()
+- (UIItem(id='not-a-favorite',
+-         title='Skyline Circuit',
+-         subtitle='PSP',
+-         kind='game',
+-         system_id='PSP',
+-         artwork='',
+-         available=True,
+-         resume_available=False,
+-         reason='',
+-         favorite=False,
+-         state_recorded_at='',
+-         system_label='',
+-         selected_emulator='',
+-         selected_preset='',
+-         availability='available'),)
+
+======================================================================
+FAIL: test_pending_favorites_reply_cannot_populate_all_games (tests.test_ui_continuation.CombinedFilterTests.test_pending_favorites_reply_cannot_populate_all_games)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_ui_continuation.py", line 127, in test_pending_favorites_reply_cannot_populate_all_games
+    self.assertEqual(model.snapshot().items, ())
+AssertionError: Tuples differ: (UIItem(id='favorite', title='Skyline Circ[233 chars]e'),) != ()
+
+First tuple contains 1 additional elements.
+First extra element 0:
+UIItem(id='favorite', title='Skyline Circuit', subtitle='PSP', kind='game', system_id='PSP', artwork='', available=True, resume_available=False, reason='', favorite=True, state_recorded_at='', system_label='', selected_emulator='', selected_preset='', availability='available')
+
++ ()
+- (UIItem(id='favorite',
+-         title='Skyline Circuit',
+-         subtitle='PSP',
+-         kind='game',
+-         system_id='PSP',
+-         artwork='',
+-         available=True,
+-         resume_available=False,
+-         reason='',
+-         favorite=True,
+-         state_recorded_at='',
+-         system_label='',
+-         selected_emulator='',
+-         selected_preset='',
+-         availability='available'),)
+
+======================================================================
+FAIL: test_unavailable_copy_destination_closes_already_opened_source (tests.test_recovery_payload.RecoveryPayloadTests.test_unavailable_copy_destination_closes_already_opened_source)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_recovery_payload.py", line 342, in test_unavailable_copy_destination_closes_already_opened_source
+    self.fail("failed destination open leaked the source descriptor")
+AssertionError: failed destination open leaked the source descriptor
+
+======================================================================
+FAIL: test_failed_target_parent_open_closes_already_opened_source_parent (tests.test_recovery_payload.RecoveryPayloadTests.test_failed_target_parent_open_closes_already_opened_source_parent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_recovery_payload.py", line 363, in test_failed_target_parent_open_closes_already_opened_source_parent
+    self.fail("failed target parent open leaked the source parent descriptor")
+AssertionError: failed target parent open leaked the source parent descriptor
+
+======================================================================
+FAIL: test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) (flag='--assume-unchanged')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_release_descriptor.py", line 71, in test_git_index_flags_cannot_hide_modified_exported_source
+    self.assertTrue(selection["frontend"]["working_tree_modified"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_git_index_flags_cannot_hide_modified_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source) (flag='--skip-worktree')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_release_descriptor.py", line 71, in test_git_index_flags_cannot_hide_modified_exported_source
+    self.assertTrue(selection["frontend"]["working_tree_modified"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) (flag='--assume-unchanged')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_release_descriptor.py", line 87, in test_git_index_flags_cannot_hide_missing_exported_source
+    self.assertTrue(selection["frontend"]["working_tree_modified"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_git_index_flags_cannot_hide_missing_exported_source (tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source) (flag='--skip-worktree')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_release_descriptor.py", line 87, in test_git_index_flags_cannot_hide_missing_exported_source
+    self.assertTrue(selection["frontend"]["working_tree_modified"])
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_changed_consumed_source_lock_marks_frontend_modified (tests.test_release_descriptor.ReleaseDescriptorTest.test_changed_consumed_source_lock_marks_frontend_modified)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/trimui-regression-reproduction-nvyrwa39/project/tests/test_release_descriptor.py", line 114, in test_changed_consumed_source_lock_marks_frontend_modified
+    self.assertTrue(selection["frontend"]["working_tree_modified"])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.174s
+
+FAILED (failures=9)

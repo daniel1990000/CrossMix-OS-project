@@ -1,0 +1,14 @@
+{
+  "baseline_commit": "17339c0575791914cf5c869addc034ae5c90a745",
+  "cases": [
+    "tests.test_ui_continuation.CombinedFilterTests.test_pending_game_query_cannot_populate_favorites",
+    "tests.test_ui_continuation.CombinedFilterTests.test_pending_favorites_reply_cannot_populate_all_games",
+    "tests.test_recovery_payload.RecoveryPayloadTests.test_unavailable_copy_destination_closes_already_opened_source",
+    "tests.test_recovery_payload.RecoveryPayloadTests.test_failed_target_parent_open_closes_already_opened_source_parent",
+    "tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_modified_exported_source",
+    "tests.test_release_descriptor.ReleaseDescriptorTest.test_git_index_flags_cannot_hide_missing_exported_source",
+    "tests.test_release_descriptor.ReleaseDescriptorTest.test_changed_consumed_source_lock_marks_frontend_modified"
+  ],
+  "baseline_exit_code": 1,
+  "fixed_exit_code": 0
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "source_export_without_git": true,
+  "separate_disposable_signers": true,
+  "archives": [
+    {
+      "name": "smartpro-psp-0.1.0-dev17-host-preview.zip",
+      "sha256": "cfb24aab8977cc6342c79af0d922d147b783f7ca96b7a959bfb2316324326454",
+      "size": 1460530,
+      "byte_identical": true
+    },
+    {
+      "name": "smartpro-psp-0.1.0-dev17-original-source.zip",
+      "sha256": "1efb4549b3dd3189278c58b0caf5d885fec2adbbd28bf492298fe75f6bbbe40a",
+      "size": 2052182,
+      "byte_identical": true
+    }
+  ],
+  "installed_smoke_passed": true,
+  "physical_device_verified": false
+}

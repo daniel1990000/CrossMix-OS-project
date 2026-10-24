@@ -1,5 +1,8 @@
 # TrimUI project working instructions
 
+Latest host fixes: `project/docs/host-fixes-2026-10-24.md` and its linked evidence.
+Dev17 is the current development descriptor; published dev16 retains its exact packet.
+
 Read `HANDOVER.md`, `project/handover/LATEST.json` and `project/README.md` first. `NEXT_CHAT_PROMPT.txt` is the current continuation prompt; the master-plan register is `project/docs/master-plan-2026-10-22.md`. The active implementation lives under `project/` on `main` after PR #1 merged. The retained `build/spruce-psp-experience` branch identifies the published dev16 source; the inherited CrossMix runtime is historical reference. The owner authorized this host merge/publication; older draft/unmerged holds are historical. Device/profile gates remain disabled pending their actual qualification evidence.
 
 The user requests autonomous implementation, research beyond supplied links, and parallel agents. Delegate independent lanes with explicit file ownership. Preserve existing unrelated work and save progress, evidence and next steps in GitHub.

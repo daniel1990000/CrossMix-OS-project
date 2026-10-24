@@ -1,6 +1,32 @@
 # TrimUI Smart Pro implementation handover
 
-## Current state — merged source and published dev16 computer preview
+## Current state: dev17 host correctness fixes
+
+Continue on `main`. The owner still lacks device access and requested useful
+independent work. We fixed delayed library replies replacing the wrong view,
+recovery copy descriptor leaks and release identity mistakes under hidden Git
+edits/deletions or a changed consumed lock. Clean implementation/build:
+`de9ecf099a305f2623086c9d78b808fe4d14197c`. The development descriptor selects
+`smartpro-psp-0.1.0-dev17`.
+
+All **1,107 strict tests pass**, zero skips/errors/failures, against five pinned
+sources. Installed smoke, signature/payload verification, fixture rollback,
+same-key deterministic overlay rebuild and byte-identical no-Git ZIP rebuilds
+pass. Independent review and old-code regression reproduction pass. Read
+[the fix report](project/docs/host-fixes-2026-10-24.md) and
+[exact evidence](project/evidence/host-fixes-20261024/verification.json).
+Later documentation/evidence commits have separate source inventories.
+
+CI run 40053305796 also passes all 1,107 checks. Downloaded artifact 12544371913
+passes full signature, payload, source and checksum readback; both CI ZIPs match
+the local ZIPs. Its expiry is 22 January 2027. No new independent private
+retention was performed for this checkpoint.
+
+The public dev16 preview and its fixed publication packet retain their exact
+identities. This checkpoint does not publish a new release. Device gates remain
+disabled; 14/25 register rows are complete and 0/13 physical areas have run.
+
+## Published dev16 computer preview: historical exact snapshot
 
 The owner explicitly instructed merging and publishing the completed work.
 That instruction supersedes the earlier draft/unmerged hold for this host

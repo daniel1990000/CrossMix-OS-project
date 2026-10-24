@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "verified_at_utc": "2026-10-24T02:15:33.079902+00:00",
+  "kind": "dev17-host-correctness-fixes",
+  "baseline_commit": "17339c0575791914cf5c869addc034ae5c90a745",
+  "implementation_commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+  "implementation_tree": "1cf06e297c178788fbcf821fbed49a83ac5604e7",
+  "release_id": "smartpro-psp-0.1.0-dev17",
+  "strict_tests": {
+    "tests_run": 1107,
+    "passed": 1107,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "source_checkouts": 5,
+  "test_snapshot": "Tests ran on the identical implementation tree before committing; clean packaging binds the same bytes to de9ecf0.",
+  "regressions": {
+    "methods": 7,
+    "baseline_assertion_failures": 9,
+    "fixed_failures": 0,
+    "additional_sparse_scope_compatibility_test": true
+  },
+  "independent_review": {
+    "ui": "Pass: asynchronous desktop and synchronous embedded callers; filter serial guards preserved.",
+    "recovery": "Pass: root and parent acquisition failures close owned descriptors; 1,000 injected failures keep descriptor count stable.",
+    "packaging": "Pass after independent reviewer reproduced hidden deletion; complete committed/consumed allowlist comparison covers it."
+  },
+  "payload_files": 66,
+  "source_inventory_files": 224,
+  "source_inventory_sha256": "bd52faec9e9e08c0b1ffaf2603a907409017835bf8bc3eae44a4797d6ac81f91",
+  "frontend": {
+    "commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+    "working_tree_modified": false
+  },
+  "signature_and_payload_verified": true,
+  "same_key_overlay_rebuild_byte_identical": true,
+  "installed_smoke": {
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "game_information": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 3,
+    "settings_dispatch": true
+  },
+  "fixture_rollback_passed": true,
+  "no_git_export_rebuild_both_zips_byte_identical": true,
+  "generated_development_keys_deleted": true,
+  "public_release_created": false,
+  "published_dev16_changed": false,
+  "ci": {
+    "verified_at_utc": "2026-10-24T02:16:36.499425+00:00",
+    "artifact_sha256": "332fa7260c0d67024306fefb46cf1580df23d7dd301927780821cdbc0db540fb",
+    "artifact_size_bytes": 5251166,
+    "frontend": {
+      "commit": "de9ecf099a305f2623086c9d78b808fe4d14197c",
+      "working_tree_modified": false
+    },
+    "totals": {
+      "tests_run": 1107,
+      "passed": 1107,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "inner_artifact_sha256": {
+      "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+      "build-report.json": "fd2970ff9f075e5a94abf873100e1d9b24e87b7f92b2ff21ffbf5e6ebc393975",
+      "development-verification.pub": "331f778495ac86066b17c9acba8425db2a1002531156b72a7323e7ca16affb1c",
+      "host-preview.png": "8e18ed1eba437b54c98a152a4e469a0dd4184c89e58f8f09ed4cc49c982e20f6",
+      "release-source.json": "70e840cd1ebffcd081ea971a5426fb9a9f7a938df0752cb09182188d35d1b432",
+      "smartpro-psp-0.1.0-dev17-host-preview.zip": "cfb24aab8977cc6342c79af0d922d147b783f7ca96b7a959bfb2316324326454",
+      "smartpro-psp-0.1.0-dev17-original-source.zip": "1efb4549b3dd3189278c58b0caf5d885fec2adbbd28bf492298fe75f6bbbe40a",
+      "smartpro-psp-0.1.0-dev17.tar": "99dcffe5342c6f5cd4aac1625689304858cf7550c34221a1c02a725d30ae4c3a"
+    },
+    "source_inventory_files": 224,
+    "source_inventory_sha256": "bd52faec9e9e08c0b1ffaf2603a907409017835bf8bc3eae44a4797d6ac81f91",
+    "payload_files": 66,
+    "signature_and_payload_inventory_verified": true,
+    "source_export_bytes_verified": true,
+    "hardware_qualified": false,
+    "production_authenticity_claim": false,
+    "private_native_artifact_custody_verified": false,
+    "schema": 1,
+    "run_id": 40053305796,
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40053305796",
+    "status": "success",
+    "artifact_id": 12544371913,
+    "artifact_expires_at_utc": "2027-01-22T02:14:00Z",
+    "independent_private_storage_retention_performed": false,
+    "local_and_ci_zip_bytes_identical": {
+      "smartpro-psp-0.1.0-dev17-host-preview.zip": true,
+      "smartpro-psp-0.1.0-dev17-original-source.zip": true
+    }
+  },
+  "device_activation_enabled": false,
+  "hardware_qualified": false,
+  "physical_areas_run": 0,
+  "physical_areas_total": 13,
+  "native_binaries_replaced": false,
+  "owner_data_changed": false,
+  "register_completed": 14,
+  "register_total": 25,
+  "later_documentation_identity": "Later evidence and handover commits have separate inventories; build receipts bind only de9ecf0."
+}
