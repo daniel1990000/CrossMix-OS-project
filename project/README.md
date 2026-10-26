@@ -1,70 +1,39 @@
 # Smart Pro PSP experience
 
-Development source for an original TrimUI Smart Pro **TG5040** offshoot of spruceOS v4.5.4 and its shipped PyUI. The interface now follows the classic PSP crossbar: anchored horizontal categories, a vertical selection column, white pictograms, broad blue waves and translucent options. It uses original graphics and PPSSPP's supported native UI features. Read [the handover](../HANDOVER.md) and [complete plan](../TRIMUI_PLAN.md) before continuing.
+Original PSP-style interface extensions for the original TrimUI Smart Pro **TG5040**, built around pinned spruceOS v4.5.4/PyUI and its existing native owners.
 
-See the [new screenshots](evidence/psp-design/gallery.png), [actual PSP comparison](evidence/psp-design/comparison.png), and [visual design/source notes](docs/psp-visual-design.md). All new captures are actual SDL host renders. PlayFieldPortal informed category positioning and bounded row motion; EmuCoreA informed cover presentation. The matching PPSSPP palette uses its pinned official theme parser.
+**Current development: dev18.** This batch adds native Collections browsing, scoped discovery, accessible help and named offline backup history. It fixes save-Undo conflicts, optional state/normal-launch boundaries, stale views, focus restoration and package/source identity. Read the [dev18 report](docs/dev18-library-backups-2026-10-26.md) and its linked exact verification before relying on a test or build claim.
 
-[Download the published dev16 computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16). PR #1 is merged into `main`. The release includes matching original source, checksums and verified workflow provenance; [publication evidence](docs/host-publication-2026-10-23.md) records all 11 asset readbacks. This runs on a computer; physical-device qualification remains pending and device activation stays disabled.
+[Dev16 remains the published computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16), with its original tag, assets and matching source. Dev18 does not change that publication. This is host software: all device/profile gates remain disabled and 0/13 physical acceptance areas have run. Read [the current handover](../HANDOVER.md), [status record](handover/LATEST.json) and [master register](docs/master-plan-2026-10-22.md) for the exact development branch and remaining qualification.
 
-The current development descriptor selects **dev17**. [Host correctness fixes](docs/host-fixes-2026-10-24.md)
-address delayed library responses, failed-copy file-handle leaks and incomplete
-release source identity checks. All **1,107 strict checks** pass, with installed
-package smoke/rollback and byte-identical no-Git ZIP rebuilds. The published
-dev16 download and its historical evidence keep their own exact scope.
+## Browse and organize
 
-The [dev14 to release continuation](docs/release-continuation-2026-10-23.md)
-extends existing per-game performance controls, gameplay reports, game information,
-combined library filters, Continue/backup status and PS1 disc presentation. Use
-Start (desktop Tab) for system filters. Game information leads to native
-performance and existing emulator options. That historical development descriptor
-selected **smartpro-psp-0.1.0-dev16**; the published dev14 preview retains its own
-exact artifact identity and 1,011-check evidence. Candidate presets remain
-untested, and no Smart Pro performance improvement is claimed.
-The historical clean dev15 implementation passes **1,092 strict checks** with zero skips,
-errors or failures. Packaging, installed smoke/rollback and the no-Git source
-export rebuild pass; [exact snapshot evidence](evidence/release-continuation-20261023/verification.json)
-keeps later documentation edits separate from those build identities.
+Use **Start** (desktop **Tab**) for Library tools. Search stays within All games, Favorites, Continue or the selected collection. Choose any available system, clear filters, change sort order, move between pages or jump to a letter. Surprise chooses an available game from the complete current result and opens its confirmation card; it does not launch automatically. Continue keeps native recent order by default.
 
-Dev16 fixes reproduced gameplay-report output collisions, mixed repeat protocols
-and PS1 disc-reference path swaps. [The fix report](docs/release-preflight-fixes-2026-10-23.md)
-records their scope; new checks and build identities are recorded separately
-from dev15. Clean dev16 passes **1,099 strict checks**, zero skips/errors/failures,
-plus packaging/installed smoke/rollback, byte-identical no-Git ZIP rebuilds and
-CI artifact readback. [Exact dev16 evidence](evidence/release-preflight-20261023/verification.json)
-binds those results to their build snapshots. The public dev14 preview remains unchanged.
+**Games → Collections** presents existing native collections. Membership and creation remain in the existing native Game options/Collections routes when those routes are available. Mounted-card inspection only reads existing collections. Returning from native options refreshes metadata/artwork and keeps selection by game identity, including later pages.
 
-The [software validation fixes](docs/software-hardening-2026-10-23.md)
-address source certification, disposable probe cleanup, device evidence chronology,
-revocation receipts and trust report readback. The historical descriptor selected
-**smartpro-psp-0.1.0-dev16**, an original-only host preview. Dev14 remains available with its historical evidence; dev16 is the current
-published computer preview.
+**Settings → Controls & help** explains the active mode and physical controls. Text size includes 175%; footer hints and status scale too. Game information puts warnings before details and keeps disc details separately reachable. Empty results offer relevant search/filter/refresh actions.
 
-The [work completed without hardware](docs/nondevice-completion-2026-10-23.md)
-adds exact recovered-key possession verification, current upstream maintenance
-review, native notice/source work and original-only host hosting/provenance.
-The current exact build and retained-readback evidence is kept separately from
-the historical receipts.
+## Named offline backup history
 
-The earlier [remaining-plan software completion](docs/completion-2026-10-23.md)
-implements the conditional private viewing route, real backup/restore payloads,
-structured casebook review, exact native notice review and original-only release
-handoff. Its dev12 build and retention receipts retain their historical identities.
-The owner confirms author permission for private noncommercial source work;
-the attestation is retained privately. No message was sent by this work.
+History names existing payloads produced by the recovery tools. It never discovers active emulator save paths, creates emulator states or restores over live data. Capture time, registration time and last-check time are separate; a prior successful check is historical until another check completes.
 
-The master register has 14 completed scoped rows: 13 host engineering rows
-including D01, plus owner-confirmed R05 private source use. Zero of 13 physical
-acceptance areas have run. Actual device recovery/inventory, qualification,
-precise public native distribution rights and operational release custody remain
-open. The fixed selectors and production/profile gates remain unavailable.
-Exact certification, packaging, source identities and retained readbacks are in
-[the completion evidence](evidence/completion-20261023/verification.json).
+Register a retained payload with a catalog outside the inspected card and payload:
+
+```sh
+PYTHONPATH=project python -m tools.backup_catalog --catalog /external/ui-state/backups.json --inspected-card /mounted/card register --payload /external/retained-backup --label "Before changing settings"
+PYTHONPATH=project python -m psp_shell --sd-root /mounted/card --backup-catalog /external/ui-state/backups.json
+```
+
+Open **Settings → Backups & recovery → Backup history** to inspect, rename a label, check bytes again or remove an entry from history. Removal keeps the payload. Checks show progress and can be cancelled; the native input and launch owners remain unchanged. A stopped check cannot become a successful check. The catalog CLI also supports list/detail/verify, generation-checked edits and explicit interrupted-edit recovery. Its restore command delegates to the existing verifier and accepts only a new expendable directory outside protected roots.
+
+The catalog is bounded to 1 MiB/1,000 entries. Labels and receipts live outside payloads, which remain immutable. No complete-save-coverage, independent-media or physical-restore claim follows from matching bytes. [The recovery runbook](docs/recovery.md) retains the operator procedure.
 
 ## Run the preview
 
 Use Python 3.9 or later, system SDL2 and libsodium. On Debian/Ubuntu the runtime packages are `libsdl2-2.0-0` and `libsodium23`.
 
-Complete host certification also requires `libsdl2-image-2.0-0` to exercise the embedded artwork path against a real host SDL_image. Device libraries are kept at the existing spruce versions. See [artwork formats and limits](docs/artwork-formats.md).
+Complete host certification also requires `libsdl2-image-2.0-0` and `libsdl2-ttf-2.0-0` to exercise the embedded artwork and text paths against real host libraries. Device libraries are kept at the existing spruce versions. See [artwork formats and limits](docs/artwork-formats.md).
 
 ```sh
 python3 -m venv /tmp/smartpro-venv
@@ -74,7 +43,7 @@ PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo
 
 Use arrow keys or a controller to navigate. Enter confirms, Escape returns, and the on-screen hints follow the selected physical Confirm button. The sample titles and state cards are fixtures; no games are included or launched.
 
-The controller keyboard scales with text size, provides title punctuation and shows physical Confirm/Cancel/Delete/Find hints. Use Games → Refresh library (or F5) after changing covers; refresh preserves page/focus and clears stale artwork. See [interface accessibility](docs/interface-accessibility.md) and the [new host captures](evidence/ui-polish/).
+The controller keyboard and essential footer help scale with text size through 175%, with physical Confirm/Cancel/Delete/Find hints. Use Games → Refresh library (or F5) after changing covers; refresh preserves page/focus and clears stale artwork. See [interface accessibility](docs/interface-accessibility.md) and the [dev18 host captures](evidence/dev18-library-backups-20261026/).
 
 ```sh
 PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo --headless --frames 2 --screen library --screenshot /tmp/smartpro-library.png
@@ -98,7 +67,7 @@ The second command inspects a card without launching its scripts or modifying it
 | Reliability | Four pinned fixes for launcher quoting, TLS failure, extractor status and USB staging failure; optional scoped PPSSPP wrapper patch. Private source composition verifies preimages, resulting hashes, signatures and restoration backups. |
 | Data and recovery | Read-only inventory and [installed loader/mapped-library evidence](docs/installed-runtime-evidence.md); offline migration; signed scoped overlays; pinned per-title port/runtime inventory and existing launch-token reuse; owner-data staging and Undo; [device acceptance recorder](docs/device-test-runbook.md). |
 
-Continue Playing displays existing recents. Resume requires authenticated engine/game/state identity, stopped writers and a qualified profile. The dialog shows the original checkpoint verification time, including after a later save fails. Actual save-completion time is unavailable. Existing power, sleep, USB, networking and advanced menus remain owned by spruce. Native emulator and third-party screens retain their engine layouts; the [coverage register](docs/feature-coverage.md) records those visual exceptions and pending physical tests.
+Continue Playing displays existing recents. Recorded checkpoints say that verification is required; open their information to check them. Resume requires authenticated engine/game/state identity, stopped writers and a qualified profile. The dialog distinguishes historical checkpoint verification from the current check, including after a later save fails. Actual save-completion time is unavailable. Existing power, sleep, USB, networking and advanced menus remain owned by spruce. Native emulator and third-party screens retain their engine layouts; the [coverage register](docs/feature-coverage.md) records those visual exceptions and pending physical tests.
 
 ## Check and package
 

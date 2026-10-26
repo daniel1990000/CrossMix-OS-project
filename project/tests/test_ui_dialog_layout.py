@@ -52,7 +52,7 @@ class ContextHeaderTests(unittest.TestCase):
                 result = label(text, x, y, size, color, max_width, scale)
                 if size == 18:
                     body.append((text, y, result[1]))
-                if text.startswith("X  More text"):
+                if text.startswith("More text"):
                     page_count = int(text.rsplit("/", 1)[1])
                 return result
             with mock.patch.object(renderer, "_label", side_effect=record):
@@ -61,7 +61,7 @@ class ContextHeaderTests(unittest.TestCase):
                 for page in range(1, page_count):
                     renderer.render(replace(state, dialog=replace(state.dialog, message_page=page)), 0)
         readable = " ".join(line for line, _, _ in body).split()
-        self.assertEqual(readable, (title + " Existing saves stay available.").split())
+        self.assertEqual(readable, ("Existing saves stay available. Full title: " + title).split())
         first_choice_y = 626 - 4 * (round(38 * 1.75) + 8) + 12
         self.assertLess(max(y + h for _, y, h in body), first_choice_y)
 

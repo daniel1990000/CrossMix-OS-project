@@ -221,6 +221,9 @@ class Renderer:
             sdl2.SDL_RenderDrawLine(self.renderer, round(x1), round(y1 + offset), round(x2), round(y2 + offset))
 
     def _circle(self, x: float, y: float, radius: int, color: tuple[int, ...]) -> None:
+        # Round the center once. Rounding each half-pixel scanline separately
+        # duplicates alternating rows and leaves holes in small button glyphs.
+        x, y = round(x), round(y)
         for offset in range(-radius, radius + 1):
             half = math.sqrt(max(0, radius * radius - offset * offset))
             self._rect(x - half, y + offset, half * 2 + 1, 1, color)
@@ -542,6 +545,10 @@ class Renderer:
 
     @staticmethod
     def _item_icon(item: UIItem) -> str:
+        if item.kind == "collection" or item.id == "manage_collections":
+            return "folder"
+        if item.id == "help":
+            return "info"
         if item.kind in ("menu", "setting", "experience_profile", "hardware_control", "hardware_route"):
             return item.id
         if item.kind == "system":
@@ -557,7 +564,9 @@ class Renderer:
                     snapshot.offset, tuple(item.id for item in snapshot.items))
         position = self._item_glide.position(snapshot.selected, now, identity, prefs.motion)
         gap = max(74, round(70 * min(scale, 1.65)))
-        clip = sdl2.SDL_Rect(172, 280, 1035, 348)
+        footer_top = 620 if scale > 1.2 else 660
+        bottom = footer_top - (round(18 * scale) + 22 if snapshot.status or snapshot.loading else 12)
+        clip = sdl2.SDL_Rect(172, 280, 1035, bottom - 280)
         sdl2.SDL_RenderSetClipRect(self.renderer, ctypes.byref(clip))
         try:
             # Farther rows first; the selected row is drawn last and stays clear
@@ -567,7 +576,7 @@ class Renderer:
                 item = snapshot.items[index]
                 distance = index - position
                 y = self._row_y(distance, gap)
-                if y < 270 or y > 637:
+                if y < 278 or y + 28 > bottom:
                     continue
                 selected = index == snapshot.selected
                 emphasis = max(0.0, 1.0 - abs(distance))
@@ -583,49 +592,73 @@ class Renderer:
                 title_size = 31 if selected else 22
                 title_scale = scale if selected else min(scale, 1.35)
                 title_y = y - (24 if selected else 10)
-                title_width, _ = self._text(item.title, 391, title_y, title_size, color,
-                                            740 if item.favorite else 780, title_scale)
+                title_width = 740 if item.favorite else 780
+                pixels = round(title_size * title_scale)
+                lines = self.text.wrap(item.title, pixels, title_width, 2) if selected else (item.title,)
+                last_width = 0
+                for line_index, line in enumerate(lines):
+                    last_width, _ = self._text(line, 391, title_y + line_index * (pixels + 7),
+                                                title_size, color, title_width, title_scale)
                 if selected:
                     subtitle = item.subtitle
                     if item.kind == "game":
                         subtitle = (item.system_id + "   /   " + subtitle).strip(" / ")
                     if subtitle:
-                        self._text(subtitle, 393, y + max(23, round(20 * scale)), 17, muted, 763, min(scale, 1.35))
+                        subtitle_y = max(y + 23, title_y + len(lines) * (pixels + 7) + 8)
+                        self._text(subtitle, 393, subtitle_y, 17, muted, 763, scale)
                     if item.favorite:
-                        self._icon("favorites", 405 + title_width, title_y + 2, 22, primary)
+                        self._icon("favorites", 405 + last_width,
+                                   title_y + max(0, len(lines) - 1) * (pixels + 7) + 2,
+                                   round(22 * min(scale, 1.5)), primary)
             if position > .05:
-                self._polyline([(286, 283), (292, 279), (298, 283)], (*primary[:3], 130))
-            if self._row_y(len(snapshot.items) - 1 - position, gap) > 620:
-                self._polyline([(286, 622), (292, 626), (298, 622)], (*primary[:3], 130))
+                self._polyline([(286, 293), (292, 289), (298, 293)], (*primary[:3], 180))
+            if self._row_y(len(snapshot.items) - 1 - position, gap) + 28 > bottom:
+                self._polyline([(286, bottom - 7), (292, bottom - 3), (298, bottom - 7)], (*primary[:3], 180))
         finally:
             sdl2.SDL_RenderSetClipRect(self.renderer, None)
 
-    def _button(self, position: str, x: float, y: float, color: tuple[int, ...]) -> None:
-        # Physical positions match the existing input policy. The small diamond
-        # makes South/East legible without pretending TrimUI has Sony buttons.
-        for key, dx, dy in (("north", 0, -6), ("east", 6, 0), ("south", 0, 6), ("west", -6, 0)):
-            self._circle(x + dx, y + dy, 3, color if position == key else (*color[:3], 52))
+    def _button(self, position: str, x: float, y: float, color: tuple[int, ...],
+                scale: float = 1.0) -> None:
+        # Physical positions remain independent of device lettering. A larger
+        # filled selected dot also differs by shape from the three small dots.
+        scale = max(.85, scale)
+        for key, dx, dy in (("north", 0, -9), ("east", 9, 0), ("south", 0, 9), ("west", -9, 0)):
+            selected = position == key
+            self._circle(x + dx * scale, y + dy * scale,
+                         max(2, round((4 if selected else 2) * scale)),
+                         color if selected else (*color[:3], 145))
 
     def _footer(self, snapshot: UISnapshot, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
         prefs = snapshot.preferences
-        confirm = prefs.confirm
-        back = "east" if confirm == "south" else "south"
-        self._button(confirm, 268, 681, primary)
-        self._text("Enter", 287, 674, 15, primary, 100)
-        self._button(back, 402, 681, primary)
-        self._text("Back", 421, 674, 15, primary, 100)
-        self._button("west", 531, 681, muted)
-        self._text("Search", 550, 674, 15, muted, 110)
+        scale = prefs.text_scale
+        expanded = scale > 1.2
+        top = 620 if expanded else 660
+        # Contrast does not depend on which moving wave happens to be behind
+        # these essential controls. Large text gets a second row, never shrinks.
+        self._rect(0, top, LOGICAL_WIDTH, LOGICAL_HEIGHT - top,
+                   (0, 0, 0, 255) if prefs.high_contrast else (3, 22, 53, 255))
+        font = max(14, round(17 * scale))
+        hints = [(prefs.confirm, "Enter"),
+                 ("east" if prefs.confirm == "south" else "south", "Back"),
+                 ("west", "Search")]
         if snapshot.selected_item and snapshot.selected_item.kind == "game":
-            self._button("north", 680, 681, muted)
-            self._text("Favorite", 699, 674, 15, muted, 140)
+            hints.append(("north", "Favorite"))
         if snapshot.category in (0, 1):
-            self._text("Start  Filters", 866, 674, 15, muted, 180)
+            hints.append(("", "Start: Library tools"))
         number = snapshot.offset + snapshot.selected + 1 if snapshot.items else 0
-        text = f"{number} / {snapshot.total}"
-        self._text(text, 1157 - self.text.measure(text, 14), 675, 14, muted, 110)
-        if snapshot.demo:
-            self._text("Desktop preview", 54, 677, 12, (*muted[:3], 160), 170)
+        count = f"{number} / {snapshot.total}"
+        columns = 3 if expanded else 6
+        stride = 390 if expanded else 197
+        for index, (position, label) in enumerate(hints):
+            x = 54 + (index % columns) * stride
+            y = (626 if index < columns else 677) if expanded else 676
+            reserve = round(38 * max(.85, scale)) if position else 0
+            if position:
+                self._button(position, x + round(13 * scale), y + font / 2, primary, scale)
+            self._label(label, x + reserve, y, font, primary, stride - reserve - 16)
+        count_width = self.text.measure(count, font)
+        self._label(count, 1226 - count_width, 677 if expanded else 676,
+                    font, muted, min(350, round(count_width + 3)))
 
     def render(self, snapshot: UISnapshot, now: float = 0.0) -> None:
         if self._closed:
@@ -657,15 +690,22 @@ class Renderer:
             # A small location cue for drilled-in lists, absent on root pages.
             root_titles = ("Your games", "Pick up where you left off", "Tools", "Settings")
             if snapshot.title not in root_titles and snapshot.breadcrumb != snapshot.categories[snapshot.category]:
-                self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 392, 253, 14, (*muted[:3], 190), 786)
+                self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 460, 253, 14, muted, 744, prefs.text_scale)
             if snapshot.items:
                 self._items(snapshot, now, primary, muted)
             else:
                 self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
                 self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))
             if snapshot.status or snapshot.loading:
-                self._text(snapshot.status or "Loading…", 391, 633, 15, primary, 780)
-            self._footer(snapshot, primary, muted)
+                footer_top = 620 if prefs.text_scale > 1.2 else 660
+                font = max(14, round(18 * prefs.text_scale))
+                status_y = footer_top - font - 14
+                self._rect(380, status_y - 5, 840, font + 12, (3, 22, 53, 245))
+                self._label(snapshot.status or "Loading…", 391, status_y, font, primary, 818)
+            if snapshot.demo and not snapshot.keyboard:
+                self._text("Desktop preview", 54, 45, 14, primary, 320, prefs.text_scale)
+            if not snapshot.dialog and not snapshot.keyboard:
+                self._footer(snapshot, primary, muted)
             if snapshot.dialog:
                 self._draw_dialog(snapshot.dialog, prefs, primary, muted, accent)
             if snapshot.keyboard:
@@ -684,7 +724,7 @@ class Renderer:
         for index in range(20):
             self._rect(left - 60 + index * 3, 0, 3, LOGICAL_HEIGHT, (3, 23, 63, round(index * 9.5)))
         self._rect(left, 0, LOGICAL_WIDTH - left, LOGICAL_HEIGHT,
-                   (2, 20, 54, 242) if preferences.high_contrast else (3, 26, 65, 222))
+                   (0, 0, 0, 255) if preferences.high_contrast else (3, 26, 65, 255))
         self._line(left, 0, left, LOGICAL_HEIGHT, (230, 245, 255, 40))
         if dialog.system_id or dialog.artwork:
             art_width = 180 if expanded else 270
@@ -712,10 +752,11 @@ class Renderer:
         body_y = divider_y + 24
         body_size = round(18 * scale)
         max_lines = max(1, int((first_y - 22 - body_y) // (body_size + 7)))
-        message = dialog.message
+        # The model puts warnings before optional details. An overflowing title
+        # must not displace them or consume the separate message budget.
+        lines = self.text.wrap(dialog.message, body_size, width, 128)
         if len(self.text.wrap(dialog.title, title_pixels, width, 128)) > 2:
-            message = dialog.title + "\n\n" + message
-        lines = self.text.wrap(message, body_size, width, 128)
+            lines += ("",) + self.text.wrap("Full title: " + dialog.title, body_size, width, 64)
         page_count = max(1, math.ceil(len(lines) / max_lines))
         page = dialog.message_page % page_count
         for index, line in enumerate(lines[page * max_lines:(page + 1) * max_lines]):
@@ -733,14 +774,29 @@ class Renderer:
                                (content_x - 28, y + row_height / 2),
                                (content_x - 34, y + row_height / 2 + 5)], primary)
             self._label(choice.title, content_x, y + 12, 21, primary if selected else (*muted[:3], 180), width, scale)
+        hint_font = max(14, round(15 * scale))
+        hint_y = 635
         if page_count > 1:
-            self._label(f"X  More text     {page + 1} / {page_count}", content_x, 646, 15, primary, width)
-        elif len(dialog.choices) > rows:
-            self._label(f"Options {choice_offset + 1}–{choice_offset + rows} / {len(dialog.choices)} · Up / Down", content_x, 646, 15, primary, width)
-        self._button(preferences.confirm, content_x + 4, 686, primary)
-        self._label("Enter", content_x + 23, 679, 15, primary, 100)
-        self._button("east" if preferences.confirm == "south" else "south", content_x + 143, 686, primary)
-        self._label("Back", content_x + 162, 679, 15, primary, 100)
+            self._button("west", content_x + 10 * scale, hint_y + hint_font / 2, primary, scale)
+            self._label(f"More text  {page + 1} / {page_count}", content_x + 35 * scale,
+                        hint_y, hint_font, primary, int(width * .60 - 35 * scale))
+        if len(dialog.choices) > rows:
+            text = f"Actions {choice_offset + 1}–{choice_offset + rows} / {len(dialog.choices)}"
+            action_width = self.text.measure(text, hint_font)
+            self._label(text, content_x + width - action_width, hint_y, hint_font, primary,
+                        round(action_width + 3))
+        help_hints = [(preferences.confirm, "Enter"),
+                      ("east" if preferences.confirm == "south" else "south", "Back")]
+        if page_count > 1:
+            help_hints.append(("north", "Previous text"))
+        x = content_x
+        help_y = 679
+        for position, label in help_hints:
+            self._button(position, x + 10 * scale, help_y + hint_font / 2, primary, scale)
+            label_x = x + 35 * scale
+            label_width = self.text.measure(label, hint_font)
+            self._label(label, label_x, help_y, hint_font, primary, round(label_width + 3))
+            x = label_x + label_width + 26 * scale
 
     def _draw_keyboard(self, snapshot: UISnapshot, primary: tuple[int, ...], muted: tuple[int, ...],
                         accent: tuple[int, ...]) -> None:
@@ -756,7 +812,7 @@ class Renderer:
             self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
         layout = keyboard_layout(snapshot.preferences.text_scale, keyboard.keys)
         x, y, size = layout.title
-        self._text("Find a game", x, y, size, primary, 1032)
+        self._text(getattr(keyboard, "title", "Find a game"), x, y, size, primary, 1032)
         x, y, width, height = layout.field
         self._rect(x, y, width, height, (255, 255, 255, 12))
         self._line(x, y + height, x + width, y + height, (255, 255, 255, 165))
@@ -783,13 +839,16 @@ class Renderer:
             if not selected:
                 self._line(cell.x, cell.y + cell.height - 1,
                            cell.x + cell.width, cell.y + cell.height - 1, (255, 255, 255, 40))
-            label_width = self.text.measure(cell.key, cell.font_size)
-            self._label(cell.key, cell.x + max(6, (cell.width - label_width) / 2),
+            label = getattr(keyboard, "submit_label", "Find") if cell.key == "Find" else cell.key
+            label_width = self.text.measure(label, cell.font_size)
+            self._label(label, cell.x + max(6, (cell.width - label_width) / 2),
                         cell.y + (cell.height - cell.font_size) / 2, cell.font_size,
                         (5, 39, 86) if selected else primary, cell.width - 12)
         for hint, (x, y) in zip(keyboard_hints(snapshot.preferences.confirm), layout.hint_positions):
-            self._button(hint.position, x - 20, y + layout.hint_font_size / 2, primary)
-            self._text(hint.title, x, y, layout.hint_font_size, muted, 450)
+            scale = snapshot.preferences.text_scale
+            self._button(hint.position, x - 22 * max(1, scale), y + layout.hint_font_size / 2, primary, scale)
+            label = getattr(keyboard, "submit_label", "Find") if hint.title == "Find" else hint.title
+            self._text(label, x, y, layout.hint_font_size, muted, 450)
 
     def present(self) -> None:
         if self._external or self._closed:

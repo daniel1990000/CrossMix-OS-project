@@ -266,12 +266,15 @@ class ReleaseIntegrationTests(unittest.TestCase):
         ui_modules = {"app/psp_shell/ui/" + path.name for path in (PROJECT / "psp_shell/ui").glob("*.py")}
         required = set(record["bridge_review"]["required_project_modules"])
         self.assertTrue(ui_modules <= required, ui_modules - required)
+        from build_payload import PAYLOAD_TOOLS
+        self.assertEqual(integration.SIGNED_TOOL_MODULES, {"app/tools/" + name for name in PAYLOAD_TOOLS})
+        self.assertTrue(integration.SIGNED_TOOL_MODULES <= required)
         with integration.overlay.VerifiedArchive(archive, integration.overlay.load_key(key, 32)) as verified:
             signed = {item["path"]: item["sha256"] for item in verified.manifest["files"]}
         retained = {item["path"]: item["sha256"] for item in record["artifact_files"]}
-        for module in ("motion.py", "pictograms.py"):
-            relative = "app/psp_shell/ui/" + module
-            expected = hashlib.sha256((PROJECT / "psp_shell/ui" / module).read_bytes()).hexdigest()
+        for relative in ("app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py",
+                         *sorted(integration.SIGNED_TOOL_MODULES)):
+            expected = hashlib.sha256((PROJECT / relative.removeprefix("app/")).read_bytes()).hexdigest()
             self.assertEqual(signed[relative], expected)
             self.assertEqual(retained["tree/" + integration.PAYLOAD_ROOT + "/" + relative], expected)
         self.assertIn("TRIMUI_PROJECT_STATE_REQUEST", (output / "tree/spruce/scripts/emu/lib/ppsspp_functions.sh").read_text())
@@ -291,12 +294,30 @@ class ReleaseIntegrationTests(unittest.TestCase):
                 overlay_archive=archive, public_key=key)
         self.assertFalse(output.exists())
 
+    def test_process_boundary_rejects_an_unapproved_tool_even_in_a_signed_archive(self):
+        from bridge import principal_integration
+        _, key = self.signed_original("tool-scope", full=True)
+        payload = self.root / "tool-scope-payload"
+        (payload / "app/tools/unapproved.py").write_text("# must remain outside the integration scope\n")
+        archive = self.root / "extra-tool.tar"
+        profile = integration.overlay.read_json(PROJECT / "packaging/profiles/spruce454-tg5040-development.json")
+        integration.overlay.create_archive(payload, archive, self.root / "tool-scope-private", key,
+                                           profile, "extra-tool", "python-extension")
+        output = self.root / "tool-scope-refused"
+        with patch.object(principal_integration, "REQUIRED_PROJECT_MODULES",
+                          principal_integration.REQUIRED_PROJECT_MODULES + ["app/tools/unapproved.py"]):
+            with self.assertRaisesRegex(integration.IntegrationError, "outside the signed original app scope"):
+                integration.assemble_private_candidate(self.source, output, source_review=self.review,
+                    overlay_archive=archive, public_key=key)
+        self.assertFalse(output.exists())
+
     def test_recomputed_private_inventory_cannot_replace_an_expanded_signed_module(self):
         archive, key = self.signed_original("modified-expanded-original", full=True)
         output = self.root / "changed-original-module"
         integration.assemble_private_candidate(self.source, output, source_review=self.review,
             overlay_archive=archive, public_key=key)
-        for name in ("app/bridge/principal.py", "app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py"):
+        for name in ("app/bridge/principal.py", "app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py",
+                     "app/tools/backup_catalog.py", "app/tools/recovery_payload.py"):
             with self.subTest(module=name):
                 module = output / "tree" / integration.PAYLOAD_ROOT / name
                 original = module.read_bytes()

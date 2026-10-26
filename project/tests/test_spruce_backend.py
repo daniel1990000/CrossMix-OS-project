@@ -343,7 +343,9 @@ class LiveTests(unittest.TestCase):
     def test_resume_needs_identity_format_hash_clean_exit_and_existing_handler(self):
         record, profile = self.evidence()
         self.backend.set_resume_evidence({self.game["id"]: record}, {"gambatte": profile})
-        self.assertTrue(self.backend.recent()[0]["resume_eligible"])
+        self.assertFalse(self.backend.recent()[0]["resume_eligible"])
+        self.assertEqual(self.backend.recent()[0]["resume_reason"], "VERIFICATION_REQUIRED")
+        self.assertTrue(self.backend.game_info(self.game["id"])["resume_eligible"])
         self.assertFalse(self.backend.recent()[0]["resume_available"])
         self.provider.mode_actions = {"gambatte": {"resume": lambda model, evidence: self.events.append(("resume", evidence))}}
         context = self.backend.resolve_game(self.game["id"], mode="resume")
@@ -356,11 +358,11 @@ class LiveTests(unittest.TestCase):
             altered = copy.deepcopy(record)
             altered[key] = value
             self.backend.set_resume_evidence({self.game["id"]: altered}, {"gambatte": profile})
-            self.assertEqual(self.backend.recent()[0]["resume_reason"], reason)
+            self.assertEqual(self.backend.game_info(self.game["id"])["resume_reason"], reason)
         altered = copy.deepcopy(record)
         altered["state"]["format_id"] = "another-core"
         self.backend.set_resume_evidence({self.game["id"]: altered}, {"gambatte": profile})
-        self.assertEqual(self.backend.recent()[0]["resume_reason"], "STATE_FORMAT_MISMATCH")
+        self.assertEqual(self.backend.game_info(self.game["id"])["resume_reason"], "STATE_FORMAT_MISMATCH")
 
     def test_changed_state_invalidates_resume_before_callback(self):
         record, profile = self.evidence()

@@ -24,10 +24,10 @@ class KeyboardRenderingTests(unittest.TestCase):
             if active:
                 labels.append((text, x, y, size, max_width, *result))
             return result
-        def record_button(position, x, y, color):
+        def record_button(position, x, y, color, scale=1):
             if active:
                 buttons.append((position, x, y))
-            return button(position, x, y, color)
+            return button(position, x, y, color, scale)
         def keyboard(*args):
             nonlocal active
             active = True

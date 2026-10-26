@@ -123,5 +123,6 @@ def keyboard_layout(text_scale: float = 1.0,
                           field=(124, 130, 1032, 76),
                           text=(141, 146, round(24 * scale), 998),
                           cells=tuple(cells),
-                          hint_positions=((143, 626), (664, 626), (143, 665), (664, 665)),
+                          hint_positions=(((143, 622), (664, 622), (143, 674), (664, 674)) if scale > 1.2
+                                          else ((143, 626), (664, 626), (143, 665), (664, 665))),
                           hint_font_size=round(15 * scale))

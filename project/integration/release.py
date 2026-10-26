@@ -30,6 +30,12 @@ MAX_PATCH = 512 * 1024
 MAX_RECORDS = 64
 MODULE_ROOT = "/mnt/SDCARD/App/PSPMode/integration/app"
 PAYLOAD_ROOT = "App/PSPMode/integration"
+# Only these installed original helpers may participate in this boundary.
+# A signed archive is not permission to import arbitrary maintenance tools.
+SIGNED_TOOL_MODULES = frozenset({
+    "app/tools/__init__.py", "app/tools/backup_catalog.py",
+    "app/tools/recovery_payload.py", "app/tools/recovery_preflight.py",
+})
 LICENCES = {
     "LICENSE": "7d82903f223c62b411247115f1b577c44e2e6bc2",
     "App/PyUI/LICENSE.md": "3e98034103df4771210012e478d792b2a361d856",
@@ -437,7 +443,8 @@ def assemble_private_candidate(source_root, output, *, source_review=None, bridg
             require(isinstance(modules, list) and modules, "bridge integration must identify its fixed original module requirements")
             for module in modules:
                 overlay.relative_path(module)
-                require(module.startswith("app/bridge/") or module.startswith("app/psp_shell/"),
+                require(module.startswith("app/bridge/") or module.startswith("app/psp_shell/") or
+                        module in SIGNED_TOOL_MODULES,
                         "bridge module requirement is outside the signed original app scope")
                 require((staging / "tree" / PAYLOAD_ROOT / module).is_file(),
                         "signed original overlay is stale or lacks a required process-integration module: " + module)

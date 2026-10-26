@@ -14,14 +14,13 @@ import json
 import os
 from pathlib import Path
 import queue
-import random
 import sys
 import tempfile
 import time
 from concurrent.futures import ThreadPoolExecutor
 from collections import deque
 
-from . import __version__
+from . import __version__, build_info
 from .demo import DemoBackend
 
 
@@ -89,6 +88,48 @@ class Dispatcher:
             raise AppError("INVALID_PARAMS", f"Invalid {name}.")
         return value
 
+    def _library_scope(self, params):
+        """Validate presentation filters without accepting paths or actions."""
+        source = self._text(params, "source", "all", 16)
+        order = self._text(params, "sort", "native", 16)
+        if source not in {"all", "favorites", "recent", "collection"} or order not in {
+                "native", "title_asc", "title_desc", "system"}:
+            raise AppError("INVALID_PARAMS", "Choose a supported library source and sort order.")
+        available = params.get("available_only", False)
+        if type(available) is not bool:
+            raise AppError("INVALID_PARAMS", "Available-only must be true or false.")
+        collection = self._text(params, "collection_id", limit=128)
+        if (source == "collection") != bool(collection):
+            raise AppError("INVALID_PARAMS", "A collection view requires its existing collection identity.")
+        return {"system_id": self._text(params, "system_id", limit=128) or None,
+                "search": self._text(params, "search", limit=128),
+                "source": source, "sort": order, "collection_id": collection,
+                "available_only": available}
+
+    def _backup_history(self, action, params):
+        allowed = {
+            "history": (), "detail": ("entry_id",),
+            "rename": ("entry_id", "label", "expected_generation", "note"),
+            "remove": ("entry_id", "expected_generation"),
+            "verify": ("entry_id", "expected_generation"),
+            "job": ("job_id",), "cancel": ("job_id",),
+        }
+        required = tuple(field for field in allowed[action] if field != "note")
+        self._fields(params, allowed[action], required)
+        callback = getattr(self.backup_adapter, action, None)
+        if not callable(callback):
+            raise AppError("BACKUP_HISTORY_UNAVAILABLE", "Select a backup catalog through the trusted setup first.")
+        values = {}
+        for field in ("entry_id", "job_id", "label", "note"):
+            if field in params:
+                values[field] = self._text(params, field, limit=512 if field == "note" else 80)
+        if "expected_generation" in params:
+            generation = params["expected_generation"]
+            if type(generation) is not int or not 0 <= generation <= 9_007_199_254_740_991:
+                raise AppError("INVALID_PARAMS", "The backup catalog generation is invalid.")
+            values["expected_generation"] = generation
+        return callback(**values)
+
     def dispatch(self, method, params=None):
         params = dict(params or {})
         if self.pending_launch is not None and method not in ("system.snapshot", "system.capabilities"):
@@ -111,6 +152,9 @@ class Dispatcher:
                     "game_launch": self.launch_bridge is not None,
                     "game_options": callable(self.game_options_handler),
                     "game_information": callable(getattr(self.backend, "game_info", None)),
+                    "collections": callable(getattr(self.backend, "collections", None)),
+                    "collection_management": False,
+                    "backup_history": callable(getattr(self.backup_adapter, "history", None)),
                     "power": {"supported": False, "reason": "Use the verified spruce device backend"},
                     "usb": {"supported": False, "reason": "Requires the qualified staged export/reboot route"},
                     "menu_controls": {"gameplay_is_separate": True, "live_emulator_changes": False}}
@@ -119,7 +163,7 @@ class Dispatcher:
             return {"profile_id": "Desktop sample collection" if getattr(self.backend, "demo", False)
                     else "Read-only spruce snapshot", "firmware": None, "battery": None,
                     "temperature": None, "last_error_code": self.last_error_code,
-                    "version": __version__, "hardware_readings": "unavailable"}
+                    "version": __version__, "build": build_info(), "hardware_readings": "unavailable"}
         if method == "hardware.status":
             self._fields(params, ())
             if self.hardware_adapter is not None:
@@ -132,6 +176,9 @@ class Dispatcher:
                 return self.backup_adapter.status()
             from .recovery import unavailable_status
             return unavailable_status()
+        if method in {"backup.history", "backup.detail", "backup.rename", "backup.remove",
+                      "backup.verify", "backup.job", "backup.cancel"}:
+            return self._backup_history(method.split(".", 1)[1], params)
         if method == "backup.action":
             self._fields(params, ("action_id",), ("action_id",))
             action = self._text(params, "action_id", limit=32)
@@ -237,13 +284,31 @@ class Dispatcher:
                 refresh()
             return self.backend.systems()
         if method == "library.query":
-            self._fields(params, ("system_id", "search", "offset", "limit"))
-            system = self._text(params, "system_id", limit=128)
-            search = self._text(params, "search", limit=128)
+            self._fields(params, ("source", "system_id", "search", "sort", "collection_id",
+                                  "available_only", "offset", "limit", "jump", "focus_game_id"))
+            scope = self._library_scope(params)
+            jump = self._text(params, "jump", limit=1)
+            focus = self._text(params, "focus_game_id", limit=128)
+            if jump and (jump not in "ABCDEFGHIJKLMNOPQRSTUVWXYZ#" or scope["sort"] != "title_asc"):
+                raise AppError("INVALID_PARAMS", "Jump to letter requires alphabetical order and A–Z or #.")
             offset, limit = params.get("offset", 0), params.get("limit", 40)
-            if type(offset) is not int or type(limit) is not int or offset < 0 or not 1 <= limit <= 100:
-                raise AppError("INVALID_PARAMS", "Page size must be 1–100 and offset must be nonnegative.")
-            return self.backend.games(system or None, search=search, offset=offset, limit=limit)
+            if type(offset) is not int or type(limit) is not int or not 0 <= offset <= 100000 or not 1 <= limit <= 100:
+                raise AppError("INVALID_PARAMS", "Page size must be 1–100 and offset must be within the library limit.")
+            # Keep the narrow established provider call for callers that do not
+            # request the new scope API (including original injected adapters).
+            if not set(params) & {"source", "sort", "collection_id", "available_only", "jump", "focus_game_id"}:
+                return self.backend.games(scope["system_id"], search=scope["search"], offset=offset, limit=limit)
+            if jump:
+                scope["jump"] = jump
+            if focus:
+                scope["focus_game_id"] = focus
+            return self.backend.games(**scope, offset=offset, limit=limit)
+        if method == "library.collections":
+            self._fields(params, ())
+            callback = getattr(self.backend, "collections", None)
+            if not callable(callback):
+                raise AppError("COLLECTIONS_UNAVAILABLE", "This library does not expose existing collections.")
+            return callback()
         if method in ("library.recent", "library.favorites"):
             self._fields(params, ("system_id", "search"))
             system = self._text(params, "system_id", limit=128)
@@ -254,13 +319,13 @@ class Dispatcher:
             self._fields(params, ())
             return self.backend.tools()
         if method == "library.random":
-            self._fields(params, ())
-            if hasattr(self.backend, "random"):
-                return self.backend.random()
-            data = self.backend.games(None, limit=100)
-            if not data["items"]:
-                raise AppError("EMPTY_LIBRARY", "There are no available games in this collection.")
-            return random.choice(data["items"])
+            self._fields(params, ("source", "system_id", "search", "sort", "collection_id",
+                                  "available_only", "exclude_game_id"))
+            scope = self._library_scope(params)
+            callback = getattr(self.backend, "random", None)
+            if not callable(callback):
+                raise AppError("RANDOM_UNAVAILABLE", "This library cannot select from the complete result.")
+            return callback(**scope, exclude_game_id=self._text(params, "exclude_game_id", limit=128))
         if method == "library.favorite.set":
             self._fields(params, ("game_id", "enabled"), ("game_id", "enabled"))
             game_id = self._text(params, "game_id")
@@ -315,6 +380,7 @@ class Dispatcher:
             self._fields(params, ())
             self.state_dir.mkdir(parents=True, exist_ok=True)
             report = {"schema": 1, "component": "smartpro-psp-experience", "version": __version__,
+                      "build": build_info(),
                       "evidence": "host", "physical_device_verified": False,
                       "last_error_code": self.last_error_code,
                       "operations": list(self.transitions),
@@ -333,7 +399,7 @@ def _restore_navigation(state_dir):
         if path.stat().st_size > 32768:
             return None
         data = json.loads(path.read_text(encoding="utf-8"))
-        return data if isinstance(data, dict) and data.get("schema") == 1 else None
+        return data if isinstance(data, dict) and type(data.get("schema")) is int and data["schema"] in (1, 2) else None
     except (OSError, ValueError):
         return None
 
@@ -347,6 +413,21 @@ def _save_navigation(state_dir, model):
 
 
 def run_preview(args, backend=None):
+    """Own only the standalone catalog adapter, including failed startup."""
+    adapter = None
+    catalog = getattr(args, "backup_catalog", None)
+    if catalog:
+        guard_snapshot_outputs(args.sd_root, (catalog,))
+        from .recovery import BackupHistoryAdapter
+        adapter = BackupHistoryAdapter(catalog, forbidden_roots=(args.sd_root,) if args.sd_root else ())
+    try:
+        return _run_preview(args, backend, adapter)
+    finally:
+        if adapter is not None:
+            adapter.close()
+
+
+def _run_preview(args, backend=None, backup_adapter=None):
     if args.headless:
         os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
         os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
@@ -373,7 +454,7 @@ def run_preview(args, backend=None):
             backend = SpruceBackend(args.sd_root, read_only=True)
     settings = SettingsStore(str(state_dir))
     settings.recover()
-    dispatcher = Dispatcher(backend, settings, state_dir)
+    dispatcher = Dispatcher(backend, settings, state_dir, backup_adapter=backup_adapter)
     model = NavigationModel(demo=bool(getattr(backend, "demo", False)),
                             restored_state=_restore_navigation(state_dir))
 
@@ -404,10 +485,12 @@ def run_preview(args, backend=None):
         select_category(1)
     elif args.screen == "tools":
         select_category(2)
-    elif args.screen in ("settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power"):
+    elif args.screen in ("settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power", "help", "backups"):
         select_category(3)
         if args.screen != "settings":
-            target = args.screen if args.screen in ("controls", "appearance", "experience") else "hardware_" + args.screen
+            target = ("backup" if args.screen == "backups" else args.screen
+                      if args.screen in ("controls", "appearance", "experience", "help")
+                      else "hardware_" + args.screen)
             for _ in range(len(model.snapshot().items)):
                 if model.snapshot().selected_item.id == target:
                     break
@@ -415,6 +498,21 @@ def run_preview(args, backend=None):
             else:
                 raise AppError("SCREEN_UNAVAILABLE", "This preview screen is unavailable.")
             synchronous(model.handle("confirm"))
+    elif args.screen == "collections":
+        select_category(0)
+        # Restored state may point into a game list. Return to Games before
+        # selecting an explicit preview screen by stable menu identity.
+        for _ in range(4):
+            if any(item.id == "collections" for item in model.snapshot().items):
+                break
+            synchronous(model.handle("back"))
+        for _ in range(len(model.snapshot().items)):
+            if model.snapshot().selected_item.id == "collections":
+                break
+            synchronous(model.handle("down"))
+        else:
+            raise AppError("SCREEN_UNAVAILABLE", "This library does not expose Collections.")
+        synchronous(model.handle("confirm"))
     elif args.screen == "search":
         for _ in range(2):
             synchronous(model.handle("down"))
@@ -425,7 +523,7 @@ def run_preview(args, backend=None):
         select_category(0)
         synchronous(model.handle("confirm"))
     for action in filter(None, (args.actions or "").split(",")):
-        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search", "menu"):
+        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search", "menu", "refresh"):
             raise AppError("INVALID_ACTION", "The scripted preview contains an unknown navigation action.")
         synchronous(model.handle(action))
 
@@ -467,6 +565,9 @@ def run_preview(args, backend=None):
     try:
         while args.frames == 0 or frames < args.frames:
             start = time.monotonic()
+            poll = getattr(model, "poll_commands", None)
+            if callable(poll):
+                submit(poll(start))
             snapshot = model.snapshot(start)
             sync_text_input()
             while sdl2.SDL_PollEvent(ctypes.byref(event)):
@@ -503,6 +604,7 @@ def run_preview(args, backend=None):
         if args.report:
             times = sorted(frame_times)
             report = {"schema": 1, "evidence": "host-preview", "version": __version__,
+                      "build": build_info(),
                       "frames": frames, "width": args.width, "height": args.height,
                       "render_ms_p50": times[len(times)//2] * 1000 if times else None,
                       "render_ms_p95": times[min(len(times)-1, int(len(times)*.95))] * 1000 if times else None,
@@ -532,11 +634,12 @@ def main(argv=None):
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--frames", type=int, default=0, help="Exit after N rendered frames; zero runs interactively")
     parser.add_argument("--frame-time", type=float, default=0.0, help="Fixed animation time for deterministic headless screenshots")
-    parser.add_argument("--screen", choices=("home", "library", "continue", "tools", "settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power", "search", "error"), default="home")
+    parser.add_argument("--screen", choices=("home", "library", "collections", "continue", "tools", "settings", "controls", "appearance", "experience", "display", "sound", "network", "controllers", "power", "search", "help", "backups", "error"), default="home")
     parser.add_argument("--actions", help="Comma-separated navigation actions for a recorded preview")
     parser.add_argument("--screenshot")
     parser.add_argument("--report")
     parser.add_argument("--state-dir")
+    parser.add_argument("--backup-catalog", help="Inspect a registered external backup catalog; never restore or load saves")
     parser.add_argument("--assets")
     parser.add_argument("--version", action="version", version=__version__)
     args = parser.parse_args(argv)

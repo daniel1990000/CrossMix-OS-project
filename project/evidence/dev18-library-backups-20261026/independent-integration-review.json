@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "kind": "dev18-independent-delivery-and-lifecycle-review",
+  "recorded_at_utc": "2026-10-26T17:32:48.285828+00:00",
+  "repository": "daniel1990000/CrossMix-OS-project",
+  "branch": "build/dev18-library-backups",
+  "base_commit": "9dfa857fec43c165b2b8836406012f1b38cfed87",
+  "evidence_scope": "Summary of observed focused test outputs and manual failure injection; not a strict five-source certification or a clean release receipt.",
+  "commands": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=project SPRUCE_SOURCE_ROOT=/tmp/trimui-review-sources/spruce /tmp/trimui-visual-venv/bin/python -m unittest discover -s project/tests -p test_release_integration.py -v",
+      "tests_run": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=project SPRUCE_SOURCE_ROOT=/tmp/trimui-review-sources/spruce /tmp/trimui-visual-venv/bin/python -m unittest discover -s project/tests -p test_app.py -v",
+      "tests_run": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=project SPRUCE_SOURCE_ROOT=/tmp/trimui-review-sources/spruce /tmp/trimui-visual-venv/bin/python -m unittest discover -s project/tests -p test_embedded.py -v",
+      "tests_run": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0
+    }
+  ],
+  "assembly_fix": {
+    "confirmed_problem": "New required app/tools modules were rejected by prior bridge/psp_shell-only assembly prefix check.",
+    "resolution": "Admit only exact app/tools/__init__.py, app/tools/backup_catalog.py, app/tools/recovery_payload.py and app/tools/recovery_preflight.py.",
+    "new_regression": "A signed unapproved tool cannot be added as a required process-integration module.",
+    "expanded_assertions": [
+      "Fixed tool allowlist equals PAYLOAD_TOOLS.",
+      "Each selected tool source digest matches the signed archive and expanded candidate digest.",
+      "Tampered backup_catalog/recovery_payload expanded bytes are rejected even after recomputing the candidate inventory."
+    ],
+    "signature_source_checks_weakened": false
+  },
+  "independent_lifecycle_review": {
+    "dispatcher": "Backup UI accepts only fixed operations and bounded catalog/job IDs, generations, label/note fields; no register/restore/payload-path endpoint.",
+    "snapshot_guard": "Catalog writes remain outside inspected card; setup/finally close standalone-owned adapter.",
+    "module_identity": "Required inventory includes all actual shipped Python modules; process and experimental device configurations still demand those expected hashes.",
+    "build_info": "Descriptor/package metadata informs display and diagnostics only; it cannot grant qualification.",
+    "busy_backup_failure_injection": {
+      "method": "Construct test_embedded.EmbeddedTests fixture; inject context.backup_adapter whose quiesce() raises RuntimeError; call runner.open_advanced(settings) and runner.release_for_fallback().",
+      "result": {
+        "busy_backup_blocks_native_handoff": true,
+        "busy_backup_blocks_fallback": true,
+        "native_owners_released": false
+      },
+      "assertions": [
+        "No release-project-input event",
+        "No stop-project-work event",
+        "No existing-menu event",
+        "release_for_fallback returns False"
+      ]
+    }
+  },
+  "reviewed_file_sha256_at_recording": {
+    "project/integration/release.py": "2f1c29f9cfb2a2271824b350750d5f0872c4699183bf7bf37cf1c7080ff2da5f",
+    "project/tests/test_release_integration.py": "cdef5b1ab5f5e707114cb62bcb4270cbbd854e91fe34eb958a2405ba2f84dc59",
+    "project/bridge/principal_integration.py": "9f577f13555c11f8de7d64bb3cb21c2459fcc7c39a8515536f759425c44c9650",
+    "project/bridge/process_source.py": "a0770d8a01d01f9b59835f644657d13c8dc80b3f8eebe456bd6aba1ec71719aa",
+    "project/bridge/experimental_runtime.py": "2f6e9f17d692932fe82b33ab29eec60ec7dfb11063587238f50fe14b22caeea3",
+    "project/psp_shell/app.py": "524029ab51384153b8830ea87b1a633df5e249fa7ddaa426ebb69006124cf7e9",
+    "project/psp_shell/embedded.py": "11499b5567b1d8bf358073889fe4b86228b6085054c448b497c4fcb4de3743b1",
+    "project/tests/test_app.py": "8a1ddff9271431339afc0c24879079484ca17cb64e8c036fef49d7445594694b",
+    "project/tests/test_embedded.py": "7ffb4ff3bfea0035ebfec0241b6da8e0aa283f9dbf9d1fc3ea0b256c305e51a8"
+  },
+  "identity_limit": "Hashes captured when writing this review summary after checks; root final strict certification and clean build bind the completed batch.",
+  "physical_device_tested": false,
+  "device_performance_claim": false,
+  "physical_recovery_claim": false,
+  "native_resume_qualified": false,
+  "git_commits_created": false,
+  "publication_performed": false
+}

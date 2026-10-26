@@ -295,15 +295,23 @@ def _undo(transaction):
             require(digest(data) == item["before_sha256"], "undo backup hash mismatch")
         else:
             require(item["before_sha256"] is None, "undo backup missing")
-        restore.append((dst, data))
-    for dst, data in reversed(restore):
+        restore.append((item, data))
+    restored = 0
+    for item, data in reversed(restore):
+        dst = contained(target, item["destination"])
+        current = maybe_hash(dst)
+        require(current in {item["before_sha256"], item["after_sha256"]},
+                "destination changed during undo; retain the journal and backups")
+        if current == item["before_sha256"]:
+            continue  # another recovery step may already have restored it
         if data is None:
             dst.unlink()
         else:
             atomic_write(dst, data)
+        restored += 1
     journal["status"] = "undone"
     write_record(transaction / "journal.json", journal)
-    return {"restored": len(restore), "source_modified": False}
+    return {"restored": restored, "source_modified": False}
 
 
 def undo(transaction):

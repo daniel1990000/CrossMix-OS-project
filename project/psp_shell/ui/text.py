@@ -76,12 +76,17 @@ class TextRasterizer:
         return text[:low].rstrip() + ellipsis
 
     def wrap(self, text: str, size: int, max_width: int, max_lines: int = 5) -> tuple[str, ...]:
-        key = (str(text)[:self.MAX_TEXT_CHARS], size, max_width, max_lines)
+        source = str(text)
+        clipped = len(source) > self.MAX_TEXT_CHARS
+        bounded = source[:self.MAX_TEXT_CHARS]
+        # Equal prefixes with different omitted suffixes must not share a
+        # complete-looking cached result. Keep the existing processing bound.
+        key = (bounded, size, max_width, max_lines, clipped)
         if key in self._wrap_cache:
             self._wrap_cache.move_to_end(key)
             return self._wrap_cache[key]
         lines: list[str] = []
-        paragraphs = str(text)[:self.MAX_TEXT_CHARS].split("\n")
+        paragraphs = bounded.split("\n")
         overflow = False
         for paragraph_index, paragraph in enumerate(paragraphs):
             if len(lines) >= max_lines:
@@ -124,6 +129,12 @@ class TextRasterizer:
         lines = lines[:max_lines]
         if overflow and lines:
             lines[-1] = self.fit(lines[-1].rstrip("…") + "…", size, max_width)
+        if clipped and max_lines > 0:
+            marker = self.fit("… More text omitted.", size, max_width)
+            if len(lines) < max_lines:
+                lines.append(marker)
+            else:
+                lines[-1] = marker
         result = tuple(lines)
         self._wrap_cache[key] = result
         if len(self._wrap_cache) > 128:

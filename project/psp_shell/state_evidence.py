@@ -156,25 +156,46 @@ class QualifiedStateProfile:
     native_state_launch_qualified: bool = False
     config_hashes: tuple[tuple[str, str], ...] = ()
 
-    def assert_qualified(self):
-        if not all(value is True for value in (self.hardware_qualified, self.writer_inventory_qualified,
-                                               self.state_save_load_qualified, self.native_state_launch_qualified)):
-            _error("STATE_PROFILE_UNQUALIFIED", "Installed state, writer, launch and hardware qualification is required")
+    def assert_structure(self):
+        """Validate the fixed profile before considering optional capture.
+
+        A missing qualification or changed native setting can disable capture;
+        malformed identities and paths must never become that fallback.
+        """
+        if any(type(value) is not bool for value in self.qualification_flags):
+            _error("STATE_PROFILE_UNQUALIFIED", "State qualification flags must be explicit booleans")
         if (not _hex(self.engine_sha256) or not _hex(self.principal_sha256) or self.state_format_id != FORMAT or
-                self.architecture not in {"aarch64", "x86_64"} or not self.writer_ids or len(set(self.writer_ids)) != len(self.writer_ids)):
+                self.architecture not in {"aarch64", "x86_64"} or not isinstance(self.writer_ids, tuple) or
+                not self.writer_ids or any(not isinstance(value, str) for value in self.writer_ids) or
+                len(set(self.writer_ids)) != len(self.writer_ids)):
             _error("STATE_PROFILE_UNQUALIFIED", "State profile identities or writer inventory are incomplete")
         for value in (self.profile_id, self.preset_id, self.engine_id, *self.writer_ids):
             if not _text(value, 256):
                 _error("STATE_PROFILE_UNQUALIFIED", "A state profile identity is empty")
         root = _absolute(self.sd_root)
-        if not _absolute(self.executable).is_relative_to(root) or not self.state_roots:
+        if (not _absolute(self.executable).is_relative_to(root) or
+                not isinstance(self.state_roots, tuple) or not self.state_roots):
             _error("STATE_PROFILE_UNQUALIFIED", "Engine or state roots are outside the approved card")
         if any(not _absolute(path).is_relative_to(root) for path in self.state_roots):
             _error("STATE_PROFILE_UNQUALIFIED", "State root is outside the approved card")
-        if not self.config_hashes:
+        if (not isinstance(self.config_hashes, tuple) or not self.config_hashes or
+                any(not isinstance(item, tuple) or len(item) != 2 for item in self.config_hashes)):
             _error("STATE_PROFILE_UNQUALIFIED", "Independent native configuration fingerprints are required")
         for path, expected in self.config_hashes:
-            if not _absolute(path).is_relative_to(root) or not _hex(expected) or _file_hash(path, 1024**2)[0] != expected:
+            if not _absolute(path).is_relative_to(root) or not _hex(expected):
+                _error("STATE_PROFILE_UNQUALIFIED", "Native configuration fingerprints must name approved paths and hashes")
+
+    @property
+    def qualification_flags(self):
+        return (self.hardware_qualified, self.writer_inventory_qualified,
+                self.state_save_load_qualified, self.native_state_launch_qualified)
+
+    def assert_qualified(self):
+        self.assert_structure()
+        if not all(self.qualification_flags):
+            _error("STATE_PROFILE_UNQUALIFIED", "Installed state, writer, launch and hardware qualification is required")
+        for path, expected in self.config_hashes:
+            if _file_hash(path, 1024**2)[0] != expected:
                 _error("STATE_PROFILE_CHANGED", "Native state configuration differs from its qualified profile")
 
     @property
@@ -678,7 +699,10 @@ class PrincipalStateSessionAuthority:
     """
     def __init__(self, *, store: StateCapabilityStore, private_root, profiles: Mapping[str, QualifiedStateProfile],
                  observe_writers: Callable[[ForegroundIdentity, QualifiedStateProfile], WriterStoppedEvidence]):
-        if type(store) is not StateCapabilityStore or not callable(observe_writers):
+        if (type(store) is not StateCapabilityStore or not callable(observe_writers) or
+                not isinstance(profiles, Mapping) or
+                any(not isinstance(key, str) or type(value) is not QualifiedStateProfile
+                    for key, value in profiles.items())):
             _error("INVALID_STATE_ADAPTER", "Principal state binding requires a private store and trusted writer authority")
         self.store, self.private_root, self.profiles = store, private_root, dict(profiles)
         self.observe_writers = observe_writers
@@ -688,20 +712,60 @@ class PrincipalStateSessionAuthority:
     def command_environment(self, foreground, request):
         from bridge.process_source import SourceCommandRequest
         from .adapters.spruce import SourceSnapshotProvider
-        if type(request) is not SourceCommandRequest or request.foreground != foreground:
+        if (type(request) is not SourceCommandRequest or request.foreground != foreground or
+                type(foreground) is not ForegroundIdentity or
+                not all(_hex(value, 32) for value in (foreground.token, foreground.request_id)) or
+                not isinstance(foreground.boot_id, str) or re.fullmatch(r"[A-Za-z0-9_-]{1,64}", foreground.boot_id) is None or
+                type(foreground.generation) is not int or not 0 <= foreground.generation <= 10**15 or
+                not _hex(request.command_sha256) or type(request.source_pid) is not int or
+                not 0 < request.source_pid < 2**31 or not isinstance(request.source_start, str) or
+                re.fullmatch(r"[0-9]{1,32}", request.source_start) is None):
             _error("INVALID_STATE_SESSION", "State launch requires the principal-correlated source model request")
-        game = request.source_game
-        if game is None or game["system_id"] not in self.profiles:
+        game, state_intent = request.source_game, request.state_intent
+        if game is not None and (not isinstance(game, Mapping) or set(game) != {"system_id", "rom_relative"} or
+                any(not isinstance(value, str) or not value or len(value) > 4096 or "\0" in value for value in game.values()) or
+                game["system_id"] in {".", ".."} or any(c in game["system_id"] for c in "/\\") or
+                not game["rom_relative"].startswith("Roms/") or "\\" in game["rom_relative"] or
+                any(part in {"", ".", ".."} for part in game["rom_relative"].split("/"))):
+            _error("INVALID_STATE_SESSION", "State capture requires a bounded source game identity")
+        if state_intent is not None:
+            if (not isinstance(state_intent, Mapping) or
+                    set(state_intent) != {"mode", "state_path", "state_sha256", "slot"} or
+                    state_intent["mode"] != "resume" or not _hex(state_intent["state_sha256"]) or
+                    type(state_intent["slot"]) is not int or not 0 <= state_intent["slot"] <= 99):
+                _error("INVALID_STATE_SESSION", "Resume requires an exact bounded state intent")
+            _absolute(state_intent["state_path"])
+        if foreground.token in self.sessions:
+            _error("INVALID_STATE_SESSION", "This foreground already owns a retained state session")
+        self.last_error = None
+
+        def unavailable(code, message):
+            self.last_error = code
+            if state_intent is not None:
+                _error(code, message)
+            # Optional capture does not replace the normal source/runtime
+            # qualification performed by the existing principal. Only these
+            # explicit compatibility decisions may omit its scoped environment.
             return {}
+
+        if game is None or game["system_id"] not in self.profiles:
+            return unavailable("STATE_PROFILE_UNAVAILABLE", "No state profile is associated with this source game")
         profile = self.profiles[game["system_id"]]
-        profile.assert_qualified()
+        profile.assert_structure()
+        if not all(profile.qualification_flags):
+            return unavailable("STATE_PROFILE_UNQUALIFIED", "Optional state capture is not qualified for this profile")
+        try:
+            profile.assert_qualified()
+        except StateEvidenceError as error:
+            if error.code != "STATE_PROFILE_CHANGED":
+                raise
+            return unavailable(error.code, str(error))
         provider = SourceSnapshotProvider(profile.sd_root)
         row = provider.game_record(game["system_id"], game["rom_relative"])
         if row["preset_repair_required"] or row["selected_preset"] != profile.preset_id:
-            _error("STATE_PROFILE_UNQUALIFIED", "Source-selected engine preset does not match the qualified state engine")
+            return unavailable("STATE_PRESET_CHANGED", "Source-selected engine preset does not match the qualified state engine")
         rom = provider.path(row["rom_path"])
         identity = LaunchIdentity(foreground, row["id"], rom, _file_hash(rom, 8 * 1024**3)[0])
-        state_intent = getattr(request, "state_intent", None)
         resume = None
         if state_intent is not None:
             resume = self.store.load(row["id"], profile, self.observe_writers)

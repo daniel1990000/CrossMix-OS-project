@@ -105,6 +105,7 @@ class UIItem:
     selected_emulator: str = ""
     selected_preset: str = ""
     availability: str = "available"
+    state_verification_required: bool = False
 
     @classmethod
     def from_record(cls, value: Mapping[str, Any], kind: str = "game") -> "UIItem":
@@ -127,6 +128,7 @@ class UIItem:
             selected_emulator=_text(value.get("selected_emulator", ""), 256),
             selected_preset=_text(value.get("selected_preset", ""), 256),
             availability=_text(availability, 128),
+            state_verification_required=value.get("state_verification_required") is True,
         )
 
 
@@ -168,6 +170,38 @@ class Keyboard:
     selected: int
     keys: tuple[str, ...] = KEYBOARD_KEYS
     preferred_column: float | None = None
+    title: str = "Find a game"
+    submit_label: str = "Find"
+
+
+@dataclass(frozen=True)
+class BrowseScope:
+    """Only presentation choices; native managers retain library ownership."""
+    source: str = "all"
+    system_id: str = ""
+    search: str = ""
+    sort: str = "native"
+    collection_id: str = ""
+
+    @classmethod
+    def from_mapping(cls, value: Any, source: str = "all") -> "BrowseScope":
+        value = value if isinstance(value, Mapping) else {}
+        order = value.get("sort", "native")
+        return cls(source, _text(value.get("system_id", ""), 128),
+                   keyboard_text(value.get("search", "")),
+                   order if order in ("native", "title_asc", "title_desc", "system") else "native",
+                   _text(value.get("collection_id", ""), 256))
+
+    def params(self) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        if self.source != "all":
+            result["source"] = self.source
+        for key in ("system_id", "search", "collection_id"):
+            if getattr(self, key):
+                result[key] = getattr(self, key)
+        if self.sort != "native":
+            result["sort"] = self.sort
+        return result
 
 
 @dataclass(frozen=True)
@@ -245,6 +279,18 @@ class NavigationModel:
         self._system_label = ""
         self._search = ""
         self._history_filters = {"recent": "", "favorites": ""}
+        self._history_search = {"recent": "", "favorites": ""}
+        self._sorts = {"all": "native", "recent": "native", "favorites": "native", "collection": "native"}
+        self._collection_id = ""
+        self._collection_label = ""
+        self._collections = _Page()
+        self._system_records: tuple[Mapping[str, Any], ...] = ()
+        self._keyboard_purpose = "search"
+        self._keyboard_scope = "all"
+        self._random_scope = BrowseScope()
+        self._random_game_id = ""
+        self._details: tuple[tuple[str, str], ...] = ()
+        self._details_return: Dialog | None = None
         self._history_records: dict[str, tuple[UIItem, ...]] = {}
         self._history_serial: dict[str, int] = {}
         self._game_information: Mapping[str, Any] = {}
@@ -261,9 +307,30 @@ class NavigationModel:
             raise ValueError("Invalid UI session identity")
         self._session_id = session_id or uuid.uuid4().hex
         self._pending: set[int] = set()
+        self._pending_commands: dict[int, UICommand] = {}
+        self._request_epochs: dict[int, int] = {}
+        self._view_epoch = 0
+        self._latest_reads: dict[str, int] = {}
+        self._mutation_messages: list[str] = []
+        self._favorites_loaded = False
+        self._favorite_overrides: dict[str, bool] = {}
+        self._favorite_override_serial: dict[str, int] = {}
+        self._restored_offsets: dict[str, int] = {}
+        self._restored_indices: dict[str, int] = {}
+        self._backup_generation = 0
+        self._backup_entries: tuple[Mapping[str, Any], ...] = ()
+        self._backup_history_offset = 0
+        self._backup_history_reason = ""
+        self._backup_entry_id = ""
+        self._backup_detail: Mapping[str, Any] = {}
+        self._backup_job: Mapping[str, Any] = {}
+        self._backup_poll_due = 0.0
+        self._backup_poll_pending = False
+        self._backup_poll_serial = 0
         self._query_serial = 0
         self._query_last_focus = False
         self._query_keep_focus = False
+        self._pending_jump = ""
         self._favorites: set[str] = set()
         self._last_transaction = ""
         self._settings_view = "root"
@@ -284,14 +351,14 @@ class NavigationModel:
         self._restored_focus: dict[str, str] = {}
         self._set_systems([])
         self._rebuild_settings()
-        if restored_state and restored_state.get("schema", 1) == 1:
+        if restored_state and restored_state.get("schema", 1) in (1, 2):
             value = restored_state.get("category", 0)
             self.category = value if isinstance(value, int) and not isinstance(value, bool) and 0 <= value < 4 else 0
             focus = restored_state.get("focus", {})
             if isinstance(focus, Mapping):
                 self._restored_focus = {str(k): _text(v, 1024) for k, v in focus.items()}
             view = restored_state.get("games_view", "systems")
-            if view in ("systems", "all", "system", "favorites", "search"):
+            if view in ("systems", "all", "system", "favorites", "search", "collections", "collection"):
                 self._games_view = view
             self._system_id = _text(restored_state.get("system_id", ""), 128)
             self._system_label = _text(restored_state.get("system_label", ""), 512)
@@ -299,14 +366,63 @@ class NavigationModel:
             filters = restored_state.get("history_filters", {})
             if isinstance(filters, Mapping):
                 self._history_filters = {key: _text(filters.get(key, ""), 128) for key in self._history_filters}
+            scopes = restored_state.get("scopes", {})
+            if isinstance(scopes, Mapping):
+                for source in self._sorts:
+                    if source not in scopes:
+                        continue
+                    scope = BrowseScope.from_mapping(scopes.get(source), source)
+                    self._sorts[source] = scope.sort
+                    if source in self._history_filters:
+                        self._history_filters[source] = scope.system_id
+                        self._history_search[source] = scope.search
+                collection = BrowseScope.from_mapping(scopes.get("collection"), "collection")
+                self._collection_id = collection.collection_id
+                self._collection_label = _text(restored_state.get("collection_label", ""), 512)
+            positions = restored_state.get("positions", {})
+            if isinstance(positions, Mapping):
+                for key, position in positions.items():
+                    if key not in ("0", "1", "2", "3", "systems", "collections") or not isinstance(position, Mapping):
+                        continue
+                    offset, selected = position.get("offset", 0), position.get("selected", 0)
+                    if type(offset) is int and 0 <= offset <= 100000:
+                        self._restored_offsets[key] = offset - offset % self.PAGE_SIZE
+                    if type(selected) is int and 0 <= selected < self.PAGE_SIZE:
+                        self._restored_indices[key] = selected
             if self._games_view == "system" and not self._system_id:
                 self._games_view = "systems"
+            if self._games_view == "collection" and not self._collection_id:
+                self._games_view = "collections"
 
     def _request(self, method: str, params: Mapping[str, Any] | None = None,
                  context: str = "") -> UICommand:
         self._serial += 1
         self._pending.add(self._serial)
-        return UICommand(self._serial, method, dict(params or {}), context)
+        command = UICommand(self._serial, method, dict(params or {}), context)
+        self._pending_commands[command.serial] = command
+        self._request_epochs[command.serial] = self._view_epoch
+        if not self._is_mutation(command):
+            self._latest_reads[context] = command.serial
+        return command
+
+    @staticmethod
+    def _is_mutation(command: UICommand) -> bool:
+        return (command.context in ("apply", "undo", "favorite_set", "launch", "switch", "hardware_apply",
+                                    "controls_apply", "controls_undo", "appearance_apply", "appearance_undo",
+                                    "experience_apply", "experience_undo", "performance_apply", "performance_undo",
+                                    "backup_rename", "backup_remove", "backup_cancel") or
+                command.method.endswith((".apply", ".undo")))
+
+    def _leave_view(self) -> None:
+        self._view_epoch += 1
+
+    def _scope(self, source: str | None = None) -> BrowseScope:
+        source = source or ("recent" if self.category == 1 else "favorites" if self._games_view == "favorites"
+                            else "collection" if self._games_view == "collection" else "all")
+        if source in self._history_filters:
+            return BrowseScope(source, self._history_filters[source], self._history_search[source], self._sorts[source])
+        return BrowseScope(source, self._system_id, self._search, self._sorts[source],
+                           self._collection_id if source == "collection" else "")
 
     def initial_commands(self, *, preserve_focus: bool = False) -> list[UICommand]:
         commands = [self._request(method, {"refresh": True} if preserve_focus and method == "library.systems" else None,
@@ -318,33 +434,50 @@ class NavigationModel:
         commands.append(self._history_query("recent"))
         if self._games_view == "favorites":
             commands.append(self._history_query("favorites"))
+        elif self._games_view == "collections":
+            commands.append(self._request("library.collections", context="collections"))
         elif self._games_view != "systems":
-            commands.append(self._query(self._pages[0].offset if preserve_focus else 0,
-                                        keep_focus=preserve_focus))
+            commands.append(self._query(self._pages[0].offset if preserve_focus else self._restored_offsets.get("0", 0),
+                                        keep_focus=preserve_focus or "0" in self._restored_offsets))
         return commands
+
+    def refresh_commands(self) -> list[UICommand]:
+        """Refresh after a native handoff without changing its return focus."""
+        self._leave_view()
+        self._artwork_generation += 1
+        return self.initial_commands(preserve_focus=True)
 
     def _page(self) -> _Page:
         if self.category == 0 and self._games_view == "systems":
             return self._systems
+        if self.category == 0 and self._games_view == "collections":
+            return self._collections
         return self._pages[self.category]
 
     def _focus_key(self) -> str:
         return "systems" if self.category == 0 and self._games_view == "systems" else str(self.category)
 
     def _restore_focus(self, page: _Page, key: str) -> None:
+        index = self._restored_indices.pop(key, None)
+        if index is not None and page.items:
+            page.selected = min(index, len(page.items) - 1)
         identifier = self._restored_focus.pop(key, "")
         if identifier:
             page.selected = next((i for i, item in enumerate(page.items) if item.id == identifier), page.selected)
 
     def export_state(self) -> dict[str, Any]:
         focus = {}
-        for key, page in [("systems", self._systems)] + [(str(i), page) for i, page in enumerate(self._pages)]:
+        positions = {}
+        for key, page in [("systems", self._systems), ("collections", self._collections)] + [(str(i), page) for i, page in enumerate(self._pages)]:
             if 0 <= page.selected < len(page.items):
                 focus[key] = page.items[page.selected].id
-        return {"schema": 1, "category": self.category, "focus": focus,
+            positions[key] = {"offset": page.offset, "selected": page.selected}
+        return {"schema": 2, "category": self.category, "focus": focus, "positions": positions,
                 "games_view": self._games_view, "system_id": self._system_id,
                 "system_label": self._system_label, "search": self._search,
-                "history_filters": dict(self._history_filters)}
+                "history_filters": dict(self._history_filters),
+                "collection_label": self._collection_label,
+                "scopes": {source: self._scope(source).params() for source in self._sorts}}
 
     def set_category_items(self, category: int | str, items: Iterable[UIItem | Mapping[str, Any]],
                            *, offset: int = 0, total: int | None = None) -> None:
@@ -360,32 +493,42 @@ class NavigationModel:
         self._restore_focus(self._pages[category], str(category))
 
     def _set_systems(self, records: Iterable[Mapping[str, Any]]) -> None:
+        self._system_records = tuple(records)
         items = [_menu("all", "All games", "Your existing collection"),
                  _menu("favorites", "Favorites", "The games you keep close"),
                  _menu("search", "Find a game", "Search across your collection"),
                  _menu("random", "Surprise me", "Choose an available game")]
-        for value in records:
+        for value in self._system_records:
             identifier = _text(value.get("system_id", value.get("id", "")), 128)
             if not identifier:
                 continue
             count = value.get("game_count", 0)
-            count = count if isinstance(count, int) and count >= 0 else 0
+            count = count if type(count) is int and count >= 0 else None
             items.append(UIItem(identifier, _text(value.get("label", identifier)),
-                                f"{count} games", "system", identifier,
+                                f"{count} games" if count is not None else "Browse games", "system", identifier,
                                 available=value.get("availability", "available") == "available"))
-        items.append(_menu("library_filters", "Library filters", "Combine a system with search, favorites or recents"))
+        items.append(_menu("collections", "Collections", "Browse your existing spruce collections"))
+        items.append(_menu("library_filters", "Library tools", "Filter, sort, jump or choose a game"))
+        items.append(_menu("help", "Controls & help", "Buttons, browsing and safe ways to continue"))
         items.append(_menu("refresh_library", "Refresh library", "Reload game lists and changed artwork"))
         self._systems.replace(items)
         self._restore_focus(self._systems, "systems")
 
     def _query(self, offset: int = 0, *, keep_focus: bool = False,
                last_focus: bool = False) -> UICommand:
-        params: dict[str, Any] = {"offset": offset, "limit": self.PAGE_SIZE}
-        if self._system_id:
-            params["system_id"] = self._system_id
-        if self._search and self._games_view in ("system", "search", "all"):
-            params["search"] = self._search
+        params: dict[str, Any] = {"offset": offset, "limit": self.PAGE_SIZE,
+                                  **self._scope("collection" if self._games_view == "collection" else "all").params()}
+        page = self._pages[0]
+        focus_id = (page.items[page.selected].id if keep_focus and 0 <= page.selected < len(page.items)
+                    else self._restored_focus.get("0", ""))
+        if focus_id:
+            params["focus_game_id"] = focus_id
         command = self._request("library.query", params, "games")
+        if self._pending_jump:
+            params["jump"] = self._pending_jump
+            command = replace(command, params=params)
+            self._pending_commands[command.serial] = command
+            self._pending_jump = ""
         self._query_serial = command.serial
         self._query_keep_focus = keep_focus
         self._query_last_focus = last_focus
@@ -393,6 +536,8 @@ class NavigationModel:
 
     def _history_query(self, kind: str) -> UICommand:
         params = {"system_id": self._history_filters[kind]} if self._history_filters[kind] else {}
+        if self._history_search[kind]:
+            params["search"] = self._history_search[kind]
         command = self._request("library." + kind, params, kind)
         self._history_serial[kind] = command.serial
         return command
@@ -401,7 +546,11 @@ class NavigationModel:
                            last_focus: bool = False) -> None:
         items = self._history_records.get(kind, ())
         page = self._pages[1 if kind == "recent" else 0]
-        previous = page.items[page.selected].id if keep_focus and 0 <= page.selected < len(page.items) else None
+        key = "1" if kind == "recent" else "0"
+        previous = (page.items[page.selected].id if keep_focus and 0 <= page.selected < len(page.items)
+                    else self._restored_focus.get(key))
+        if not page.items:
+            offset = self._restored_offsets.get(key, offset)
         absolute_focus = next((index for index, item in enumerate(items) if item.id == previous), None) if previous else None
         if absolute_focus is not None:
             offset = (absolute_focus // self.PAGE_SIZE) * self.PAGE_SIZE
@@ -414,23 +563,134 @@ class NavigationModel:
             page.selected = len(page.items) - 1
 
     def _filter_dialog(self) -> None:
-        target = "recent" if self.category == 1 else "favorites" if self._games_view == "favorites" else "games"
-        selected = self._history_filters.get(target, self._system_id)
-        choices = tuple(DialogChoice(label, "set_filter", params={"target": target, "system_id": system,
-                                                                   "label": label})
-                        for system, label in (("", "All systems"), ("PSP", "PSP"), ("PS", "PS1")))
-        self._dialog = Dialog("Filter " + ("Continue Playing" if target == "recent" else "Favorites" if target == "favorites" else "Games"),
-            "Current system: " + ({"": "All systems", "PSP": "PSP", "PS": "PS1"}.get(selected, selected)) +
-            ("\nYour search stays combined with the selected system." if target == "games" else "\nExisting game identities and history order stay in place."),
-            choices + (DialogChoice("Cancel"),))
+        if self.category == 0 and self._games_view in ("systems", "collections"):
+            self._system_id = self._system_label = self._search = ""
+        scope = self._scope()
+        label = {"all": "Games", "favorites": "Favorites", "recent": "Continue Playing", "collection": self._collection_label or "Collection"}[scope.source]
+        system = next((_text(row.get("label", scope.system_id)) for row in self._system_records
+                       if row.get("system_id", row.get("id")) == scope.system_id), scope.system_id) or "All systems"
+        order = {"native": "Original order" if scope.source in ("recent", "favorites", "collection") else "Title A–Z",
+                 "title_asc": "Title A–Z", "title_desc": "Title Z–A", "system": "System, then title"}[scope.sort]
+        choices = [DialogChoice("System: " + system, "system_filter"),
+                   DialogChoice("Search this view", "search_view"),
+                   DialogChoice("Clear filters", "clear_filters"),
+                   DialogChoice("Sort: " + order, "sort_menu"),
+                   DialogChoice("Surprise me", "random_view")]
+        page = self._page()
+        if page.offset:
+            choices.append(DialogChoice("Previous page", "page", params={"delta": -1}))
+        if page.offset + len(page.items) < page.total:
+            choices.append(DialogChoice("Next page", "page", params={"delta": 1}))
+        choices.append(DialogChoice("Jump to letter", "jump_menu"))
+        if scope.source == "collection":
+            choices.append(DialogChoice("Manage in spruce", "manage_collections"))
+        choices.append(DialogChoice("Back"))
+        self._dialog = Dialog("Library tools", label + " · " + system +
+                              ("\nSearch: " + scope.search if scope.search else "\nNo search filter"), tuple(choices))
+
+    def _system_filter_dialog(self) -> None:
+        target = self._scope().source
+        choices = [DialogChoice("All systems", "set_filter", params={"target": target, "system_id": "", "label": "All systems"})]
+        seen = set()
+        for row in self._system_records[:256]:
+            identifier = _text(row.get("system_id", row.get("id", "")), 128)
+            if identifier and identifier not in seen:
+                seen.add(identifier)
+                choices.append(DialogChoice(_text(row.get("label", identifier)), "set_filter",
+                    params={"target": target, "system_id": identifier, "label": _text(row.get("label", identifier))}))
+        choices.append(DialogChoice("Cancel"))
+        self._dialog = Dialog("Choose system", "Your search stays combined with this system.", tuple(choices))
+
+    def _reload_scope(self, *, offset: int = 0, keep_focus: bool = False) -> list[UICommand]:
+        source = self._scope().source
+        if source in self._history_filters:
+            page = self._pages[1 if source == "recent" else 0]
+            if not keep_focus:
+                page.replace((), offset=offset, keep_focus=False)
+            return [self._history_query(source)]
+        if self._games_view in ("systems", "collections"):
+            self._games_view = "search" if self._search else "system" if self._system_id else "all"
+        if not keep_focus:
+            self._pages[0] = _Page(offset=offset)
+        return [self._query(offset, keep_focus=keep_focus)]
+
+    def _open_search(self, *, global_search: bool = False) -> None:
+        scope = self._scope()
+        self._keyboard_purpose = "search"
+        self._keyboard_scope = "global" if global_search else scope.source
+        self._keyboard = Keyboard("" if global_search else scope.search, 0,
+                                  title="Find a game" if global_search else "Search this view")
+
+    def _page_commands(self, delta: int) -> list[UICommand]:
+        page = self._page()
+        target = max(0, min(page.offset + delta * self.PAGE_SIZE,
+                            max(0, (page.total - 1) // self.PAGE_SIZE * self.PAGE_SIZE)))
+        source = self._scope().source
+        if source in self._history_filters:
+            self._show_history_page(source, target, keep_focus=False, last_focus=delta < 0)
+            return []
+        return [self._query(target, last_focus=delta < 0)]
+
+    def _random_commands(self, *, another: bool = False) -> list[UICommand]:
+        if not another:
+            self._random_scope = self._scope()
+            self._random_game_id = ""
+        params = self._random_scope.params()
+        if another and self._random_game_id:
+            params["exclude_game_id"] = self._random_game_id
+        return [self._request("library.random", params, "random")]
+
+    _MODAL_READS = frozenset(("game_info", "performance_status", "performance_preview", "backup_status",
+        "backup_action", "hardware_preview", "experience", "experience_preview", "preview", "controls",
+        "controls_preview", "appearance", "appearance_preview", "random", "support", "backup_history",
+        "backup_detail", "backup_verify", "backup_job"))
 
     def receive(self, command: UICommand, result: Any) -> list[UICommand]:
+        epoch = self._request_epochs.pop(command.serial, self._view_epoch)
+        self._pending_commands.pop(command.serial, None)
+        self._pending.discard(command.serial)
+        stale = epoch != self._view_epoch
+        mutation = self._is_mutation(command)
+        if not mutation:
+            if self._latest_reads.get(command.context, command.serial) != command.serial:
+                if command.context == "backup_verify" and isinstance(result, Mapping) and result.get("job_id"):
+                    return [self._request("backup.cancel", {"job_id": result["job_id"]}, "backup_cancel_background")]
+                return []
+            if stale and (command.context in self._MODAL_READS or command.context.startswith("hardware:")):
+                if command.context == "backup_job" and command.serial == self._backup_poll_serial:
+                    self._backup_poll_pending = False
+                if command.context == "backup_verify" and isinstance(result, Mapping) and result.get("job_id"):
+                    return [self._request("backup.cancel", {"job_id": result["job_id"]}, "backup_cancel_background")]
+                return []
+        if mutation and stale:
+            # Receipts still update transaction/generation state. They must not
+            # navigate back into an abandoned screen or open its next dialog.
+            dialog, view, page = self._dialog, self._settings_view, replace(self._pages[3])
+            followups = self._receive_current(command, result)
+            self._dialog, self._settings_view, self._pages[3] = dialog, view, page
+            message = self._status or "The earlier action completed."
+            self._mutation_messages = (self._mutation_messages + [message])[-12:]
+            self.notice(message + " Details remain in Recent actions.")
+            retained = []
+            for request in followups:
+                if request.context in ("favorites", "recent", "favorites_cache"):
+                    retained.append(request)
+                else:
+                    self._pending.discard(request.serial)
+                    self._pending_commands.pop(request.serial, None)
+                    self._request_epochs.pop(request.serial, None)
+            return retained
+        return self._receive_current(command, result)
+
+    def _receive_current(self, command: UICommand, result: Any) -> list[UICommand]:
         self._pending.discard(command.serial)
         context = command.context
         if context in ("settings", "apply", "undo"):
             if not isinstance(result, Mapping):
                 raise ValueError("Settings reply must be an object")
             self.preferences = Preferences.from_mapping(result.get("preferences"))
+            if context in ("apply", "undo"):
+                self._latest_reads["settings"] = command.serial
             generation = result.get("generation", self.generation)
             if isinstance(generation, int) and generation >= 0:
                 self.generation = generation
@@ -513,6 +773,46 @@ class NavigationModel:
                     self._dialog = Dialog("Diagnostic report saved", _text(result["path"], 2048))
                 else:
                     self._dialog = Dialog("Recovery instructions", _text(result.get("message"), 8192) or "Use the existing verified recovery tools and expendable media.")
+        elif context == "backup_history":
+            if isinstance(result, Mapping):
+                self._backup_history_dialog(result)
+        elif context == "backup_detail":
+            if isinstance(result, Mapping):
+                self._backup_detail_dialog(result)
+        elif context in ("backup_rename", "backup_remove"):
+            if isinstance(result, Mapping) and type(result.get("generation")) is int:
+                self._backup_generation = result["generation"]
+            self.notice("Backup label updated." if context == "backup_rename" else "Removed from history. Backup files were kept.")
+            return [self._request("backup.detail", {"entry_id": command.params["entry_id"]}, "backup_detail")] if context == "backup_rename" else [self._request("backup.history", context="backup_history")]
+        elif context in ("backup_verify", "backup_job"):
+            self._backup_poll_pending = False
+            if isinstance(result, Mapping):
+                self._backup_job = dict(result)
+                if result.get("state") == "running":
+                    self._backup_job_dialog()
+                else:
+                    self._backup_job = {}
+                    self.notice("Backup bytes verified just now." if result.get("state") == "verified" else
+                                _text(result.get("reason"), 512) or "Backup verification did not complete.")
+                    return [self._request("backup.detail", {"entry_id": result.get("entry_id", self._backup_entry_id)}, "backup_detail")]
+        elif context == "backup_cancel":
+            if self._backup_job.get("job_id") and self._backup_job.get("job_id") != command.params.get("job_id"):
+                # A delayed cancellation acknowledgement belongs to its old
+                # job, even if another verification has since been started.
+                return []
+            self._backup_poll_pending = False
+            state = result.get("state") if isinstance(result, Mapping) else "cancelled"
+            if state == "running":
+                if self._backup_job:
+                    self._backup_job = dict(result)
+                    self._backup_job_dialog()
+                self.notice("The check is finishing. Its final result will be available in backup history.")
+            else:
+                self._backup_job = {}
+                self.notice("Backup verification cancelled. Backup files were kept." if state == "cancelled" else
+                            "The check already completed. Its result is available in backup history.")
+        elif context == "backup_cancel_background":
+            pass
         elif context == "game_options":
             if isinstance(result, Mapping) and result.get("state") == "releasing_ui":
                 self.notice("Opening this game's existing spruce options…")
@@ -564,10 +864,18 @@ class NavigationModel:
             return [self._request("experience.ppsspp.status", context="experience")]
         elif context == "systems":
             self._set_systems(value for value in result if isinstance(value, Mapping))
+        elif context == "collections":
+            items = [UIItem(_text(value.get("collection_id", value.get("id", "")), 256),
+                            _text(value.get("label", "Collection")),
+                            f"{value['game_count']} games" if type(value.get("game_count")) is int else "Browse games",
+                            "collection") for value in result if isinstance(value, Mapping)]
+            items.append(_menu("manage_collections", "Manage in spruce", "Use the existing collection tools"))
+            self._collections.replace(items)
+            self._restore_focus(self._collections, "collections")
         elif context == "games":
             # Games and Favorites share a page. A background query can finish
             # after navigation has selected Favorites or returned to systems.
-            if command.serial != self._query_serial or self._games_view not in ("all", "system", "search"):
+            if command.serial != self._query_serial or self._games_view not in ("all", "system", "search", "collection"):
                 return []
             values = result.get("items", []) if isinstance(result, Mapping) else []
             items = [UIItem.from_record(value) for value in values if isinstance(value, Mapping)]
@@ -585,27 +893,49 @@ class NavigationModel:
             self._query_last_focus = False
             self._query_keep_focus = False
             self._restore_focus(self._pages[0], "0")
+            if isinstance(result.get("focus_id"), str):
+                self._pages[0].selected = next((index for index, item in enumerate(items)
+                    if item.id == result["focus_id"]), self._pages[0].selected)
+            self._restored_offsets.pop("0", None)
         elif context in ("recent", "favorites", "favorites_cache"):
             if context != "favorites_cache" and command.serial != self._history_serial.get(context, command.serial):
                 return []
             items = tuple(UIItem.from_record(value) for value in result if isinstance(value, Mapping))
-            if context == "favorites_cache" or (context == "favorites" and not self._history_filters["favorites"]):
+            if context == "favorites_cache" or (context == "favorites" and not self._history_filters["favorites"] and not self._history_search["favorites"]):
                 self._favorites = {item.id for item in items}
+                self._favorites_loaded = True
+                for identifier, serial in tuple(self._favorite_override_serial.items()):
+                    if command.serial > serial:
+                        self._favorite_overrides.pop(identifier, None)
+                        self._favorite_override_serial.pop(identifier, None)
             elif context == "favorites":
                 self._favorites.update(item.id for item in items)
             if context != "favorites_cache":
+                order = self._sorts[context]
+                if order != "native":
+                    items = tuple(sorted(items, key=(lambda item: (item.system_label.casefold() or item.system_id.casefold(), item.title.casefold(), item.id))
+                                         if order == "system" else (lambda item: (item.title.casefold(), item.id)),
+                                         reverse=order == "title_desc"))
                 self._history_records[context] = items
                 if context == "recent" or self._games_view == "favorites":
                     page = self._pages[1 if context == "recent" else 0]
                     self._show_history_page(context, page.offset)
                     self._restore_focus(page, "1" if context == "recent" else "0")
+                    self._restored_offsets.pop("1" if context == "recent" else "0", None)
         elif context == "tools":
             self._pages[2].replace(UIItem.from_record(value, "tool") for value in result if isinstance(value, Mapping))
             self._restore_focus(self._pages[2], "2")
         elif context == "random":
-            self._launch_dialog(UIItem.from_record(result))
+            item = UIItem.from_record(result)
+            self._random_game_id = item.id
+            self._launch_dialog(item)
+            if self._dialog:
+                self._dialog = replace(self._dialog, choices=self._dialog.choices[:-1] +
+                    (DialogChoice("Pick another", "pick_another"), self._dialog.choices[-1]))
         elif context == "favorite_set":
             identifier = command.params.get("game_id", "")
+            self._favorite_overrides[identifier] = command.params.get("enabled") is True
+            self._favorite_override_serial[identifier] = command.serial
             if command.params.get("enabled"):
                 self._favorites.add(identifier)
                 self.notice("Added to Favorites.")
@@ -731,6 +1061,20 @@ class NavigationModel:
     def error(self, command: UICommand | None, code: str, message: str) -> None:
         if command:
             self._pending.discard(command.serial)
+            self._pending_commands.pop(command.serial, None)
+            epoch = self._request_epochs.pop(command.serial, self._view_epoch)
+            if command.context == "backup_cancel_background":
+                self._mutation_messages = (self._mutation_messages + ["Background verification cancellation: " + _text(message, 512)])[-12:]
+                return
+            if command.context == "backup_job" and command.serial == self._backup_poll_serial:
+                self._backup_poll_pending = False
+            stale = epoch != self._view_epoch or (not self._is_mutation(command) and
+                self._latest_reads.get(command.context, command.serial) != command.serial)
+            if stale:
+                if self._is_mutation(command):
+                    self._mutation_messages = (self._mutation_messages + [_text(message, 2048) + " · " + _text(code, 128)])[-12:]
+                    self.notice("An earlier action failed. Open Recent actions in Settings for details.")
+                return
         self._dialog = Dialog("Unable to complete that action", _text(message, 2048) + "\n" + _text(code, 128), error=True)
 
     def notice(self, message: str) -> None:
@@ -763,7 +1107,9 @@ class NavigationModel:
                       _menu("backup", "Backups & recovery", "Verified backup readbacks and supported recovery actions"),
                       _menu("device", "System status", "Capabilities and firmware availability"),
                       _menu("support", "Save diagnostic report", "Redacted component and failure information"),
-                      _menu("about", "About & credits", "Version, source credits and license information")))
+                      _menu("about", "About & credits", "Version, source credits and license information"),
+                      _menu("help", "Controls & help", "Buttons, browsing and safe ways to continue"),
+                      _menu("recent_actions", "Recent actions", "Results of actions completed after you moved on")))
         advanced = next((row for row in self._hardware_status.get("routes", [])
                          if isinstance(row, Mapping) and row.get("route_id") == "advanced"), {})
         items.append(UIItem("advanced", "All spruce settings", "Keep advanced settings in their existing authority",
@@ -796,15 +1142,53 @@ class NavigationModel:
         items.append(_menu("hardware_refresh", "Refresh status", "Read current values from the existing authority"))
         self._pages[3].replace(items, keep_focus=keep_focus)
 
+    @staticmethod
+    def _detail_pages(title: str, rows: Iterable[str]) -> tuple[tuple[str, str], ...]:
+        pages, current = [], ""
+        for row in rows:
+            row = _text(row, 1024)
+            if len(current) + len(row) + 1 > 1500 and current:
+                pages.append((title, current))
+                current = ""
+            current += ("\n" if current else "") + row
+        if current:
+            pages.append((title, current))
+        return tuple(pages)
+
+    def _show_detail(self, index: int) -> None:
+        if not self._details:
+            return
+        index = max(0, min(index, len(self._details) - 1))
+        title, message = self._details[index]
+        choices = []
+        if index:
+            choices.append(DialogChoice("Previous details", "info_detail", params={"index": index - 1}))
+        if index + 1 < len(self._details):
+            choices.append(DialogChoice("Next details", "info_detail", params={"index": index + 1}))
+        choices.append(DialogChoice("Back to information", "info_return"))
+        self._dialog = Dialog(title + f" ({index + 1}/{len(self._details)})", message, tuple(choices))
+
     def _game_info_dialog(self, value: Mapping[str, Any]) -> None:
         self._game_information = value
         item = UIItem.from_record(value)
-        rows = ["System: " + (item.system_label or item.system_id or "Unavailable"),
-                "Emulator: " + (item.selected_emulator or "Current system emulator"),
-                "Preset: " + (item.selected_preset or "Current system setting"),
-                "Availability: " + item.availability.replace("_", " ")]
-        if value.get("preset_repair_required") is True:
-            rows.append("The saved emulator choice is unavailable. Review existing Game options before launching.")
+        disc_set = value.get("disc_set", {})
+        disc_set = disc_set if isinstance(disc_set, Mapping) else {}
+        raw_warnings = value.get("warnings", [])
+        disc_warnings = disc_set.get("warnings", [])
+        codes = list(dict.fromkeys(code for code in (raw_warnings[:64] if isinstance(raw_warnings, list) else []) +
+                    (disc_warnings[:64] if isinstance(disc_warnings, list) else []) if isinstance(code, str)))
+        warnings = [_warning_message(code) for code in codes]
+        if value.get("preset_repair_required") is True and "SAVED_PRESET_UNAVAILABLE" not in codes:
+            warnings.insert(0, _warning_message("SAVED_PRESET_UNAVAILABLE"))
+        # Warnings precede optional metadata and full disc names. Every bounded
+        # detail page stays below the renderer's text limit.
+        rows = ["Warning: " + warning for warning in warnings[:4]]
+        if len(warnings) > 4:
+            rows.append(f"{len(warnings) - 4} further warnings are listed in Details.")
+        rows.extend(("System: " + (item.system_label or item.system_id or "Unavailable"),
+                     "Emulator: " + (item.selected_emulator[:160] or "Current system emulator"),
+                     "Preset: " + (item.selected_preset[:160] or "Current system setting"),
+                     "Availability: " + item.availability.replace("_", " ")))
         if item.resume_available and not self.demo:
             rows.append("Resume available for this boot.")
             recorded = _checkpoint_utc(item.state_recorded_at)
@@ -812,39 +1196,40 @@ class NavigationModel:
                 rows.append("Checkpoint verified " + recorded)
         else:
             rows.append("Sample Resume card" if self.demo and item.resume_available else "Recently played · Resume unavailable" if self.category == 1 else "Resume unavailable")
-            rows.append(item.reason or "No authenticated compatible checkpoint is available. Start normally to use in-game saves.")
-        disc_set = value.get("disc_set", {})
-        if isinstance(disc_set, Mapping) and disc_set.get("kind") not in (None, "none"):
+            rows.append(item.reason[:256] or "No authenticated compatible checkpoint is available. Start normally to use in-game saves.")
+        details = list(self._detail_pages("Warnings", warnings))
+        discs = disc_set.get("discs", [])
+        disc_rows = []
+        if disc_set.get("kind") not in (None, "none"):
             count = disc_set.get("disc_count")
             if type(count) is int:
                 rows.append(f"Disc set: {count} disc(s)")
-            discs = disc_set.get("discs", [])
             if isinstance(discs, list):
-                for number, disc in enumerate(discs[:20], 1):
+                for number, disc in enumerate(discs[:256], 1):
                     if isinstance(disc, Mapping):
-                        rows.append(f"Disc {number}: " + _text(disc.get("label", disc.get("relative_path", "")), 256) +
-                                    (" · available" if disc.get("available") is True else " · missing"))
-                if len(discs) > 20:
-                    rows.append(f"{len(discs) - 20} further disc entries; inspect the existing playlist for the complete set.")
-            warnings = disc_set.get("warnings", [])
-            if isinstance(warnings, list):
-                rows.extend("Disc warning: " + _warning_message(warning) for warning in warnings[:12] if isinstance(warning, str))
+                        disc_rows.append(f"Disc {number}: " + _text(disc.get("label", disc.get("relative_path", "")), 256) +
+                                         (" · available" if disc.get("available") is True else " · missing"))
+                if len(discs) > 256:
+                    disc_rows.append("Further discs exceed this view's limit; inspect the existing playlist.")
+            if len("\n".join(rows + disc_rows)) < 1350:
+                rows.extend(disc_rows)
+            elif disc_rows:
+                rows.append("Full disc names and availability are listed in Details.")
+            details.extend(self._detail_pages("Disc details", disc_rows))
             management = value.get("disc_management", {})
-            if isinstance(management, Mapping):
-                rows.append(_text(management.get("description"), 1024) or "Change discs in the selected emulator's existing in-game menu.")
-        warnings = value.get("warnings", [])
-        disc_warnings = disc_set.get("warnings", []) if isinstance(disc_set, Mapping) else []
-        if isinstance(warnings, list):
-            rows.extend("Warning: " + _warning_message(warning) for warning in warnings[:8]
-                        if isinstance(warning, str) and warning not in disc_warnings)
+            management = management if isinstance(management, Mapping) else {}
+            rows.append(_text(management.get("description"), 240) or "Change discs in the selected emulator's existing in-game menu.")
+        self._details = tuple(details)
         choices = []
         if item.available and not value.get("preset_repair_required"):
             if item.resume_available:
                 choices.append(DialogChoice("Resume", "demo_launch" if self.demo else "request", "game.launch",
                     {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
-            choices.append(DialogChoice("Fresh start" if item.resume_available or self.category == 1 else "Start game",
+            choices.append(DialogChoice("Start normally" if self.category == 1 and not item.resume_available else "Fresh start" if item.resume_available else "Start game",
                 "demo_launch" if self.demo else "request", "game.launch",
                 {"game_id": item.id, "preset_id": "", "mode": "fresh" if item.resume_available or self.category == 1 else "normal"}, "launch"))
+        if self._details:
+            choices.append(DialogChoice("Details", "info_detail", params={"index": 0}))
         if item.system_id.casefold() == "psp":
             choices.append(DialogChoice("Performance options", "request", "performance.status", {"game_id": item.id}, "performance_status"))
         if self._capabilities.get("game_options") is True:
@@ -853,6 +1238,35 @@ class NavigationModel:
         choices.append(DialogChoice("Back"))
         self._dialog = Dialog(item.title, "\n".join(row for row in rows if row), tuple(choices),
                               artwork=item.artwork, system_id=item.system_id)
+        self._details_return = self._dialog
+
+    def _manage_collections(self) -> list[UICommand]:
+        available = self._capabilities.get("collections_manage") is True or any(
+            item.id == "route:collections" and item.available for item in self._pages[2].items)
+        if available:
+            self._dialog = Dialog("Manage collections", "Create and organize collections in the existing spruce screen. Your collection list refreshes when you return.",
+                (DialogChoice("Open spruce collections", "request", "tool.launch", {"tool_id": "route:collections"}, "hardware_route"), DialogChoice("Cancel")), selected=1)
+        else:
+            self._dialog = Dialog("Collections in this preview", "You can browse collection metadata here. Create collections or add and remove games through Collections and Game options in your installed spruce interface.")
+        return []
+
+    def _help_dialog(self) -> None:
+        confirm = "South" if self.preferences.confirm == "south" else "East"
+        back = "East" if self.preferences.confirm == "south" else "South"
+        mode = ("This sample preview cannot launch games. Sample artwork and checkpoints are demonstrations." if self.demo else
+                "Mounted-card inspection is read-only. Your original games and saves stay with spruce." if not self._capabilities.get("game_launch") else
+                "Games and advanced screens use the existing spruce and emulator controls.")
+        self._dialog = Dialog("Controls & help", f"{confirm}: choose · {back}: back\nLeft/right: categories · Up/down: games\n"
+            "West: search this view · North: toggle Favorite\nStart: Library tools (desktop Tab)\n"
+            "Desktop Enter: choose · Escape: back · X: search · Y: Favorite\n"
+            "Use Library tools to filter, sort, change pages or choose a random game.\n"
+            "Start normally uses in-game saves. Resume appears only after a compatible checkpoint is freshly verified.\n" + mode,
+            (DialogChoice("Text size", "text_size"), DialogChoice("Done")), selected=1)
+
+    def _empty_dialog(self) -> None:
+        self._dialog = Dialog("No matching games", "Try another search, clear filters, or refresh after changing your library.",
+            (DialogChoice("Search this view", "search_view"), DialogChoice("Clear filters", "clear_filters"),
+             DialogChoice("Refresh library", "refresh"), DialogChoice("Controls & help", "help"), DialogChoice("Back")))
 
     def _performance_dialog(self, value: Mapping[str, Any]) -> None:
         self._performance_status = value
@@ -926,6 +1340,8 @@ class NavigationModel:
         rows.append(_text(value.get("reason"), 2048))
         rows.append("Backup byte verification does not establish independent-media retention or physical restoration.")
         choices = []
+        if value.get("history_available") is True:
+            choices.append(DialogChoice("Named backup history", "request", "backup.history", context="backup_history"))
         for action in value.get("supported_actions", [])[:8]:
             if isinstance(action, Mapping) and action.get("available") is True:
                 identifier = action.get("id", action.get("action_id"))
@@ -934,6 +1350,90 @@ class NavigationModel:
                                                 {"action_id": identifier}, "backup_action"))
         choices.append(DialogChoice("Back"))
         self._dialog = Dialog("Backups & recovery", "\n".join(row for row in rows if row), tuple(choices))
+
+    def _backup_history_dialog(self, value: Mapping[str, Any]) -> None:
+        generation = value.get("generation", 0)
+        self._backup_generation = generation if type(generation) is int and generation >= 0 else 0
+        entries = value.get("entries", [])
+        self._backup_entries = tuple(entry for entry in entries[:1000] if isinstance(entry, Mapping)) if isinstance(entries, list) else ()
+        self._backup_history_reason = _text(value.get("reason"), 512)
+        selected = next((index for index, entry in enumerate(self._backup_entries)
+                         if entry.get("entry_id") == self._backup_entry_id), None)
+        offset = selected // 20 * 20 if selected is not None else self._backup_history_offset
+        self._show_backup_history_page(offset)
+
+    def _show_backup_history_page(self, offset: int) -> None:
+        total = len(self._backup_entries)
+        offset = max(0, min(offset, max(0, (total - 1) // 20 * 20)))
+        self._backup_history_offset = offset
+        choices = [DialogChoice(_text(entry.get("label", "Unnamed backup"), 64), "request", "backup.detail",
+                   {"entry_id": _text(entry.get("entry_id"), 128)}, "backup_detail") for entry in self._backup_entries[offset:offset + 20]]
+        if offset:
+            choices.append(DialogChoice("Previous backups", "backup_history_page", params={"offset": offset - 20}))
+        if offset + 20 < total:
+            choices.append(DialogChoice("Next backups", "backup_history_page", params={"offset": offset + 20}))
+        choices.append(DialogChoice("Back"))
+        selected = next((index for index, choice in enumerate(choices)
+                         if choice.params.get("entry_id") == self._backup_entry_id), 0)
+        self._dialog = Dialog("Named backup history", (f"Backups {offset + 1}–{min(offset + 20, total)} of {total}.\nChoose a backup to inspect its scope or check its bytes again. A previous successful check is historical evidence." if self._backup_entries else
+            self._backup_history_reason or "No verified backup manifests have been registered. Use the existing offline backup tools, then register a manifest; this screen never creates a save state."), tuple(choices), selected=selected)
+
+    def _backup_detail_dialog(self, value: Mapping[str, Any]) -> None:
+        self._backup_detail = value
+        self._backup_entry_id = _text(value.get("entry_id"), 128)
+        generation = value.get("generation", self._backup_generation)
+        if type(generation) is int and generation >= 0:
+            self._backup_generation = generation
+        status = value.get("status", "unchecked")
+        rows = [{"previously_verified": "Previously checked backup · recheck for current byte verification",
+                 "unavailable": "Backup unavailable at its registered location", "unchecked": "Backup has not been checked"}.get(status, "Backup verification is unavailable")]
+        scope = value.get("scope", "")
+        if isinstance(scope, list):
+            scope = ", ".join(_text(part, 64) for part in scope)
+        rows.append("Scope: " + _text(scope, 256))
+        if type(value.get("bytes")) is int:
+            rows.append(f"Registered size: {max(0, value['bytes']):,} bytes")
+        for key, label in (("captured_at_utc", "Backup captured"), ("registered_at_utc", "Registered"), ("last_verified_at_utc", "Last successful check")):
+            stamp = _checkpoint_utc(value.get(key, ""))
+            if stamp:
+                rows.append(label + " " + stamp)
+        last = value.get("last_check", {})
+        if isinstance(last, Mapping):
+            stamp = _checkpoint_utc(last.get("checked_at_utc", ""))
+            if stamp:
+                rows.append("Last check " + stamp + " · " + {"verified": "bytes verified then", "unavailable": "unavailable"}.get(last.get("status"), "incomplete"))
+        if isinstance(last, Mapping) and last.get("reason"):
+            rows.append(_text(last["reason"], 256))
+        if value.get("note"):
+            rows.append("Note: " + _text(value["note"], 512))
+        rows.append("Byte verification does not prove independent-media retention or physical restoration. This history never renames or deletes the backup files.")
+        self._dialog = Dialog(_text(value.get("label", "Backup"), 64), "\n".join(rows), (
+            DialogChoice("Check backup bytes", "request", "backup.verify", {"entry_id": self._backup_entry_id, "expected_generation": self._backup_generation}, "backup_verify"),
+            DialogChoice("Rename label", "backup_rename_label"),
+            DialogChoice("Remove from history", "backup_remove_review"),
+            DialogChoice("Recovery instructions", "request", "backup.action", {"action_id": "recovery_guide"}, "backup_action"),
+            DialogChoice("Back to history", "request", "backup.history", context="backup_history")))
+
+    def _backup_job_dialog(self) -> None:
+        job = self._backup_job
+        files, byte_count = job.get("files_checked", 0), job.get("bytes_checked", 0)
+        files = files if type(files) is int and files >= 0 else 0
+        byte_count = byte_count if type(byte_count) is int and byte_count >= 0 else 0
+        cancellable = job.get("cancellable", True) is not False
+        self._dialog = Dialog("Checking backup bytes", _text(job.get("phase", "Verifying"), 128) +
+            f"\n{files:,} files · {byte_count:,} bytes checked\n" +
+            ("You can cancel. Backup files stay unchanged." if cancellable else "Finishing the verification record. Backup files stay unchanged."),
+            (DialogChoice("Cancel verification", "request", "backup.cancel", {"job_id": job.get("job_id", "")}, "backup_cancel")
+             if cancellable else DialogChoice("Back", "backup_detach"),))
+
+    def poll_commands(self, now: float) -> list[UICommand]:
+        if self._backup_job.get("state") != "running" or self._backup_poll_pending or now < self._backup_poll_due:
+            return []
+        self._backup_poll_due = now + .25
+        self._backup_poll_pending = True
+        command = self._request("backup.job", {"job_id": self._backup_job["job_id"]}, "backup_job")
+        self._backup_poll_serial = command.serial
+        return [command]
 
     def _launch_dialog(self, item: UIItem) -> None:
         if not item.available:
@@ -960,7 +1460,7 @@ class NavigationModel:
         elif self.category == 1:
             message += "\nRecently played · Resume unavailable.\n" + (item.reason or "No verified resume state is available. Start normally to use your in-game saves.")
         fresh = self.category == 1 or item.resume_available
-        choices.append(DialogChoice("Fresh start" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
+        choices.append(DialogChoice("Fresh start" if item.resume_available else "Start normally" if fresh else "Start game", "demo_launch" if self.demo else "request", "game.launch",
                                      {"game_id": item.id, "preset_id": "", "mode": "fresh" if fresh else "normal"}, "launch"))
         if self._capabilities.get("game_options") is True:
             choices.append(DialogChoice("Game options", "demo_launch" if self.demo else "request", "game.options",
@@ -974,10 +1474,19 @@ class NavigationModel:
         if self.category == 3 and self._settings_view == "root":
             self._settings_parent_focus = item.id
         if item.kind == "game":
+            if item.state_verification_required and self._capabilities.get("game_information") is True:
+                return [self._request("game.info", {"game_id": item.id}, "game_info")]
             self._launch_dialog(item)
         elif item.kind == "system":
             self._games_view = "system"
             self._system_id, self._system_label = item.system_id, item.title
+            self._search = ""
+            self._pages[0] = _Page()
+            return [self._query()]
+        elif item.kind == "collection":
+            self._games_view = "collection"
+            self._collection_id, self._collection_label = item.id, item.title
+            self._system_id, self._system_label, self._search = "", "", ""
             self._pages[0] = _Page()
             return [self._query()]
         elif item.kind == "tool":
@@ -1041,7 +1550,13 @@ class NavigationModel:
             elif item.id == "confirm":
                 value = "east" if value == "south" else "south"
             elif item.id == "text_scale":
-                value = 1.15 if value < 1.1 else 1.3 if value < 1.25 else 1.5 if value < 1.45 else 1.0
+                choices = tuple(DialogChoice(f"{round(scale * 100)}%", "request", "settings.preview",
+                    {"changes": {"text_scale": scale}, "expected_generation": self.generation}, "preview")
+                    for scale in (.75, 1.0, 1.15, 1.3, 1.5, 1.75))
+                selected = min(range(6), key=lambda index: abs((.75, 1, 1.15, 1.3, 1.5, 1.75)[index] - value))
+                self._dialog = Dialog("Text size", "Choose a readable size. Review before applying; Undo remains available.",
+                                      choices + (DialogChoice("Cancel"),), selected=selected)
+                return []
             return [self._request("settings.preview", {"changes": {item.id: value}, "expected_generation": self.generation}, "preview")]
         elif item.id == "all":
             self._system_id, self._system_label, self._search = "", "", ""
@@ -1053,9 +1568,16 @@ class NavigationModel:
             self._pages[0] = _Page()
             return [self._history_query("favorites")]
         elif item.id == "search":
-            self._keyboard = Keyboard(self._search, 0)
+            self._open_search(global_search=True)
         elif item.id == "random":
+            self._random_scope = BrowseScope()
+            self._random_game_id = ""
             return [self._request("library.random", context="random")]
+        elif item.id == "collections":
+            self._games_view = "collections"
+            return [self._request("library.collections", context="collections")]
+        elif item.id == "manage_collections":
+            return self._manage_collections()
         elif item.id == "library_filters":
             self._filter_dialog()
         elif item.id == "backup":
@@ -1106,6 +1628,10 @@ class NavigationModel:
                                   "PyUI — Copyright (c) 2025 Christopher Jacobs.\nUsed under its non-commercial license.\n"
                                   "Optional PPSSPP changes retain separate GPL notices.\n"
                                   "Original Smart Pro hardware qualification is pending.", (DialogChoice("Done"),))
+        elif item.id == "help":
+            self._help_dialog()
+        elif item.id == "recent_actions":
+            self._dialog = Dialog("Recent actions", "\n\n".join(self._mutation_messages) or "No earlier action needs attention.")
         elif item.id == "classic":
             self._dialog = Dialog("Return to spruce?", "Your existing games, saves and emulator settings stay in place.",
                                   (DialogChoice("Return to spruce", "classic"), DialogChoice("Stay here")), selected=1)
@@ -1113,6 +1639,79 @@ class NavigationModel:
 
     def _activate_choice(self, choice: DialogChoice) -> list[UICommand]:
         self._dialog = None
+        if choice.action == "info_detail":
+            self._show_detail(choice.params.get("index", 0))
+            return []
+        if choice.action == "info_return":
+            self._dialog = self._details_return
+            return []
+        if choice.action == "backup_rename_label":
+            self._keyboard_purpose = "backup_label"
+            self._keyboard = Keyboard(_text(self._backup_detail.get("label", ""), 64), 0,
+                                      title="Rename backup label", submit_label="Save label")
+            return []
+        if choice.action == "backup_remove_review":
+            self._dialog = Dialog("Remove from history?", "Only this history entry is removed. The backup files and your game saves are kept.",
+                (DialogChoice("Remove history entry", "request", "backup.remove", {"entry_id": self._backup_entry_id,
+                    "expected_generation": self._backup_generation}, "backup_remove"), DialogChoice("Cancel")), selected=1)
+            return []
+        if choice.action == "backup_detach":
+            self._backup_job = {}
+            return []
+        if choice.action == "backup_history_page":
+            self._show_backup_history_page(choice.params.get("offset", 0))
+            return []
+        if choice.action == "system_filter":
+            self._system_filter_dialog()
+            return []
+        if choice.action == "search_view":
+            self._open_search(global_search=self.category not in (0, 1) or self._games_view == "systems" and self.category == 0)
+            return []
+        if choice.action == "clear_filters":
+            source = self._scope().source
+            if source in self._history_filters:
+                self._history_filters[source] = self._history_search[source] = ""
+            else:
+                self._system_id = self._system_label = self._search = ""
+            return self._reload_scope()
+        if choice.action == "sort_menu":
+            self._dialog = Dialog("Sort games", "Recent and favorite lists keep their original order unless you choose another sort.",
+                tuple(DialogChoice(label, "set_sort", params={"sort": value}) for value, label in (
+                    ("native", "Original order"), ("title_asc", "Title A–Z"), ("title_desc", "Title Z–A"), ("system", "System, then title"))) + (DialogChoice("Cancel"),))
+            return []
+        if choice.action == "set_sort":
+            self._sorts[self._scope().source] = choice.params["sort"]
+            return self._reload_scope()
+        if choice.action == "page":
+            return self._page_commands(choice.params["delta"])
+        if choice.action in ("random_view", "pick_another"):
+            return self._random_commands(another=choice.action == "pick_another")
+        if choice.action == "jump_menu":
+            self._dialog = Dialog("Jump to letter", "Jump uses Title A–Z order. Choose the start of a title.",
+                tuple(DialogChoice(letter, "jump", params={"letter": letter}) for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ") + (DialogChoice("Cancel"),))
+            return []
+        if choice.action == "jump":
+            source, letter = self._scope().source, choice.params["letter"]
+            self._sorts[source] = "title_asc"
+            if source in self._history_filters:
+                items = tuple(sorted(self._history_records.get(source, ()), key=lambda item: (item.title.casefold(), item.id)))
+                self._history_records[source] = items
+                index = next((i for i, item in enumerate(items) if item.title.casefold() >= letter.casefold()), max(0, len(items) - 1))
+                self._show_history_page(source, index // self.PAGE_SIZE * self.PAGE_SIZE, keep_focus=False)
+                if items:
+                    self._page().selected = index % self.PAGE_SIZE
+                return []
+            self._pending_jump = letter
+            return self._reload_scope()
+        if choice.action == "manage_collections":
+            return self._manage_collections()
+        if choice.action == "help":
+            self._help_dialog()
+            return []
+        if choice.action == "text_size":
+            return self._activate(UIItem("text_scale", "Text size", kind="setting"))
+        if choice.action == "refresh":
+            return self.refresh_commands()
         if choice.action == "set_filter":
             target = choice.params.get("target", "games")
             system = _text(choice.params.get("system_id"), 128)
@@ -1122,7 +1721,8 @@ class NavigationModel:
                 return [self._history_query(target)]
             self._system_id = system
             self._system_label = _text(choice.params.get("label")) if system else ""
-            self._games_view = "search" if self._search else "system" if system else "all"
+            if self._games_view != "collection":
+                self._games_view = "search" if self._search else "system" if system else "all"
             self._pages[0] = _Page()
             return [self._query()]
         if choice.action == "performance_option":
@@ -1141,12 +1741,29 @@ class NavigationModel:
         return []
 
     def _submit_search(self) -> list[UICommand]:
-        self._search = self._keyboard.text if self._keyboard else self._search
+        text = self._keyboard.text if self._keyboard else ""
         self._keyboard = None
+        if self._keyboard_purpose == "backup_label":
+            return [self._request("backup.rename", {"entry_id": self._backup_entry_id, "label": text,
+                "expected_generation": self._backup_generation}, "backup_rename")]
+        source = self._keyboard_scope
+        if source in self._history_filters:
+            self._history_search[source] = text
+            return self._reload_scope()
+        self._search = text
+        if source == "global":
+            self._system_id = self._system_label = ""
         self.category = 0
-        self._games_view = "search"
+        if source != "collection":
+            self._games_view = "search"
         self._pages[0] = _Page()
         return [self._query()]
+
+    def _cancel_keyboard(self) -> None:
+        self._keyboard = None
+        if self._keyboard_purpose == "backup_label":
+            self._backup_detail_dialog(self._backup_detail)
+        self._keyboard_purpose = "search"
 
     def handle(self, action: str, text: str = "") -> list[UICommand]:
         self._status = ""
@@ -1155,16 +1772,23 @@ class NavigationModel:
         if action == "quit":
             self.exit_request = "quit"
             return []
+        if (action in ("back", "submit_text") or
+                action == "confirm" and self._keyboard is None or
+                action in ("search", "menu") and self._dialog is None and self._keyboard is None or
+                action in ("left", "right", "up", "down") and self._dialog is None and self._keyboard is None):
+            self._leave_view()
         if self._keyboard:
             keyboard = self._keyboard
             if action == "back":
-                self._keyboard = None
+                self._cancel_keyboard()
             elif action in ("left", "right", "up", "down"):
                 selected, column = move_keyboard_focus(keyboard.selected, action,
                                                        keyboard.preferred_column, keyboard.keys)
                 self._keyboard = replace(keyboard, selected=selected, preferred_column=column)
             elif action in ("text", "delete_text"):
                 value = keyboard.text[:-1] if action == "delete_text" else keyboard.text + keyboard_text(text)
+                if self._keyboard_purpose == "backup_label":
+                    value = value[:64]
                 self._keyboard = replace(keyboard, text=keyboard_text(value))
             elif action == "submit_text":
                 return self._submit_search()
@@ -1173,15 +1797,21 @@ class NavigationModel:
                 if key == "Find":
                     return self._submit_search()
                 if key == "Cancel":
-                    self._keyboard = None
+                    self._cancel_keyboard()
                 elif key == "Delete":
                     self._keyboard = replace(keyboard, text=keyboard.text[:-1])
                 else:
-                    self._keyboard = replace(keyboard, text=keyboard_text(keyboard.text + (" " if key == "Space" else key)))
+                    value = keyboard_text(keyboard.text + (" " if key == "Space" else key))
+                    self._keyboard = replace(keyboard, text=value[:64] if self._keyboard_purpose == "backup_label" else value)
             return []
         if self._dialog:
             dialog = self._dialog
             if action == "back":
+                if self._backup_job.get("state") == "running":
+                    job_id = self._backup_job.get("job_id")
+                    self._backup_job = {}
+                    self._dialog = None
+                    return [self._request("backup.cancel", {"job_id": job_id}, "backup_cancel")]
                 self._dialog = None
             elif action in ("up", "left", "down", "right"):
                 delta = -1 if action in ("up", "left") else 1
@@ -1196,13 +1826,15 @@ class NavigationModel:
             return []
         if action in ("left", "right"):
             self.category = (self.category + (-1 if action == "left" else 1)) % 4
+            if self.category == 3 and self._settings_view == "root":
+                self._rebuild_settings()
             return []
         if action == "search":
-            self._keyboard = Keyboard(self._search, 0)
+            self._open_search(global_search=self.category not in (0, 1) or self.category == 0 and self._games_view in ("systems", "collections"))
             return []
         if action == "back":
             if self.category == 0 and self._games_view != "systems":
-                self._games_view = "systems"
+                self._games_view = "collections" if self._games_view == "collection" else "systems"
             elif self.category == 3 and self._settings_view != "root":
                 self._settings_view = "root"
                 self._rebuild_settings()
@@ -1229,13 +1861,17 @@ class NavigationModel:
                 return [self._query(page.offset + len(page.items))]
         elif action == "confirm" and page.items:
             return self._activate(page.items[page.selected])
+        elif action == "confirm" and not page.items and self.category in (0, 1):
+            self._empty_dialog()
         elif action == "favorite" and page.items:
             item = page.items[page.selected]
             if item.kind == "game":
-                return [self._request("library.favorite.set", {"game_id": item.id, "enabled": item.id not in self._favorites}, "favorite_set")]
+                favorite = self._favorite_overrides.get(item.id, item.id in self._favorites if self._favorites_loaded else item.favorite or item.id in self._favorites)
+                return [self._request("library.favorite.set", {"game_id": item.id, "enabled": not favorite}, "favorite_set")]
         elif action == "refresh":
-            self._artwork_generation += 1
-            return self.initial_commands(preserve_focus=True)
+            return self.refresh_commands()
+        elif action in ("page_previous", "page_next") and self.category in (0, 1):
+            return self._page_commands(-1 if action == "page_previous" else 1)
         return []
 
     def snapshot(self, now: float = 0.0, *, display_clock: str = "") -> UISnapshot:
@@ -1246,6 +1882,8 @@ class NavigationModel:
             title, breadcrumb = "Pick up where you left off", "Continue Playing"
             if self._history_filters["recent"]:
                 breadcrumb += "  /  " + ("PS1" if self._history_filters["recent"] == "PS" else self._history_filters["recent"])
+            if self._history_search["recent"]:
+                breadcrumb += "  /  " + self._history_search["recent"]
             empty = "Your recently played games will appear here. A compatible state is required for Resume."
         elif self.category == 2:
             title, breadcrumb = "Your tools, together", "Tools"
@@ -1259,23 +1897,29 @@ class NavigationModel:
                 title, breadcrumb = label, "Settings  /  " + label
             empty = "No emulator menu profile is qualified." if self._settings_view == "controls" else "Settings are unavailable. Return to the classic interface to check your configuration."
         else:
-            title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results"}.get(self._games_view, self._system_label)
+            title = {"systems": "Your games", "all": "All games", "favorites": "Favorites", "search": "Search results",
+                     "collections": "Collections", "collection": self._collection_label or "Collection"}.get(self._games_view, self._system_label)
             breadcrumb = "Games  /  " + ("Collection" if self._games_view == "systems" else title)
             if self._games_view == "favorites" and self._history_filters["favorites"]:
                 breadcrumb += "  /  " + ("PS1" if self._history_filters["favorites"] == "PS" else self._history_filters["favorites"])
-            elif self._games_view != "systems":
+            elif self._games_view not in ("systems", "collections", "favorites"):
                 if self._system_id and self._games_view != "system":
                     breadcrumb += "  /  " + (self._system_label or self._system_id)
                 if self._search:
                     breadcrumb += "  /  " + self._search
+            if self._games_view == "favorites" and self._history_search["favorites"]:
+                breadcrumb += "  /  " + self._history_search["favorites"]
             empty = {"favorites": "Save a game with Favorite to keep it here.", "search": "No games match this search. Try another title."}.get(self._games_view,
                      "No available games were found. Keep ROMs in their existing spruce folders and refresh the library.")
-        items = tuple(replace(item, favorite=item.id in self._favorites or item.favorite,
-                              subtitle=("Resume available" if item.resume_available and not self.demo else "Recently played")
+        items = tuple(replace(item, favorite=self._favorite_overrides.get(item.id,
+                              item.id in self._favorites if self._favorites_loaded else item.id in self._favorites or item.favorite),
+                              subtitle=("Checkpoint recorded · verify to Resume" if item.state_verification_required else
+                                        "Resume available" if item.resume_available and not self.demo else "Recently played")
                               if self.category == 1 and item.kind == "game" else item.subtitle)
                       for item in page.items)
+        loading = any(self._request_epochs.get(serial) == self._view_epoch for serial in self._pending)
         return UISnapshot(self.category, CATEGORIES, title, breadcrumb, items, page.selected,
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
-                          self._status, "Loading your collection…" if self._pending and not items else empty,
-                          bool(self._pending), self.demo, self.exit_request, _text(display_clock, 32),
+                          self._status, "Loading your collection…" if loading and not items else empty,
+                          loading, self.demo, self.exit_request, _text(display_clock, 32),
                           self._artwork_generation)

@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-26",
+  "kind": "independent-agent-review",
+  "baseline_commit": "9dfa857fec43c165b2b8836406012f1b38cfed87",
+  "baseline_tests": 1107,
+  "lanes": [
+    {
+      "owner": "reliability_saves",
+      "scope": "Undo/state capture/Resume boundaries",
+      "independent_reviewers": [
+        "delivery_audit",
+        "architecture_native"
+      ],
+      "focused_passed": 117
+    },
+    {
+      "owner": "backup_history",
+      "scope": "Catalog/journals/protected restore/cancellable verifier",
+      "independent_reviewers": [
+        "reliability_saves"
+      ],
+      "focused_passed": 91,
+      "review_corrections": [
+        "Restore rejects every registered payload tree",
+        "Unexpected/deep-JSON worker errors terminate truthfully",
+        "Timed-out paused worker can resume only after it finishes"
+      ]
+    },
+    {
+      "owner": "architecture_native",
+      "scope": "Scoped library/native collections/identity/Resume checks",
+      "independent_reviewers": [
+        "reliability_saves"
+      ],
+      "independent_passed": 69,
+      "review_corrections": [
+        "Retained-model hydration preserves collision checks",
+        "Required module inventory matches every shipped Python file"
+      ]
+    },
+    {
+      "owner": "delivery_audit",
+      "scope": "Captured-source packaging/build metadata",
+      "independent_reviewers": [
+        "root"
+      ],
+      "independent_passed": 41
+    },
+    {
+      "owner": "everyday_ux",
+      "scope": "Navigation/scope/actions/history/help",
+      "independent_reviewers": [
+        "visual_review",
+        "root"
+      ],
+      "review_corrections": [
+        "Dropped followup requests leave no pending contexts",
+        "Superseded verification start cancels its late job",
+        "All 1000 catalog entries reachable by paging",
+        "Failed check retains its distinct timestamp",
+        "Refresh remains final Games-root entry",
+        "Changing selected game invalidates a pending information card",
+        "Backup detail returns to the same entry, including later pages",
+        "Rename cancellation returns to unmodified backup details"
+      ]
+    },
+    {
+      "owner": "visual_review",
+      "scope": "Renderer/text/keyboard accessibility",
+      "independent_reviewers": [
+        "root"
+      ],
+      "review_corrections": [
+        "Button circle rounds center once to avoid alternating blank rows"
+      ],
+      "render_matrix": {
+        "scales": [
+          0.75,
+          1,
+          1.15,
+          1.3,
+          1.5,
+          1.75
+        ],
+        "confirm": [
+          "south",
+          "east"
+        ],
+        "contrast": [
+          false,
+          true
+        ],
+        "states": [
+          "library",
+          "dialog",
+          "empty",
+          "loading",
+          "error",
+          "keyboard"
+        ]
+      }
+    }
+  ],
+  "independent_integration_review": {
+    "receipt": "independent-integration-review.json",
+    "independent_assembler_reviewer": "architecture_native",
+    "focused_passed": 18,
+    "negative_per_tool_identity_probes": 8,
+    "blockers_remaining": false
+  },
+  "limits": [
+    "These are independent AI-agent review lanes, not human or hardware qualification.",
+    "Focused totals overlap; only final strict certification supplies the full unique test count.",
+    "No user game image was used.",
+    "Candidate rejection is retained separately; it is not a passing certification."
+  ],
+  "hardware_tested": false,
+  "device_gates_enabled": false
+}

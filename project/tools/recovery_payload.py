@@ -256,7 +256,7 @@ def copy_tree(source, destination, scope, expected, *, max_entries, max_bytes,
         raise ValueError("copied contents or scoped metadata failed readback")
 
 
-def check_supported_metadata(root, expected, *, expected_root_identity=None):
+def check_supported_metadata(root, expected, *, expected_root_identity=None, progress=None):
     """Recheck unsupported metadata that the content manifest cannot encode."""
     supported_tree(expected)
     root_fd = verifier.directory_fd(root)
@@ -266,6 +266,8 @@ def check_supported_metadata(root, expected, *, expected_root_identity=None):
             raise ValueError("metadata inspection root changed since capture")
         reject_xattrs(root_fd)
         for entry in expected["entries"]:
+            if progress is not None:
+                progress("metadata", 0, 0)
             relative = verifier.relative_name(entry["path"])
             parent_name, _, leaf = relative.rpartition("/")
             parent = open_directory(root_fd, parent_name)
@@ -422,12 +424,17 @@ def read_record(root_fd, name):
                 raise ValueError("duplicate payload record key")
             result[key] = value
         return result
-    value = json.loads(raw, object_pairs_hook=unique,
-                       parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite payload record")))
+    try:
+        value = json.loads(raw, object_pairs_hook=unique,
+                           parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite payload record")))
+    except (RecursionError, UnicodeError) as error:
+        raise ValueError("payload record exceeds JSON nesting or encoding limits") from error
     return value, hashlib.sha256(raw).hexdigest()
 
 
-def inspect_payload(payload):
+def inspect_payload(payload, *, progress=None):
+    if progress is not None:
+        progress("manifest", 0, 0)
     payload = verifier.clean_path(payload)
     root_fd = verifier.directory_fd(payload)
     try:
@@ -457,11 +464,11 @@ def inspect_payload(payload):
                 readback.get("manifest_sha256") != manifest_sha):
             raise ValueError("payload completion does not bind its manifest/readback")
         same_root(payload, root_fd)
-        check_supported_metadata(payload / "data", manifest["source_tree"])
-        fresh = verifier.verify(payload / "manifest.json", payload / "data")
+        check_supported_metadata(payload / "data", manifest["source_tree"], **({"progress": progress} if progress is not None else {}))
+        fresh = verifier.verify(payload / "manifest.json", payload / "data", **({"progress": progress} if progress is not None else {}))
         if not fresh["all_trees_match"]:
             raise ValueError("retained payload no longer matches its manifest")
-        check_supported_metadata(payload / "data", manifest["source_tree"])
+        check_supported_metadata(payload / "data", manifest["source_tree"], **({"progress": progress} if progress is not None else {}))
         same_root(payload, root_fd)
         return manifest, {"complete_sha256": complete_sha, "manifest_sha256": manifest_sha,
                           "readback_sha256": readback_sha}, fresh

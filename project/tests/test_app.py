@@ -7,7 +7,7 @@ import sys
 import tempfile
 import unittest
 
-from psp_shell.app import AppError, Dispatcher, guard_snapshot_outputs
+from psp_shell.app import AppError, Dispatcher, guard_snapshot_outputs, _restore_navigation
 from psp_shell.demo import DemoBackend
 from psp_shell.settings import SettingsStore
 
@@ -73,6 +73,58 @@ class ApplicationTests(unittest.TestCase):
         self.assertNotIn(game_id, {g["game_id"] for g in self.backend.favorites()})
         self.dispatcher.dispatch("library.favorite.set", {"game_id": game_id, "enabled": True})
         self.assertIn(game_id, {g["game_id"] for g in self.backend.favorites()})
+
+    def test_discovery_scope_is_forwarded_without_accepting_paths(self):
+        class Backend:
+            def games(inner, **params):
+                return params
+            def random(inner, **params):
+                return params
+            def collections(inner):
+                return [{"id": "collection:fixture", "label": "Play later"}]
+        dispatcher = Dispatcher(Backend(), self.store, self.root)
+        scope = {"source": "collection", "collection_id": "collection:fixture",
+                 "system_id": "GBA", "search": "island", "sort": "title_desc", "available_only": True}
+        result = dispatcher.dispatch("library.query", {**scope, "offset": 40, "limit": 40})
+        self.assertEqual(result, {**scope, "offset": 40, "limit": 40})
+        self.assertEqual(dispatcher.dispatch("library.random", {**scope, "exclude_game_id": "game:old"}),
+                         {**scope, "exclude_game_id": "game:old"})
+        self.assertEqual(dispatcher.dispatch("library.collections")[0]["label"], "Play later")
+        for invalid in ({"source": "shell"}, {"source": "collection"},
+                        {"source": "all", "collection_id": "stale"}, {"available_only": 1},
+                        {"sort": "playtime"}, {"offset": 100001}, {"path": "/tmp/collection"}):
+            with self.subTest(invalid=invalid), self.assertRaises(AppError):
+                dispatcher.dispatch("library.query", invalid)
+
+    def test_backup_job_routes_accept_only_catalog_ids_and_generation(self):
+        class History:
+            def verify(inner, **params):
+                return params
+            def rename(inner, **params):
+                return params
+            def cancel(inner, **params):
+                return params
+        dispatcher = Dispatcher(self.backend, self.store, self.root, backup_adapter=History())
+        identity = {"entry_id": "entry-opaque", "expected_generation": 2}
+        self.assertEqual(dispatcher.dispatch("backup.verify", identity), identity)
+        self.assertEqual(dispatcher.dispatch("backup.rename", {**identity, "label": "Before settings"})["label"],
+                         "Before settings")
+        self.assertEqual(dispatcher.dispatch("backup.cancel", {"job_id": "job-opaque"}), {"job_id": "job-opaque"})
+        for invalid in ({**identity, "payload": "/private/save"},
+                        {**identity, "expected_generation": True}, {"entry_id": "entry-opaque"}):
+            with self.subTest(invalid=invalid), self.assertRaises(AppError):
+                dispatcher.dispatch("backup.verify", invalid)
+        for method in ("backup.restore", "backup.delete_payload", "backup.register"):
+            with self.subTest(method=method), self.assertRaises(AppError):
+                dispatcher.dispatch(method, {"path": "/private/save"})
+
+    def test_navigation_reader_accepts_old_and_new_schemas_without_truthy_versions(self):
+        for schema in (1, 2):
+            (self.root / "navigation.json").write_text(json.dumps({"schema": schema}))
+            self.assertEqual(_restore_navigation(self.root), {"schema": schema})
+        for schema in (True, 3, "2"):
+            (self.root / "navigation.json").write_text(json.dumps({"schema": schema}))
+            self.assertIsNone(_restore_navigation(self.root))
 
     def test_support_report_collects_no_rom_names_or_paths(self):
         self.dispatcher.dispatch("library.query", {"search": "Skyline"})

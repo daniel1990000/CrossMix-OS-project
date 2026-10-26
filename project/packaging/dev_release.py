@@ -29,7 +29,7 @@ import overlay
 from build_payload import build_payload
 from fixture_card import create_fixture
 from release_descriptor import (resolve as resolve_descriptor, original_source_scope, original_source_file,
-                                SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS)
+                                source_inventory, SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS)
 
 
 def put_json(path, value):
@@ -68,6 +68,25 @@ def original_source_entries(project):
     return entries
 
 
+def materialize_source(entries, output):
+    """Build only from the bytes already inventoried, never from the live tree."""
+    output.mkdir(mode=0o700)
+    seen = set()
+    for name, data in entries:
+        prefix = "smartpro-original-source/"
+        overlay.require(name.startswith(prefix), "captured source path has no archive root")
+        relative = name[len(prefix):]
+        overlay.relative_path(relative)
+        overlay.require(relative not in seen, "duplicate captured source path")
+        overlay.require(original_source_file(relative) or relative == "metadata/spruce-source-lock.json",
+                        "captured source path is outside the original allowlist")
+        seen.add(relative)
+        path = output / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+    return {item["path"]: item["sha256"] for item in source_inventory(entries)}
+
+
 def host_smoke(python, release, scratch):
     environment = dict(os.environ)
     environment.update(PYTHONDONTWRITEBYTECODE="1", PYTHONPATH=str(release / "app"),
@@ -84,43 +103,134 @@ def host_smoke(python, release, scratch):
                     observed.get("real_game_launches") == 0, "preview did not report host-only rendering")
     overlay.require(screenshot.is_file() and screenshot.stat().st_size > 1000, "preview screenshot missing")
     # Exercise existing original dispatch contracts from the *installed* payload.
-    probe = (
-        "import json,tempfile; from pathlib import Path; "
-        "from psp_shell.demo import DemoBackend; from psp_shell.settings import SettingsStore; "
-        "from psp_shell.app import Dispatcher; "
-        "from psp_shell.recovery import BackupStatusAdapter; "
-        "from tools.recovery_payload import backup; "
-        "root=Path(tempfile.mkdtemp()); d=Dispatcher(DemoBackend(),SettingsStore(str(root/'preferences')),root/'reports'); "
-        "assert d.dispatch('settings.get')['generation']>=0; "
-        "g=d.dispatch('library.query',{'system_id':'PSP','search':'Skyline'})['items'][0]; "
-        "assert d.dispatch('game.info',{'game_id':g['game_id']})['game_id']==g['game_id']; "
-        "assert all(x['system_id']=='PSP' for x in d.dispatch('library.recent',{'system_id':'PSP'})); "
-        "assert d.dispatch('backup.status')['status']=='unavailable'; "
-        "src=root/'stopped-saves'; src.mkdir(mode=0o700); (src/'fixture.sav').write_bytes(b'original'); "
-        "backup(src,root/'backup','saves'); d.backup_adapter=BackupStatusAdapter({'saves':root/'backup'}); "
-        "assert d.dispatch('backup.status')['status']=='verified'; "
-        "(root/'backup/data/fixture.sav').write_bytes(b'changed'); "
-        "assert d.dispatch('backup.status')['status']=='unavailable'; "
-        "r=d.dispatch('interface.switch',{'interface':'classic'}); "
-        "assert r['interface']=='classic' and r['state']=='releasing_ui'; "
-        "print(json.dumps({'settings':True,'game_information':True,'combined_filters':True,'fresh_backup_readback':True,'classic_delegation_contract':True}))"
-    )
+    probe = """
+import json, subprocess, sys, tempfile, time
+from pathlib import Path
+from unittest.mock import patch
+from psp_shell import build_info
+from psp_shell.demo import DemoBackend
+from psp_shell.settings import SettingsStore
+from psp_shell.app import Dispatcher
+from psp_shell.adapters.spruce import SpruceBackend
+from psp_shell.recovery import BackupStatusAdapter, BackupHistoryAdapter
+from psp_shell.backup_catalog import BackupCatalog
+from tools.recovery_payload import backup
+from tools.backup_catalog import main as catalog_command
+
+expected = json.loads(Path('metadata/development-release.json').read_text())
+assert build_info()['release_id'] == expected['release_id']
+assert build_info()['source_kind'] == 'installed-package'
+with tempfile.TemporaryDirectory(prefix='installed-preview-contract-') as temporary:
+    root = Path(temporary)
+    d = Dispatcher(DemoBackend(), SettingsStore(root/'preferences'), root/'reports')
+    assert d.dispatch('settings.get')['generation'] >= 0
+    g = d.dispatch('library.query', {'system_id':'PSP', 'search':'Skyline'})['items'][0]
+    assert d.dispatch('game.info', {'game_id':g['game_id']})['game_id'] == g['game_id']
+    assert all(x['system_id'] == 'PSP' for x in d.dispatch('library.recent', {'system_id':'PSP'}))
+    card = root/'read-only-library'
+    (card/'Emu/GB').mkdir(parents=True)
+    (card/'Emu/GB/config.json').write_text(json.dumps({'label':'Game Boy', 'extlist':'gb',
+        'default_emulator':'gambatte', 'devices':['TRIMUI_A133P']}))
+    (card/'Roms/GB').mkdir(parents=True)
+    records = []
+    for index in range(75):
+        name = 'Fixture%03d.gb' % index
+        (card/'Roms/GB'/name).write_bytes(b'non-executable synthetic library fixture')
+        records.append({'game_system_name':'GB', 'rom_file_path':'/mnt/SDCARD/Roms/GB/' + name})
+    (card/'Collections').mkdir()
+    (card/'Collections/collections.json').write_text(json.dumps([
+        {'collection_name':'Installed collection', 'game_list':records}]))
+    library_before = {p.relative_to(card).as_posix():p.read_bytes() for p in card.rglob('*') if p.is_file()}
+    discovery = Dispatcher(SpruceBackend(card), SettingsStore(root/'library-preferences'), root/'library-reports')
+    collection = discovery.dispatch('library.collections')[0]
+    scope = {'source':'collection', 'collection_id':collection['id'], 'system_id':'GB',
+             'search':'Fixture', 'sort':'title_asc', 'available_only':True}
+    page = discovery.dispatch('library.query', {**scope, 'offset':0, 'limit':40})
+    assert page['total'] == 75 and len(page['items']) == 40
+    with patch('psp_shell.adapters.spruce.secrets.choice', side_effect=lambda rows:rows[-1]):
+        chosen = discovery.dispatch('library.random', scope)
+    assert chosen['label'] == 'Fixture074' and chosen['game_id'] not in {row['game_id'] for row in page['items']}
+    assert not discovery.backend._actions
+    assert library_before == {p.relative_to(card).as_posix():p.read_bytes() for p in card.rglob('*') if p.is_file()}
+    assert d.dispatch('backup.status')['status'] == 'unavailable'
+    src = root/'stopped-saves'
+    src.mkdir(mode=0o700)
+    (src/'fixture.sav').write_bytes(b'original')
+    backup(src, root/'backup', 'saves')
+    d.backup_adapter = BackupStatusAdapter({'saves':root/'backup'})
+    assert d.dispatch('backup.status')['status'] == 'verified'
+    (root/'backup/data/fixture.sav').write_bytes(b'changed')
+    assert d.dispatch('backup.status')['status'] == 'unavailable'
+    (root/'backup/data/fixture.sav').write_bytes(b'original')
+    catalog = root/'backups.json'
+    registered = BackupCatalog(catalog).register(root/'backup', 'Installed smoke backup')
+    adapter = BackupHistoryAdapter(catalog)
+    d.backup_adapter = adapter
+    try:
+        history = d.dispatch('backup.history')
+        assert history['entries'][0]['label'] == 'Installed smoke backup'
+        job = d.dispatch('backup.verify', {'entry_id':registered['entry_id'],
+                                          'expected_generation':history['generation']})
+        deadline = time.monotonic() + 10
+        while job['state'] == 'running' and time.monotonic() < deadline:
+            time.sleep(0.01)
+            job = d.dispatch('backup.job', {'job_id':job['job_id']})
+        assert job['state'] == 'verified'
+        history = d.dispatch('backup.history')
+        assert history['entries'][0]['status'] == 'previously_verified'
+        detail = d.dispatch('backup.detail', {'entry_id':registered['entry_id']})
+        assert detail['label'] == 'Installed smoke backup' and detail['physical_restore_tested'] is False
+        job = d.dispatch('backup.verify', {'entry_id':registered['entry_id'],
+                                          'expected_generation':history['generation']})
+        job = d.dispatch('backup.cancel', {'job_id':job['job_id']})
+        deadline = time.monotonic() + 10
+        while job['state'] == 'running' and time.monotonic() < deadline:
+            time.sleep(0.01)
+            job = d.dispatch('backup.job', {'job_id':job['job_id']})
+        assert job['state'] in {'verified', 'cancelled'}
+        assert catalog_command(['--catalog', str(catalog), 'list']) == 0
+        rendered = 0
+        for screen, arguments in [('help', ['--demo']),
+                                  ('backups', ['--demo', '--backup-catalog', str(catalog)]),
+                                  ('collections', ['--sd-root', str(card)])]:
+            screenshot, report = root/(screen + '.png'), root/(screen + '.json')
+            run = subprocess.run([sys.executable, '-m', 'psp_shell', *arguments, '--headless',
+                '--frames', '2', '--screen', screen, '--state-dir', str(root/('state-' + screen)),
+                '--screenshot', str(screenshot), '--report', str(report)], capture_output=True, text=True, timeout=20)
+            assert run.returncode == 0, run.stderr
+            observation = json.loads(report.read_text())
+            assert observation['real_game_launches'] == 0 and observation['device_performance_claim'] is False
+            assert observation['frames'] == 2 and screenshot.stat().st_size > 1000
+            rendered += observation['frames']
+        assert (root/'backup/data/fixture.sav').read_bytes() == b'original'
+        r = d.dispatch('interface.switch', {'interface':'classic'})
+        assert r['interface'] == 'classic' and r['state'] == 'releasing_ui'
+    finally:
+        adapter.close()
+print(json.dumps({'settings':True, 'game_information':True, 'combined_filters':True,
+                  'fresh_backup_readback':True, 'named_backup_history':True,
+                  'installed_build_identity':True, 'classic_delegation_contract':True,
+                  'discovery_scope':True, 'full_result_random':True, 'backup_cancel_dispatch':True,
+                  'help_backups_collections_rendered_frames':rendered}))
+"""
     contract = subprocess.run([str(python), "-c", probe], env=environment, cwd=release,
-                              capture_output=True, text=True, timeout=30)
+                              capture_output=True, text=True, timeout=90)
     overlay.require(contract.returncode == 0, "packaged settings/classic contract failed: " + contract.stderr[-2000:])
-    return {"rendered_frames": observed["frames"], "navigation_actions_exercised": True,
+    contracts = json.loads(contract.stdout.splitlines()[-1])
+    return {"rendered_frames": observed["frames"] + contracts["help_backups_collections_rendered_frames"],
+            "navigation_actions_exercised": True,
             "settings_dispatch": True, "classic_delegation_contract": True, "clean_process_exit": True,
             "game_information": True, "combined_filters": True, "fresh_backup_readback": True,
+            "named_backup_history": True, "installed_build_identity": True,
+            "discovery_scope": True, "full_result_random": True, "backup_cancel_dispatch": True,
+            "help_backups_collections_rendered": True,
             "physical_device_verified": False, "real_game_launches": 0}, screenshot
 
 
-def build(project, output, release, epoch, *, source_lock=None, include_source=False,
+def build(project, output, release=None, epoch=None, *, source_lock=None, include_source=False,
           smoke_python=None, private_key=None, public_key=None, release_descriptor=None):
     project = overlay.ensure_no_links(Path(project))
     output = overlay.ensure_no_links(Path(output))
-    overlay.identifier(release, "development release id")
-    overlay.require(type(epoch) is int and 315532800 <= epoch <= 4354819198,
-                    "ZIP/release timestamp must be UTC 1980 through 2107")
     overlay.require(output != project and project not in output.parents and output not in project.parents,
                     "artifact output must be outside project source")
     overlay.require(not output.exists(), "artifact output already exists")
@@ -132,8 +242,15 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
     selection = snapshot = None
     if release_descriptor is not None:
         selection, snapshot = resolve_descriptor(project, release_descriptor, source_entries, source_lock)
+        if release is None:
+            release = selection["descriptor"]["release_id"]
+        if epoch is None:
+            epoch = selection["descriptor"]["source_date_epoch"]
         overlay.require(release == selection["descriptor"]["release_id"],
                         "--release differs from the current release descriptor")
+    overlay.identifier(release, "development release id")
+    overlay.require(type(epoch) is int and 315532800 <= epoch <= 4354819198,
+                    "ZIP/release timestamp must be UTC 1980 through 2107")
     output.parent.mkdir(parents=True, exist_ok=True)
     temporary_output = Path(tempfile.mkdtemp(prefix=".development-release-", dir=output.parent))
     try:
@@ -143,8 +260,11 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
             create_fixture(card)
             profile = overlay.read_json(card / "fixture-profile.json")
             inventory = overlay.read_json(card / "fixture-inventory.json")
+            captured_project = scratch / "captured-source"
+            captured_inventory = materialize_source(source_entries, captured_project)
+            captured_lock = captured_project / "metadata/spruce-source-lock.json" if source_lock else None
             payload = scratch / "payload"
-            build_payload(project, payload, source_lock)
+            build_payload(captured_project, payload, captured_lock, source_inventory=captured_inventory)
             generated_key = private_key is None
             if generated_key:
                 key_dir = scratch / "keys"
@@ -228,6 +348,7 @@ def build(project, output, release, epoch, *, source_lock=None, include_source=F
                 "byte_identical_overlay_rebuild_with_same_key": True,
                 "byte_identical_unsigned_zip_rebuild": True,
                 "signature_hash_inventory_verified": True,
+                "payload_source_inventory_verified": True,
                 "fixture_stage_activate_rollback": True,
                 "smoke": smoke,
                 "device_activation_qualified": False,
@@ -282,11 +403,9 @@ def main(argv=None):
             args.source_lock = (embedded_lock if embedded_lock.is_file() else
                                 repository_lock if repository_lock.is_file() else None)
         descriptor_path = args.release_descriptor or args.project / "packaging/current-release.json"
-        descriptor = overlay.read_json(descriptor_path)
-        release = args.release or descriptor["release_id"]
         epoch = (args.source_date_epoch if args.source_date_epoch is not None else
-                 int(os.environ.get("SOURCE_DATE_EPOCH", descriptor["source_date_epoch"])))
-        print(json.dumps(build(args.project, args.output, release, epoch,
+                 int(os.environ["SOURCE_DATE_EPOCH"]) if "SOURCE_DATE_EPOCH" in os.environ else None)
+        print(json.dumps(build(args.project, args.output, args.release, epoch,
                                source_lock=args.source_lock, include_source=args.include_source,
                                smoke_python=args.smoke_python, private_key=args.private_key,
                                public_key=args.public_key, release_descriptor=descriptor_path), indent=2, sort_keys=True))

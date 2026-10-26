@@ -620,6 +620,8 @@ class InitializedSourceBindingTests(unittest.TestCase):
             initialize=lambda *_: self.fail("history reinitialized"))
         recents = SimpleNamespace(_init_event=ready, get_recents=lambda: [],
             initialize=lambda *_: self.fail("history reinitialized"))
+        collections = SimpleNamespace(_init_event=ready, get_collection_names=lambda: [], get_games_in_collection=lambda _: [],
+            initialize=lambda *_: self.fail("collections reinitialized"))
         builder = SimpleNamespace(rom_utils=SimpleNamespace(get_roms=lambda *_: ([], [])),
             resolve_display_name=lambda value: "fixture", get_image_path=lambda value: None)
         popup = lambda _: events.append("game-options")
@@ -632,6 +634,7 @@ class InitializedSourceBindingTests(unittest.TestCase):
             "display.display": SimpleNamespace(Display=display), "controller.controller": SimpleNamespace(Controller=controller),
             "menus.games.utils.favorites_manager": SimpleNamespace(FavoritesManager=favorites),
             "menus.games.utils.recents_manager": SimpleNamespace(RecentsManager=recents),
+            "menus.games.utils.collections_manager": SimpleNamespace(CollectionsManager=collections),
             "menus.games.utils.rom_info": SimpleNamespace(RomInfo=lambda system, path: SimpleNamespace(game_system=system, rom_file_path=path))})
         class Renderer:
             def __init__(self, *_, **kwargs):

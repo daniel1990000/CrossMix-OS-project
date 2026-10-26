@@ -95,6 +95,69 @@ class MigrationTest(unittest.TestCase):
         self.assertEqual(save.read_bytes(), b"new progress after migration")
         self.assertEqual(self.favorites.read_bytes(), current_favorites)
 
+    def test_save_recreated_after_undo_preflight_is_preserved(self):
+        self.preview()
+        result = migration.apply(self.plan, "late-save")
+        save = self.target / self.destination
+        favorites = self.favorites.read_bytes()
+        real_hash, calls = migration.maybe_hash, []
+        def recreate_after_preflight(path):
+            value = real_hash(path)
+            if path == save and not calls:
+                calls.append(path)
+                save.unlink()
+                save.write_bytes(b"newer external save progress")
+            return value
+        with mock.patch.object(migration, "maybe_hash", side_effect=recreate_after_preflight):
+            with self.assertRaisesRegex(overlay.OverlayError, "changed during undo"):
+                migration.undo(result["transaction"])
+        self.assertEqual(save.read_bytes(), b"newer external save progress")
+        self.assertEqual(self.favorites.read_bytes(), favorites)
+        journal = Path(result["transaction"]) / "journal.json"
+        self.assertEqual(overlay.read_record(journal)["status"], "committed")
+
+    def test_partial_undo_keeps_late_edit_and_retryable_journal(self):
+        save = self.put(self.target, self.destination, b"prior battery save")
+        self.selection["battery_saves"][0]["replace_existing"] = True
+        self.preview()
+        result = migration.apply(self.plan, "late-list")
+        applied_favorites = self.favorites.read_bytes()
+        real_write = migration.atomic_write
+        def edit_after_first_restore(path, data):
+            real_write(path, data)
+            if path == save:
+                self.favorites.write_bytes(b"newer external favorite list")
+        with mock.patch.object(migration, "atomic_write", side_effect=edit_after_first_restore):
+            with self.assertRaisesRegex(overlay.OverlayError, "changed during undo"):
+                migration.undo(result["transaction"])
+        self.assertEqual(save.read_bytes(), b"prior battery save")
+        self.assertEqual(self.favorites.read_bytes(), b"newer external favorite list")
+        transaction = Path(result["transaction"])
+        self.assertEqual(overlay.read_record(transaction / "journal.json")["status"], "committed")
+        self.assertEqual((transaction / "1.backup").read_bytes(), b"prior battery save")
+        self.favorites.write_bytes(applied_favorites)  # Explicit conflict resolution.
+        self.assertEqual(migration.undo(transaction)["restored"], 1)
+        self.assertEqual(save.read_bytes(), b"prior battery save")
+        self.assertEqual(self.favorites.read_bytes(), b"[]\n")
+        self.assertEqual(overlay.read_record(transaction / "journal.json")["status"], "undone")
+
+    def test_late_deleted_existing_save_is_not_recreated_by_undo(self):
+        save = self.put(self.target, self.destination, b"prior battery save")
+        self.selection["battery_saves"][0]["replace_existing"] = True
+        self.preview()
+        result = migration.apply(self.plan, "late-delete")
+        real_hash, removed = migration.maybe_hash, []
+        def delete_after_preflight(path):
+            value = real_hash(path)
+            if path == save and not removed:
+                removed.append(path)
+                save.unlink()
+            return value
+        with mock.patch.object(migration, "maybe_hash", side_effect=delete_after_preflight):
+            with self.assertRaisesRegex(overlay.OverlayError, "changed during undo"):
+                migration.undo(result["transaction"])
+        self.assertFalse(save.exists())
+
     def test_conflict_requires_explicit_replacement_then_backup_hash_undo(self):
         existing = self.put(self.target, self.destination, b"destination battery")
         report = self.preview()

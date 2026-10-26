@@ -175,3 +175,70 @@ class PortSaveTests(unittest.TestCase):
                 self.backup, preview, confirm_idle=True, confirm_overwrite=True))
         self.assertEqual(first.read_bytes(), b'live zero')
         self.assertEqual(second.read_bytes(), b'live one')
+
+    def test_undo_preserves_late_progress_and_can_retry_partial_restore(self):
+        from psp_shell import ports
+        first = self.write('Roms/ports/celeste/savedata/Saves/0.celeste', b'backup zero')
+        second = self.write('Roms/ports/celeste/savedata/Saves/1.celeste', b'backup one')
+        self.manager.snapshot_saves('celeste', self.backup, confirm_idle=True)
+        first.write_bytes(b'live zero')
+        second.write_bytes(b'live one')
+        transaction = self.manager.restore_saves(self.backup, self.manager.preview_save_restore(self.backup),
+                                                 confirm_idle=True, confirm_overwrite=True)
+        install = ports._install
+        def late_progress(source, target, digest):
+            install(source, target, digest)
+            if target == second:
+                first.write_bytes(b'newer external progress')
+        with mock.patch.object(ports, '_install', side_effect=late_progress):
+            self.assert_code('CONFLICT', lambda: self.manager.rollback_import(transaction, confirm_idle=True))
+        self.assertEqual(first.read_bytes(), b'newer external progress')
+        self.assertEqual(second.read_bytes(), b'live one')
+        self.assertEqual(json.loads((transaction / 'receipt.json').read_text())['phase'], 'applied')
+        self.assertTrue((transaction / 'backup/0').is_file())
+        # Explicitly resolving the conflict permits retry; the restored second
+        # file is skipped instead of being reapplied or losing its journal.
+        first.write_bytes(b'backup zero')
+        self.manager.rollback_import(transaction, confirm_idle=True)
+        self.assertEqual(first.read_bytes(), b'live zero')
+        self.assertEqual(second.read_bytes(), b'live one')
+        self.assertEqual(json.loads((transaction / 'receipt.json').read_text())['phase'], 'rolled-back')
+
+    def test_undo_refuses_to_delete_a_late_recreated_save(self):
+        from psp_shell import ports
+        first = self.write('Roms/ports/celeste/savedata/Saves/0.celeste', b'backup zero')
+        second = self.write('Roms/ports/celeste/savedata/Saves/1.celeste', b'backup one')
+        self.manager.snapshot_saves('celeste', self.backup, confirm_idle=True)
+        first.unlink()  # Restore will create this slot, so Undo normally deletes it.
+        second.write_bytes(b'live one')
+        transaction = self.manager.restore_saves(self.backup, self.manager.preview_save_restore(self.backup),
+                                                 confirm_idle=True, confirm_overwrite=True)
+        install = ports._install
+        def recreated(source, target, digest):
+            install(source, target, digest)
+            if target == second:
+                first.unlink()
+                first.write_bytes(b'new external slot')
+        with mock.patch.object(ports, '_install', side_effect=recreated):
+            self.assert_code('CONFLICT', lambda: self.manager.rollback_import(transaction, confirm_idle=True))
+        self.assertEqual(first.read_bytes(), b'new external slot')
+        self.assertEqual(second.read_bytes(), b'live one')
+
+    def test_undo_does_not_recreate_a_late_deleted_existing_save(self):
+        from psp_shell import ports
+        first = self.write('Roms/ports/celeste/savedata/Saves/0.celeste', b'backup zero')
+        second = self.write('Roms/ports/celeste/savedata/Saves/1.celeste', b'backup one')
+        self.manager.snapshot_saves('celeste', self.backup, confirm_idle=True)
+        first.write_bytes(b'live zero')
+        second.write_bytes(b'live one')
+        transaction = self.manager.restore_saves(self.backup, self.manager.preview_save_restore(self.backup),
+                                                 confirm_idle=True, confirm_overwrite=True)
+        install = ports._install
+        def removed(source, target, digest):
+            install(source, target, digest)
+            if target == second:
+                first.unlink()
+        with mock.patch.object(ports, '_install', side_effect=removed):
+            self.assert_code('CONFLICT', lambda: self.manager.rollback_import(transaction, confirm_idle=True))
+        self.assertFalse(first.exists())
+        self.assertEqual(second.read_bytes(), b'live one')

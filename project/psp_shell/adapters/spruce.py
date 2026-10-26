@@ -24,6 +24,7 @@ DEVICE_NAMES = frozenset(("TRIMUI_A133P", "TRIMUI_SMART_PRO", "SPRUCE_TRIMUI_SMA
 MAX_JSON = 1024 * 1024
 MAX_ENTRIES = 50000
 MAX_DEPTH = 12
+MAX_COLLECTIONS = 256
 MEDIA_SYSTEMS = frozenset(("MEDIA", "FFPLAY", "MPV", "MUSIC", "VIDEOS"))
 
 
@@ -104,6 +105,16 @@ def _under(root: Path, path: Path, *, exists: bool = True) -> Path:
 
 def _hash_id(kind: str, system: str, relative: str) -> str:
     return kind + ":" + hashlib.sha256((system + "\0" + relative).encode("utf-8")).hexdigest()
+
+
+def _collection_id(name: str) -> str:
+    return _hash_id("collection", "", _text(name, "collection name", 512))
+
+
+def _available(row: dict) -> bool:
+    # A read-only preview has no launch capability; that does not make its
+    # otherwise valid library entries unavailable for discovery.
+    return row.get("availability", "available") == "available" and not row.get("preset_repair_required", False)
 
 
 def _filter_records(rows: Iterable[dict], system_id: str | None = None, search: str = "") -> list[dict]:
@@ -544,6 +555,67 @@ class SourceSnapshotProvider:
         self._load()
         return [row.copy() for row in self._games.values() if system_id is None or row["system_id"] == system_id]
 
+    def game_record_by_id(self, game_id: str) -> dict:
+        self._load()
+        if game_id not in self._games:
+            raise SpruceError("GAME_NOT_FOUND", "Game is no longer in the current library")
+        return self._games[game_id].copy()
+
+    def _snapshot_collections(self) -> list[dict]:
+        """Read the pinned native format without creating or pruning it."""
+        try:
+            path = self.path(self.root / "Collections/collections.json", exists=False)
+            values = _read_json(path, [], 8 * MAX_JSON)
+            if not isinstance(values, list) or len(values) > MAX_COLLECTIONS:
+                raise SpruceError("INVALID_COLLECTIONS", "Collections must be a bounded native array")
+            result, seen, total = [], set(), 0
+            for value in values:
+                try:
+                    if not isinstance(value, dict):
+                        raise SpruceError("INVALID_COLLECTIONS", "Invalid collection record")
+                    name = _text(value.get("collection_name"), "collection name", 512)
+                    entries = value.get("game_list")
+                    if not name or not isinstance(entries, list) or len(entries) + total > self.max_entries:
+                        raise SpruceError("INVALID_COLLECTIONS", "Collection entries exceed their budget")
+                    total += len(entries)
+                    if name in seen:
+                        raise SpruceError("DUPLICATE_COLLECTION", "Duplicate native collection name")
+                    seen.add(name)
+                    result.append({"id": _collection_id(name), "label": name, "entries": entries})
+                except SpruceError as error:
+                    self._warn(error.code, "collections")
+            return result
+        except SpruceError as error:
+            self._warn(error.code, "collections")
+            return []
+
+    def collections(self) -> list[dict]:
+        return [{"id": row["id"], "collection_id": row["id"], "label": row["label"],
+                 "game_count": None, "stored_entry_count": len(row["entries"])} for row in self._snapshot_collections()]
+
+    def collection_records(self, collection_id: str) -> list[dict]:
+        collection = next((row for row in self._snapshot_collections() if row["id"] == collection_id), None)
+        if collection is None:
+            raise SpruceError("COLLECTION_NOT_FOUND", "This native collection is no longer available")
+        self._load()
+        index = {(row["system_id"], row["rom_path"]): row for row in self._games.values()}
+        result, seen = [], set()
+        for entry in collection["entries"]:
+            try:
+                if not isinstance(entry, dict):
+                    raise SpruceError("INVALID_COLLECTION_ENTRY", "Invalid native collection entry")
+                key = (_text(entry.get("game_system_name"), "system", 256),
+                       str(self.path(entry.get("rom_file_path"))))
+                row = index.get(key)
+                if row is not None and row["id"] not in seen:
+                    result.append(row.copy())
+                    seen.add(row["id"])
+            except (SpruceError, TypeError):
+                self._warn("COLLECTION_ENTRY_UNAVAILABLE", collection_id)
+        # The pinned native manager presents collection members by basename.
+        result.sort(key=lambda row: (Path(row["rom_path"]).name.casefold(), row["id"]))
+        return result
+
     def tools(self) -> list[dict]:
         self._load()
         return [row.copy() for row in self._tools.values()]
@@ -637,7 +709,8 @@ class PyUIModelProvider(SourceSnapshotProvider):
                  tool_actions: Mapping[str, Callable] | None = None,
                  mode_actions: Mapping[str, Mapping[str, Callable]] | None = None,
                  label_for: Callable[[Any], str] | None = None,
-                 artwork_for: Callable[[Any], str | None] | None = None):
+                 artwork_for: Callable[[Any], str | None] | None = None,
+                 collections_manager: Any = None):
         super().__init__(sd_root)
         if not callable(game_list) or not callable(release_resources) or not callable(quiescent):
             raise SpruceError("INVALID_PROVIDER", "Live provider needs explicit model and lifecycle callbacks")
@@ -649,8 +722,10 @@ class PyUIModelProvider(SourceSnapshotProvider):
         self.tool_list, self.tool_actions = tool_list, dict(tool_actions or {})
         self.mode_actions = dict(mode_actions or {})
         self.label_for, self.artwork_for = label_for, artwork_for
+        self.collections_manager = collections_manager
         self.models: dict[str, Any] = {}
         self._library_cache: dict[str, list[dict]] = {}
+        self._record_index: dict[str, dict] = {}
 
     def refresh(self) -> None:
         super().refresh()
@@ -660,6 +735,7 @@ class PyUIModelProvider(SourceSnapshotProvider):
             for record in records:
                 self.models.pop(record['id'], None)
         self._library_cache.clear()
+        self._record_index.clear()
 
     @classmethod
     def from_pyui(cls, sd_root: str | os.PathLike, *, device: Any,
@@ -674,6 +750,7 @@ class PyUIModelProvider(SourceSnapshotProvider):
         """
         from menus.games.utils.favorites_manager import FavoritesManager
         from menus.games.utils.recents_manager import RecentsManager
+        from menus.games.utils.collections_manager import CollectionsManager
         from menus.games.utils.rom_info import RomInfo
         from menus.games.utils.rom_select_options_builder import get_rom_select_options_builder
 
@@ -709,7 +786,8 @@ class PyUIModelProvider(SourceSnapshotProvider):
                    favorites_manager=FavoritesManager, recents_manager=RecentsManager,
                    release_resources=release_resources, quiescent=quiescent,
                    tool_list=tool_list, tool_actions=tool_actions, mode_actions=mode_actions,
-                   label_for=builder.resolve_display_name, artwork_for=builder.get_image_path)
+                   label_for=builder.resolve_display_name, artwork_for=builder.get_image_path,
+                   collections_manager=CollectionsManager)
 
     def systems(self) -> list[dict]:
         output = []
@@ -740,7 +818,14 @@ class PyUIModelProvider(SourceSnapshotProvider):
                 except SpruceError:
                     record["warnings"].append("ARTWORK_OUTSIDE_SNAPSHOT")
         if bind_model:
+            previous = self._record_index.get(record["id"])
+            if previous is not None and "FILENAME_COLLISION" in previous["warnings"]:
+                record["availability"] = "review_required"
+                record["warnings"].append("FILENAME_COLLISION")
+            if record["id"] not in self._record_index and len(self._record_index) >= self.max_entries:
+                raise SpruceError("MODEL_LIMIT", "Retained source model identities exceed their query budget")
             self.models[record["id"]] = model
+            self._record_index[record["id"]] = record
         record["capabilities"]["launch"] = record["availability"] == "available"
         return record
 
@@ -770,8 +855,11 @@ class PyUIModelProvider(SourceSnapshotProvider):
                 # duplicates. Never keep one max-sized cache per system.
                 if sum(len(rows) for rows in self._library_cache.values()) + len(records) > self.max_entries:
                     raise SpruceError("MODEL_LIMIT", "Live library cache exceeded its budget")
+                if len(self._record_index.keys() | bindings.keys()) > self.max_entries:
+                    raise SpruceError("MODEL_LIMIT", "Retained source model identities exceed their query budget")
                 self._library_cache[name] = records
                 self.models.update(bindings)
+                self._record_index.update((record["id"], record) for record in records)
             for record in self._library_cache[name]:
                 if len(output) >= self.max_entries:
                     raise SpruceError("MODEL_LIMIT", "Live model query exceeded its budget")
@@ -790,6 +878,71 @@ class PyUIModelProvider(SourceSnapshotProvider):
                 output.append(record)
         return output
 
+    def game_record_by_id(self, game_id: str) -> dict:
+        # IDs received from our lists already have a retained source model.
+        # Looking up one must not enumerate every unvisited native system.
+        if game_id in self._record_index:
+            system = self._record_index[game_id]["system_id"]
+            if system not in self._library_cache:
+                # Histories and collections can bind a model before the main
+                # list. Inspect its own system once to retain collision rules.
+                self.game_records(system)
+            return self._record_index[game_id].copy()
+        if game_id in self.models:
+            record = self._record_model(self.models[game_id])
+            if record["id"] != game_id:
+                raise SpruceError("GAME_NOT_FOUND", "The retained source model now identifies another game")
+            return self.game_record_by_id(game_id)
+        self.game_records()
+        if game_id not in self._record_index:
+            raise SpruceError("GAME_NOT_FOUND", "Game is no longer in the current library")
+        return self._record_index[game_id].copy()
+
+    def _collection_names(self) -> list[str]:
+        manager = self.collections_manager
+        if manager is None:
+            return []
+        event = getattr(manager, "_init_event", None)
+        if (event is None or not event.is_set() or
+                not callable(getattr(manager, "get_collection_names", None)) or
+                not callable(getattr(manager, "get_games_in_collection", None))):
+            raise SpruceError("MODELS_NOT_READY", "The existing native collections manager is not ready")
+        names = manager.get_collection_names()
+        if not isinstance(names, (list, tuple)) or len(names) > MAX_COLLECTIONS:
+            raise SpruceError("MODEL_LIMIT", "Native collections exceed their query budget")
+        result, seen = [], set()
+        for name in names:
+            try:
+                _text(name, "collection name", 512)
+                if not name or name in seen:
+                    raise SpruceError("INVALID_COLLECTIONS", "Native collection names must be unique and nonempty")
+                seen.add(name)
+                result.append(name)
+            except SpruceError as error:
+                self._warn(error.code, "collections")
+        return result
+
+    def collections(self) -> list[dict]:
+        return [{"id": _collection_id(name), "collection_id": _collection_id(name),
+                 "label": name, "game_count": None} for name in self._collection_names()]
+
+    def collection_records(self, collection_id: str) -> list[dict]:
+        name = next((name for name in self._collection_names() if _collection_id(name) == collection_id), None)
+        if name is None:
+            raise SpruceError("COLLECTION_NOT_FOUND", "This native collection is no longer available")
+        result, seen = [], set()
+        for index, model in enumerate(self.collections_manager.get_games_in_collection(name)):
+            if index >= self.max_entries:
+                raise SpruceError("MODEL_LIMIT", "Native collection exceeds its query budget")
+            try:
+                row = self._record_model(model)
+                if row["id"] not in seen:
+                    result.append(row)
+                    seen.add(row["id"])
+            except (SpruceError, OSError, TypeError):
+                self._warn("COLLECTION_ENTRY_UNAVAILABLE", collection_id)
+        return result
+
     def histories(self, name: str) -> list[dict]:
         if name == "favorites":
             values = self.favorites_manager.get_favorites()
@@ -797,11 +950,16 @@ class PyUIModelProvider(SourceSnapshotProvider):
             values = self.recents_manager.get_recents()
         else:
             return super().histories(name)
-        output = []
-        for model in values:
+        output, seen = [], set()
+        for index, model in enumerate(values):
+            if index >= self.max_entries:
+                raise SpruceError("MODEL_LIMIT", "Native history exceeds its query budget")
             try:
-                output.append(self._record_model(model))
-            except (SpruceError, OSError):
+                row = self._record_model(model)
+                if row["id"] not in seen:
+                    output.append(row)
+                    seen.add(row["id"])
+            except (SpruceError, OSError, TypeError):
                 continue
         return output
 
@@ -826,6 +984,8 @@ class _Action:
     mode: str
     callback: Callable
     identity: tuple
+    preset_id: str | None = None
+    source_model: Any = None
 
 
 class SpruceBackend:
@@ -845,36 +1005,128 @@ class SpruceBackend:
 
     def refresh(self) -> None:
         self.provider.refresh()
+        self._actions.clear()
 
     def systems(self) -> list[dict]:
         return self.provider.systems()
 
-    def games(self, system_id: str | None = None, search: str = "", offset: int = 0, limit: int = 50) -> dict:
-        if type(offset) is not int or type(limit) is not int or offset < 0 or offset > MAX_ENTRIES or not 1 <= limit <= 200:
-            raise SpruceError("INVALID_QUERY", "Pagination exceeds its bounds")
+    def _query_rows(self, system_id=None, search="", *, source="all", collection_id="",
+                    sort="native", available_only=False) -> list[dict]:
+        if (not isinstance(source, str) or source not in {"all", "favorites", "recent", "collection"} or
+                not isinstance(sort, str) or sort not in {"native", "title_asc", "title_desc", "system"}):
+            raise SpruceError("INVALID_QUERY", "Unknown library source or sort order")
         if system_id is not None:
             _text(system_id, "system_id", 256)
         _text(search, "search", 1024)
-        rows = _filter_records(self.provider.game_records(system_id), system_id, search)
-        rows.sort(key=lambda row: (row["label"].casefold(), row["id"]))
-        return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset, "limit": limit}
+        if type(available_only) is not bool:
+            raise SpruceError("INVALID_QUERY", "Availability selection must be a boolean")
+        _text(collection_id, "collection_id", 128)
+        if bool(collection_id) != (source == "collection"):
+            raise SpruceError("INVALID_QUERY", "Select a collection only for the collection source")
+        if source == "all":
+            rows = self.provider.game_records(system_id)
+        elif source == "collection":
+            rows = self.provider.collection_records(collection_id)
+        else:
+            rows = self.provider.histories(source)
+        rows = _filter_records(rows, system_id, search)
+        if available_only:
+            rows = [row for row in rows if _available(row)]
+        title = lambda row: (unicodedata.normalize("NFC", row["label"]).casefold().lstrip(), row["id"])
+        if sort in {"title_asc", "title_desc"} or (sort == "native" and source == "all"):
+            rows.sort(key=title, reverse=sort == "title_desc")
+        elif sort == "system":
+            rows.sort(key=lambda row: (row["system_id"].casefold(), *title(row)))
+        if source == "favorites":
+            return [dict(row, favorite=True) for row in rows]
+        if source == "recent":
+            return [dict(row, **self._checkpoint_summary(row)) for row in rows]
+        return [row.copy() for row in rows]
+
+    def games(self, system_id: str | None = None, search: str = "", offset: int = 0, limit: int = 50,
+              *, source="all", collection_id="", sort="native", available_only=False, jump="", focus_game_id="") -> dict:
+        if type(offset) is not int or type(limit) is not int or offset < 0 or offset > MAX_ENTRIES or not 1 <= limit <= 200:
+            raise SpruceError("INVALID_QUERY", "Pagination exceeds its bounds")
+        rows = self._query_rows(system_id, search, source=source, collection_id=collection_id,
+                                sort=sort, available_only=available_only)
+        if not isinstance(jump, str) or jump not in ("", "#", *"ABCDEFGHIJKLMNOPQRSTUVWXYZ") or (jump and sort != "title_asc"):
+            raise SpruceError("INVALID_QUERY", "Jump requires a letter or # with ascending title order")
+        _text(focus_game_id, "focus_game_id", 128)
+        focus_id = ""
+        if jump and rows:
+            def initial(row):
+                return unicodedata.normalize("NFC", row["label"]).casefold().lstrip()[:1]
+            if jump == "#":
+                index = next((i for i, row in enumerate(rows) if not "a" <= initial(row) <= "z"), 0)
+            else:
+                index = next((i for i, row in enumerate(rows) if initial(row) >= jump.lower()), len(rows) - 1)
+            offset = index // limit * limit
+            focus_id = rows[index]["id"]
+        elif focus_game_id:
+            index = next((i for i, row in enumerate(rows) if row["id"] == focus_game_id), None)
+            if index is not None:
+                offset = index // limit * limit
+                focus_id = focus_game_id
+            elif offset >= len(rows):
+                offset = max(0, len(rows) - 1) // limit * limit
+        result = {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset, "limit": limit}
+        if jump or focus_game_id:
+            result["focus_id"] = focus_id
+        return result
+
+    def collections(self) -> list[dict]:
+        return self.provider.collections()
+
+    def random(self, system_id=None, search="", *, source="all", collection_id="", sort="native",
+               available_only=False, exclude_game_id="") -> dict:
+        """Sample all matching entries, never a page or a launch action."""
+        _text(exclude_game_id, "exclude_game_id", 128)
+        rows = self._query_rows(system_id, search, source=source, collection_id=collection_id,
+                                sort=sort, available_only=available_only)
+        rows = [row for row in rows if _available(row)]
+        if len(rows) > 1 and exclude_game_id:
+            rows = [row for row in rows if row["id"] != exclude_game_id]
+        while rows:
+            row = secrets.choice(rows)
+            try:
+                rom = self.provider.path(row["rom_path"])
+                info = rom.stat()
+                config = self.provider._descriptor(self.provider.root / "Emu" / row["system_id"] / "config.json")
+                if stat.S_ISREG(info.st_mode) and info.st_size > 0 and not _preset(config, rom.name)["preset_repair_required"]:
+                    return row.copy()
+            except (SpruceError, OSError):
+                pass
+            rows.remove(row)
+        raise SpruceError("EMPTY_LIBRARY", "No available games match these filters")
 
     def tools(self) -> list[dict]:
         return self.provider.tools()
 
     def _game(self, game_id: str) -> dict:
         _text(game_id, "game_id", 128)
-        for row in self.provider.game_records():
-            if row["id"] == game_id:
-                return row
-        raise SpruceError("GAME_NOT_FOUND", "Game is no longer in the current library")
+        return self.provider.game_record_by_id(game_id)
 
     def favorites(self, system_id: str | None = None, search: str = "") -> list[dict]:
-        return [dict(row, favorite=True) for row in _filter_records(self.provider.histories("favorites"), system_id, search)]
+        return self._query_rows(system_id, search, source="favorites")
 
     def recent(self, system_id: str | None = None, search: str = "") -> list[dict]:
-        return [dict(row, **self._resume_status(row))
-                for row in _filter_records(self.provider.histories("recent"), system_id, search)]
+        return self._query_rows(system_id, search, source="recent")
+
+    def _checkpoint_summary(self, game: dict) -> dict:
+        """Historical presentation only; no hashing or executable capability."""
+        result = {"resume_available": False, "resume_eligible": False,
+                  "resume_reason": "NO_VERIFIED_STATE", "continue_kind": "recently_played",
+                  "state_verification_required": False}
+        verified = self._verified_resume_records.get(game["id"])
+        if verified is not None or game["id"] in self._resume_records:
+            result.update(resume_reason="VERIFICATION_REQUIRED", continue_kind="checkpoint_recorded",
+                          state_verification_required=True)
+        if verified is not None:
+            result.update(state_recorded_at=verified.recorded_at_utc, state_recorded_at_kind="verification",
+                          state_recorded_monotonic_ns=verified.recorded_monotonic_ns,
+                          state_request_id=verified.identity.foreground.request_id,
+                          state_profile_sha256=verified.profile.fingerprint)
+        return result
 
     def game_info(self, game_id: str) -> dict:
         """Inspect current metadata; do not mint actions or run a launcher."""
@@ -998,12 +1250,23 @@ class SpruceBackend:
         info = rom.stat()
         return (str(rom), info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, _sha_file(descriptor, MAX_JSON))
 
+    def _model_id(self, model) -> str:
+        system = getattr(model, "game_system", None)
+        name = getattr(system, "system_name", None) or getattr(getattr(system, "game_system_config", None), "system_name", None)
+        _text(name, "source model system", 256)
+        rom = self.provider.path(getattr(model, "rom_file_path", ""))
+        return _hash_id("game", name, rom.relative_to(self.provider.root).as_posix())
+
     def resolve_game(self, game_id: str, preset_id: str | None = None, mode: str = "normal") -> dict:
         if mode not in ("normal", "fresh", "resume"):
             raise SpruceError("INVALID_MODE", "Unknown launch mode")
         game = self._game(game_id)
+        identity = self._identity(game)
         context = self.provider.resolve_game(game, preset_id, mode)
-        context.update(self._resume_status(game))
+        current_game = dict(game, selected_preset=context["preset_id"])
+        context.update(self._resume_status(current_game))
+        if self._identity(game) != identity:
+            raise SpruceError("STALE_ACTION", "The game or selected settings changed during resolution")
         if game["availability"] != "available" or self.provider.path(game['rom_path']).stat().st_size == 0:
             context["gate_reason"] = "GAME_REQUIRES_REVIEW"
             return context
@@ -1016,6 +1279,8 @@ class SpruceBackend:
             context["gate_reason"] = "PRESET_REQUIRES_EXISTING_MENU"
             return context
         model = self.provider.models.get(game_id)
+        if model is not None and self._model_id(model) != game_id:
+            raise SpruceError("STALE_ACTION", "The native model now identifies another game")
         callback = (lambda: self.provider.device.run_game(model)) if mode == "normal" else None
         if mode != "normal":
             handler = self.provider.mode_actions.get(context["preset_id"], {}).get(mode)
@@ -1031,7 +1296,7 @@ class SpruceBackend:
         if len(self._actions) >= 64:
             self._actions.clear()
         token = "game:" + secrets.token_hex(16)
-        self._actions[token] = _Action("game", game_id, mode, callback, self._identity(game))
+        self._actions[token] = _Action("game", game_id, mode, callback, identity, context["preset_id"], model)
         context.update(action_id=token, launchable=True, gate_reason="")
         return context
 
@@ -1063,10 +1328,23 @@ class SpruceBackend:
             raise SpruceError("ACTION_MODE_MISMATCH", "Action was resolved for another launch mode")
         if not self.provider.quiescent():
             raise SpruceError("BUSY_SESSION", "Wait for the existing foreground job to finish")
-        if action.kind == "game" and self._identity(self._game(action.item_id)) != action.identity:
-            raise SpruceError("STALE_ACTION", "The game or selected settings changed after preview")
-        if action.mode == "resume" and not self._resume_status(self._game(action.item_id))["resume_available"]:
-            raise SpruceError("RESUME_UNAVAILABLE", "State eligibility changed after preview")
+        if action.kind == "game":
+            if (self.provider.models.get(action.item_id) is not action.source_model or
+                    self._model_id(action.source_model) != action.item_id):
+                raise SpruceError("STALE_ACTION", "The native model changed after the selected game was resolved")
+            game = self._game(action.item_id)
+            if self._identity(game) != action.identity:
+                raise SpruceError("STALE_ACTION", "The game or selected settings changed after preview")
+            context = self.provider.resolve_game(game, None, action.mode)
+            if context["preset_repair_required"] or context["preset_id"] != action.preset_id:
+                raise SpruceError("STALE_ACTION", "The selected emulator no longer matches this action")
+            if action.mode == "resume" and not self._resume_status(dict(game, selected_preset=context["preset_id"]))["resume_available"]:
+                raise SpruceError("RESUME_UNAVAILABLE", "State eligibility changed after preview")
+            if self._identity(game) != action.identity:
+                raise SpruceError("STALE_ACTION", "The game or selected settings changed during validation")
+            if (self.provider.models.get(action.item_id) is not action.source_model or
+                    self._model_id(action.source_model) != action.item_id):
+                raise SpruceError("STALE_ACTION", "The native model changed during action validation")
 
     def execute_action(self, action_id: str, mode: str | None = None, *, release_ui: bool = True) -> Any:
         """Invoke one registered callback; Coordinator passes release_ui=False."""
