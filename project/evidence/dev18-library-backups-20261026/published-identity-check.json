@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "kind": "published-tag-and-provider-metadata-check",
+  "release_id": 422401559,
+  "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16",
+  "tag": "smartpro-host-0.1.0-dev16",
+  "tag_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+  "prerelease": true,
+  "asset_count": 11,
+  "assets": [
+    {
+      "name": "build-report.json",
+      "id": 670756344,
+      "bytes": 5494,
+      "digest": "sha256:f55cf5d826def98855b4b05712e8b500c97396e4c597e2fa8886430a224e287e"
+    },
+    {
+      "name": "certification.json",
+      "id": 670756368,
+      "bytes": 7108,
+      "digest": "sha256:94608756a0eaba28f0ee1116535808f7e81a7eef773800508079d0e09c5f6e1c"
+    },
+    {
+      "name": "development-verification.pub",
+      "id": 670756342,
+      "bytes": 32,
+      "digest": "sha256:5e8c7a421132dca5424c370dd2c65bc363dbc7895eddfa2cbc93235cb675160d"
+    },
+    {
+      "name": "host-preview-provenance.jsonl",
+      "id": 670756375,
+      "bytes": 13554,
+      "digest": "sha256:5471344a019d831e423a1ec8c40e19222bc9ba3e938aee712b56ea43ef58418b"
+    },
+    {
+      "name": "host-preview.png",
+      "id": 670756345,
+      "bytes": 153209,
+      "digest": "sha256:2f759e35da4299492b835bb5f44ee387751c4ea5b1fa14778289789634fedf15"
+    },
+    {
+      "name": "release-source.json",
+      "id": 670756361,
+      "bytes": 28805,
+      "digest": "sha256:e557f9d06bed8d555e89709dbef9e9862edb515887ff0fb3163ae948dd2d7f8b"
+    },
+    {
+      "name": "SHA256SUMS",
+      "id": 670756346,
+      "bytes": 743,
+      "digest": "sha256:82362e30209bca05a540541f0b7ffa7e1a37174ca8dad208f92ab55e0871b4fd"
+    },
+    {
+      "name": "smartpro-psp-0.1.0-dev16-host-preview.zip",
+      "id": 670756362,
+      "bytes": 1460422,
+      "digest": "sha256:43aeebb57353f510b945ebcdeb5d8924b7e13ce37f9ce6f210c8c68a3f29d62b"
+    },
+    {
+      "name": "smartpro-psp-0.1.0-dev16-original-source.zip",
+      "id": 670756363,
+      "bytes": 2048102,
+      "digest": "sha256:b8c714e58439f36d013eef8707a82cf6f6a991669b65a0e602127d1933562d82"
+    },
+    {
+      "name": "smartpro-psp-0.1.0-dev16.tar",
+      "id": 670756365,
+      "bytes": 3082240,
+      "digest": "sha256:6097f3560d51a3b0d3b13d2919bef2381fedc78557d3208c1fe0ef44c82db311"
+    },
+    {
+      "name": "START-HERE.txt",
+      "id": 670756343,
+      "bytes": 859,
+      "digest": "sha256:a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402"
+    }
+  ],
+  "new_release_created": false,
+  "public_assets_modified": false,
+  "fresh_asset_bytes_downloaded_in_this_check": false,
+  "prior_byte_readback": "project/evidence/host-publication-20261023/public-readback.json"
+}

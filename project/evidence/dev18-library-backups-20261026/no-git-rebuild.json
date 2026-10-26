@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "clean_source_commit": "399a528542da1139903c93cef3041d23acad2fca",
+  "working_tree_modified": false,
+  "source_inventory_sha256": "bed2e770420510d3cae0cdf86f13714e65a8c27c7cc65c3d4f03d4fd9cb2082a",
+  "source_export_has_git": false,
+  "rebuilt_using_exported_packager": true,
+  "both_zips_byte_identical": true,
+  "artifacts": [
+    {
+      "file": "smartpro-psp-0.1.0-dev18-host-preview.zip",
+      "original_sha256": "ad1823ceeb7f1f8a4606b4f392748f2fd0051eb5a83600c2063f430df9683a5a",
+      "no_git_rebuild_sha256": "ad1823ceeb7f1f8a4606b4f392748f2fd0051eb5a83600c2063f430df9683a5a",
+      "byte_identical": true
+    },
+    {
+      "file": "smartpro-psp-0.1.0-dev18-original-source.zip",
+      "original_sha256": "2c0d20e76b301d93075e8129a0cc17c2616404125f351fea4e14a2bd0dd18a6e",
+      "no_git_rebuild_sha256": "2c0d20e76b301d93075e8129a0cc17c2616404125f351fea4e14a2bd0dd18a6e",
+      "byte_identical": true
+    }
+  ],
+  "separate_ephemeral_signing_keys": true,
+  "separate_signed_tars_expected_to_differ": true,
+  "smoke_and_fixture_rollback_passed_on_both": true,
+  "device_qualified": false
+}

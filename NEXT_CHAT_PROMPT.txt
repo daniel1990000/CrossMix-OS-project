@@ -1,62 +1,35 @@
-Continue daniel1990000/CrossMix-OS-project on main.
-PR #1 is merged at 87264629735e179c81c2ad360516665c1e7fd5cd.
-The owner explicitly authorized merging and publishing the completed host work;
-older draft/unmerged instructions are historical for this release.
-
-Latest development checkpoint: dev17 host correctness fixes at exact implementation
-de9ecf099a305f2623086c9d78b808fe4d14197c. All 1,107 strict checks pass with zero
-skips/errors/failures, plus installed smoke/rollback and byte-identical no-Git ZIP
-rebuilds. Fixed async library view mix-ups, failed-copy fd leaks and hidden
-changed/deleted release source inputs. No new public release; dev16 below remains
-the latest public download. Read project/docs/host-fixes-2026-10-24.md and
-project/evidence/host-fixes-20261024/verification.json before older snapshots.
-Later handover/evidence edits have their own source inventories.
-CI 40053305796 passes all 1,107 checks; artifact 12544371913 passes complete
-downloaded signature/source/checksum readback. Both CI ZIPs match local bytes.
-
+Continue daniel1990000/CrossMix-OS-project, active source project/.
+Dev18 is on build/dev18-library-backups in PR #2, not merged or publicly released.
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
-project/docs/host-publication-2026-10-23.md,
-project/evidence/host-publication-20261023/verification.json and the master plan.
+project/docs/dev18-library-backups-2026-10-26.md and its exact evidence first.
 
-Dev16 computer preview is published:
+Clean implementation 399a528542da1139903c93cef3041d23acad2fca passes all 1,209
+strict host checks with zero skips/errors/failures against five pinned sources.
+Installed preview, signature/source/payload checks, fixture rollback and both
+byte-identical no-Git ZIP rebuilds pass. CI readback records its separate exact
+merge checkout and artifact identity. Later metadata commits do not inherit
+older package identities. PR #2 describes latest CI status.
+
+Dev18 includes scoped library discovery and native Collections, page/identity
+restoration, stale-response/mutation handling, 175% accessible help, structured
+game information and named offline backup history, plus Undo/capture/Resume
+identity and captured-source packaging fixes. Preserve native ownership and
+immutable payloads. Independent review and real SDL renders are retained.
+
+Dev16 remains published at tag/source 99336f6525efbd1b790a15c7de54acca3eacd1ec:
 https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16
-Tag/source: 99336f6525efbd1b790a15c7de54acca3eacd1ec.
-223-file original-source inventory:
-a0c9c9179528ddc0e9316a6aef2bda9c6f4d4ef24f70c91296d49c18a6ea834a.
-Source/provenance run 40041273891 and delivery run 40042094364 pass. All 1,099
-strict checks pass with zero skips/errors/failures against five pinned sources.
-All 10 provenance subjects and 11 public assets pass exact verification; both
-release ZIPs reproduce byte for byte from a no-Git source export. Installed
-smoke and fixture rollback pass; generated development keys were deleted.
-Later main/workflow/evidence/docs commits have their own source identities.
+Do not replace its assets. No native engine/SDK/game/save/private key is included
+in original-only development downloads. Historical records through dev17 are
+explicitly archived; read current status before their dated completion claims.
 
-Dev14's public release and historical dev15/dev16 fix receipts remain unchanged.
-Native engine patches/binaries, SDKs, games, saves and private keys are excluded
-from the attached original-only downloads. Use the attached matching-source ZIP;
-automatic repository archives include inherited mixed runtime/history and are
-outside verified attached scope. Retained native/compiler artifacts stay private.
+Keep device/profile gates disabled: original register 14/25; physical areas 0/13.
+No hardware performance, battery, recovery or Resume reliability is established.
+When the device returns use the existing recovery/inventory/qualification
+casebook, matched game-scene protocol and exact installed identities.
+Production signing, public native distribution and maintenance ownership remain
+open. Preserve existing PPSSPP and PS1 routes; no save/memory-card relocation.
 
-Do not redo completed foundations or six dev15 additions. Dev16 fixed gameplay
-output collisions, mixed repeat protocols and PS1 disc-reference path swaps.
-Keep PPSSPP and the current PS1 route; no emulator/OS/SDK/build rewrite. Never
-silently generate playlists, move games or change memory-card locations.
-
-Hardware remains unavailable; the register is 14/25 complete and 0/13 physical
-areas run. Keep all device/profile gates disabled. Remaining actual work is
-Smart Pro recovery/inventory and qualification, game-scene measurements and
-recommended presets, precise public native distribution decisions, production
-signing/custody and accepted maintenance ownership. No device-ready release,
-performance percentage, battery figure or qualified Resume is established.
-Use existing recovery preparation and 13-area casebook when hardware is available.
-Compare unchanged spruce/current engine/settings, our frontend with those same
-settings, then individual changes separately. Use five matched runs per named
-scene and 30-minute demanding-profile runs. Record intended speed, frame pacing,
-audio, resolution and frameskip. Candidate presets stay untested until measured;
-unavailable figures stay unavailable.
-
-State galleries, named save history and power-off Resume are later enhancements.
-Preserve historical evidence and permission records; do not send author messages
-or request private keys. Without hardware, address concrete reproducible defects
-or scoped release preparation and save evidence/updated handover to main. Reuse
-the existing strict five-source checks and packaging. Manual publication inputs
-default false and the dev16 packet must retain its exact published identities.
+The owner moved Vice City emulation/testing to a separate chat. It does not
+block this development track. Main received an independent audit/game-image
+document at 4a97d8a; preserve it without treating it as dev18 gameplay evidence.
+No additional game download/testing is requested in this chat.
