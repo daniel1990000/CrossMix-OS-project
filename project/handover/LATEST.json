@@ -71,13 +71,16 @@
   },
   "schema": 2,
   "date_utc": "2026-10-26",
-  "branch": "build/dev18-library-backups",
+  "branch": "main",
   "base_at_start": "9dfa857fec43c165b2b8836406012f1b38cfed87",
   "pull_request": {
     "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/2",
     "number": 2,
-    "state": "open",
-    "merged": false
+    "state": "closed",
+    "merged": true,
+    "draft": false,
+    "merge_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+    "merged_head": "2d182edf0cf868a4a8e5214ee552dd42ccba894a"
   },
   "release_id": "smartpro-psp-0.1.0-dev18",
   "project_stage": "Dev18 host feature batch implemented and independently reviewed; 1,209 strict checks pass. Device qualification remains pending.",
@@ -189,7 +192,7 @@
     "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
   },
   "next_work": [
-    "Review/merge PR #2 when desired; no new public release was created.",
+    "Continue from merged dev18 on main; no new public release was created.",
     "When hardware returns, begin with inventory and actual recovery rehearsal using the existing 13-area casebook.",
     "Qualify native menu return, input/display ownership, I/O latency, sleep/power, interrupted saves and actual Resume on exact installed profiles.",
     "Collect five matched runs per scene and 30-minute demanding-profile observations before recommending presets.",
@@ -223,5 +226,6 @@
     "gameplay_tests_run": false,
     "physical_tests_run": false,
     "completion_counts_unchanged": true
-  }
+  },
+  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json"
 }

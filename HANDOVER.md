@@ -1,6 +1,6 @@
 # TrimUI project handover — dev18
 
-Updated 26 October 2026. Dev18 is saved on `build/dev18-library-backups` in [PR #2](https://github.com/daniel1990000/CrossMix-OS-project/pull/2), based on main `9dfa857`. It is not merged or publicly released. Main also received a separate audit/game-image document at `4a97d8a`; that document is preserved by the PR merge and is not this batch's game-testing evidence.
+Updated 26 October 2026. Dev18 is merged into `main` through [PR #2](https://github.com/daniel1990000/CrossMix-OS-project/pull/2) at `30aa59ffa35195bcad2b2553f91c43fc32301556`. No new public release was created. The separate ISO roadmap and execution prompt from the other chat are preserved; conflict resolution changed documentation only. [The merge record](project/evidence/dev18-library-backups-20261026/merge-record.json) retains the exact merged source and verification boundaries.
 
 Read [the dev18 report](project/docs/dev18-library-backups-2026-10-26.md), [verification](project/evidence/dev18-library-backups-20261026/verification.json), [machine-readable status](project/handover/LATEST.json), [README](project/README.md) and [master register](project/docs/master-plan-2026-10-22.md). Historical detail is retained in [the previous handover](HANDOVER-HISTORY-through-dev17.md), [previous status](project/handover/LATEST-through-dev17.json) and [previous plan](project/docs/master-plan-history-through-dev17.md); their old current/latest fields are historical.
 

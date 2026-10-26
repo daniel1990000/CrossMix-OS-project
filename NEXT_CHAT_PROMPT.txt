@@ -1,5 +1,6 @@
 Continue daniel1990000/CrossMix-OS-project, active source project/.
-Dev18 is on build/dev18-library-backups in PR #2, not merged or publicly released.
+Dev18 is on main after PR #2 merged at 30aa59ffa35195bcad2b2553f91c43fc32301556.
+No new public release was created.
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
 project/docs/dev18-library-backups-2026-10-26.md and its exact evidence first.
 
