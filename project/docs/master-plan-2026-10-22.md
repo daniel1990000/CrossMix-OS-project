@@ -1,5 +1,25 @@
 # TrimUI master plan — 22 October 2026
 
+
+## Planned ISO-enabled continuation — 26 October 2026
+
+The supplied GTA: Vice City Stories ISO is fully downloaded and hashed.
+The next batch is [the ISO-enabled execution plan](iso-enabled-roadmap-2026-10-26.md),
+with [a ready execution prompt](../handover/ISO_EXECUTION_PROMPT.txt).
+The user requested preparation first, then execution; this batch has not run.
+
+G01–G08 cover actual game identity/UI behavior, desktop native gameplay and saves,
+native-produced per-game settings/Undo, a full patched desktop state protocol
+where feasible, real host launch/return/Continue composition, scene measurements,
+reproduced fixes and strict certification. C01–C06 remain existing host features.
+This adds real-game validation work against C01–C05, D04 and the host portions
+of N01/N02. It supplies no PS1, native-port or physical-device qualification.
+
+The register remains 14/25 complete and 0/13 physical areas run. Dev17 remains
+the development baseline; published dev16 and all historical receipts retain
+their exact identities. See the new plan for dependencies and acceptance criteria.
+
+
 ## Host correctness fixes, 24 October 2026
 
 [Dev17 fixes](host-fixes-2026-10-24.md) cover delayed library view responses,
