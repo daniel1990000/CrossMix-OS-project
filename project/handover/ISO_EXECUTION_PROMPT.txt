@@ -1,0 +1,39 @@
+Execute the ISO-enabled continuation for daniel1990000/CrossMix-OS-project on current main.
+
+This is the execution prompt prepared on 26 October 2026. Run it when the user instructs execution; writing or reading it during planning does not start the batch.
+
+Goal
+Use the downloaded GTA: Vice City Stories ISO to complete the real-game HOST validation and fixes described in project/docs/iso-enabled-roadmap-2026-10-26.md. Carry every independent feasible work package through evidence and review. Record concrete blockers; do not stop all work because one native/device path is unavailable.
+
+Read first
+AGENTS.md; the newest HANDOVER.md section; project/handover/LATEST.json; project/README.md; project/docs/iso-enabled-roadmap-2026-10-26.md; project/docs/trimui-audit-plan-2026-10-26.md; project/docs/master-plan-2026-10-22.md; project/docs/per-game-performance.md; project/docs/gameplay-performance.md; project/ppsspp/state-session.md.
+Current runtime baseline is dev17 with historical 1,107 strict passes. Published dev16 remains unchanged. Fetch current source and record the actual starting commit. Do not reuse historical hashes/results for changed code.
+
+Input
+/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso
+Receipt: /workspace/trimui-audit/private-inputs/download-receipt.json
+Size: 1696006144 bytes
+SHA256: e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a
+DISC_ID: ULUS10160; DISC_VERSION: 1.03.
+The complete image was downloaded and checked. Reuse it. If the workspace was replaced, retrieve https://gofile.io/d/x8y4jAzg and require the same full SHA256; report changed/unavailable input rather than substituting another game.
+Keep the original immutable, all game/state/save/native binaries private, and all run memstick/config/save directories disposable and isolated.
+
+Execute in this order
+1. G01: freeze identities and test the existing frontend/library against the actual ISO.
+2. G02: run pinned host-compatible PPSSPP, observe real gameplay and native controls, exercise actual game save/relaunch/readback and native state save/load. Complete three independent host cycles where possible.
+3. G03: test existing per-game controls/Undo against native-produced INIs and real native readback. Investigate benign INI rewrite invalidation; do not weaken trust checks to make a test pass.
+4. G04: inspect/reuse the existing build pipeline, attempt a full host-native build with pinned locked patches, then exercise genuine save-completion/load-acknowledgement and negative cases using real state bytes. The retained aarch64 PowerVR build is not a desktop binary. Record adaptations separately.
+5. G05: compose actual host emulator completion with the existing source/principal/state/Continue route where supported. Any necessary host test seam must remain explicit and unable to grant device authority. If only native protocol works, report that boundary.
+6. G06: define reproducible GTA scenes and use existing tools for actual host observations. Five matched pairs for meaningful comparisons; one changed variable; a 30-minute host stability run when observable. Real device comparisons remain pending.
+7. G07: reproduce and fix defects, add focused regressions that fail on old code, obtain independent review, run the full strict five-source checks and established installed package/rebuild/rollback verification.
+8. G08: save sanitized report, receipts, status of every package and next steps in GitHub; update existing roadmap/handover authorities.
+
+Autonomy and ownership
+Use parallel agents as AGENTS.md requests, with explicit file ownership: native build/protocol, frontend/configuration, independent evidence/regression review. Integrate sequentially. Preserve unrelated changes. Reuse existing inventory, settings, process, input, rendering, state and reporting authorities. Continue independent work when a lane is blocked.
+
+Evidence rules
+A process start, black frame, queued state operation or log-only boot is not a gameplay pass. Stock desktop PPSSPP cannot prove our patches. Compiled function fixtures cannot prove the complete emulator. Native packets alone cannot prove composed frontend Resume. Host runs cannot prove TG5040 behavior. Record renderer/audio limitations, exact commands and raw observations; unavailable metrics remain null.
+Preserve all failures/retests, image/config/engine identities and private save evidence. Never enable shipped gates, fabricate a qualified device profile, replace installed device engines, upload the game, change public dev16, or claim device-ready/performance/battery/physical Resume results.
+
+Completion
+Provide a concise user report: what now works with the real game, defects fixed, exact tests/artifacts, what remains blocked and why. Link the GitHub report. Keep original 14/25 and 0/13 physical counts unchanged unless original criteria are actually met. C01–C06 are existing host features; do not rebuild them or count this ISO as PS1/native-port evidence. State galleries, named save history and power-off Resume are later work.
