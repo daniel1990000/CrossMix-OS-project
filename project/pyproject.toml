@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "smartpro-psp-experience"
-version = "0.1.0.dev1"
+dynamic = ["version"]
 description = "Original Smart Pro interface extensions around pinned spruce integrations"
 requires-python = ">=3.9"
 dependencies = ["PySDL2==0.9.17"]
@@ -19,5 +19,9 @@ smartpro-preview = "psp_shell.app:main"
 where = ["."]
 include = ["psp_shell*"]
 
+[tool.setuptools.dynamic]
+version = {attr = "psp_shell.__version__"}
+
 [tool.setuptools.data-files]
 "share/psp_shell/assets/fonts" = ["assets/fonts/NotoSans.ttf", "assets/fonts/OFL.txt"]
+"share/psp_shell/metadata" = ["packaging/current-release.json"]

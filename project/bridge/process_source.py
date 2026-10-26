@@ -372,6 +372,7 @@ def existing_models(device, builder) -> ExistingPyUIModels:
     """Wrap the source's normal initialized builder/managers; create none."""
     from menus.games.utils.favorites_manager import FavoritesManager
     from menus.games.utils.recents_manager import RecentsManager
+    from menus.games.utils.collections_manager import CollectionsManager
     from menus.games.utils.rom_info import RomInfo
     from psp_shell.adapters.spruce import MAX_DEPTH, MAX_ENTRIES
     systems, roms = device.get_game_system_utils(), getattr(builder, "rom_utils", None)
@@ -399,7 +400,7 @@ def existing_models(device, builder) -> ExistingPyUIModels:
                 yield RomInfo(system, filename)
             pending.extend((folder, depth + 1) for folder in folders)
     return ExistingPyUIModels(systems, game_list, FavoritesManager, RecentsManager,
-                              builder.resolve_display_name, builder.get_image_path)
+                              builder.resolve_display_name, builder.get_image_path, CollectionsManager)
 
 
 def bind_initialized_source(main_menu, tasks: ProcessExitSourceTasks, builder):

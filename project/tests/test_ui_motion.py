@@ -55,6 +55,8 @@ class ListReplacementMotionTests(unittest.TestCase):
         self.renderer._icon = mock.Mock()
         self.renderer._polyline = mock.Mock()
         self.renderer._text = mock.Mock(return_value=(100, 31))
+        self.renderer.text = mock.Mock()
+        self.renderer.text.wrap.side_effect = lambda text, *_: (text,)
         clipping = mock.patch("psp_shell.ui.renderer.sdl2.SDL_RenderSetClipRect")
         clipping.start()
         self.addCleanup(clipping.stop)

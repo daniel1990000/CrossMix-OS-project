@@ -298,7 +298,7 @@ class PackageTest(unittest.TestCase):
         (project / "psp_shell").mkdir(parents=True)
         (project / "psp_shell/__main__.py").write_text("print('demo')\n")
         (project / "tools").mkdir()
-        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py", "backup_catalog.py"):
             (project / "tools" / tool).write_bytes((PROJECT / "tools" / tool).read_bytes())
         (project / "tools/unselected.py").write_text("raise RuntimeError('must not ship')\n")
         (project / "psp_shell/__pycache__").mkdir()
@@ -308,6 +308,8 @@ class PackageTest(unittest.TestCase):
         (project / "LICENSE").write_text("original project license")
         (project / "state").mkdir()
         (project / "state/private.json").write_text('{"password":"not packaged"}')
+        (project / "psp_shell/state").mkdir()
+        (project / "psp_shell/state/private.py").write_text("private = 'must not ship'\n")
         output = self.root / "prepared-payload"
         build_payload(project, output)
         names = [x.relative_to(output).as_posix() for x in output.rglob("*") if x.is_file()]
@@ -325,7 +327,7 @@ class PackageTest(unittest.TestCase):
         (project / "psp_shell").mkdir(parents=True)
         (project / "psp_shell/__main__.py").write_text("print('host fixture')\n")
         (project / "tools").mkdir()
-        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+        for tool in ("__init__.py", "recovery_payload.py", "recovery_preflight.py", "backup_catalog.py"):
             (project / "tools" / tool).write_bytes((PROJECT / "tools" / tool).read_bytes())
         (project / "assets/fonts").mkdir(parents=True)
         (project / "assets/fonts/OFL.txt").write_text("font notice")

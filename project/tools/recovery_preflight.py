@@ -66,26 +66,35 @@ def relative_name(value):
     return value
 
 
-def scan_tree(value, scope, *, max_entries=MAX_ENTRIES, max_bytes=MAX_BYTES):
+def scan_tree(value, scope, *, max_entries=MAX_ENTRIES, max_bytes=MAX_BYTES, progress=None):
     if scope not in SCOPES or not 0 < max_entries <= MAX_ENTRIES or not 0 <= max_bytes <= MAX_BYTES:
         raise ValueError("invalid scope or inventory budget")
     root = clean_path(value)
     root_fd = directory_fd(root)
     entries, byte_count = [], 0
+    bytes_checked, files_checked = 0, 0
+
+    def report():
+        if progress is not None:
+            progress("hashing", bytes_checked, files_checked)
+
     root_info = os.fstat(root_fd)
 
     def visit(fd, prefix, depth):
-        nonlocal byte_count
+        nonlocal byte_count, bytes_checked, files_checked
+        report()
         if depth > MAX_DEPTH:
             raise ValueError("tree exceeds depth budget")
         before_dir = os.fstat(fd)
         names = []
         with os.scandir(fd) as children:
             for child in children:
+                report()
                 if len(names) + len(entries) >= max_entries:
                     raise ValueError("tree exceeds entry budget")
                 names.append(child.name)
         for name in sorted(names):
+            report()
             relative = relative_name(prefix + name)
             info = os.stat(name, dir_fd=fd, follow_symlinks=False)
             entry = {"path": relative}
@@ -123,12 +132,16 @@ def scan_tree(value, scope, *, max_entries=MAX_ENTRIES, max_bytes=MAX_BYTES):
                             raise ValueError("file shortened during hashing")
                         h.update(block)
                         remaining -= len(block)
+                        bytes_checked += len(block)
+                        report()
                     if stream.read(1) or fingerprint(before) != fingerprint(os.fstat(stream.fileno())):
                         raise ValueError("file changed during hashing")
                 if fingerprint(before) != fingerprint(os.stat(name, dir_fd=fd, follow_symlinks=False)):
                     raise ValueError("file name changed during hashing")
                 entry.update(type="file", size=before.st_size, sha256=h.hexdigest())
                 entries.append(entry)
+                files_checked += 1
+                report()
             elif stat.S_ISLNK(info.st_mode):
                 target = os.readlink(name, dir_fd=fd)
                 if len(os.fsencode(target)) > 4096 or any(ord(c) < 32 or ord(c) == 127 for c in target):
@@ -263,8 +276,11 @@ def load_manifest(path):
             result[key] = value
         return result
 
-    manifest = json.loads(data, object_pairs_hook=unique,
-                          parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite JSON")))
+    try:
+        manifest = json.loads(data, object_pairs_hook=unique,
+                              parse_constant=lambda _: (_ for _ in ()).throw(ValueError("nonfinite JSON")))
+    except (RecursionError, UnicodeError) as error:
+        raise ValueError("manifest exceeds JSON nesting or encoding limits") from error
     if (not isinstance(manifest, dict) or manifest.get("schema") != 1
             or type(manifest.get("schema")) is not int
             or manifest.get("kind") != "tg5040-offline-backup-manifest"
@@ -322,14 +338,14 @@ def load_manifest(path):
     return manifest, hashlib.sha256(data).hexdigest()
 
 
-def verify(manifest_path, backup, restored=None):
+def verify(manifest_path, backup, restored=None, *, progress=None):
     manifest, manifest_digest = load_manifest(manifest_path)
     reports = {}
     requested = (backup, restored) if restored is not None else (backup,)
     with anchored_roots(*requested) as roots:
         observed_identities = []
         for name, root in zip(("retained_backup", "restored_tree"), roots):
-            observed = scan_tree(root, manifest["scope"])
+            observed = scan_tree(root, manifest["scope"], **({"progress": progress} if progress is not None else {}))
             if observed["root_identity"] in observed_identities:
                 raise ValueError("backup and restored observations alias one another")
             observed_identities.append(observed["root_identity"])

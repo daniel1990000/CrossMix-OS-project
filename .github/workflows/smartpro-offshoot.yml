@@ -82,7 +82,7 @@ jobs:
             common_src/spruce_igm_theme.c
             common_src/spruce_igm_theme.h
             build.sh
-      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsdl2-image-2.0-0 libsodium23 binutils
+      - run: sudo apt-get update && sudo apt-get install -y libsdl2-2.0-0 libsdl2-image-2.0-0 libsdl2-ttf-2.0-0 libsodium23 binutils
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           repository: PortsMaster/PortMaster-New

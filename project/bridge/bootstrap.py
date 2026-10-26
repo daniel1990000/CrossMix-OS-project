@@ -29,6 +29,7 @@ class ExistingPyUIModels:
     recents_manager: Any
     label_for: Callable[[Any], str] | None = None
     artwork_for: Callable[[Any], str | None] | None = None
+    collections_manager: Any = None
 
     def assert_ready(self) -> None:
         if not callable(getattr(self.system_manager, "get_active_systems", None)) or not callable(self.game_list):
@@ -43,7 +44,8 @@ class ExistingPyUIModels:
         from psp_shell.adapters.spruce import PyUIModelProvider
         return PyUIModelProvider(sd_root, system_manager=self.system_manager, game_list=self.game_list,
             favorites_manager=self.favorites_manager, recents_manager=self.recents_manager,
-            label_for=self.label_for, artwork_for=self.artwork_for, **kwargs)
+            label_for=self.label_for, artwork_for=self.artwork_for,
+            collections_manager=self.collections_manager, **kwargs)
 
 
 @dataclass(frozen=True)

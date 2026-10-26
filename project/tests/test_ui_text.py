@@ -39,5 +39,21 @@ class TextWrappingTests(unittest.TestCase):
                 self.assertEqual(lines, self.text.wrap(value, 20, 70, 2))
 
 
+    def test_character_budget_reports_omission_and_does_not_poison_complete_prefix_cache(self):
+        prefix = "word " * 409 + "end"
+        self.assertEqual(len(prefix), self.text.MAX_TEXT_CHARS)
+        for values in ((prefix, prefix + " hidden warning"), (prefix + " hidden warning", prefix)):
+            for value in values:
+                lines = self.text.wrap(value, 20, 500, 128)
+                self.assertEqual("More text omitted" in " ".join(lines), len(value) > self.text.MAX_TEXT_CHARS)
+                self.assertLessEqual(len(lines), 128)
+                self.assertTrue(all(self.text.measure(line, 20) <= 500 for line in lines))
+
+    def test_character_budget_marker_survives_a_small_line_budget(self):
+        lines = self.text.wrap("long details " * 200, 20, 500, 2)
+        self.assertEqual(len(lines), 2)
+        self.assertEqual(lines[-1], "… More text omitted.")
+
+
 if __name__ == "__main__":
     unittest.main()

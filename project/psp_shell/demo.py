@@ -47,6 +47,10 @@ class DemoBackend:
                     "selected_preset": "PPSSPP-SA" if system == "PSP" else "Existing emulator (sample)",
                 })
         self._favorites = {"sample:PSP:skyline", "sample:PS:echo", "sample:PORTS:summit"}
+        self._collections = {
+            "sample:collection:later": ("Play later", ("sample:PSP:harbor", "sample:GBA:moon", "sample:PORTS:garden")),
+            "sample:collection:arcade": ("One more round", ("sample:PSP:skyline", "sample:PS:rally", "sample:PORTS:vector")),
+        }
 
     def refresh(self):
         # Demo records are already in memory; no owner files are read or changed.
@@ -55,13 +59,48 @@ class DemoBackend:
     def systems(self):
         return copy.deepcopy(self._systems)
 
-    def games(self, system_id=None, search="", offset=0, limit=50):
+    def games(self, system_id=None, search="", offset=0, limit=50, *, source="all", collection_id="",
+              sort="native", available_only=False, jump="", focus_game_id=""):
         search = unicodedata.normalize("NFC", search).casefold()
-        records = [self._record(g) for g in self._games
+        if source == "favorites":
+            candidates = self.favorites()
+        elif source == "recent":
+            candidates = self.recent()
+        elif source == "collection":
+            if collection_id not in self._collections:
+                raise ValueError("The sample collection is no longer available")
+            identifiers = self._collections[collection_id][1]
+            candidates = [g for identifier in identifiers for g in self._games if g["id"] == identifier]
+        elif source == "all":
+            candidates = self._games
+        else:
+            raise ValueError("Unknown library source")
+        records = [self._record(g) for g in candidates
                    if (not system_id or g["system_id"] == system_id)
-                   and search in unicodedata.normalize("NFC", g["label"]).casefold()]
-        records.sort(key=lambda g: (g["label"].casefold(), g["id"]))
-        return {"items": records[offset:offset + limit], "total": len(records), "offset": offset, "limit": limit}
+                   and search in unicodedata.normalize("NFC", g["label"]).casefold()
+                   and (not available_only or g.get("availability") == "available")]
+        if sort == "system":
+            records.sort(key=lambda g: (g["system_id"].casefold(), g["label"].casefold(), g["id"]))
+        elif sort in ("title_asc", "title_desc") or source == "all":
+            records.sort(key=lambda g: (g["label"].casefold(), g["id"]), reverse=sort == "title_desc")
+        focus_id = ""
+        if jump and records:
+            index = next((i for i, game in enumerate(records) if game["label"].casefold() >= jump.casefold()), len(records) - 1)
+            offset = index // limit * limit
+            focus_id = records[index]["id"]
+        elif focus_game_id and records:
+            index = next((i for i, game in enumerate(records) if game["id"] == focus_game_id), None)
+            if index is not None:
+                offset = index // limit * limit
+                focus_id = focus_game_id
+        result = {"items": records[offset:offset + limit], "total": len(records), "offset": offset, "limit": limit}
+        if focus_id:
+            result["focus_id"] = focus_id
+        return result
+
+    def collections(self):
+        return [{"id": identifier, "collection_id": identifier, "label": label, "game_count": len(games)}
+                for identifier, (label, games) in self._collections.items()]
 
     def _record(self, value):
         result = copy.deepcopy(value)
@@ -100,8 +139,14 @@ class DemoBackend:
                                                         "This is sample metadata; no emulator or game is running."}
         return result
 
-    def random(self):
-        return self._record(random.choice(self._games))
+    def random(self, system_id=None, search="", *, source="all", collection_id="", sort="native",
+               available_only=True, exclude_game_id=""):
+        records = self.games(system_id, search, limit=len(self._games), source=source,
+                             collection_id=collection_id, sort=sort, available_only=True)["items"]
+        choices = [game for game in records if game["id"] != exclude_game_id] or records
+        if not choices:
+            raise ValueError("No available games match this view")
+        return random.choice(choices)
 
     def tools(self):
         return [{"id": identifier, "tool_id": identifier, "label": label,

@@ -1,4 +1,16 @@
-# Artwork refresh and controller text entry
+# Interface accessibility and refresh
+
+Settings → Text size offers 75%, 100%, 115%, 130%, 150% and 175%. Essential
+footer hints and status text scale with the preference; larger sizes use two
+footer rows. Selected game titles can wrap to two lines. High contrast retains
+an opaque footer and dialog background. Physical Confirm/Back hints follow the
+chosen button position, independently of device lettering.
+
+Dialogs show text-page and hidden-action indicators independently. West advances
+long text and North returns to the previous text page. Game warnings appear
+before optional details. Controls & help is available from Settings and Games;
+empty results offer relevant search, filter or refresh actions. Library tools
+use Start on a controller or Tab on desktop.
 
 Use **Games → Refresh library**, or F5 on a desktop, after changing artwork or
 library metadata. Refresh keeps the current page and game when they still
@@ -46,7 +58,8 @@ lowercase controller entry and complete font
 coverage are outside the current contract. Non-Latin input remains useful only
 where the installed font can display it.
 
-The [captures](../evidence/ui-polish/) are actual SDL host renders using original
+The [dev18 captures](../evidence/dev18-library-backups-20261026/) and
+[earlier captures](../evidence/ui-polish/) are actual SDL host renders using original
 synthetic metadata and artwork. Host tests cover both Confirm preferences,
 every key, punctuation/actions, Unicode input, actual maximum-size label bounds,
 source metadata refresh, same-path replacement and stale worker completions.

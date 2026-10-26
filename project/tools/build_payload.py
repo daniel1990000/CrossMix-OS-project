@@ -10,9 +10,10 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).absolute().parents[1] / "packaging"))
 from overlay import ensure_no_links, OverlayError, SPRUCE_COMMIT, PYUI_TREE, relative_path
+from release_descriptor import original_source_scope, original_source_file, PAYLOAD_TOOLS
 
 
-def build_payload(project, output, source_lock=None):
+def build_payload(project, output, source_lock=None, *, source_inventory=None):
     project = ensure_no_links(Path(project))
     output = ensure_no_links(Path(output))
     if output.exists():
@@ -31,27 +32,50 @@ def build_payload(project, output, source_lock=None):
         if not root.is_dir():
             continue
         for path in sorted(root.rglob("*")):
+            relative = path.relative_to(project)
+            if not original_source_scope(relative):
+                continue
             if path.is_symlink():
                 raise OverlayError("source symlinks are excluded from a payload")
             if not path.is_file() or path.suffix.casefold() not in extensions or "__pycache__" in path.parts:
                 continue
             name = destination + "/" + path.relative_to(root).as_posix()
+            if not original_source_file(relative):
+                raise OverlayError("payload input is outside the original source allowlist")
             relative_path(name)
             sources.append((path, name))
     # The backup screen reuses the existing fresh readback implementation.
     # Keep this narrow: no arbitrary tool, command or auto-restore endpoint.
-    for name in ("__init__.py", "recovery_payload.py", "recovery_preflight.py"):
+    for name in PAYLOAD_TOOLS:
         path = project / "tools" / name
         if path.is_symlink() or not path.is_file():
             raise OverlayError("existing recovery verifier source missing")
         sources.append((path, "app/tools/" + name))
     output.mkdir(parents=True)
     try:
+        consumed, copies = {}, []
+
+        def captured_bytes(path):
+            relative = path.relative_to(project).as_posix()
+            data = path.read_bytes()
+            digest = hashlib.sha256(data).hexdigest()
+            if source_inventory is not None and source_inventory.get(relative) != digest:
+                raise OverlayError("payload input differs from captured source inventory: " + relative)
+            consumed[relative] = digest
+            return data
+
+        def copy_source(path, destination):
+            data = captured_bytes(path)
+            destination.write_bytes(data)
+            destination.chmod(0o644)
+            copies.append({"source_path": path.relative_to(project).as_posix(),
+                           "payload_path": destination.relative_to(output).as_posix(),
+                           "sha256": hashlib.sha256(data).hexdigest()})
+
         for path, name in sources:
             destination = output / name
             destination.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copyfile(path, destination)
-            destination.chmod(0o644)
+            copy_source(path, destination)
         metadata, notices = output / "metadata", output / "notices"
         metadata.mkdir(exist_ok=True)
         notices.mkdir(exist_ok=True)
@@ -59,19 +83,20 @@ def build_payload(project, output, source_lock=None):
                 "kind": "original-host-preview", "hardware_qualified": False,
                 "upstream_source_bundled": False, "firmware_emulators_roms_bundled": False}
         if source_lock:
-            provenance = json.loads(Path(source_lock).read_text(encoding="utf-8"))
+            lock_path = Path(source_lock)
+            provenance = json.loads(captured_bytes(lock_path) if source_inventory is not None else lock_path.read_bytes())
             if provenance.get("base", {}).get("source_commit") != SPRUCE_COMMIT:
                 raise OverlayError("source lock is not the selected spruce baseline")
             lock["source_lock"] = provenance
         (metadata / "source-provenance.json").write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         if (project / "LICENSE").is_file():
-            shutil.copyfile(project / "LICENSE", notices / "ORIGINAL-PROJECT-LICENSE.txt")
+            copy_source(project / "LICENSE", notices / "ORIGINAL-PROJECT-LICENSE.txt")
         else:
             raise OverlayError("project/LICENSE is required to package original source")
         font_notice = project / "assets/fonts/OFL.txt"
         if not font_notice.is_file():
             raise OverlayError("font license notice missing")
-        shutil.copyfile(font_notice, notices / "NotoSans-OFL.txt")
+        copy_source(font_notice, notices / "NotoSans-OFL.txt")
         (notices / "DEPENDENCIES.txt").write_text(
             "This package contains original project Python code and original assets, plus the licensed Noto Sans font.\n"
             "It does not contain spruceOS/PyUI source, SDL, Python, PySDL2, Pillow, firmware, emulators, ROMs, saves or signing keys.\n"
@@ -83,7 +108,10 @@ def build_payload(project, output, source_lock=None):
         for path in sorted(output.rglob("*")):
             if path.is_file():
                 entries.append({"path": path.relative_to(output).as_posix(), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
-        (metadata / "original-payload.json").write_text(json.dumps({"schema": 1, "files": entries}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        (metadata / "original-payload.json").write_text(json.dumps({
+            "schema": 1, "files": entries, "source_payload": copies,
+            "source_files": [{"path": name, "sha256": digest} for name, digest in sorted(consumed.items())],
+            "source_inventory_verified": source_inventory is not None}, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return {"payload": str(output), "files": len(entries) + 1, "device_qualified": False}
     except BaseException:
         shutil.rmtree(output)

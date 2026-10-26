@@ -1,0 +1,52 @@
+{
+  "verified_at_utc": "2026-10-26T17:45:12.842382+00:00",
+  "artifact_sha256": "3ce9dd25838227189f7a106270e37ad2e64a6944d53a337e33b95fe3406bdf80",
+  "artifact_size_bytes": 5363997,
+  "frontend": {
+    "commit": "89da2a33bb853bca10aca1d983d84bb02702b216",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 1209,
+    "passed": 1209,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "e6d6da65be4df59f0652cca0498082d634006dad8ac37493f22f429e69c7bfeb",
+    "development-verification.pub": "426b92376da32764f13b8c39c9e910b46d39737a494972b6204670f3c13caa71",
+    "host-preview.png": "c9a0e8028be8c873a0a127ff10e3e764022efccb6932f8e34b770a22317825ae",
+    "release-source.json": "c5c3454222a612780cec8294d4c2edf46fad9dc9a6427d6f9d3524d37b1c397e",
+    "smartpro-psp-0.1.0-dev18-host-preview.zip": "d91685dd705e236650be18a4b352b4e7c85d22a06356780f3a38b1a3b887af06",
+    "smartpro-psp-0.1.0-dev18-original-source.zip": "3d956d84487527c09f5072fa5d8c10eb19743f0349f96bfcb83c549a0d336605",
+    "smartpro-psp-0.1.0-dev18.tar": "62e95c9c2815598c144441a01ef335cfb700c5e99e14b9f8e7d7958c8aedf072"
+  },
+  "source_inventory_files": 235,
+  "source_inventory_sha256": "7e910473d1c4bbb0c8b00d929b8c809212439c0e6be8e3f5d47978af11809ec9",
+  "payload_files": 68,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false,
+  "schema": 1,
+  "run_id": 40370508776,
+  "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40370508776",
+  "status": "success",
+  "branch_source_commit": "399a528542da1139903c93cef3041d23acad2fca",
+  "actual_clean_checkout": "89da2a33bb853bca10aca1d983d84bb02702b216",
+  "base_commit": "4a97d8a253e9d572e51f17876711597d38181633",
+  "event": "pull_request",
+  "artifact_id": 12673380140,
+  "artifact_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40370508776/artifacts/12673380140",
+  "artifact_expires_at_utc": "2027-01-24T17:38:26Z",
+  "provider_digest_verified": true,
+  "source_expectation": "ci-source-expectation.json",
+  "independent_private_retention_performed": false,
+  "public_release_created": false,
+  "scope_note": "CI merge includes one independent main-branch audit document absent from the local clean implementation package; both identities are recorded separately."
+}

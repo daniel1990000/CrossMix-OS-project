@@ -250,10 +250,18 @@ class EmbeddedRunner:
             self.context.assert_owners()
 
     def _stop_background_tasks(self):
+        self._quiesce_backup()
         self._background_stopped = True
         self.context.stop_background_tasks()
         if self.context.assert_owners is not None:
             self.context.assert_owners()
+
+    def _quiesce_backup(self):
+        # This is a project-owned read-only job, not a second native owner.
+        # Finish its cooperative cancellation before releasing the frontend.
+        callback = getattr(self.context.backup_adapter, "quiesce", None)
+        if callable(callback):
+            callback()
 
     def _restore_owners(self):
         try:
@@ -322,6 +330,11 @@ class EmbeddedRunner:
                 return super().dispatch(method, params)
 
             def _dispatch(self, method, params):
+                if method == "system.capabilities":
+                    result = super()._dispatch(method, params)
+                    result["collection_management"] = experimental is None and callable(
+                        getattr(runner.context.main_menu, "launch_selection", None))
+                    return result
                 if method == "spruce.advanced":
                     self._fields(params, ("route",), ("route",))
                     route = self._text(params, "route", limit=32)
@@ -416,7 +429,7 @@ class EmbeddedRunner:
         self._pending_game_options = None
         self.model.exit_request = None
         self._restore(None)
-        self._commands(self.model.initial_commands())
+        self._commands(self.model.refresh_commands())
 
     def run(self, *, max_frames: int = 0, scripted_actions=()) -> EmbeddedResult:
         if type(max_frames) is not int or max_frames < 0 or max_frames > 100000:
@@ -437,6 +450,9 @@ class EmbeddedRunner:
                 if experimental is not None and not experimental.check_view():
                     return self._finish_experimental()
                 now = time.monotonic()
+                poll = getattr(self.model, "poll_commands", None)
+                if callable(poll):
+                    self._commands(poll(now))
                 snapshot = self.model.snapshot(now, display_clock=time.strftime("%m/%d  %H:%M"))
                 self.renderer.render(snapshot, now)
                 self.context.display.present()
@@ -473,6 +489,7 @@ class EmbeddedRunner:
                 if self.model.exit_request in {"classic", "quit"}:
                     if experimental is not None:
                         return self._finish_experimental()
+                    self._quiesce_backup()
                     state = self.health.record()
                     self.health.request("classic", state["generation"])
                     self._snapshot()
@@ -492,7 +509,12 @@ class EmbeddedRunner:
                 experimental.block("callback_failed")
             raise
         finally:
-            self._close_project_renderer()
+            try:
+                callback = getattr(self.context.backup_adapter, "close", None)
+                if callable(callback):
+                    callback()
+            finally:
+                self._close_project_renderer()
 
     def _finish_experimental(self):
         """Release this view before authenticated return; never claim classic readiness."""
@@ -532,6 +554,7 @@ class EmbeddedRunner:
         try:
             if self.context.assert_owners is not None:
                 self.context.assert_owners()
+            self._quiesce_backup()
             self._close_project_renderer()
             self._restore_owners()
             self.context.controller.clear_input_queue()

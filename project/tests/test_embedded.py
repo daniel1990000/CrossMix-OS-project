@@ -56,6 +56,8 @@ class FakeBackend:
         self.events = managers.events
     def systems(self):
         return []
+    def refresh(self):
+        self.events.append("refresh-existing-models")
     def recent(self):
         return []
     def favorites(self):
@@ -317,6 +319,53 @@ class EmbeddedTests(unittest.TestCase):
             runner.release_for_fallback()
         self.assertIn("existing-menu:Setting", self.events)
         self.assertNotIn("existing-device-run-game", self.events)
+
+    def test_native_return_refreshes_records_without_losing_second_page_selection(self):
+        live = {"label": "Before options"}
+        class PagedBackend(FakeBackend):
+            def __init__(inner, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                inner.label = live["label"]
+            def refresh(inner):
+                super().refresh()
+                inner.label = live["label"]
+            def games(inner, *args, offset=0, limit=40, **kwargs):
+                rows = [{"game_id": "game:%03d" % i, "display_name": inner.label + " %03d" % i,
+                         "system_id": "PSP"} for i in range(85)]
+                return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset}
+        deps = replace(self.dependencies, backend_factory=PagedBackend)
+        runner = EmbeddedRunner(self.context, health=self.health, dependencies=deps)
+        self.main_menu.launch_selection = lambda _: live.update(label="After native options")
+        with self.provider_patch():
+            runner.setup()
+            runner._commands(runner.model.handle("confirm"))
+            for _ in range(44):
+                runner._commands(runner.model.handle("down"))
+            before = runner.model.snapshot()
+            self.assertEqual(before.selected_item.id, "game:044")
+            generation = before.artwork_generation
+            runner.open_advanced("settings")
+            after = runner.model.snapshot()
+            self.assertEqual(after.selected_item.id, "game:044")
+            self.assertEqual(after.selected_item.title, "After native options 044")
+            self.assertGreater(after.artwork_generation, generation)
+            runner.release_for_fallback()
+        self.assertIn("refresh-existing-models", self.events)
+
+    def test_read_only_backup_job_is_quiesced_before_native_owner_release(self):
+        class Backup:
+            def quiesce(inner):
+                self.events.append("quiesce-backup-job")
+            def close(inner):
+                self.events.append("close-backup-job")
+        context = replace(self.context, backup_adapter=Backup())
+        runner = EmbeddedRunner(context, health=self.health, dependencies=self.dependencies)
+        with self.provider_patch():
+            runner.setup()
+            runner.open_advanced("settings")
+            runner.release_for_fallback()
+        self.assertLess(self.events.index("quiesce-backup-job"), self.events.index("stop-project-work"))
+        self.assertLess(self.events.index("quiesce-backup-job"), self.events.index("release-project-input"))
 
     def test_failed_advanced_owner_restore_blocks_retry_and_classic_fallback(self):
         def restore():

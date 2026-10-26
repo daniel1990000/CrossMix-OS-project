@@ -1,0 +1,8 @@
+{
+  "frontend_commit": "89da2a33bb853bca10aca1d983d84bb02702b216",
+  "branch_commit": "399a528542da1139903c93cef3041d23acad2fca",
+  "base_commit": "4a97d8a253e9d572e51f17876711597d38181633",
+  "source_inventory_sha256": "7e910473d1c4bbb0c8b00d929b8c809212439c0e6be8e3f5d47978af11809ec9",
+  "source_inventory_files": 235,
+  "independent_expectation": "Local clean inventory plus the one independently fetched main-branch audit document; git diff confirms no other differences."
+}

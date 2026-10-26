@@ -18,7 +18,8 @@ from unittest.mock import patch
 from bridge.bootstrap import ForegroundIdentity, SpruceReturnEvidence
 from psp_shell.runtime import SPRUCE_COMMIT
 from psp_shell.state_evidence import (FORMAT, UPSTREAM, LaunchIdentity, PPSSPPResumeAdapter, PrivateStateSession,
-    QualifiedStateProfile, StateCapabilityStore, StateEvidenceError, VerifiedLoadCompletion, VerifiedState, WriterStoppedEvidence, encode_packet)
+    PrincipalStateSessionAuthority, QualifiedStateProfile, StateCapabilityStore, StateEvidenceError,
+    VerifiedLoadCompletion, VerifiedState, WriterStoppedEvidence, encode_packet)
 
 
 class StateEvidenceTests(unittest.TestCase):
@@ -379,10 +380,13 @@ store.close()
         value = self.verified()
         backend.set_verified_resume_evidence({row["id"]: value})
         status = backend.recent()[0]
-        self.assertTrue(status["resume_available"])
+        self.assertFalse(status["resume_available"])
+        self.assertTrue(status["state_verification_required"])
         self.assertEqual(status["state_recorded_at"], value.recorded_at_utc)
         self.assertEqual(status["state_recorded_at_kind"], "verification")
-        action = backend.resolve_game(row["id"], mode="resume")["action_id"]
+        resolved = backend.resolve_game(row["id"], mode="resume")
+        self.assertTrue(resolved["resume_available"])
+        action = resolved["action_id"]
         backend.execute_action(action, "resume", release_ui=False)
         self.assertIs(calls[0], value)
         action = backend.resolve_game(row["id"], mode="resume")["action_id"]
@@ -391,6 +395,137 @@ store.close()
             backend.execute_action(action, "resume", release_ui=False)
         with self.assertRaises(SpruceError):
             backend.set_verified_resume_evidence({row["id"]: {"state": "forged"}})
+
+    def capture_authority(self):
+        from bridge.process_source import SourceCommandRequest
+        game = self.card / "Roms/PSP/game.iso"
+        game.parent.mkdir(parents=True)
+        game.write_bytes(b"synthetic source game")
+        descriptor = self.card / "Emu/PSP/config.json"
+        descriptor.parent.mkdir(parents=True)
+        descriptor.write_text(json.dumps({"label": "PSP", "launch": "launch.sh", "extlist": "iso",
+            "default_emulator": "PPSSPP", "menuOptions": {"Emulator": {
+                "options": ["PPSSPP", "Other"], "selected": "PPSSPP", "overrides": {}}}}))
+        store = StateCapabilityStore(self.root / "authority-store", boot_id=self.foreground.boot_id)
+        self.addCleanup(store.close)
+        authority = PrincipalStateSessionAuthority(store=store, private_root=self.root,
+            profiles={"PSP": self.profile}, observe_writers=lambda foreground, profile: self.writers)
+        def close_sessions():
+            for session in authority.sessions.values():
+                session.close()
+        self.addCleanup(close_sessions)
+        request = SourceCommandRequest(self.foreground, "c" * 64, 123, "123",
+                                      {"system_id": "PSP", "rom_relative": "Roms/PSP/game.iso"}, None)
+        return authority, request, descriptor
+
+    def resume_request(self, request):
+        return replace(request, state_intent={"mode": "resume", "state_path": str(self.state),
+                                             "state_sha256": self.sha(self.state), "slot": 2})
+
+    def test_native_config_drift_disables_capture_for_normal_launch_only(self):
+        authority, request, _ = self.capture_authority()
+        original = self.native_config.read_bytes()
+        self.native_config.write_bytes(original + b"# native settings edit\n")
+        self.assertEqual(authority.command_environment(self.foreground, request), {})
+        self.assertEqual(authority.last_error, "STATE_PROFILE_CHANGED")
+        self.assertEqual(authority.sessions, {})
+        self.assertEqual(list(self.root.glob("trimui-state-*")), [])
+        with self.assertRaises(StateEvidenceError) as caught:
+            authority.command_environment(self.foreground, self.resume_request(request))
+        self.assertEqual(caught.exception.code, "STATE_PROFILE_CHANGED")
+        self.native_config.write_bytes(original)
+        environment = authority.command_environment(self.foreground, request)
+        self.assertEqual(environment["TRIMUI_PROJECT_RESUME_STATE"], "")
+        self.assertTrue(Path(environment["TRIMUI_PROJECT_STATE_REQUEST"]).is_file())
+        self.assertIsNone(authority.last_error)
+
+    def test_changed_or_unavailable_preset_omits_capture_but_never_downgrades_resume(self):
+        authority, request, descriptor = self.capture_authority()
+        config = json.loads(descriptor.read_text())
+        for selected in ("Other", "No longer installed"):
+            with self.subTest(selected=selected):
+                config["menuOptions"]["Emulator"]["selected"] = selected
+                descriptor.write_text(json.dumps(config))
+                self.assertEqual(authority.command_environment(self.foreground, request), {})
+                self.assertEqual(authority.last_error, "STATE_PRESET_CHANGED")
+                self.assertEqual(authority.sessions, {})
+                with self.assertRaises(StateEvidenceError) as caught:
+                    authority.command_environment(self.foreground, self.resume_request(request))
+                self.assertEqual(caught.exception.code, "STATE_PRESET_CHANGED")
+
+    def test_unqualified_optional_profile_and_missing_association_cannot_resume(self):
+        authority, request, _ = self.capture_authority()
+        for profile in (replace(self.profile, state_save_load_qualified=False), None):
+            with self.subTest(profile=profile):
+                authority.profiles = {"PSP": profile} if profile else {}
+                reason = "STATE_PROFILE_UNQUALIFIED" if profile else "STATE_PROFILE_UNAVAILABLE"
+                self.assertEqual(authority.command_environment(self.foreground, request), {})
+                self.assertEqual(authority.last_error, reason)
+                with self.assertRaises(StateEvidenceError) as caught:
+                    authority.command_environment(self.foreground, self.resume_request(request))
+                self.assertEqual(caught.exception.code, reason)
+                self.assertEqual(authority.sessions, {})
+        with self.assertRaises(StateEvidenceError) as caught:
+            authority.command_environment(self.foreground, replace(self.resume_request(request), source_game=None))
+        self.assertEqual(caught.exception.code, "STATE_PROFILE_UNAVAILABLE")
+
+    def test_malformed_profiles_are_not_optional_capture_fallbacks(self):
+        authority, request, _ = self.capture_authority()
+        invalid = (replace(self.profile, engine_sha256="invalid"),
+                   replace(self.profile, hardware_qualified=0),
+                   replace(self.profile, config_hashes=((str(self.root / "outside.ini"), "0" * 64),)),
+                   replace(self.profile, config_hashes=()),
+                   replace(self.profile, state_roots=(self.root,)))
+        for profile in invalid:
+            with self.subTest(profile=profile), self.assertRaises(StateEvidenceError):
+                authority.profiles = {"PSP": profile}
+                authority.command_environment(self.foreground, request)
+        self.assertEqual(authority.sessions, {})
+
+    def test_malformed_source_requests_fail_before_missing_profile_fallback(self):
+        authority, request, _ = self.capture_authority()
+        authority.profiles = {}
+        invalid = (replace(request, source_game={"system_id": "PSP"}),
+                   replace(request, source_game={"system_id": "PSP", "rom_relative": "Roms/../outside.iso"}),
+                   replace(request, source_pid=False), replace(request, command_sha256="invalid"),
+                   replace(request, state_intent={}),
+                   replace(self.resume_request(request), state_intent={"mode": "normal"}))
+        for changed in invalid:
+            with self.subTest(request=changed), self.assertRaises(StateEvidenceError):
+                authority.command_environment(self.foreground, changed)
+        self.assertEqual(authority.sessions, {})
+
+    def test_io_and_writer_errors_never_become_normal_launch_fallbacks(self):
+        authority, request, _ = self.capture_authority()
+        for error in (OSError("unavailable storage"),
+                      StateEvidenceError("STATE_WRITERS_UNVERIFIED", "writer ownership changed"),
+                      StateEvidenceError("STATE_INPUT_CHANGED", "changed during hashing")):
+            with self.subTest(error=error), patch("psp_shell.state_evidence._file_hash", side_effect=error):
+                with self.assertRaises(type(error)):
+                    authority.command_environment(self.foreground, request)
+        self.assertEqual(authority.sessions, {})
+        self.native_config.unlink()
+        self.native_config.symlink_to(self.game)
+        with self.assertRaises(OSError):
+            authority.command_environment(self.foreground, request)
+
+    def test_interrupted_capture_setup_retains_no_session_and_allows_retry(self):
+        authority, request, _ = self.capture_authority()
+        count = len(os.listdir("/proc/self/fd"))
+        with patch("psp_shell.state_evidence.os.fsync", side_effect=OSError("interrupted private transport")):
+            with self.assertRaises(OSError):
+                authority.command_environment(self.foreground, request)
+        self.assertEqual(authority.sessions, {})
+        self.assertEqual(len(os.listdir("/proc/self/fd")), count)
+        self.assertEqual(authority.store.game_ids(), ())
+        environment = authority.command_environment(self.foreground, request)
+        self.assertTrue(Path(environment["TRIMUI_PROJECT_STATE_REQUEST"]).is_file())
+        retained = authority.sessions[self.foreground.token]
+        with self.assertRaises(StateEvidenceError) as caught:
+            authority.command_environment(self.foreground, request)
+        self.assertEqual(caught.exception.code, "INVALID_STATE_SESSION")
+        self.assertIs(authority.sessions[self.foreground.token], retained)
+        self.assertGreaterEqual(retained._directory, 0)
 
 
 if __name__ == "__main__":

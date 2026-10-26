@@ -584,7 +584,10 @@ class PortsManager:
                 _require(_fingerprint(backup)[0] == record['before'], 'INVALID_BACKUP', 'An import backup is missing or damaged')
         for index, record in reversed(list(enumerate(receipt['files']))):
             target = _safe(self.root, record['target'])
-            if _fingerprint(target)[0] == record['before']:
+            current = _fingerprint(target)[0]
+            _require(current in (record['before'], record['after']),
+                     'CONFLICT', 'Port data changed during undo; retain the receipt and backups')
+            if current == record['before']:
                 continue
             if record['before'] is None:
                 target.unlink()

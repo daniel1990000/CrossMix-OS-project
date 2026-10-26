@@ -80,7 +80,7 @@ class NavigationTests(unittest.TestCase):
         model.set_category_items(1, [game(resume_available=False)])
         model.handle("right")
         model.handle("confirm")
-        self.assertEqual([c.title for c in model.snapshot().dialog.choices], ["Fresh start", "Cancel"])
+        self.assertEqual([c.title for c in model.snapshot().dialog.choices], ["Start normally", "Cancel"])
         launch = model.handle("confirm")[0]
         self.assertEqual(launch.method, "game.launch")
         self.assertEqual(launch.params["mode"], "fresh")

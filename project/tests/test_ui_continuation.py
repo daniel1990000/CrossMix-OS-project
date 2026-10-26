@@ -48,14 +48,17 @@ class CombinedFilterTests(unittest.TestCase):
 
     def test_favorites_and_recent_filters_are_independent_and_reject_stale_reply(self):
         model = NavigationModel()
+        receive(model, "systems", [{"system_id": "PSP", "label": "PSP"}, {"system_id": "PS", "label": "PS1"}])
         model.handle("down")
         initial = model.handle("confirm")[0]
         model.receive(initial, [game()])
         model.handle("menu")
+        choose(model, "System: All systems")
         psp = choose(model, "PSP")[0]
         self.assertEqual(psp.method, "library.favorites")
         self.assertEqual(psp.params, {"system_id": "PSP"})
         model.handle("menu")
+        choose(model, "System: PSP")
         ps1 = choose(model, "PS1")[0]
         self.assertEqual(ps1.params, {"system_id": "PS"})
         model.receive(ps1, [game("ps:one", "PS")])
@@ -63,6 +66,7 @@ class CombinedFilterTests(unittest.TestCase):
         self.assertEqual(model.snapshot().selected_item.id, "ps:one")
         model.handle("right")
         model.handle("menu")
+        choose(model, "System: All systems")
         recent = choose(model, "PSP")[0]
         self.assertEqual(recent.method, "library.recent")
         self.assertEqual(recent.params, {"system_id": "PSP"})
@@ -251,7 +255,7 @@ class ContinuationRenderTests(unittest.TestCase):
                 self.assertFalse(any(row[0] == "Resume" for row in drawn))
                 self.assertTrue(art.called)
                 self.assertEqual(art.call_args.args[0].artwork, "missing-art.png")
-                self.assertTrue(any(row[0].startswith("X  More text") for row in drawn))
+                self.assertTrue(any(row[0].startswith("More text") for row in drawn))
                 drawn.clear()
                 renderer.render(replace(model.snapshot(), dialog=replace(dialog, selected=0)), 0)
                 self.assertTrue(any(row[0] == "Resume" for row in drawn))

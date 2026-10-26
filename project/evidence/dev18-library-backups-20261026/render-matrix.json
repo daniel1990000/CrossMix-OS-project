@@ -1,0 +1,1164 @@
+{
+  "scope": "Actual SDL host renders with synthetic metadata; no device qualification",
+  "source_sha256": {
+    "renderer.py": "f3284e054f87e9cd244d9c2b96f8351cae2d7782cec1c13e4f9187c81f8c68f1",
+    "text.py": "540fff3c82a2fac60d1743603a58a5d55d5c7c8f10eaaf19e0d90d521020d466",
+    "keyboard.py": "2c0ca8639d3eca7803188d4960903510b08a94c5abf836b8f88702a1b2a0a674",
+    "model.py": "6f9c4eade72c85877ac14b198655e5fee8b17e5793d7e1023329929bb58431dc"
+  },
+  "count": 144,
+  "renders": [
+    {
+      "file": "075-south-default-library.png",
+      "surface": "library",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "fcdcb77f805991060e85413b64b42a8558c2a7cc5fed0f35a90fbb8dc9be1253"
+    },
+    {
+      "file": "075-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "a40161748b7b35c32c89309e639b9d94c271ba09b5391067c0db824d8573e9fa"
+    },
+    {
+      "file": "075-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "6199a6b78447900bee00a97636bc08fd74af93b093c7ba9ed396d9819e45c3b0"
+    },
+    {
+      "file": "075-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "ebcb311cd9e560a562731e7a7c548671cb6c190cae02cf06e7e76cd15823f0d7"
+    },
+    {
+      "file": "075-south-default-error.png",
+      "surface": "error",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "fc1917b109f3a03cdec6c7af7ff3152a824cbff9b70b78b1d1800be7fca28165"
+    },
+    {
+      "file": "075-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "54198aa27b1d6a980c9505b87592f9055aa288881308e444f4ee557e2e7862be"
+    },
+    {
+      "file": "075-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "55435e2f8a9d5cb292f4d28a74091b75eca7d59dd1eb591b2cf9665acbd92f2e"
+    },
+    {
+      "file": "075-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "b97aa177bfa7ba4eb57820e3ea1244cc41424e3ac389a430757884c023926e85"
+    },
+    {
+      "file": "075-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "46dc60cbf6461244d7275746095e6ae451bf918d589c9f730216a13aa49f2e50"
+    },
+    {
+      "file": "075-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "b45ebbf2b28f2db98be2cb91511e78c3e9a24134d748b1aec797131e822afdcc"
+    },
+    {
+      "file": "075-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "75fdfa92bce3ab15c3816b4834f0ae37f0dd8fcac926464a6505dbf4b4280038"
+    },
+    {
+      "file": "075-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 0.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "360ffcb97046a442060fbadf0ca8744402253bdfdd3cd1d3c801f9cf519b8d08"
+    },
+    {
+      "file": "075-east-default-library.png",
+      "surface": "library",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "10167a44ee209030352cfeb922e9b44e4eaade44f74c887cafe62187d36e0aa6"
+    },
+    {
+      "file": "075-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "ade23e43ad9b1eb898795a38cae800921efabb58e6e1f2abb1c4edcece392484"
+    },
+    {
+      "file": "075-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "555ad254af44d21b21fb4898ed43d0207eb4dc0611e481d52d0585b44d41c171"
+    },
+    {
+      "file": "075-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "59d5c13be41d993d9ec34d3b582b6f18066602c84e88358b1c75b5c742af2766"
+    },
+    {
+      "file": "075-east-default-error.png",
+      "surface": "error",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "62993561f51adca89cb117afb2751be08c57b0cb8162d91eea6d4d986da7e57b"
+    },
+    {
+      "file": "075-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "de05e28e74b1e72712af701b0983a50f0ab42de3005cf25b9eefc4c0c80d11bc"
+    },
+    {
+      "file": "075-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "34cb56fcc86e5d119a1f3c33d35eb76b7d744c861a264cdacaded87b537de5a7"
+    },
+    {
+      "file": "075-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "ad296c8e29746426ed1fdd5aecfc5eff627462fdc60abd0b8ed28d2344faef2f"
+    },
+    {
+      "file": "075-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "293a89f7edcd5c3bc97954b32c1a66a8c9d377a617ac8c4b0000a4b4d1df4d90"
+    },
+    {
+      "file": "075-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "86995fabf363527b4982ad790b7c17c0cbb57465857970268888b5f4fdf2420d"
+    },
+    {
+      "file": "075-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "410d8c60a423ae9d8c5160f2a8ec6da6cf9bd11ee00e09eb89a3441bde73e88c"
+    },
+    {
+      "file": "075-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 0.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "f130f01634df41439dc33378d475a3357a4f38e9411935cf21083cc30ea56bee"
+    },
+    {
+      "file": "100-south-default-library.png",
+      "surface": "library",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "37d23862a45c9042ecd85d5e3c21abd9037e154af6b89c263229df9c07a9c5f2"
+    },
+    {
+      "file": "100-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "8d2b270ee6aa1432eed84baeb76db3dc5336d33e648713d0ddc10f6173047499"
+    },
+    {
+      "file": "100-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "a4c38076a3e5b63fb22edbf5d7e020c06d32ef259f393f8c4ca8fb142fa6888b"
+    },
+    {
+      "file": "100-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "98a3bfbac414eb48241594ef5d3e6f5901aa2da4d29a082ecfedf1969f873e10"
+    },
+    {
+      "file": "100-south-default-error.png",
+      "surface": "error",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "f1d0b629dc0bd9406883cafc86194ebc376152e058df59db1f89d4c7db6d788a"
+    },
+    {
+      "file": "100-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "2a7aceb12fc88a4047d259a3abd6898d69e5994be3ee6424e11a2af1be9ad448"
+    },
+    {
+      "file": "100-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "982dece495b57d0d1adfb2b4c6ced669ec2f829d99c56ef99974ea0fa61ab709"
+    },
+    {
+      "file": "100-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "8aaf250f679f861806675ba834745446b936b9fb0214c873f2553c05235be990"
+    },
+    {
+      "file": "100-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "4968856951ebeb8948ad637c60d775e9526efb9462b2c457056b059f2747d264"
+    },
+    {
+      "file": "100-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "6429a1becde52be4473b25c6891d35d2d3b13f1015c46d54affef363fb9d2c54"
+    },
+    {
+      "file": "100-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "2d51063734e7c10f4740b995f015da73c6378a5e0896d691dadf2edae77ae3c0"
+    },
+    {
+      "file": "100-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "deb317bcf20d67bb8b9c11d6a236cd1f42c741f7808675f915fd55b7063b1767"
+    },
+    {
+      "file": "100-east-default-library.png",
+      "surface": "library",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "f19c6b3bf3a6945119ef0294aab76599413a16c8cd772b1ad32a49c4ad0af68e"
+    },
+    {
+      "file": "100-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "6c56aa143caa61121b903478017119efd78dea6194fbef582ee19205b6b89233"
+    },
+    {
+      "file": "100-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "3274dc71f4d8052d02feeeea7919fb84cda20883e75757ba764cb24254b624ea"
+    },
+    {
+      "file": "100-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "76f848bdb98f84458d8a551a400d3bc4407970c524c32b5910a8dd96c83b7216"
+    },
+    {
+      "file": "100-east-default-error.png",
+      "surface": "error",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "51cbff99a7097bab57e3441d7b189e127f6aae02330a2c8f37f3078e06f417a3"
+    },
+    {
+      "file": "100-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "01f1e37d757ab06687a6482143f0aff4f7c163ea058a9aebc4ebb7609e30d8b4"
+    },
+    {
+      "file": "100-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "f30347f1d96cc39a6c231411a8ae515ab6c9f1dccc65856be73f770bf4e48d4b"
+    },
+    {
+      "file": "100-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "f595ce9c18b7acba1c9862051b1ad761e694ba0c25fed9ff06b8dd598ae44ff8"
+    },
+    {
+      "file": "100-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "30e76a057113f7db4f8a53f55f62140081ba85d45fe1e16e047a4e08d331eabf"
+    },
+    {
+      "file": "100-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "0fcf3c54b6bfc66439381ca49850806ab3186a4c25e325c292634ab8c27ffbaa"
+    },
+    {
+      "file": "100-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "7a7be17c970b9d73a56d01a2431d38649437cc4c0431d3bf3e5f5a3506031710"
+    },
+    {
+      "file": "100-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "c5fe16f6ad95eea0e05092add8adca3b217184c0514271fe2bed8ff884b6a62b"
+    },
+    {
+      "file": "115-south-default-library.png",
+      "surface": "library",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "1bbb8460835cd86be9358b487ca9f4d43374685962668dce001086c48d549984"
+    },
+    {
+      "file": "115-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "f079635934d7f4cf8003e85d3a467bee37abca14f6a5f31306c39b17e0c6c93e"
+    },
+    {
+      "file": "115-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "d2f3397e7e702c5379eb63ed1a761912f4f11824d5ffcf11cef26a86bdd0725c"
+    },
+    {
+      "file": "115-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "396c059433ad5c6638deb90b1457f4c9adc50b1c22b22b69cbe13816e6f1e604"
+    },
+    {
+      "file": "115-south-default-error.png",
+      "surface": "error",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "f339b8bce84b205b255af8f68b8e590192e7ddb4ebe27b6e8a63e8330b165c60"
+    },
+    {
+      "file": "115-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "6081ea73e4190b76d674882f9fd73059f3f9c13535a247f11cad73a17e503362"
+    },
+    {
+      "file": "115-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "59dc7a7e361d3299efa1c9cb5d25c5d43d9bf10113643a2d1160900e9f8ee0af"
+    },
+    {
+      "file": "115-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "d667178e2321f778ffb108ac0e06f2ffe19566a5d53a3c64e502f7f28d08ce85"
+    },
+    {
+      "file": "115-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "900c8445bbe1eee5036e2d8d9d87966180eaf3b891359a6ba64af45737684cd9"
+    },
+    {
+      "file": "115-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "68bfe04ebd0b49b63df583b096d4a16e9e77232bc2f35179a5ffe679cc1f30ad"
+    },
+    {
+      "file": "115-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "abb8b28a480941876ab7ee7180a67c6507d77161202eff6458f937be894b7ad2"
+    },
+    {
+      "file": "115-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.15,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "7861364d20649e541de760d5743b3059d00c28b5707ca3e0e37fa563c453ede5"
+    },
+    {
+      "file": "115-east-default-library.png",
+      "surface": "library",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "4446df1b4c1b26627774824fce942d100fbc5974110df620910b74ebdea7388c"
+    },
+    {
+      "file": "115-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "a2ba75a79446b4088a4f36d407ad8c23c85b8c6298a5dfcd0477cfc398edad19"
+    },
+    {
+      "file": "115-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "c5330291704643864557539a34342f0845441a5233beff96eb03c123c9781d80"
+    },
+    {
+      "file": "115-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "594c988a8926fd91e4d4a162a3b7b728d1649a0831494476d1bfb4caa9962bad"
+    },
+    {
+      "file": "115-east-default-error.png",
+      "surface": "error",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "5e9abcc7cfae0bce707716d9ef90c8ff609b6bf9bb80427d6df46ce7c1826f87"
+    },
+    {
+      "file": "115-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "710b079353076ee6f9ba9bdec0a227ca2db3a84a1bff5635d102985bc94a3b06"
+    },
+    {
+      "file": "115-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "76bb3f7816b1fbb15cbed56e9519aa1cbc857546566f799101f3dd18d7423450"
+    },
+    {
+      "file": "115-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "4b1614467b068e1bba3ec1a14b035f99c220e97f60344e8127366af58ac3d158"
+    },
+    {
+      "file": "115-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "47865ff01327ade1fdad5c717d1847111b191801a306828479ff7e739a5b27d3"
+    },
+    {
+      "file": "115-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "6f7d2d222ad7a1e85feeba2d9f99918eb5f9b713d7f07f1afffcbeeae1558e24"
+    },
+    {
+      "file": "115-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "26a2bbd1d026756b7f006daf5984fa110105143447e7a2de2342a2c0912f7670"
+    },
+    {
+      "file": "115-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.15,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "1f910f46ad129b7ba52536f264edfe17ba475b764d4a209f88911e9bb82e8408"
+    },
+    {
+      "file": "130-south-default-library.png",
+      "surface": "library",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "45d53b576f1ad904ff57b2f12f577e0ade5ae5776cfd6b6916dd3e0b71c66328"
+    },
+    {
+      "file": "130-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "79bd79d71b9110967b73b537e26bb2b8e624f39b81ae852d211a2a7e60256263"
+    },
+    {
+      "file": "130-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "5dcd5cd8729090ef3db961e2201b9079b4b5931340257cc0d78f06cd55d8cdb3"
+    },
+    {
+      "file": "130-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "14caf90f6fca86d0c7310152b7b5b07332992151de4bcef0fe51ba2594b4e635"
+    },
+    {
+      "file": "130-south-default-error.png",
+      "surface": "error",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "ef54f054e93c9c11350df44087f823e2017367a17a0938ad0aca27ba6b8c1ecf"
+    },
+    {
+      "file": "130-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "b53f22921602e6cfd1822a05e1e4305909b99c95e960dfc8e674e22c3382df84"
+    },
+    {
+      "file": "130-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "425785098f1301d6efc07b3f2947476ffef9d5ec9d3702d1199ead891c992440"
+    },
+    {
+      "file": "130-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "065bce795a1bec5c4d5a714efa349c7c2aba5aa8aee418f14926ff4563893184"
+    },
+    {
+      "file": "130-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "4c9ac6c24bf288ac55ad9f0a79c32727526a67ab320c4863666bd12397302971"
+    },
+    {
+      "file": "130-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "ed2afda2a71768bdc7b1df9fbb3dd14a6dfc3d0df35340a3c7f34d8a748131b0"
+    },
+    {
+      "file": "130-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "a1c8a033b40b0ae86838bae7ceffba4c62b9886affc14e570496881ee8993136"
+    },
+    {
+      "file": "130-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.3,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "c7fe9904177660b10d932e3558d33317e2bc20ae910196f7ead9883394c4e56c"
+    },
+    {
+      "file": "130-east-default-library.png",
+      "surface": "library",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "daf511b8129bcb31134a4a4856eab7f6f1520b01edfeb0401b3f8c2b712ee975"
+    },
+    {
+      "file": "130-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "04c8078656d5ac0746f2be23c082d3fb3326fa73793dcf464568fceb9d0cb5c9"
+    },
+    {
+      "file": "130-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "a140be6abd0a06aa32f2193e793b17e6bdf5b5ec7a23760304d1242c35ccabe0"
+    },
+    {
+      "file": "130-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "4bea85e6676d5a8e1550cd28d435bee9f5457c4cc297093fe0eb471527dd818f"
+    },
+    {
+      "file": "130-east-default-error.png",
+      "surface": "error",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "606c88e414d3d2d10a3cf513194f77e02333cbf51d8c76b7ade924b384a402bb"
+    },
+    {
+      "file": "130-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "264d0f88e918988639cda180e0e00977c73c1bb8edd91240a6115047b5d2a3e6"
+    },
+    {
+      "file": "130-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "643b9bf0f7554988b16b2e043248ae9bb2f2fae14667da1094dab2bc53a7953e"
+    },
+    {
+      "file": "130-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "1175263a3b1a7930774384f11422b2170e9ca372d96d48f969dc7fe3b96c3cd8"
+    },
+    {
+      "file": "130-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "7fd1975edc85c5acdcfd7084c089187af6d863af4e504d2c547463c18a39c9c8"
+    },
+    {
+      "file": "130-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "95e6eb253df193608757d19195fd9addd899820bb9db4d70af42c2fc80a16fa3"
+    },
+    {
+      "file": "130-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "c7dd3d8df660f8bed3c800a9f00893895bbb14889bae61c3586515cee801de21"
+    },
+    {
+      "file": "130-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.3,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "980b9ebaf302c586038cbb484f3ac3da760234f4ce849c3a86f2cf2d8fe1291d"
+    },
+    {
+      "file": "150-south-default-library.png",
+      "surface": "library",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "9f56e84c54922615c27b7d866140023246d86a613f1b5d7cd131840dd6b53704"
+    },
+    {
+      "file": "150-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "11abb133987f889412f94773cf8dd7edeaeac6220b313da078259652eacfb72d"
+    },
+    {
+      "file": "150-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "d10f95fb5dd7ce8a81694bb5f8d6fa2560b0f098028244d73bcd39359cc5de93"
+    },
+    {
+      "file": "150-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "fdd1ea41de54ba84d3c029f54b053bc8eaa9e132e23fe0186bad47b36d31480f"
+    },
+    {
+      "file": "150-south-default-error.png",
+      "surface": "error",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "4428ed8e5ddaef93caf49578be4463f9eea5b17b07cf80b521e6feb15f8f0849"
+    },
+    {
+      "file": "150-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "290b11c1f02b9e3c31762d853d4e994c7b353ac38859be3575addab8f6a00ca3"
+    },
+    {
+      "file": "150-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "94e8eb913b3938b3be17e11f2852c59bd1810be245d0153112ccf047aeca9e84"
+    },
+    {
+      "file": "150-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "8fef3d370b4d11b2c7c23e4dc4afab893b02d63abfbb56bb02fb5697a7831b49"
+    },
+    {
+      "file": "150-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "a51d5872dc91dbe1402b20a65e274db625da1cd102790d324ff8c0f9afbd3dce"
+    },
+    {
+      "file": "150-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "e9c9bccfe7c5b7f5913c00c2db1016e0c620ecaba071070e0df86ef193809906"
+    },
+    {
+      "file": "150-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "9581f8e57309868721943eb26b16258e004d56d8b623bfa5bf659e915c61c264"
+    },
+    {
+      "file": "150-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.5,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "2b95b2a692e164620c32406cd7cd83ec251ea47c6f736a4cbcb633da5ada8a31"
+    },
+    {
+      "file": "150-east-default-library.png",
+      "surface": "library",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "863fac85f09463776f174baca8c23aff6d345f5fcdd2d7f1e356a1e29925f8e3"
+    },
+    {
+      "file": "150-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "64231f5f8bcea31a7322e37f35b7c7fb920bb836064c2a3cb6c6166bdd7b9d09"
+    },
+    {
+      "file": "150-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "52ab274a6c5db7c8ba1e54ddbf9bef31435fb202d36fed20da2a5eaeeba9540f"
+    },
+    {
+      "file": "150-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "9a2890d4f92899013ac9b84d73afcde3c0f7d6d8cde0f342f193f279f3e3a247"
+    },
+    {
+      "file": "150-east-default-error.png",
+      "surface": "error",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "aad0d858ac18adf7aea598c7a1ee9c5cece2bb1d49986f20560ed18e2e89ddf3"
+    },
+    {
+      "file": "150-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "e33421de2f52f9a6bab8cc2fb4a6e86bbb5bb8a0745a9ae15d244ee4caeb7e34"
+    },
+    {
+      "file": "150-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "436c843bd96cfea6cb12195c7ece4b0e9f4d336a02e1518c9f4d48535b0c1ae6"
+    },
+    {
+      "file": "150-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "dea54ab04c44ee8549d5dde4a2c5cec48c99aee7c9e4c3bf89e97e6d5922a960"
+    },
+    {
+      "file": "150-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "f20da82c067c75d8b056e4d7fcfc0e20fc25c0b7a1e1d789a21b2d6805e182f6"
+    },
+    {
+      "file": "150-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "b4f84ea19762728a931b4a5a52d062c8975c7c544a48757bdc8ea6ca88c4c043"
+    },
+    {
+      "file": "150-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "c75b448168ed68c9dfcf4b07339d5433912ee3c97d6cecb6084f3ef4764f9c3e"
+    },
+    {
+      "file": "150-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.5,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "aec0e0ab8f1e9a007a4a52d7bf1605aedf31041d737f586549d59caf59008f18"
+    },
+    {
+      "file": "175-south-default-library.png",
+      "surface": "library",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "890ed74421f73da4e7bc5086a29212a1dc0ba7c8541b4ba9bc93648beb33a099"
+    },
+    {
+      "file": "175-south-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "888c66d9cde89b604eefdbfd54d436b6032d15080bcbc164028f3469da40c66e"
+    },
+    {
+      "file": "175-south-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "cd2f6ccab08791dd8867e02c3d8d8e05f58f31558721ef3f9c87515379c60f9a"
+    },
+    {
+      "file": "175-south-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "816e2401caee972a9e2eaa3078687580ea3804dcefe0f6e07252befdcd8be76f"
+    },
+    {
+      "file": "175-south-default-error.png",
+      "surface": "error",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "4dee6af004b0ab19e8ba718ba723a4b651cec57b5b4a36506a732eaecf61c8ef"
+    },
+    {
+      "file": "175-south-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": false,
+      "sha256": "d0262b573a0fc13b21f8aaf30baad73f76cd1ad11670762b23954eb9f407edd0"
+    },
+    {
+      "file": "175-south-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "6fdd812fe68d504b218e8a15c2578b5178ee90927f2361d9f5dafc4944c5d106"
+    },
+    {
+      "file": "175-south-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "f0726ff062a538c9c81a0e12baf5028cc20315b83bde00ea93a9ac764fad75e2"
+    },
+    {
+      "file": "175-south-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "40d4d708447ab9e3f648951307978e99842cf8fe5a40e26c37067b7229494915"
+    },
+    {
+      "file": "175-south-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "9da340af910be084f7527307001e614fb08bb6aad280f7dae3bcf1fed185630f"
+    },
+    {
+      "file": "175-south-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "e42a2986ba55e0e9f00d331dcc831d284efc364546eef44293c0e8a5d812fd03"
+    },
+    {
+      "file": "175-south-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.75,
+      "confirm": "south",
+      "high_contrast": true,
+      "sha256": "bbf7c050e75304b30baa9c67ab8370fc368c58079633da68edc280cc9e907383"
+    },
+    {
+      "file": "175-east-default-library.png",
+      "surface": "library",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "9573ed5ff4e0785903c2e889cbb44b51b0af4a0fddcd0d9872c1cd2b1e8ac813"
+    },
+    {
+      "file": "175-east-default-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "fc2b24490d6f59a139376c22dcfcfe8c0df34e88aaae603f9b8fe1c90b66a952"
+    },
+    {
+      "file": "175-east-default-empty.png",
+      "surface": "empty",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "18dee34bf955db6fa6bc895045187e85c1c031268330ffc37ce3a40de3fcbd17"
+    },
+    {
+      "file": "175-east-default-loading.png",
+      "surface": "loading",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "a33c2e2bad6dbee7646653af4632bb7094128b9c91f833390529db94bf65cf24"
+    },
+    {
+      "file": "175-east-default-error.png",
+      "surface": "error",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "3585bcbe34f4e59cd0d92abe4e872df04fea03ef23874cb5a61f5373af6f6edd"
+    },
+    {
+      "file": "175-east-default-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": false,
+      "sha256": "ec99c4871da511eda1b4b759cb7f205241638ee2f5cb547a94f51d656d660c9b"
+    },
+    {
+      "file": "175-east-contrast-library.png",
+      "surface": "library",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "8e6632005387a8bff489600a855b6255389b6de8c86367d45999bea7fe26b808"
+    },
+    {
+      "file": "175-east-contrast-dialog.png",
+      "surface": "dialog",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "94a0443d94cdcf21361c07df6e6723b0c53f6e4f910fd40907312e96182902f7"
+    },
+    {
+      "file": "175-east-contrast-empty.png",
+      "surface": "empty",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "33f73f5df16735c83567ef024a2d47ef8ed931d347cd2dc7e869e48a0d6cd07b"
+    },
+    {
+      "file": "175-east-contrast-loading.png",
+      "surface": "loading",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "c17e13b53a5b51e2eecf857a021d973f21e9d65d7675364b468134c7f7d39853"
+    },
+    {
+      "file": "175-east-contrast-error.png",
+      "surface": "error",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "9e58e3e5fe3b5710ae386ca7ba96ef299f31088aa1af46114c15cd90a5afbb60"
+    },
+    {
+      "file": "175-east-contrast-keyboard.png",
+      "surface": "keyboard",
+      "text_scale": 1.75,
+      "confirm": "east",
+      "high_contrast": true,
+      "sha256": "9032d5290a90a124e87521a18903bf26fe1212d251316a7d616d0b6f88fd2c93"
+    }
+  ]
+}

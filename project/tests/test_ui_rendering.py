@@ -208,7 +208,7 @@ print("embedded state preserved; Pillow absent")
                 renderer.render(model.snapshot(), 0)
             body = [entry for entry in drawn if entry[0].startswith("Body line")]
             choices = [entry for entry in drawn if entry[0] in {"Resume", "Fresh start", "Game options", "Cancel"}]
-            hint = next(entry for entry in drawn if entry[0].startswith("X  More text"))
+            hint = next(entry for entry in drawn if entry[0].startswith("More text"))
             self.assertTrue(body)
             self.assertEqual(len(choices), 4)
             self.assertLess(max(y + height for _, y, height in body), min(y for _, y, _ in choices))
