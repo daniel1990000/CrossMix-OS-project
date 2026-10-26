@@ -1,6 +1,6 @@
 # TrimUI master plan — current register
 
-Updated 26 October 2026. Active development is the dev18 library/backup batch on `build/dev18-library-backups`, based on main `9dfa857`. The [dev18 report](dev18-library-backups-2026-10-26.md), [current handover](../../HANDOVER.md) and [machine-readable status](../handover/LATEST.json) identify exact verification and delivery. The [unchanged historical plan](master-plan-history-through-dev17.md) retains prior research, decisions and dated completion records; its old branch/publication instructions are historical.
+Updated 26 October 2026. Active development is the dev18 library/backup batch on `main`, merged through PR #2 at `30aa59f` (original implementation based on `9dfa857`). The [dev18 report](dev18-library-backups-2026-10-26.md), [current handover](../../HANDOVER.md) and [machine-readable status](../handover/LATEST.json) identify exact verification and delivery. The [unchanged historical plan](master-plan-history-through-dev17.md) retains prior research, decisions and dated completion records; its old branch/publication instructions are historical.
 
 The original register remains **14/25 complete and 0/13 physical areas run**. New host features do not complete the pending device, distribution or operational rows. Published dev16 stays fixed at `99336f6`; no native binary or upstream patch is selected by dev18.
 
