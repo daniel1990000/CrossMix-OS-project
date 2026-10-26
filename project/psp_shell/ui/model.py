@@ -1171,6 +1171,7 @@ class NavigationModel:
     def _game_info_dialog(self, value: Mapping[str, Any]) -> None:
         self._game_information = value
         item = UIItem.from_record(value)
+        launch_unavailable = not self.demo and self._capabilities.get("game_launch") is False
         disc_set = value.get("disc_set", {})
         disc_set = disc_set if isinstance(disc_set, Mapping) else {}
         raw_warnings = value.get("warnings", [])
@@ -1182,18 +1183,22 @@ class NavigationModel:
             warnings.insert(0, _warning_message("SAVED_PRESET_UNAVAILABLE"))
         # Warnings precede optional metadata and full disc names. Every bounded
         # detail page stays below the renderer's text limit.
-        rows = ["Warning: " + warning for warning in warnings[:4]]
+        rows = (["Game launch is unavailable in this view. Open the game through the existing spruce interface."]
+                if launch_unavailable else [])
+        rows.extend("Warning: " + warning for warning in warnings[:4])
         if len(warnings) > 4:
             rows.append(f"{len(warnings) - 4} further warnings are listed in Details.")
         rows.extend(("System: " + (item.system_label or item.system_id or "Unavailable"),
                      "Emulator: " + (item.selected_emulator[:160] or "Current system emulator"),
                      "Preset: " + (item.selected_preset[:160] or "Current system setting"),
                      "Availability: " + item.availability.replace("_", " ")))
-        if item.resume_available and not self.demo:
+        if item.resume_available and not self.demo and not launch_unavailable:
             rows.append("Resume available for this boot.")
             recorded = _checkpoint_utc(item.state_recorded_at)
             if recorded:
                 rows.append("Checkpoint verified " + recorded)
+        elif launch_unavailable:
+            rows.append("Resume is unavailable in this view.")
         else:
             rows.append("Sample Resume card" if self.demo and item.resume_available else "Recently played · Resume unavailable" if self.category == 1 else "Resume unavailable")
             rows.append(item.reason[:256] or "No authenticated compatible checkpoint is available. Start normally to use in-game saves.")
@@ -1221,7 +1226,7 @@ class NavigationModel:
             rows.append(_text(management.get("description"), 240) or "Change discs in the selected emulator's existing in-game menu.")
         self._details = tuple(details)
         choices = []
-        if item.available and not value.get("preset_repair_required"):
+        if item.available and not value.get("preset_repair_required") and not launch_unavailable:
             if item.resume_available:
                 choices.append(DialogChoice("Resume", "demo_launch" if self.demo else "request", "game.launch",
                     {"game_id": item.id, "preset_id": "", "mode": "resume"}, "launch"))
@@ -1436,11 +1441,19 @@ class NavigationModel:
         return [command]
 
     def _launch_dialog(self, item: UIItem) -> None:
-        if not item.available:
-            choices = ((DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"), DialogChoice("Back"))
-                       if self._capabilities.get("game_information") is True else (DialogChoice("Back"),))
-            self._dialog = Dialog(item.title, item.reason or "This entry needs a reviewed launcher or dependency. Your files remain unchanged.",
-                                  choices, error=True, artwork=item.artwork, system_id=item.system_id)
+        launch_unavailable = not self.demo and self._capabilities.get("game_launch") is False
+        if not item.available or launch_unavailable:
+            choices = []
+            if self._capabilities.get("game_information") is True:
+                choices.append(DialogChoice("Game information", "request", "game.info", {"game_id": item.id}, "game_info"))
+            if item.available and self._capabilities.get("game_options") is True:
+                choices.append(DialogChoice("Game options", "demo_launch" if self.demo else "request", "game.options",
+                                            {"game_id": item.id}, "game_options"))
+            choices.append(DialogChoice("Back"))
+            message = ("Game launch is unavailable in this view. Open the game through the existing spruce interface."
+                       if launch_unavailable else item.reason or "This entry needs a reviewed launcher or dependency. Your files remain unchanged.")
+            self._dialog = Dialog(item.title, message, tuple(choices), error=not item.available,
+                                  artwork=item.artwork, system_id=item.system_id)
             return
         choices: list[DialogChoice] = []
         message = "System: " + (item.system_label or item.system_id)

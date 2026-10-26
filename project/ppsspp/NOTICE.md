@@ -36,6 +36,12 @@ separate build evidence; its binary/source archive remains private. Python
 private-session, authenticated capability-transfer and test drivers are original
 MIT code. The new extension does not exist in the installed stable emulator.
 
+The optional debugger GPU timing copy correction in
+`patches/0005-gpu-stats-float-copy.patch` and its C++ acceptance fixture retain
+GPL-2.0-or-later terms. Its preimage, patch and postimage hashes are recorded in
+`gpu-stats.lock.json`; its original Python test driver is MIT. The correction
+does not select a shipped native binary or enable a device profile.
+
 The separate PowerVR recipe is pinned to
 `spruceUI/PPSSPP-spruce@9f770cb984fd8ffcc8f91d24fcbca859439c2e9b`.
 That checkout has no root `LICENSE`, and `build-pvr.sh`, `Dockerfile.pvr`,

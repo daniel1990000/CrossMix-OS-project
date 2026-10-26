@@ -77,13 +77,23 @@ class ExperimentalEmbeddedTests(unittest.TestCase):
 
     def test_actual_confirm_path_cannot_resolve_or_launch_a_game(self):
         runner = self.runner()
+        runner.setup()
+        runner._commands(runner.model.handle("confirm"))
+        runner._commands(runner.model.handle("confirm"))
+        dialog = runner.model.snapshot().dialog
+        self.assertIsNotNone(dialog)
+        self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+        self.assertIn("Game launch is unavailable in this view", dialog.message)
+        # The hidden action is presentation only; direct dispatch must still
+        # enforce the independent experimental authority boundary.
         with self.assertRaises(ContractError):
-            runner.run(max_frames=6, scripted_actions=("confirm", "confirm", "confirm"))
+            runner.dispatcher.dispatch("game.launch", {"game_id": "fixture-game"})
         self.assertEqual(self.session.phase, "blocked")
         self.assertFalse(runner.release_for_fallback())
         self.assertNotIn("validate-existing-action", self.fixture.events)
         self.assertNotIn("existing-device-run-game", self.fixture.events)
         self.assertNotIn("return", self.phases)
+        runner._close_project_renderer()
 
     def test_actual_favorite_action_is_denied_before_a_backend_write(self):
         runner = self.runner()

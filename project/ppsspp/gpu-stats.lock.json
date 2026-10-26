@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "scope": "Optional native debugger GPU timing copy correction; no device or production profile activation",
+  "patch": {
+    "path": "patches/0005-gpu-stats-float-copy.patch",
+    "sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+    "license": "GPL-2.0-or-later"
+  },
+  "source_files": [
+    {
+      "path": "Core/Debugger/WebSocket/GPUStatsSubscriber.cpp",
+      "sha256": "e83bfef607628ee4d1584709afe5b716fdc89215c760a64216279a579e95a6bd"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "Core/Debugger/WebSocket/GPUStatsSubscriber.cpp",
+      "sha256": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674"
+    }
+  ],
+  "qualification": {
+    "selected_in_shipped_profile": false,
+    "device_tested": false,
+    "full_engine_build": false,
+    "source_acceptance": "Exact FlipListener body under ASan/UBSan with explicit display stubs"
+  }
+}
