@@ -205,5 +205,23 @@
     "Catalog labels/check receipts live outside payloads; registration requires the external CLI.",
     "Continue bulk records require fresh verification on selection; initial evidence-store authentication still performs checks.",
     "Original master register remains 14/25 and physical areas remain 0/13."
-  ]
+  ],
+  "planned_iso_continuation": {
+    "prepared_at_utc": "2026-10-26",
+    "status": "planned_awaiting_execution_instruction",
+    "plan": "project/docs/iso-enabled-roadmap-2026-10-26.md",
+    "execution_prompt": "project/handover/ISO_EXECUTION_PROMPT.txt",
+    "input": {
+      "title": "Grand Theft Auto: Vice City Stories",
+      "native_id": "ULUS10160",
+      "size_bytes": 1696006144,
+      "sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+      "download_and_local_metadata_verified": true
+    },
+    "scope": "G01-G08: real-game host validation, native settings/state/launch evidence, scene reporting, reproduced fixes and certification",
+    "runtime_changes_made": false,
+    "gameplay_tests_run": false,
+    "physical_tests_run": false,
+    "completion_counts_unchanged": true
+  }
 }

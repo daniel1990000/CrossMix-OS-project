@@ -37,3 +37,7 @@ Keep the baseline comparison protocol: unchanged spruce and current emulator/set
 State galleries, automatic named state history and power-off Resume remain deferred. The delivered catalog is the useful offline portion: it names and verifies already-retained recovery payloads. Saved filter presets and frontend collection editing remain follow-ups.
 
 The owner moved **Vice City emulation/testing to another chat**. Continue this development/review/delivery track independently. Do not download or test that game again here, or infer gameplay results from the other document without its specific evidence.
+
+## Separate ISO-enabled continuation
+
+Main also contains [the ISO-enabled roadmap](project/docs/iso-enabled-roadmap-2026-10-26.md) and [execution prompt](project/handover/ISO_EXECUTION_PROMPT.txt), prepared in the other chat. That plan records the supplied image's download/metadata verification and G01–G08 host game-validation work as awaiting execution instruction. Its planning step made no gameplay, runtime, build or certification change. The plan and prompt are preserved unchanged; their dev17 baseline predates dev18. Use this handover for current implementation identity, and the separate chat for game-specific execution. No game result is inferred here.

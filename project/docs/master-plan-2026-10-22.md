@@ -4,6 +4,10 @@ Updated 26 October 2026. Active development is the dev18 library/backup batch on
 
 The original register remains **14/25 complete and 0/13 physical areas run**. New host features do not complete the pending device, distribution or operational rows. Published dev16 stays fixed at `99336f6`; no native binary or upstream patch is selected by dev18.
 
+## Separate planned ISO-enabled continuation
+
+The other chat prepared [G01–G08 real-game host validation](iso-enabled-roadmap-2026-10-26.md) and [its execution prompt](../handover/ISO_EXECUTION_PROMPT.txt). Its planning record verifies the supplied image's download and metadata but reports no gameplay, runtime change or certification rerun. Keep the plan's dependencies and acceptance criteria; its dev17 baseline is historical relative to this dev18 batch. This separate work targets C01–C05, D04 and host portions of N01/N02, without PS1, native-port or physical qualification. The register remains 14/25 and physical areas 0/13.
+
 ## Dev18 host batch
 
 | Order | Deliverable | Acceptance |

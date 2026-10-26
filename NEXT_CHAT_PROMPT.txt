@@ -33,3 +33,9 @@ The owner moved Vice City emulation/testing to a separate chat. It does not
 block this development track. Main received an independent audit/game-image
 document at 4a97d8a; preserve it without treating it as dev18 gameplay evidence.
 No additional game download/testing is requested in this chat.
+
+The separate chat's planned ISO-enabled batch is retained in
+project/docs/iso-enabled-roadmap-2026-10-26.md and
+project/handover/ISO_EXECUTION_PROMPT.txt. It awaits its execution instruction;
+its historical dev17 baseline is superseded by the current dev18 handover.
+Preserve that plan without starting its game work in this development track.
