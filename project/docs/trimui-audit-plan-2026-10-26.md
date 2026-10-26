@@ -21,11 +21,11 @@ The latest [dev17 receipt](../evidence/host-fixes-20261024/verification.json) re
 | PARAM.SFO PSP_SYSTEM_VER | 2.81 |
 | PARAM.SFO CATEGORY | UG |
 | PARAM.SFO SHA-256 | 2bb27a13cc037f4c640516b82ff9ce1d2fe5fbe12204339a5d230ca9545ae835 |
-| Full image SHA-256 | Not yet measured |
+| Full image SHA-256 | e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a |
 
-These observations came from the live file listing and bounded HTTP range reads of the ISO descriptor, directories and PARAM.SFO. The complete image was not retained, verified or executed. The filename's PSN label is not independent provenance evidence. PSP_SYSTEM_VER is game metadata, not the TrimUI firmware version.
+The complete ISO was downloaded on 26 October 2026 at 17:32 UTC into private workspace storage. Its 1,696,006,144-byte size and MD5 (5b6b0ed024eaea63511a387efd6b9595) match the GoFile listing; SHA-256 was calculated from the full downloaded file. Local ISO descriptor/directory/PARAM.SFO inspection confirms the values above and a matching declared volume size. These checks establish download consistency, not independent authenticity or gameplay correctness. The image has not been executed. The filename's PSN label is not independent provenance evidence. PSP_SYSTEM_VER is game metadata, not the TrimUI firmware version.
 
-Before any execution, download the complete image into private test storage, verify size, calculate SHA-256 and recheck its structure/metadata. Freeze that hash in every run identity. Preserve the original image read-only and use separate test saves. Keep game bytes, saves, screenshots containing private data and session credentials outside GitHub. Store sanitized manifests and test summaries in the repository.
+The full ISO and download receipt are retained under `/workspace/trimui-audit/private-inputs/`. Download, size/hash verification and local structure/metadata inspection are complete. Freeze the full SHA-256 above in every run identity. Preserve the original image read-only and use separate test saves. Keep game bytes, saves, screenshots containing private data and session credentials outside GitHub. Store sanitized manifests and test summaries in the repository.
 
 Vice City Stories supplies a realistic PSP workload for launch, streaming, controls, saves and sustained gameplay. It cannot qualify PS1, ports or every PSP game. Keep existing redistributable smoke fixtures and add separate representative titles for each claimed runtime.
 
@@ -151,4 +151,4 @@ P0 findings include save loss/corruption, broken recovery, unsafe writes and pro
 
 Completion requires: full strict host certification; installed artifact/source/signature and rollback checks; scoped native evidence; all applicable physical cases and minimum cycles; matched gameplay and sustained results; independent review of retained evidence; and separate release custody/distribution decisions where applicable. The review tool generates a proposal and does not activate profiles.
 
-Immediate next work is to finish the game download/hash, rerun dev17 certification with the five pins, map existing tests to the audit matrix, reproduce any uncovered defects, and run real desktop GTA checks. Device stages remain blocked until actual TG5040 access and recovery evidence exist. This plan adds no device pass, performance claim or production activation.
+The game download/hash and local metadata checks are complete. Immediate next work is to rerun dev17 certification with the five pins, map existing tests to the audit matrix, reproduce any uncovered defects, and run real desktop GTA checks. Device stages remain blocked until actual TG5040 access and recovery evidence exist. This plan adds no device pass, performance claim or production activation.
