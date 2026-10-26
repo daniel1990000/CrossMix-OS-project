@@ -1,3 +1,11 @@
+Next task prepared on 26 October 2026: ISO-enabled real-game validation.
+When the user instructs execution, use project/handover/ISO_EXECUTION_PROMPT.txt
+and project/docs/iso-enabled-roadmap-2026-10-26.md as the active batch instructions.
+The full GTA: Vice City Stories ISO is downloaded and hashed; its identity and
+workspace path are in those files. Planning is complete; gameplay/build/fix work
+has not started. Do not execute merely because this continuation file is read
+during a planning request. Preserve the historical baseline details below.
+
 Continue daniel1990000/CrossMix-OS-project on main.
 PR #1 is merged at 87264629735e179c81c2ad360516665c1e7fd5cd.
 The owner explicitly authorized merging and publishing the completed host work;
