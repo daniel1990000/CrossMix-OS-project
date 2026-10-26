@@ -1,5 +1,21 @@
 # TrimUI Smart Pro implementation handover
 
+
+## Next batch prepared: real-game validation — 26 October 2026
+
+The full supplied GTA: Vice City Stories ISO is downloaded and verified.
+Read [the ISO-enabled plan](project/docs/iso-enabled-roadmap-2026-10-26.md)
+and [execution prompt](project/handover/ISO_EXECUTION_PROMPT.txt).
+The user requested the prompt/plan now and execution afterward. No gameplay,
+build, certification rerun or runtime change occurred in this planning step.
+
+The batch targets real desktop saves/settings, patched native state evidence,
+host launch/return/Continue, scene reports and fixes. It preserves existing
+authorities and device gates. C01–C06 already exist; physical qualification
+remains 0/13 and the original register remains 14/25 complete.
+The dev17 results below remain historical evidence for their exact bytes.
+
+
 ## Current state: dev17 host correctness fixes
 
 Continue on `main`. The owner still lacks device access and requested useful
