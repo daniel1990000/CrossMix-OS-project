@@ -1,0 +1,13 @@
+{
+  "acceptance": "Only cases/ and verified-summary.json define the final8point matrix plus freshload.",
+  "earlier_attempts": {
+    "result-before-rename": "Failed setup before accepted native publication probe (missingexplicitF2mapping).",
+    "result-before-rename2": "Failed harnesssetup (xenv typo); no acceptance.",
+    "result-before-rename3": "EXCLUDED: process-directed stop raced writer. Preservedstate, but finalsequence2 contradicts requested before-result point; passedtrue in originalreport is superseded by review.",
+    "accepted-result-before-rename": "Valid frozenhook pre-matrix check; not added as ninth interruption."
+  },
+  "correction": "Final thread-directed tgkill stop cannot return into intercepted syscall; frozenrunner enforces exact point-specific partial bytes and sequence conditions.",
+  "private_raw_payloads": "States/game/logs/hookbinary remain private; copied reports retain rawartifact hashes/sizes for independent readback.",
+  "ordinary_savedata_test": false,
+  "device_test": false
+}

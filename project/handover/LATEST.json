@@ -70,52 +70,43 @@
     "commercial_sdk_or_public_native_terms_inferred": false
   },
   "schema": 2,
-  "date_utc": "2026-10-26",
-  "branch": "build/iso-host-validation-20261026",
-  "base_at_start": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "date_utc": "2026-10-28",
+  "branch": "build/iso-next-round-20261028",
+  "base_at_start": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
   "pull_request": {
-    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/3",
-    "number": 3,
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/4",
+    "number": 4,
     "state": "open",
     "merged": false,
-    "draft": true
+    "draft": true,
+    "depends_on": 3
   },
-  "release_id": "smartpro-psp-0.1.0-dev19",
-  "project_stage": "Dev19 ISO host audit recorded with explicit partial/blocked criteria; 1,213 checks and verified packaging pass. Device qualification remains pending.",
+  "release_id": "smartpro-psp-0.1.0-dev20",
+  "project_stage": "Dev20 continuation executing: settings/audit/controller and optional immutable native snapshot source implemented/reviewed; exact clean strict1256 pass; live acceptance and packaging underway.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
     "project/handover/LATEST.json",
     "project/README.md",
-    "project/docs/iso-continuation-2026-10-26.md",
-    "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
+    "project/docs/iso-next-round-2026-10-28.md",
+    "project/evidence/iso-next-round-20261028/review.json",
     "project/docs/master-plan-2026-10-22.md"
   ],
   "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
   "master_plan": "project/docs/master-plan-2026-10-22.md",
   "current_snapshot": {
-    "clean_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "clean_implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
     "strict_tests": {
-      "tests_run": 1213,
-      "passed": 1213,
+      "tests_run": 1256,
+      "passed": 1256,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "test_execution": "Changed-tree test immediately before commit; all ten changed/new input hashes independently matched to clean commit.",
-    "verification": "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
-    "source_inventory_files": 236,
-    "source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
-    "payload_files": 68,
-    "both_zips_byte_identical_without_git": true,
-    "installed_preview_and_fixture_rollback_passed": true,
-    "package_receipt": "project/evidence/iso-continuation-20261026/certification/package-receipt.json",
-    "ci_readback": "project/evidence/iso-continuation-20261026/certification/ci-readback.json",
-    "ci_run_id": 40383733188,
-    "ci_status": "success",
-    "ci_actual_clean_checkout": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "test_execution": "Clean detached exact implementation checkout; separate five pinned source verification. Final receipt copied after packaging.",
+    "package_status": "in_progress_separate_exact_source_receipt_required",
     "later_metadata_commits_have_separate_identity": true
   },
   "published_snapshot": {
@@ -126,7 +117,8 @@
     "changed_by_dev18": false,
     "identity_check": "project/evidence/dev18-library-backups-20261026/published-identity-check.json",
     "byte_readback": "project/evidence/host-publication-20261023/public-readback.json",
-    "changed_by_dev19": false
+    "changed_by_dev19": false,
+    "changed_by_dev20": false
   },
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -169,7 +161,12 @@
     "handover": "HANDOVER-HISTORY-through-dev18.md",
     "status": "project/handover/LATEST-through-dev18.json",
     "plan": "project/docs/master-plan-history-through-dev18.md",
-    "warning": "Dated current/latest fields in historical records apply only to their named snapshots."
+    "warning": "Dated current/latest fields in historical records apply only to their named snapshots.",
+    "through_dev19": {
+      "handover": "HANDOVER-HISTORY-through-dev19.md",
+      "status": "project/handover/LATEST-through-dev19.json",
+      "report": "project/docs/iso-continuation-2026-10-26.md"
+    }
   },
   "owner_device_status": {
     "device": "Original TrimUI Smart Pro TG5040",
@@ -179,11 +176,11 @@
     "game_specific_testing": "Owner authorized ISO continuation; actual desktop/native evidence in dev19 report. No physical tests."
   },
   "next_work": [
-    "Review PR #3 and its explicit G01\u2013G08 gaps; no public release created.",
-    "Complete Soldier and normal in-game savedata save/relaunch/Continue; then qualified manager Apply/Undo and composed frontend Resume when genuine prerequisites exist.",
-    "With target hardware, inventory and rehearse recovery, then run the existing 13-area casebook.",
-    "Collect driving/action scenes and matched demanding-profile evidence before any preset recommendation.",
-    "Resolve public native distribution scope, production signing custody and maintenance ownership."
+    "Validate the final direct-native-load/warmup collector in a clean exact-source check/package and actual scene acquisition.",
+    "Complete ordinary Soldier/save/fresh-process Continue; retain explicit unmet criterion until observed.",
+    "Freeze legitimate on-foot/driving/action fixtures; collect five matched30second pairs and both isolated30minute settings runs with final exact engine.",
+    "Finish exact clean packaging and CI artifact readback; update final acceptance without device promotion.",
+    "With real target hardware perform inventory/recovery and existing13area casebook."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -237,5 +234,55 @@
       "audio_quality_reviewed": false
     }
   },
-  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json"
+  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json",
+  "previous_snapshot_dev19": {
+    "clean_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "strict_tests": {
+      "tests_run": 1213,
+      "passed": 1213,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "test_execution": "Changed-tree test immediately before commit; all ten changed/new input hashes independently matched to clean commit.",
+    "verification": "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
+    "source_inventory_files": 236,
+    "source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
+    "payload_files": 68,
+    "both_zips_byte_identical_without_git": true,
+    "installed_preview_and_fixture_rollback_passed": true,
+    "package_receipt": "project/evidence/iso-continuation-20261026/certification/package-receipt.json",
+    "ci_readback": "project/evidence/iso-continuation-20261026/certification/ci-readback.json",
+    "ci_run_id": 40383733188,
+    "ci_status": "success",
+    "ci_actual_clean_checkout": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "later_metadata_commits_have_separate_identity": true
+  },
+  "next_round": {
+    "status": "executing",
+    "report": "project/docs/iso-next-round-2026-10-28.md",
+    "evidence": "project/evidence/iso-next-round-20261028",
+    "settings_clarity": "implemented_reviewed",
+    "reusable_host_audit": "reviewed_post789_direct_native_load_ack_and_warmup; final_strict_and_live_acquisition_pending",
+    "analogue_helper": "actual_native_menu_and_onfoot_movement_verified; first_axis_priming_frozen_in_audit_warmup",
+    "optional_snapshot_patch": "0006_source_reviewed_private_full_engine_built_host_whole_native8windows_and_fresh_load_passed",
+    "ordinary_savedata_continue": "in_progress_unverified",
+    "broader_measurements": "preparation_only_no_accepted_samples",
+    "base_interruption_preservation": "UNMET_reproduced10windows_only2preserved_usable_prior",
+    "optional_snapshot_fixture": "PASS16kill12faultcases_no_positive_qualified_profile",
+    "runtime_gates_enabled": false,
+    "selected_native_binaries": [],
+    "selected_upstream_patches": [],
+    "optional_snapshot_whole_native": {
+      "interruptions_passed": 8,
+      "fresh_native_load_passed": true,
+      "raw_artifacts_verified": 175,
+      "report": "project/evidence/iso-next-round-20261028/native-whole/verified-summary.json",
+      "profile_created": false,
+      "physical_power_loss_test": false,
+      "legacy_mutable_receipts_repaired": false
+    }
+  }
 }

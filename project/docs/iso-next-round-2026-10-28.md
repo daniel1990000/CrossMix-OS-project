@@ -60,8 +60,13 @@ Legacy mutable receipts are not migrated. Six source test methods exercise
 16 interruption windows and 12 fault cases. Their
 [retained fixture report](../evidence/iso-next-round-20261028/native-snapshot-fixture.json)
 has separate identity from the original defect probes. A private full SDL build
-with 0006 has also completed; whole-emulator interruption acceptance is recorded
-separately after actual execution. No shipped profile selects the patch.
+with 0006 has also completed; the [whole-emulator report](../evidence/iso-next-round-20261028/native-whole/verified-summary.json)
+now passes eight precise same-slot interruption windows and a fresh-process native
+load of the preserved immutable snapshot, with normal exit. Independent review
+verified 175 retained raw artifacts. Early setup/stop-timing attempts are retained
+separately and excluded from the final matrix. This is host process interruption,
+not physical power-loss durability or authenticated frontend promotion. No shipped
+profile selects the patch.
 
 ## Evidence and remaining acceptance
 

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "kind": "independent-private-native-statistics-build-review",
+  "reviewer": "review independent agent",
+  "recorded_at_utc": "2026-10-28T23:03:55.025088+00:00",
+  "decision": "accepted_for_host_counter_collection",
+  "executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+  "statistics_source_sha256": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "statistics_object_sha256": "093f614a29e87057b60e84f0814dd29589b44b95b66caa7b3b10c5aed74827f3",
+  "core_archive_sha256": "6e45c550ebb984674910f479bbbfa8ed2bf3080e50dea7526ba88cc8ccd52add",
+  "checked_artifact_sha256": {
+    "base-0001-3-5/build-report.json": "e61217b61541b17fa449860981ea833798be27565a59d348e82532d7ae8de5ee",
+    "base-0001-3-5/assembly-dev20.json": "149e19ec7cd2eb877bfd3b8f3509f3fcc76b381bc14f33ded7eb112cd48be209",
+    "base-0001-3-5/compile_commands.json": "9789fd8b4ffa72b1ed4eff9be6432c0d62a8452d1ee99fdb07c2142856c4aebe",
+    "base-0001-3-5/link-command.txt": "7ae49ea3ee1f0e14be7f6acf5e3e92ffce04bbe24d388e84363db5a4b47c13b4",
+    "base-0001-3-5/build.log": "5d6670bf36494c5c7e5889fdc31f813ce4000962d9198011b0b275c21f5d0983",
+    "base-0001-3-5/ldd.txt": "9c719cf2f0de64b1e1e598aee8419205398f616485ad34fc7e00714de85097b9",
+    "base-0001-3-5/configure-host.sh": "343c9e846216541b5f5573715b150b1bd2f42d099e4dcdca36efcecdbf4c23bf",
+    "build-failed-mixed-png-headers.log": "fc910f6e20ee09a3e6fe110412f41a621091be2fc3a7a3267a43fe1291e80549",
+    "excluded-system-png-headers/exclusion-receipt.json": "920b357b93dce0f37283eb8135703ed5e3a6ef043483e8ceb32a31325fbcd431"
+  },
+  "checks": [
+    "Exact pinned upstream and recursive submodule identities independently inspected before final build.",
+    "All retained modified and added source hashes match reviewed dev19 source assembly, including exact corrected float-copy source.",
+    "Corrected statistics object hash matches its libCore.a member; final link includes that archive; executable retains the native statistics listener symbol.",
+    "Final executable digest and size, build/compile/link/assembly/dependency receipt digests independently verified.",
+    "Failed libpng header/link attempt retained; excluded top-level private libpng16 aliases verified by exact hashes; current Ninja dependency closure contains no excluded aliases."
+  ],
+  "limits": [
+    "Private host-counter collection only. No TrimUI/device/profile qualification, selected native distribution, production Resume or optional0006 identity.",
+    "Pinned FFmpeg static archives were reused; corresponding FFmpeg sources were not rebuilt and full binary-distribution source correspondence is not established.",
+    "Compiler/build provenance is independently reviewed evidence, not cryptographic proof of source-to-binary correspondence."
+  ],
+  "optional0006_included": false,
+  "hardware_qualified": false
+}

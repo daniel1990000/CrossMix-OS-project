@@ -1,0 +1,161 @@
+{
+  "kind": "actual-whole-native-interruption",
+  "profile_created": false,
+  "consumer_scope": "real transport/envelope/sequence with explicit refusal stub; no qualified profile validation",
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "shim_sha256": "9a8723d8ab69c518a6c53555b6d194752c05bf8b8970afc050c026d63768e2fd",
+  "shim_source_sha256": "7d680b63fbc30198a05ebebb9ef7ced52889d4217c645eeb825a5d2f278205fc",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "iso_size": 1696006144,
+  "point": "snapshot-partial-write",
+  "request_sha256": "a2993c5ca21a5fdb6abe00b1d32c6ec19fe6cc802e7c5a7c299246ba9fc3ff87",
+  "frozen_initial_config_sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+  "frozen_controls_sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--escape-exit",
+    "--log=/workspace/trimui-audit/native-snapshot-whole/matrix/snapshot-partial-write/native.log",
+    "--project-state-session=/workspace/trimui-audit/native-snapshot-whole/matrix/snapshot-partial-write/session/request",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "pid": 34891,
+  "start_ticks": 146309,
+  "previous_state_path": "/workspace/trimui-audit/native-snapshot-whole/matrix/snapshot-partial-write/config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/5352adc75d8a6b3c32c5ccbf5b3eff4f-1-0.ppst",
+  "previous_state_sha256": "e2483d97910433ce268b9784b8669d380033972939be03cd982e748f3a4ee9df",
+  "prior_snapshot_preserved": true,
+  "final_sequence": "1",
+  "completion_sequence": "1",
+  "bounded_valid_completion": true,
+  "qualification_gate": "STATE_PROFILE_UNQUALIFIED",
+  "supervision": {
+    "root_pid": 34891,
+    "exit_status": -9,
+    "children_reaped": 1
+  },
+  "passed": true,
+  "elapsed_ns": 33663576091,
+  "events": [
+    {
+      "event": "launched",
+      "elapsed_ns": 100584527,
+      "pid": 34891
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 20339426394,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "first_completed",
+      "elapsed_ns": 26855801955,
+      "operation": "save",
+      "sequence": "1",
+      "state_sha256": "e2483d97910433ce268b9784b8669d380033972939be03cd982e748f3a4ee9df"
+    },
+    {
+      "event": "armed",
+      "elapsed_ns": 26859927697,
+      "point": "snapshot-partial-write"
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 27093822513,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "killed_owned_stopped_native",
+      "elapsed_ns": 33622672055,
+      "marker": {
+        "point": "snapshot-partial-write",
+        "pid": 34891,
+        "monotonic_ns": 1496661832056
+      }
+    }
+  ],
+  "runner_sha256": "f8b6a4bf777166a9f720097b2cd3acb6b7a9ae77de5c620b21b68c77550add6b",
+  "artifacts": {
+    "command": {
+      "sha256": "ca19236b5b044dae94bba7f18b36a05cb7fd33e8d28546592f412f94d37ee92c",
+      "size": 23
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/5352adc75d8a6b3c32c5ccbf5b3eff4f-1-0.ppst": {
+      "sha256": "e2483d97910433ce268b9784b8669d380033972939be03cd982e748f3a4ee9df",
+      "size": 5542967
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/5352adc75d8a6b3c32c5ccbf5b3eff4f-2-0.ppst": {
+      "sha256": "b8611f8c900a56c9ee2861b698de83f6fcaf8eebb3e4347f3fda2c4e90e2dabb",
+      "size": 9
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.ppst": {
+      "sha256": "6284fc8d8a9dc08fa9544d8c7e6f606ebb3247a217b03b6a2834b7d402eb5f2f",
+      "size": 5546977
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.jpg": {
+      "sha256": "722e1396e133fa82dd7f7be6ac1a270e385f233520f4175b61b8953f5fcdb5ab",
+      "size": 4723
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.ppst": {
+      "sha256": "e2483d97910433ce268b9784b8669d380033972939be03cd982e748f3a4ee9df",
+      "size": 5542967
+    },
+    "config/ppsspp/PSP/SYSTEM/controls.ini": {
+      "sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+      "size": 50
+    },
+    "config/ppsspp/PSP/SYSTEM/ppsspp.ini": {
+      "sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+      "size": 198
+    },
+    "events.jsonl": {
+      "sha256": "4ca03989d0a8b1698e5d50c3b9f7e7e0eea62c783aad394f04c6363063d16198",
+      "size": 642
+    },
+    "marker.json": {
+      "sha256": "789dd5216ebbf8277b7b48040fe2e557301ec46795b73ed83586df299709ef18",
+      "size": 76
+    },
+    "native.log": {
+      "sha256": "6b99a58c4dd54c8eb83c03d26295a36a615a8e4a8c9537cd3b1e691d4a32afd4",
+      "size": 347
+    },
+    "previous-result": {
+      "sha256": "88e1fe909ab35506179cf261cf8639388566251f655fffd2ffb14c68009ba989",
+      "size": 941
+    },
+    "previous-save-completed": {
+      "sha256": "88e1fe909ab35506179cf261cf8639388566251f655fffd2ffb14c68009ba989",
+      "size": 941
+    },
+    "process.json": {
+      "sha256": "69548009ea4c365ce4a399a89f063e661d81db093233e0cea0cd311893430fcb",
+      "size": 37
+    },
+    "session/request": {
+      "sha256": "a2993c5ca21a5fdb6abe00b1d32c6ec19fe6cc802e7c5a7c299246ba9fc3ff87",
+      "size": 618
+    },
+    "session/result": {
+      "sha256": "88e1fe909ab35506179cf261cf8639388566251f655fffd2ffb14c68009ba989",
+      "size": 941
+    },
+    "session/save-completed": {
+      "sha256": "88e1fe909ab35506179cf261cf8639388566251f655fffd2ffb14c68009ba989",
+      "size": 941
+    },
+    "stdout.log": {
+      "sha256": "3555e9c38e7913ff5aa615075b88ff21ce2a036ad399e27e4e2b0fac69aa220d",
+      "size": 2810
+    },
+    "supervise.py": {
+      "sha256": "5e1f410f5938eae4c644e619814ea4c491c0f0ce24eabb3955681a9422f52822",
+      "size": 528
+    },
+    "supervision.json": {
+      "sha256": "ee91d0dda5a96dc19152d4335911eb89d67f9299e92147bf394a9dfc7c4c4616",
+      "size": 60
+    }
+  }
+}

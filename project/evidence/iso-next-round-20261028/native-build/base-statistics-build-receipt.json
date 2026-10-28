@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "kind": "reviewed-host-statistics-build",
+  "executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+  "statistics_source_sha256": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "statistics_patch_sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+  "review_evidence_sha256": "3260d2024221b08d0877e373a9f2b1bf239d69d5b96546ad0bd77c5f8c8bca1f",
+  "full_build_report_sha256": "e61217b61541b17fa449860981ea833798be27565a59d348e82532d7ae8de5ee",
+  "optional0006_included": false,
+  "device_qualified": false
+}

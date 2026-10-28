@@ -1,0 +1,77 @@
+{
+  "kind": "actual-whole-native-interruption",
+  "profile_created": false,
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "shim_sha256": "19aa181e8bf8d5eb51e7aeb5686d1755db9f8203fd6575493cc41fb408490b86",
+  "shim_source_sha256": "dcf6fbe3f73042936381b24207b9c8ab9d02dc7cfaffc114f7eca618ad6313d3",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "iso_size": 1696006144,
+  "point": "result-before-rename",
+  "request_sha256": "556c07a652ea07345ecb3921345308ad46ee29962f2d61c2766ed153f7f338f4",
+  "frozen_initial_config_sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+  "frozen_controls_sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--escape-exit",
+    "--log=/workspace/trimui-audit/native-snapshot-whole/result-before-rename2/native.log",
+    "--project-state-session=/workspace/trimui-audit/native-snapshot-whole/result-before-rename2/session/request",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "pid": 28857,
+  "start_ticks": 123029,
+  "passed": false,
+  "error": "NameError: name 'xenv' is not defined",
+  "elapsed_ns": 20132767531,
+  "events": [
+    {
+      "event": "launched",
+      "elapsed_ns": 100506414,
+      "pid": 28857
+    },
+    {
+      "event": "failure",
+      "elapsed_ns": 20101012281,
+      "error": "NameError: name 'xenv' is not defined"
+    }
+  ],
+  "runner_sha256": "80a510d4ab5586fe1ae81be522c563c73a45b34511e9341ba0c8f53f8d9cd4f0",
+  "artifacts": {
+    "config/ppsspp/PSP/SYSTEM/controls.ini": {
+      "sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+      "size": 50
+    },
+    "config/ppsspp/PSP/SYSTEM/ppsspp.ini": {
+      "sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+      "size": 198
+    },
+    "events.jsonl": {
+      "sha256": "111d8c5618e938bce0365a20dff49bda4fa3690acf999bad0e5615dc1bf73f95",
+      "size": 159
+    },
+    "native.log": {
+      "sha256": "d685d1de767fc89af9cfba8ce08495e6c69a85be2d850d21f6731539716ed63b",
+      "size": 347
+    },
+    "process.json": {
+      "sha256": "8aa2d174dc42f94e57d474f98d15d7a06a82b6948da668927e37edf926c46981",
+      "size": 37
+    },
+    "session/request": {
+      "sha256": "556c07a652ea07345ecb3921345308ad46ee29962f2d61c2766ed153f7f338f4",
+      "size": 609
+    },
+    "stdout.log": {
+      "sha256": "93aff5e0d76ce364c73a0a55a0a7d21485d26e5f72dc91555525c8751ac48708",
+      "size": 2810
+    },
+    "supervise.py": {
+      "sha256": "c29eae4e0fafd7bfdaa849e8112aefa4ca5f289a51741ba20e755d1b105c820f",
+      "size": 512
+    },
+    "supervision.json": {
+      "sha256": "c7c21c01b8a0dedb430df0847540bbae4c4571f2fb9b4df18123a611694becb5",
+      "size": 60
+    }
+  }
+}

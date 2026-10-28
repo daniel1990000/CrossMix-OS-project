@@ -25,6 +25,7 @@ import sys
 import time
 
 from tools.gameplay_benchmark import METRICS, compare, record, validate_identity, validate_run
+from tools import host_audit_native as native_probe
 
 PROJECT = Path(__file__).resolve().parents[1]
 REVIEWED_EXECUTABLE = '6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de'
@@ -111,6 +112,27 @@ def configuration_identity(root, game_id):
     digest = hashlib.sha256(json.dumps(files, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
     return {'sha256': digest, 'resolution': resolution + 'x',
             'frameskip': '0 (automatic disabled)', 'values': values}
+
+
+IMPLEMENTATION_FILES = (
+    'tools/host_gameplay_audit.py', 'tools/host_audit_native.py',
+    'psp_shell/state_evidence.py', 'bridge/principal.py',
+    'dev/host_virtual_controller.py', 'dev/host_virtual_controller.c',
+)
+
+
+def implementation_identity():
+    return {name: sha(PROJECT / name) for name in IMPLEMENTATION_FILES}
+
+
+def retain_implementation(output):
+    identities = implementation_identity()
+    for name in identities:
+        destination = Path(output) / 'collector-source' / name
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(PROJECT / name, destination)
+        need(sha(destination) == identities[name], 'Host helper source changed during retention')
+    return identities
 
 
 def verify_statistics(emulator, source, build_receipt=None, receipt_sha256=None, review_evidence=None):
@@ -269,7 +291,8 @@ async def observe(raw, *, port, seconds, interval, game_id, check, replay=None):
                     remaining = 10 - (time.monotonic() - sent)
                     need(remaining > 0, 'Native request timed out')
                     message = json.loads(await asyncio.wait_for(ws.recv(), remaining))
-                    row = {'elapsed_seconds': time.monotonic() - started, 'utc': utc(),
+                    received_ns = time.monotonic_ns()
+                    row = {'elapsed_seconds': received_ns / 1e9 - started, 'monotonic_ns': received_ns, 'utc': utc(),
                            'request_sent_elapsed_seconds': sent - started, 'message': message}
                     stream.write(json.dumps(row, allow_nan=False) + '\n')
                     stream.flush()
@@ -280,10 +303,20 @@ async def observe(raw, *, port, seconds, interval, game_id, check, replay=None):
                         check()
                         return row
             await request('version', 'version', name='trimui-development-host-audit', version='1')
+            ready_deadline = time.monotonic() + 30
+            ready_index = 0
+            while True:
+                ready = await request('game.status', 'status-ready-' + str(ready_index))
+                if (ready['message'].get('game', {}).get('id') == game_id and
+                        ready['message'].get('paused') is False):
+                    break
+                need(time.monotonic() < ready_deadline, 'Native game did not become ready before phase startup')
+                ready_index += 1
+                await asyncio.sleep(.1)
             initial = await request('game.status', 'status-start')
             need(initial['message'].get('game', {}).get('id') == game_id and
                  initial['message'].get('paused') is False, 'Wrong game or paused before observation')
-            window_start = started + initial['elapsed_seconds']
+            window_start = initial['monotonic_ns'] / 1e9
             deadline = window_start + seconds
             replay_task = asyncio.create_task(replay(window_start)) if replay else None
             index = 0
@@ -326,7 +359,7 @@ def validate_sequence(sequence, seconds):
         previous_end = at + duration
 
 
-async def replay_inputs(sequence, *, window_start, pid, start_ticks, args, output, tolerance):
+async def replay_inputs(sequence, *, window_start, pid, start_ticks, args, output, tolerance, request_name='requests.jsonl'):
     spec = importlib.util.spec_from_file_location('audit_controller', PROJECT / 'dev/host_virtual_controller.py')
     controller = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(controller)
@@ -334,16 +367,16 @@ async def replay_inputs(sequence, *, window_start, pid, start_ticks, args, outpu
         await asyncio.sleep(max(0, window_start + event['at_seconds'] - time.monotonic()))
         receipt = controller.send(pid=pid, executable=args.emulator.resolve(), sha256=sha(args.emulator),
             expected_start_ticks=int(start_ticks),
-            command=output / 'controller/command', record=output / 'controller/requests.jsonl',
+            command=output / 'controller/command', record=output / 'controller' / request_name,
             axes=event['axes'], buttons=event['buttons'], seconds=event['seconds'])
         need(0 <= receipt['published_monotonic_ns'] / 1e9 - window_start - event['at_seconds'] <= tolerance,
              'Input publication missed frozen timing tolerance')
 
 
-def validate_input_receipts(output, sequence, window_start, tolerance):
+def validate_input_receipts(output, sequence, window_start, tolerance, request_name='requests.jsonl'):
     if not sequence:
         return
-    requests = [json.loads(line) for line in (output / 'controller/requests.jsonl').read_text().splitlines()]
+    requests = [json.loads(line) for line in (output / 'controller' / request_name).read_text().splitlines()]
     observed = [json.loads(line) for line in (output / 'controller/observed.jsonl').read_text().splitlines()]
     need(len(requests) == len(sequence), 'Input replay was interrupted')
     for event, request in zip(sequence, requests):
@@ -372,8 +405,11 @@ def validate_input_receipts(output, sequence, window_start, tolerance):
 
 
 def final_input_evidence(output):
-    return {str(path.relative_to(output)): sha(path) for path in
-        [output / 'input-sequence.json', output / 'controller/requests.jsonl', output / 'controller/observed.jsonl']}
+    paths = [output / name for name in ('input-sequence.json', 'warmup-input-sequence.json') if (output / name).exists()]
+    paths += sorted((output / 'controller').glob('*.jsonl'))
+    if (output / 'warmup-observations.jsonl').exists():
+        paths.append(output / 'warmup-observations.jsonl')
+    return {str(path.relative_to(output)): sha(path) for path in paths}
 
 
 def import_raw(manifest, raw, output):
@@ -407,6 +443,9 @@ def frozen_check(args, manifest):
     if getattr(args, 'input_sequence', None) is not None:
         need(sha(args.input_sequence) == manifest.get('input_sequence_sha256'), 'Frozen input sequence changed')
         need(sha(args.controller_shim) == manifest.get('controller_shim_sha256'), 'Frozen controller shim changed')
+    if getattr(args, 'warmup_input_sequence', None) is not None:
+        need(sha(args.warmup_input_sequence) == manifest.get('warmup_input_sequence_sha256'), 'Frozen warmup input sequence changed')
+        need(sha(args.controller_shim) == manifest.get('controller_shim_sha256'), 'Frozen controller shim changed')
     need(inventory(args.frozen_config) == manifest['configuration'], 'Frozen configuration changed')
 
 
@@ -417,7 +456,10 @@ def validate_scene(manifest, scene):
     sequence_key = 'sustained_input_sequence_sha256' if sustained else 'input_sequence_sha256'
     need(scene.get('id') == manifest['identity']['scene_id'] and
          scene.get('starting_state_sha256') == manifest['starting_state_sha256'] and
+         scene.get('native_slot') == manifest.get('native_slot') and
+         scene.get('native_disc_version') == manifest.get('native_disc_version') and
          scene.get('warmup_seconds') == manifest['warmup_seconds'] and
+         scene.get('warmup_input_sequence_sha256') == manifest.get('warmup_input_sequence_sha256') and
          scene.get(duration_key) == manifest['duration_seconds'] and
          sequence_key in scene and scene[sequence_key] == manifest.get('input_sequence_sha256') and
          isinstance(scene.get('camera'), str) and scene['camera'].strip(),
@@ -426,8 +468,10 @@ def validate_scene(manifest, scene):
 
 def validate_manifest(args, manifest):
     validate_identity(manifest['identity'])
+    native_probe.validate_declaration(manifest)
     validate_scene(manifest, json.loads(args.scene_definition.read_text()))
     need(manifest['identity']['evidence_class'] == 'host', 'This collector only records host evidence')
+    need(manifest['identity']['system_id'] == 'PSP', 'This collector only launches the admitted PSP engine')
     need(manifest['identity']['emulator']['binary_sha256'] == manifest['emulator_sha256'] and
          manifest['identity']['content_sha256'] == manifest['iso_sha256'], 'Manifest identities disagree')
     for key, low, high in [('duration_seconds', 1, 3600), ('warmup_seconds', 0, 300), ('interval_seconds', .25, 10)]:
@@ -455,7 +499,7 @@ def normal_exit(pid, start, emulator_hash, xdotool):
 
 def collect(args):
     output = args.output.resolve()
-    protected = [args.emulator, args.iso, args.starting_state, args.statistics_source, args.manifest, args.frozen_config] + [p for p in (getattr(args, 'scene_definition', None), getattr(args, 'input_sequence', None), getattr(args, 'controller_shim', None)) if p is not None]
+    protected = [args.emulator, args.iso, args.starting_state, args.statistics_source, args.manifest, args.frozen_config] + [p for p in (getattr(args, 'scene_definition', None), getattr(args, 'input_sequence', None), getattr(args, 'controller_shim', None), getattr(args, 'warmup_input_sequence', None)) if p is not None]
     need(all(output != p.resolve() and p.resolve() not in output.parents and
              output not in p.resolve().parents for p in protected), 'Output overlaps retained inputs')
     output.mkdir(parents=True, exist_ok=False)
@@ -466,9 +510,19 @@ def collect(args):
     helper = None
     pid = start = None
     try:
+        receipt['implementation_sha256'] = retain_implementation(output)
         manifest = json.loads(args.manifest.read_text())
         validate_manifest(args, manifest)
-        sequence = []
+        sequence, warmup_sequence = [], []
+        warmup_path = getattr(args, 'warmup_input_sequence', None)
+        if warmup_path is not None:
+            need(sha(warmup_path) == manifest.get('warmup_input_sequence_sha256'), 'Frozen warmup input sequence changed')
+            warmup_sequence = json.loads(warmup_path.read_text())
+            validate_sequence(warmup_sequence, manifest['warmup_seconds'])
+            need(args.controller_shim is not None and sha(args.controller_shim) == manifest.get('controller_shim_sha256'),
+                 'Warmup input replay requires exact frozen controller shim')
+        else:
+            need(manifest.get('warmup_input_sequence_sha256') is None, 'Frozen warmup input sequence path missing')
         if args.input_sequence is not None:
             need(sha(args.input_sequence) == manifest.get('input_sequence_sha256'), 'Frozen input sequence changed')
             sequence = json.loads(args.input_sequence.read_text())
@@ -480,6 +534,10 @@ def collect(args):
                  'Freeze input timing tolerance before collection')
         else:
             need(manifest.get('input_sequence_sha256') is None, 'Frozen input sequence path missing')
+        if warmup_path is not None:
+            need(type(manifest.get('input_tolerance_seconds')) in (int, float) and
+                 math.isfinite(manifest['input_tolerance_seconds']) and 0 < manifest['input_tolerance_seconds'] <= 1,
+                 'Freeze warmup input timing tolerance before collection')
         receipt['statistics_binding'] = verify_statistics(args.emulator, args.statistics_source,
             args.build_receipt, args.build_receipt_sha256, args.review_evidence)
         need(not os.environ.get('LD_PRELOAD'), 'Collector refuses inherited LD_PRELOAD')
@@ -497,18 +555,24 @@ def collect(args):
             shutil.copyfile(args.review_evidence, output / 'build-review.json')
         if args.input_sequence is not None:
             shutil.copyfile(args.input_sequence, output / 'input-sequence.json')
+        if warmup_path is not None:
+            shutil.copyfile(warmup_path, output / 'warmup-input-sequence.json')
+        if args.input_sequence is not None or warmup_path is not None:
             (output / 'controller').mkdir(mode=0o700)
         need(inventory(output / 'config') == manifest['configuration'] and
              sha(output / 'starting.ppst') == manifest['starting_state_sha256'], 'Copied frozen inputs changed')
+        load_context = native_probe.prepare_load_session(output, emulator=args.emulator, iso=args.iso, manifest=manifest)
+        receipt['native_load_context_sha256'] = sha(output / 'native-load-session/context.json')
         receipt['frozen_inputs'] = manifest
         receipt['manifest_sha256'] = sha(output / 'manifest.json')
         write(output / 'receipt.json', receipt)
         plan = {'emulator': str(args.emulator.resolve()), 'iso': str(args.iso.resolve()),
-                'output': str(output), 'emulator_sha256': manifest['emulator_sha256']}
+                'output': str(output), 'emulator_sha256': manifest['emulator_sha256'],
+                'native_request': str(output / 'native-load-session/request')}
         write(output / 'launch.json', plan)
         helper_env = dict(os.environ, PYTHONPATH=str(PROJECT), XDG_CONFIG_HOME=str(output / 'config'),
                           DBUS_SESSION_BUS_ADDRESS='unix:path=/nonexistent')
-        if args.input_sequence is not None:
+        if args.input_sequence is not None or warmup_path is not None:
             need(not helper_env.get('LD_PRELOAD'), 'Replay refuses competing inherited LD_PRELOAD')
             helper_env.update(LD_PRELOAD=str(args.controller_shim.resolve()),
                 TRIMUI_CONTROLLER_EXECUTABLE=str(args.emulator.resolve()),
@@ -523,7 +587,7 @@ def collect(args):
                 time.sleep(.05)
             root = json.loads((output / 'root.json').read_text())
             pid, start = root['pid'], root['start_ticks']
-            retained_paths = [args.emulator, args.iso, args.starting_state, args.statistics_source, args.manifest, args.scene_definition] + [p for p in (args.input_sequence, args.controller_shim) if p is not None] + [
+            retained_paths = [args.emulator, args.iso, args.starting_state, args.statistics_source, args.manifest, args.scene_definition] + [PROJECT / name for name in IMPLEMENTATION_FILES] + [p for p in (args.input_sequence, args.controller_shim, warmup_path) if p is not None] + [
                 args.frozen_config / name for name in manifest['configuration']]
             def snapshots():
                 return {str(p): (p.stat().st_dev, p.stat().st_ino, p.stat().st_size,
@@ -543,10 +607,33 @@ def collect(args):
                 except (AuditError, FileNotFoundError):
                     need(helper.poll() is None and time.monotonic() < deadline, 'Listener startup failed')
                     time.sleep(.1)
-            warmup_deadline = time.monotonic() + manifest['warmup_seconds']
-            while time.monotonic() < warmup_deadline:
+            load_deadline = time.monotonic() + 90
+            while True:
                 check()
-                time.sleep(min(.25, max(0, warmup_deadline - time.monotonic())))
+                try:
+                    receipt['native_load_before_warmup'] = native_probe.verify_load_session(output, load_context, manifest)
+                    receipt['native_load_before_warmup_utc'] = utc()
+                    break
+                except FileNotFoundError:
+                    need(helper.poll() is None and time.monotonic() < load_deadline,
+                         'Native starting-state load acknowledgement missing or timed out')
+                    time.sleep(.1)
+            warmup_start = None
+            if warmup_sequence:
+                async def warmup_replay(origin):
+                    nonlocal warmup_start
+                    warmup_start = origin
+                    await replay_inputs(warmup_sequence, window_start=origin, pid=pid, start_ticks=start,
+                        args=args, output=output, tolerance=manifest['input_tolerance_seconds'],
+                        request_name='warmup-requests.jsonl')
+                asyncio.run(observe(output / 'warmup-observations.jsonl', port=args.port,
+                    seconds=manifest['warmup_seconds'], interval=manifest['interval_seconds'],
+                    game_id=manifest['identity']['game_id'], check=check, replay=warmup_replay))
+            else:
+                warmup_deadline = time.monotonic() + manifest['warmup_seconds']
+                while time.monotonic() < warmup_deadline:
+                    check()
+                    time.sleep(min(.25, max(0, warmup_deadline - time.monotonic())))
             window_start = []
             async def replay(origin):
                 window_start.append(origin)
@@ -560,15 +647,25 @@ def collect(args):
             need(helper.wait(timeout=30) == 0, 'Owned tree did not exit normally')
         completion = json.loads((output / 'completion.json').read_text())
         need(completion['exit_status'] == 0 and completion['root_pid'] == pid, 'Native exit failed')
+        receipt['native_load_after_exit'] = native_probe.verify_load_session(output, load_context, manifest)
+        receipt['native_load_after_exit_utc'] = utc()
+        need(receipt['native_load_after_exit'] == receipt['native_load_before_warmup'],
+             'Native load evidence changed between warmup and owned exit')
+        if warmup_sequence:
+            validate_input_receipts(output, warmup_sequence, warmup_start, manifest['input_tolerance_seconds'],
+                request_name='warmup-requests.jsonl')
+            receipt['warmup_window_start_monotonic'] = warmup_start
         if sequence:
             # SDL_Quit appends neutralization timing: bind final bytes only
             # after the existing owner observes all descendants closed.
             validate_input_receipts(output, sequence, window_start[0], manifest['input_tolerance_seconds'])
             receipt['input_window_start_monotonic'] = window_start[0]
+        if sequence or warmup_sequence:
             receipt['input_evidence'] = final_input_evidence(output)
         frozen_check(args, manifest)
         need(inventory(output / 'frozen-config') == manifest['configuration'] and
              sha(output / 'starting.ppst') == manifest['starting_state_sha256'], 'Retained frozen copy changed')
+        need(implementation_identity() == receipt['implementation_sha256'], 'Host observer/helper implementation changed')
         import_raw(manifest, output / 'observations.jsonl', output / 'run.json')
         receipt.update(status='complete', completion=completion)
     except BaseException as error:
@@ -595,7 +692,7 @@ def internal(mode, plan_path):
         need(sha(plan['emulator']) == plan['emulator_sha256'], 'Executable changed before exec')
         write(output / 'root.json', {'pid': os.getpid(), 'start_ticks': process_start(os.getpid())})
         argv = [plan['emulator'], '--windowed', '--graphics=opengl', '--escape-exit',
-                '--state=' + str(output / 'starting.ppst'), '--log=' + str(output / 'native.log'), plan['iso']]
+                '--state=' + str(output / 'starting.ppst'), '--project-state-session=' + plan['native_request'], '--log=' + str(output / 'native.log'), plan['iso']]
         os.execv(plan['emulator'], argv)
     from bridge.principal import run_owned_tree
     result = run_owned_tree([sys.executable, '-m', 'tools.host_gameplay_audit', '_exec', str(plan_path)])
@@ -611,12 +708,21 @@ def validate_collected_run(path):
     folder = path.parent
     receipt = json.loads((folder / 'receipt.json').read_text())
     manifest = json.loads((folder / 'manifest.json').read_text())
+    need(set(receipt.get('implementation_sha256', {})) == set(IMPLEMENTATION_FILES) and
+         all(sha(folder / 'collector-source' / name) == digest
+             for name, digest in receipt['implementation_sha256'].items()), 'Retained host helper implementation changed')
     completion = json.loads((folder / 'completion.json').read_text())
     need(receipt.get('status') == 'complete' and completion.get('exit_status') == 0 and
          receipt.get('completion') == completion, 'Run lacks complete normal owned-tree exit')
     need(receipt.get('manifest_sha256') == sha(folder / 'manifest.json') and
          receipt.get('frozen_inputs') == manifest, 'Retained manifest changed')
     need(sha(folder / 'starting.ppst') == manifest['starting_state_sha256'], 'Retained starting state changed')
+    load_context = native_probe.read_context(folder)
+    need(receipt.get('native_load_context_sha256') == sha(folder / 'native-load-session/context.json'),
+         'Retained native load context changed')
+    native_load = native_probe.verify_load_session(folder, load_context, manifest)
+    need(receipt.get('native_load_before_warmup') == native_load == receipt.get('native_load_after_exit'),
+         'Run lacks unchanged actual native starting-state load acknowledgement')
     binding = receipt['statistics_binding']
     need(binding['executable_sha256'] == manifest['emulator_sha256'], 'Executable binding differs from manifest')
     rechecked_binding = verify_statistics_binding(manifest['emulator_sha256'], folder / 'statistics-source.cpp',
@@ -632,6 +738,21 @@ def validate_collected_run(path):
     need(inventory(folder / 'frozen-config') == manifest['configuration'] and
          configuration_identity(folder / 'frozen-config', run['identity']['game_id']) == run['identity']['settings'],
          'Run settings differ from actual frozen native configuration')
+    if manifest.get('warmup_input_sequence_sha256') is not None:
+        warmup_path = folder / 'warmup-input-sequence.json'
+        need(sha(warmup_path) == manifest['warmup_input_sequence_sha256'], 'Retained warmup input sequence changed')
+        warmup_sequence = json.loads(warmup_path.read_text())
+        validate_sequence(warmup_sequence, manifest['warmup_seconds'])
+        if warmup_sequence:
+            need(receipt.get('input_evidence'), 'Warmup acquisition evidence missing')
+            validate_input_receipts(folder, warmup_sequence, receipt['warmup_window_start_monotonic'],
+                manifest['input_tolerance_seconds'], request_name='warmup-requests.jsonl')
+            warmup_rows = [json.loads(line) for line in (folder / 'warmup-observations.jsonl').read_text().splitlines()]
+            select_samples(warmup_rows, manifest['warmup_seconds'], run['identity']['game_id'])
+            warmup_ack = next(row for row in warmup_rows if row['message'].get('ticket') == 'status-start')
+            need(type(warmup_ack.get('monotonic_ns')) is int and
+                 warmup_ack['monotonic_ns'] / 1e9 == receipt['warmup_window_start_monotonic'],
+                 'Warmup input clock is not bound to raw game-ready acknowledgement')
     if manifest.get('input_sequence_sha256') is not None:
         sequence_path = folder / 'input-sequence.json'
         need(sha(sequence_path) == manifest['input_sequence_sha256'], 'Retained input sequence changed')
@@ -642,12 +763,24 @@ def validate_collected_run(path):
         if sequence:
             need(receipt.get('input_evidence'), 'Input acquisition evidence missing')
             validate_input_receipts(folder, sequence, receipt['input_window_start_monotonic'], manifest['input_tolerance_seconds'])
+    if receipt.get('input_evidence'):
+        need(all(sha(folder / name) == digest for name, digest in receipt['input_evidence'].items()),
+             'Retained input timing evidence changed')
     raw = folder / 'observations.jsonl'
     need(receipt.get('raw_sha256') == sha(raw) and
          all(Path(run['observations'][metric]['evidence_file']).resolve() == raw.resolve()
              for metric in ('native_fps', 'native_speed_percent')), 'Run raw evidence binding changed')
     rows = [json.loads(line) for line in raw.read_text().splitlines()]
     included, excluded = select_samples(rows, run['duration_seconds'], run['identity']['game_id'])
+    if manifest.get('input_sequence_sha256') is not None and json.loads((folder / 'input-sequence.json').read_text()):
+        status_start = next(row for row in rows if row['message'].get('ticket') == 'status-start')
+        need(type(status_start.get('monotonic_ns')) is int and
+             status_start['monotonic_ns'] / 1e9 == receipt['input_window_start_monotonic'],
+             'Measured input clock is not bound to raw status-start acknowledgement')
+    if (manifest.get('warmup_input_sequence_sha256') is not None and manifest.get('input_sequence_sha256') is not None and
+            receipt.get('warmup_window_start_monotonic') is not None and receipt.get('input_window_start_monotonic') is not None):
+        need(receipt['warmup_window_start_monotonic'] + manifest['warmup_seconds'] <= receipt['input_window_start_monotonic'],
+             'Warmup and measured input phases overlap')
     for metric in ('native_fps', 'native_speed_percent'):
         need(run['observations'][metric]['start_seconds'] == 0 and
              run['observations'][metric]['end_seconds'] == run['duration_seconds'],
@@ -683,6 +816,7 @@ def main(argv=None):
     capture.add_argument('--build-receipt-sha256')
     capture.add_argument('--review-evidence', type=Path)
     capture.add_argument('--input-sequence', type=Path)
+    capture.add_argument('--warmup-input-sequence', type=Path)
     capture.add_argument('--controller-shim', type=Path)
     review = commands.add_parser('compare')
     review.add_argument('--baseline', type=Path, nargs=5, required=True)

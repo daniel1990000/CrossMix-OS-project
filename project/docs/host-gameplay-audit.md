@@ -44,6 +44,10 @@ The manifest contains the existing gameplay importer fields `identity`, `run_id`
 - `emulator_sha256`, `iso_sha256`, `starting_state_sha256`.
 - `configuration`: every relative frozen configuration file and its SHA-256.
 - `warmup_seconds`, `interval_seconds` (0.25–10 seconds).
+- `native_slot` from the legitimate fixture record (never inferred from its
+  filename), `native_disc_version` and `native_architecture`. The scene also
+  freezes the slot and disc version. `identity.emulator.version` is the exact
+  native reported build version, rather than a nearby release tag.
 - `input_sequence_sha256`: null, or the exact replay file digest.
 - For replay, `controller_shim_sha256` and `input_tolerance_seconds` (0–1 seconds,
   positive, frozen before collecting).
@@ -147,3 +151,43 @@ complete collector reports undergo the same raw/config/input revalidation before
 the existing comparator checks identities against the repeat arms. The raw
 window and late-sample classification always use each run's actual frozen
 duration, rather than assuming the 30-second repeat duration.
+
+### Explicit warmup input
+
+A native SDL axis can cache its first event before forwarding later changes.
+If the observed game/input path needs priming, freeze a separate warmup sequence
+and supply `--warmup-input-sequence /private/frozen/warmup-inputs.json`. Its
+`warmup_input_sequence_sha256` must occur in both the scene and run manifest.
+The same event schema applies, with timing relative to warmup start and events
+ending within the frozen warmup duration. Nonzero-to-neutral pulses must be
+explicitly declared; the collector never inserts hidden priming or changes
+native SDL code. Requested/applied/hold-end timing for warmup and measured input
+is validated separately against their respective clocks. Both phases share the
+same PID-bound controller and retained final native observation log; request
+journals are separate. Measured input's clock is additionally bound to the raw
+status-start acknowledgement's monotonic timestamp. Final log hashes are recorded
+after owned-tree closure, including SDL_Quit neutralization.
+
+### Actual starting-state load acknowledgement
+
+Before native launch the development collector creates a fresh 0700 raw-session
+directory and canonical 0600 `request`, using the existing packet codec. Its
+random session/request/context IDs bind the copied state, exact game/engine
+hashes, explicit fixture slot and format. Both `--state` and the existing
+`--project-state-session` extension are passed. Before any warmup input, the
+collector requires actual native `result` and `load-completed` packets with
+matching fresh context, operation load, sequence1, success, native game ID, disc
+version/prefix, exact paths/hashes/sizes, slot, upstream, extension, build version,
+architecture and format. Missing, failed, stale or incompletely published records
+fail collection. The same packets and copied state must remain unchanged after
+normal owned-tree exit and when a report is revalidated. All raw packets and
+context hashes are retained privately.
+
+This uses the native trusted-caller diagnostic boundary. No
+`QualifiedStateProfile`, production capability, authenticated frontend consumer
+or Resume authority is constructed. Slot declarations still require legitimate
+fixture review. After the load acknowledgement, each input phase additionally
+waits for a retained matching unpaused `game.status` acknowledgement; listener
+readiness alone never authorizes warmup controls. The native load callback proves
+that the exact state loaded; private visual review must still verify the desired
+progress and camera before accepting the frozen scene.

@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "kind": "actual-whole-native-0006-publication-and-reload",
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "interruptions_passed": 8,
+  "fresh_native_load_passed": true,
+  "raw_artifact_files_verified": 175,
+  "profile_created": false,
+  "ordinary_savedata_or_continue_test": false,
+  "physical_qualification": false,
+  "filesystem_power_loss_test": false,
+  "consumer_scope": "Real private transport/envelope/sequence with explicit refusal stub, no full qualified profile validation",
+  "legacy_mutable_receipts_protected": false,
+  "observations": [
+    {
+      "point": "completion-after-rename",
+      "passed": true,
+      "report_sha256": "fa97fb2980afc98e3db71d9bbd260c10d9f259e58a69a1c65d73061190275b69",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33180097246,
+      "final_sequence": "2",
+      "completion_sequence": "2",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 36049,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "completion-before-rename",
+      "passed": true,
+      "report_sha256": "fb4693a872ba17d81344c5e431471fa68176e1292cba41684ef50125f9f7a811",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33553571372,
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 35888,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "fresh-load",
+      "passed": true,
+      "report_sha256": "3e65a5f1620cc93176fcc8ae8ef26ae62453b0e851f7bc1e8d10dd4613c899c9",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 7264270344,
+      "final_sequence": null,
+      "completion_sequence": null,
+      "prior_snapshot_preserved": null,
+      "normal_fresh_process_load": true,
+      "supervision": {
+        "root_pid": 36224,
+        "exit_status": 0,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "result-before-rename",
+      "passed": true,
+      "report_sha256": "f7ff49215b9373833f6dea083860b0a93980f1e4a928d3898fec2e5625735e41",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33255128302,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 35770,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "result-partial-write",
+      "passed": true,
+      "report_sha256": "b431e182f1d35a4d8ad665af7899e56be52ee7f035d6f0302ed33e92a936b22c",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33427697523,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 35628,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "snapshot-after-fsync",
+      "passed": true,
+      "report_sha256": "1d83fba0cc02acde8b8955ef6e0f76d5cf6c625a41de262d418497fe00bb164c",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33298013796,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 35501,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "snapshot-before-fsync",
+      "passed": true,
+      "report_sha256": "2d7ddeb8618e5d0dce74679a820f28636e5ff912b3da9fea0bf007388d67b02f",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33480790676,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 35128,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "snapshot-partial-write",
+      "passed": true,
+      "report_sha256": "e32577ae64b132a14b6dfe14656dc9996a44d2aaa2e7dc5a1ddb32c332791fff",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 33663576091,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 34891,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    },
+    {
+      "point": "state-before-rename",
+      "passed": true,
+      "report_sha256": "b6a64ffab5516f5251b5c9b67b5ea18209259cca42e2d5a35d8536cb631d2c2c",
+      "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+      "elapsed_ns": 30126925472,
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "prior_snapshot_preserved": true,
+      "normal_fresh_process_load": false,
+      "supervision": {
+        "root_pid": 34702,
+        "exit_status": -9,
+        "children_reaped": 1
+      }
+    }
+  ]
+}

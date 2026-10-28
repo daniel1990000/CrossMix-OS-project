@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "kind": "full-host-ppsspp-build",
+  "status": "built",
+  "recorded_at": "2026-10-28T23:02:41.083582+00:00",
+  "architecture": "x86_64",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+  "executable_size": 44885576,
+  "reported_version": "d357e6a",
+  "version_exit_code": 0,
+  "project_patches": [
+    {
+      "lock": "source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "path": "patches/0001-independent-native-menu-controls.patch",
+      "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "state-evidence.lock.json",
+      "lock_sha256": "ecdcca6b95f60f5a035e3fa06d16a18efd93e77304cd0c171a302ea0e147cb55",
+      "path": "patches/0002-save-slot-completion-evidence.patch",
+      "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "state-session.lock.json",
+      "lock_sha256": "5b7c17ec52ea57ba0bdd2453346da6c4bfec9aa6c878de4d0b054cd78a2923e4",
+      "path": "patches/0003-project-state-session.patch",
+      "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "gpu-stats.lock.json",
+      "lock_sha256": "ff0845444a477cc9c2f1586b6e45107e5a581ab27abadcf7b4e2e55b86c60058",
+      "path": "patches/0005-gpu-stats-float-copy.patch",
+      "sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+      "license": "GPL-2.0-or-later"
+    }
+  ],
+  "statistics_source_sha256": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674",
+  "statistics_object_sha256": "093f614a29e87057b60e84f0814dd29589b44b95b66caa7b3b10c5aed74827f3",
+  "statistics_archive_member_matches_object": true,
+  "core_archive_sha256": "6e45c550ebb984674910f479bbbfa8ed2bf3080e50dea7526ba88cc8ccd52add",
+  "final_link_command_sha256": "7ae49ea3ee1f0e14be7f6acf5e3e92ffce04bbe24d388e84363db5a4b47c13b4",
+  "assembly_sha256": "149e19ec7cd2eb877bfd3b8f3509f3fcc76b381bc14f33ded7eb112cd48be209",
+  "configure_script_sha256": "343c9e846216541b5f5573715b150b1bd2f42d099e4dcdca36efcecdbf4c23bf",
+  "compile_commands_sha256": "9789fd8b4ffa72b1ed4eff9be6432c0d62a8452d1ee99fdb07c2142856c4aebe",
+  "build_log_sha256": "5d6670bf36494c5c7e5889fdc31f813ce4000962d9198011b0b275c21f5d0983",
+  "dynamic_dependencies_sha256": "9c719cf2f0de64b1e1e598aee8419205398f616485ad34fc7e00714de85097b9",
+  "recursive_submodules_sha256": "7973beb9a7a78d68d3c2cea2e6db188b915abf1df58a15f5ddd22995e0f0c638",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "cmake": "cmake version 4.4.0",
+  "ninja": "1.13.0.git.kitware.jobserver-pipe-1",
+  "ffmpeg_built_from_source": false,
+  "ffmpeg_prebuilt_gitlink": "1e3b4965632f60b1d85360261d1b9dd45444bc71",
+  "ffmpeg_prebuilt_archives": {
+    "libavcodec.a": "e777f2cc6a22ab42baee117534788b8695ab338c491436d4fa7f4ed033eddeb6",
+    "libswscale.a": "1166cebff89cbe46196d5ab61a930c8e57be2ea9a9d2d34e16098c20c8dcd844",
+    "libswresample.a": "27342f68346ba4970f2fd68700a77c162a3746ea4248e1b0b7002b8ad60fb9e4",
+    "libavformat.a": "8ab345bc56844c18f0348df80ce6fa00937f72a448d360d709f2073ce4f6435d",
+    "libavutil.a": "8d03d54c0a280cdce177cbf76611a954f05beaab2b6e56389b0fa001d33ab331"
+  },
+  "hardware_qualified": false,
+  "native_device_binary_replaced": false,
+  "PowerVR_recipe_applied": false,
+  "base_preserved_before_optional_patch": true,
+  "optional0006_included": false,
+  "build_command": "cmake --build /workspace/trimui-audit/native/patched-build --target PPSSPPSDL -j4",
+  "failed_link_log_sha256": "fc910f6e20ee09a3e6fe110412f41a621091be2fc3a7a3267a43fe1291e80549",
+  "header_exclusion_receipt_sha256": "920b357b93dce0f37283eb8135703ed5e3a6ef043483e8ceb32a31325fbcd431"
+}

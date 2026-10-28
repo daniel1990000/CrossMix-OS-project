@@ -1,26 +1,23 @@
-Continue daniel1990000/CrossMix-OS-project, active source project/.
-Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json and
-project/docs/iso-continuation-2026-10-26.md with linked evidence first.
-The owner explicitly executed the separate ISO continuation in this chat.
-
-Dev19 branch build/iso-host-validation-20261026 is draft PR #3.
-Clean tested/package commit a962d6c9d213f9d76b6a104ba78a282029cc453a:
-1213 strict checks, five pinned sources, zero skips/errors/failures;
-clean installed smoke/rollback, signed inventories and no-Git ZIP rebuilds pass.
-CI run40383733188 has a separate merge checkout and verified downloaded artifact.
-Later evidence/metadata commits have separate identities. Preserve merged dev18
-and published dev16 assets. No new public release is requested.
-
-Use final G01-G08 statuses, not assumed completion. Gameplay/native states and
-host closure differ from ordinary savedata and authenticated frontend Resume.
-Never fabricate qualified manager/source/foreground/writer/device gates.
-Native private packets alone cannot grant frontend production authority.
-
-Private input SHA256 e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a,
-size1696006144; session artifacts /workspace/trimui-audit/. Verify existence and
-hashes before reuse. Keep game/state/audio/native distributions/private keys out
-of Git. Retained hashes cannot recover missing private artifacts.
-
-Keep gates disabled, original register14/25, physical0/13. Continue feasible unmet
-host criteria. With hardware, begin inventory/recovery and the13-area casebook.
-Stationary host observations cannot recommend TrimUI presets or demanding scenes.
+Continue TrimUI and execute the current handover; do not stop after another plan.
+Repository daniel1990000/CrossMix-OS-project; source project/; workspace /workspace/TrimUi if retained.
+Branch build/iso-next-round-20261028; stacked draft PR4 depends on unmerged PR3.
+Inspect local/remote state and preserve newer work before editing. Do not merge or release automatically.
+Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
+project/docs/iso-next-round-2026-10-28.md, evidence/iso-next-round-20261028 review/results,
+and project/docs/master-plan-2026-10-22.md. Historical through-dev19/18/17 files are dated snapshots.
+Reviewed implementation789647449bd5a8ddb47fad4630e234703689c4f8 passes1256 strict checks against5exact pins, zero skips/errors/failures.
+Later evidence commits and packages have distinct identities. Do not attribute old package hashes to new code.
+Settings clarity/refresh, reusable dev-only host collector and analogue helper are implemented.
+Optional native0006 fixes preservation for new immutable snapshot receipts; original0003 failures remain retained.
+Whole-native0006 interruption now passes8precisewindows+freshload with175rawartifactsreviewed.
+Ordinary Soldier/save/fresh Continue and broader moving scenes are still in progress;
+check current actual receipts before claiming acceptance or repeating acquisition.
+Private ISO was recovered/fullhash verified; patched0006 executable is a newa9ab92b... identity, not the old6924...build.
+Private paths /workspace/trimui-audit are temporary: verify before reuse. Never commit game/state/audio/native distributions/keys.
+Continue5matched30second pairs per legitimate frozen scene and isolated30minute1x/2x demanding runs only after gameplay/probe processes stop.
+Retain late/excluded/failed raw evidence, exact identities and actual input application timing. Audio/pacing/latency/energy remain unavailable.
+Keep APIs, native owners and qualification gates; no fabricated positive profile or automatic binary replacement.
+Run strict5source checks after code changes, package clean exact source with dev_release.py, verify installed rollback/signatures/inventories/noGit rebuilding.
+Use independent implementation/review lanes with explicit ownership; save reviewed work and sanitized evidence in PR4.
+Original completion14/25, physical0/13; qualified Apply/Undo and composed Resume remain unverified. Publisheddev16 unchanged.
+Update this prompt/status/report to actual settled results before final handoff.

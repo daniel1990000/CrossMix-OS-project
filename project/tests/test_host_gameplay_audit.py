@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: MIT
 import hashlib
+import asyncio
 import json
 import os
 from pathlib import Path
@@ -171,6 +172,14 @@ class HostGameplayAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(audit.AuditError, 'disabled'):
             audit.configuration_identity(root, 'ULUS10160')
 
+    @staticmethod
+    def publish_native_fixture(folder, context):
+        fields = tuple('Synthetic successful load' if value is None else value
+                       for value in audit.native_probe.expected_result(context))
+        raw = audit.native_probe.encode_packet(b'TPSE1R\n', fields)
+        for name in ('result', 'load-completed'):
+            audit.native_probe._private_bytes(folder / 'native-load-session' / name, raw)
+
     def collected_fixture(self):
         folder = self.root / 'collected'
         folder.mkdir()
@@ -179,19 +188,25 @@ class HostGameplayAuditTests(unittest.TestCase):
         (config / 'ppsspp.ini').write_text('[Graphics]\nInternalResolution=1\nFrameSkip=0\nAutoFrameSkip=False\n')
         (config / 'ULUS10160_ppsspp.ini').write_text('[Graphics]\nInternalResolution=1\n')
         (folder / 'starting.ppst').write_text('Synthetic state fixture')
+        engine = folder / 'reference-engine'
+        iso = folder / 'reference-iso'
+        engine.write_text('Synthetic reference engine')
+        iso.write_text('Synthetic reference ISO')
         audit.write(folder / 'scene.json', {'id': 'fixture-scene',
             'starting_state_sha256': audit.sha(folder / 'starting.ppst'), 'camera': 'Synthetic fixed camera',
-            'warmup_seconds': 10, 'duration_seconds': 30, 'input_sequence_sha256': None})
+            'warmup_seconds': 10, 'duration_seconds': 30, 'input_sequence_sha256': None,
+            'native_slot': 0, 'native_disc_version': '1.03'})
         (folder / 'statistics-source.cpp').write_text('Synthetic provenance fixture')
         identity = {'system_id': 'PSP', 'game_id': 'ULUS10160', 'game_title': 'Synthetic fixture',
-            'content_sha256': '1' * 64, 'scene_id': 'fixture-scene',
+            'content_sha256': audit.sha(iso), 'scene_id': 'fixture-scene',
             'scene_definition_sha256': audit.sha(folder / 'scene.json'), 'device_id': 'host-fixture',
             'environment_sha256': '2' * 64, 'evidence_class': 'host',
-            'emulator': {'id': 'fixture', 'version': 'fixture', 'binary_sha256': '3' * 64},
+            'emulator': {'id': 'fixture', 'version': 'fixture', 'binary_sha256': audit.sha(engine)},
             'settings': audit.configuration_identity(folder / 'frozen-config', 'ULUS10160'),
             'frontend_id': 'fixture-native', 'intended_speed_percent': 100}
         manifest = dict(identity=identity, run_id='fixture-1x', pair_id='pair-1', duration_seconds=30,
-            sustained=False, demanding_profile=False, emulator_sha256='3' * 64,
+            sustained=False, demanding_profile=False, emulator_sha256=audit.sha(engine), iso_sha256=audit.sha(iso),
+            native_slot=0, native_disc_version='1.03', native_architecture='x86_64',
             starting_state_sha256=audit.sha(folder / 'starting.ppst'),
             configuration=audit.inventory(folder / 'frozen-config'), warmup_seconds=10)
         audit.write(folder / 'manifest.json', manifest)
@@ -202,10 +217,16 @@ class HostGameplayAuditTests(unittest.TestCase):
         audit.import_raw(manifest, folder / 'observations.jsonl', folder / 'run.json')
         completion = {'root_pid': 101, 'exit_status': 0, 'children_reaped': 1}
         audit.write(folder / 'completion.json', completion)
-        binding = {'executable_sha256': '3' * 64}
+        context = audit.native_probe.prepare_load_session(folder, emulator=engine, iso=iso, manifest=manifest)
+        self.publish_native_fixture(folder, context)
+        native_load = audit.native_probe.verify_load_session(folder, context, manifest)
+        binding = {'executable_sha256': audit.sha(engine)}
         audit.write(folder / 'receipt.json', dict(status='complete', completion=completion,
             manifest_sha256=audit.sha(folder / 'manifest.json'), frozen_inputs=manifest,
-            statistics_binding=binding, raw_sha256=audit.sha(folder / 'observations.jsonl')))
+            statistics_binding=binding, raw_sha256=audit.sha(folder / 'observations.jsonl'),
+            implementation_sha256=audit.retain_implementation(folder),
+            native_load_context_sha256=audit.sha(folder / 'native-load-session/context.json'),
+            native_load_before_warmup=native_load, native_load_after_exit=native_load))
         return folder, binding
 
     def test_import_recomputes_window_and_comparison_rejects_numeric_tampering(self):
@@ -379,6 +400,8 @@ class HostGameplayAuditTests(unittest.TestCase):
             def __init__(self):
                 self.finished = False
                 audit.write(output / 'root.json', {'pid': 101, 'start_ticks': '12345'})
+                context = audit.native_probe.read_context(output)
+                HostGameplayAuditTests.publish_native_fixture(output, context)
             def poll(self):
                 return 0 if self.finished else None
             def wait(self, timeout):
@@ -410,6 +433,140 @@ class HostGameplayAuditTests(unittest.TestCase):
         self.assertEqual(receipt['status'], 'complete')
         self.assertEqual(receipt['input_evidence']['controller/observed.jsonl'], audit.sha(output / 'controller/observed.jsonl'))
         self.assertIn('quit_neutral', (output / 'controller/observed.jsonl').read_text())
+
+    def test_warmup_and_measured_requests_validate_as_separate_frozen_phases(self):
+        controller = self.root / 'controller'
+        controller.mkdir()
+        warmup = dict(at_seconds=0, seconds=.1, axes=[.01, .01, .01, .01], buttons=0)
+        measured = dict(at_seconds=1, seconds=1, axes=[0, 1, 0, 0], buttons=1)
+        warmup_request = dict(sequence=0, pid=101, axes=[328, 328, 328, 328], buttons=0,
+            requested_monotonic_ns=100000000000, published_monotonic_ns=100010000000,
+            expires_monotonic_ns=100100000000)
+        measured_request = dict(sequence=1, pid=101, axes=[0, 32767, 0, 0], buttons=1,
+            requested_monotonic_ns=111000000000, published_monotonic_ns=111010000000,
+            expires_monotonic_ns=112000000000)
+        observed = [dict(event='applied', sequence=0, pid=101, axes=warmup_request['axes'], buttons=0,
+                result=0, observed_monotonic_ns=100020000000),
+            dict(event='deadline_neutral', sequence=0, pid=101, result=0, observed_monotonic_ns=100120000000),
+            dict(event='applied', sequence=1, pid=101, axes=measured_request['axes'], buttons=1,
+                result=0, observed_monotonic_ns=111020000000),
+            dict(event='deadline_neutral', sequence=1, pid=101, result=0, observed_monotonic_ns=112020000000)]
+        (controller / 'warmup-requests.jsonl').write_text(json.dumps(warmup_request) + '\n')
+        (controller / 'requests.jsonl').write_text(json.dumps(measured_request) + '\n')
+        (controller / 'observed.jsonl').write_text(''.join(json.dumps(row) + '\n' for row in observed))
+        audit.validate_input_receipts(self.root, [warmup], 100, .1, request_name='warmup-requests.jsonl')
+        audit.validate_input_receipts(self.root, [measured], 110, .1)
+        # Changing the warmup phase does not silently alter measured validation.
+        warmup['axes'] = [0, 0, 0, 0]
+        with self.assertRaisesRegex(audit.AuditError, 'differs from frozen sequence'):
+            audit.validate_input_receipts(self.root, [warmup], 100, .1, request_name='warmup-requests.jsonl')
+        audit.validate_input_receipts(self.root, [measured], 110, .1)
+
+    def test_scene_warmup_sequence_digest_is_explicitly_bound(self):
+        scene = dict(id='fixture', starting_state_sha256='1' * 64, camera='Fixed forward',
+            warmup_seconds=10, duration_seconds=30, input_sequence_sha256='2' * 64,
+            warmup_input_sequence_sha256='3' * 64)
+        manifest = dict(identity={'scene_id': 'fixture'}, starting_state_sha256='1' * 64,
+            warmup_seconds=10, duration_seconds=30, input_sequence_sha256='2' * 64,
+            warmup_input_sequence_sha256='3' * 64, sustained=False)
+        audit.validate_scene(manifest, scene)
+        manifest['warmup_input_sequence_sha256'] = '4' * 64
+        with self.assertRaises(audit.AuditError):
+            audit.validate_scene(manifest, scene)
+
+    def test_native_failed_load_and_fresh_context_mismatch_rejected(self):
+        folder, _ = self.collected_fixture()
+        context = audit.native_probe.read_context(folder)
+        manifest = json.loads((folder / 'manifest.json').read_text())
+        audit.native_probe.verify_load_session(folder, context, manifest)
+        result = folder / 'native-load-session/result'
+        original = result.read_bytes()
+        fields = list(audit.native_probe._decode_packet(original, b'TPSE1R\n', 27))
+        fields[8] = 'failure'
+        fields[10:] = [''] * 17
+        result.write_bytes(audit.native_probe.encode_packet(b'TPSE1R\n', fields))
+        with self.assertRaisesRegex(audit.native_probe.NativeAuditError, 'load failed'):
+            audit.native_probe.verify_load_session(folder, context, manifest)
+        result.write_bytes(original)
+        fields = list(audit.native_probe._decode_packet(original, b'TPSE1R\n', 27))
+        fields[0] = '0' * 32
+        result.write_bytes(audit.native_probe.encode_packet(b'TPSE1R\n', fields))
+        with self.assertRaisesRegex(audit.native_probe.NativeAuditError, 'another session'):
+            audit.native_probe.verify_load_session(folder, context, manifest)
+
+    def test_native_wrong_slot_future_sequence_and_incomplete_publication_rejected(self):
+        folder, _ = self.collected_fixture()
+        context = audit.native_probe.read_context(folder)
+        manifest = json.loads((folder / 'manifest.json').read_text())
+        result = folder / 'native-load-session/result'
+        completed = folder / 'native-load-session/load-completed'
+        original = result.read_bytes()
+        for index, value, reason in [(7, '2', 'stale sequence'), (21, '1', 'exact game/engine/state/slot')]:
+            fields = list(audit.native_probe._decode_packet(original, b'TPSE1R\n', 27))
+            fields[index] = value
+            packet = audit.native_probe.encode_packet(b'TPSE1R\n', fields)
+            result.write_bytes(packet)
+            completed.write_bytes(packet)
+            with self.assertRaisesRegex(audit.native_probe.NativeAuditError, reason):
+                audit.native_probe.verify_load_session(folder, context, manifest)
+        result.write_bytes(original)
+        completed.write_bytes(original[:-1])
+        with self.assertRaises(ValueError):
+            audit.native_probe.verify_load_session(folder, context, manifest)
+        completed.write_bytes(original)
+        completed.chmod(0o644)
+        with self.assertRaisesRegex(audit.native_probe.NativeAuditError, '0600'):
+            audit.native_probe.verify_load_session(folder, context, manifest)
+
+    def test_phase_waits_for_unpaused_game_ack_before_replaying_input(self):
+        from types import SimpleNamespace
+        class Socket:
+            async def send(self, payload):
+                self.request = json.loads(payload)
+            async def recv(self):
+                request = self.request
+                event, ticket = request['event'], request['ticket']
+                message = {'event': event, 'ticket': ticket}
+                if event == 'game.status':
+                    message.update(game={'id': 'ULUS10160'}, paused=ticket == 'status-ready-0')
+                elif event == 'gpu.stats.get':
+                    message.update(fps={'actual': 30, 'target': 30},
+                        vblanksPerSecond={'actual': 60, 'target': 60})
+                return json.dumps(message)
+        class Connection:
+            async def __aenter__(self):
+                return Socket()
+            async def __aexit__(self, *_args):
+                pass
+        replay_origins = []
+        async def replay(origin):
+            replay_origins.append(origin)
+        raw = self.root / 'warmup-observations.jsonl'
+        with patch.dict('sys.modules', {'websockets': SimpleNamespace(connect=lambda *_args, **_kw: Connection())}):
+            rows = asyncio.run(audit.observe(raw, port=19362, seconds=.01, interval=.25,
+                game_id='ULUS10160', check=lambda: None, replay=replay))
+        ready = [row for row in rows if row['message'].get('ticket', '').startswith('status-ready-')]
+        self.assertEqual([row['message']['paused'] for row in ready], [True, False])
+        start = next(row for row in rows if row['message'].get('ticket') == 'status-start')
+        self.assertEqual(replay_origins, [start['monotonic_ns'] / 1e9])
+        self.assertGreater(start['elapsed_seconds'], ready[0]['elapsed_seconds'])
+        self.assertTrue(raw.exists())
+
+    def test_ppsspp_collector_rejects_ps1_identity_before_launch(self):
+        from types import SimpleNamespace
+        folder, _ = self.collected_fixture()
+        manifest = json.loads((folder / 'manifest.json').read_text())
+        manifest['identity']['system_id'] = 'PS1'
+        with self.assertRaisesRegex(audit.AuditError, 'admitted PSP engine'):
+            audit.validate_manifest(SimpleNamespace(scene_definition=folder / 'scene.json'), manifest)
+
+    def test_retained_collector_helper_source_tampering_rejected(self):
+        folder, binding = self.collected_fixture()
+        with patch.object(audit, 'verify_statistics_binding', return_value=binding):
+            audit.validate_collected_run(folder / 'run.json')
+            (folder / 'collector-source/tools/host_audit_native.py').write_text('changed helper')
+            with self.assertRaisesRegex(audit.AuditError, 'helper implementation changed'):
+                audit.validate_collected_run(folder / 'run.json')
 
     def test_nonfinite_counters_rejected(self):
         rows = self.rows()

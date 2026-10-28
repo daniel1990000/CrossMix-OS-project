@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "kind": "independent-private-native-statistics-build-review",
+  "reviewer": "review independent agent",
+  "recorded_at_utc": "2026-10-28T23:05:30.523822+00:00",
+  "decision": "accepted_for_host_counter_collection",
+  "executable_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "statistics_source_sha256": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "statistics_object_sha256": "093f614a29e87057b60e84f0814dd29589b44b95b66caa7b3b10c5aed74827f3",
+  "save_state_object_archive_member_sha256": "491549198d886dc8dfd6a06467561a0b4dc4aa941f2caec196d8e239a61b6e6e",
+  "core_archive_sha256": "9a05acbdaee471e528c78993b3c872d2c92a8ea41687ad6fca75639098928c6a",
+  "checked_artifact_sha256": {
+    "candidate-0006/build-report.json": "ecf1cb0ef22cc121a5b2caf3cbab4e443e26a240cc87d231ae9cd2fd6adf5036",
+    "candidate-0006/assembly-0006.json": "8359c365f81543e019b031c485fd8f3242e53306ccb0dbba74887179a79b3b89",
+    "candidate-0006/compile_commands.json": "9789fd8b4ffa72b1ed4eff9be6432c0d62a8452d1ee99fdb07c2142856c4aebe",
+    "candidate-0006/link-command.txt": "7ae49ea3ee1f0e14be7f6acf5e3e92ffce04bbe24d388e84363db5a4b47c13b4",
+    "candidate-0006/build-0006.log": "f5b19e67c38f86b557ed1fa09e26babaebeab9ef227d1129afdc3f2f6f666d37",
+    "candidate-0006/ldd.txt": "c66e1a526c51d9663ff14cf00eedb88489f97f953d64281ca7338a9d99d1b22a"
+  },
+  "checks": [
+    "Exact separately preserved optional0006 engine bytes independently rehashed; retained modified source closure and optional patch/postimage lock match.",
+    "Corrected statistics object/archive member unchanged from separately reviewed base engine; final link includes exact Core archive.",
+    "Optional0006 SaveState source/postimage and rebuilt SaveState archive member bound; snapshot namespace appears in exact executable.",
+    "Incremental build targets only SaveState and dependent archive/link; base0001\u20133+0005 engine remains separately preserved."
+  ],
+  "limits": [
+    "This review binds build/source identity for private host counter and native-protocol probes; preservation behavior still needs separately reviewed whole-emulator interruption evidence.",
+    "Do not mix this0006 engine identity with base0001\u20133+0005 resolution comparisons.",
+    "FFmpeg static archives were reused; complete corresponding-source distribution proof and device qualification remain unavailable.",
+    "Reviewable compiler provenance is not cryptographic source-to-binary proof; no production profile or capability is granted."
+  ],
+  "optional0006_included": true,
+  "hardware_qualified": false
+}

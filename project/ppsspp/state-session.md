@@ -199,9 +199,16 @@ preserved the prior usable completion. Normal serializer failure preservation
 above must not be read as general interruption preservation. Native Undo bytes
 are recovery material, not an authenticated replacement path.
 
-Preserving the last usable completion across these windows remains **unmet**.
+For the original 0003 implementation, preserving the last usable completion
+across these windows remains **unmet**.
 A fix needs immutable generation-bound state payloads, coherent bounded receipt
 publication/recovery, disk lifecycle limits and review at the existing path,
 slot, session and freshness boundaries. Reordering two renames alone does not
 preserve the old slot bytes. The current API and qualification gates are retained;
 no positive profile or production Resume acceptance follows from these probes.
+
+The separate optional [0006 extension](state-snapshots.md) implements bounded
+immutable snapshots and final-first publication for newly created receipts. Its
+[whole-native host matrix](../evidence/iso-next-round-20261028/native-whole/verified-summary.json)
+passes eight precise interruption windows and a fresh native reload. That does
+not migrate legacy mutable receipts or establish power-loss/device acceptance.

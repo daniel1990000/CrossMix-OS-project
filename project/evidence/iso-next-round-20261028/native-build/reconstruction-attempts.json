@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-10-28T22:54:24.846856+00:00",
+  "prior_native_binary_retained": false,
+  "prior_binary_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "reconstruction_attempts": [
+    {
+      "operation": "git clone --shared --no-checkout from sparse promisor PPSSPP checkout",
+      "exit_code": 128,
+      "error": "lazy fetching disabled; could not fetch missing promisor object; early EOF",
+      "outcome": "No usable clone retained; clone process removed its destination."
+    },
+    {
+      "operation": "cp -a pristine sparse PPSSPP checkout to separate private patched-source, then git sparse-checkout disable",
+      "exit_code": 0,
+      "outcome": "Complete tracked top-level source recovered from upstream; pristine reference not changed."
+    },
+    {
+      "operation": "git submodule update --init --recursive --depth 1 --jobs 4",
+      "outcome": "Stopped only owned FFmpeg clone/updater during unfiltered default-head pack transfer (~93MB). No complete input from this attempt used. Guarded assembly refused unpinned/uninitialized modules before patch application."
+    },
+    {
+      "operation": "Exact FFmpeg gitlink blobless depth1 fetch + sparse /linux/x86_64 and licenses",
+      "outcome": "Success at 1e3b4965632f60b1d85360261d1b9dd45444bc71; other architecture prebuilts omitted; nested gitlink recovery continuing."
+    },
+    {
+      "operation": "First CMake configure of exact pinned source after initial interrupted submodule clone",
+      "exit_code": 1,
+      "outcome": "Missing freetype CMakeLists from empty no-checkout worktree; configure failed before compilation. Retained configure-failed-incomplete-submodule.log."
+    },
+    {
+      "operation": "Reset every disposable submodule to exact HEAD; recursively recover nested dlg/linkernsbypass gitlinks",
+      "exit_code": 0,
+      "outcome": "Materialized exact pinned source; subsequent configure successful. All 28 recursive identities match retained source pins."
+    },
+    {
+      "operation": "git sparse-checkout add --no-cone /.gitmodules",
+      "exit_code": 129,
+      "outcome": "Git add subcommand does not accept --no-cone; retried without flag under existing no-cone configuration, success."
+    },
+    {
+      "operation": "First full PPSSPPSDL final link",
+      "exit_code": 1,
+      "outcome": "Mixed system libpng16 header aliases ahead of bundled libpng17 caused undefined png_set_* symbols. No source defect assumed; retained build-failed-mixed-png-headers.log."
+    },
+    {
+      "operation": "Exclude only top-level private system png header aliases; incremental compile/link",
+      "exit_code": 0,
+      "outcome": "11 targets rebuilt; full executable23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d built. Header exclusions explicitly retained and source unchanged."
+    }
+  ],
+  "build_tools": {
+    "cmake": "4.4.0",
+    "ninja": "1.13.0",
+    "python": "3.12.14"
+  },
+  "current_status": "base0001\u20133+0005_and_separate_reviewed-source0006_full_engine_built",
+  "prior_source_or_binary_identity_inferred": false,
+  "additional_build": {
+    "patch": "0006-immutable-state-completion-snapshots.patch",
+    "patch_sha256": "1515146917289839533949b66f15dc401f82570e2a0bed03d40b944b5dfcd179",
+    "executable_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "base_executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+    "incremental_targets": 5,
+    "exit_code": 0,
+    "statistics_binary_review_status": "pending_separate_review",
+    "native_interruption_status": "pending_real_engine_probes",
+    "device_qualified": false
+  }
+}

@@ -1,8 +1,8 @@
 # TrimUI master plan — current register
 
-Updated 26 October 2026. Active development is the dev19 ISO host audit on `build/iso-host-validation-20261026`, PR #3. Merged dev18 is preserved. Read the [audit report](iso-continuation-2026-10-26.md), [handover](../../HANDOVER.md) and [status](../handover/LATEST.json) for exact evidence. Prior records are archived [through dev18](master-plan-history-through-dev18.md) and [through dev17](master-plan-history-through-dev17.md).
+Updated 28 October 2026. Active development is dev20 on `build/iso-next-round-20261028`, stacked draft PR #4 over unmerged PR #3. Read the [current report](iso-next-round-2026-10-28.md), [handover](../../HANDOVER.md) and [status](../handover/LATEST.json). Clean source `7896474` passes 1,256 strict checks; later evidence/package identities remain separate. Settings clarity/refresh and reusable host auditing are implemented. Optional0006 source fixes interrupted completion publication with bounded immutable snapshots; whole-native and gameplay acceptance continue. Prior dev19 and earlier records retain their dated scopes.
 
-The original register remains **14/25 complete and 0/13 physical areas run**. Published dev16 is unchanged. No native binary or upstream patch is selected in dev19.
+The original register remains **14/25 complete and 0/13 physical areas run**. Published dev16 is unchanged. No native binary or upstream patch is selected in dev20.
 
 ## Executed ISO continuation
 
