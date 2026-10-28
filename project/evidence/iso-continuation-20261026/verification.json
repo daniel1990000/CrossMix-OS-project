@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-28T07:05:33.431222+00:00",
+  "implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "application_changes_after_implementation": false,
+  "report": "project/docs/iso-continuation-2026-10-26.md",
+  "strict_checks": {
+    "run": 1213,
+    "passed": 1213,
+    "skipped": 0,
+    "failures": 0,
+    "errors": 0
+  },
+  "package_receipt": "certification/package-receipt.json",
+  "ci_readback": "certification/ci-readback.json",
+  "acceptance": {
+    "G01": "pass_readonly_scope",
+    "G02": "partial_no_ordinary_savedata_relaunch",
+    "G03": "partial_qualified_manager_undo_unverified",
+    "G04": "partial_full_authenticated_consumption_unverified",
+    "G05": "blocked_positive_composed_resume",
+    "G06": "partial_stationary_host_scope_complete",
+    "G07": "pass_host_implementation",
+    "G08": "pass_recorded_scope"
+  },
+  "physical_areas_tested": 0,
+  "original_tasks_completed": 14,
+  "selected_native_binaries": [],
+  "selected_upstream_patches": [],
+  "measurement_pairs": 5,
+  "standalone_soak_seconds": 1800,
+  "ordinary_game_savedata_relaunch_verified": false,
+  "qualified_manager_apply_undo_verified": false,
+  "authenticated_frontend_resume_verified": false,
+  "private_payloads_exported": false
+}

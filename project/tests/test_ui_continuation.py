@@ -147,6 +147,39 @@ class CombinedFilterTests(unittest.TestCase):
 
 
 class InformationAndStatusTests(unittest.TestCase):
+    def test_explicit_readonly_capability_hides_launch_in_confirmation_and_information(self):
+        for resume in (False, True):
+            for surface in ("confirmation", "information"):
+                with self.subTest(resume=resume, surface=surface):
+                    model = NavigationModel()
+                    receive(model, "capabilities", {"game_information": True, "game_launch": False, "game_options": True})
+                    record = game("psp:actual-image", resume_available=resume)
+                    model.set_category_items(0, [record])
+                    model.handle("confirm")
+                    if surface == "information":
+                        request = choose(model, "Game information")[0]
+                        model.receive(request, record)
+                    dialog = model.snapshot().dialog
+                    self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+                    self.assertIn("Game launch is unavailable in this view", dialog.message)
+                    self.assertNotIn("Resume available for this boot", dialog.message)
+                    self.assertTrue(any(choice.method == "game.options" for choice in dialog.choices))
+
+    def test_live_launch_and_demo_choices_survive_readonly_presentation_guard(self):
+        for demo, allowed in ((False, True), (True, False)):
+            with self.subTest(demo=demo, allowed=allowed):
+                model = NavigationModel(demo=demo)
+                receive(model, "capabilities", {"game_information": True, "game_launch": allowed})
+                record = game(resume_available=True)
+                model.set_category_items(0, [record])
+                model.handle("confirm")
+                self.assertEqual([choice.title for choice in model.snapshot().dialog.choices
+                                  if choice.method == "game.launch"], ["Resume", "Fresh start"])
+                request = choose(model, "Game information")[0]
+                model.receive(request, record)
+                self.assertEqual([choice.title for choice in model.snapshot().dialog.choices
+                                  if choice.method == "game.launch"], ["Resume", "Fresh start"])
+
     def test_info_panel_preserves_launch_and_native_routes_with_disc_warnings(self):
         model = NavigationModel()
         receive(model, "capabilities", {"game_information": True, "game_options": True})

@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "kind": "independent-dev19-batch-review",
+  "reviewer": "sources_certification independent agent",
+  "status": "accepted_recorded_host_scope_with_explicit_partial_and_blocked_criteria",
+  "reviewed_at_utc": "2026-10-28T07:08:13.974788+00:00",
+  "implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "reviewed_file_sha256": {
+    "HANDOVER.md": "ae904993927189a700047e0d0c862442464344244bdb174326acbe7566ea66ec",
+    "NEXT_CHAT_PROMPT.txt": "22624d2ebba472220530479fc175230b4c7a573e1e38c087ec7e4d1424037420",
+    "project/README.md": "cde7fded82dd5dbcf9b6b0b6339f211844b815a8c39897f56d2683c7172277bd",
+    "project/docs/iso-continuation-2026-10-26.md": "dc79cf9f06bacb6e40821c43ee2593d298705270f5615b396a5292b5a04f7caa",
+    "project/docs/master-plan-2026-10-22.md": "eb5200576cce1b2c66084e7216d9e4706f8604019ab0f5990431bb36514e1cbc",
+    "project/handover/LATEST.json": "83def3f9034896de5f4b67dddfd35c786705e5669d75fee9e79e0803ce340b16",
+    "project/evidence/iso-continuation-20261026/frontend/g03-native-ui-followup.json": "53e5f7550d8185ab1673c7be42a06b774c18659779d88a0f2e181dfba7b09ae5",
+    "project/evidence/iso-continuation-20261026/native/slot-replay-boundary-review.json": "a2462aa0a7bc35e04012086f8df5217f8a7e48e5bc1a4fb94b5830b750fa4287",
+    "project/docs/per-game-performance.md": "304c26511c4a1a10ce2a3fd786c8e9fbf7c750632e0ba139c4996be6bd15bf4a",
+    "project/evidence/iso-continuation-20261026/frontend/g03-native-frameskip-followup.json": "71d51db6b87988f4b9914b04b34e6f2fe37edcd261500afc5ae604d32488c880",
+    "project/evidence/iso-continuation-20261026/native/independent-review.json": "85f0f65c63713a0f6bf7eacb40cfd34c37cceb04a4dc4198a05cea9a29a3b62f",
+    "project/evidence/iso-continuation-20261026/native/ordinary-gameplay-report.json": "fa3f248c15204436544834544688fe36b3e11bfb3790b5914da51fd85480fc2c",
+    "project/evidence/iso-continuation-20261026/measurements/review.json": "8d575fbcc3496e23e6118635eaadc786d33add5cbb01fcd75234cbdb56077fda"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "severity": "final-report consistency",
+      "status": "resolved",
+      "finding": "G03 register still says native readback in progress although g03-native-ui-followup.json now records accepted resolution restoration, virtual native-menu Confirm/Back and original palette rendering.",
+      "requested_action": "Link the followup and describe completed native subcriteria while retaining partial G03 status: qualified manager Apply/Undo, native frameskip/default inheritance, gameplay remap behavior and physical input remain unverified.",
+      "resolution": "Parent updated G03 register to partial with completed resolution/menu/palette/frameskip/native one-launch fallback subcriteria, and links both native followups. Qualified managers and physical buttons remain explicitly unverified."
+    },
+    {
+      "id": "R2",
+      "severity": "historical-review scope",
+      "status": "resolved",
+      "finding": "native/independent-review.json remaining_criteria reflects an earlier snapshot and says wrong slot, replay, hash-matched truncation and native menu behavior are unexercised. Later evidence exists for their narrower native/helper observations.",
+      "requested_action": "Preserve the original review snapshot and append or link a dated followup explaining superseded subcriteria, including raw native slot/replay acceptance and the exact trusted-caller boundary. Do not rewrite these observations as full authenticated frontend rejection.",
+      "resolution": "Native independent-review.json now appends dated supersession and retains historical initial coverage statements. It accurately records native slot/replay acceptance and separate uncomposed authority requirements."
+    },
+    {
+      "id": "R3",
+      "severity": "measurement methodology",
+      "status": "resolved",
+      "finding": "Original pair4-2x overlapped other native work; pair5-2x has one response after 30 seconds. The running stationary soak overlaps native-menu/savedata work.",
+      "requested_action": "Retain and exclude original pair4, replace both arms, filter common nominal windows with recomputed sample means, retain acquisition overhead, and disclose soak contention. Keep one-arm stationary longevity separate from demanding or device performance qualification.",
+      "resolution": "Independent final G06 readback validates replacement pair4 frozen inputs/listeners, preserved excluded originals, correct common-window filtering and all 11 imports. Contended soak and partial resources are explicitly separated; comparison recomputes exactly."
+    },
+    {
+      "id": "R4",
+      "severity": "unfinished acceptance",
+      "status": "resolved_with_explicit_unmet_criteria",
+      "finding": "G02 ordinary in-game savedata, G06 final comparison/soak and G08 final reporting are explicitly in progress in reviewed docs.",
+      "requested_action": "Resolve each to exact observed pass/partial/blocked status when work settles; preserve unsupported criteria and avoid claiming all G01-G08 complete.",
+      "resolution": "Final report and machine status now mark G02 partial without ordinary savedata/Continue; G06 partial with completed stationary host subset; G08 complete only for recorded scope. Native mission attempt stopped without save, and this remains explicitly unpassed."
+    }
+  ],
+  "accepted_boundaries": [
+    "Core handover, report and machine status consistently retain 14/25 original tasks, 0/13 physical areas, disabled device/runtime gates, unchanged published dev16 and no selected emulator/native patch distribution.",
+    "Local strict certification 1213/1213 matches ten changed/new files committed in a962d6c. Local package is a separate clean checkout; CI is distinct clean PR merge d25f46b. Evidence/metadata commits are not retroactively claimed as the identical tested/package snapshot.",
+    "G03 uses production edit helpers and private SDL virtual-controller events through actual native SDL/menu code. It does not exercise a physical controller or grant qualified manager authority.",
+    "G03 final stopped-input helper restoration exactly restores original game INI bytes and native Graphics page reads 1x after prior 2x. This is helper restoration and native readback, not qualified Manager Undo.",
+    "G03 palette renders in native main/settings menus; high-contrast variant and qualified ThemeManager Apply/Undo remain untested.",
+    "G03 retained exit 134 belongs to the documented discarded overlapping/X-drawable-destruction harness attempt, while accepted final runs exit 0. The failed attempt is neither hidden nor presented as an unexplained product crash.",
+    "Wrong-slot native request accepts supplied slot metadata and reused native session is accepted. The helper envelope accepts same context, rejects fresh mismatched context and rejects insufficient sequence. Full qualified consumer execution remains unperformed; independent comparison of one predicate is not an authenticated transfer test.",
+    "Actual native SaveSlot/Load packets, child closure and ordinary game saves are distinct from frontend-authenticated checkpoint promotion and Resume.",
+    "Current local relative documentation links resolve. Private game/state/native imagery and audio remain outside Git; retained hashes do not recover missing private files.",
+    "The real missing-key fallback experiment closes one-launch inheritance readback only. Subsequent native materialization changes whole-file hash and future fallback behavior; no compatibility or hashing rule was weakened."
+  ],
+  "g03_independent_verification": {
+    "all10_private_capture_hashes_match": true,
+    "shim_source_and_binary_hashes_match": true,
+    "final_game_ini_equals_original_bytes": true,
+    "visually_inspected": [
+      "graphics-settings-2x.png",
+      "final-graphics-1x.png",
+      "final-controls-east.png",
+      "final-focus-before-east-confirm.png",
+      "final-east-confirm-focused-continue.png",
+      "spruce-midnight-native-settings.png"
+    ],
+    "visual_limit": "Swapped Confirm demonstrates native pause dismissal into emulation of the opening title sequence; this is not a gameplay-button remap test. Images remain private.",
+    "synthetic_input_method": "Inspected shim: attaches SDL virtual game controller, maps south/east buttons, feeds SDL_JoystickSetVirtualButton on polling; controller file commands and explicit focus form the accepted observed path."
+  },
+  "prior_reviews": {
+    "implementation_and_certification": "certification/review.json",
+    "ci_artifact_readback": "certification/ci-readback.json",
+    "measurement_methodology": "measurements/review.json",
+    "native_packets": "native/independent-review.json",
+    "slot_replay_boundary": "native/slot-replay-boundary-review.json"
+  },
+  "additional_strict_test_run": false,
+  "additional_test_reason": "No application code changes after reviewed implementation; this turn reviews evidence and documentation.",
+  "application_code_edited": false,
+  "hardware_qualified": false,
+  "marketing_claim_approved": false,
+  "g03_frameskip_followup": {
+    "decision": "accepted_with_documented_limits",
+    "all4_private_capture_hashes_match": true,
+    "all12_post_exit_ini_hashes_match": true,
+    "all4_private_captures_visually_inspected": true,
+    "native_added_only_frameskip_line_independently_recomputed": true,
+    "observations": [
+      "Manual Frame skipping2 with Auto unchecked.",
+      "Automatic frameskip checked with manual2 disabled.",
+      "Per-game key removed and explicit global1 produced native1.",
+      "Native exit added only localFrameSkip1, preserving other INI bytes. Changing only global1 to2 subsequently kept native1 from the newly local override."
+    ],
+    "scope": "Actual native readback and configuration persistence on disposable host inputs; not physical qualification, a native default assumption, a performance recommendation or qualified manager Apply/Undo.",
+    "documentation": "docs/per-game-performance.md correctly narrows Use global to removal of the current override; native writes can materialize a local value."
+  },
+  "decision": "Accept the recorded host audit and evidence handoff within its stated scope. Remaining game-save, qualified-manager, composed-Resume, broader measurement and physical-device criteria remain open; this is not whole-roadmap completion.",
+  "final_acceptance_register": {
+    "G01": "pass_readonly_scope",
+    "G02": "partial_no_ordinary_savedata_relaunch",
+    "G03": "partial_qualified_manager_undo_unverified",
+    "G04": "partial_full_authenticated_consumption_unverified",
+    "G05": "blocked_positive_composed_resume",
+    "G06": "partial_stationary_host_scope_complete",
+    "G07": "pass_host_implementation",
+    "G08": "pass_recorded_scope"
+  },
+  "final_measurement_review": "measurements/review.json",
+  "unresolved_blocking_findings": [],
+  "remaining_acceptance_is_not_an_implementation_failure": true,
+  "final_documentation_consistency": {
+    "local_and_ci_identities_distinct": true,
+    "no_native_slot_or_replay_rejection_overclaim": true,
+    "virtual_input_stays_host_scope": true,
+    "helper_restore_not_qualified_manager_undo": true,
+    "ordinary_savedata_not_claimed_complete": true,
+    "contended_stationary_soak_not_device_or_demanding_qualification": true,
+    "partial_resource_window_explicit": true,
+    "report_numbers_match_retained_sources": true,
+    "reviewed_relative_markdown_links_resolve": true
+  }
+}

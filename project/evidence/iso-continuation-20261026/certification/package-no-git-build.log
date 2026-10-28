@@ -1,0 +1,35 @@
+{
+  "artifacts": [
+    "SHA256SUMS",
+    "START-HERE.txt",
+    "build-report.json",
+    "development-verification.pub",
+    "host-preview.png",
+    "release-source.json",
+    "smartpro-psp-0.1.0-dev19-host-preview.zip",
+    "smartpro-psp-0.1.0-dev19-original-source.zip",
+    "smartpro-psp-0.1.0-dev19.tar"
+  ],
+  "device_activation_qualified": false,
+  "output": "/workspace/trimui-audit/package-dev19-no-git",
+  "overlay_sha256": "60a89821665f9da755433dc39612f7913b4bc2b18f5b6eb70aa4dcaa8b812be6",
+  "smoke": {
+    "backup_cancel_dispatch": true,
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "discovery_scope": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "full_result_random": true,
+    "game_information": true,
+    "help_backups_collections_rendered": true,
+    "installed_build_identity": true,
+    "named_backup_history": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 9,
+    "settings_dispatch": true
+  }
+}

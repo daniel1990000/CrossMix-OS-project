@@ -1,0 +1,12 @@
+{
+  "reason": "Native negative probes overlapped original pair4-2x; both arms retained and replaced. Interval reconstruction approximate from experiment mtime minus monotonic duration.",
+  "overlap_utc": [
+    "2026-10-26T19:06:38.477Z",
+    "2026-10-26T19:07:00.276Z"
+  ],
+  "probe_cases": [
+    "wrong-slot",
+    "truncated-matching-hash",
+    "replay-session-first-attempt"
+  ]
+}

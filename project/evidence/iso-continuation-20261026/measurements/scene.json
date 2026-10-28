@@ -1,0 +1,29 @@
+{
+  "id": "soldier-office-bike-stationary-v1",
+  "state_sha256": "2d7b3d34a4b31c02e855444b1359c85630bf8bb6c34fb012fa4a4c33bb91e7b8",
+  "description": "Outside office at Soldier objective before motorcycle entry; no input after 10-second warmup; fresh native process and identical state each repeat.",
+  "demanding_profile": false,
+  "repeats": 5,
+  "duration": 30,
+  "arms": [
+    1,
+    2
+  ],
+  "changed_setting": "Graphics.InternalResolution",
+  "frameskip": 0,
+  "automatic_frameskip": false,
+  "comparison": "setting",
+  "soak": "single 1x stationary 1800-second host observation; not demanding-profile release acceptance",
+  "metrics": [
+    "native_fps",
+    "native_speed_percent"
+  ],
+  "unavailable": [
+    "panel_frame_pacing",
+    "audio_faults",
+    "input_latency",
+    "battery_energy"
+  ],
+  "order": "AB BA AB BA AB",
+  "host_only": true
+}

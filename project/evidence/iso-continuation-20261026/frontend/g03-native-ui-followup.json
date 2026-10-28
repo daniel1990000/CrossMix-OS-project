@@ -1,0 +1,197 @@
+{
+  "schema": 1,
+  "scope": "G03 follow-up actual x86_64 native resolution/menu/palette checks; lower-level helpers and virtual SDL input only",
+  "status": "native subcriteria observed; qualified manager Apply/Undo and device qualification remain blocked",
+  "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "source_immutable_native_ini_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+  "resolution": {
+    "initial_helper_change": {
+      "source_global_sha256": "d8ab7a03b7cb7800675cddb365d08c9388bb900109e934c63d41d3e7bf941863",
+      "source_game_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+      "edited_game_sha256": "74a1065b558cae5a20f04f98741c0d56331e178df6812373c664499051ff77cf",
+      "diff": [
+        {
+          "option_id": "resolution",
+          "label": "Rendering resolution",
+          "section": "Graphics",
+          "key": "InternalResolution",
+          "before_present": true,
+          "before_token": "1",
+          "before": 1,
+          "after_present": true,
+          "after": 2
+        }
+      ],
+      "input_mode": "SDL virtual controller host probe; no physical hardware"
+    },
+    "accepted_restore": {
+      "source": "frozen native-generated2x snapshot from first run before abandoned restoration attempt",
+      "before_game_sha256": "74a1065b558cae5a20f04f98741c0d56331e178df6812373c664499051ff77cf",
+      "after_game_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+      "restored_bytes_equal_original_native_1x_snapshot": true,
+      "diff": [
+        {
+          "option_id": "resolution",
+          "label": "Rendering resolution",
+          "section": "Graphics",
+          "key": "InternalResolution",
+          "before_present": true,
+          "before_token": "2",
+          "before": 2,
+          "after_present": true,
+          "after": 1
+        }
+      ],
+      "unrelated_bytes_preserved": true,
+      "prior_run_exit_status": 0
+    },
+    "actual_native_readback": [
+      2,
+      1
+    ],
+    "final_native_game_config_matches_original_bytes": true,
+    "qualified_manager_apply_undo": false,
+    "native_frameskip_and_inheritance_readback_at_this_probe": false
+  },
+  "native_controls": {
+    "input": "Private SDL virtual game controller attached via LD_PRELOAD; events traverse SDL joystick/controller mapping and actual native menu code",
+    "physical_input_tested": false,
+    "default_pair": {
+      "confirm": "south/A",
+      "observed_confirm": "Focused Controls tab opens",
+      "back": "east/B",
+      "observed_back": "Controls page returns to pause"
+    },
+    "swapped_pair": {
+      "confirm": "east/B",
+      "observed_confirm": "Focused Continue returns from pause to game",
+      "back": "south/A",
+      "observed_back": "Controls page returns to pause"
+    },
+    "gameplay_control_mapping_config_preserved": true,
+    "gameplay_remap_input_behavior_tested": false,
+    "shim_sha256": "b97600ecbcb2b8e94e0b33cdb81c3675e530bf48b8d9db6991cf6d13d302ab13",
+    "shim_source_sha256": "aaef5cddcecb066e5652b967b37c3cba3005ac32b4e593a669fc5c7d31b633ad"
+  },
+  "theme": {
+    "theme_name": "Spruce Midnight",
+    "background_animation": 0,
+    "theme_sha256": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a",
+    "native_global_sha256": "c69befe743d7985e3f44cf5a1fe7fe33c603bb18a213f6024a927f92f98ece39",
+    "mode": "private native theme render; no qualified ThemeManager apply",
+    "actual_native_render_observed": true,
+    "high_contrast_variant_tested": false,
+    "qualified_theme_manager_apply_undo": false
+  },
+  "private_capture_hashes": {
+    "graphics-settings-2x.png": {
+      "sha256": "e37d91f95506211a00a251c326fea8bd379f99a817712e220db851701f857ce6",
+      "observation": "Actual native Graphics page reads2x PSP after existing helper changes initial native1x token to2",
+      "pixels_exported": false
+    },
+    "south-confirm-third.png": {
+      "sha256": "5b15e07bbc18b7f4431050e515e3c01448ef8882f36aaf92cf067e5109ac2965",
+      "observation": "Virtual south/A confirms focused Controls tab; native page shows independent controls enabled and South(bottom)",
+      "pixels_exported": false
+    },
+    "east-back-settings-to-pause.png": {
+      "sha256": "6df420f1f966cc05b881b5ec208090f73f5045ed0263feafdb7f0ae6c89e3cd5",
+      "observation": "Virtual east/B backs out of Controls page into pause menu",
+      "pixels_exported": false
+    },
+    "final-graphics-1x.png": {
+      "sha256": "87562f8b403b8be1563af2b5714e5bec02968c372ae9ee92c5390344a81c0749",
+      "observation": "Fresh native process reads1x PSP after exact helper restore from frozen2x input",
+      "pixels_exported": false
+    },
+    "final-controls-east.png": {
+      "sha256": "42b0c278fb9412f37d607523d5872f14c184c9ab692a2ff1045c44ee4d682d3e",
+      "observation": "Native Controls page shows independent controls enabled and East(right)",
+      "pixels_exported": false
+    },
+    "final-south-back-pause.png": {
+      "sha256": "8764822ca6cc2a233b93233baa1ce9fcf582722853aaf61298f77159451c1ca1",
+      "observation": "Virtual south/A backs out of Controls page into pause menu",
+      "pixels_exported": false
+    },
+    "final-focus-before-east-confirm.png": {
+      "sha256": "9a8739648012e0e2d793d7395cbc315fc2527efc4eecbbcb9663f5551888c628",
+      "observation": "Virtual D-pad sets Continue focus before swapped confirm observation",
+      "pixels_exported": false
+    },
+    "final-east-confirm-focused-continue.png": {
+      "sha256": "365cba429ce7646a26002d0ce62163bcb7789ff429492c094255b511e9a08ada",
+      "observation": "Virtual east/B confirms focused Continue and returns to running game",
+      "pixels_exported": false
+    },
+    "spruce-midnight-native-menu.png": {
+      "sha256": "5ef479e37a0bd416d862ae3626cf2d5754e5efb0cb93eceffbb1120017c5a220",
+      "observation": "Actual native main menu renders installed original Spruce Midnight palette",
+      "pixels_exported": false
+    },
+    "spruce-midnight-native-settings.png": {
+      "sha256": "3b658f6b8c219ae70f885e56427ee756d51685ff8378982998c3f51ca5f126b2",
+      "observation": "Actual native settings renderer uses original Spruce Midnight palette",
+      "pixels_exported": false
+    }
+  },
+  "runtime_intervals": [
+    {
+      "run": "south-2x",
+      "start_utc": "2026-10-26T19:11:42.090252666Z",
+      "end_utc": "2026-10-26T19:16:45.789069460Z",
+      "native_exit_status": 0,
+      "scope": "Valid2x readback and southConfirm/eastBack; later harness overlap noted",
+      "native_log_sha256": "93135baed56737647e877f6a6c26484fbad790f1c8fd80afe50a3101f748f656",
+      "stdout_sha256": "8e4962d6c2fd37d83f1d4a899740e1ea28f5f7c803979dc08e6fd78c75ebdebb"
+    },
+    {
+      "run": "east-1x",
+      "start_utc": "2026-10-26T19:15:09.781852120Z",
+      "end_utc": "2026-10-26T19:15:50.803044701Z",
+      "native_exit_status": 134,
+      "scope": "Discarded harness attempt: prior process had not exited; externally closed X drawable caused native abort",
+      "native_log_sha256": "b678c76238c8a147c593f8e2d5f3320fc9c10ee555c8546ab687483634a3e53f",
+      "stdout_sha256": "3f6fdf3340a7389de24bd4faf3e001f12e03705257f6e415cc8405b8877fdb20"
+    },
+    {
+      "run": "east-1x-clean",
+      "start_utc": "2026-10-26T19:17:23.077709080Z",
+      "end_utc": "2026-10-26T19:18:58.161820998Z",
+      "native_exit_status": 0,
+      "scope": "Separate copied config after both prior processes ended;1x readback; preliminary swapped input observations",
+      "native_log_sha256": "a26110482357e2b75d281e71b4e4129ed98296c81ba43fd9b9a2e38072ca1ed5",
+      "stdout_sha256": "7d8b679c1822caf568fee0e11513419fbb6ad176f1b15b1e46ef7d2349e50fdd"
+    },
+    {
+      "run": "final-east-1x",
+      "start_utc": "2026-10-26T19:19:34.492850067Z",
+      "end_utc": "2026-10-26T19:20:49.576083160Z",
+      "native_exit_status": 0,
+      "scope": "Accepted stopped-input helper2\u21921 restoration plus native readback and swapped control behavior",
+      "native_log_sha256": "3a32a2ad1dcc6a0c450f3fe45dba467c679835f87ecf960d9b91d25427c7385e",
+      "stdout_sha256": "2686eb913dfe84d46bddbf712c584711d5696511179daeeddf4519938b2d76ae"
+    },
+    {
+      "run": "theme",
+      "start_utc": "2026-10-26T19:21:09.145911635Z",
+      "end_utc": "2026-10-26T19:21:50.205752261Z",
+      "native_exit_status": 0,
+      "scope": "Native custom palette render in main/settings menus; no game launched in this process",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "242f3343811adfb74cde6feecc0149160fe18166843073ba89a59f1781aeac27"
+    }
+  ],
+  "soak_contention": "All intervals occurred after soak START19:09:16.914802Z. These separate native processes shared CPU/software-renderer resources with the soak and must be disclosed; none overlapped the completed matched pairs.",
+  "retained_harness_failures": [
+    "80ms synthetic button taps and instantaneous mouse clicks were unreliable; accepted observations use250ms holds with explicit native focus and visual after-state.",
+    "Alt+F4 under bare Xvfb did not terminate the first process. An initial second launch overlapped it; its1x evidence is discarded.",
+    "xdotool windowclose on the discarded second client destroyed its drawable and produced BadDrawable/exit134. This is not reported as a clean exit or unexplained product crash.",
+    "Final accepted restoration was repeated from frozen2x bytes into a separate config after observed process exit; no live manager authority was bypassed."
+  ],
+  "artifact_policy": "All native screenshots, generated configs and original game assets remain private; only hashes, observed labels and intervals are exported.",
+  "source_changes": false,
+  "hardware_qualified": false,
+  "subsequent_frameskip_readback": "g03-native-frameskip-followup.json"
+}

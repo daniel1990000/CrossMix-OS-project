@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "kind": "independent-iso-continuation-review",
+  "reviewer": "sources_certification independent agent",
+  "reviewed_at_utc": "2026-10-26T18:40:24.222460+00:00",
+  "base_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "reviewed_file_sha256": {
+    "project/psp_shell/ui/model.py": "58b56dde47562718bf99d6e2e97f54125b780c02b138ec3b8890eac43623b1ed",
+    "project/tests/test_ui_continuation.py": "3f41fc308a266939a69ac681ef722ec165bfcfbb529ff15bd947cf135c932e7f",
+    "project/ppsspp/patches/0005-gpu-stats-float-copy.patch": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+    "project/ppsspp/gpu-stats.lock.json": "ff0845444a477cc9c2f1586b6e45107e5a581ab27abadcf7b4e2e55b86c60058",
+    "project/ppsspp/tests/test_gpu_stats_patch.py": "e0a33c1b6db2cdbc296a90eacd8185ba3b36b4ebff53153d39a5d16d37c06ec0",
+    "project/ppsspp/tests/gpu_stats_acceptance.cpp.in": "11fd300cc70a37b353309105a465fc11bdb74617afcd64e4e1371433957f0e08",
+    "project/tests/test_experimental_embedded.py": "27a92a7dae82a4c603b5f65073870ea68bfb0566b5a54e923780f82dbe191a85"
+  },
+  "ui": {
+    "decision": "pass_after_revision",
+    "scope": "Explicit readonly game-launch capability in confirmation and information; preserve live and demo choices",
+    "independent_old_code_test": {
+      "tests": 14,
+      "failures": 4,
+      "exit_code": 1,
+      "log": "review-ui-old.log",
+      "sha256": "acdc5baaa4fc34ab18504f72da8dd46d3d61e765b26f0d64e03b1bd7d3c4427e"
+    },
+    "independent_fixed_code_test": {
+      "tests": 14,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "log": "review-ui-fixed.log",
+      "sha256": "cc003f35ccc48c90f054a6e3137e92935ec5743c0c7d5acf47fef5ba74243f85"
+    },
+    "observations": [
+      "Old unchanged model independently reproduces all four new readonly subcase failures.",
+      "Fixed guard applies only when game_launch is exactly false and demo is false; live and demo paths preserve prior launch choices.",
+      "Readonly dialogs do not claim Resume available or advise starting normally; backend launch/qualification authority is unchanged.",
+      "Unknown capability semantics remain unchanged, outside the explicit-false fix scope."
+    ],
+    "blocking_findings": [],
+    "resolved_findings": [
+      "Preserved separately authorized Game options when game launch is unavailable; existing hardware lifecycle test passes unchanged.",
+      "Experimental confirmation test now verifies hidden launch and directly exercises independent dispatcher refusal, blocked session and no fallback."
+    ]
+  },
+  "gpu_stats": {
+    "decision": "pass",
+    "scope": "Optional locked native source patch and exact function-body sanitizer harness; no full-engine/device claim",
+    "source_sha256": "e83bfef607628ee4d1584709afe5b716fdc89215c760a64216279a579e95a6bd",
+    "independent_test": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "log": "review-gpu-stats.log",
+      "sha256": "9a02392fee1b978d74ee2fc0196c39dea5fa53dbf2c7e46789b36f16c2ca57b8"
+    },
+    "observations": [
+      "Actual source declares std::vector<float> destinations and float* source histories; original memcpy copies sizeof(double)*valid into float-sized storage.",
+      "Pinned Core/HW/Display.cpp supplies float history arrays of 600 entries and bounds valid count; fixture covers 0,1,4,600.",
+      "Independent test applies hash-locked patch to exact source, extracts production CollectedStats and FlipListener, and reproduces original heap-buffer-overflow under ASan/UBSan.",
+      "Fixed copies use each source element size and vector.data(); empty/partial/full histories preserve exact values and one-shot/feed semantics.",
+      "Optional patch is not selected in a shipped profile and does not modify native binaries by itself."
+    ],
+    "blocking_findings": []
+  },
+  "production_gates_enabled": false,
+  "hardware_qualified": false,
+  "application_files_edited_by_reviewer": false,
+  "final_certification": {
+    "attempt": 2,
+    "successful": true,
+    "totals": {
+      "tests_run": 1213,
+      "passed": 1213,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "preview_passed": true,
+    "report": "final-certification.json",
+    "report_sha256": "bf5ecdd66246ba80a60da10f7f9fb5d31745d19163ee0fc8279c885dea48face",
+    "log": "final-certification.log",
+    "log_sha256": "15871409b7d98a58360729657d7fc0dfd9d741a4126856d08697d8545d97aa40",
+    "input_hashes_unchanged_after_tests": true,
+    "started_at_utc": "2026-10-26T18:58:30.904487+00:00",
+    "finished_at_utc": "2026-10-26T18:59:29.701376+00:00"
+  },
+  "prior_failed_certification": {
+    "attempt": 1,
+    "tests_run": 1213,
+    "passed": 1211,
+    "failures": 2,
+    "report": "final-attempt1-certification.json",
+    "log": "final-attempt1-certification.log"
+  },
+  "review_updated_at_utc": "2026-10-26T19:08:14.878013+00:00"
+}

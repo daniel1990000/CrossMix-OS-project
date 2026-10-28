@@ -1,0 +1,55 @@
+test_favorites_and_recent_filters_are_independent_and_reject_stale_reply (test_ui_continuation.CombinedFilterTests.test_favorites_and_recent_filters_are_independent_and_reject_stale_reply) ... ok
+test_history_pagination_and_favorite_removal_keep_game_identity (test_ui_continuation.CombinedFilterTests.test_history_pagination_and_favorite_removal_keep_game_identity) ... ok
+test_pending_favorites_reply_cannot_populate_all_games (test_ui_continuation.CombinedFilterTests.test_pending_favorites_reply_cannot_populate_all_games) ... ok
+test_pending_game_query_cannot_populate_favorites (test_ui_continuation.CombinedFilterTests.test_pending_game_query_cannot_populate_favorites) ... ok
+test_refresh_preserves_history_focus_across_page_boundary (test_ui_continuation.CombinedFilterTests.test_refresh_preserves_history_focus_across_page_boundary) ... ok
+test_restore_retains_filters_and_current_system_search (test_ui_continuation.CombinedFilterTests.test_restore_retains_filters_and_current_system_search) ... ok
+test_selected_system_stays_with_search_and_pagination (test_ui_continuation.CombinedFilterTests.test_selected_system_stays_with_search_and_pagination) ... ok
+test_large_text_info_scrolls_every_action_and_keeps_art_placeholder (test_ui_continuation.ContinuationRenderTests.test_large_text_info_scrolls_every_action_and_keeps_art_placeholder) ... ok
+test_backup_status_never_turns_partial_or_unknown_into_full_recovery (test_ui_continuation.InformationAndStatusTests.test_backup_status_never_turns_partial_or_unknown_into_full_recovery) ... ok
+test_continue_distinguishes_recent_and_verified_resume_with_reason (test_ui_continuation.InformationAndStatusTests.test_continue_distinguishes_recent_and_verified_resume_with_reason) ... ok
+test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) ... 
+  test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=False, surface='confirmation') ... FAIL
+  test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=False, surface='information') ... FAIL
+  test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=True, surface='confirmation') ... FAIL
+  test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=True, surface='information') ... FAIL
+test_info_panel_preserves_launch_and_native_routes_with_disc_warnings (test_ui_continuation.InformationAndStatusTests.test_info_panel_preserves_launch_and_native_routes_with_disc_warnings) ... ok
+test_live_launch_and_demo_choices_survive_readonly_presentation_guard (test_ui_continuation.InformationAndStatusTests.test_live_launch_and_demo_choices_survive_readonly_presentation_guard) ... ok
+test_performance_preview_is_explicit_and_undo_is_scoped_to_that_game (test_ui_continuation.InformationAndStatusTests.test_performance_preview_is_explicit_and_undo_is_scoped_to_that_game) ... ok
+
+======================================================================
+FAIL: test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=False, surface='confirmation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "project/tests/test_ui_continuation.py", line 163, in test_explicit_readonly_capability_hides_launch_in_confirmation_and_information
+    self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=False, surface='information')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "project/tests/test_ui_continuation.py", line 163, in test_explicit_readonly_capability_hides_launch_in_confirmation_and_information
+    self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=True, surface='confirmation')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "project/tests/test_ui_continuation.py", line 163, in test_explicit_readonly_capability_hides_launch_in_confirmation_and_information
+    self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_explicit_readonly_capability_hides_launch_in_confirmation_and_information (test_ui_continuation.InformationAndStatusTests.test_explicit_readonly_capability_hides_launch_in_confirmation_and_information) (resume=True, surface='information')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "project/tests/test_ui_continuation.py", line 163, in test_explicit_readonly_capability_hides_launch_in_confirmation_and_information
+    self.assertFalse(any(choice.method == "game.launch" for choice in dialog.choices))
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.165s
+
+FAILED (failures=4)

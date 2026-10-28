@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "kind": "iso-continuation-final-host-certification",
+  "base_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "working_tree_modified": true,
+  "exact_tested_input_inventory": "final-working-tree-inputs.json",
+  "exact_tested_input_inventory_sha256": "29ed15fe945e58be8e0287bb815e80d61c213e6361e3dc4a4cb5f8c5377b50b5",
+  "input_hashes_unchanged_after_tests": true,
+  "successful": true,
+  "totals": {
+    "tests_run": 1213,
+    "passed": 1213,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "preview_passed": true,
+  "source_recheck_passed": true,
+  "started_at_utc": "2026-10-26T18:58:30.904487+00:00",
+  "finished_at_utc": "2026-10-26T18:59:29.701376+00:00",
+  "report_sha256": "bf5ecdd66246ba80a60da10f7f9fb5d31745d19163ee0fc8279c885dea48face",
+  "log_sha256": "15871409b7d98a58360729657d7fc0dfd9d741a4126856d08697d8545d97aa40",
+  "device_qualified": false,
+  "real_game_launched_by_certification": false,
+  "clean_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "tested_files_match_clean_implementation_commit": true
+}

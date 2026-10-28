@@ -2,9 +2,9 @@
 
 Original PSP-style interface extensions for the original TrimUI Smart Pro **TG5040**, built around pinned spruceOS v4.5.4/PyUI and its existing native owners.
 
-**Current development: dev18.** This batch adds native Collections browsing, scoped discovery, accessible help and named offline backup history. It fixes save-Undo conflicts, optional state/normal-launch boundaries, stale views, focus restoration and package/source identity. Read the [dev18 report](docs/dev18-library-backups-2026-10-26.md) and its linked exact verification before relying on a test or build claim.
+**Current development: dev19 ISO host audit.** The supplied PSP image has now run in stock and patched desktop PPSSPP. This batch fixes unavailable launch actions, adds an optional native statistics correction, and retains actual native state evidence. All 1,213 strict host checks pass. Read the [audit report](docs/iso-continuation-2026-10-26.md) for exact scope, package identity and remaining qualification. Dev18's discovery, accessibility and offline backup features are preserved.
 
-[Dev16 remains the published computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16), with its original tag, assets and matching source. Dev18 does not change that publication. This is host software: all device/profile gates remain disabled and 0/13 physical acceptance areas have run. Read [the current handover](../HANDOVER.md), [status record](handover/LATEST.json) and [master register](docs/master-plan-2026-10-22.md) for the exact development branch and remaining qualification.
+[Dev16 remains the published computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16), with its original tag, assets and matching source. Dev19 does not change that publication. This is host software: all device/profile gates remain disabled and 0/13 physical acceptance areas have run. Read [the current handover](../HANDOVER.md), [status record](handover/LATEST.json) and [master register](docs/master-plan-2026-10-22.md) for the exact development branch and remaining qualification.
 
 ## Browse and organize
 

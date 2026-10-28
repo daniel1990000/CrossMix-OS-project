@@ -1,0 +1,10 @@
+{
+  "source": "https://github.com/hrydgard/ppsspp/releases/download/v1.20.3/PPSSPP-v1.20.3-anylinux-x86_64.AppImage",
+  "sha256": "f6c7c399adfad19476b0fd20216132046b84242c6679b6822d10d124bb1c5366",
+  "size": 54369507,
+  "kind": "official upstream stock AppImage, separate baseline",
+  "architecture": "x86_64",
+  "source_rebuilt_in_this_lane": false,
+  "device_qualified": false,
+  "content_in_repository": false
+}

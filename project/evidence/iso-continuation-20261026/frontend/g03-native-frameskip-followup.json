@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "scope": "actual native frameskip/readback and one-launch global fallback using disposable copies; no qualified manager authority",
+  "status": "native readback observed; qualified manager Apply/Undo still pending",
+  "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "native_source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "observed_native_ui": {
+    "manual": "Frame skipping2, Auto frameskip unchecked",
+    "auto": "Auto frameskip checked, manual Frame skipping2 disabled",
+    "inherit": "No FrameSkip key in per-game input, explicitly configured global1; native Frame skipping1, Auto unchecked",
+    "persistence": "After native exit had reinserted local1, changing only global1\u21922 still produced native Frame skipping1 on next fresh launch"
+  },
+  "runs": [
+    {
+      "arm": "manual",
+      "setup": {
+        "arm": "manual",
+        "experiment_global_selection": {
+          "frameskip": 1,
+          "auto_frameskip": false
+        },
+        "native_global_original_sha256": "52cc57da18446e97ef959d85c3ad3efb03f340fb4b5f1c601429b2cfddae413b",
+        "global_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": true,
+            "after": 1
+          }
+        ],
+        "per_game_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": true,
+            "after": 2
+          }
+        ],
+        "per_game_frameskip_present_before": true,
+        "before_config_sha256": {
+          "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+          "ppsspp.ini": "40344761d1cccb130baa78f7b704254b4d196e6b35597b0f551e55fe296fdfb9",
+          "ULUS10160_ppsspp.ini": "a1ac9e2f02cd378b5b6ef568259a21398e35f837fc13b5706a0d779f7bae7a60"
+        },
+        "inputs": "Actual native-generated files copied privately; deliberately chosen global1 is not a claimed native default"
+      },
+      "start_utc": "2026-10-26T19:28:09.804098031Z",
+      "end_utc": "2026-10-26T19:28:39.860863470Z",
+      "native_exit_status": 0,
+      "after_config_sha256": {
+        "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+        "ppsspp.ini": "64c16d5114f4c324f340ea11a4b3f16503242c7ea73acbf8adf04a06ecf7383e",
+        "ULUS10160_ppsspp.ini": "a1ac9e2f02cd378b5b6ef568259a21398e35f837fc13b5706a0d779f7bae7a60"
+      },
+      "native_local_frameskip_after_exit": "2",
+      "native_global_frameskip_after_exit": "1",
+      "native_auto_frameskip_after_exit": "False",
+      "private_screenshot_sha256": "8d73bf9e7a5cc339507c5c1c39247858433a9e9867fb5363209e12083d72c5f6",
+      "private_screenshot_name": "frameskip-manual-native.png",
+      "native_log_sha256": "ceb05aaf532bb23057fe8cac1e7cf8e8c6c605c663cdef125e88d05566158e2f",
+      "stdout_sha256": "3d6ab3a0f7dd33ac781b77dafbd03e398773db11cd0a8131476b5ee5e2efcd0f"
+    },
+    {
+      "arm": "auto",
+      "setup": {
+        "arm": "auto",
+        "experiment_global_selection": {
+          "frameskip": 1,
+          "auto_frameskip": false
+        },
+        "native_global_original_sha256": "52cc57da18446e97ef959d85c3ad3efb03f340fb4b5f1c601429b2cfddae413b",
+        "global_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": true,
+            "after": 1
+          }
+        ],
+        "per_game_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": true,
+            "after": 2
+          },
+          {
+            "option_id": "auto_frameskip",
+            "label": "Automatic frameskip",
+            "section": "Graphics",
+            "key": "AutoFrameSkip",
+            "before_present": true,
+            "before_token": "False",
+            "before": false,
+            "after_present": true,
+            "after": true
+          }
+        ],
+        "per_game_frameskip_present_before": true,
+        "before_config_sha256": {
+          "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+          "ppsspp.ini": "40344761d1cccb130baa78f7b704254b4d196e6b35597b0f551e55fe296fdfb9",
+          "ULUS10160_ppsspp.ini": "d77d27ec97e78ce40da99f3b46ecc8f190dc4ef2cc3b70734c6588033b0e50b0"
+        },
+        "inputs": "Actual native-generated files copied privately; deliberately chosen global1 is not a claimed native default"
+      },
+      "start_utc": "2026-10-26T19:28:57.846751500Z",
+      "end_utc": "2026-10-26T19:29:20.899169219Z",
+      "native_exit_status": 0,
+      "after_config_sha256": {
+        "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+        "ppsspp.ini": "137ee1c5ec443507bf76c1f65f60c323aebdd1fafc53336ecb6c7e6485d5b4e5",
+        "ULUS10160_ppsspp.ini": "d77d27ec97e78ce40da99f3b46ecc8f190dc4ef2cc3b70734c6588033b0e50b0"
+      },
+      "native_local_frameskip_after_exit": "2",
+      "native_global_frameskip_after_exit": "1",
+      "native_auto_frameskip_after_exit": "True",
+      "private_screenshot_sha256": "275eef38b7f9f61ad0cfa7b5b468ff8918e1a5e5e52c45630acd26c196972c19",
+      "private_screenshot_name": "frameskip-auto-native.png",
+      "native_log_sha256": "ae5cadb8208685face74e0e7d5c7eb7ce0e210d5dfce824a7c811c2508786b9f",
+      "stdout_sha256": "2d8599364408779bd33ee4ad6abf56c7653efb3debda063604486f6d6c9f4f57"
+    },
+    {
+      "arm": "inherit",
+      "setup": {
+        "arm": "inherit",
+        "experiment_global_selection": {
+          "frameskip": 1,
+          "auto_frameskip": false
+        },
+        "native_global_original_sha256": "52cc57da18446e97ef959d85c3ad3efb03f340fb4b5f1c601429b2cfddae413b",
+        "global_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": true,
+            "after": 1
+          }
+        ],
+        "per_game_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "0",
+            "before": 0,
+            "after_present": false,
+            "after": null
+          }
+        ],
+        "per_game_frameskip_present_before": false,
+        "before_config_sha256": {
+          "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+          "ppsspp.ini": "40344761d1cccb130baa78f7b704254b4d196e6b35597b0f551e55fe296fdfb9",
+          "ULUS10160_ppsspp.ini": "57f42ab009e1cf3fa1727c23c0dc42da9cb03dee0282ceaa4e715fed176013f9"
+        },
+        "inputs": "Actual native-generated files copied privately; deliberately chosen global1 is not a claimed native default"
+      },
+      "start_utc": "2026-10-26T19:29:26.978803335Z",
+      "end_utc": "2026-10-26T19:29:51.044505174Z",
+      "native_exit_status": 0,
+      "after_config_sha256": {
+        "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+        "ppsspp.ini": "3f50656ac38cdcc23ecde5a7033fb7da4d53f5fb18685d18f2884d7e30c43473",
+        "ULUS10160_ppsspp.ini": "b55496d0a6d33fb7c6ce4aa5d6adfef498c5c35f4da6824daa1b2133227a94b2"
+      },
+      "native_local_frameskip_after_exit": "1",
+      "native_global_frameskip_after_exit": "1",
+      "native_auto_frameskip_after_exit": "False",
+      "private_screenshot_sha256": "ed289219315fd33c1a13026299b9de26a482303e6679ad3f34510313f7f22ce4",
+      "private_screenshot_name": "frameskip-inherit-native.png",
+      "native_log_sha256": "984a4ff9833a37257eb2b4270060d1f46ae30662d0201b4a493ce927d33cfc97",
+      "stdout_sha256": "3718d058a35dda6cbd58ee5acdc42f40f6b27edf2ee033029bbbf87445d3c491"
+    },
+    {
+      "arm": "persistence",
+      "setup": {
+        "arm": "persistence",
+        "scope": "Controlled global-only1\u21922 change after native has reinserted per-gameFrameSkip1",
+        "global_diff": [
+          {
+            "option_id": "frameskip",
+            "label": "Manual frameskip",
+            "section": "Graphics",
+            "key": "FrameSkip",
+            "before_present": true,
+            "before_token": "1",
+            "before": 1,
+            "after_present": true,
+            "after": 2
+          }
+        ],
+        "per_game_unchanged_from_native_exit": true,
+        "before_config_sha256": {
+          "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+          "ppsspp.ini": "7f68cc1e70a4528a18d8b897a1bbf93cb0e2b0b765f00bdceba6b51c89ed2f7a",
+          "ULUS10160_ppsspp.ini": "b55496d0a6d33fb7c6ce4aa5d6adfef498c5c35f4da6824daa1b2133227a94b2"
+        }
+      },
+      "start_utc": "2026-10-26T19:30:19.168967224Z",
+      "end_utc": "2026-10-26T19:31:07.238479735Z",
+      "native_exit_status": 0,
+      "after_config_sha256": {
+        "controls.ini": "8df200fbe66712bdf49fae8ffab35dfa9dc7d83739be3dfb20d770e30e4e3845",
+        "ppsspp.ini": "88c692ace8c7f7e72bb230121a4c974a1d47ae3eb2960fcaa334efea4f139c50",
+        "ULUS10160_ppsspp.ini": "b55496d0a6d33fb7c6ce4aa5d6adfef498c5c35f4da6824daa1b2133227a94b2"
+      },
+      "native_local_frameskip_after_exit": "1",
+      "native_global_frameskip_after_exit": "2",
+      "native_auto_frameskip_after_exit": "False",
+      "private_screenshot_sha256": "44cc3293f9b0397f8030ece618cad5558bb6e7cf5a4e14469f07ab75e46e830f",
+      "private_screenshot_name": "frameskip-after-global-change-native.png",
+      "native_log_sha256": "90a3c7f46b99b8bf884fd74f894e4c36c964df7fa120cc4b85bed84912ba3c31",
+      "stdout_sha256": "dfa0086d046fd8db5076d968e805fbb8c1f68349a65f4210839e103077c5786a"
+    }
+  ],
+  "native_rewrite": {
+    "before_local_frameskip_present": false,
+    "before_missing_key_file_sha256": "57f42ab009e1cf3fa1727c23c0dc42da9cb03dee0282ceaa4e715fed176013f9",
+    "after_local_frameskip": "1",
+    "after_explicit_key_file_sha256": "b55496d0a6d33fb7c6ce4aa5d6adfef498c5c35f4da6824daa1b2133227a94b2",
+    "native_only_added_frameskip_line": true,
+    "all_other_game_ini_bytes_preserved": true,
+    "per_game_bytes_unchanged_after_global_only_change_and_second_exit": true,
+    "meaning": "Use global removes the selected override before launch. This launch inherited global1. Normal native config saving materialized FrameSkip1; the later global2 no longer applied until that override is removed again. This is not persistent dynamic inheritance.",
+    "fingerprint_implication": "The missing-key and explicit-key whole-file hashes differ. No compatibility/hash rule was weakened; this change affects future global fallback semantics."
+  },
+  "source_references": {
+    "native_game_config_saving": "PPSSPP Core/Config.cpp:1815-1865 at pinned commit; each PerGame setting is written via WriteToIniSection",
+    "save_dispatch": "PPSSPP Core/Config.cpp:1438-1441 invokes SaveGameConfig while game-specific",
+    "native_game_config_loading": "PPSSPP Core/Config.cpp:1918 reads per-game settings without applying missing defaults",
+    "frameskip_per_game_flag": "PPSSPP Core/Config.cpp:722",
+    "project_supported_removal": "project/psp_shell/performance.py:_changes and _remove"
+  },
+  "host_controls": {
+    "instance_namespace_shim_sha256": "f7bd4f1980e36d3f274f58cc1ea68ce7fa4c1befa5edbdbe166798ec963ad674",
+    "shim_scope": "Private remap of only PPSSPP shared-instance name; each arm is its own first instance so native save behavior is observable",
+    "driver_sha256": "98653ca745c8b01beab617bab5816560ef0a072114faf91f2683e5aafa3fbedd",
+    "control_driver_sha256": "cb7fc784ed0e44aa38556d286691d82f00b5e02f9627d031780256b8b36813b7",
+    "input": "held xdotool keyboard/mouse on private display99",
+    "soak_contention": "All four intervals overlap the ongoing single stationary host soak; none overlap completed matched comparison pairs."
+  },
+  "limits": [
+    "Chosen global1 is an explicit experiment input made from an actual native global INI; no native default is invented.",
+    "Initial native global snapshot without frameskip keys still yields unknown effective values in the earlier lower-level probe.",
+    "No qualified PerformanceManager or ThemeManager Apply/Undo path was bypassed or executed.",
+    "No performance benefit, physical input or device suitability inferred.",
+    "All game pixels, native INIs and runtime logs remain private; exported evidence contains metadata and hashes only."
+  ],
+  "hardware_qualified": false,
+  "production_source_changed": false
+}

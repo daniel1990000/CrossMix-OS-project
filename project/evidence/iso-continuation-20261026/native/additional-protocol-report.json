@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "baseline_report": "protocol-report.json",
+  "scope": "Additional real native raw-session observations after independent review",
+  "g04_status": "partial against complete authenticated roadmap acceptance",
+  "hardware_qualified": false,
+  "qualified_profile_created": false,
+  "authenticated_frontend_transfer_tested": false,
+  "cases": [
+    {
+      "case": "wrong-slot",
+      "exit_code": 0,
+      "pid": 30575,
+      "request_sha256": "0a214f4776e953dd5010e14292811035ff2ff0bc27c2d2882acc58bea279e210",
+      "request_slot": "1",
+      "input_basename": "ULUS10160_1.03_0.ppst",
+      "input_bytes": 13376733,
+      "input_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+      "observations": {
+        "kind": "native-only-result-observation",
+        "does_not_grant_foreground_or_device_authority": true,
+        "results": {
+          "result": {
+            "packet_sha256": "1233a3d0e8a9452d8151557bf1c96b4c9ce1a123cf3b884bd22c656bd03541f3",
+            "operation": "load",
+            "sequence": 1,
+            "status": "success",
+            "message": "(2) State loaded",
+            "disc_id": "ULUS10160",
+            "disc_version": "1.03",
+            "prefix": "ULUS10160_1.03",
+            "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+            "game_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+            "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+            "state_size": "13376733",
+            "state_path": "/workspace/trimui-audit/native/runtime/wrong-slot/ULUS10160_1.03_0.ppst",
+            "slot": "1",
+            "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+            "extension": "trimui-slot-evidence-v1",
+            "architecture": "x86_64",
+            "current_state_matches": true
+          },
+          "load-completed": {
+            "packet_sha256": "1233a3d0e8a9452d8151557bf1c96b4c9ce1a123cf3b884bd22c656bd03541f3",
+            "operation": "load",
+            "sequence": 1,
+            "status": "success",
+            "message": "(2) State loaded",
+            "disc_id": "ULUS10160",
+            "disc_version": "1.03",
+            "prefix": "ULUS10160_1.03",
+            "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+            "game_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+            "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+            "state_size": "13376733",
+            "state_path": "/workspace/trimui-audit/native/runtime/wrong-slot/ULUS10160_1.03_0.ppst",
+            "slot": "1",
+            "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+            "extension": "trimui-slot-evidence-v1",
+            "architecture": "x86_64",
+            "current_state_matches": true
+          }
+        }
+      },
+      "experiment_sha256": "2b8da8a71479852593afa6ecb43fffb8955168f3c3b5782ebfe456ef19bd64b3",
+      "native_log_sha256": "a7801461e4d03eb8236ef30248f499fdb59aad222c7a177811fa0d3e51cffd3f",
+      "display": ":100",
+      "remote_debugger_on_startup": false,
+      "outcome": "Native accepts trusted caller slot metadata 1 for a file named slot 0; no filename-to-slot binding or authenticated frontend rejection demonstrated.",
+      "approximate_utc_interval": {
+        "start": "2026-10-26T19:06:38.477239+00:00",
+        "end": "2026-10-26T19:06:46.663239+00:00",
+        "method": "experiment file mtime minus monotonic duration; approximate reconstruction, not directly captured start UTC"
+      }
+    },
+    {
+      "case": "truncated-matching-hash",
+      "exit_code": 0,
+      "pid": 30672,
+      "request_sha256": "18f9d3bd46896f8dd1ce4c8bb469c2ea0f852f62c251a8a26c74e7b648aed825",
+      "request_slot": "0",
+      "input_basename": "ULUS10160_1.03_0.ppst",
+      "input_bytes": 256,
+      "input_sha256": "d45acd02e0e6e2b4c1454bd18a4731516103d4067b15ddde1ebcc8572ab46ddb",
+      "observations": {
+        "kind": "native-only-result-observation",
+        "does_not_grant_foreground_or_device_authority": true,
+        "results": {
+          "result": {
+            "packet_sha256": "c926494439b79fc186e8837d3d80a9eaedff497cacfd2fed2edb4ced7da6dd81",
+            "operation": "load",
+            "sequence": 1,
+            "status": "failure",
+            "message": "Failed to load state: Savestate is for an older version of PPSSPP!",
+            "disc_id": "",
+            "disc_version": "",
+            "prefix": "",
+            "engine_sha256": "",
+            "game_sha256": "",
+            "state_sha256": "",
+            "state_size": "",
+            "state_path": "",
+            "slot": "",
+            "upstream_commit": "",
+            "extension": "",
+            "architecture": ""
+          }
+        }
+      },
+      "experiment_sha256": "1f213e4c323b0d0979276213670f1d20abdbc1e1fbf91330995b71842848ca9a",
+      "native_log_sha256": "a813f11aea3d2b76fb8b79dbb4b648a5c573ddd9fb73cca317ee8c0bc2920d0c",
+      "display": ":100",
+      "remote_debugger_on_startup": false,
+      "outcome": "Matching-hash 256-byte truncated real state reaches native loader and fails; no positive completion.",
+      "approximate_utc_interval": {
+        "start": "2026-10-26T19:06:46.805636+00:00",
+        "end": "2026-10-26T19:06:51.990636+00:00",
+        "method": "experiment file mtime minus monotonic duration; approximate reconstruction, not directly captured start UTC"
+      }
+    },
+    {
+      "case": "replay-session",
+      "exit_code": 0,
+      "pid": 31306,
+      "request_sha256": "b1d0d32d9a9110d06b197d73b3e9f0cd78612a505d69e4478c5703c9f709fd9f",
+      "request_slot": "0",
+      "input_basename": "ULUS10160_1.03_0.ppst",
+      "input_bytes": 13376733,
+      "input_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+      "observations": {
+        "kind": "native-only-result-observation",
+        "does_not_grant_foreground_or_device_authority": true,
+        "results": {
+          "result": {
+            "packet_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+            "operation": "load",
+            "sequence": 1,
+            "status": "success",
+            "message": "(1) State loaded",
+            "disc_id": "ULUS10160",
+            "disc_version": "1.03",
+            "prefix": "ULUS10160_1.03",
+            "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+            "game_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+            "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+            "state_size": "13376733",
+            "state_path": "/workspace/trimui-audit/native/runtime/replay-session/ULUS10160_1.03_0.ppst",
+            "slot": "0",
+            "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+            "extension": "trimui-slot-evidence-v1",
+            "architecture": "x86_64",
+            "current_state_matches": true
+          },
+          "load-completed": {
+            "packet_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+            "operation": "load",
+            "sequence": 1,
+            "status": "success",
+            "message": "(1) State loaded",
+            "disc_id": "ULUS10160",
+            "disc_version": "1.03",
+            "prefix": "ULUS10160_1.03",
+            "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+            "game_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+            "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+            "state_size": "13376733",
+            "state_path": "/workspace/trimui-audit/native/runtime/replay-session/ULUS10160_1.03_0.ppst",
+            "slot": "0",
+            "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+            "extension": "trimui-slot-evidence-v1",
+            "architecture": "x86_64",
+            "current_state_matches": true
+          }
+        }
+      },
+      "experiment_sha256": "f09adeb52cc490f95461afd153f9643e349dec42d41bf0dad3d69d4ee993b1a6",
+      "native_log_sha256": "7d444ab60ad2e1b1ae22a46e951ea1eefabdc8a38c6eb9270da3918b8432b20f",
+      "display": ":100",
+      "remote_debugger_on_startup": false,
+      "first_pid": 30754,
+      "first_result_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+      "second_result_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+      "second_run_interval": {
+        "started_utc": "2026-10-26T19:09:25.897986+00:00",
+        "finished_utc": "2026-10-26T19:09:33.591549+00:00",
+        "runner_exit": 0
+      },
+      "native_results_byte_identical": true,
+      "outcome": "Same private raw request reused in a fresh process succeeds again at sequence 1; native itself does not enforce one-time session consumption. Production retained context/sequence checks are separate."
+    }
+  ],
+  "independent_boundary_review": "slot-replay-boundary-review.json",
+  "contention": "Three initial launches overlapped controlled performance pair4-2x19:06:38\u201319:07:00UTC. Parent will exclude/repeat impacted measurements. Actual replay happened after soak START; native debugger disabled. These probes provide no isolated FPS evidence.",
+  "remaining_limits": [
+    "Wrong-slot and replay are accepted at the native trusted-caller boundary; do not label these as successful native rejection tests.",
+    "Independent envelope checks reject changed session context or stale sequence; full qualified consumer not exercised.",
+    "Publication failure remains pathname obstruction, not process-death or physical power-loss test.",
+    "No physical device acceptance or authenticated checkpoint promotion."
+  ]
+}

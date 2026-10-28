@@ -1,0 +1,320 @@
+{
+  "scope": "Downloaded packages available in extracted private host prefix; not all linked and not a complete source-correspondence or runtime closure audit",
+  "packages": [
+    {
+      "archive": "libasound2-dev_1.2.14-1+deb13u1_amd64.deb",
+      "sha256": "dfa8e8a133ef8704093d03464d86a3e86d26232baf1e3827aa030cb68c437e1c",
+      "metadata": [
+        "Package: libasound2-dev",
+        "Version: 1.2.14-1+deb13u1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libdbus-1-dev_1.16.2-2_amd64.deb",
+      "sha256": "83767cf52f88de6d6f370cee30e717828c6fd22cb55d1fb84b38a3e911742887",
+      "metadata": [
+        "Package: libdbus-1-dev",
+        "Version: 1.16.2-2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libdecor-0-dev_0.2.2-2_amd64.deb",
+      "sha256": "f02b9409ff31d546beb5bf2f2eddbc432ed051696a632c82dc9e4ba76c9e60c4",
+      "metadata": [
+        "Package: libdecor-0-dev",
+        "Version: 0.2.2-2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libdrm-dev_2.4.124-2_amd64.deb",
+      "sha256": "83b84b1207c4dda3d64ebad7725a7ad237c69c870668db3b01eabad1052f0dcb",
+      "metadata": [
+        "Package: libdrm-dev",
+        "Version: 2.4.124-2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libegl-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "97fcfff08a5de0a510066d55260a30fbd3ccbd87da6c2f317e6efe17566b9f5a",
+      "metadata": [
+        "Package: libegl-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libfontconfig-dev_2.15.0-2.3_amd64.deb",
+      "sha256": "e7c533d87da316da3b127d136c0d1f0238a936c4b0797cb5ab67ebac3cf7151e",
+      "metadata": [
+        "Package: libfontconfig-dev",
+        "Version: 2.15.0-2.3",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libgbm-dev_25.0.7-2+deb13u1_amd64.deb",
+      "sha256": "8e3f9958fbcd4838953ebc7cb11e661e26652059473278d8f7e130c246f97c2a",
+      "metadata": [
+        "Package: libgbm-dev",
+        "Version: 25.0.7-2+deb13u1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libgl-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "2c5044a44bc7cd7a196d554ca6ff78ae0358fbb98b7d2cce49176bdc6a816fe4",
+      "metadata": [
+        "Package: libgl-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libgles-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "87af52464cb40d54e78ecf2046db019bf1ab19a8bed7511ab282be623d1216de",
+      "metadata": [
+        "Package: libgles-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libglu1-mesa-dev_9.0.2-1.1+b3_amd64.deb",
+      "sha256": "365a0576d95edf7b8052608bcbebe69ead0bb9aa8475b27174558961a58db70f",
+      "metadata": [
+        "Package: libglu1-mesa-dev",
+        "Version: 9.0.2-1.1+b3",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libglvnd-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "3076d220a658adc9f4a505bac97d1ca7a896957c2ea641e058a85a2b384a4367",
+      "metadata": [
+        "Package: libglvnd-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libglx-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "93d456321c07009491b942783db8c57065b616db713ef5f6a0c629ca078c4ea0",
+      "metadata": [
+        "Package: libglx-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libopengl-dev_1.7.0-1+b2_amd64.deb",
+      "sha256": "fe63853277e05a3b02f9339fff85ab68af1c7ef63c4663b716930b8c88b29d52",
+      "metadata": [
+        "Package: libopengl-dev",
+        "Version: 1.7.0-1+b2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libpulse-dev_17.0+dfsg1-2+b1_amd64.deb",
+      "sha256": "bcbd91aae55d1794f8fe8b1e766ec810173a6415b2165642bf756858e20ab7c4",
+      "metadata": [
+        "Package: libpulse-dev",
+        "Version: 17.0+dfsg1-2+b1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libsdl2-2.0-0_2.32.4+dfsg-1_amd64.deb",
+      "sha256": "c61af1033d79fa6a393c49fac987165876de8ff27ebbd6a36cf19f5fc84d7a7a",
+      "metadata": [
+        "Package: libsdl2-2.0-0",
+        "Version: 2.32.4+dfsg-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libsdl2-dev_2.32.4+dfsg-1_amd64.deb",
+      "sha256": "277dc6373473df2079ed44ac8661575b97b39fa263bfa424b0324c1501d21413",
+      "metadata": [
+        "Package: libsdl2-dev",
+        "Version: 2.32.4+dfsg-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libsdl2-image-2.0-0_2.8.8+dfsg-1+deb13u1_amd64.deb",
+      "sha256": "3df007d463b84c3dd1d82cd91adc10cbeab5a2531357cfd9af21b3d81b2ebdf5",
+      "metadata": [
+        "Package: libsdl2-image-2.0-0",
+        "Version: 2.8.8+dfsg-1+deb13u1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libsdl2-ttf-2.0-0_2.24.0+dfsg-2_amd64.deb",
+      "sha256": "a7aff4e1f3389b1c25edfe9248d918a8ba762dcefb57c3be3a1bbdb6c55f833b",
+      "metadata": [
+        "Package: libsdl2-ttf-2.0-0",
+        "Version: 2.24.0+dfsg-2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libudev-dev_257.13-1~deb13u1_amd64.deb",
+      "sha256": "73c3ed98a435ec420b327ef267d89ece81bf23c2c19391265bb4f261cbf5d558",
+      "metadata": [
+        "Package: libudev-dev",
+        "Version: 257.13-1~deb13u1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libwayland-dev_1.23.1-3_amd64.deb",
+      "sha256": "66055b7df9a6c4b15fe0b52a42a76680bb4d0f4d1083800e7cd7ba26e59e68ed",
+      "metadata": [
+        "Package: libwayland-dev",
+        "Version: 1.23.1-3",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libx11-dev_2%3a1.8.12-1_amd64.deb",
+      "sha256": "530de60c9c6dadd997ae7d74eca2a41b25e849373a5ad5dcdb619aa05713d6e0",
+      "metadata": [
+        "Package: libx11-dev",
+        "Version: 2:1.8.12-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxcursor-dev_1%3a1.2.3-1_amd64.deb",
+      "sha256": "57f2fc575496edc9f3dd286423494499d231a8b1cdb417bb8401f6b66b584a26",
+      "metadata": [
+        "Package: libxcursor-dev",
+        "Version: 1:1.2.3-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxdo3_1%3a3.20160805.1-5.1_amd64.deb",
+      "sha256": "d634e25d2b50af140ee9f44bab507fcfb665f3556fd483faefdb56e85598cc12",
+      "metadata": [
+        "Package: libxdo3",
+        "Version: 1:3.20160805.1-5.1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxfont2_1%3a2.0.6-1+deb13u1_amd64.deb",
+      "sha256": "79a7f56e4a0c7b1defa706c7b1f3076f7d80aaeea9de253b2a87406253319681",
+      "metadata": [
+        "Package: libxfont2",
+        "Version: 1:2.0.6-1+deb13u1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxi-dev_2%3a1.8.2-1_amd64.deb",
+      "sha256": "be3ca6202327858845aa0a8d70374b08dae5c89250ad8997256e02b2833501d3",
+      "metadata": [
+        "Package: libxi-dev",
+        "Version: 2:1.8.2-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxinerama-dev_2%3a1.1.4-3+b4_amd64.deb",
+      "sha256": "711206b2a759461fe27b86099c4b593cb80c1f558fa64dd92239706f8c2a43b3",
+      "metadata": [
+        "Package: libxinerama-dev",
+        "Version: 2:1.1.4-3+b4",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxkbcommon-dev_1.7.0-2_amd64.deb",
+      "sha256": "b62327152ae59bec442c0d7ae893520a3a3a2381100c83332e4a3497157ce5ec",
+      "metadata": [
+        "Package: libxkbcommon-dev",
+        "Version: 1.7.0-2",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "libxrandr-dev_2%3a1.5.4-1+b3_amd64.deb",
+      "sha256": "e408e4f8c77135725e9055d445635587225839a929d348c04b85adfa84bdefb1",
+      "metadata": [
+        "Package: libxrandr-dev",
+        "Version: 2:1.5.4-1+b3",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "strace_6.13+ds-1_amd64.deb",
+      "sha256": "cae290b67cf835350a2cde58ca332256fba475784b3e02a9a8677d73eaf47511",
+      "metadata": [
+        "Package: strace",
+        "Version: 6.13+ds-1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "x11-utils_7.7+7_amd64.deb",
+      "sha256": "239d8a87b464cbe370d63029820218a52c5bfa1f0dfeb74f7cfe7d0df017046b",
+      "metadata": [
+        "Package: x11-utils",
+        "Version: 7.7+7",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "x11proto-dev_2024.1-1_all.deb",
+      "sha256": "6a6764500eb8171d3cd6d793c09902974f8ea87bd20c68d9eac5f1eeaf3fc407",
+      "metadata": [
+        "Package: x11proto-dev",
+        "Version: 2024.1-1",
+        "Architecture: all"
+      ]
+    },
+    {
+      "archive": "xauth_1%3a1.1.2-1.1_amd64.deb",
+      "sha256": "14687bc8e3af350738f61e5a872bcdd83725694cb09d448d75077abd6249679a",
+      "metadata": [
+        "Package: xauth",
+        "Version: 1:1.1.2-1.1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "xdotool_1%3a3.20160805.1-5.1_amd64.deb",
+      "sha256": "98ac8681533b01020c7288fb2e9de403d586747dab48cfd58e04cb00d0c44fb1",
+      "metadata": [
+        "Package: xdotool",
+        "Version: 1:3.20160805.1-5.1",
+        "Architecture: amd64"
+      ]
+    },
+    {
+      "archive": "xserver-common_2%3a21.1.16-1.3+deb13u4_all.deb",
+      "sha256": "94bc0dcceeefabd4f706af19b3424de7f827758d0ebad5c18c52e73365d7f3ab",
+      "metadata": [
+        "Package: xserver-common",
+        "Version: 2:21.1.16-1.3+deb13u4",
+        "Architecture: all"
+      ]
+    },
+    {
+      "archive": "xvfb_2%3a21.1.16-1.3+deb13u4_amd64.deb",
+      "sha256": "893d87bf159b6de077a929fc796a73c39f837d45310b2076e3eeebebb80552b6",
+      "metadata": [
+        "Package: xvfb",
+        "Version: 2:21.1.16-1.3+deb13u4",
+        "Architecture: amd64"
+      ]
+    }
+  ]
+}

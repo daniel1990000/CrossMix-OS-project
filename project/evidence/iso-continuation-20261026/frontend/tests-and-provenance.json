@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "source_baseline": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "files": {
+    "project/psp_shell/ui/model.py": "58b56dde47562718bf99d6e2e97f54125b780c02b138ec3b8890eac43623b1ed",
+    "project/tests/test_ui_continuation.py": "3f41fc308a266939a69ac681ef722ec165bfcfbb529ff15bd947cf135c932e7f",
+    "project/tests/test_experimental_embedded.py": "27a92a7dae82a4c603b5f65073870ea68bfb0566b5a54e923780f82dbe191a85",
+    "project/psp_shell/performance.py": "524a93a84f4c79e572c096d8596bc6cfc1206b8ba15c0606bc136162eadfd81a",
+    "project/psp_shell/state_evidence.py": "1bda9bf692de23c5bb5920a35e2021a442523acd548babfecc47dcc9a77b6269",
+    "project/bridge/principal.py": "6df9ec5a91d03c342efdf7ffca883e4294fb61b12972216a6a9f4b485f633b7c",
+    "project/bridge/process_source.py": "a0770d8a01d01f9b59835f644657d13c8dc80b3f8eebe456bd6aba1ec71719aa"
+  },
+  "test_logs": [
+    {
+      "path": "read-only-baseline.log",
+      "scope": "Original production UI with newly added regression tests: four expected failures; retained reproduction",
+      "original_private_sha256": "de2a56ea56da93cc239913c42d456fb9396161b0c74682629ba79bf35d57f992",
+      "sanitized_sha256": "e51f15b26b2ca59f4a303ff8e157368a94021d370b0119571d1ce18e68bfcacf"
+    },
+    {
+      "path": "ui-integration-corrected.log",
+      "scope": "Final owned UI change:45 tests across UI continuation, experimental embedded, hardware settings; all pass",
+      "original_private_sha256": "a5471cb0fcafa494ebb3cfd40fa8c317e04d285190fd0cbddad34565a9b53fea",
+      "sanitized_sha256": "a5471cb0fcafa494ebb3cfd40fa8c317e04d285190fd0cbddad34565a9b53fea"
+    },
+    {
+      "path": "performance-focused.log",
+      "scope": "29 existing synthetic-manager-fixture tests pass; separate from real native config evidence",
+      "original_private_sha256": "2e4df7783c8b569e6bbfcc2392ee5c74371c5bd4e51ab67d1e036685f89fd994",
+      "sanitized_sha256": "2e4df7783c8b569e6bbfcc2392ee5c74371c5bd4e51ab67d1e036685f89fd994"
+    }
+  ],
+  "commands": {
+    "final_focused": "PYTHONPATH=project:project/tests SPRUCE_SOURCE_ROOT=<pinned-spruce> python -m unittest test_ui_continuation test_experimental_embedded test_hardware_settings",
+    "performance_fixtures": "PYTHONPATH=project python -m unittest discover -s project/tests -p test_performance_controls.py",
+    "private_reproductions": [
+      "<private-audit>/frontend/inspect_frontend.py",
+      "<private-audit>/frontend/inspect_native_config.py",
+      "<private-audit>/frontend/review_g05.py",
+      "<private-audit>/frontend/owned_native_run.py"
+    ]
+  },
+  "private_script_sha256": {
+    "inspect_frontend.py": "6184b3fcc7128081b9ad19e5df1867f7fb063cd9b3bb7cc32bc0353c18901636",
+    "inspect_native_config.py": "5d92db4511725a3827983ca3c5ef0c157ecb5c858e403848f3dc37046d7dabf8",
+    "review_g05.py": "46802e91ecd8cb2d925f0a5d58bdbc8dbee84e415aeee3596678a25b13c71d6c",
+    "owned_native_run.py": "d9e5cdcf25da583a9a633821f22b32209498969f3652cf71c6ee6e540b9b87a4"
+  },
+  "limits": [
+    "Final strict all-source certification is owned by the certification lane and recorded separately.",
+    "The 106-test UI run and14-test continuation pass preceded the final preservation of independent Game options; final focused45-test receipt is the settled owned change.",
+    "No ISO bytes, native states, native INI files, game pixels, runtime paths, or credentials are included.",
+    "Original private raw receipts and logs remain under the private audit frontend directory."
+  ],
+  "implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a"
+}

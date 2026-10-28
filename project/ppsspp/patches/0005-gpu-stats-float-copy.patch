@@ -1,0 +1,13 @@
+--- a/Core/Debugger/WebSocket/GPUStatsSubscriber.cpp
++++ b/Core/Debugger/WebSocket/GPUStatsSubscriber.cpp
+@@ -129,8 +129,8 @@
+ 	stats.frameTimes.resize(valid);
+ 	stats.sleepTimes.resize(valid);
+ 	if (valid > 0) {
+-		memcpy(&stats.frameTimes[0], history, sizeof(double) * valid);
+-		memcpy(&stats.sleepTimes[0], sleepHistory, sizeof(double) * valid);
++		memcpy(stats.frameTimes.data(), history, sizeof(*history) * valid);
++		memcpy(stats.sleepTimes.data(), sleepHistory, sizeof(*sleepHistory) * valid);
+ 	}
+ 
+ 	sendNext_ = false;

@@ -1,0 +1,245 @@
+{
+  "scope": "actual native-created per-game INI, production parser/edit helpers and generic journal only",
+  "source_bytes": 14644,
+  "source_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+  "source_unmodified": true,
+  "utf8_bom_preserved": true,
+  "baseline": {
+    "resolution": 1,
+    "frameskip": 0,
+    "auto_frameskip": false
+  },
+  "effective_local": {
+    "InternalResolution": "1",
+    "FrameSkip": "0",
+    "AutoFrameSkip": false
+  },
+  "option_checks": [
+    {
+      "option": "resolution",
+      "value": null,
+      "diff": [
+        {
+          "option_id": "resolution",
+          "label": "Rendering resolution",
+          "section": "Graphics",
+          "key": "InternalResolution",
+          "before_present": true,
+          "before_token": "1",
+          "before": 1,
+          "after_present": false,
+          "after": null
+        }
+      ],
+      "after_sha256": "f31791a42cc59af13e7376c06cd856ba8963c838c101026c191816a715f45cf6",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "resolution",
+      "value": 1,
+      "diff": [],
+      "after_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "resolution",
+      "value": 2,
+      "diff": [
+        {
+          "option_id": "resolution",
+          "label": "Rendering resolution",
+          "section": "Graphics",
+          "key": "InternalResolution",
+          "before_present": true,
+          "before_token": "1",
+          "before": 1,
+          "after_present": true,
+          "after": 2
+        }
+      ],
+      "after_sha256": "74a1065b558cae5a20f04f98741c0d56331e178df6812373c664499051ff77cf",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "resolution",
+      "value": 3,
+      "diff": [
+        {
+          "option_id": "resolution",
+          "label": "Rendering resolution",
+          "section": "Graphics",
+          "key": "InternalResolution",
+          "before_present": true,
+          "before_token": "1",
+          "before": 1,
+          "after_present": true,
+          "after": 3
+        }
+      ],
+      "after_sha256": "cb1176989f28f635b1239ed6ad8d01da8f23af9d7d2ad792a9b484f542b2fe4b",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "frameskip",
+      "value": null,
+      "diff": [
+        {
+          "option_id": "frameskip",
+          "label": "Manual frameskip",
+          "section": "Graphics",
+          "key": "FrameSkip",
+          "before_present": true,
+          "before_token": "0",
+          "before": 0,
+          "after_present": false,
+          "after": null
+        }
+      ],
+      "after_sha256": "57f42ab009e1cf3fa1727c23c0dc42da9cb03dee0282ceaa4e715fed176013f9",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "frameskip",
+      "value": 0,
+      "diff": [],
+      "after_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "frameskip",
+      "value": 1,
+      "diff": [
+        {
+          "option_id": "frameskip",
+          "label": "Manual frameskip",
+          "section": "Graphics",
+          "key": "FrameSkip",
+          "before_present": true,
+          "before_token": "0",
+          "before": 0,
+          "after_present": true,
+          "after": 1
+        }
+      ],
+      "after_sha256": "8f2870b6fff1b0008d02e556fd96219122db1bd420a07925646f169a8d3504fd",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "frameskip",
+      "value": 2,
+      "diff": [
+        {
+          "option_id": "frameskip",
+          "label": "Manual frameskip",
+          "section": "Graphics",
+          "key": "FrameSkip",
+          "before_present": true,
+          "before_token": "0",
+          "before": 0,
+          "after_present": true,
+          "after": 2
+        }
+      ],
+      "after_sha256": "a1ac9e2f02cd378b5b6ef568259a21398e35f837fc13b5706a0d779f7bae7a60",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "auto_frameskip",
+      "value": null,
+      "diff": [
+        {
+          "option_id": "auto_frameskip",
+          "label": "Automatic frameskip",
+          "section": "Graphics",
+          "key": "AutoFrameSkip",
+          "before_present": true,
+          "before_token": "False",
+          "before": false,
+          "after_present": false,
+          "after": null
+        }
+      ],
+      "after_sha256": "58b749d8f3012baa09e21a116775fb3ba404486d22addda7b15d8273dc65d3a9",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "auto_frameskip",
+      "value": false,
+      "diff": [],
+      "after_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    },
+    {
+      "option": "auto_frameskip",
+      "value": true,
+      "diff": [
+        {
+          "option_id": "auto_frameskip",
+          "label": "Automatic frameskip",
+          "section": "Graphics",
+          "key": "AutoFrameSkip",
+          "before_present": true,
+          "before_token": "False",
+          "before": false,
+          "after_present": true,
+          "after": true
+        }
+      ],
+      "after_sha256": "6412455b63fffa294e650de05db6890e395ee1628d8a786025c80e42971cc6a7",
+      "unrelated_bytes_preserved": true,
+      "repeat_noop": true
+    }
+  ],
+  "transaction_checks": [
+    "paired config/generation commit, snapshots and request replay",
+    "generic snapshot restoration exact bytes",
+    "injected interrupted paired commit rolls back exact native bytes",
+    "stale input rejected and external bytes preserved"
+  ],
+  "native_global_observation": {
+    "source_sha256": "a9793dcb696276be52598f760c26a387b73c8f8cd43354b2f9cb67fd003a8412",
+    "source_bytes": 4982,
+    "options": {
+      "resolution": {
+        "global_key_present": false,
+        "effective_after_removal": null
+      },
+      "frameskip": {
+        "global_key_present": false,
+        "effective_after_removal": null
+      },
+      "auto_frameskip": {
+        "global_key_present": false,
+        "effective_after_removal": null
+      }
+    },
+    "interpretation": "Native global file created while in game-specific mode omits these per-game keys. Existing shell reports unknown, rather than inventing a native default. Runtime inheritance is not observed."
+  },
+  "limits": [
+    "No fabricated qualified profile or manager gate bypass.",
+    "Selections are structural edit candidates, not runtime or performance recommendations.",
+    "Generic journal restoration does not exercise manager undo merge/conflict rules.",
+    "Existing fixture-based manager tests remain separate evidence."
+  ],
+  "status": "partial: actual native resolution/manual/automatic frameskip readback, one-launch global fallback and native rewrite semantics observed; qualified manager Apply/Undo remains unverified",
+  "source_provenance": "Per-game INI created by actual native PPSSPP Create game config action for ULUS10160. Only hashes and selected observations exported.",
+  "initial_probe_qualification": {
+    "hardware": false,
+    "installed_manager_live_apply": false,
+    "manager_undo": false,
+    "native_readback_of_edited_config": false,
+    "global_inheritance_runtime": false
+  },
+  "native_followup": "g03-native-ui-followup.json",
+  "native_frameskip_followup": "g03-native-frameskip-followup.json"
+}

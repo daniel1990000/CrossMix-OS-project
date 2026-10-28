@@ -1,0 +1,232 @@
+{
+  "schema": 1,
+  "reviewer": "frontend_config lane; independent of native build/protocol implementation; author of separately identified G05 kernel receipt",
+  "decision": "native evidence accepted within stated desktop scope; G04 remains partial against complete roadmap acceptance",
+  "reviewed_report_sha256": "b42223766869da905086d45dc280b719494dc01a7d0cd298982a5b4a55841e4e",
+  "reviewed_build_report_sha256": "e558b938a66c56c5c55c711d3f3af7e4527049021d3713fea75ac469af1a0964",
+  "reviewed_manifest_sha256": "6933c07ffdecd9b7daa9e34112ac50d979162039a98f1c1f99cfc686ce433b18",
+  "verified": {
+    "exported_manifest_hashes_match": true,
+    "actual_engine_matches_build_and_protocol_reports": true,
+    "case_packet_checks": [
+      {
+        "case": "save0",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 0
+      },
+      {
+        "case": "save1",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 2
+      },
+      {
+        "case": "resume1",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 3
+      },
+      {
+        "case": "playable-resume1",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 3
+      },
+      {
+        "case": "playable-resume2",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 2
+      },
+      {
+        "case": "playable-resume3",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 2
+      },
+      {
+        "case": "wrong-engine",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 0
+      },
+      {
+        "case": "malformed-packet",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 0
+      },
+      {
+        "case": "insecure-mode",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 0
+      },
+      {
+        "case": "wrong-game",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 1
+      },
+      {
+        "case": "mutated-state",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 1
+      },
+      {
+        "case": "truncated-state",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 1
+      },
+      {
+        "case": "corrupt-state",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 1
+      },
+      {
+        "case": "interrupted-result",
+        "request_and_reported_packet_hashes_match": true,
+        "native_packets_checked": 1
+      }
+    ],
+    "failed_save_preservation": "save1 sequence1 successful completion bytes equal first-save-completed snapshot after sequence2 failure; preserved actual state digest matches. Failure positive fields are empty. No promoted frontend capability claim.",
+    "fresh_reload": "playable-resume1 loads original gameplay state then saves new bytes at sequence2; playable-resume2 and3 load that exact new digest at sequence1 in fresh processes.",
+    "g05_cross_check": "playable-resume3 packet digest matches separate actual kernel run: exit0, one child reaped, prior subreaper restored, no external cleanup. Earlier dbus-assisted closure is kept separate.",
+    "negative_scope": "wrong-engine/malformed/insecure inputs rejected on startup; wrong-game digest/mutated/truncated inputs rejected for identity; hash-matched invalid state reaches actual loader and fails.",
+    "publication_scope": "directory at final result path causes missing regular final result while load-completed survives; no power-cut or production promotion assertion"
+  },
+  "corrections_requested": [
+    {
+      "severity": "receipt reference",
+      "finding": "kernel_boundary_report points to unexported g05-owned-native-clean.json",
+      "required": "Point to ../frontend/g05-native-boundary.json and its clean-run entry.",
+      "status": "addressed in corrected protocol report"
+    },
+    {
+      "severity": "wording",
+      "finding": "playable-resume2 and3 outcome says load/save callbacks, but these runs have load only",
+      "required": "Describe load-only callbacks; save belongs to playable-resume1.",
+      "status": "addressed in corrected protocol report"
+    }
+  ],
+  "remaining_criteria": [
+    {
+      "criterion": "wrong slot",
+      "status": "Actual native mismatch probe performed and accepted caller metadata; retained expected-slot comparison reviewed, but full authenticated parser path remains blocked. See slot-replay-boundary-review.json."
+    },
+    {
+      "criterion": "replayed request/session",
+      "status": "Actual unchanged request reused by fresh native process accepted; real envelope helper rejects old packet under changed expected nonce or advanced minimum sequence. Full owner/capability freshness not composed."
+    },
+    {
+      "criterion": "production completed-packet acceptance and last valid checkpoint promotion",
+      "status": "blocked without genuine qualified profile, source/foreground and writer authority; packet decoding is not authenticated frontend transfer"
+    },
+    {
+      "criterion": "truncated native loader input with matching hash",
+      "status": "Closed for one256-byte truncation: matching hash passed input check and genuine native loader failed with empty positives; broader corruption classes not inferred."
+    },
+    {
+      "criterion": "publication interruption by process death or power loss",
+      "status": "not exercised; pathname obstruction only"
+    },
+    {
+      "criterion": "native menu Confirm/Back and matching theme behavior",
+      "status": "Native subcriteria observed later using SDL virtual input and real native renderer; see ../frontend/g03-native-ui-followup.json. Physical input and qualified managers remain unverified."
+    },
+    {
+      "criterion": "full reproducible dependency source correspondence",
+      "status": "host FFmpeg static archives are pinned prebuilt inputs; source rebuild/correspondence unproven"
+    }
+  ],
+  "frontend_screenshot_review": {
+    "files": {
+      "game-information-1.0.png": "5bea53f590c4c684261c6ea395bed1b4cf4a11ab0244a0e88d5aeb860f9680b2",
+      "game-information-1.75.png": "994253984d4f53030fde33e6a2faa1b298bc3dfba186936eca796a43a1557b56",
+      "game-information-before-1.0.png": "f9bc8ef281351600dc6bb516d6b7b7678d43d6ae00f71ee2ce8e37480c196ab3",
+      "game-information-before-1.75.png": "df47b1164759c74f55993e0d87ca1ac5702756cc12a55d41ec69ddc4854e0ce7"
+    },
+    "visual_inspection": "All four images reviewed. Only original frontend chrome, text labels, control hints and generic missing-artwork gamepad placeholder are present. No game-derived artwork, screenshots or gameplay pixels.",
+    "supporting_observation": "G01 records missing artwork and empty artwork reference; inspection script renders existing frontend, without extracting ISO assets."
+  },
+  "source_changes": false,
+  "corrected_protocol_report_sha256": "cd59e84d5dcc08d4d45f62c2ba9966c8fd4b85d61acad96057223b7c0661d73b",
+  "additional_raw_native_checks": [
+    {
+      "case": "wrong-slot",
+      "request_sha256": "0a214f4776e953dd5010e14292811035ff2ff0bc27c2d2882acc58bea279e210",
+      "result_sha256": "1233a3d0e8a9452d8151557bf1c96b4c9ce1a123cf3b884bd22c656bd03541f3",
+      "operation": "load",
+      "sequence": 1,
+      "status": "success",
+      "request_slot": "1",
+      "returned_slot": "1",
+      "meaning": "Native accepts caller slot1 metadata while loading explicit hash-matched filename ending slot0; not native rejection."
+    },
+    {
+      "case": "truncated-matching-hash",
+      "request_sha256": "18f9d3bd46896f8dd1ce4c8bb469c2ea0f852f62c251a8a26c74e7b648aed825",
+      "result_sha256": "c926494439b79fc186e8837d3d80a9eaedff497cacfd2fed2edb4ced7da6dd81",
+      "operation": "load",
+      "sequence": 1,
+      "status": "failure",
+      "request_slot": "0",
+      "returned_slot": "",
+      "meaning": "Hash-matched256-byte truncation reaches native loader and fails with empty positive fields."
+    },
+    {
+      "case": "replay-session",
+      "request_sha256": "b1d0d32d9a9110d06b197d73b3e9f0cd78612a505d69e4478c5703c9f709fd9f",
+      "result_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+      "operation": "load",
+      "sequence": 1,
+      "status": "success",
+      "request_slot": "0",
+      "returned_slot": "0",
+      "meaning": "Same unchanged private request reused in another actual native process is accepted; successful sequence1 packet bytes match first run. Owner/session freshness is separate.",
+      "first_result_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+      "second_run_interval": {
+        "started_utc": "2026-10-26T19:09:25.897986+00:00",
+        "finished_utc": "2026-10-26T19:09:33.591549+00:00",
+        "runner_exit": 0
+      }
+    }
+  ],
+  "slot_replay_boundary_review_sha256": "a2462aa0a7bc35e04012086f8df5217f8a7e48e5bc1a4fb94b5830b750fa4287",
+  "native_ui_followup_sha256": "a11733ee70132e1bcb5da6431beeb619f7bb7e9b7c807b5c5c0cdb9376fe524a",
+  "supersession": {
+    "updated_utc": "2026-10-26T19:32:48.841180+00:00",
+    "instruction": "The following current statuses supersede the initial14-case review statements. Historical coverage gaps are retained here only to explain evidence chronology. Full qualified authority gaps remain open.",
+    "items": [
+      {
+        "criterion": "wrong slot",
+        "historical_assessment": "Initial14-case review: not exercised with actual native session",
+        "current_status": "Actual native mismatch probe performed and accepted caller metadata; retained expected-slot comparison reviewed, but full authenticated parser path remains blocked. See slot-replay-boundary-review.json.",
+        "followup_evidence": [
+          "slot-replay-boundary-review.json"
+        ]
+      },
+      {
+        "criterion": "replayed request/session",
+        "historical_assessment": "Initial14-case review: actual native replay not exercised; fixture authority coverage separate",
+        "current_status": "Actual unchanged request reused by fresh native process accepted; real envelope helper rejects old packet under changed expected nonce or advanced minimum sequence. Full owner/capability freshness not composed.",
+        "followup_evidence": [
+          "slot-replay-boundary-review.json"
+        ]
+      },
+      {
+        "criterion": "truncated native loader input with matching hash",
+        "historical_assessment": "Initial14-case review: truncation had only failed digest check before loader",
+        "current_status": "Closed for one256-byte truncation: matching hash passed input check and genuine native loader failed with empty positives; broader corruption classes not inferred.",
+        "followup_evidence": [
+          "additional_raw_native_checks within this receipt"
+        ]
+      },
+      {
+        "criterion": "native menu Confirm/Back and matching theme behavior",
+        "historical_assessment": "Initial14-case review: no native menu/palette runtime evidence",
+        "current_status": "Native subcriteria observed later using SDL virtual input and real native renderer; see ../frontend/g03-native-ui-followup.json. Physical input and qualified managers remain unverified.",
+        "followup_evidence": [
+          "../frontend/g03-native-ui-followup.json"
+        ]
+      }
+    ]
+  },
+  "additional_g03_followup": {
+    "path": "../frontend/g03-native-frameskip-followup.json",
+    "sha256": "71d51db6b87988f4b9914b04b34e6f2fe37edcd261500afc5ae604d32488c880",
+    "recorded_by": "frontend_config native UI lane, same reviewer; not claimed independent review of own follow-up",
+    "summary": "Manual and automatic frameskip readback, initial global fallback and subsequent native materialization observed. Qualified manager Apply/Undo remains open."
+  }
+}

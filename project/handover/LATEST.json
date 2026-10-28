@@ -71,66 +71,52 @@
   },
   "schema": 2,
   "date_utc": "2026-10-26",
-  "branch": "main",
-  "base_at_start": "9dfa857fec43c165b2b8836406012f1b38cfed87",
+  "branch": "build/iso-host-validation-20261026",
+  "base_at_start": "30aa59ffa35195bcad2b2553f91c43fc32301556",
   "pull_request": {
-    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/2",
-    "number": 2,
-    "state": "closed",
-    "merged": true,
-    "draft": false,
-    "merge_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
-    "merged_head": "2d182edf0cf868a4a8e5214ee552dd42ccba894a"
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/3",
+    "number": 3,
+    "state": "open",
+    "merged": false,
+    "draft": true
   },
-  "release_id": "smartpro-psp-0.1.0-dev18",
-  "project_stage": "Dev18 host feature batch implemented and independently reviewed; 1,209 strict checks pass. Device qualification remains pending.",
+  "release_id": "smartpro-psp-0.1.0-dev19",
+  "project_stage": "Dev19 ISO host audit recorded with explicit partial/blocked criteria; 1,213 checks and verified packaging pass. Device qualification remains pending.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
     "project/handover/LATEST.json",
     "project/README.md",
-    "project/docs/dev18-library-backups-2026-10-26.md",
-    "project/evidence/dev18-library-backups-20261026/verification.json",
+    "project/docs/iso-continuation-2026-10-26.md",
+    "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
     "project/docs/master-plan-2026-10-22.md"
   ],
   "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
   "master_plan": "project/docs/master-plan-2026-10-22.md",
   "current_snapshot": {
-    "clean_implementation_commit": "399a528542da1139903c93cef3041d23acad2fca",
+    "clean_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
     "strict_tests": {
-      "tests_run": 1209,
-      "passed": 1209,
+      "tests_run": 1213,
+      "passed": 1213,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "verification": "project/evidence/dev18-library-backups-20261026/verification.json",
-    "source_inventory_files": 234,
-    "source_inventory_sha256": "bed2e770420510d3cae0cdf86f13714e65a8c27c7cc65c3d4f03d4fd9cb2082a",
+    "test_execution": "Changed-tree test immediately before commit; all ten changed/new input hashes independently matched to clean commit.",
+    "verification": "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
+    "source_inventory_files": 236,
+    "source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
     "payload_files": 68,
     "both_zips_byte_identical_without_git": true,
     "installed_preview_and_fixture_rollback_passed": true,
-    "ci_readback": "project/evidence/dev18-library-backups-20261026/ci-readback.json",
-    "later_metadata_commits_have_separate_identity": true,
-    "ci": {
-      "status": "success",
-      "run_id": 40370508776,
-      "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40370508776",
-      "branch_source_commit": "399a528542da1139903c93cef3041d23acad2fca",
-      "actual_clean_checkout": "89da2a33bb853bca10aca1d983d84bb02702b216",
-      "base_commit": "4a97d8a253e9d572e51f17876711597d38181633",
-      "artifact_id": 12673380140,
-      "artifact_sha256": "3ce9dd25838227189f7a106270e37ad2e64a6944d53a337e33b95fe3406bdf80",
-      "artifact_size_bytes": 5363997,
-      "artifact_expires_at_utc": "2027-01-24T17:38:26Z",
-      "source_inventory_sha256": "7e910473d1c4bbb0c8b00d929b8c809212439c0e6be8e3f5d47978af11809ec9",
-      "source_inventory_files": 235,
-      "signature_and_payload_inventory_verified": true,
-      "source_export_bytes_verified": true,
-      "readback": "ci-readback.json"
-    }
+    "package_receipt": "project/evidence/iso-continuation-20261026/certification/package-receipt.json",
+    "ci_readback": "project/evidence/iso-continuation-20261026/certification/ci-readback.json",
+    "ci_run_id": 40383733188,
+    "ci_status": "success",
+    "ci_actual_clean_checkout": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "later_metadata_commits_have_separate_identity": true
   },
   "published_snapshot": {
     "release": "smartpro-host-0.1.0-dev16",
@@ -139,7 +125,8 @@
     "asset_count": 11,
     "changed_by_dev18": false,
     "identity_check": "project/evidence/dev18-library-backups-20261026/published-identity-check.json",
-    "byte_readback": "project/evidence/host-publication-20261023/public-readback.json"
+    "byte_readback": "project/evidence/host-publication-20261023/public-readback.json",
+    "changed_by_dev19": false
   },
   "selected_upstream_patches": [],
   "selected_native_binaries": [],
@@ -179,9 +166,9 @@
     }
   ],
   "historical_records": {
-    "handover": "HANDOVER-HISTORY-through-dev17.md",
-    "status": "project/handover/LATEST-through-dev17.json",
-    "plan": "project/docs/master-plan-history-through-dev17.md",
+    "handover": "HANDOVER-HISTORY-through-dev18.md",
+    "status": "project/handover/LATEST-through-dev18.json",
+    "plan": "project/docs/master-plan-history-through-dev18.md",
     "warning": "Dated current/latest fields in historical records apply only to their named snapshots."
   },
   "owner_device_status": {
@@ -189,14 +176,14 @@
     "available": false,
     "physical_areas_run": 0,
     "physical_areas_total": 13,
-    "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
+    "game_specific_testing": "Owner authorized ISO continuation; actual desktop/native evidence in dev19 report. No physical tests."
   },
   "next_work": [
-    "Continue from merged dev18 on main; no new public release was created.",
-    "When hardware returns, begin with inventory and actual recovery rehearsal using the existing 13-area casebook.",
-    "Qualify native menu return, input/display ownership, I/O latency, sleep/power, interrupted saves and actual Resume on exact installed profiles.",
-    "Collect five matched runs per scene and 30-minute demanding-profile observations before recommending presets.",
-    "Resolve precise public native distribution scope, production signing custody and maintenance ownership."
+    "Review PR #3 and its explicit G01\u2013G08 gaps; no public release created.",
+    "Complete Soldier and normal in-game savedata save/relaunch/Continue; then qualified manager Apply/Undo and composed frontend Resume when genuine prerequisites exist.",
+    "With target hardware, inventory and rehearse recovery, then run the existing 13-area casebook.",
+    "Collect driving/action scenes and matched demanding-profile evidence before any preset recommendation.",
+    "Resolve public native distribution scope, production signing custody and maintenance ownership."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -207,11 +194,14 @@
     "Backup history names existing offline recovery payloads; no live restore, automatic state history or emulator save gallery.",
     "Catalog labels/check receipts live outside payloads; registration requires the external CLI.",
     "Continue bulk records require fresh verification on selection; initial evidence-store authentication still performs checks.",
-    "Original master register remains 14/25 and physical areas remain 0/13."
+    "Original master register remains 14/25 and physical areas remain 0/13.",
+    "Actual native game/save/load does not establish authenticated frontend Resume or qualified manager Apply/Undo.",
+    "Stationary software-rendered host samples do not qualify device presets, audio/frame pacing, demanding scenes, sleep or power.",
+    "Private game/state/audio/build paths are session-local; GitHub retains sanitized evidence, not recoverable private payload bytes."
   ],
   "planned_iso_continuation": {
     "prepared_at_utc": "2026-10-26",
-    "status": "planned_awaiting_execution_instruction",
+    "status": "executed_with_partial_and_blocked_criteria",
     "plan": "project/docs/iso-enabled-roadmap-2026-10-26.md",
     "execution_prompt": "project/handover/ISO_EXECUTION_PROMPT.txt",
     "input": {
@@ -222,10 +212,30 @@
       "download_and_local_metadata_verified": true
     },
     "scope": "G01-G08: real-game host validation, native settings/state/launch evidence, scene reporting, reproduced fixes and certification",
-    "runtime_changes_made": false,
-    "gameplay_tests_run": false,
+    "runtime_changes_made": true,
+    "gameplay_tests_run": true,
     "physical_tests_run": false,
-    "completion_counts_unchanged": true
+    "completion_counts_unchanged": true,
+    "report": "project/docs/iso-continuation-2026-10-26.md",
+    "runtime_changes_scope": "Host frontend availability fix and separate optional native diagnostic patch; no selected device runtime.",
+    "acceptance": {
+      "G01": "pass_readonly_scope",
+      "G02": "partial_no_ordinary_savedata_relaunch",
+      "G03": "partial_qualified_manager_undo_unverified",
+      "G04": "partial_full_authenticated_consumption_unverified",
+      "G05": "blocked_positive_composed_resume",
+      "G06": "partial_stationary_host_scope_complete",
+      "G07": "pass_host_implementation",
+      "G08": "pass_recorded_scope"
+    },
+    "measurements": {
+      "matched_stationary_pairs": 5,
+      "seconds_per_arm": 30,
+      "standalone_soak_seconds": 1800,
+      "soak_exit_code": 0,
+      "device_qualified": false,
+      "audio_quality_reviewed": false
+    }
   },
   "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json"
 }

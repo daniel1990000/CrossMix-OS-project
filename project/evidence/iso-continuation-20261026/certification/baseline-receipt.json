@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "kind": "iso-continuation-baseline-certification",
+  "frontend_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "working_tree_modified": false,
+  "baseline_checkout": "/workspace/trimui-audit/baseline-checkout",
+  "report": "baseline-certification.json",
+  "report_sha256": "2e2d0592422d90f572d799f9681564217855d34e2a61ca3a326524befcfa886a",
+  "log": "baseline-certification.log",
+  "log_sha256": "84ad195ba682a0f8b97859f51738a782d99ecb2e4e3f3d57e578f9c25cae5bdb",
+  "environment": "baseline-environment.json",
+  "successful": true,
+  "totals": {
+    "tests_run": 1209,
+    "passed": 1209,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "preview_passed": true,
+  "hardware_qualified": false,
+  "real_game_launched_by_certification": false
+}
