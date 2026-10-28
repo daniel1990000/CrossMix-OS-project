@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-28T22:50:58.421664+00:00",
+  "base": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
+  "branch": "build/iso-next-round-20261028",
+  "remote_main": "05d1088f35ff76231144ef44c393deb95900bc28",
+  "prior_pr": 3,
+  "prior_head_ci": {
+    "run_id": 40648250845,
+    "conclusion": "success",
+    "does_not_certify_next_round": true
+  },
+  "retained_private_tree_present": false,
+  "recovery_required": true,
+  "attempts": [
+    {
+      "operation": "initial full repository clone",
+      "outcome": "stopped our clone after slow full-history transfer; no checkout edited"
+    },
+    {
+      "operation": "depth-one blobless sparse clone of current PR branch",
+      "outcome": "success; exact remote HEAD verified; new branch created"
+    }
+  ],
+  "private_input": {
+    "size_bytes": 1696006144,
+    "sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+    "recovered_full_hash_verified": true
+  },
+  "prior_application_package_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "prior_package_receipts_cover_new_source": false,
+  "physical_areas_tested": 0,
+  "original_completed_count": 14
+}

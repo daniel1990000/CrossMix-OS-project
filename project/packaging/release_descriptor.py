@@ -12,6 +12,7 @@ import overlay
 
 SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp"}
 SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
+SOURCE_ORIGINAL_C_FILES = {"dev/host_virtual_controller.c"}
 SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
 PAYLOAD_TOOLS = ("__init__.py", "recovery_payload.py", "recovery_preflight.py", "backup_catalog.py")
 ORIGINAL_PAYLOAD = ["psp_shell", "bridge", "profiles", "ppsspp/theme", "assets",
@@ -34,7 +35,8 @@ def original_source_scope(relative):
 def original_source_file(relative):
     relative = Path(relative)
     return original_source_scope(relative) and (relative.suffix.lower() in SOURCE_EXTENSIONS or
-           relative.as_posix() in SOURCE_ROOT_FILES or relative.name == "LICENSE")
+           relative.as_posix() in SOURCE_ROOT_FILES or relative.as_posix() in SOURCE_ORIGINAL_C_FILES or
+           relative.name == "LICENSE")
 
 
 def source_inventory(entries):

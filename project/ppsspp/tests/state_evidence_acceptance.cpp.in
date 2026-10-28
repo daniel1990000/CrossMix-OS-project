@@ -19,6 +19,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <signal.h>
 #include "Common/Crypto/sha256.h"
 
 #define PPSSPP_GIT_VERSION "v1.20.3-fixture"
@@ -44,6 +45,34 @@ struct Path {
 	bool operator!=(const Path &other) const { return value != other.value; }
 };
 
+// Test-only syscall/platform observation points. Native function bodies below
+// remain byte-for-byte extracted; a stopped child is killed by its Python owner.
+static std::string interruptionPoint;
+static void InterruptAt(const char *point) {
+	if (interruptionPoint != point) return;
+	std::cout << "interruption=" << point << std::endl;
+	raise(SIGSTOP);
+	abort();  // The owner must kill the stopped process, never resume it.
+}
+static ssize_t InterruptionWrite(int fd, const void *data, size_t size) {
+	char descriptor[64], path[4096];
+	snprintf(descriptor, sizeof(descriptor), "/proc/self/fd/%d", fd);
+	ssize_t length = readlink(descriptor, path, sizeof(path) - 1);
+	std::string name = length > 0 ? std::string(path, length) : "";
+	if (interruptionPoint == "result-partial-write" && name.size() >= 10 && name.substr(name.size() - 10) == "result.tmp") {
+		ssize_t written = ::write(fd, data, std::min(size, size_t(9)));
+		assert(written > 0 && size_t(written) < size);
+		InterruptAt("result-partial-write");
+	}
+	return ::write(fd, data, size);
+}
+static int InterruptionRenameAt(int from, const char *oldName, int to, const char *newName) {
+	if (std::string(newName) == "save-completed") InterruptAt("completion-before-rename");
+	if (std::string(newName) == "result") InterruptAt("result-before-rename");
+	int result = ::renameat(from, oldName, to, newName);
+	if (result == 0 && std::string(newName) == "save-completed") InterruptAt("completion-after-rename");
+	return result;
+}
 static bool failFinalRename = false;
 static bool emptyFinalState = false;
 static int screenshotCount = 0;
@@ -52,6 +81,8 @@ namespace File {
 bool Exists(const Path &path) { return std::filesystem::exists(path.value); }
 bool Delete(const Path &path, bool) { return std::filesystem::remove(path.value); }
 bool Rename(const Path &from, const Path &to) {
+	if (from.value.size() >= 4 && from.value.substr(from.value.size() - 4) == ".tmp")
+		InterruptAt("state-before-rename");
 	if (failFinalRename && from.value.size() >= 4 && from.value.substr(from.value.size() - 4) == ".tmp")
 		return false;
 	std::error_code error;
@@ -184,7 +215,11 @@ void Rescan(std::string_view) {}
 /*@@FINGERPRINT@@*/
 /*@@VALIDATE_ID@@*/
 /*@@SAVE_EVIDENCE@@*/
+#define write InterruptionWrite
+#define renameat InterruptionRenameAt
 /*@@SESSION_CODE@@*/
+#undef renameat
+#undef write
 /*@@FLUSH@@*/
 /*@@PROCESS@@*/
 /*@@INIT@@*/

@@ -445,7 +445,20 @@ class NavigationModel:
         """Refresh after a native handoff without changing its return focus."""
         self._leave_view()
         self._artwork_generation += 1
-        return self.initial_commands(preserve_focus=True)
+        # Native settings writes can materialize a formerly inherited value.
+        # Discard old dialogs/previews and reread through the same authority;
+        # the background reply must not reopen a modal or erase Undo receipts.
+        game_id = _text(self._performance_status.get("game_id"), 1024)
+        page = self._page()
+        selected = page.items[page.selected] if 0 <= page.selected < len(page.items) else None
+        if selected is not None and selected.system_id.casefold() == "psp":
+            game_id = selected.id
+        self._performance_status = {}
+        self._dialog = None
+        commands = self.initial_commands(preserve_focus=True)
+        if game_id:
+            commands.append(self._request("performance.status", {"game_id": game_id}, "performance_cache"))
+        return commands
 
     def _page(self) -> _Page:
         if self.category == 0 and self._games_view == "systems":
@@ -738,6 +751,9 @@ class NavigationModel:
         elif context == "game_info":
             if isinstance(result, Mapping):
                 self._game_info_dialog(result)
+        elif context == "performance_cache":
+            if isinstance(result, Mapping) and command.serial > self._latest_reads.get("performance_status", 0):
+                self._store_performance_status(result)
         elif context == "performance_status":
             if isinstance(result, Mapping):
                 self._performance_dialog(result)
@@ -747,8 +763,8 @@ class NavigationModel:
                 if isinstance(change, Mapping):
                     label = _text(change.get("label", change.get("option_id", "Setting")), 128)
                     before, after = change.get("before"), change.get("after")
-                    rows.append(label + ": " + ("Use global setting" if before is None else str(before)) +
-                                " → " + ("Use global setting" if after is None else str(after)))
+                    rows.append(label + ": " + ("Use current global setting" if before is None else str(before)) +
+                                " → " + ("Use current global setting" if after is None else str(after)))
             rows.extend(_text(warning, 512) for warning in result.get("warnings", [])[:8] if isinstance(warning, str))
             rows.append("Only the selected per-game options change. Review image quality and motion tradeoffs before applying.")
             self._dialog = Dialog("Review performance change", "\n".join(rows), (
@@ -1075,6 +1091,10 @@ class NavigationModel:
                     self._mutation_messages = (self._mutation_messages + [_text(message, 2048) + " · " + _text(code, 128)])[-12:]
                     self.notice("An earlier action failed. Open Recent actions in Settings for details.")
                 return
+            if command.context == "performance_cache":
+                if command.serial > self._latest_reads.get("performance_status", 0):
+                    self.notice("Per-game settings refresh unavailable. Open Performance options to check again.")
+                return
         self._dialog = Dialog("Unable to complete that action", _text(message, 2048) + "\n" + _text(code, 128), error=True)
 
     def notice(self, message: str) -> None:
@@ -1273,26 +1293,37 @@ class NavigationModel:
             (DialogChoice("Search this view", "search_view"), DialogChoice("Clear filters", "clear_filters"),
              DialogChoice("Refresh library", "refresh"), DialogChoice("Controls & help", "help"), DialogChoice("Back")))
 
-    def _performance_dialog(self, value: Mapping[str, Any]) -> None:
+    def _store_performance_status(self, value: Mapping[str, Any]) -> None:
         self._performance_status = value
         generation = value.get("generation", 0)
         self._performance_generation = generation if type(generation) is int and generation >= 0 else 0
+
+    @staticmethod
+    def _performance_value_label(option: Mapping[str, Any], value: Any) -> str:
+        for choice in option.get("choices", []):
+            if isinstance(choice, Mapping) and type(choice.get("value")) is type(value) and choice.get("value") == value:
+                return _text(choice.get("label"), 128) or str(value)
+        return str(value)
+
+    def _performance_dialog(self, value: Mapping[str, Any]) -> None:
+        self._store_performance_status(value)
         rows = ["Per-game settings · candidate presets untested.",
                 "No measured gameplay improvement is claimed. Native settings apply the next time this game starts."]
         choices = []
-        if value.get("writable") is True:
-            for option in value.get("options", [])[:8]:
-                if not isinstance(option, Mapping):
-                    continue
-                label = _text(option.get("label", option.get("id", "")), 128)
-                current = option.get("value")
-                current_label = "Use global setting" if current is None else str(current)
-                for choice in option.get("choices", []):
-                    if isinstance(choice, Mapping) and choice.get("value") == current:
-                        current_label = _text(choice.get("label")) or current_label
-                        break
-                rows.append(label + ": " + current_label)
+        for option in value.get("options", [])[:8]:
+            if not isinstance(option, Mapping):
+                continue
+            label = _text(option.get("label", option.get("id", "")), 128)
+            if option.get("value_available") is False or option.get("inherited") is None:
+                current_label = "Unavailable"
+            elif option.get("inherited") is True:
+                current_label = "Inherited: " + self._performance_value_label(option, option.get("effective_value")) + " (current global)"
+            else:
+                current_label = "Local: " + self._performance_value_label(option, option.get("value"))
+            rows.append(label + ": " + current_label)
+            if value.get("writable") is True:
                 choices.append(DialogChoice(label, "performance_option", params={"option_id": option.get("id", "")}))
+        if value.get("writable") is True:
             if self._performance_transaction and self._performance_transaction_game == value.get("game_id"):
                 choices.append(DialogChoice("Undo last performance change", "request", "performance.undo",
                     {"transaction_id": self._performance_transaction,

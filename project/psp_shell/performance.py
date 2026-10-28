@@ -20,8 +20,8 @@ from .settings import (_Transactions, SettingsError, _atomic_write, _check_gener
                        _encoded, _fields, _generation, _identifier, _json, _read, _require, _schema, _sha)
 
 
-_INHERIT = {"value": None, "label": "Use global setting",
-            "description": "Remove only this game's override for this option; keep the global setting."}
+_INHERIT = {"value": None, "label": "Use current global setting",
+            "description": "Remove this game's override now. PPSSPP may save the inherited value as this game's setting after play."}
 OPTIONS = (
     {"id": "resolution", "key": "InternalResolution", "label": "Rendering resolution",
      "description": "Lower resolution reduces GPU work and image detail. It does not change intended game speed.",
@@ -231,7 +231,7 @@ class PPSSPPPerformanceManager:
                     effective = local or _assignment(global_text, "Graphics", option["key"])
                     options.append({**copy.deepcopy(option), "value": _value(option, local),
                                     "effective_value": _value(option, effective), "inherited": local is None,
-                                    "value_available": True})
+                                    "value_available": effective is not None})
                 aliases = sorted(identifier for identifier, value in self.game_configs.items() if value == relative and identifier != game_id)
                 response.update(available=True, writable=True, gate_reason="", reason="Changes apply only to this native per-game configuration. Candidates are untested.",
                                 options=options, config_path=relative, shared_game_ids=aliases,
@@ -281,6 +281,8 @@ class PPSSPPPerformanceManager:
             aliases = [identifier for identifier, value in self.game_configs.items()
                        if value == record["config_path"] and identifier != record["game_id"]]
             warnings = ["Candidate settings are untested until matched game-and-scene measurements are recorded."]
+            if any(value is None for value in record["changes"].values()):
+                warnings.append("Use current global setting removes the override now. PPSSPP may save the inherited value as this game's setting after play; later global changes may then no longer apply.")
             if aliases:
                 warnings.append("Other library entries share this PPSSPP game configuration.")
             return {"preview_id": preview_id, "generation": record["generation"], "game_id": record["game_id"],

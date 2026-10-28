@@ -39,6 +39,11 @@ trusted runtime's injected manager slot. Shipped unqualified profiles remain
 unavailable, with an explanation and the existing native-settings route.
 
 `status(game_id)` describes current local values and inherited global values.
+After a native return the frontend discards its old settings dialog and preview,
+then refreshes through this same authority without reopening a dialog. The next
+settings display labels the observed value **Local**, **Inherited** (with the
+current global value) or **Unavailable**. Undo receipts remain available, but a
+native write to an owned option still produces an Undo conflict.
 An unread or unqualified value is **unavailable**, not an assumed default.
 `preview({game_id, changes, expected_generation})` records the exact selected
 edits, profile identities, global INI and complete override inventory.
@@ -48,8 +53,9 @@ reverses only its supported edits and preserves independent later owner edits.
 An external change to an owned option produces a conflict instead of overwriting
 the owner's value. Request IDs support idempotent retries.
 
-Each option also offers **Use global setting**, which removes only that selected
-override. Other per-game options, mappings, comments, global settings and
+Each option also offers **Use current global setting**, which removes only that selected
+override. Choices and confirmation explain that PPSSPP may save the inherited
+value as this game's setting after play. Other per-game options, mappings, comments, global settings and
 unselected INIs are preserved. Undo of a removed option restores its original
 token and inline comment; if unrelated edits happened meanwhile, the restored
 line can move within the same section. With no intervening changes, Undo restores
@@ -59,7 +65,7 @@ The [dev19 native audit](../evidence/iso-continuation-20261026/frontend/g03-nati
 observed an important limit: removing the per-game FrameSkip key used the
 explicitly configured global value on the next launch, but PPSSPP wrote that
 value back into the per-game INI on normal exit. A later global-only change did
-not override the newly written local value. **Use global setting removes the
+not override the newly written local value. **Use current global setting removes the
 current override; it does not guarantee permanent inheritance after native
 settings writes.** Fresh status must describe the actual local value. The test
 used chosen global values, not assumed emulator defaults, and did not exercise

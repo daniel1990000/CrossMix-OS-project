@@ -181,3 +181,27 @@ PowerVR, actual input, native widgets, per-game configuration, real saves/load,
 durability, suspend/power/USB and recovery still require the original TG5040.
 The complete route is present for qualification; the test evidence does not
 authorize enabling its device profiles.
+
+## Interrupted publication finding (dev20)
+
+The [deterministic host interruption probes](../evidence/iso-next-round-20261028/native-interruption.json)
+kill real extracted native functions at state and result publication boundaries.
+They confirm that future completion receipts cannot pass the final-result
+sequence bound. They also expose a separate preservation gap: a new
+`save-completed` rename can discard the previous receipt before `result` is
+published. A same-slot save can move the previous state into native Undo and
+replace its path before either completion is published. The previous receipt's
+path/hash can therefore become unusable even when the old final result survives.
+
+These ten probes use explicit serializer/platform fixtures, not the whole
+emulator or power-loss simulation. Only two of the ten interruption windows
+preserved the prior usable completion. Normal serializer failure preservation
+above must not be read as general interruption preservation. Native Undo bytes
+are recovery material, not an authenticated replacement path.
+
+Preserving the last usable completion across these windows remains **unmet**.
+A fix needs immutable generation-bound state payloads, coherent bounded receipt
+publication/recovery, disk lifecycle limits and review at the existing path,
+slot, session and freshness boundaries. Reordering two renames alone does not
+preserve the old slot bytes. The current API and qualification gates are retained;
+no positive profile or production Resume acceptance follows from these probes.

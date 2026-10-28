@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "kind": "independent-dev20-implementation-review",
+  "reviewer": "review independent agent",
+  "recorded_at_utc": "2026-10-28T22:58:59.044159+00:00",
+  "base_commit": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
+  "status": "reviewed_code_subset_accepted_optional_0006_and_final_evidence_review_pending",
+  "reviewed_input_sha256": {
+    "project/psp_shell/performance.py": "70fdcbb574865e0a9384fbb1791b40a43b47ba72c53b3f19bac14a7ac10c9bb7",
+    "project/psp_shell/ui/model.py": "76f69fc0d69d639f9de2e004b138c984c8829c522b2009e3ce2adabd44aa6835",
+    "project/tests/test_performance_controls.py": "809c4f5a625e98ef1e0ccb36ad26542eec1f542bda00327572f74f481ee72056",
+    "project/tests/test_ui_continuation.py": "b55805ccc2447f2f7f6d6b77321112b92e379e7c60fa1a3540a518b51dc5c711",
+    "project/tests/test_embedded.py": "1dfa329ae854f96b9bf8e0ae4f3dceed9a282db51d74a79faa1fafc4616d381b",
+    "project/docs/per-game-performance.md": "2ad73e6bb5ab3b56db713323a6ca9a9a3e00ddfbd88815e5f81418561f14e81e",
+    "project/tools/host_gameplay_audit.py": "22724ff60ba8c6b867b1dc33bd55b73a03a44bc1e2b2370f9c255013f9d9d7dc",
+    "project/tests/test_host_gameplay_audit.py": "5a33def8916bd8113c638cb8fecd474e609e9143d96dc3167cf88159227d9d12",
+    "project/docs/host-gameplay-audit.md": "f69c3f559ca7deac8de3dfd7236ef68bbb098fed66a3efb17af6d09b76b689ad",
+    "project/dev/host_virtual_controller.c": "5cf8c0fce48ce201492028d99fec7ebc4297ed2b9e34baa94187099dcb900d8a",
+    "project/dev/host_virtual_controller.py": "11eb92b9ef1744a81bc92a631dba48fcd2e8c2a81c7676c9e1b846b00f272a3c",
+    "project/dev/host_virtual_controller.md": "514268d2fe81353e07e7084488a5324e1850d384464825f617da57373270b40f",
+    "project/tests/test_host_virtual_controller.py": "9b0c9dbdfc4219147d91a031a82c32f2b0f85160e240a92bfd5e6abd641b349a",
+    "project/packaging/release_descriptor.py": "78373171e37bafd09ae2ea7a88c8abcae32d73223d70c14e16ead8fc7c724826",
+    "project/tests/test_release_descriptor.py": "e8da70a620015b7960feab72f6f8ebb1a1f2d60909a27e5f90dea9c92ffb0f4f",
+    "project/ppsspp/tests/test_state_session_patch.py": "e3fb129a1f42812dc6f56cf512e273e38f7115581deac4e4283cc5deef1d9e0b",
+    "project/ppsspp/tests/state_session_main.cpp.in": "b550bf79d05811a5bcd79a6c0093c8ded9062defb2fb9b399cdb544c060d0a4a",
+    "project/ppsspp/tests/state_evidence_acceptance.cpp.in": "c24dcdc6410f7ee5d7c537003bf680bf492a6b6b31dd38a4632046a47468dcd4",
+    "project/ppsspp/tests/capture_state_interruption.py": "e3da44610b87f3e3e2f4481412ad732a4d85f659be246fc39dd7e2824233a7c9",
+    "project/ppsspp/state-session.md": "f4696878c16f4b3cfdc33ccc0f381e74437c06b58f8cdb7bfbf9b175fb66ffec",
+    "project/evidence/iso-next-round-20261028/native-interruption.json": "af7e8dbb55ed258f0442678fab4c6d6527401c3b4b7825db0683922df2b08a61",
+    "project/evidence/iso-next-round-20261028/native-interruption-first-attempt.json": "a997cd9a221dfcb10a77f18cf51938af3389ca26070109118c134fd24879cc14",
+    "project/evidence/iso-next-round-20261028/startup.json": "8a2d3a6a3c45538847a6570f291e3d4f15a83e8a26cb8455ae07b4d1f6a30582"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "status": "resolved",
+      "finding": "Native-materialization stale-preview regression initially changed both global and game INIs.",
+      "resolution": "Test now rejects stale preview with only native per-game materialization; later global change and owned-option Undo conflict are checked separately."
+    },
+    {
+      "id": "R2",
+      "status": "resolved",
+      "finding": "Initial collector settings labels were not derived from actual frozen native INIs.",
+      "resolution": "Collector derives exact global/local effective settings and configuration inventory; only1x/2x with manual/automatic frameskip disabled can compare."
+    },
+    {
+      "id": "R3",
+      "status": "resolved",
+      "finding": "Raw report declarations could diverge from actual window/status/counters or retained starting/provenance inputs.",
+      "resolution": "Collected-run validation rechecks retained config/state/scene/statistics source/build review, exact game/unpaused statuses, finite monotonic windows, metric means/window/analysis/summary and raw digests."
+    },
+    {
+      "id": "R4",
+      "status": "resolved",
+      "finding": "Publisher could retarget a reused PID and alias command/request paths.",
+      "resolution": "Retained launch start ticks are required and checked twice; resolved/hardlink output aliases reject; actual SDL tests cover axes/buttons, expiry, foreign/late input and identity failures."
+    },
+    {
+      "id": "R5",
+      "status": "resolved",
+      "finding": "Replay timing needed binding to frozen axis values and observed hold completion.",
+      "resolution": "Requested/published/applied values, issue/deadline times and native neutral/next-command end are validated within frozen tolerance."
+    },
+    {
+      "id": "R6",
+      "status": "resolved",
+      "finding": "Original-source export omitted the new original MIT controller C source.",
+      "resolution": "An exact source-only path allowlist includes dev/host_virtual_controller.c while unrelated C/native/binaries stay excluded."
+    },
+    {
+      "id": "R7",
+      "status": "reproduced_optional_fix_under_review",
+      "finding": "Original0003 interrupted publication preserves prior usable completion in only2/10 deterministic windows.",
+      "resolution": "Diagnostic evidence retains exact observed failure and raw identities. Optional0006 immutable generation snapshots plus final-result-first publication is being implemented; no preservation pass granted yet."
+    }
+  ],
+  "independent_checks": [
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_performance_controls test_ui_continuation test_embedded -q",
+      "tests": 73,
+      "passed": 73,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_host_gameplay_audit -q",
+      "tests": 20,
+      "passed": 20,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project $PYTHON -m unittest discover -s project/tests -p test_host_virtual_controller.py -q",
+      "tests": 3,
+      "passed": 3,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_release_descriptor -q",
+      "tests": 18,
+      "passed": 18,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/ppsspp/tests $PYTHON -m unittest test_state_session_patch -q",
+      "tests": 14,
+      "passed": 14,
+      "skipped": 0
+    }
+  ],
+  "retained_evidence_readback": {
+    "recovered_iso_size_bytes": 1696006144,
+    "recovered_iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+    "full_digest_independently_recomputed": true,
+    "native_interruption_observations": 10,
+    "all_retained_raw_artifact_hashes_and_sizes_match": true,
+    "native_source_input_hashes_match": true
+  },
+  "accepted_boundaries": [
+    "Existing settings authority, native process supervision, transaction ownership and qualification gates are retained.",
+    "Collector build receipts and review documents are provenance declarations, not cryptographic source-to-binary proof.",
+    "No frontend runtime API, device activation path, selected native binary or selected upstream patch is added.",
+    "Original0003 interruption diagnostics use real extracted native functions with explicit serializer/platform fixtures; they are not whole-emulator or power-loss tests.",
+    "Ordinary savedata/Continue and broader gameplay measurement evidence remain pending until independently reviewed fresh native evidence exists.",
+    "Historical dev19 package/CI receipts do not certify this changed tree; published dev16 remains unchanged."
+  ],
+  "qualification": {
+    "production_profile_constructed_by_review": false,
+    "device_qualified": false,
+    "physical_areas_tested": 0,
+    "original_completed_count": 14
+  }
+}

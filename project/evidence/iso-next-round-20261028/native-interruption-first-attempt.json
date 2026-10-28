@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "stage": "diagnostic harness first targeted run",
+  "test": "test_same_slot_interruption_exposes_native_bytes_replacement_before_publication",
+  "case": "state-before-rename same-slot",
+  "outcome": "ERROR FileNotFoundError reading original slot path",
+  "cause": "Initial diagnostic expected prior bytes at original slot path before temp rename; real native code had already moved prior slot into .undo.ppst.",
+  "correction": "Assert original path absent and verify prior bytes in native Undo. Preserve same-slot prior usable completion criterion as UNMET.",
+  "native_changes": false,
+  "count": {
+    "tests_run": 14,
+    "errors": 1,
+    "failures": 0
+  }
+}

@@ -60,6 +60,25 @@ class ReleaseDescriptorTest(unittest.TestCase):
         self.assertTrue(changed["frontend"]["working_tree_modified"])
         self.assertNotEqual(selection["source_inventory_sha256"], changed["source_inventory_sha256"])
 
+    def test_original_controller_source_exports_without_binaries_or_native_scopes(self):
+        development = self.project / "dev"
+        development.mkdir()
+        for name in ("host_virtual_controller.c", "controller.so", "unreviewed.c"):
+            (development / name).write_text("fixture source\n")
+        native = self.project / "ppsspp/native.c"
+        native.parent.mkdir()
+        native.write_text("separately licensed native fixture\n")
+        entries = dev_release.original_source_entries(self.project)
+        names = {name for name, _ in entries}
+        self.assertIn("smartpro-original-source/dev/host_virtual_controller.c", names)
+        self.assertNotIn("smartpro-original-source/dev/controller.so", names)
+        self.assertNotIn("smartpro-original-source/dev/unreviewed.c", names)
+        self.assertNotIn("smartpro-original-source/ppsspp/native.c", names)
+        exported = self.root / "source-export"
+        dev_release.materialize_source(entries, exported)
+        self.assertEqual((exported / "dev/host_virtual_controller.c").read_bytes(),
+                         (development / "host_virtual_controller.c").read_bytes())
+
     def test_git_index_flags_cannot_hide_modified_exported_source(self):
         for flag in ("--assume-unchanged", "--skip-worktree"):
             with self.subTest(flag=flag):
