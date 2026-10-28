@@ -1,0 +1,93 @@
+{
+  "name": "spruce",
+  "repository": "spruceUI/spruceOS",
+  "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "started_at": "2026-10-28T22:49:46.463906+00:00",
+  "attempts": [
+    {
+      "argv": [
+        "git",
+        "init"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.002805395999985194
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/spruceUI/spruceOS.git"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.001130281000001787
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0015807449999840628
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0008897509999883368
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "origin",
+        "d45ff8dfe5756147522b04ae5863d17a90e88b54"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.525256925000008
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "init",
+        "--no-cone"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0014662429999816595
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "--stdin"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.001864859000022534
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 5.103939104999995
+    }
+  ],
+  "finished_at": "2026-10-28T22:49:55.104371+00:00",
+  "successful": true
+}

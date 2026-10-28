@@ -42,6 +42,13 @@ GPL-2.0-or-later terms. Its preimage, patch and postimage hashes are recorded in
 `gpu-stats.lock.json`; its original Python test driver is MIT. The correction
 does not select a shipped native binary or enable a device profile.
 
+The optional immutable completion snapshot patch
+`patches/0006-immutable-state-completion-snapshots.patch` and its C++ fixtures
+also retain GPL-2.0-or-later terms. `state-snapshot.lock.json` records its exact
+prerequisite, patch and postimage. Its original Python tests/capture drivers are
+MIT. Snapshot/source acceptance and private host builds do not select a shipped
+binary, migrate legacy mutable receipts or enable a qualified profile.
+
 The separate PowerVR recipe is pinned to
 `spruceUI/PPSSPP-spruce@9f770cb984fd8ffcc8f91d24fcbca859439c2e9b`.
 That checkout has no root `LICENSE`, and `build-pvr.sh`, `Dockerfile.pvr`,

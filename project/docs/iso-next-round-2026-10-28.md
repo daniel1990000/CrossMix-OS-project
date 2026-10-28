@@ -50,6 +50,19 @@ probed windows preserved a usable prior completion. Native Undo bytes at another
 path are not an authenticated checkpoint. This diagnostic does **not** satisfy
 last-valid-completion preservation acceptance.
 
+The separately locked optional [0006 snapshot extension](../ppsspp/state-snapshots.md)
+addresses this defect for new saves without changing the packet format or
+qualification authorities. It copies a completed native state to a verified
+immutable generation beneath the existing approved root, then publishes the
+final result before replacing the positive completion. The directory stops at
+32 files or 512 MiB, counts interrupted copies and never deletes retained files.
+Legacy mutable receipts are not migrated. Six source test methods exercise
+16 interruption windows and 12 fault cases. Their
+[retained fixture report](../evidence/iso-next-round-20261028/native-snapshot-fixture.json)
+has separate identity from the original defect probes. A private full SDL build
+with 0006 has also completed; whole-emulator interruption acceptance is recorded
+separately after actual execution. No shipped profile selects the patch.
+
 ## Evidence and remaining acceptance
 
 [Startup evidence](../evidence/iso-next-round-20261028/startup.json) records remote

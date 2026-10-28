@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "kind": "certification-attempt-history",
+  "recorded_at": "2026-10-28T23:03:48.342637+00:00",
+  "attempts": [
+    {
+      "name": "preliminary",
+      "tests_run": 1234,
+      "passed": 1233,
+      "failures": 1,
+      "errors": 0,
+      "skips": 0,
+      "cause": "In-progress host audit test expected Incomplete observation error but input first triggered nonmonotonic timestamps. Corrected by implementation lane; retained full log privately.",
+      "report": "preliminary-certification.json"
+    },
+    {
+      "name": "first-freeze",
+      "successful": true,
+      "totals": {
+        "tests_run": 1245,
+        "passed": 1245,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0
+      },
+      "before_inventory_sha256": "7848467222827bc2fd01fbff463c9727f490f2c32f4a7eb90864271df71b8914",
+      "after_inventory_sha256": "b989ae5d99e90f3e84799d3ae224e29d3d82877371b57c4011b95ab45d9a97f1",
+      "changed_paths": [
+        "project/ppsspp/patches/0006-immutable-state-completion-snapshots.patch",
+        "project/ppsspp/state-snapshot.lock.json",
+        "project/tests/test_host_gameplay_audit.py",
+        "project/tools/host_gameplay_audit.py"
+      ],
+      "status": "Functional pass of loaded snapshot; source drift disqualifies clean latest-head attribution. Host audit review edits and new optional0006 inputs appeared during execution."
+    },
+    {
+      "name": "aborted-wrong-cwd",
+      "status": "Operator harness cwd mistake detected after 5 seconds; only owned test processes terminated; log retained; no acceptance claim."
+    },
+    {
+      "name": "clean-f3fd457",
+      "report": "clean-f3fd457-certification.json",
+      "receipt": "clean-f3fd457-receipt.json",
+      "status": "Strict exact clean commit pass,1,246 passed,zero failures/errors/skips; no later optional0006 coverage inferred."
+    }
+  ],
+  "private_log_sha256": {
+    "preliminary-check.log": "7c6e73658cd01f647c62b704a76fbd6a61858f521e5de0ea251003f2caca2d61",
+    "final-check.log": "a8e537b9d961f5cc94639ca39fc751119f78f8030f46fa084404cdbeeba5e5e3",
+    "aborted-wrong-cwd-check.log": "dc1446412081683a205d12dd1fceeee6415e60fb9fa590fefd4fd08874d93c2b",
+    "clean-f3fd457-check.log": "cf4c1e0c9b1fbfee79f46f0692e17f91178a9bd67d24d679d7978f880e56de7e"
+  },
+  "no_private_payload_bytes_in_delivery": true
+}

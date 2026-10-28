@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "scope": "Retained failed attempts and review corrections; later successful checks have their own identities.",
+  "attempts": [
+    {
+      "lane": "repository recovery",
+      "attempt": "full-history clone",
+      "result": "our incomplete clone stopped; replaced with exact shallow blobless sparse checkout"
+    },
+    {
+      "lane": "settings",
+      "attempt": "initial focused run",
+      "result": "two AttributeErrors in page-selection lookup",
+      "correction": "use existing page.items/page.selected; focused and independent reruns pass"
+    },
+    {
+      "lane": "controller",
+      "attempt": "prototype compile/readback",
+      "result": "misleading-indentation warning and missing SDL_JoystickUpdate",
+      "correction": "explicit control flow and SDL update; real value/expiry tests pass"
+    },
+    {
+      "lane": "native interruption diagnostic",
+      "attempt": "same-slot before-rename expectation",
+      "result": "original state pathname already absent",
+      "correction": "assert native Undo preservation at its actual path; old completion acceptance remains unmet for base extension"
+    },
+    {
+      "lane": "strict certification",
+      "attempt": "preliminary changed-tree run",
+      "result": "1234 run; one new host-audit test expectation failure; zero errors/skips",
+      "correction": "fix precise expected rejection; retain raw log and certification record privately"
+    },
+    {
+      "lane": "strict certification",
+      "attempt": "first freeze run",
+      "result": "1245 passed; input inventory drift while audit changes completed",
+      "correction": "retain before/after hashes; no attribution to later source; retry clean exact commit"
+    },
+    {
+      "lane": "strict certification",
+      "attempt": "clean worktree launch",
+      "result": "aborted after wrong working directory discovered",
+      "correction": "run from clean worktree; aborted log retained"
+    },
+    {
+      "lane": "native recovery",
+      "attempt": "all-architecture FFmpeg shallow clone",
+      "result": "our transfer stopped after excessive unrelated binary retrieval",
+      "correction": "exact gitlink blobless sparse x86_64 inputs; pinned recursive sources verified"
+    },
+    {
+      "lane": "native build",
+      "attempt": "first guard/configure",
+      "result": "wrong gitlinks/empty no-checkout submodule worktrees refused",
+      "correction": "restore disposable module worktrees and exact pins; pristine references untouched"
+    },
+    {
+      "lane": "native build",
+      "attempt": "first final link",
+      "result": "undefined png_set_benign_errors",
+      "status": "investigating private header/library configuration; no success claimed"
+    }
+  ]
+}

@@ -371,6 +371,11 @@ def validate_input_receipts(output, sequence, window_start, tolerance):
              'Native input hold duration missed frozen timing tolerance')
 
 
+def final_input_evidence(output):
+    return {str(path.relative_to(output)): sha(path) for path in
+        [output / 'input-sequence.json', output / 'controller/requests.jsonl', output / 'controller/observed.jsonl']}
+
+
 def import_raw(manifest, raw, output):
     rows = [json.loads(line) for line in Path(raw).read_text().splitlines()]
     seconds = manifest['duration_seconds']
@@ -405,16 +410,23 @@ def frozen_check(args, manifest):
     need(inventory(args.frozen_config) == manifest['configuration'], 'Frozen configuration changed')
 
 
-def validate_manifest(args, manifest):
-    validate_identity(manifest['identity'])
-    scene = json.loads(args.scene_definition.read_text())
+def validate_scene(manifest, scene):
+    sustained = manifest.get('sustained')
+    need(type(sustained) is bool, 'Declare sustained scene scope')
+    duration_key = 'sustained_duration_seconds' if sustained else 'duration_seconds'
+    sequence_key = 'sustained_input_sequence_sha256' if sustained else 'input_sequence_sha256'
     need(scene.get('id') == manifest['identity']['scene_id'] and
          scene.get('starting_state_sha256') == manifest['starting_state_sha256'] and
          scene.get('warmup_seconds') == manifest['warmup_seconds'] and
-         scene.get('duration_seconds') == manifest['duration_seconds'] and
-         scene.get('input_sequence_sha256') == manifest.get('input_sequence_sha256') and
+         scene.get(duration_key) == manifest['duration_seconds'] and
+         sequence_key in scene and scene[sequence_key] == manifest.get('input_sequence_sha256') and
          isinstance(scene.get('camera'), str) and scene['camera'].strip(),
-         'Scene must freeze state, input sequence, camera, warmup and duration')
+         'Scene must freeze state, selected input sequence, camera, warmup and selected duration')
+
+
+def validate_manifest(args, manifest):
+    validate_identity(manifest['identity'])
+    validate_scene(manifest, json.loads(args.scene_definition.read_text()))
     need(manifest['identity']['evidence_class'] == 'host', 'This collector only records host evidence')
     need(manifest['identity']['emulator']['binary_sha256'] == manifest['emulator_sha256'] and
          manifest['identity']['content_sha256'] == manifest['iso_sha256'], 'Manifest identities disagree')
@@ -543,16 +555,17 @@ def collect(args):
             rows = asyncio.run(observe(output / 'observations.jsonl', port=args.port,
                 seconds=manifest['duration_seconds'], interval=manifest['interval_seconds'],
                 game_id=manifest['identity']['game_id'], check=check, replay=replay if sequence else None))
-            if sequence:
-                validate_input_receipts(output, sequence, window_start[0], manifest['input_tolerance_seconds'])
-                receipt['input_window_start_monotonic'] = window_start[0]
-                receipt['input_evidence'] = {str(p.relative_to(output)): sha(p) for p in
-                    [output / 'input-sequence.json', output / 'controller/requests.jsonl', output / 'controller/observed.jsonl']}
             select_samples(rows, manifest['duration_seconds'], manifest['identity']['game_id'])
             normal_exit(pid, start, manifest['emulator_sha256'], args.xdotool)
             need(helper.wait(timeout=30) == 0, 'Owned tree did not exit normally')
         completion = json.loads((output / 'completion.json').read_text())
         need(completion['exit_status'] == 0 and completion['root_pid'] == pid, 'Native exit failed')
+        if sequence:
+            # SDL_Quit appends neutralization timing: bind final bytes only
+            # after the existing owner observes all descendants closed.
+            validate_input_receipts(output, sequence, window_start[0], manifest['input_tolerance_seconds'])
+            receipt['input_window_start_monotonic'] = window_start[0]
+            receipt['input_evidence'] = final_input_evidence(output)
         frozen_check(args, manifest)
         need(inventory(output / 'frozen-config') == manifest['configuration'] and
              sha(output / 'starting.ppst') == manifest['starting_state_sha256'], 'Retained frozen copy changed')
@@ -612,6 +625,7 @@ def validate_collected_run(path):
         folder / 'build-review.json' if (folder / 'build-review.json').exists() else None)
     need(binding == rechecked_binding, 'Statistics provenance binding changed')
     need(sha(folder / 'scene.json') == run['identity']['scene_definition_sha256'], 'Retained scene definition changed')
+    validate_scene(manifest, json.loads((folder / 'scene.json').read_text()))
     need(run['identity'] == manifest['identity'] and
          all(run[k] == manifest[k] for k in ('run_id', 'pair_id', 'duration_seconds', 'sustained', 'demanding_profile')),
          'Run identity differs from frozen manifest')
@@ -673,6 +687,8 @@ def main(argv=None):
     review = commands.add_parser('compare')
     review.add_argument('--baseline', type=Path, nargs=5, required=True)
     review.add_argument('--candidate', type=Path, nargs=5, required=True)
+    review.add_argument('--sustained-baseline', type=Path)
+    review.add_argument('--sustained-candidate', type=Path)
     review.add_argument('--output', type=Path, required=True)
     args = parser.parse_args(argv)
     if args.command == 'collect':
@@ -685,7 +701,12 @@ def main(argv=None):
         need(all(run['identity']['settings']['values'].get('Graphics.FrameSkip') == '0' and
                  str(run['identity']['settings']['values'].get('Graphics.AutoFrameSkip')).casefold() == 'false'
                  for run in arms[0] + arms[1]), 'Frameskip must stay disabled')
-        write(args.output, compare(*arms, metrics=['native_fps', 'native_speed_percent'], comparison='setting'))
+        need((args.sustained_baseline is None) == (args.sustained_candidate is None),
+             'Supply both sustained arms together')
+        sustained = [[validate_collected_run(path)] if path is not None else []
+                     for path in (args.sustained_baseline, args.sustained_candidate)]
+        write(args.output, compare(*arms, metrics=['native_fps', 'native_speed_percent'], comparison='setting',
+             sustained_baseline=sustained[0], sustained_candidate=sustained[1]))
     return 0
 
 

@@ -1,0 +1,50 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+int main(int argc, char **argv) {
+	assert(argc == 4);
+	std::string scenario(argv[1]);
+	std::filesystem::path work(argv[2]);
+	stateDirectory = Path((work / "states").string());
+	coreParameter.fileToStart = Path((work / "game ü.iso").string());
+	std::string option = "--project-state-session=" + std::string(argv[3]);
+	const char *arguments[] = {"PPSSPPSDL", option.c_str()};
+	std::string error;
+	using namespace SaveState;
+	assert(ConfigureProjectStateSessionArgs(2, arguments, &error));
+	Init();
+	int callbacks = 0;
+	Status last = Status::FAILURE;
+	auto callback = [&](Status status, std::string_view) { ++callbacks; last = status; };
+	SaveSlot(GetGamePrefix(g_paramSFO), 2, callback);
+	Process();
+	assert(callbacks == 1 && last == Status::SUCCESS && projectSession->sequence == 1);
+	for (const char *name : {"result", "save-completed"})
+		std::filesystem::copy_file(std::filesystem::path(argv[3]).parent_path() / name, work / (std::string("previous-") + name));
+	std::filesystem::path snapshots = work / "states/.trimui-state-snapshots";
+	if (scenario == "fail-count-cap") {
+		for (int n = 0; n < 31; ++n) {
+			auto path = snapshots / ("retained-incomplete-" + std::to_string(n));
+			std::ofstream(path) << "";
+			assert(chmod(path.c_str(), 0600) == 0);
+		}
+	}
+	if (scenario == "fail-byte-cap") {
+		auto path = snapshots / "retained-incomplete-large";
+		std::ofstream(path) << "";
+		assert(chmod(path.c_str(), 0600) == 0);
+		std::filesystem::resize_file(path, 512ULL * 1024 * 1024 - serializedStateBytes.size());
+	}
+	if (scenario == "fail-entry-symlink") std::filesystem::create_symlink(work / "game ü.iso", snapshots / "foreign-link");
+	if (scenario == "fail-entry-hardlink") std::filesystem::create_hard_link(work / "game ü.iso", snapshots / "foreign-hardlink");
+	if (scenario == "fail-directory-mode") assert(chmod(snapshots.c_str(), 0755) == 0);
+	if (scenario.rfind("fail-", 0) == 0) snapshotFailure = scenario.substr(5);
+	bool kill = scenario.rfind("kill-", 0) == 0;
+	bool sameSlot = scenario.rfind("kill-same-slot-", 0) == 0;
+	if (kill) interruptionPoint = scenario.substr(std::string(sameSlot ? "kill-same-slot-" : "kill-separate-slot-").size());
+	serializedStateBytes = "new immutable snapshot fixture bytes\n";
+	mutationSource = (work / "states/ULUS12345_1.00_2.ppst").string();
+	SaveSlot(GetGamePrefix(g_paramSFO), kill && !sameSlot ? 3 : 2, callback);
+	Process();
+	assert(!kill);
+	assert(callbacks == 2 && projectSession->sequence == 2);
+	assert((last == Status::SUCCESS) == (scenario == "success"));
+}

@@ -2,9 +2,9 @@
   "schema": 1,
   "kind": "independent-dev20-implementation-review",
   "reviewer": "review independent agent",
-  "recorded_at_utc": "2026-10-28T22:58:59.044159+00:00",
+  "recorded_at_utc": "2026-10-28T23:07:18.827989+00:00",
   "base_commit": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
-  "status": "reviewed_code_subset_accepted_optional_0006_and_final_evidence_review_pending",
+  "status": "implementation_source_review_accepted_whole_native_optional0006_and_final_evidence_pending",
   "reviewed_input_sha256": {
     "project/psp_shell/performance.py": "70fdcbb574865e0a9384fbb1791b40a43b47ba72c53b3f19bac14a7ac10c9bb7",
     "project/psp_shell/ui/model.py": "76f69fc0d69d639f9de2e004b138c984c8829c522b2009e3ce2adabd44aa6835",
@@ -12,9 +12,9 @@
     "project/tests/test_ui_continuation.py": "b55805ccc2447f2f7f6d6b77321112b92e379e7c60fa1a3540a518b51dc5c711",
     "project/tests/test_embedded.py": "1dfa329ae854f96b9bf8e0ae4f3dceed9a282db51d74a79faa1fafc4616d381b",
     "project/docs/per-game-performance.md": "2ad73e6bb5ab3b56db713323a6ca9a9a3e00ddfbd88815e5f81418561f14e81e",
-    "project/tools/host_gameplay_audit.py": "22724ff60ba8c6b867b1dc33bd55b73a03a44bc1e2b2370f9c255013f9d9d7dc",
-    "project/tests/test_host_gameplay_audit.py": "5a33def8916bd8113c638cb8fecd474e609e9143d96dc3167cf88159227d9d12",
-    "project/docs/host-gameplay-audit.md": "f69c3f559ca7deac8de3dfd7236ef68bbb098fed66a3efb17af6d09b76b689ad",
+    "project/tools/host_gameplay_audit.py": "76b0c9ca0a8fd094fddeff0cf5d9a70b314e0afcb6bbfffd14631944a9ed6771",
+    "project/tests/test_host_gameplay_audit.py": "ec12c5884cd55519ad38c91a13b4306ad69c7056885b144381efedfa7122fe80",
+    "project/docs/host-gameplay-audit.md": "10f8c01e53393686fe6f4f064ccb81f30c50a22e526a007599d0e0d0585cdf68",
     "project/dev/host_virtual_controller.c": "5cf8c0fce48ce201492028d99fec7ebc4297ed2b9e34baa94187099dcb900d8a",
     "project/dev/host_virtual_controller.py": "11eb92b9ef1744a81bc92a631dba48fcd2e8c2a81c7676c9e1b846b00f272a3c",
     "project/dev/host_virtual_controller.md": "514268d2fe81353e07e7084488a5324e1850d384464825f617da57373270b40f",
@@ -28,7 +28,14 @@
     "project/ppsspp/state-session.md": "f4696878c16f4b3cfdc33ccc0f381e74437c06b58f8cdb7bfbf9b175fb66ffec",
     "project/evidence/iso-next-round-20261028/native-interruption.json": "af7e8dbb55ed258f0442678fab4c6d6527401c3b4b7825db0683922df2b08a61",
     "project/evidence/iso-next-round-20261028/native-interruption-first-attempt.json": "a997cd9a221dfcb10a77f18cf51938af3389ca26070109118c134fd24879cc14",
-    "project/evidence/iso-next-round-20261028/startup.json": "8a2d3a6a3c45538847a6570f291e3d4f15a83e8a26cb8455ae07b4d1f6a30582"
+    "project/evidence/iso-next-round-20261028/startup.json": "8a2d3a6a3c45538847a6570f291e3d4f15a83e8a26cb8455ae07b4d1f6a30582",
+    "project/ppsspp/patches/0006-immutable-state-completion-snapshots.patch": "1515146917289839533949b66f15dc401f82570e2a0bed03d40b944b5dfcd179",
+    "project/ppsspp/state-snapshot.lock.json": "709c25fe3de024e48e6c1a323d14ce5527a00be9688f84c134a9eae27a0d2992",
+    "project/ppsspp/state-snapshots.md": "a428f5985bcf3d5d3c565f3cfc8a7bb55ce66a18d9d7e3e07b5e74c79dfcd0ce",
+    "project/ppsspp/tests/test_state_snapshot_patch.py": "da5e2c453c86fd155d1487be078d696aac83916758bc985bdf2a22c9389163a6",
+    "project/ppsspp/tests/state_snapshot_main.cpp.in": "65083f3345047fcc6fa5eca910c9df7a3d98b0769e68d69689814441bacaf166",
+    "project/ppsspp/tests/capture_state_snapshot.py": "ce3c50df49f5637724cf3cce8f7037129ed2db4f9bcfed84decc294dc5676d25",
+    "project/ppsspp/NOTICE.md": "c2d2db52795a064706577ecce1c35b9282712b69e44192b595e3039c7b3f645d"
   },
   "findings": [
     {
@@ -69,9 +76,15 @@
     },
     {
       "id": "R7",
-      "status": "reproduced_optional_fix_under_review",
+      "status": "resolved_for_optional0006_native_function_host_scope",
       "finding": "Original0003 interrupted publication preserves prior usable completion in only2/10 deterministic windows.",
-      "resolution": "Diagnostic evidence retains exact observed failure and raw identities. Optional0006 immutable generation snapshots plus final-result-first publication is being implemented; no preservation pass granted yet."
+      "resolution": "Original0003 failure retained. Independently reviewed optional0006 creates exact private O_EXCL generation snapshots under existing approved root, counts all partial/retained entries under32files/512MiB, never deletes/overwrites retained files, synchronizes verified bytes before final-result-first publication. Six targeted methods pass16killwindows/12faultcases/normal generation behavior. Whole-native preservation and legacy mutable-load receipts remain separately limited."
+    },
+    {
+      "id": "R8",
+      "status": "resolved",
+      "finding": "Controller SDL_Quit appends neutralization after observation, so hashing its log before native exit made valid replay receipts stale.",
+      "resolution": "Collector now validates and hashes final timing evidence after normal owned-tree closure; lifecycle regression drives full collection finalization with mocked native owner appending quit neutralization. Shared pre-frozen scene definition also binds explicit30s and sustained durations/sequences, and both sustained arms use full raw/config/input validation before existing comparator."
     }
   ],
   "independent_checks": [
@@ -83,8 +96,8 @@
     },
     {
       "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_host_gameplay_audit -q",
-      "tests": 20,
-      "passed": 20,
+      "tests": 24,
+      "passed": 24,
       "skipped": 0
     },
     {
@@ -104,6 +117,13 @@
       "tests": 14,
       "passed": 14,
       "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/ppsspp/tests $PYTHON -m unittest test_state_snapshot_patch -q",
+      "tests": 6,
+      "passed": 6,
+      "skipped": 0,
+      "scope": "Exact patched native functions with explicit serializer/platform fixtures;16SIGKILL windows and12faultcases."
     }
   ],
   "retained_evidence_readback": {
@@ -120,12 +140,27 @@
     "No frontend runtime API, device activation path, selected native binary or selected upstream patch is added.",
     "Original0003 interruption diagnostics use real extracted native functions with explicit serializer/platform fixtures; they are not whole-emulator or power-loss tests.",
     "Ordinary savedata/Continue and broader gameplay measurement evidence remain pending until independently reviewed fresh native evidence exists.",
-    "Historical dev19 package/CI receipts do not certify this changed tree; published dev16 remains unchanged."
+    "Historical dev19 package/CI receipts do not certify this changed tree; published dev16 remains unchanged.",
+    "Optional0006 source preservation applies new immutable save snapshots and loads of those inputs; older/arbitrary mutable-slot receipts are not migrated or repaired. Native function harnesses use exact transport/envelope/sequence checks with refused capability construction, not a qualified positive frontend consumer."
   ],
   "qualification": {
     "production_profile_constructed_by_review": false,
     "device_qualified": false,
     "physical_areas_tested": 0,
     "original_completed_count": 14
+  },
+  "reviewed_private_native_counter_build": {
+    "review_sha256": "3260d2024221b08d0877e373a9f2b1bf239d69d5b96546ad0bd77c5f8c8bca1f",
+    "executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+    "decision": "accepted_for_host_counter_collection",
+    "optional0006_included": false,
+    "complete_ffmpeg_source_correspondence": false
+  },
+  "reviewed_private_optional_native_build": {
+    "review_sha256": "5cdff9c03b5e790fb11d286f9adb3316b00ad98b227363bd6347ce71a8cf5776",
+    "executable_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "optional0006_included": true,
+    "whole_native_preservation_behavior_pending": true,
+    "hardware_qualified": false
   }
 }

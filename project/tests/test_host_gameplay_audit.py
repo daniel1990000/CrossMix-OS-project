@@ -179,7 +179,9 @@ class HostGameplayAuditTests(unittest.TestCase):
         (config / 'ppsspp.ini').write_text('[Graphics]\nInternalResolution=1\nFrameSkip=0\nAutoFrameSkip=False\n')
         (config / 'ULUS10160_ppsspp.ini').write_text('[Graphics]\nInternalResolution=1\n')
         (folder / 'starting.ppst').write_text('Synthetic state fixture')
-        (folder / 'scene.json').write_text('Synthetic scene fixture')
+        audit.write(folder / 'scene.json', {'id': 'fixture-scene',
+            'starting_state_sha256': audit.sha(folder / 'starting.ppst'), 'camera': 'Synthetic fixed camera',
+            'warmup_seconds': 10, 'duration_seconds': 30, 'input_sequence_sha256': None})
         (folder / 'statistics-source.cpp').write_text('Synthetic provenance fixture')
         identity = {'system_id': 'PSP', 'game_id': 'ULUS10160', 'game_title': 'Synthetic fixture',
             'content_sha256': '1' * 64, 'scene_id': 'fixture-scene',
@@ -191,7 +193,7 @@ class HostGameplayAuditTests(unittest.TestCase):
         manifest = dict(identity=identity, run_id='fixture-1x', pair_id='pair-1', duration_seconds=30,
             sustained=False, demanding_profile=False, emulator_sha256='3' * 64,
             starting_state_sha256=audit.sha(folder / 'starting.ppst'),
-            configuration=audit.inventory(folder / 'frozen-config'))
+            configuration=audit.inventory(folder / 'frozen-config'), warmup_seconds=10)
         audit.write(folder / 'manifest.json', manifest)
         rows = self.rows()
         for row in (rows[0], rows[-1]):
@@ -250,6 +252,27 @@ class HostGameplayAuditTests(unittest.TestCase):
         with self.assertRaisesRegex(audit.AuditError, 'Native game ID'):
             audit.configuration_identity(self.root, '../other')
 
+    def test_scene_freezes_repeat_and_sustained_sequences_under_one_identity(self):
+        scene = dict(id='fixture', starting_state_sha256='1' * 64, camera='Fixed forward',
+            warmup_seconds=10, duration_seconds=30, input_sequence_sha256='2' * 64,
+            sustained_duration_seconds=1800, sustained_input_sequence_sha256='3' * 64)
+        manifest = dict(identity={'scene_id': 'fixture'}, starting_state_sha256='1' * 64,
+            warmup_seconds=10, duration_seconds=30, input_sequence_sha256='2' * 64, sustained=False)
+        audit.validate_scene(manifest, scene)
+        manifest.update(sustained=True, duration_seconds=1800, input_sequence_sha256='3' * 64)
+        audit.validate_scene(manifest, scene)
+        manifest['input_sequence_sha256'] = '2' * 64
+        with self.assertRaisesRegex(audit.AuditError, 'selected input sequence'):
+            audit.validate_scene(manifest, scene)
+        manifest['input_sequence_sha256'] = '3' * 64
+        manifest['duration_seconds'] = 30
+        with self.assertRaisesRegex(audit.AuditError, 'selected duration'):
+            audit.validate_scene(manifest, scene)
+        del scene['sustained_duration_seconds']
+        manifest['duration_seconds'] = 1800
+        with self.assertRaises(audit.AuditError):
+            audit.validate_scene(manifest, scene)
+
     def test_frozen_replay_rejects_overlap_and_out_of_window(self):
         event = dict(at_seconds=0, seconds=1, axes=[0, 1, 0, 0], buttons=1)
         audit.validate_sequence([event], 30)
@@ -286,6 +309,107 @@ class HostGameplayAuditTests(unittest.TestCase):
         (folder / 'observed.jsonl').write_text(json.dumps(observed) + '\n')
         with self.assertRaisesRegex(audit.AuditError, 'differs from frozen sequence'):
             audit.validate_input_receipts(self.root, [event], 100, .1)
+
+    def test_compare_cli_validates_both_sustained_arms_and_delegates(self):
+        identity = {'settings': {'resolution': '1x', 'values': {
+            'Graphics.FrameSkip': '0', 'Graphics.AutoFrameSkip': 'False'}}}
+        before = {'identity': identity}
+        after = {'identity': {'settings': dict(identity['settings'], resolution='2x')}}
+        baseline = [str(self.root / ('b' + str(i))) for i in range(5)]
+        candidate = [str(self.root / ('c' + str(i))) for i in range(5)]
+        seen = []
+        def validated(path):
+            seen.append(Path(path).name)
+            return before if Path(path).name.startswith('b') else after
+        with patch.object(audit, 'validate_collected_run', side_effect=validated), patch.object(audit, 'compare', return_value={}) as comparator:
+            audit.main(['compare', '--baseline', *baseline, '--candidate', *candidate,
+                '--sustained-baseline', str(self.root / 'b-soak'),
+                '--sustained-candidate', str(self.root / 'c-soak'), '--output', str(self.root / 'comparison.json')])
+        self.assertEqual(seen[-2:], ['b-soak', 'c-soak'])
+        self.assertEqual(comparator.call_args.kwargs['sustained_baseline'], [before])
+        self.assertEqual(comparator.call_args.kwargs['sustained_candidate'], [after])
+
+    def test_input_evidence_binds_final_quit_neutralization_bytes(self):
+        folder = self.root / 'controller'
+        folder.mkdir()
+        (self.root / 'input-sequence.json').write_text('[]')
+        (folder / 'requests.jsonl').write_text('request\n')
+        observed = folder / 'observed.jsonl'
+        observed.write_text('applied\n')
+        before_exit = audit.final_input_evidence(self.root)
+        with observed.open('a') as stream:
+            stream.write('quit_neutral\n')
+        final = audit.final_input_evidence(self.root)
+        self.assertNotEqual(before_exit['controller/observed.jsonl'], final['controller/observed.jsonl'])
+        self.assertEqual(final['controller/observed.jsonl'], audit.sha(observed))
+        self.assertEqual(before_exit['controller/requests.jsonl'], final['controller/requests.jsonl'])
+
+    def test_collect_waits_for_owned_exit_before_validating_and_hashing_input_log(self):
+        from types import SimpleNamespace
+        folder, binding = self.collected_fixture()
+        manifest = json.loads((folder / 'manifest.json').read_text())
+        scene = json.loads((folder / 'scene.json').read_text())
+        engine = self.file('source-engine', 'Synthetic engine identity')
+        iso = self.file('source-iso', 'Synthetic game identity')
+        source = self.file('source.cpp', 'Synthetic source identity')
+        shim = self.file('shim.so', 'Synthetic shim identity')
+        event = dict(at_seconds=1, seconds=1, axes=[0, 1, 0, 0], buttons=1)
+        sequence = self.file('sequence.json', json.dumps([event]))
+        scene.update(warmup_seconds=0, input_sequence_sha256=audit.sha(sequence))
+        audit.write(folder / 'scene.json', scene)
+        manifest.update(warmup_seconds=0, interval_seconds=1, input_sequence_sha256=audit.sha(sequence),
+            controller_shim_sha256=audit.sha(shim), input_tolerance_seconds=.1,
+            emulator_sha256=audit.sha(engine), iso_sha256=audit.sha(iso))
+        manifest['identity'].update(content_sha256=audit.sha(iso), scene_definition_sha256=audit.sha(folder / 'scene.json'))
+        manifest['identity']['emulator']['binary_sha256'] = audit.sha(engine)
+        audit.write(folder / 'manifest.json', manifest)
+        output = self.root / 'captured'
+        args = SimpleNamespace(output=output, emulator=engine, iso=iso,
+            starting_state=folder / 'starting.ppst', statistics_source=source,
+            manifest=folder / 'manifest.json', scene_definition=folder / 'scene.json',
+            frozen_config=folder / 'frozen-config', input_sequence=sequence, controller_shim=shim,
+            build_receipt=None, build_receipt_sha256=None, review_evidence=None, port=19362,
+            xdotool=self.root / 'not-invoked-xdotool')
+        request = dict(sequence=0, pid=101, axes=[0, 32767, 0, 0], buttons=1,
+            requested_monotonic_ns=101000000000, published_monotonic_ns=101010000000,
+            expires_monotonic_ns=102000000000)
+        applied = dict(event='applied', sequence=0, pid=101, axes=request['axes'], buttons=1,
+            result=0, observed_monotonic_ns=101020000000)
+        class FakeOwnedHelper:
+            def __init__(self):
+                self.finished = False
+                audit.write(output / 'root.json', {'pid': 101, 'start_ticks': '12345'})
+            def poll(self):
+                return 0 if self.finished else None
+            def wait(self, timeout):
+                with (output / 'controller/observed.jsonl').open('a') as stream:
+                    stream.write(json.dumps(dict(event='quit_neutral', sequence=0, pid=101,
+                        result=0, observed_monotonic_ns=102020000000)) + '\n')
+                audit.write(output / 'completion.json', {'root_pid': 101, 'exit_status': 0, 'children_reaped': 1})
+                self.finished = True
+                return 0
+        async def fake_replay(*_args, **_kwargs):
+            return None
+        async def fake_observe(raw, **kwargs):
+            await kwargs['replay'](100)
+            (output / 'controller/requests.jsonl').write_text(json.dumps(request) + '\n')
+            (output / 'controller/observed.jsonl').write_text(json.dumps(applied) + '\n')
+            rows = self.rows()
+            for row in (rows[0], rows[-1]):
+                row['message'].update(game={'id': 'ULUS10160'}, paused=False)
+            Path(raw).write_text(''.join(json.dumps(row) + '\n' for row in rows))
+            return rows
+        with patch.object(audit, 'verify_statistics', return_value=binding), \
+             patch.object(audit, 'competing'), patch.object(audit, 'check_port'), \
+             patch.object(audit, 'bind_listener', return_value={}), patch.object(audit, 'normal_exit'), \
+             patch.object(audit, 'replay_inputs', side_effect=fake_replay), \
+             patch.object(audit, 'observe', side_effect=fake_observe), \
+             patch.object(audit.subprocess, 'Popen', side_effect=lambda *_args, **_kw: FakeOwnedHelper()):
+            audit.collect(args)
+        receipt = json.loads((output / 'receipt.json').read_text())
+        self.assertEqual(receipt['status'], 'complete')
+        self.assertEqual(receipt['input_evidence']['controller/observed.jsonl'], audit.sha(output / 'controller/observed.jsonl'))
+        self.assertIn('quit_neutral', (output / 'controller/observed.jsonl').read_text())
 
     def test_nonfinite_counters_rejected(self):
         rows = self.rows()

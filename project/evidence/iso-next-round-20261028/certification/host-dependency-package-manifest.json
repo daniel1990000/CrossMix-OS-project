@@ -1,0 +1,338 @@
+{
+  "libasound2-dev": {
+    "Package": "libasound2-dev",
+    "Version": "1.2.14-1+deb13u1",
+    "Filename": "pool/main/a/alsa-lib/libasound2-dev_1.2.14-1+deb13u1_amd64.deb",
+    "SHA256": "dfa8e8a133ef8704093d03464d86a3e86d26232baf1e3827aa030cb68c437e1c",
+    "Depends": "libasound2t64 (= 1.2.14-1+deb13u1)"
+  },
+  "libdbus-1-dev": {
+    "Package": "libdbus-1-dev",
+    "Version": "1.16.2-2",
+    "Filename": "pool/main/d/dbus/libdbus-1-dev_1.16.2-2_amd64.deb",
+    "SHA256": "83767cf52f88de6d6f370cee30e717828c6fd22cb55d1fb84b38a3e911742887",
+    "Depends": "libdbus-1-3 (= 1.16.2-2), libsystemd-dev, pkgconf, xml-core (>= 0.14)"
+  },
+  "libfontconfig-dev": {
+    "Package": "libfontconfig-dev",
+    "Version": "2.15.0-2.3",
+    "Filename": "pool/main/f/fontconfig/libfontconfig-dev_2.15.0-2.3_amd64.deb",
+    "SHA256": "e7c533d87da316da3b127d136c0d1f0238a936c4b0797cb5ab67ebac3cf7151e",
+    "Depends": "libfontconfig1 (= 2.15.0-2.3), libexpat1-dev, libfreetype-dev (>= 2.8.1), uuid-dev, pkgconf"
+  },
+  "libfreetype-dev": {
+    "Package": "libfreetype-dev",
+    "Version": "2.13.3+dfsg-1+deb13u1",
+    "Filename": "pool/main/f/freetype/libfreetype-dev_2.13.3+dfsg-1+deb13u1_amd64.deb",
+    "SHA256": "f58107859d9fa44206e64cf35bdbd4febdec66a33e456ce2e5e3712f01b6c895",
+    "Depends": "libfreetype6 (= 2.13.3+dfsg-1+deb13u1), libbrotli-dev, libbz2-dev, libc6-dev | libc-dev, libpng-dev, zlib1g-dev | libz-dev"
+  },
+  "libharfbuzz-dev": {
+    "Package": "libharfbuzz-dev",
+    "Version": "10.2.0-1+deb13u1",
+    "Filename": "pool/main/h/harfbuzz/libharfbuzz-dev_10.2.0-1+deb13u1_amd64.deb",
+    "SHA256": "2588a9535b4b08193418d076605ca0878545e5b06a1a86a1f952f88f33ce79f9",
+    "Depends": "gir1.2-freetype2-2.0-dev, gir1.2-gobject-2.0-dev, gir1.2-harfbuzz-0.0 (= 10.2.0-1+deb13u1), libharfbuzz0b (= 10.2.0-1+deb13u1), libharfbuzz-icu0 (= 10.2.0-1+deb13u1), libharfbuzz-gobject0 (= 10.2.0-1+deb13u1), libharfbuzz-subset0 (= 10.2.0-1+deb13u1), libharfbuzz-cairo0 (= 10.2.0-1+deb13u1), libglib2.0-dev, libgraphite2-dev, libicu-dev, libfreetype-dev"
+  },
+  "libdecor-0-dev": {
+    "Package": "libdecor-0-dev",
+    "Version": "0.2.2-2",
+    "Filename": "pool/main/libd/libdecor-0/libdecor-0-dev_0.2.2-2_amd64.deb",
+    "SHA256": "f02b9409ff31d546beb5bf2f2eddbc432ed051696a632c82dc9e4ba76c9e60c4",
+    "Depends": "libdecor-0-0 (= 0.2.2-2), libwayland-dev"
+  },
+  "libdrm-dev": {
+    "Package": "libdrm-dev",
+    "Version": "2.4.124-2",
+    "Filename": "pool/main/libd/libdrm/libdrm-dev_2.4.124-2_amd64.deb",
+    "SHA256": "83b84b1207c4dda3d64ebad7725a7ad237c69c870668db3b01eabad1052f0dcb",
+    "Depends": "libdrm2 (= 2.4.124-2), libdrm-intel1 (= 2.4.124-2), libdrm-radeon1 (= 2.4.124-2), libdrm-nouveau2 (= 2.4.124-2), libdrm-amdgpu1 (= 2.4.124-2), libpciaccess-dev"
+  },
+  "libglu1-mesa-dev": {
+    "Package": "libglu1-mesa-dev",
+    "Version": "9.0.2-1.1+b3",
+    "Filename": "pool/main/libg/libglu/libglu1-mesa-dev_9.0.2-1.1+b3_amd64.deb",
+    "SHA256": "365a0576d95edf7b8052608bcbebe69ead0bb9aa8475b27174558961a58db70f",
+    "Depends": "libglu1-mesa (= 9.0.2-1.1+b3), libgl-dev, libopengl-dev"
+  },
+  "libegl-dev": {
+    "Package": "libegl-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libegl-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "97fcfff08a5de0a510066d55260a30fbd3ccbd87da6c2f317e6efe17566b9f5a",
+    "Depends": "libegl1 (= 1.7.0-1+b2), libgl-dev, libx11-dev"
+  },
+  "libgl-dev": {
+    "Package": "libgl-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libgl-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "2c5044a44bc7cd7a196d554ca6ff78ae0358fbb98b7d2cce49176bdc6a816fe4",
+    "Depends": "libgl1 (= 1.7.0-1+b2), libglx-dev"
+  },
+  "libgles-dev": {
+    "Package": "libgles-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libgles-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "87af52464cb40d54e78ecf2046db019bf1ab19a8bed7511ab282be623d1216de",
+    "Depends": "libegl-dev, libgl-dev, libgles1 (= 1.7.0-1+b2), libgles2 (= 1.7.0-1+b2)"
+  },
+  "libglvnd-dev": {
+    "Package": "libglvnd-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libglvnd-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "3076d220a658adc9f4a505bac97d1ca7a896957c2ea641e058a85a2b384a4367",
+    "Depends": "libglvnd0 (= 1.7.0-1+b2), libglvnd-core-dev (= 1.7.0-1+b2), libegl-dev (>= 1.3.0-1), libgl-dev (>= 1.3.0-1), libgles-dev (>= 1.3.0-1), libglx-dev (>= 1.3.0-1), libopengl-dev (>= 1.3.0-1)"
+  },
+  "libglx-dev": {
+    "Package": "libglx-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libglx-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "93d456321c07009491b942783db8c57065b616db713ef5f6a0c629ca078c4ea0",
+    "Depends": "libglx0 (= 1.7.0-1+b2), libx11-dev"
+  },
+  "libopengl-dev": {
+    "Package": "libopengl-dev",
+    "Version": "1.7.0-1+b2",
+    "Filename": "pool/main/libg/libglvnd/libopengl-dev_1.7.0-1+b2_amd64.deb",
+    "SHA256": "fe63853277e05a3b02f9339fff85ab68af1c7ef63c4663b716930b8c88b29d52",
+    "Depends": "libopengl0 (= 1.7.0-1+b2)"
+  },
+  "libice-dev": {
+    "Package": "libice-dev",
+    "Version": "2:1.1.1-1",
+    "Filename": "pool/main/libi/libice/libice-dev_1.1.1-1_amd64.deb",
+    "SHA256": "cd4dceeb1afbb75c00df04be44ff117da8861a4c8e6ab45126baf3a78ebf1a24",
+    "Depends": "libice6 (= 2:1.1.1-1), x11proto-dev"
+  },
+  "libpng-dev": {
+    "Package": "libpng-dev",
+    "Version": "1.6.48-1+deb13u5",
+    "Filename": "pool/main/libp/libpng1.6/libpng-dev_1.6.48-1+deb13u5_amd64.deb",
+    "SHA256": "9027d5ace59ce266124c87054302805f49f9cb1ec4a6c8264a64596c7916fbff",
+    "Depends": "libpng16-16t64 (= 1.6.48-1+deb13u5), zlib1g-dev"
+  },
+  "libpthread-stubs0-dev": {
+    "Package": "libpthread-stubs0-dev",
+    "Version": "0.5-1",
+    "Filename": "pool/main/libp/libpthread-stubs/libpthread-stubs0-dev_0.5-1_amd64.deb",
+    "SHA256": "5e7c88649d87d9e54bab252831e61633aa7aee64c968c2a5a85c76f15c8e2cc8",
+    "Depends": null
+  },
+  "libsdl2-2.0-0": {
+    "Package": "libsdl2-2.0-0",
+    "Version": "2.32.4+dfsg-1",
+    "Filename": "pool/main/libs/libsdl2/libsdl2-2.0-0_2.32.4+dfsg-1_amd64.deb",
+    "SHA256": "c61af1033d79fa6a393c49fac987165876de8ff27ebbd6a36cf19f5fc84d7a7a",
+    "Depends": "libasound2t64 (>= 1.0.27), libc6 (>= 2.38), libdecor-0-0 (>= 0.1.1-2~), libdrm2 (>= 2.4.71), libgbm1 (>= 17.1.0~rc2), libpulse0 (>= 5.0), libsamplerate0 (>= 0.1.7), libwayland-client0 (>= 1.20.0), libwayland-cursor0 (>= 1.18), libwayland-egl1 (>= 1.18), libx11-6 (>= 2:1.2.99.901), libxcursor1 (>> 1.1.2), libxext6, libxfixes3 (>= 1:5.0), libxi6 (>= 2:1.6.99.1), libxkbcommon0 (>= 0.5.0), libxrandr2 (>= 2:1.2.99.3), libxss1"
+  },
+  "libsdl2-dev": {
+    "Package": "libsdl2-dev",
+    "Version": "2.32.4+dfsg-1",
+    "Filename": "pool/main/libs/libsdl2/libsdl2-dev_2.32.4+dfsg-1_amd64.deb",
+    "SHA256": "277dc6373473df2079ed44ac8661575b97b39fa263bfa424b0324c1501d21413",
+    "Depends": "libasound2-dev, libdbus-1-dev, libdecor-0-dev, libdrm-dev, libegl-dev, libgbm-dev, libgl-dev, libgles-dev, libibus-1.0-dev, libpulse-dev, libsamplerate0-dev, libsdl2-2.0-0 (= 2.32.4+dfsg-1), libsndio-dev, libudev-dev, libwayland-dev, libx11-dev, libxcursor-dev, libxext-dev, libxfixes-dev, libxi-dev, libxinerama-dev, libxkbcommon-dev, libxrandr-dev, libxss-dev, libxt-dev, libxv-dev, libxxf86vm-dev"
+  },
+  "libsdl2-image-2.0-0": {
+    "Package": "libsdl2-image-2.0-0",
+    "Version": "2.8.8+dfsg-1+deb13u1",
+    "Filename": "pool/main/libs/libsdl2-image/libsdl2-image-2.0-0_2.8.8+dfsg-1+deb13u1_amd64.deb",
+    "SHA256": "3df007d463b84c3dd1d82cd91adc10cbeab5a2531357cfd9af21b3d81b2ebdf5",
+    "Depends": "libc6 (>= 2.11), libjpeg62-turbo (>= 1.3.1), libpng16-16t64 (>= 1.6.46), libsdl2-2.0-0 (>= 2.0.16), libtiff6 (>= 4.0.3), libwebp7 (>= 1.5.0), libwebpdemux2 (>= 1.5.0)"
+  },
+  "libsdl2-ttf-2.0-0": {
+    "Package": "libsdl2-ttf-2.0-0",
+    "Version": "2.24.0+dfsg-2",
+    "Filename": "pool/main/libs/libsdl2-ttf/libsdl2-ttf-2.0-0_2.24.0+dfsg-2_amd64.deb",
+    "SHA256": "a7aff4e1f3389b1c25edfe9248d918a8ba762dcefb57c3be3a1bbdb6c55f833b",
+    "Depends": "libc6 (>= 2.4), libfreetype6 (>= 2.2.1), libharfbuzz0b (>= 1.6.0), libsdl2-2.0-0 (>= 2.0.12)"
+  },
+  "libsm-dev": {
+    "Package": "libsm-dev",
+    "Version": "2:1.2.6-1",
+    "Filename": "pool/main/libs/libsm/libsm-dev_1.2.6-1_amd64.deb",
+    "SHA256": "22c83f0579dac10ff4583c31d0997097cfb4bc3ea8682eb75dafe35ae8251aea",
+    "Depends": "libsm6 (= 2:1.2.6-1), x11proto-dev, libice-dev (>= 1:1.0.0-1), uuid-dev"
+  },
+  "libx11-dev": {
+    "Package": "libx11-dev",
+    "Version": "2:1.8.12-1",
+    "Filename": "pool/main/libx/libx11/libx11-dev_1.8.12-1_amd64.deb",
+    "SHA256": "530de60c9c6dadd997ae7d74eca2a41b25e849373a5ad5dcdb619aa05713d6e0",
+    "Depends": "libx11-6 (= 2:1.8.12-1), libxau-dev, libxdmcp-dev, x11proto-dev (>= 2019.2-1), xtrans-dev, libxcb1-dev"
+  },
+  "libxau-dev": {
+    "Package": "libxau-dev",
+    "Version": "1:1.0.11-1",
+    "Filename": "pool/main/libx/libxau/libxau-dev_1.0.11-1_amd64.deb",
+    "SHA256": "1e29410af794a3d3790aab9fa0c1b0ec9324697502e982fce4dcdd4610ce3e8a",
+    "Depends": "libxau6 (= 1:1.0.11-1), x11proto-dev"
+  },
+  "libxcb1-dev": {
+    "Package": "libxcb1-dev",
+    "Version": "1.17.0-2+b1",
+    "Filename": "pool/main/libx/libxcb/libxcb1-dev_1.17.0-2+b1_amd64.deb",
+    "SHA256": "669949f8d5dff76616630d839b9047b76af553c62c376458094bd759f8fdb903",
+    "Depends": "libxcb1 (= 1.17.0-2+b1), libxau-dev, libxdmcp-dev"
+  },
+  "libxcursor-dev": {
+    "Package": "libxcursor-dev",
+    "Version": "1:1.2.3-1",
+    "Filename": "pool/main/libx/libxcursor/libxcursor-dev_1.2.3-1_amd64.deb",
+    "SHA256": "57f2fc575496edc9f3dd286423494499d231a8b1cdb417bb8401f6b66b584a26",
+    "Depends": "libxcursor1 (= 1:1.2.3-1), x11proto-dev, libx11-dev, libxrender-dev, libxfixes-dev"
+  },
+  "libxdmcp-dev": {
+    "Package": "libxdmcp-dev",
+    "Version": "1:1.1.5-1",
+    "Filename": "pool/main/libx/libxdmcp/libxdmcp-dev_1.1.5-1_amd64.deb",
+    "SHA256": "bc845297d20cf63388c6b248d9ee169a3890347cb1c29bcd9f771684bf17b528",
+    "Depends": "libxdmcp6 (= 1:1.1.5-1), x11proto-dev"
+  },
+  "libxext-dev": {
+    "Package": "libxext-dev",
+    "Version": "2:1.3.4-1+b3",
+    "Filename": "pool/main/libx/libxext/libxext-dev_1.3.4-1+b3_amd64.deb",
+    "SHA256": "e6bd898976d762a6955ec465870e7f12a3b149f4c5b231b0687e293ed5726532",
+    "Depends": "libxext6 (= 2:1.3.4-1+b3), x11proto-dev, libx11-dev"
+  },
+  "libxfixes-dev": {
+    "Package": "libxfixes-dev",
+    "Version": "1:6.0.0-2+b4",
+    "Filename": "pool/main/libx/libxfixes/libxfixes-dev_6.0.0-2+b4_amd64.deb",
+    "SHA256": "1070e0721765992c5355a9585f6eae9e0d11437a7d2b4a2c28123e6e5b0c0b2f",
+    "Depends": "libxfixes3 (= 1:6.0.0-2+b4), libx11-dev, x11proto-dev"
+  },
+  "libxfont2": {
+    "Package": "libxfont2",
+    "Version": "1:2.0.6-1+deb13u1",
+    "Filename": "pool/main/libx/libxfont/libxfont2_2.0.6-1+deb13u1_amd64.deb",
+    "SHA256": "79a7f56e4a0c7b1defa706c7b1f3076f7d80aaeea9de253b2a87406253319681",
+    "Depends": "libbz2-1.0, libc6 (>= 2.38), libfontenc1 (>= 1:1.1.8), libfreetype6 (>= 2.2.1), zlib1g (>= 1:1.1.4)"
+  },
+  "libxi-dev": {
+    "Package": "libxi-dev",
+    "Version": "2:1.8.2-1",
+    "Filename": "pool/main/libx/libxi/libxi-dev_1.8.2-1_amd64.deb",
+    "SHA256": "be3ca6202327858845aa0a8d70374b08dae5c89250ad8997256e02b2833501d3",
+    "Depends": "libxi6 (= 2:1.8.2-1), libx11-dev, libxext-dev, libxfixes-dev, x11proto-dev (>= 2021.5), xorg-sgml-doctools"
+  },
+  "libxinerama-dev": {
+    "Package": "libxinerama-dev",
+    "Version": "2:1.1.4-3+b4",
+    "Filename": "pool/main/libx/libxinerama/libxinerama-dev_1.1.4-3+b4_amd64.deb",
+    "SHA256": "711206b2a759461fe27b86099c4b593cb80c1f558fa64dd92239706f8c2a43b3",
+    "Depends": "libxinerama1 (= 2:1.1.4-3+b4), libx11-dev, libxext-dev, x11proto-dev"
+  },
+  "libxkbcommon-dev": {
+    "Package": "libxkbcommon-dev",
+    "Version": "1.7.0-2",
+    "Filename": "pool/main/libx/libxkbcommon/libxkbcommon-dev_1.7.0-2_amd64.deb",
+    "SHA256": "b62327152ae59bec442c0d7ae893520a3a3a2381100c83332e4a3497157ce5ec",
+    "Depends": "libxkbcommon0 (= 1.7.0-2)"
+  },
+  "libxrandr-dev": {
+    "Package": "libxrandr-dev",
+    "Version": "2:1.5.4-1+b3",
+    "Filename": "pool/main/libx/libxrandr/libxrandr-dev_1.5.4-1+b3_amd64.deb",
+    "SHA256": "e408e4f8c77135725e9055d445635587225839a929d348c04b85adfa84bdefb1",
+    "Depends": "libxrandr2 (= 2:1.5.4-1+b3), libx11-dev, libxext-dev, x11proto-dev, libxrender-dev"
+  },
+  "libxrender-dev": {
+    "Package": "libxrender-dev",
+    "Version": "1:0.9.12-1",
+    "Filename": "pool/main/libx/libxrender/libxrender-dev_0.9.12-1_amd64.deb",
+    "SHA256": "55121741c44e03cbeb03dabb5721ded1341c987f055d7cae991de7431c9edfa6",
+    "Depends": "libxrender1 (= 1:0.9.12-1), libx11-dev, x11proto-dev"
+  },
+  "libgbm-dev": {
+    "Package": "libgbm-dev",
+    "Version": "25.0.7-2+deb13u1",
+    "Filename": "pool/main/m/mesa/libgbm-dev_25.0.7-2+deb13u1_amd64.deb",
+    "SHA256": "8e3f9958fbcd4838953ebc7cb11e661e26652059473278d8f7e130c246f97c2a",
+    "Depends": "libgbm1 (= 25.0.7-2+deb13u1)"
+  },
+  "libpulse-dev": {
+    "Package": "libpulse-dev",
+    "Version": "17.0+dfsg1-2+b1",
+    "Filename": "pool/main/p/pulseaudio/libpulse-dev_17.0+dfsg1-2+b1_amd64.deb",
+    "SHA256": "bcbd91aae55d1794f8fe8b1e766ec810173a6415b2165642bf756858e20ab7c4",
+    "Depends": "libpulse0 (= 17.0+dfsg1-2+b1), libpulse-mainloop-glib0 (= 17.0+dfsg1-2+b1), libglib2.0-dev"
+  },
+  "strace": {
+    "Package": "strace",
+    "Version": "6.13+ds-1",
+    "Filename": "pool/main/s/strace/strace_6.13+ds-1_amd64.deb",
+    "SHA256": "cae290b67cf835350a2cde58ca332256fba475784b3e02a9a8677d73eaf47511",
+    "Depends": "libc6 (>= 2.38), libunwind8"
+  },
+  "libudev-dev": {
+    "Package": "libudev-dev",
+    "Version": "257.13-1~deb13u1",
+    "Filename": "pool/main/s/systemd/libudev-dev_257.13-1~deb13u1_amd64.deb",
+    "SHA256": "73c3ed98a435ec420b327ef267d89ece81bf23c2c19391265bb4f261cbf5d558",
+    "Depends": "libcap-dev, libudev1 (= 257.13-1~deb13u1)"
+  },
+  "libwayland-dev": {
+    "Package": "libwayland-dev",
+    "Version": "1.23.1-3",
+    "Filename": "pool/main/w/wayland/libwayland-dev_1.23.1-3_amd64.deb",
+    "SHA256": "66055b7df9a6c4b15fe0b52a42a76680bb4d0f4d1083800e7cd7ba26e59e68ed",
+    "Depends": "libwayland-client0 (= 1.23.1-3), libwayland-server0 (= 1.23.1-3), libwayland-cursor0 (= 1.23.1-3), libwayland-egl1 (= 1.23.1-3), libwayland-bin (= 1.23.1-3), libffi-dev"
+  },
+  "x11-utils": {
+    "Package": "x11-utils",
+    "Version": "7.7+7",
+    "Filename": "pool/main/x/x11-utils/x11-utils_7.7+7_amd64.deb",
+    "SHA256": "239d8a87b464cbe370d63029820218a52c5bfa1f0dfeb74f7cfe7d0df017046b",
+    "Depends": "libc6 (>= 2.38), libfontconfig1 (>= 2.12.6), libgl1, libx11-6, libx11-xcb1 (>= 2:1.8.7), libxaw7 (>= 2:1.0.14), libxcb-shape0, libxcb1 (>= 1.6), libxcomposite1 (>= 1:0.4.5), libxext6, libxft2 (>> 2.1.1), libxi6, libxinerama1 (>= 2:1.1.4), libxkbfile1 (>= 1:1.1.0), libxmu6 (>= 2:1.1.3), libxmuu1 (>= 2:1.1.3), libxrandr2 (>= 2:1.2.0), libxrender1, libxt6t64 (>= 1:1.1.0), libxtst6, libxv1, libxxf86dga1 (>= 2:1.1.5), libxxf86vm1"
+  },
+  "xauth": {
+    "Package": "xauth",
+    "Version": "1:1.1.2-1.1",
+    "Filename": "pool/main/x/xauth/xauth_1.1.2-1.1_amd64.deb",
+    "SHA256": "14687bc8e3af350738f61e5a872bcdd83725694cb09d448d75077abd6249679a",
+    "Depends": "libc6 (>= 2.38), libx11-6, libxau6 (>= 1:1.0.11), libxext6, libxmuu1 (>= 2:1.1.3)"
+  },
+  "libxdo3": {
+    "Package": "libxdo3",
+    "Version": "1:3.20160805.1-5.1",
+    "Filename": "pool/main/x/xdotool/libxdo3_3.20160805.1-5.1_amd64.deb",
+    "SHA256": "d634e25d2b50af140ee9f44bab507fcfb665f3556fd483faefdb56e85598cc12",
+    "Depends": "libc6 (>= 2.4), libx11-6, libxinerama1 (>= 2:1.1.4), libxkbcommon0 (>= 0.5.0), libxtst6 (>= 2:1.2.5)"
+  },
+  "xdotool": {
+    "Package": "xdotool",
+    "Version": "1:3.20160805.1-5.1",
+    "Filename": "pool/main/x/xdotool/xdotool_3.20160805.1-5.1_amd64.deb",
+    "SHA256": "98ac8681533b01020c7288fb2e9de403d586747dab48cfd58e04cb00d0c44fb1",
+    "Depends": "libc6 (>= 2.38), libx11-6, libxdo3 (>= 1:3.20150503.1)"
+  },
+  "xserver-common": {
+    "Package": "xserver-common",
+    "Version": "2:21.1.16-1.3+deb13u3",
+    "Filename": "pool/main/x/xorg-server/xserver-common_21.1.16-1.3+deb13u3_all.deb",
+    "SHA256": "dc1d37303c103b23c40cd1ea694c5c6561e0e8dc1734a73c7a0ae0ef080e7fcc",
+    "Depends": "x11-common, xkb-data, x11-xkb-utils"
+  },
+  "xvfb": {
+    "Package": "xvfb",
+    "Version": "2:21.1.16-1.3+deb13u3",
+    "Filename": "pool/main/x/xorg-server/xvfb_21.1.16-1.3+deb13u3_amd64.deb",
+    "SHA256": "365da2b6c93339f34337c434a9489bb6411a240fa47b9f49693d3091745f28c2",
+    "Depends": "xserver-common (>= 2:21.1.16-1.3+deb13u3), libaudit1 (>= 1:2.2.1), libc6 (>= 2.38), libgl1, libnettle8t64, libpixman-1-0 (>= 0.30.0), libselinux1 (>= 3.1~), libsystemd0, libunwind8, libxau6 (>= 1:1.0.11), libxdmcp6, libxfont2 (>= 1:2.0.1)"
+  },
+  "x11proto-dev": {
+    "Package": "x11proto-dev",
+    "Version": "2024.1-1",
+    "Filename": "pool/main/x/xorgproto/x11proto-dev_2024.1-1_all.deb",
+    "SHA256": "6a6764500eb8171d3cd6d793c09902974f8ea87bd20c68d9eac5f1eeaf3fc407",
+    "Depends": "xorg-sgml-doctools (>= 1:1.5)"
+  },
+  "zlib1g-dev": {
+    "Package": "zlib1g-dev",
+    "Version": "1:1.3.dfsg+really1.3.1-1+b1",
+    "Filename": "pool/main/z/zlib/zlib1g-dev_1.3.dfsg+really1.3.1-1+b1_amd64.deb",
+    "SHA256": "76ed5c858e1aef38b7be93acce5910e457e77bd6271471b9d05fb42e78826224",
+    "Depends": "zlib1g (= 1:1.3.dfsg+really1.3.1-1+b1), libc6-dev | libc-dev"
+  }
+}

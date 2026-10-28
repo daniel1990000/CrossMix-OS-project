@@ -29,7 +29,14 @@ The frozen scene JSON has `id`, `starting_state_sha256`, `camera` (a concrete
 camera description), `warmup_seconds`, `duration_seconds` and
 `input_sequence_sha256` (null for a stationary scene). Its exact file digest is
 `identity.scene_definition_sha256`. Changes to camera, input sequence, warmup,
-duration or state require a new frozen definition before collection.
+duration or state require a new frozen definition before collection. For a scene
+that will have demanding-profile comparisons, the **same file must also freeze**
+`sustained_duration_seconds` (at least 1800) and
+`sustained_input_sequence_sha256` before the first candidate. A sustained run
+selects those fields through its explicit `sustained=true` manifest; its
+`input_sequence_sha256` binds the selected long sequence. The shared scene file
+keeps the state, camera and scene identity identical across repeats and soaks.
+A later scene redefinition cannot qualify earlier runs.
 
 The manifest contains the existing gameplay importer fields `identity`, `run_id`,
 `pair_id`, `duration_seconds`, `sustained`, `demanding_profile`, and these bindings:
@@ -133,3 +140,10 @@ the existing five-pair comparator. It permits only 1x versus 2x with frameskip
 disabled. Native FPS is approximate; tiny differences cannot establish an
 improvement. Audio quality, panel frame pacing, latency and energy stay
 unavailable. Host observations do not qualify TrimUI presets or production gates.
+
+For demanding scenes, add `--sustained-baseline /private/results/soak-1x/run.json`
+and `--sustained-candidate /private/results/soak-2x/run.json` to compare. Both
+complete collector reports undergo the same raw/config/input revalidation before
+the existing comparator checks identities against the repeat arms. The raw
+window and late-sample classification always use each run's actual frozen
+duration, rather than assuming the 30-second repeat duration.
