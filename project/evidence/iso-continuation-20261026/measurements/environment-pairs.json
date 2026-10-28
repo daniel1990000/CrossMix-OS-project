@@ -1,0 +1,14 @@
+{
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "cpu_quota": "400000 100000",
+  "renderer": "OpenGL Mesa software; LIBGL_ALWAYS_SOFTWARE=1 LP_NUM_THREADS=2",
+  "display": ":101 Xvfb 960x600x24",
+  "audio": "SDL dummy; native mix-buffer WAV recording",
+  "isolation_shim_sha256": "491e64c0fb00129cd653a28eb4140f4fc120bd5937172b0841230df2326dc701",
+  "isolation_scope": "Exact PPSSPP shared instance name remapped; optional discovery registration hostname fails locally; all other calls pass through.",
+  "native_binary_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "source": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "device_tested": false,
+  "scope": "Selected isolated matched pairs; original contaminated pair4 retained and excluded. Shared host, not a controlled physical-device benchmark."
+}

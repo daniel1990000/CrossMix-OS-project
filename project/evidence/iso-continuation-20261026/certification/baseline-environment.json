@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "kind": "iso-continuation-host-baseline-environment",
+  "recorded_at_utc": "2026-10-26T18:36:27.988134+00:00",
+  "repository": "daniel1990000/CrossMix-OS-project",
+  "checkout": "/workspace/trimui-audit/baseline-checkout",
+  "commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "working_tree_status": "",
+  "architecture": "x86_64",
+  "kernel": "6.18.55",
+  "python": "Python 3.12.14",
+  "python_packages": [
+    "pillow==11.1.0",
+    "PySDL2==0.9.17"
+  ],
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "source_roots": {
+    "SPRUCE_SOURCE_ROOT": "/workspace/trimui-sources/spruce",
+    "PPSSPP_SOURCE_ROOT": "/workspace/trimui-sources/ppsspp-certification",
+    "SPRUCE_RA_SOURCE_ROOT": "/workspace/trimui-sources/ra",
+    "PORTS_SOURCE_ROOT": "/workspace/trimui-sources/ports",
+    "PORTMASTER_SOURCE_ROOT": "/workspace/trimui-sources/portmaster"
+  },
+  "library_root": "/workspace/trimui-audit/host-libs/usr/lib/x86_64-linux-gnu",
+  "sdl_video_driver": "dummy",
+  "sdl_audio_driver": "dummy",
+  "physical_device": false
+}

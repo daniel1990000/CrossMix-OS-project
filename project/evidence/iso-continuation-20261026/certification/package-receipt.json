@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "kind": "iso-continuation-host-package-verification",
+  "verified_at_utc": "2026-10-26T19:01:25.582429+00:00",
+  "implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "release_id": "smartpro-psp-0.1.0-dev19",
+  "working_tree_modified": false,
+  "source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
+  "source_inventory_files": 236,
+  "payload_files": 68,
+  "signature_payload_and_source_inventory_verified": true,
+  "all_eight_output_checksums_verified": true,
+  "same_key_overlay_rebuild_byte_identical": true,
+  "installed_smoke": {
+    "backup_cancel_dispatch": true,
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "discovery_scope": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "full_result_random": true,
+    "game_information": true,
+    "help_backups_collections_rendered": true,
+    "installed_build_identity": true,
+    "named_backup_history": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 9,
+    "settings_dispatch": true
+  },
+  "fixture_activation_and_rollback": true,
+  "no_git_both_zips_byte_identical": true,
+  "generated_private_keys_deleted": true,
+  "public_release_created": false,
+  "device_qualified": false,
+  "build_timing": {
+    "started_at_utc": "2026-10-26T19:00:20.185252+00:00",
+    "finished_at_utc": "2026-10-26T19:00:22.521590+00:00",
+    "exit_code": 0,
+    "source_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "source_checkout": "/workspace/trimui-audit/package-checkout",
+    "log": "package-build.log"
+  },
+  "no_git_build_timing": {
+    "started_at_utc": "2026-10-26T19:00:50.451262+00:00",
+    "finished_at_utc": "2026-10-26T19:00:52.783041+00:00",
+    "exit_code": 0,
+    "source_export_has_git": false,
+    "source_checkout": "/workspace/trimui-audit/source-export-dev19/smartpro-original-source",
+    "log": "package-no-git-build.log"
+  },
+  "artifacts": [
+    {
+      "file": "SHA256SUMS",
+      "size_bytes": 743,
+      "sha256": "b47f85a3d371db4b67ea9c2fb42ca6a6af40bc63131310d0c8092dcdde5ac715"
+    },
+    {
+      "file": "START-HERE.txt",
+      "size_bytes": 859,
+      "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402"
+    },
+    {
+      "file": "build-report.json",
+      "size_bytes": 5729,
+      "sha256": "5c4d14d20da5d77cccfd389998a94242efd87231e32ebcad7b5d9a1927c4496d"
+    },
+    {
+      "file": "development-verification.pub",
+      "size_bytes": 32,
+      "sha256": "019a230437ed35c1153a27e2d114015e6c529e41d2e272a47fb9e3c2868ad279"
+    },
+    {
+      "file": "host-preview.png",
+      "size_bytes": 147433,
+      "sha256": "eddacb360f5995e1767cf85cf73780f079b8e28a990f2fc54c7db540882aa31f"
+    },
+    {
+      "file": "release-source.json",
+      "size_bytes": 30544,
+      "sha256": "e831826704ddf1bf6a2e7455d3c438c5ab2d54b55cbd9dc95427080c182948eb"
+    },
+    {
+      "file": "smartpro-psp-0.1.0-dev19-host-preview.zip",
+      "size_bytes": 1487831,
+      "sha256": "b3795b6991933af26a113d9833d4c26dc0ac5e651e5fa72660a929593adc131f"
+    },
+    {
+      "file": "smartpro-psp-0.1.0-dev19-original-source.zip",
+      "size_bytes": 2132731,
+      "sha256": "3f9d4ecd49cb378f1e4831e5e197d8fe90f582c01943c3178bf87c466b69de2e"
+    },
+    {
+      "file": "smartpro-psp-0.1.0-dev19.tar",
+      "size_bytes": 3225600,
+      "sha256": "f3412b4b9d2e33b5102dfd8f8e77d7315dab8ca2deeb1bdffcda8e7b33248d86"
+    }
+  ]
+}

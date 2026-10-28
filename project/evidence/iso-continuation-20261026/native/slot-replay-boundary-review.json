@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "scope": "actual raw native packets through existing envelope helper with explicit expected-field carriers; no session/profile/capability constructed",
+  "results": [
+    {
+      "case": "wrong-slot",
+      "request_sha256": "0a214f4776e953dd5010e14292811035ff2ff0bc27c2d2882acc58bea279e210",
+      "result_sha256": "1233a3d0e8a9452d8151557bf1c96b4c9ce1a123cf3b884bd22c656bd03541f3",
+      "native_operation": "load",
+      "native_status": "success",
+      "native_slot": "1",
+      "same_context_envelope": "accepted",
+      "expected_slot": "0",
+      "expected_slot_zero_envelope": "accepted; slot check is not in envelope helper",
+      "retained_load_binding_predicate": false,
+      "predicate_scope": "evaluated exact comparison from _consume_result; not full parser acceptance or qualification"
+    },
+    {
+      "case": "replay-session",
+      "request_sha256": "b1d0d32d9a9110d06b197d73b3e9f0cd78612a505d69e4478c5703c9f709fd9f",
+      "result_sha256": "23231e3b6ab09606a4505b7421c1508799e3df939e37286f4709395a4c9f2188",
+      "native_operation": "load",
+      "native_status": "success",
+      "native_slot": "0",
+      "same_context_envelope": "accepted",
+      "fresh_context_envelope": "STATE_SESSION_MISMATCH",
+      "minimum_sequence_two": "STATE_OPERATION_FAILED"
+    }
+  ],
+  "source_references": {
+    "envelope": "project/psp_shell/state_evidence.py:336",
+    "qualification_precedes_full_consumption": "project/psp_shell/state_evidence.py:375",
+    "load_path_hash_slot_binding": "project/psp_shell/state_evidence.py:397",
+    "resume_request_uses_verified_slot": "project/psp_shell/state_evidence.py:279",
+    "intent_must_match_authenticated_capability": "project/psp_shell/state_evidence.py:775",
+    "native_load_uses_request_slot": "project/ppsspp/patches/0003-project-state-session.patch:374"
+  },
+  "conclusion": "Observed native slot mismatch is trusted-caller metadata acceptance, not native rejection. A retained request expecting slot0 differs from returned slot1 at the later full-consumer predicate, but full authenticated rejection was not executed because genuine profile/foreground/writer prerequisites are unavailable. Fresh expected envelope context rejects the old native packet; same-context raw replay needs owner freshness authority. No product defect demonstrated under current trust contract.",
+  "qualified_profile_created": false,
+  "production_source_changed": false
+}

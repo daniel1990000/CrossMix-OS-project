@@ -1,0 +1,161 @@
+{
+  "schema": 1,
+  "status": "partial: actual native child/descendant boundary and negative capability gates verified; full positive source-to-fresh-frontend Resume blocked",
+  "review": {
+    "scope": "G05 composition feasibility review and negative authority probe; no emulator executed",
+    "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+    "native_ini_sha256": "f4776c182b10f0d76c586c2d801715d9d5f82b3783d7fcaa9ff8fc5e9abf83da",
+    "profile_flags": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "request": "synthetic rejection probe; no actual source staging or native completion claimed",
+    "observations": [
+      {
+        "boundary": "profile qualification",
+        "result": "STATE_PROFILE_UNQUALIFIED"
+      },
+      {
+        "boundary": "optional native capture environment",
+        "result": "omitted; STATE_PROFILE_UNQUALIFIED"
+      },
+      {
+        "boundary": "explicit Resume environment",
+        "result": "STATE_PROFILE_UNQUALIFIED"
+      },
+      {
+        "boundary": "fresh store load precondition",
+        "result": "STATE_PROFILE_UNQUALIFIED"
+      },
+      {
+        "boundary": "fresh interpreter capability store load",
+        "result": "STATE_PROFILE_UNQUALIFIED",
+        "profile_flags": [
+          false,
+          false,
+          false,
+          false
+        ]
+      }
+    ],
+    "blockers": [
+      {
+        "file": "project/psp_shell/state_evidence.py",
+        "line": 193,
+        "finding": "assert_qualified requires all four flags including hardware; no host profile alternative"
+      },
+      {
+        "file": "project/psp_shell/state_evidence.py",
+        "line": 754,
+        "finding": "principal state authority omits optional capture, or rejects explicit Resume, for unqualified profile"
+      },
+      {
+        "file": "project/psp_shell/state_evidence.py",
+        "line": 375,
+        "finding": "actual native result consumption repeats qualification before issuing VerifiedState"
+      },
+      {
+        "file": "project/psp_shell/state_evidence.py",
+        "line": 629,
+        "finding": "fresh-process capability store repeats qualification before authenticating/reconstructing state"
+      },
+      {
+        "file": "project/ppsspp/tests/state_principal_roundtrip.py",
+        "line": 35,
+        "finding": "existing host composition explicitly uses synthetic true hardware/state flags and writer evidence"
+      },
+      {
+        "file": "project/bridge/process_source.py",
+        "line": 71,
+        "finding": "existing source host-fixture path still requires explicit synthetic qualification flags"
+      },
+      {
+        "file": "project/bridge/principal.py",
+        "line": 373,
+        "finding": "experimental view-only session explicitly cannot execute staged commands"
+      }
+    ],
+    "feasible_separate_boundary": "run_owned_tree can observe actual native child/descendant closure without a state profile. It cannot issue composed Resume or source capability transfer by itself.",
+    "decision": "No production authority changes. Native packets, kernel closure, fixture composition and qualified fresh-frontend transfer remain separately reported."
+  },
+  "runs": [
+    {
+      "scope": "real patched native engine through existing run_owned_tree only; no composed source or Resume capability",
+      "started_utc": "2026-10-26T18:55:51.460972+00:00",
+      "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+      "argv_json_sha256": "5911c436a750b90579874fa84958c97809470d2229d2579ee2fea3f1539222f1",
+      "wrapper_sha256": "d9e5cdcf25da583a9a633821f22b32209498969f3652cf71c6ee6e540b9b87a4",
+      "boundary_source_sha256": "6df9ec5a91d03c342efdf7ffca883e4294fb61b12972216a6a9f4b485f633b7c",
+      "subreaper_before": 0,
+      "kernel_completion": true,
+      "exit_status": 0,
+      "children_reaped": 3,
+      "finished_utc": "2026-10-26T18:57:08.593045+00:00",
+      "elapsed_seconds": 77.13211061499987,
+      "subreaper_after": 0,
+      "native_log_sha256": "032a99094be71fb26202df1f4e59afdc3192f846ebb1b03878106ad254ef7833",
+      "source_staging_observed": false,
+      "qualified_writer_inventory": false,
+      "authenticated_frontend_state_transfer": false,
+      "composed_resume": false,
+      "external_descendant_cleanup": true,
+      "unassisted_tree_closure": false,
+      "host_environment_adjustment": null,
+      "native_protocol_files": {
+        "request": "8b5fc1adaf038fa4633af812dcb96a377c899f8b90499e012a3a9a0abca2f908",
+        "result": "0c4483e6a0ab857e602fcd17de68f70fa2b1d5cea1006f62d353aa26aac2c4e8",
+        "load-completed": "0c4483e6a0ab857e602fcd17de68f70fa2b1d5cea1006f62d353aa26aac2c4e8"
+      },
+      "native_result_observation": {
+        "operation": "load",
+        "sequence": 1,
+        "status": "success",
+        "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+        "protocol_validation_owner": "native_ppsspp lane; this wrapper only observed success envelope"
+      },
+      "receipt_name": "g05-owned-native.json",
+      "closure_scope": "Game exited normally; persistent adopted host DBus services were externally terminated after exact parent verification. This is NOT an unassisted closure pass.",
+      "independent_native_protocol_validation_sha256": "d189d8165a27e3bacd8fad5937f0d0207039f175df5f34869d182488ec3d80ee"
+    },
+    {
+      "scope": "real patched native engine through existing run_owned_tree only; no composed source or Resume capability",
+      "started_utc": "2026-10-26T18:57:52.966661+00:00",
+      "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+      "argv_json_sha256": "30e70b73af11000de60518e50c1ca272cada7f1520f9676673a36a3c95811ffa",
+      "wrapper_sha256": "d9e5cdcf25da583a9a633821f22b32209498969f3652cf71c6ee6e540b9b87a4",
+      "boundary_source_sha256": "6df9ec5a91d03c342efdf7ffca883e4294fb61b12972216a6a9f4b485f633b7c",
+      "subreaper_before": 0,
+      "kernel_completion": true,
+      "exit_status": 0,
+      "children_reaped": 1,
+      "finished_utc": "2026-10-26T18:58:08.142490+00:00",
+      "elapsed_seconds": 15.17583841799933,
+      "subreaper_after": 0,
+      "native_log_sha256": "2964c0fabc3a3dec529125918609688466489b3252c6d52f5785dfc3b3e13142",
+      "source_staging_observed": false,
+      "qualified_writer_inventory": false,
+      "authenticated_frontend_state_transfer": false,
+      "composed_resume": false,
+      "external_descendant_cleanup": false,
+      "unassisted_tree_closure": true,
+      "host_environment_adjustment": "Prevented host DBus autolaunch with explicitly unavailable session bus address",
+      "native_protocol_files": {
+        "request": "86aa36967804f41007384398cfe0dc6ec70c6074efba4ace336b0986a48108a6",
+        "result": "d7bd3896bdc92bb2f6eca6d9ec383c2c09ea3b2e10e68120e140abf541fd1068",
+        "load-completed": "d7bd3896bdc92bb2f6eca6d9ec383c2c09ea3b2e10e68120e140abf541fd1068"
+      },
+      "native_result_observation": {
+        "operation": "load",
+        "sequence": 1,
+        "status": "success",
+        "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+        "protocol_validation_owner": "native_ppsspp lane; this wrapper only observed success envelope"
+      },
+      "receipt_name": "g05-owned-native-clean.json",
+      "closure_scope": "Native load and normal Exit; kernel boundary reached ECHILD unassisted and restored prior subreaper state.",
+      "independent_native_protocol_validation_sha256": "8806a998b24f924c529bab04e3fb9352abfabe35b239725436d3e1ee04d74dd8"
+    }
+  ]
+}

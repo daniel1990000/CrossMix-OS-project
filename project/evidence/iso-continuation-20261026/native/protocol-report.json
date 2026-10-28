@@ -1,0 +1,872 @@
+{
+  "schema": 1,
+  "scope": "actual full x86_64 SDL native game/state protocol using private ISO and real native SaveSlot/Load callbacks",
+  "hardware_qualified": false,
+  "authenticated_frontend_resume_completed": false,
+  "qualified_profile_created": false,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "engine_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "rom_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "cases": [
+    {
+      "case": "save0",
+      "request_sha256": "7f1b681bc1fb152c4f4e8314582c78f9bf9b4724727ee4cf7aa2368d0405c191",
+      "native_packets": {},
+      "private_files": {
+        "probe.json": "8fed792129ade50d8e67b231ae571a2ea7bc5cac382cecc13613b5cdda083922",
+        "experiment.json": "cf433f1beecb064aefd41cd6ce612c5701c5e1a8570db5c6523d42e767013591",
+        "stdout.log": "85ad5f0ad3ea7bea47a6222ee7ea23a558f2d71f05e736e42c70b9a3d15f6587",
+        "native.log": "ff1492606f67c3390244a7b4ee2c3541512791ce928bd55edcc29a0706781b5f",
+        "driver.log": "3165ae0ec87ec9511c72c7190c7070a6b2462905fb9c7b797bdfe7704e5ac349"
+      },
+      "experiment": {
+        "case": "save",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/save0/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/save0/request",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "error": "engine exited before result: 0",
+        "elapsed_seconds": 65.882,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 17937
+          },
+          {
+            "event": "key",
+            "elapsed": 20.333,
+            "key_name": "F2"
+          },
+          {
+            "event": "failure",
+            "elapsed": 65.882,
+            "message": "engine exited before result: 0"
+          }
+        ]
+      },
+      "outcome": "retained harness setup failure: native default controls lacked F2 binding"
+    },
+    {
+      "case": "save1",
+      "request_sha256": "e20036259b7ab3e8496eb1b6c8f1f67642a524d30fb27fedb7df14c921dc6d6c",
+      "native_packets": {
+        "result": {
+          "sha256": "cbe422631e90ab408caa16bb2189708584420b66b64c09ded0e21532198ad8b7",
+          "operation": "save",
+          "sequence": 2,
+          "status": "failure",
+          "message": "Failed to save state",
+          "state_sha256": "",
+          "state_size": ""
+        },
+        "save-completed": {
+          "sha256": "e58bde6e63c1dee045cf8cb498e8f87d09f6e2b2767923b7aaa88767ad4bd686",
+          "operation": "save",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State saved",
+          "state_sha256": "0982034d6f3c7e08ab7149297392df200c4662cc4e05fad6a4177343e417bc97",
+          "state_size": "5433024"
+        }
+      },
+      "private_files": {
+        "probe.json": "aff60fa274a5c887511b171a177eb424ee08ba969cf3fd5aa7510814a255763a",
+        "experiment.json": "a2529bba0986ba7ea283bf06e38c6256d24e84ca63c6ec61addd033165f32d38",
+        "observations.json": "109d5281f4689d6b92d757d0934d68b7303645c02f9695501b557302d6b363a6",
+        "stdout.log": "4440709ad39e56f7b7f5ae41256236b0b8bb258690d8effd0d4e090703fe68cc",
+        "native.log": "5a6c6f638fc2d395d958b1ab53f4d240e2b090e0185c36159b357cd1ec0621ec",
+        "screen.png": "a95cee1af320a3f353ebc76130038cf3347ea065ff14ce17b5e34c075f862213",
+        "driver.log": "862b24cdee64d1009cfff167a73f7c104e82ecb4904d99f0405bbd63078e94db"
+      },
+      "experiment": {
+        "case": "save-failure",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/save1/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/save1/request",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "success",
+        "second_operation_status": "failure",
+        "exit_code": 0,
+        "elapsed_seconds": 25.7,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 18356
+          },
+          {
+            "event": "key",
+            "elapsed": 15.348,
+            "key_name": "F2"
+          },
+          {
+            "event": "native_result",
+            "elapsed": 21.851,
+            "sequence": 1,
+            "status": "success",
+            "operation": "save",
+            "message": "(1) State saved"
+          },
+          {
+            "event": "state_root_readonly",
+            "elapsed": 21.851
+          },
+          {
+            "event": "key",
+            "elapsed": 22.183,
+            "key_name": "F2"
+          },
+          {
+            "event": "native_result",
+            "elapsed": 25.186,
+            "sequence": 2,
+            "status": "failure",
+            "operation": "save",
+            "message": "Failed to save state"
+          },
+          {
+            "event": "key",
+            "elapsed": 25.7,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed real save then failed write; completed original retained"
+    },
+    {
+      "case": "resume1",
+      "request_sha256": "0f09e045d00bc1863f5f2b111b07bca5d795f9361c1f6ae8bf91a3c14c667377",
+      "native_packets": {
+        "result": {
+          "sha256": "968f84ac116f25c0713e660a098efd0cab346f816e1dc6963865f5b9d539e1f1",
+          "operation": "save",
+          "sequence": 2,
+          "status": "success",
+          "message": "(1) State saved",
+          "state_sha256": "5ffe7358884f8c02421b08f9452aa17c1930a05cd0b0a0b7f3a87313c635f336",
+          "state_size": "5486579"
+        },
+        "save-completed": {
+          "sha256": "968f84ac116f25c0713e660a098efd0cab346f816e1dc6963865f5b9d539e1f1",
+          "operation": "save",
+          "sequence": 2,
+          "status": "success",
+          "message": "(1) State saved",
+          "state_sha256": "5ffe7358884f8c02421b08f9452aa17c1930a05cd0b0a0b7f3a87313c635f336",
+          "state_size": "5486579"
+        },
+        "load-completed": {
+          "sha256": "67a15472f11c5de2eb89b448ab2618c3b1e176b168b2b60557242b317433901c",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "0982034d6f3c7e08ab7149297392df200c4662cc4e05fad6a4177343e417bc97",
+          "state_size": "5433024"
+        }
+      },
+      "private_files": {
+        "probe.json": "2b0528a4619a4154ebf9818e2d61fb0c47e6dd19049972df1785412359f8e3f8",
+        "experiment.json": "6b58b8afbe2fde31beed35110cc70d41655edda2e6e98465a20272d2106c7fe0",
+        "observations.json": "a38baed44e8b37a9bb5f6d3c05376874a9bea9a00035020d99a127a09085aaeb",
+        "stdout.log": "d9988f03dc6f6cd23898675a841650d1d7be78335dbd7c776878a499433e6948",
+        "native.log": "eb548128e39379881d7ba7730d3a6f39c384cabee696ef52dede187c70360512",
+        "screen.png": "ee1a55dd1fbe88fcadaed9ca697376462ed6ce74627856dfae1847d1915fd8b4",
+        "driver.log": "97cdb6837f00b9d658263340be0ca7e8f09f47c1eefa88680167a41f536b7250"
+      },
+      "experiment": {
+        "case": "resume-save",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/resume1/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/resume1/request",
+          "--state=/workspace/trimui-audit/native/runtime/config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "success",
+        "second_operation_status": "success",
+        "exit_code": 0,
+        "elapsed_seconds": 14.372,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 18538
+          },
+          {
+            "event": "native_result",
+            "elapsed": 7.008,
+            "sequence": 1,
+            "status": "success",
+            "operation": "load",
+            "message": "(1) State loaded"
+          },
+          {
+            "event": "key",
+            "elapsed": 7.347,
+            "key_name": "F2"
+          },
+          {
+            "event": "native_result",
+            "elapsed": 13.854,
+            "sequence": 2,
+            "status": "success",
+            "operation": "save",
+            "message": "(1) State saved"
+          },
+          {
+            "event": "key",
+            "elapsed": 14.372,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed native load then save callbacks; no qualified profile granted"
+    },
+    {
+      "case": "playable-resume1",
+      "request_sha256": "f6cffd5fac97cf66f642599418301a67a11139d249eeedc59554c7bf2ce28319",
+      "native_packets": {
+        "result": {
+          "sha256": "4e6d1ab59d38b43f340023e73a94d7814f569bbab80739c2fadfa02823405350",
+          "operation": "save",
+          "sequence": 2,
+          "status": "success",
+          "message": "(1) State saved",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        },
+        "save-completed": {
+          "sha256": "4e6d1ab59d38b43f340023e73a94d7814f569bbab80739c2fadfa02823405350",
+          "operation": "save",
+          "sequence": 2,
+          "status": "success",
+          "message": "(1) State saved",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        },
+        "load-completed": {
+          "sha256": "28cf8fb19ffd539767222482eea63e711050e77d680f649e5f6d003f9fb892fc",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "2d7b3d34a4b31c02e855444b1359c85630bf8bb6c34fb012fa4a4c33bb91e7b8",
+          "state_size": "13377585"
+        }
+      },
+      "private_files": {
+        "probe.json": "1b4b7b253351c9c7bb2421e6c87d5d8b6fbfce8bbd5645b1267225dca167fa3b",
+        "experiment.json": "feab099a79dd2eb363a0a4a13b16dd9121bba46090c316bf93dbec2b8a5c4a40",
+        "observations.json": "8308d7346a4da709ae364846fd2913a895916e67a89d8d2a5746f8a364e73b61",
+        "stdout.log": "01ed4e763fe21c1892075f31985e8917033463e0cc62fd17f476f4275c0681d0",
+        "native.log": "73c16112138a41880a6080ff6216be1b9a87334c65d952b83e35385402bc8bd2",
+        "screen.png": "38e0b8ce3b8954104b874f33c82054679bb9775b419589c38c59fb37b55e51d1",
+        "driver.log": "3f6656ded00524a344ad18545543cf2048e868b4062a838dee70d979f55e7d94"
+      },
+      "experiment": {
+        "case": "resume-save",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/playable-resume1/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/playable-resume1/request",
+          "--state=/workspace/trimui-audit/native/runtime/config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "success",
+        "second_operation_status": "success",
+        "exit_code": 0,
+        "elapsed_seconds": 14.666,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 18959
+          },
+          {
+            "event": "native_result",
+            "elapsed": 7.004,
+            "sequence": 1,
+            "status": "success",
+            "operation": "load",
+            "message": "(1) State loaded"
+          },
+          {
+            "event": "key",
+            "elapsed": 7.338,
+            "key_name": "F2"
+          },
+          {
+            "event": "native_result",
+            "elapsed": 13.842,
+            "sequence": 2,
+            "status": "success",
+            "operation": "save",
+            "message": "(1) State saved"
+          },
+          {
+            "event": "key",
+            "elapsed": 14.402,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed native load then save callbacks; no qualified profile granted"
+    },
+    {
+      "case": "playable-resume2",
+      "request_sha256": "8b5fc1adaf038fa4633af812dcb96a377c899f8b90499e012a3a9a0abca2f908",
+      "native_packets": {
+        "result": {
+          "sha256": "0c4483e6a0ab857e602fcd17de68f70fa2b1d5cea1006f62d353aa26aac2c4e8",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        },
+        "load-completed": {
+          "sha256": "0c4483e6a0ab857e602fcd17de68f70fa2b1d5cea1006f62d353aa26aac2c4e8",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        }
+      },
+      "private_files": {
+        "probe.json": "61f81d96e9c139e23698ad2abfda34e8fd42924d92c8bae603a65f79872b7c78",
+        "observations.json": "d189d8165a27e3bacd8fad5937f0d0207039f175df5f34869d182488ec3d80ee",
+        "native.log": "8cd6a995cf4d6c706715dc5ddf7824be6bf351a4ba3a6d423a053c138cd24d04"
+      },
+      "experiment": null,
+      "outcome": "passed native load-only callback; no qualified profile granted"
+    },
+    {
+      "case": "playable-resume3",
+      "request_sha256": "86aa36967804f41007384398cfe0dc6ec70c6074efba4ace336b0986a48108a6",
+      "native_packets": {
+        "result": {
+          "sha256": "d7bd3896bdc92bb2f6eca6d9ec383c2c09ea3b2e10e68120e140abf541fd1068",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        },
+        "load-completed": {
+          "sha256": "d7bd3896bdc92bb2f6eca6d9ec383c2c09ea3b2e10e68120e140abf541fd1068",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        }
+      },
+      "private_files": {
+        "probe.json": "4227b07358d43f1ddbf8a2b79b4061be884351bdaf47841c94ea5ac750d81aa8",
+        "observations.json": "8806a998b24f924c529bab04e3fb9352abfabe35b239725436d3e1ee04d74dd8",
+        "native.log": "58d9e51830f8b9f6794216896d9d8adea9be40b0a4afd347bc9f5fc9dfd55689"
+      },
+      "experiment": null,
+      "outcome": "passed native load-only callback; no qualified profile granted"
+    },
+    {
+      "case": "wrong-engine",
+      "request_sha256": "cdb819c1a3b9fcff0a08e7ba1c81b3e9eeb352ddbd215c67833fea52a723e4be",
+      "native_packets": {},
+      "private_files": {
+        "probe.json": "185f2050ed04bbf7291bb4ae1146eef58af57179fa395e1c3563e2080f5b11a1",
+        "experiment.json": "d36270a971976c0e36d8a8a1682b464f5dc0637ae783ef052a5f4e04726b8320",
+        "stdout.log": "38ba85c9f92a34574b6438797d5c31af00956f33a6dfe8e46c8646050cd097a6",
+        "driver.log": "02e022ffad1c7f71e6f9ff19b0d499c78bb02c06dcb0f056613a9b50cbac183d"
+      },
+      "experiment": {
+        "case": "invalid-engine",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/wrong-engine/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/wrong-engine/request",
+          "--state=/workspace/trimui-audit/native/runtime/wrong-engine/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "exit_code": 2,
+        "native_result_present": false,
+        "elapsed_seconds": 0.115,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23674
+          }
+        ]
+      },
+      "outcome": "passed expected startup rejection"
+    },
+    {
+      "case": "malformed-packet",
+      "request_sha256": "3010b9f2f5cb51ad01e3fceddfd77c582d0dade724b44b5d4399728cddf35a3e",
+      "native_packets": {},
+      "private_files": {
+        "probe.json": "1549199b8c454e591dfdf5ab13c9d3c6647c2f06ecb642740695d51dc6039288",
+        "experiment.json": "f9dadd92f6aa849296a933231e3ee6f39cbfa948f4b3dd867c53065bba5687c5",
+        "stdout.log": "7af15a09ea3148ae9d0725959d6ee896707fe20b76f27d99d8f2e17282ae6f07",
+        "driver.log": "8ed24189d7ed985bae8565538c0cc7babb795443d57e1061758dbaa35c0c9349"
+      },
+      "experiment": {
+        "case": "invalid-engine",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/malformed-packet/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/malformed-packet/request",
+          "--state=/workspace/trimui-audit/native/runtime/malformed-packet/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "exit_code": 2,
+        "native_result_present": false,
+        "elapsed_seconds": 0.032,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23677
+          }
+        ]
+      },
+      "outcome": "passed expected startup rejection"
+    },
+    {
+      "case": "insecure-mode",
+      "request_sha256": "76256214322c5609e42a20f3573178ac8c4311ff4b75b35b04ba32803785ace6",
+      "native_packets": {},
+      "private_files": {
+        "probe.json": "85e8993598c1cdb75e250a03470ec608ce55905523187b390a2afc26d19a67eb",
+        "experiment.json": "d9f2012dab661b512096d97a0af3122f19a94306aa4de6e53ee852a45fa6ff56",
+        "stdout.log": "734131e773ff59aeda3aa4a59c0865a90f9e512653a93ce562a3a705c5f34847",
+        "driver.log": "c536b9a5ae25d97907da7bc8e09682cbd0efbdd4e4f063943c4861011a841ef8"
+      },
+      "experiment": {
+        "case": "invalid-engine",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/insecure-mode/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/insecure-mode/request",
+          "--state=/workspace/trimui-audit/native/runtime/insecure-mode/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "exit_code": 2,
+        "native_result_present": false,
+        "elapsed_seconds": 0.032,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23680
+          }
+        ]
+      },
+      "outcome": "passed expected startup rejection"
+    },
+    {
+      "case": "wrong-game",
+      "request_sha256": "66209f88835249606c455d2384d3c009f7bd1a596a415d71c25ba1750101e391",
+      "native_packets": {
+        "result": {
+          "sha256": "aaffb4d92d61ca0feaea62e6d8bc6414344d7937740167e4f93825f48ddf2d5d",
+          "operation": "load",
+          "sequence": 1,
+          "status": "failure",
+          "message": "Project resume input identity mismatch",
+          "state_sha256": "",
+          "state_size": ""
+        }
+      },
+      "private_files": {
+        "probe.json": "6900b876f3f29530f8855c14f77eefff9929b764d55b58abc66076c0594cb3d4",
+        "experiment.json": "a3cdbf8b1b442e4f12f944afd00590a9f0faab6eb601c066db4b4ddbb2ad46dd",
+        "observations.json": "99b9fbe630e2d9b6e09e8ca32274ca02878191fbe7ee0316dec97aa6d68e45f0",
+        "stdout.log": "8502f561ae6ca743f569fe78df69fa2a359534bd71ad4106e888a731502a2a84",
+        "native.log": "eabe6addb236dddff8c479ea6a8a3e5eedfb2a6244ed6dcd50e305f16b498bd5",
+        "screen.png": "4d1ff7aba6475edbb21b2a44a2c7f39e2f80923e50d1a985ec8ed3dfc3de0d5a",
+        "driver.log": "46dc83870ac2519f8d204dc9aee5fee9bc4a16069eaa3bc153d1e43a901c95ee"
+      },
+      "experiment": {
+        "case": "resume",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/wrong-game/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/wrong-game/request",
+          "--state=/workspace/trimui-audit/native/runtime/wrong-game/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "failure",
+        "exit_code": 0,
+        "elapsed_seconds": 6.707,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23687
+          },
+          {
+            "event": "native_result",
+            "elapsed": 6.014,
+            "sequence": 1,
+            "status": "failure",
+            "operation": "load",
+            "message": "Project resume input identity mismatch"
+          },
+          {
+            "event": "key",
+            "elapsed": 6.543,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed expected native failure without positive receipt"
+    },
+    {
+      "case": "mutated-state",
+      "request_sha256": "720f8f392ad148ecee841152378d1122386c547a6cd0f46392ed4f9e25c825df",
+      "native_packets": {
+        "result": {
+          "sha256": "df834f5b3d3afa5db499c974b18b0ba78d506de165a7cd1170c1e03f4664941f",
+          "operation": "load",
+          "sequence": 1,
+          "status": "failure",
+          "message": "Project resume input identity mismatch",
+          "state_sha256": "",
+          "state_size": ""
+        }
+      },
+      "private_files": {
+        "probe.json": "d24115f6dc1892e3f64a258cefb383752ffff7cb905e8e533cc9451986d90afd",
+        "experiment.json": "3aa721fce87fe649fe47a63b77be5c42dc8284e6aeda53d651f75a7d328c8e3e",
+        "observations.json": "12cf2504260c98cd1c4e1219bfcd91c3e4cc8a421a2f3c68d967dc84184f561e",
+        "stdout.log": "a98ec8b00214f19fc304702afe7d893c6c86983dab549ccb07602bd82bea681c",
+        "native.log": "ea6f92bbd553dbcd3866ac77e0716e199ea4be7dd8e71a56e1532b4165bc9cf8",
+        "screen.png": "0ef5cc0b02cfdd0d599b1b3cf9664dc9c3bb5212620aec9a01ea6eb6531ef6c0",
+        "driver.log": "eacd8ec8f543d873c858eaa64dc8a26c1a191351123b275563b5cbf250739782"
+      },
+      "experiment": {
+        "case": "resume",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/mutated-state/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/mutated-state/request",
+          "--state=/workspace/trimui-audit/native/runtime/mutated-state/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "failure",
+        "exit_code": 0,
+        "elapsed_seconds": 5.188,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23764
+          },
+          {
+            "event": "native_result",
+            "elapsed": 3.502,
+            "sequence": 1,
+            "status": "failure",
+            "operation": "load",
+            "message": "Project resume input identity mismatch"
+          },
+          {
+            "event": "key",
+            "elapsed": 4.022,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed expected native failure without positive receipt"
+    },
+    {
+      "case": "truncated-state",
+      "request_sha256": "2b6c2372b2e8006a1e388b468b24adbb6bcf7f4781879a927be9c3acb91893f9",
+      "native_packets": {
+        "result": {
+          "sha256": "1b944762c42b3b74e440fa9bd89a2d90d6164ca7e35062b6e794db905456ef6c",
+          "operation": "load",
+          "sequence": 1,
+          "status": "failure",
+          "message": "Project resume input identity mismatch",
+          "state_sha256": "",
+          "state_size": ""
+        }
+      },
+      "private_files": {
+        "probe.json": "4b323e4f7ec9a291d6f3e3ad904845e80c05efb1eea3ee813c9d70516e3dd359",
+        "experiment.json": "186855b83fdca551c8d7190d101a9a5d6347c535ec8fc9335d9a7afb546a9e3e",
+        "observations.json": "44015953e70db5cacb4da3b8aad740d42574bf13cbd6d07adc05b5f250ec6dce",
+        "stdout.log": "f906b4078ea9ed581d3af92ef782b5c999511f27d62519becfaa7d06294e5f45",
+        "native.log": "aeb65a754eca85c1bea84a0d3780ee8ce9dc8228cf5871d1948cdc0541f235fd",
+        "screen.png": "4d1ff7aba6475edbb21b2a44a2c7f39e2f80923e50d1a985ec8ed3dfc3de0d5a",
+        "driver.log": "39fa958caa9466f5c02fd2f48ed4c68b679f8db9eed03a8c72bb2192c0289e8e"
+      },
+      "experiment": {
+        "case": "resume",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/truncated-state/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/truncated-state/request",
+          "--state=/workspace/trimui-audit/native/runtime/truncated-state/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "failure",
+        "exit_code": 0,
+        "elapsed_seconds": 5.181,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23828
+          },
+          {
+            "event": "native_result",
+            "elapsed": 4.003,
+            "sequence": 1,
+            "status": "failure",
+            "operation": "load",
+            "message": "Project resume input identity mismatch"
+          },
+          {
+            "event": "key",
+            "elapsed": 4.513,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed expected native failure without positive receipt"
+    },
+    {
+      "case": "corrupt-state",
+      "request_sha256": "aa44dc9bd56f5e882e5d5e9a8ab63842fc5db8667a01b6dfa84f60c65be9634c",
+      "native_packets": {
+        "result": {
+          "sha256": "53015ebf4549e27554d84680baa0aacbe239f850aaeb03c64e6fc025c7d1427c",
+          "operation": "load",
+          "sequence": 1,
+          "status": "failure",
+          "message": "Failed to load state: Savestate is for an older version of PPSSPP!",
+          "state_sha256": "",
+          "state_size": ""
+        }
+      },
+      "private_files": {
+        "probe.json": "fda7d35b4957b208b3137b9bbbc3b7b9e5d421d9b3c3fc09ae2d6320dfcb96ca",
+        "experiment.json": "94a10d37f4d02521b655b937e36f1f3b8b782daa82839e67847db16dd3639cce",
+        "observations.json": "c3b9e79e0b54adfe2adb1f1a8ae97d324d1ad82b288ddc0897d998c1d630688b",
+        "stdout.log": "1b983914c9ce9fc6efae537bb7e4be1736623c15a909369ddd47c1c809d5cf36",
+        "native.log": "ef667c7c08522816d560adcf548723c070062b28c185727701343d16de9e6b7e",
+        "screen.png": "fb4f55973db742941655c7a4b53c139869e5ce48ed0aecb1cb3b3bb92bd4b1ae",
+        "driver.log": "5c53e999e97ccca903229e747627ec788eb6ac0fd882c5384c7bd15e2988ac25"
+      },
+      "experiment": {
+        "case": "resume",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/corrupt-state/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/corrupt-state/request",
+          "--state=/workspace/trimui-audit/native/runtime/corrupt-state/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "first_operation_status": "failure",
+        "exit_code": 0,
+        "elapsed_seconds": 5.133,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 23909
+          },
+          {
+            "event": "native_result",
+            "elapsed": 3.502,
+            "sequence": 1,
+            "status": "failure",
+            "operation": "load",
+            "message": "Failed to load state: Savestate is for an older version of PPSSPP!"
+          },
+          {
+            "event": "key",
+            "elapsed": 4.018,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed expected native failure without positive receipt"
+    },
+    {
+      "case": "interrupted-result",
+      "request_sha256": "03e1330a56cdd2ae44d8c72108cee45a76b52aa278e74278eb4f870df30e685c",
+      "native_packets": {
+        "load-completed": {
+          "sha256": "78b89c46e5a90ccb68be1569e1febe6f7430e77ead28f4e35991674beda502c4",
+          "operation": "load",
+          "sequence": 1,
+          "status": "success",
+          "message": "(1) State loaded",
+          "state_sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+          "state_size": "13376733"
+        }
+      },
+      "private_files": {
+        "probe.json": "8dd72839d20b445430fa78b10af90442f5e184df0e5d63fdacf2604284060b3b",
+        "experiment.json": "4ccab7ef241e0ee53afeef073a1a22cabc5894459fdf1368fa137dd5ed7c9a07",
+        "observations.json": "c71f4cad4744ce7133acb0af177dcdb7834c8f646c17a8e816b330f646e3d5c2",
+        "stdout.log": "d333b74a1bc472d36ffe80c8b1aaecd57f07ce99b07d2b1e7fc8cb4cd8d55b2c",
+        "native.log": "81eac4cadb696df66a00845af3665df9d138ba110728c37b53ef9094bdb1d958",
+        "driver.log": "d6343ef7a5fae4f527a86496a57fd92d870e2a8f02ff4ebef09cc4601d563d55"
+      },
+      "experiment": {
+        "case": "interrupted-result",
+        "kind": "native-only-protocol-experiment",
+        "command": [
+          "/workspace/trimui-audit/native/patched-build/PPSSPPSDL",
+          "--graphics=opengl",
+          "--escape-exit",
+          "--log=/workspace/trimui-audit/native/runtime/interrupted-result/native.log",
+          "--project-state-session=/workspace/trimui-audit/native/runtime/interrupted-result/request",
+          "--state=/workspace/trimui-audit/native/runtime/interrupted-result/input.ppst",
+          "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+        ],
+        "evidence_class": "desktop-native",
+        "hardware_qualified": false,
+        "profile_created": false,
+        "load_completed_status": "success",
+        "final_result_regular_file": false,
+        "publication_failure_injected": "directory occupying final result pathname",
+        "exit_code": 0,
+        "elapsed_seconds": 8.345,
+        "events": [
+          {
+            "event": "start",
+            "elapsed": 0.0,
+            "pid": 24372
+          },
+          {
+            "event": "independent_native_completion",
+            "elapsed": 7.008,
+            "sequence": 1,
+            "status": "success",
+            "operation": "load"
+          },
+          {
+            "event": "key",
+            "elapsed": 8.345,
+            "key_name": "Escape"
+          }
+        ]
+      },
+      "outcome": "passed native publication-failure injection; independent completion is not a final receipt"
+    }
+  ],
+  "preserved_states": {
+    "stock-cutscene.ppst": {
+      "sha256": "e6e93534c04c444ba112437a2d6cf600f67710b5bddfec7820a3d02ecc622d74",
+      "size": 13603166
+    },
+    "patched-initial.ppst": {
+      "sha256": "0982034d6f3c7e08ab7149297392df200c4662cc4e05fad6a4177343e417bc97",
+      "size": 5433024
+    },
+    "patched-playable.ppst": {
+      "sha256": "1292772964f0333fba549e8d2f3b23231d977bf04c03ccab4db00a658fe2ca99",
+      "size": 13376733
+    }
+  },
+  "kernel_boundary_report": "../frontend/g05-native-boundary.json",
+  "kernel_boundary_entry": "clean run with root_pid 24006; private source receipt g05-owned-native-clean.json",
+  "limitations": [
+    "Desktop native evidence does not qualify TrimUI device compatibility, GPU/FPS, suspend or shell Resume.",
+    "Raw native packets do not create QualifiedStateProfile, Spruce foreground authority, writer capability or promoted SaveRef.",
+    "Fresh resume followed by save replaces state bytes; older load receipt then correctly names old bytes, while current save receipt names new bytes.",
+    "Publication-failure injection obstructed final result pathname; it did not simulate a power cut or claim production promotion.",
+    "Wrong-slot/replay/owner/session capability proofs remain production authority checks; no fabricated authority was constructed.",
+    "Host build uses pinned FFmpeg prebuilt x86_64 static archives, not reconstructed FFmpeg source."
+  ],
+  "retained_probe_scripts": {
+    "aggregate_protocol.py": "c3aafd737db8b81f1ccd24f9a6a4e130f1309ee53402db91d8248ebcfcea2ec8",
+    "run_protocol.py": "231bbbe4193a49f45dee76cbac7330f563b41c727b628ed3df7e29abdcef3de5",
+    "inspect_protocol.py": "d91022f2977b8955f8f141401e58294b0314e07b3b25cdbc18448f968f7088f7",
+    "prepare_protocol.py": "29f30d8136b2c028f4c6943a127a9b9ceb870b37603d1da5f095acabd59ea70e"
+  }
+}

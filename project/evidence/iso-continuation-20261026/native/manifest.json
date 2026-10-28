@@ -1,0 +1,89 @@
+{
+  "scope": "sanitized host native metadata and experiment scripts only",
+  "files": {
+    "README.md": {
+      "sha256": "b8363fce1b4e781b0c9e497bf5df0862a1b4b5fe8d72a28d0bcc484b0760b08c",
+      "bytes": 7530
+    },
+    "additional-protocol-report.json": {
+      "sha256": "377fa073c2fa50611ee90a8fa11102bfd2b1d348f8ccbc4f9ae238b04616d8fb",
+      "bytes": 9977
+    },
+    "aggregate_additional.py": {
+      "sha256": "a3731b0dbe01605ea96eb8eef84f4409bb890687d7360258cac68045ccf24bca",
+      "bytes": 4040
+    },
+    "aggregate_protocol.py": {
+      "sha256": "c3aafd737db8b81f1ccd24f9a6a4e130f1309ee53402db91d8248ebcfcea2ec8",
+      "bytes": 4696
+    },
+    "assembly.json": {
+      "sha256": "51ef52f30cdebc4dcf85abd06e6282c73a4b262efd21cac19a69fbb568682e72",
+      "bytes": 3223
+    },
+    "build-report.json": {
+      "sha256": "e558b938a66c56c5c55c711d3f3af7e4527049021d3713fea75ac469af1a0964",
+      "bytes": 3114
+    },
+    "configure-host.sh": {
+      "sha256": "964a01c30d9706d9fa805699129c694c51509cd74d91c9ec1fb2d80256fc2302",
+      "bytes": 1362
+    },
+    "dependency-packages.json": {
+      "sha256": "885b6765aeb90a539891c8da98b245559b0c3964fac5588e81f287621495382f",
+      "bytes": 9869
+    },
+    "host-dynamic-dependencies.txt": {
+      "sha256": "68d3c9cd3862255bdcbda5f03898e2e0aebe1c42c93b995524a35249b21a84b6",
+      "bytes": 3672
+    },
+    "independent-review.json": {
+      "sha256": "85f0f65c63713a0f6bf7eacb40cfd34c37cceb04a4dc4198a05cea9a29a3b62f",
+      "bytes": 12008
+    },
+    "inspect_protocol.py": {
+      "sha256": "d91022f2977b8955f8f141401e58294b0314e07b3b25cdbc18448f968f7088f7",
+      "bytes": 1142
+    },
+    "ordinary-gameplay-control.py": {
+      "sha256": "69d9ac6641d97123944e81aac4a9b6d53525df9d19dccb1fdb28cb81aef86e02",
+      "bytes": 1358
+    },
+    "ordinary-gameplay-launch.py": {
+      "sha256": "747134e8894bb258184ca3aaaf9aaf2b60a5cf68774419595618702795131250",
+      "bytes": 1647
+    },
+    "ordinary-gameplay-report.json": {
+      "sha256": "fa3f248c15204436544834544688fe36b3e11bfb3790b5914da51fd85480fc2c",
+      "bytes": 11377
+    },
+    "prepare_negative_cases.py": {
+      "sha256": "2f21b89d953ac06b53ef6049eba63983cfacbea65d5e2becb8a5348184490909",
+      "bytes": 1462
+    },
+    "prepare_protocol.py": {
+      "sha256": "29f30d8136b2c028f4c6943a127a9b9ceb870b37603d1da5f095acabd59ea70e",
+      "bytes": 2242
+    },
+    "protocol-report.json": {
+      "sha256": "cd59e84d5dcc08d4d45f62c2ba9966c8fd4b85d61acad96057223b7c0661d73b",
+      "bytes": 36112
+    },
+    "run_protocol.py": {
+      "sha256": "231bbbe4193a49f45dee76cbac7330f563b41c727b628ed3df7e29abdcef3de5",
+      "bytes": 5172
+    },
+    "slot-replay-boundary-review.json": {
+      "sha256": "a2462aa0a7bc35e04012086f8df5217f8a7e48e5bc1a4fb94b5830b750fa4287",
+      "bytes": 2437
+    },
+    "stock-binary.json": {
+      "sha256": "c7e46bf2154032922811133b69dfa90a5bc29f479cf14a9c5fa04cc42bca92a9",
+      "bytes": 415
+    },
+    "submodule-identities.txt": {
+      "sha256": "7973beb9a7a78d68d3c2cea2e6db188b915abf1df58a15f5ddd22995e0f0c638",
+      "bytes": 2023
+    }
+  }
+}

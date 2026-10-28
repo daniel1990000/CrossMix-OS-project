@@ -55,6 +55,16 @@ token and inline comment; if unrelated edits happened meanwhile, the restored
 line can move within the same section. With no intervening changes, Undo restores
 the exact original file bytes.
 
+The [dev19 native audit](../evidence/iso-continuation-20261026/frontend/g03-native-frameskip-followup.json)
+observed an important limit: removing the per-game FrameSkip key used the
+explicitly configured global value on the next launch, but PPSSPP wrote that
+value back into the per-game INI on normal exit. A later global-only change did
+not override the newly written local value. **Use global setting removes the
+current override; it does not guarantee permanent inheritance after native
+settings writes.** Fresh status must describe the actual local value. The test
+used chosen global values, not assumed emulator defaults, and did not exercise
+the qualified frontend manager's Apply/Undo path.
+
 Native interactions are checked rather than silently changing more settings:
 
 - Manual frameskip is inactive while automatic frameskip is enabled. Turn auto

@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "attempt": 2,
+  "recorded_at_utc": "2026-10-26T18:58:30.852647+00:00",
+  "base_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "working_tree_modified": true,
+  "tracked_diff_sha256": "917e3f451209ee08bceedfb0a7add5f26cf71d0d2e9b5d7b4c886ab9e8cc816f",
+  "files": [
+    {
+      "path": "project/packaging/current-release.json",
+      "size": 4787,
+      "sha256": "c88c73e9419fdee0ab6b1370d8c8c9acbb464f9356c183cea21e1ba22099842d",
+      "tracked": true
+    },
+    {
+      "path": "project/ppsspp/NOTICE.md",
+      "size": 3667,
+      "sha256": "7b43503ebe189a53ae7861ae89793d45e2cc32db3d64b507f0960fb74ad3a2b0",
+      "tracked": true
+    },
+    {
+      "path": "project/ppsspp/gpu-stats.lock.json",
+      "size": 983,
+      "sha256": "ff0845444a477cc9c2f1586b6e45107e5a581ab27abadcf7b4e2e55b86c60058",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/gpu-stats.md",
+      "size": 1661,
+      "sha256": "be67b518d5c51bfc782e4eb61676b94fae1d1422c026f30f4e46487b0c00b08f",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/patches/0005-gpu-stats-float-copy.patch",
+      "size": 529,
+      "sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/tests/gpu_stats_acceptance.cpp.in",
+      "size": 1880,
+      "sha256": "11fd300cc70a37b353309105a465fc11bdb74617afcd64e4e1371433957f0e08",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/tests/test_gpu_stats_patch.py",
+      "size": 3394,
+      "sha256": "e0a33c1b6db2cdbc296a90eacd8185ba3b36b4ebff53153d39a5d16d37c06ec0",
+      "tracked": false
+    },
+    {
+      "path": "project/psp_shell/ui/model.py",
+      "size": 122145,
+      "sha256": "58b56dde47562718bf99d6e2e97f54125b780c02b138ec3b8890eac43623b1ed",
+      "tracked": true
+    },
+    {
+      "path": "project/tests/test_experimental_embedded.py",
+      "size": 13692,
+      "sha256": "27a92a7dae82a4c603b5f65073870ea68bfb0566b5a54e923780f82dbe191a85",
+      "tracked": true
+    },
+    {
+      "path": "project/tests/test_ui_continuation.py",
+      "size": 17581,
+      "sha256": "3f41fc308a266939a69ac681ef722ec165bfcfbb529ff15bd947cf135c932e7f",
+      "tracked": true
+    }
+  ]
+}

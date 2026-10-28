@@ -1,0 +1,438 @@
+{
+  "data_schema_epoch": 0,
+  "files": [
+    {
+      "mode": 420,
+      "path": "app/bridge/__init__.py",
+      "sha256": "2747fbbd37e9a9f3ace1e59badd1c39cfa07f87f5c555ff130284b923b2032bc",
+      "size": 78
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/bootstrap.py",
+      "sha256": "f4c644e1ab4f077a18be27b72bcb616d01eb6fb9465688ed91ab38afee2d980a",
+      "size": 12443
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/experimental.py",
+      "sha256": "79599db9f2ea8f4b2a8975123fb61bcfcb85e84a18ce0d617bb50b84e542e272",
+      "size": 17095
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/experimental_journal.py",
+      "sha256": "c9b1381daceff7fa6b688868529c22aa690faa233abede2aeae52efe8a4a5652",
+      "size": 11154
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/experimental_runtime.py",
+      "sha256": "2f6e9f17d692932fe82b33ab29eec60ec7dfb11063587238f50fe14b22caeea3",
+      "size": 26864
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/frontend.py",
+      "sha256": "d71c6f886b18433c4bce01aed1e9055b48338f30e145e14df9908ad8a34d6581",
+      "size": 2865
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/lifecycle.py",
+      "sha256": "4c3b20a62cb9a0884e71a4338ec133279404a3ea2287d45760e14814a0170979",
+      "size": 11411
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/principal.py",
+      "sha256": "6df9ec5a91d03c342efdf7ffca883e4294fb61b12972216a6a9f4b485f633b7c",
+      "size": 23090
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/principal_integration.py",
+      "sha256": "9f577f13555c11f8de7d64bb3cb21c2459fcc7c39a8515536f759425c44c9650",
+      "size": 18959
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/process_source.py",
+      "sha256": "a0770d8a01d01f9b59835f644657d13c8dc80b3f8eebe456bd6aba1ec71719aa",
+      "size": 25004
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/pyui_entry.py",
+      "sha256": "275e1438bf227faf94b983034fefceb77f09ac0e279c32340789fe251b1b4287",
+      "size": 10615
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/qualified_runtime.py",
+      "sha256": "37cfbbc6efbf68d73270ecc04b03df78bb90c4b624ffd464b76751b0229279cf",
+      "size": 404
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/resident.py",
+      "sha256": "67b141c27f83c4a614a23f6b4facca2c1159ae6d3b064772a8159e51b2188a52",
+      "size": 39071
+    },
+    {
+      "mode": 420,
+      "path": "app/bridge/source_integration.py",
+      "sha256": "e819c811fd35669a23e0ee2b37803cb448296ccacc7337cda254105573196ff6",
+      "size": 7826
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/LICENSE",
+      "sha256": "345857f57ca3b8226e5d2b56daa80f625d6e7779fa6c0eb588900ea3a210fcd8",
+      "size": 1321
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/README.md",
+      "sha256": "d75c4c8f257be834ef7cc4d4daae05813b99a581c00ca6e34e9c8ee0a7636c5d",
+      "size": 6448
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/compatibility-profile.example.json",
+      "sha256": "3344e55b21f8926152da3dd91bf2a7890c11a1cddd88682655c3ca533dbdd054",
+      "size": 1375
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/manifest.json",
+      "sha256": "251d81767c3a4fafa60f67b3f7f731aa710180b4621e4881fae11acccf86dd73",
+      "size": 760
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/per-game-source-lock.json",
+      "sha256": "a7b434f842a1b18d15f1d454da609c9013ab715111fc154e878c4ab33ba1885e",
+      "size": 702
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/preview.svg",
+      "sha256": "d13004446a32d72e9a652718bb7a820fc9dadbc13f2a88c5fd1726801c4db6a8",
+      "size": 2396
+    },
+    {
+      "mode": 420,
+      "path": "app/ppsspp/theme/spruce-midnight.ini",
+      "sha256": "2c994b2bf138c589f296168b55d6ab3c52b6628336411f49a4f6d386aba1d56a",
+      "size": 1830
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/controls/ppsspp-native-unqualified.json",
+      "sha256": "eb6719b82404582917a0da32aea85aa26c941da250c190e6a6ecf52870317512",
+      "size": 1721
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/controls/retroarch-standard-unqualified.json",
+      "sha256": "3b14a89330e9e265dc1356474232b4af866021583878146c469907406bffbd27",
+      "size": 1046
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/controls/spruce-igm-unqualified.json",
+      "sha256": "d5254e774d197e95198310db26d7fc7a4255db24e1d13d5f4c844ce212bf7276",
+      "size": 1966
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/measurement-scenes.json",
+      "sha256": "92e26091c42649ad36221f8f6994b8cef347f1a2b1e5624936e761bfc1be1dc0",
+      "size": 631
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/ports-sources.lock.json",
+      "sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+      "size": 11122
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/ports.json",
+      "sha256": "affd3bd2e19c175ccc6af028982b488edbebd56524601b21394695b31abb3aec",
+      "size": 16000
+    },
+    {
+      "mode": 420,
+      "path": "app/profiles/spruce-4.5.4-tg5040.json",
+      "sha256": "6686dae8de3738f5d7038e3c7857555360029c9640bda539e3e16416c693c2cc",
+      "size": 2089
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/__init__.py",
+      "sha256": "58cd243bd75c1f7c6bb86616581300ec588161ddef92fff7f6e7a2a298e06b0c",
+      "size": 3161
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/__main__.py",
+      "sha256": "a67c172046323b0efcafe92cb83abc266d5dd4bc931d9312cde1b7bed50643db",
+      "size": 48
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/adapters/spruce.py",
+      "sha256": "54fe8bc768a1496264d712c8e9e39472d1da2f9a8b5b26e347257651c7ba8fd8",
+      "size": 75283
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/app.py",
+      "sha256": "524029ab51384153b8830ea87b1a633df5e249fa7ddaa426ebb69006124cf7e9",
+      "size": 35602
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/backup_catalog.py",
+      "sha256": "66008b88e9b4ee77257632bb7b9a3d3d9ec2a655c212aab75b759e43b9dae44e",
+      "size": 18002
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/controls.py",
+      "sha256": "eec8eceb89ec394fb8ba76b4cbf5b1703e62e1447a87be604058bcbd3e441926",
+      "size": 53891
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/demo.py",
+      "sha256": "7de173a939694a67dadf36feda8c985369a11e4869eb421d034c484e23baa514",
+      "size": 9859
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/embedded.py",
+      "sha256": "11499b5567b1d8bf358073889fe4b86228b6085054c448b497c4fcb4de3743b1",
+      "size": 31897
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/game_information.py",
+      "sha256": "efda8a605bc6af38e2365e6a4b3e639d15626aafb38629fcd91de7c5c388e4c4",
+      "size": 7936
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/hardware_settings.py",
+      "sha256": "7eaace0392a1bed27c8c54b506425320728820ebb3909ec3c714ec29ad2f2312",
+      "size": 15805
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/health.py",
+      "sha256": "f05d73897bef16b8f9a55fa8cf72cbe1797acda650b4efa9388dba25f7b88929",
+      "size": 23274
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/library.py",
+      "sha256": "d2ac643dcc682e8bb75f917f6604aa605f8fde2b7b646ed439dfb69cc9fe87bd",
+      "size": 298
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/performance.py",
+      "sha256": "524a93a84f4c79e572c096d8596bc6cfc1206b8ba15c0606bc136162eadfd81a",
+      "size": 26173
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ports.py",
+      "sha256": "36576c9edf8677b5b47f6a9e2857a1521bd61ce14b8ab9496cbe511aad2170bf",
+      "size": 45378
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ppsspp.py",
+      "sha256": "bc6623129439c626afb1ee74a632189de742bc27892f14f93d5136194ba95356",
+      "size": 43312
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/recovery.py",
+      "sha256": "3f2e001fd93cbc62669da70bd2d1da157baa6cbfe8a71cff8920e8daa19c5dfc",
+      "size": 13947
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/runtime.py",
+      "sha256": "b45acb85268658ee41ae4acea9249a0f5379c340431e1e95f59e6d47b40c147c",
+      "size": 20795
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/settings.py",
+      "sha256": "c9760f7544bcdee32d1c6569eea2b97f72d97325b36204d40a5cd79b04d6767e",
+      "size": 36216
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/state_evidence.py",
+      "sha256": "1bda9bf692de23c5bb5920a35e2021a442523acd548babfecc47dcc9a77b6269",
+      "size": 46889
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/__init__.py",
+      "sha256": "62e9654a19eb35a46b946ae4a41d1df2a26641582c4d6c756f921705b9df0693",
+      "size": 322
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/artwork.py",
+      "sha256": "c0aabc0d6ee5e65ab3c8e90c4a9af21c32395232f7e40365b9e271fc5de03c8c",
+      "size": 17372
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/input.py",
+      "sha256": "84f5d98049b4841ded30178f1a401483c5e8a37501a17a06d5e01a6fc0982f82",
+      "size": 10152
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/keyboard.py",
+      "sha256": "2c0ca8639d3eca7803188d4960903510b08a94c5abf836b8f88702a1b2a0a674",
+      "size": 5376
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/model.py",
+      "sha256": "58b56dde47562718bf99d6e2e97f54125b780c02b138ec3b8890eac43623b1ed",
+      "size": 122145
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/motion.py",
+      "sha256": "a881ccfa38030d800f82c5a53ca21d94b44c30a104afa95aa6408208dd5db622",
+      "size": 1568
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/pictograms.py",
+      "sha256": "cb9480c311cd16670d6e8b6526da45d2e6670b99eccc6e576e7aa295eb3b3c3c",
+      "size": 5493
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/renderer.py",
+      "sha256": "f3284e054f87e9cd244d9c2b96f8351cae2d7782cec1c13e4f9187c81f8c68f1",
+      "size": 54066
+    },
+    {
+      "mode": 420,
+      "path": "app/psp_shell/ui/text.py",
+      "sha256": "540fff3c82a2fac60d1743603a58a5d55d5c7c8f10eaaf19e0d90d521020d466",
+      "size": 9564
+    },
+    {
+      "mode": 420,
+      "path": "app/tools/__init__.py",
+      "sha256": "9b7e85e6d36e15662dd99116b10b6206e4c12e54ebc61e3737f6e38c72304c26",
+      "size": 114
+    },
+    {
+      "mode": 420,
+      "path": "app/tools/backup_catalog.py",
+      "sha256": "4b1932d0b78cc6447b2e864cc33c1aca5cc5265675851c69fb86752b664db05b",
+      "size": 4198
+    },
+    {
+      "mode": 420,
+      "path": "app/tools/recovery_payload.py",
+      "sha256": "33f09f16761eb4d270e9757810f772951e7d89de9cfca26b394bb0f37f8d45f1",
+      "size": 27915
+    },
+    {
+      "mode": 420,
+      "path": "app/tools/recovery_preflight.py",
+      "sha256": "9010c95524b1073f6653a22d8c586cf0d1647736983be21c2e08b4f5c0adb18f",
+      "size": 20226
+    },
+    {
+      "mode": 420,
+      "path": "assets/fonts/NotoSans.ttf",
+      "sha256": "bfb7bb691513f12e734dc346c03a03f784912432d7e3fa8e56efcf906fe86b3d",
+      "size": 2049096
+    },
+    {
+      "mode": 420,
+      "path": "assets/fonts/OFL.txt",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "size": 4396
+    },
+    {
+      "mode": 420,
+      "path": "metadata/development-release.json",
+      "sha256": "53b61c7062fe1adf51cc763a0005821afa8c9ca8e8025a5aee4313c6ca35b42c",
+      "size": 4772
+    },
+    {
+      "mode": 420,
+      "path": "metadata/original-payload.json",
+      "sha256": "85273fdcd62bac0a0f67bbd8d8db5edb60cd27bc1df2899c1d19de5d9fbc8ed8",
+      "size": 31295
+    },
+    {
+      "mode": 420,
+      "path": "metadata/source-provenance.json",
+      "sha256": "b34b66e1072c74e6183d167c62c8e1a13890c018388634958230b12a05c5c8f2",
+      "size": 11561
+    },
+    {
+      "mode": 420,
+      "path": "notices/DEPENDENCIES.txt",
+      "sha256": "5e2c123235a8f13f18e0cd093219a89aabbbbe746bdd4fd9e25a5b89634c1ae4",
+      "size": 539
+    },
+    {
+      "mode": 420,
+      "path": "notices/NotoSans-OFL.txt",
+      "sha256": "cee9892f9f0cc8fe882c9e9537ee6a89621d86ee7ceaf70b02e2b2b1c25c061a",
+      "size": 4396
+    },
+    {
+      "mode": 420,
+      "path": "notices/ORIGINAL-PROJECT-LICENSE.txt",
+      "sha256": "d84d543b0bbef1deccdbccdd069fb8547ac4e6e3c918057ab4b66f5d71a77018",
+      "size": 1402
+    }
+  ],
+  "key_id": "019a230437ed35c1153a27e2d114015e6c529e41d2e272a47fb9e3c2868ad279",
+  "kind": "python-extension",
+  "license": "MIT-project-code-only",
+  "profile": {
+    "architecture": "aarch64",
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "baseline_files": {
+      "base/runtime.txt": "1ce94bd5293f71a7861f72f7fac8c3e648d69f5c693ebefb1465fafc703dd1f7"
+    },
+    "execution_environment": "host-fixture",
+    "firmware_versions": [
+      "fixture-1.1.1"
+    ],
+    "hardware_qualified": false,
+    "id": "spruce454-tg5040-host-fixture",
+    "model": "trimui-smart-pro",
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "runtime_verified": false,
+    "schema": 1,
+    "source_use_verified": false
+  },
+  "release_id": "smartpro-psp-0.1.0-dev19",
+  "schema": 1,
+  "security_epoch": 0,
+  "source_date_epoch": 1792972800
+}

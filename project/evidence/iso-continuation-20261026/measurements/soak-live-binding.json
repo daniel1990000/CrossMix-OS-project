@@ -1,0 +1,12 @@
+{
+  "observed_at_utc": "2026-10-26T19:36:03.541330+00:00",
+  "pid": 31264,
+  "exe_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "process_start_ticks": "638779",
+  "listening_port": 19362,
+  "owned_listener_sockets": [
+    "socket:[141939]"
+  ],
+  "command_sha256": "de80557bfb334ed68e9ab093e89ff65c58706546ebe68e86f767a0c7e829b6b3",
+  "scope": "Live verification during ongoing single-connection native observer run; not a prelaunch socket record."
+}

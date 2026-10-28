@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-26T18:55:39.466440+00:00",
+  "base_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "working_tree_modified": true,
+  "tracked_diff_sha256": "d7c53d32fcf21d6f1f86714dacefd0e20cd56838a4f5bb5e019236e636fae070",
+  "files": [
+    {
+      "path": "project/packaging/current-release.json",
+      "size": 4787,
+      "sha256": "c88c73e9419fdee0ab6b1370d8c8c9acbb464f9356c183cea21e1ba22099842d",
+      "tracked": true
+    },
+    {
+      "path": "project/ppsspp/NOTICE.md",
+      "size": 3667,
+      "sha256": "7b43503ebe189a53ae7861ae89793d45e2cc32db3d64b507f0960fb74ad3a2b0",
+      "tracked": true
+    },
+    {
+      "path": "project/ppsspp/gpu-stats.lock.json",
+      "size": 983,
+      "sha256": "ff0845444a477cc9c2f1586b6e45107e5a581ab27abadcf7b4e2e55b86c60058",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/gpu-stats.md",
+      "size": 1661,
+      "sha256": "be67b518d5c51bfc782e4eb61676b94fae1d1422c026f30f4e46487b0c00b08f",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/patches/0005-gpu-stats-float-copy.patch",
+      "size": 529,
+      "sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/tests/gpu_stats_acceptance.cpp.in",
+      "size": 1880,
+      "sha256": "11fd300cc70a37b353309105a465fc11bdb74617afcd64e4e1371433957f0e08",
+      "tracked": false
+    },
+    {
+      "path": "project/ppsspp/tests/test_gpu_stats_patch.py",
+      "size": 3394,
+      "sha256": "e0a33c1b6db2cdbc296a90eacd8185ba3b36b4ebff53153d39a5d16d37c06ec0",
+      "tracked": false
+    },
+    {
+      "path": "project/psp_shell/ui/model.py",
+      "size": 121835,
+      "sha256": "f503bf6423b0ebd29ccd842ddfd4ce176253c3b39f22a34dab8d01c5208eb283",
+      "tracked": true
+    },
+    {
+      "path": "project/tests/test_ui_continuation.py",
+      "size": 17456,
+      "sha256": "cfdc8f5c8e09f2a2394f70880b6f00b69f6aea3855ea9f4aa6a4d5df25e03a48",
+      "tracked": true
+    }
+  ]
+}

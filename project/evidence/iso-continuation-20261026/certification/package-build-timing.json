@@ -1,0 +1,8 @@
+{
+  "started_at_utc": "2026-10-26T19:00:20.185252+00:00",
+  "finished_at_utc": "2026-10-26T19:00:22.521590+00:00",
+  "exit_code": 0,
+  "source_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "source_checkout": "/workspace/trimui-audit/package-checkout",
+  "log": "package-build.log"
+}

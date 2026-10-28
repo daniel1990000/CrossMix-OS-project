@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "scope": "sanitized host certification/package/review evidence",
+  "implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+  "files": [
+    {
+      "path": "README.md",
+      "size": 2989,
+      "sha256": "dbb487b9cd7a495d51b143477b38d3ebdd4cfc12f3601ad0c09d380527c560ed"
+    },
+    {
+      "path": "baseline-certification.json",
+      "size": 6666,
+      "sha256": "2e2d0592422d90f572d799f9681564217855d34e2a61ca3a326524befcfa886a"
+    },
+    {
+      "path": "baseline-certification.log",
+      "size": 212872,
+      "sha256": "84ad195ba682a0f8b97859f51738a782d99ecb2e4e3f3d57e578f9c25cae5bdb"
+    },
+    {
+      "path": "baseline-environment.json",
+      "size": 1050,
+      "sha256": "9522a7aec0ae1d32460ac69d559c1ce16075e21dcafb02ac4c7e504e190ca9c3"
+    },
+    {
+      "path": "baseline-receipt.json",
+      "size": 838,
+      "sha256": "d2f8098bd53d750c3bc56e2064fb8be1f6348fb500ec8ae34baa499c5ac10bb4"
+    },
+    {
+      "path": "build-report.json",
+      "size": 5729,
+      "sha256": "5c4d14d20da5d77cccfd389998a94242efd87231e32ebcad7b5d9a1927c4496d"
+    },
+    {
+      "path": "ci-readback.json",
+      "size": 6805,
+      "sha256": "52832d02bbbe890ea9e85b92ca16e625c3dc56b83e65d197051e8eaf995126ea"
+    },
+    {
+      "path": "final-attempt1-certification.json",
+      "size": 3916,
+      "sha256": "f7b6d277598f4db1ef4d1b9ac800d2d17f3b448cdc6dd130aedd404f601b127e"
+    },
+    {
+      "path": "final-attempt1-certification.log",
+      "size": 215191,
+      "sha256": "63c22b5ead5de1585f0d68faacc775864a10ea3f85b6eb4aabf11076e006329d"
+    },
+    {
+      "path": "final-attempt1-working-tree-inputs.json",
+      "size": 2033,
+      "sha256": "56405428cfaba57c417dd7a8abb9af677d3e5150e8c28dbc1a917fb9d397a7f5"
+    },
+    {
+      "path": "final-certification.json",
+      "size": 6618,
+      "sha256": "bf5ecdd66246ba80a60da10f7f9fb5d31745d19163ee0fc8279c885dea48face"
+    },
+    {
+      "path": "final-certification.log",
+      "size": 213625,
+      "sha256": "15871409b7d98a58360729657d7fc0dfd9d741a4126856d08697d8545d97aa40"
+    },
+    {
+      "path": "final-receipt.json",
+      "size": 1141,
+      "sha256": "c07f9b525f108a3b2c807f685d5d146bf93100ea314298f427630a2a32de973d"
+    },
+    {
+      "path": "final-working-tree-inputs.json",
+      "size": 2250,
+      "sha256": "29ed15fe945e58be8e0287bb815e80d61c213e6361e3dc4a4cb5f8c5377b50b5"
+    },
+    {
+      "path": "no-git-rebuild.json",
+      "size": 1192,
+      "sha256": "409dbae4c76f74841f376b9291cd87b3b6716e49bba026d963e5269d2b1a8615"
+    },
+    {
+      "path": "package-build-timing.json",
+      "size": 292,
+      "sha256": "c215de1eb16a432b9734e09847be5248d8d90daf8cc47c9f8a999553f2d2c154"
+    },
+    {
+      "path": "package-build.log",
+      "size": 1084,
+      "sha256": "323375afff309d210ab8033a701f7651a302e3b75e2a47190be8dca6c667e51a"
+    },
+    {
+      "path": "package-checksums.log",
+      "size": 247,
+      "sha256": "18618696d2b9dd2e52d3a3ecf92b70879f1693dfe3173afe558f73bf8b48a2cf"
+    },
+    {
+      "path": "package-no-git-build.log",
+      "size": 1091,
+      "sha256": "1391302e3b0a734f32ef70c7f08fda96b4e6b06c5a3882be09d3115ffb07304e"
+    },
+    {
+      "path": "package-no-git-timing.json",
+      "size": 298,
+      "sha256": "c07565625ecc00099564d377faf457972f9534516ef5d9ca17b6600a2457e7e7"
+    },
+    {
+      "path": "package-overlay-verify.json",
+      "size": 13309,
+      "sha256": "da89283aee6330ccf91b7101edaf478c7eed53f40bfc9e5fe09ae2f1473d3780"
+    },
+    {
+      "path": "package-receipt.json",
+      "size": 3551,
+      "sha256": "f5fa57cfc956fa42f0659906054ebc1369ea630139778198ce47661ee9dd3aef"
+    },
+    {
+      "path": "release-source.json",
+      "size": 30544,
+      "sha256": "e831826704ddf1bf6a2e7455d3c438c5ab2d54b55cbd9dc95427080c182948eb"
+    },
+    {
+      "path": "review-gpu-stats.log",
+      "size": 444,
+      "sha256": "9a02392fee1b978d74ee2fc0196c39dea5fa53dbf2c7e46789b36f16c2ca57b8"
+    },
+    {
+      "path": "review-ui-fixed.log",
+      "size": 2641,
+      "sha256": "cc003f35ccc48c90f054a6e3137e92935ec5743c0c7d5acf47fef5ba74243f85"
+    },
+    {
+      "path": "review-ui-old.log",
+      "size": 6512,
+      "sha256": "acdc5baaa4fc34ab18504f72da8dd46d3d61e765b26f0d64e03b1bd7d3c4427e"
+    },
+    {
+      "path": "review.json",
+      "size": 4974,
+      "sha256": "5c737ef4a73ef166288e3409f90b47d314700d83c8a912c7979823de1dd1fe99"
+    }
+  ]
+}

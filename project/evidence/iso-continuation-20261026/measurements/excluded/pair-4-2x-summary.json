@@ -1,0 +1,41 @@
+{
+  "kind": "private-host-native-counter-observation",
+  "run_id": "2026-10-26T19:06:42.815605+00:00",
+  "evidence_class": "host",
+  "binary_sha256": "6924b0392831517fb54108b98b9faa743492fe7d2709690098f91226fcdf56de",
+  "source_endpoint": "gpu.stats.get",
+  "version": {
+    "event": "version",
+    "ticket": "version",
+    "name": "PPSSPP",
+    "version": "v1.20.3"
+  },
+  "samples": 30,
+  "requested_seconds": 30.0,
+  "observed_seconds": 30.00161650499922,
+  "interval_seconds": 1,
+  "native_fps": {
+    "mean": 30.033333333333335,
+    "median": 30.0,
+    "minimum": 30,
+    "maximum": 31
+  },
+  "native_speed_percent": {
+    "mean": 99.98723976601494,
+    "median": 100.01633958498635,
+    "minimum": 99.75486379623412,
+    "maximum": 100.20647284189859,
+    "formula": "100 * vblanksPerSecond.actual / vblanksPerSecond.target; intended display refresh must be 60Hz"
+  },
+  "raw_path": "/workspace/trimui-audit/measurements/controlled/pair-4-2x/observation.raw.jsonl",
+  "raw_sha256": "88084f2a29ea3dddfd1a10444e7522e578fa34420639e6a28c56dfdae5145730",
+  "frame_time_p95_ms": null,
+  "audio_faults": null,
+  "hardware_qualified": false,
+  "limits": [
+    "Counter sampling is native emulator evidence, not panel FPS or physical latency.",
+    "Frame histories not aggregated: circular histories overlap and need separately validated deduplication.",
+    "No audio quality or real-device inference.",
+    "Reviewed source-to-binary correspondence is a prerequisite external to this observer."
+  ]
+}

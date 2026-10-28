@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "kind": "real-iso-readonly-frontend-inspection",
+  "recorded_at_utc": "2026-10-26T18:58:40.811457+00:00",
+  "evidence_class": "host-readonly-card-with-real-game-input",
+  "input_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "input_size_bytes": 1696006144,
+  "descriptor_and_history": "Explicit host fixtures; history is not actual gameplay history",
+  "shell_game_id": "game:a905772de9aea5ee3e2501cf0bbe797a163c314ec7f916a55e769ff78afe4697",
+  "native_id": "ULUS10160",
+  "native_id_provenance": "separate local ISO PARAM.SFO inspection in verified download receipt",
+  "argv_preserved": true,
+  "case_insensitive_search": true,
+  "system_filter": true,
+  "pagination": true,
+  "favorites_recents_identity": true,
+  "read_only_favorite_rejection": "SNAPSHOT_READ_ONLY",
+  "native_collection_format_identity": true,
+  "missing_artwork_normal": true,
+  "no_unqualified_resume": true,
+  "same_path_replacement_changes_backend_identity": true,
+  "same_path_probe_scope": "Read-only identity observation, not an executed launch/action",
+  "ui_information_dialog_opened": true,
+  "trace": [
+    {
+      "method": "settings.get",
+      "context": "settings"
+    },
+    {
+      "method": "system.capabilities",
+      "context": "capabilities"
+    },
+    {
+      "method": "system.snapshot",
+      "context": "snapshot"
+    },
+    {
+      "method": "library.systems",
+      "context": "systems"
+    },
+    {
+      "method": "library.favorites",
+      "context": "favorites_cache"
+    },
+    {
+      "method": "tools.list",
+      "context": "tools"
+    },
+    {
+      "method": "hardware.status",
+      "context": "hardware_cache"
+    },
+    {
+      "method": "library.recent",
+      "context": "recent"
+    },
+    {
+      "method": "library.query",
+      "context": "games"
+    },
+    {
+      "method": "game.info",
+      "context": "game_info"
+    }
+  ],
+  "renders": [
+    {
+      "path": "game-information-before-1.0.png",
+      "sha256": "f9bc8ef281351600dc6bb516d6b7b7678d43d6ae00f71ee2ce8e37480c196ab3",
+      "content": "original frontend chrome/text and missing-artwork placeholder only; no game pixels",
+      "phase": "before fix",
+      "text_scale": 1.0
+    },
+    {
+      "path": "game-information-before-1.75.png",
+      "sha256": "df47b1164759c74f55993e0d87ca1ac5702756cc12a55d41ec69ddc4854e0ce7",
+      "content": "original frontend chrome/text and missing-artwork placeholder only; no game pixels",
+      "phase": "before fix",
+      "text_scale": 1.75
+    },
+    {
+      "path": "game-information-1.0.png",
+      "sha256": "5bea53f590c4c684261c6ea395bed1b4cf4a11ab0244a0e88d5aeb860f9680b2",
+      "content": "original frontend chrome/text and missing-artwork placeholder only; no game pixels",
+      "phase": "after fix",
+      "text_scale": 1.0
+    },
+    {
+      "path": "game-information-1.75.png",
+      "sha256": "994253984d4f53030fde33e6a2faa1b298bc3dfba186936eca796a43a1557b56",
+      "content": "original frontend chrome/text and missing-artwork placeholder only; no game pixels",
+      "phase": "after fix",
+      "text_scale": 1.75
+    }
+  ],
+  "card_unchanged": true,
+  "game_executed": false,
+  "hardware_qualified": false,
+  "status": "partial: read-only real-input acceptance passed; actual launch, active stale-action rejection and gameplay histories excluded",
+  "fix": {
+    "source": "project/psp_shell/ui/model.py",
+    "finding": "Known false launch capability still displayed Start/Resume choices in a read-only view",
+    "result": "Hide launch choices and explain unavailability; preserve independently permitted native Game options and demo/live routes"
+  },
+  "frontend_checkout_base_at_execution": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "implementation_commit_after_parent_integration": "a962d6c9d213f9d76b6a104ba78a282029cc453a"
+}

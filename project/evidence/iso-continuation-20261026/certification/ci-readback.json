@@ -1,0 +1,157 @@
+{
+  "verified_at_utc": "2026-10-26T19:13:33.838406+00:00",
+  "artifact_sha256": "6519a1a77b70553116b9801301f221af257a84ec53079f4b81919456fe403a0d",
+  "artifact_size_bytes": 5371953,
+  "frontend": {
+    "commit": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "working_tree_modified": false
+  },
+  "totals": {
+    "tests_run": 1213,
+    "passed": 1213,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "inner_artifact_sha256": {
+    "START-HERE.txt": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402",
+    "build-report.json": "3104ca4a33616d04266db5a67f71f30acee38d1b35f978ce865795b63879da0b",
+    "development-verification.pub": "7566b77dbbf4c2ea545274b9ca59f1e1f0aed3d4e8821f6f9deb82bac33379b1",
+    "host-preview.png": "a7914ed51686c7eaf98075a46435fbe2e112384f4b12ce7c9d686ae94327ac06",
+    "release-source.json": "83d5d948edca403635a5b2bae4d41d7aa5a53267660bf2c93a3089aa152fe942",
+    "smartpro-psp-0.1.0-dev19-host-preview.zip": "d5e4261bfed10787e749a4e3d30d8b08da28cac8d5be2242d29e7427877d9970",
+    "smartpro-psp-0.1.0-dev19-original-source.zip": "b0c8746acfcb7822386845829c5a0eeda73ba87566a33544c2e3884d529bcb94",
+    "smartpro-psp-0.1.0-dev19.tar": "e2630caebb4b4311779decbafb3e7a21710a59652b9a65161f3a47cd4dabf7c3"
+  },
+  "source_inventory_files": 236,
+  "source_inventory_sha256": "b6a1c850cb5f019d6793a718302af0a31be11ff9b278aad1706c930524f5396a",
+  "payload_files": 68,
+  "signature_and_payload_inventory_verified": true,
+  "source_export_bytes_verified": true,
+  "hardware_qualified": false,
+  "production_authenticity_claim": false,
+  "private_native_artifact_custody_verified": false,
+  "schema": 1,
+  "kind": "independent-ci-artifact-readback",
+  "provider": {
+    "run_id": 40383733188,
+    "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40383733188",
+    "artifact_id": 12678724675,
+    "artifact_expiry": "2027-01-24T19:06:30Z",
+    "reported_head_sha": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "reported_artifact_sha256": "6519a1a77b70553116b9801301f221af257a84ec53079f4b81919456fe403a0d",
+    "reported_artifact_size_bytes": 5371953
+  },
+  "identity": {
+    "ci_checkout_commit": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "ci_checkout_parents": [
+      "05d1088f35ff76231144ef44c393deb95900bc28",
+      "a962d6c9d213f9d76b6a104ba78a282029cc453a"
+    ],
+    "ci_checkout_working_tree_modified": false,
+    "local_packaged_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "same_commit_as_local_package": false,
+    "same_application_code_as_local_package": true,
+    "repo_changed_paths": [
+      "AGENTS.md",
+      "HANDOVER.md",
+      "NEXT_CHAT_PROMPT.txt",
+      "project/docs/master-plan-2026-10-22.md",
+      "project/evidence/dev18-library-backups-20261026/merge-record.json",
+      "project/handover/LATEST.json"
+    ],
+    "source_export_changed_paths": [
+      "docs/master-plan-2026-10-22.md"
+    ],
+    "local_source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
+    "ci_source_inventory_sha256": "b6a1c850cb5f019d6793a718302af0a31be11ff9b278aad1706c930524f5396a",
+    "expected_inventory_derivation": "Read every selected source blob directly from verified local Git object for CI merge commit; independently matched source inventory and exported bytes."
+  },
+  "checks": {
+    "outer_provider_sha256_and_size": true,
+    "outer_entries_safely_extracted": true,
+    "eight_inner_checksums": true,
+    "signed_manifest_and_68_payload_files": true,
+    "unsigned_preview_matches_signed_payload_bytes": true,
+    "payload_copies_match_exported_source_bytes": true,
+    "source_inventory_matches_ci_git_merge": true,
+    "five_pinned_sources_clean_before_and_after": true,
+    "no_private_key_artifact_member": true
+  },
+  "signed_manifest_sha256": "78bdb9610a157f7826638037972f77ae3c768bea850d20339127427d63fc85f0",
+  "release_id": "smartpro-psp-0.1.0-dev19",
+  "ci_certification": {
+    "started_at": "2026-10-26T19:07:09.417761+00:00",
+    "finished_at": "2026-10-26T19:09:10.560830+00:00",
+    "totals": {
+      "tests_run": 1213,
+      "passed": 1213,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "preview_passed": true,
+    "sha256": "629a8e067378c394aef12d8a02d003d5929b3db80ef21453c1bb3af37215bfbf",
+    "sources": [
+      {
+        "environment_variable": "SPRUCE_SOURCE_ROOT",
+        "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "materialized_files_checked": 465
+      },
+      {
+        "environment_variable": "PPSSPP_SOURCE_ROOT",
+        "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "materialized_files_checked": 1106
+      },
+      {
+        "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+        "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "materialized_files_checked": 4
+      },
+      {
+        "environment_variable": "PORTS_SOURCE_ROOT",
+        "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+        "materialized_files_checked": 2
+      },
+      {
+        "environment_variable": "PORTMASTER_SOURCE_ROOT",
+        "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+        "materialized_files_checked": 6
+      }
+    ]
+  },
+  "ci_build": {
+    "smoke": {
+      "backup_cancel_dispatch": true,
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "combined_filters": true,
+      "discovery_scope": true,
+      "executed": true,
+      "fresh_backup_readback": true,
+      "full_result_random": true,
+      "game_information": true,
+      "help_backups_collections_rendered": true,
+      "installed_build_identity": true,
+      "named_backup_history": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 9,
+      "settings_dispatch": true
+    },
+    "fixture_stage_activate_rollback": true,
+    "same_key_rebuild": true,
+    "generated_private_key_deleted": true,
+    "report_sha256": "3104ca4a33616d04266db5a67f71f30acee38d1b35f978ce865795b63879da0b"
+  },
+  "limits": [
+    "CI checkout is the PR merge, while the independent local package used the clean implementation commit. The source ZIP differs by master-plan metadata, and embedded build identity differs; they are not byte-identical packages.",
+    "CI smoke and activation/rollback are retained CI receipts; local readback independently verifies bytes, signatures, source correspondence and closed gates without executing downloaded payload.",
+    "The included ephemeral development public key verifies integrity, not production authorization. No release publication or physical-device qualification was performed."
+  ]
+}

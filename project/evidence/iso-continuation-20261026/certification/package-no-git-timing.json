@@ -1,0 +1,8 @@
+{
+  "started_at_utc": "2026-10-26T19:00:50.451262+00:00",
+  "finished_at_utc": "2026-10-26T19:00:52.783041+00:00",
+  "exit_code": 0,
+  "source_export_has_git": false,
+  "source_checkout": "/workspace/trimui-audit/source-export-dev19/smartpro-original-source",
+  "log": "package-no-git-build.log"
+}

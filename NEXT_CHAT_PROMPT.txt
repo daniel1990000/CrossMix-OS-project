@@ -1,42 +1,26 @@
 Continue daniel1990000/CrossMix-OS-project, active source project/.
-Dev18 is on main after PR #2 merged at 30aa59ffa35195bcad2b2553f91c43fc32301556.
-No new public release was created.
-Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
-project/docs/dev18-library-backups-2026-10-26.md and its exact evidence first.
+Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json and
+project/docs/iso-continuation-2026-10-26.md with linked evidence first.
+The owner explicitly executed the separate ISO continuation in this chat.
 
-Clean implementation 399a528542da1139903c93cef3041d23acad2fca passes all 1,209
-strict host checks with zero skips/errors/failures against five pinned sources.
-Installed preview, signature/source/payload checks, fixture rollback and both
-byte-identical no-Git ZIP rebuilds pass. CI readback records its separate exact
-merge checkout and artifact identity. Later metadata commits do not inherit
-older package identities. PR #2 describes latest CI status.
+Dev19 branch build/iso-host-validation-20261026 is draft PR #3.
+Clean tested/package commit a962d6c9d213f9d76b6a104ba78a282029cc453a:
+1213 strict checks, five pinned sources, zero skips/errors/failures;
+clean installed smoke/rollback, signed inventories and no-Git ZIP rebuilds pass.
+CI run40383733188 has a separate merge checkout and verified downloaded artifact.
+Later evidence/metadata commits have separate identities. Preserve merged dev18
+and published dev16 assets. No new public release is requested.
 
-Dev18 includes scoped library discovery and native Collections, page/identity
-restoration, stale-response/mutation handling, 175% accessible help, structured
-game information and named offline backup history, plus Undo/capture/Resume
-identity and captured-source packaging fixes. Preserve native ownership and
-immutable payloads. Independent review and real SDL renders are retained.
+Use final G01-G08 statuses, not assumed completion. Gameplay/native states and
+host closure differ from ordinary savedata and authenticated frontend Resume.
+Never fabricate qualified manager/source/foreground/writer/device gates.
+Native private packets alone cannot grant frontend production authority.
 
-Dev16 remains published at tag/source 99336f6525efbd1b790a15c7de54acca3eacd1ec:
-https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16
-Do not replace its assets. No native engine/SDK/game/save/private key is included
-in original-only development downloads. Historical records through dev17 are
-explicitly archived; read current status before their dated completion claims.
+Private input SHA256 e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a,
+size1696006144; session artifacts /workspace/trimui-audit/. Verify existence and
+hashes before reuse. Keep game/state/audio/native distributions/private keys out
+of Git. Retained hashes cannot recover missing private artifacts.
 
-Keep device/profile gates disabled: original register 14/25; physical areas 0/13.
-No hardware performance, battery, recovery or Resume reliability is established.
-When the device returns use the existing recovery/inventory/qualification
-casebook, matched game-scene protocol and exact installed identities.
-Production signing, public native distribution and maintenance ownership remain
-open. Preserve existing PPSSPP and PS1 routes; no save/memory-card relocation.
-
-The owner moved Vice City emulation/testing to a separate chat. It does not
-block this development track. Main received an independent audit/game-image
-document at 4a97d8a; preserve it without treating it as dev18 gameplay evidence.
-No additional game download/testing is requested in this chat.
-
-The separate chat's planned ISO-enabled batch is retained in
-project/docs/iso-enabled-roadmap-2026-10-26.md and
-project/handover/ISO_EXECUTION_PROMPT.txt. It awaits its execution instruction;
-its historical dev17 baseline is superseded by the current dev18 handover.
-Preserve that plan without starting its game work in this development track.
+Keep gates disabled, original register14/25, physical0/13. Continue feasible unmet
+host criteria. With hardware, begin inventory/recovery and the13-area casebook.
+Stationary host observations cannot recommend TrimUI presets or demanding scenes.

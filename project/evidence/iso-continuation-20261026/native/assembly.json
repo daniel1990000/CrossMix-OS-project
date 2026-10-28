@@ -1,0 +1,63 @@
+{
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "architecture": "x86_64",
+  "kind": "private-host-SDL-candidate",
+  "patches": [
+    {
+      "lock": "source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "path": "patches/0001-independent-native-menu-controls.patch",
+      "sha256": "89590cf034621c77870acb6f7f7b193ba660e361264e4af40d9889adaeee129a",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "state-evidence.lock.json",
+      "lock_sha256": "ecdcca6b95f60f5a035e3fa06d16a18efd93e77304cd0c171a302ea0e147cb55",
+      "path": "patches/0002-save-slot-completion-evidence.patch",
+      "sha256": "47558106ab2dff1f05d32132283b8d757d967b25ae67f21594b079233322e4c3",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "state-session.lock.json",
+      "lock_sha256": "5b7c17ec52ea57ba0bdd2453346da6c4bfec9aa6c878de4d0b054cd78a2923e4",
+      "path": "patches/0003-project-state-session.patch",
+      "sha256": "c8161d072238e835a0add6d53b94c1ea54e597fa8bfcc1b4ce2fadb5b71f8a0e",
+      "license": "GPL-2.0-or-later"
+    },
+    {
+      "lock": "gpu-stats.lock.json",
+      "lock_sha256": "ff0845444a477cc9c2f1586b6e45107e5a581ab27abadcf7b4e2e55b86c60058",
+      "path": "patches/0005-gpu-stats-float-copy.patch",
+      "sha256": "980d6ad8bdee549e09a42ef9041e12c17331f51e44b7b38bc939557dedd970ec",
+      "license": "GPL-2.0-or-later"
+    }
+  ],
+  "modified_source": {
+    "Core/Config.cpp": "81e0aba0d29f01a33982a17687e1204dbd993eeefdbd457271d29234f074530b",
+    "Core/Config.h": "a14626ea42d549f1a370a0c5878438f4da48abf219277e23f64025c5d84d774b",
+    "Core/Debugger/WebSocket/GPUStatsSubscriber.cpp": "96f6864fb6701313d2ca674f4aa1435c9475828487eb87b93505e43a69301674",
+    "Core/KeyMap.cpp": "cd908573ddc65e710f61ae88ce1d897533e9040fa23e9aba6aa5a6b646fb982b",
+    "Core/SaveState.cpp": "beb5ca0f0d44231b418ecff611f9a323a095f4553cd2e7fbcc51d215a2f12cb6",
+    "Core/SaveState.h": "151e059b384f35b724258ec90f426c370c52fe7b51ff747d2253e1427ddd48c7",
+    "UI/EmuScreen.cpp": "1c36109a7bd4e3809490f45b8c037967e74b8c34949bf1236d20666e5b882daf",
+    "UI/GameSettingsScreen.cpp": "683cf0247a11e0968fefef7a6af0d9968887699a1988973a78cdf523acf9d637",
+    "UI/NativeApp.cpp": "b31680a17b87edf6d06b0bd1e861f1d529780fd096f02f429697a2f8fdf46323"
+  },
+  "PowerVR_recipe_applied": false,
+  "target_binary_replaced": false,
+  "device_qualified": false,
+  "bundled_pinned_ffmpeg_prebuilt_used": true,
+  "added_source": {
+    "Core/ProjectNativeMenuControls.h": "007d472681cbb685fd4311f7c5f9773d67bf498288ffb8d3db956da439cd134c"
+  },
+  "recursive_submodule_identities_sha256": "7973beb9a7a78d68d3c2cea2e6db188b915abf1df58a15f5ddd22995e0f0c638",
+  "configure_script_sha256": "964a01c30d9706d9fa805699129c694c51509cd74d91c9ec1fb2d80256fc2302",
+  "compiler": "g++ (Debian 14.2.0-19) 14.2.0",
+  "cmake": "cmake version 4.4.4",
+  "platform_adaptations": [
+    "Host x86_64 SDL CMake build, not PowerVR recipe",
+    "Local extracted dependency prefix and multiarch include path",
+    "System dynamic Fontconfig, bundled pinned FFmpeg prebuilt archives",
+    "Vulkan X11/Wayland WSI, Discord and miniupnp disabled; no device profile selected"
+  ]
+}

@@ -1,0 +1,299 @@
+{
+  "schema": 1,
+  "kind": "independent-host-gameplay-measurement-review",
+  "status": "accepted_with_host_scope_limits",
+  "reviewer": "sources_certification independent agent",
+  "reviewed_at_utc": "2026-10-28T07:08:13.974788+00:00",
+  "reviewed_code_sha256": {
+    "run_controlled.py": "f563a377d68d4ded4aa1a5005d54f56a58e4756ba2e255a48ea8b9119572462b",
+    "native_stats_observer.py": "f80bd43efe743067338f1e1bbb86866c940b1568e140a74c305f46a5d7a6fe16",
+    "instance_namespace-v2.so": "491e64c0fb00129cd653a28eb4140f4fc120bd5937172b0841230df2326dc701",
+    "run_pair4.py": "cfa8d579eb8482be4aab57fc37c6cb9dafb9b80dd79c8d434051b86568fcb50f",
+    "import_observations.py": "24868b4f684273048182883e0a525ea2a5e937e64d54b1661691608ecade56d7",
+    "import_config.py": "5431fc254088c804de5140f0e9be8a351ebd6eaa9d8ac5f68fae06689855d7d1",
+    "audio_inventory.py": "e81e11e4c57b505540254f9b3d741eae00b888eada27f67781544660536ed033"
+  },
+  "scope": "Stationary desktop native counter observation, five 30-second paired setting repeats and a separate single-arm 1800-second longevity observation.",
+  "verified": [
+    "Template arms differ in exactly Graphics.InternalResolution (1 versus 2); shared main configuration bytes are identical; frameskip is zero and automatic frameskip is false.",
+    "Every run starts a fresh native process, copies the same state hash and arm configuration, and waits 10 seconds before counter collection; arm order alternates AB/BA.",
+    "First-pair private screenshots independently show the same Soldier office/motorcycle scene; increased edge sharpness corroborates the declared resolution change.",
+    "First five completed raw observations independently recompute to the recorded arithmetic means, each with 30 native response samples inside the nominal 30-second window and a zero process exit.",
+    "At 19:07:12.587943 UTC, pair-4-2x PID30521 was the only PPSSPPSDL process and owned port 19362 listening inode138924; its /proc executable hash matched the reviewed corrected build.",
+    "Both package builds and the full test suite completed before pair1 started; the last package build ended 19:00:52.783041 UTC, pair1 started 19:02:25.427033 UTC.",
+    "All 11 imported runs validate against the existing gameplay importer, frozen template hashes, scene/environment identities, private raw hashes and original receipt binary/state identities.",
+    "All per-run means and final five-pair comparison independently recompute exactly. Original pair4 raw observations remain retained and are absent from selected comparison.",
+    "Both replacement pair4 process receipts independently checked for expected executable hash, sole native child and port 19362 listener ownership; timestamps follow completed soak.",
+    "The single soak contains 1,748 samples, observed 1800.001647999 seconds, normal exit 0, and maximum adjacent counter response gap 1.043940986 seconds. This was a contended host longevity observation.",
+    "The separate 1200-second resource segment has 241 samples and matches the soak PID/starttime/identity. Peak memory and CPU summaries recompute; approximate segment 19:15:44.486538\u201319:35:44.491112UTC lies within the soak.",
+    "All 13 retained private WAV file hashes and container headers match the exported inventory; readable frame counts agree. This does not add auditory quality evidence."
+  ],
+  "corrections_required": [
+    {
+      "id": "C1",
+      "status": "resolved",
+      "finding": "Three native negative probes overlapped pair4-2x. The original environment description of no concurrent native process is inaccurate for that interval. Preserve originals as excluded and repeat both pair4 arms without competing native work.",
+      "intervals_reconstructed_utc": [
+        {
+          "case": "wrong-slot",
+          "start": "2026-10-26T19:06:38.477Z",
+          "end": "2026-10-26T19:06:46.663Z"
+        },
+        {
+          "case": "truncated-matching-hash",
+          "start": "2026-10-26T19:06:46.806Z",
+          "end": "2026-10-26T19:06:51.991Z"
+        },
+        {
+          "case": "replay-session",
+          "start": "2026-10-26T19:06:52.095Z",
+          "end": "2026-10-26T19:07:00.276Z"
+        }
+      ],
+      "interval_method": "Native agent reconstructed from experiment receipt mtime minus monotonic elapsed duration; these are approximate wall-clock intervals, not directly logged UTC boundaries. Independent ps output observed pair4 child and truncated-matching-hash child concurrently.",
+      "resolution": "Both original pair4 arms remain under excluded/. Replacement 2x then 1x ran after the soak and all other native sessions ended, using frozen original configuration bytes; sole-process, executable digest and listener ownership assertions passed. Both exited 0."
+    },
+    {
+      "id": "C2",
+      "status": "resolved",
+      "finding": "Importer requires exactly equal declared durations and observation windows. Observer observed_seconds includes final status request overhead and differs slightly across runs. Define the common 30-second analysis window separately from acquisition duration; preserve raw timing and observed_seconds without rounding away the distinction. Reject any sample outside the declared common window.",
+      "specific_observation": {
+        "run_id": "pair-5-2x",
+        "sample_ticket": "sample-29",
+        "response_seconds_after_retained_start_status": 30.00510130299972,
+        "observed_seconds": 30.005317767000633,
+        "required_action": "Filter response snapshots to declared common [0,30) analysis window and recompute imported sample means; retain original acquisition summary unchanged. This leaves 29 samples for this run. The other nine original runs have 30 snapshots inside that window."
+      },
+      "resolution": "Importer filters each raw response by the retained status-start anchored [0,duration) window and recomputes means. Pair5-2x includes 29 of 30 responses; all other selected runs have no excluded responses. Actual acquisition durations remain separate and unrounded."
+    }
+  ],
+  "limits": [
+    "Host x86_64 Mesa software rendering, Xvfb, four-CPU cgroup quota and SDL dummy audio are not TrimUI performance evidence.",
+    "The same shared-memory isolation and optional discovery shim is injected into both arms; observations describe this shimmed host runtime.",
+    "Observer code does not itself bind its websocket to a process. Replacement pair4 has explicit child executable/sole-process/listener assertions; original pair4 and the soak have independent live socket receipts. Earlier selected repeats rely on sequential child execution plus matching game/version, binary/configuration identities and native logs.",
+    "Measurement origin is recorded indirectly through the preceding retained game.status response. measure_start occurs just afterward, with a small unrecorded Python overhead; response acquisition after the nominal window is separately included in observed_seconds.",
+    "Native sampled FPS and vblank speed are distinct, unweighted means of counter snapshots. The speed denominator comes from the endpoint (60/1.001), not assumed panel refresh. Poll cadence includes response latency and is approximately one second.",
+    "Frame history arrays overlap and are not used for percentile estimates. Panel frame pacing, audible output quality, input latency, battery and device thermals remain unmeasured.",
+    "The single-arm stationary soak is a longevity observation; it cannot satisfy matched sustained-arm or demanding-gameplay qualification.",
+    "The scene and state are fixed, but this is a stationary short scene without representative traversal/combat/loading coverage. No preset recommendation follows from it.",
+    "Native control-config creation/save warnings and unavailable Vulkan preflight messages are retained; the selected backend is OpenGL and completed processes exit zero.",
+    "Private scene images, game data, states and WAV files are excluded from repository evidence; hashes identify retained private originals.",
+    "Pinned Display.cpp CalculateFPS assigns actualFps from the count of flips since its previous update after at least one second, without normalizing that count by elapsed time; the VPS counter does normalize elapsed time. Tiny native FPS mean differences around 30 reflect counter window quantization and do not establish a performance gain.",
+    "Replacement pair4 was collected after the other pairs and soak; its later timing is explicit. This shared host lacks device clocks, thermal controls and a preregistered performance budget.",
+    "The resource segment covers 1200 seconds of the 1800-second soak and is never attached as full-soak resource coverage. Point samples and RSS growth cannot prove or exclude a leak.",
+    "No title/load, moving on-foot, driving or action matched comparison, paired demanding soak, composed frontend comparison or actual hardware run was added."
+  ],
+  "hardware_qualified": false,
+  "marketing_claim_approved": false,
+  "application_code_edited_by_reviewer": false,
+  "decision": "Final selected stationary host observations and importer results are internally consistent and independently verified. G06 remains partial against the broader roadmap; no device, demanding-profile, audio-quality or speed-improvement qualification.",
+  "reviewed_artifact_sha256": {
+    "comparison.json": "591b508e2c40d87fe9da99d58b86dd403170ec148197041a9075884e816810f3",
+    "scene.json": "9d608064b958e1cc4b43a92b0b9a1b6381a7d24617dbf5b3e006c56cff8aeee7",
+    "environment-pairs.json": "01606a6c5a0319eca358bf7629f166c94c0466896cd55890ae731ad912380538",
+    "environment-soak.json": "748837068e21889c95e99116c6ce134ec2a022f2f3a45487a54297205e7789f3",
+    "soak-resources.json": "7a3a114a762c5c974a922d9cc0ac721da39c3fe9bcdc614a4b691bd412baea5d",
+    "soak-live-binding.json": "3bc5469f43fd81949fec1566ddf61e0ac7c7360ac403429371274167ca9b2ecb",
+    "audio-inventory.json": "656dbf6ad912ea4498319ba542025b1fae380a6a56b29f9895745c94959fd8b7"
+  },
+  "independent_final_readback": {
+    "reviewed_at_utc": "2026-10-28T07:06:03.256716+00:00",
+    "runs": [
+      {
+        "run_id": "pair-1-1x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "20e97c084ea089e55fe564741b8a45a0bad74e25a1fce0627468edbfde4a2908",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.001995088000513,
+        "counter_response_first_seconds": 0.004038897000100405,
+        "counter_response_last_seconds": 29.93349824500001,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-1-2x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "519036ed4455014b20809ef090bd44385c32a47fc4bfef06cc97d1c7f35dad04",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.000767778999943,
+        "counter_response_first_seconds": 0.00324205000015354,
+        "counter_response_last_seconds": 29.901024397000583,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-2-1x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "5d71e699adee42eb8e5affe8636ba8e564d0cddce3c4ec3603d4335307a42a68",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.001436024999748,
+        "counter_response_first_seconds": 0.01722674000029656,
+        "counter_response_last_seconds": 29.912742859999526,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-2-2x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "620093a8979e8dfcb770d54e711b2e18fe48fc9364045b6c6f4da213faf1d146",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.001004349999675,
+        "counter_response_first_seconds": 0.012814341000193963,
+        "counter_response_last_seconds": 29.909508403000473,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-3-1x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "876aefa6e4b0f655c7e2bd451c92a69c5805951cee16894c2fcb7a449fc82653",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.00123208199966,
+        "counter_response_first_seconds": 0.011839173000225856,
+        "counter_response_last_seconds": 29.875617594000687,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-3-2x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "a46acd28d6576e8591a85283b7d33aee84133949be3184f237bec5d9f594e546",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.000538758999937,
+        "counter_response_first_seconds": 0.011030553000637155,
+        "counter_response_last_seconds": 29.93994737400044,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-4-1x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "548c75cc126123d8e774d19faa0c5cde9689474cd24fe90a7ddb99a37aca218d",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.00141500999962,
+        "counter_response_first_seconds": 0.012568690999614773,
+        "counter_response_last_seconds": 29.908707245000187,
+        "native_exit_code": 0,
+        "listener_binding": {
+          "checked_at_utc": "2026-10-26T19:40:24.153633+00:00",
+          "pid": 36740,
+          "port": 19362,
+          "owned_socket_inodes": [
+            "socket:[159135]"
+          ],
+          "sole_native_process": true,
+          "running_exe_hash_matches": true
+        }
+      },
+      {
+        "run_id": "pair-4-2x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "b775cf49487c7a8bbdb2ab31b87aea953253cc8e48706129d67254098f8c873b",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.00127907500064,
+        "counter_response_first_seconds": 0.01770890700026939,
+        "counter_response_last_seconds": 29.912583417999485,
+        "native_exit_code": 0,
+        "listener_binding": {
+          "checked_at_utc": "2026-10-26T19:39:43.030891+00:00",
+          "pid": 36657,
+          "port": 19362,
+          "owned_socket_inodes": [
+            "socket:[159123]"
+          ],
+          "sole_native_process": true,
+          "running_exe_hash_matches": true
+        }
+      },
+      {
+        "run_id": "pair-5-1x",
+        "samples_included": 30,
+        "samples_excluded": 0,
+        "raw_sha256": "90e604bd60b53ac977992d5b5755e5659409d464734cd42f9f356401e6c355e0",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.00063392499942,
+        "counter_response_first_seconds": 0.01187668200054759,
+        "counter_response_last_seconds": 29.941991022000366,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "pair-5-2x",
+        "samples_included": 29,
+        "samples_excluded": 1,
+        "raw_sha256": "8efccc4f9dabaa8b973ae7d1d6da25985a419730f29eb933c105ac426f60cbfe",
+        "analysis_seconds": 30,
+        "acquisition_seconds": 30.005317767000633,
+        "counter_response_first_seconds": 0.008482590999847162,
+        "counter_response_last_seconds": 28.971122990999902,
+        "native_exit_code": 0,
+        "listener_binding": null
+      },
+      {
+        "run_id": "soak-1x",
+        "samples_included": 1748,
+        "samples_excluded": 0,
+        "raw_sha256": "36a7d393ada9879291294031750b84e2f7fe1d173e76775fa0fe40f64c8dd953",
+        "analysis_seconds": 1800,
+        "acquisition_seconds": 1800.001647999,
+        "counter_response_first_seconds": 0.019373720000658068,
+        "counter_response_last_seconds": 1799.8488764120011,
+        "native_exit_code": 0,
+        "listener_binding": null
+      }
+    ],
+    "comparison_recomputed_equal": true,
+    "settings_changed_key": [
+      "Graphics.InternalResolution"
+    ],
+    "comparison_metrics": {
+      "native_fps": {
+        "baseline_median": 30.033333333333335,
+        "candidate_median": 30.066666666666666,
+        "paired_difference_median": 0.001149425287355399,
+        "unit": "fps"
+      },
+      "native_speed_percent": {
+        "baseline_median": 100.0004045102861,
+        "candidate_median": 100.00010963630675,
+        "paired_difference_median": 0.001154463450106391,
+        "unit": "percent"
+      }
+    },
+    "resources": {
+      "samples": 241,
+      "duration_seconds": 1200,
+      "native_counter_soak_seconds": 1800,
+      "approximate_start_utc_derived_from_collection_minus_elapsed": "2026-10-26T19:15:44.486538+00:00",
+      "collected_at_utc": "2026-10-26T19:35:44.491112+00:00",
+      "identity_matches_soak": true,
+      "separate_partial_window_not_full_soak": true,
+      "summary": {
+        "peak_sampled_rss_bytes": 261537792,
+        "peak_sampled_tree_rss_bytes": 261537792,
+        "root_cpu_seconds_delta": 688.41,
+        "observed_tree_cpu_seconds_delta": 688.41,
+        "peak_sampled_tree_pss_bytes": 244673536,
+        "fps": null,
+        "frame_time_p95_ms": null,
+        "audio_faults": null,
+        "input_latency_ms": null,
+        "battery_energy_wh": null
+      }
+    },
+    "audio": {
+      "retained_containers": 13,
+      "private_hashes_and_headers_verified": true,
+      "audio_quality_reviewed": false
+    }
+  },
+  "unresolved_blocking_findings": []
+}
