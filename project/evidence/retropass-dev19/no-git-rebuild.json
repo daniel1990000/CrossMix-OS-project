@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "implementation_commit": "2858f3155c03d2efca3fd1cf364151e4d516fd5e",
+  "working_tree_modified": false,
+  "exported_source_has_git": false,
+  "comparisons": [
+    {
+      "file": "smartpro-retropass-0.1.0-dev19-host-preview.zip",
+      "sha256": "f5d716d3b1690937ac95004abfa519542dc044e05cd836738ac308ac44fb2469",
+      "bytes": 10514570,
+      "byte_identical": true
+    },
+    {
+      "file": "smartpro-retropass-0.1.0-dev19-original-source.zip",
+      "sha256": "a0bd94c1c4b5c36a6715ee39bbd9ff012fff4e56fe36519bb4731ba0e81468e5",
+      "bytes": 11132521,
+      "byte_identical": true
+    }
+  ],
+  "signed_manifest_license": "GPL-2.0-only AND MIT AND OFL-1.1",
+  "signed_payload_files": 254,
+  "source_inventory_files": 426,
+  "source_inventory_sha256": "7a6c7290dbde355b737b232ad406c64cb622114fde24b832e7ff2c50ae04c24e",
+  "source_payload_bytes_verified": true,
+  "mixed_source_handoff_readback_passed": true,
+  "signer_integrity_only_not_independent_production_trust": true,
+  "generated_private_keys_deleted": true,
+  "installed_smoke": {
+    "backup_cancel_dispatch": true,
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "discovery_scope": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "full_result_random": true,
+    "game_information": true,
+    "help_backups_collections_rendered": true,
+    "installed_build_identity": true,
+    "named_backup_history": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 9,
+    "settings_dispatch": true
+  },
+  "physical_device_verified": false,
+  "real_game_launches": 0
+}
