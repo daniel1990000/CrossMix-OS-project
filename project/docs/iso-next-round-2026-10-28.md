@@ -1,3 +1,5 @@
+> Dev21 library preview follows this dev20 report; see [its evidence](../evidence/dev21-library-20261029/README.md) and [current status](../handover/LATEST.json).
+
 # Dev20: settings and reusable host audit
 
 This continuation starts from dev19 handover

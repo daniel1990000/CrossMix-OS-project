@@ -1,6 +1,9 @@
 # TrimUI handover — dev20 continuation
 
-Updated 29 October 2026. Work is saved on
+Updated 29 October 2026.
+
+Dev21 adds an art-led Games shelf, original generated sample title cards, and clearly labeled real-title demo records. Source/package selection is `d27799f`; the [preview and package receipt](project/evidence/dev21-library-20261029/README.md) distinguish this from prior dev20 evidence. The shelf retains existing model navigation and launch gates; Continue and accessible long-title/large-text layouts retain their prior presentation. No real games were launched. Full pinned host verification is reported in the latest status.
+ Work is saved on
 `build/iso-next-round-20261028` in [draft PR #4](https://github.com/daniel1990000/CrossMix-OS-project/pull/4),
 stacked on unmerged PR #3. No merge or release is authorized by this batch.
 

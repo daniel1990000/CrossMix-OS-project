@@ -81,8 +81,8 @@
     "draft": true,
     "depends_on": 3
   },
-  "release_id": "smartpro-psp-0.1.0-dev20",
-  "project_stage": "Dev20 implementation and exact-source host/package verification complete; owner stopped game testing due to usage cost; ordinary savedata and broader measurements unverified.",
+  "release_id": "smartpro-psp-0.1.0-dev21",
+  "project_stage": "Dev21 art-led library host preview; physical qualification and owner-stopped game testing remain open.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -296,5 +296,14 @@
     "automatic_game_testing_resumption_authorized": false,
     "stop_reason": "Owner explicitly stopped game testing because of usage cost.",
     "owned_emulator_normal_exit": true
+  },
+  "dev21_library_preview": {
+    "implementation_and_package_commit": "d27799f",
+    "implementation_commit": "fa55792",
+    "evidence": "project/evidence/dev21-library-20261029/README.md",
+    "package_smoke": "passed; synthetic host, no game launches",
+    "strict_check": "passed 1263 tests, zero skips/failures/errors, five pinned sources; d27799f",
+    "device_qualified": false,
+    "source_export_rebuild": "not run"
   }
 }
