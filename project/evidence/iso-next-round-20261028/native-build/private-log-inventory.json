@@ -1,0 +1,13 @@
+{
+  "scope": "Private raw build/configure/recovery logs remain retained. No binary/source distribution/game/state/audio/private key payloads in this evidence packet.",
+  "logs": {
+    "build-failed-mixed-png-headers.log": "fc910f6e20ee09a3e6fe110412f41a621091be2fc3a7a3267a43fe1291e80549",
+    "build.log": "5d6670bf36494c5c7e5889fdc31f813ce4000962d9198011b0b275c21f5d0983",
+    "build-0006.log": "f5b19e67c38f86b557ed1fa09e26babaebeab9ef227d1129afdc3f2f6f666d37",
+    "configure-failed-incomplete-submodule.log": "7407dc87ddd7105e1e62e691b93d84c77b5f9a79f9dc356e47bc89ef35b91eca",
+    "configure.log": "fc242fc5fb04916080ac0eb285adcfe09221b5b4af6470e4fa785841786e165b",
+    "submodule-recovery.log": "738ebe42b5b75d9f5d96be539cd02372eb197b648f7e737d957ff0eff4ceb6ff",
+    "submodule-recovery-retry.log": "caefd3545c8d4844df95115121e4148ab184882876ed5d49c16bdec348e62170",
+    "submodule-nested-recovery.log": "6378314a37faea4f36146c4abf94127fae68522dbafe57dfd66ce224bbf20449"
+  }
+}

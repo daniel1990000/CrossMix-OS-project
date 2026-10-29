@@ -1,26 +1,9 @@
-Continue daniel1990000/CrossMix-OS-project, active source project/.
-Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json and
-project/docs/iso-continuation-2026-10-26.md with linked evidence first.
-The owner explicitly executed the separate ISO continuation in this chat.
-
-Dev19 branch build/iso-host-validation-20261026 is draft PR #3.
-Clean tested/package commit a962d6c9d213f9d76b6a104ba78a282029cc453a:
-1213 strict checks, five pinned sources, zero skips/errors/failures;
-clean installed smoke/rollback, signed inventories and no-Git ZIP rebuilds pass.
-CI run40383733188 has a separate merge checkout and verified downloaded artifact.
-Later evidence/metadata commits have separate identities. Preserve merged dev18
-and published dev16 assets. No new public release is requested.
-
-Use final G01-G08 statuses, not assumed completion. Gameplay/native states and
-host closure differ from ordinary savedata and authenticated frontend Resume.
-Never fabricate qualified manager/source/foreground/writer/device gates.
-Native private packets alone cannot grant frontend production authority.
-
-Private input SHA256 e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a,
-size1696006144; session artifacts /workspace/trimui-audit/. Verify existence and
-hashes before reuse. Keep game/state/audio/native distributions/private keys out
-of Git. Retained hashes cannot recover missing private artifacts.
-
-Keep gates disabled, original register14/25, physical0/13. Continue feasible unmet
-host criteria. With hardware, begin inventory/recovery and the13-area casebook.
-Stationary host observations cannot recommend TrimUI presets or demanding scenes.
+Continue the TrimUI application work only as directed by the owner. The owner stopped GTA/game testing due to usage cost. Do not automatically resume gameplay, scene acquisition, comparisons or soaks. Assuming gameplay will work does not establish passed acceptance.
+Repository daniel1990000/CrossMix-OS-project; source project/; workspace /workspace/TrimUi if retained.
+Branch build/iso-next-round-20261028; stacked draft PR4 depends on unmerged PR3. Inspect local/remote state and preserve newer work. Do not merge or release automatically.
+Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md, project/docs/iso-next-round-2026-10-28.md and project/docs/master-plan-2026-10-22.md.
+Exact implementation 50bbc3595c29238085d737cfe088971b0b514012 passes 1263 strict checks against five exact pinned sources, zero skips/errors/failures. Clean packaging, installation/rollback, signed inventories and byte-identical no-Git source-export rebuilds passed. Later documentation commits have separate identities.
+Implemented clearer per-game settings and native-return refresh, dev-only host collector/controller, and optional native0006 immutable save snapshots. Eight whole-native interruption windows and fresh native reload passed independent review. No shipped profile selects native patches or binaries.
+Ordinary Soldier/save/fresh-process game Continue remain unverified. Broader moving-scene measurements: zero accepted runs, zero pairs, zero soaks. No demonstrated FPS improvement. Emulator checkpoints are separate from game savedata.
+Game testing stopped; emulator exited normally with code0. Do not restart expensive testing merely to finish old handovers. Preserve private game/state/audio/native distributions/keys outside Git.
+Original completion14/25, physical0/13. Qualified frontend Apply/Undo and composed Resume remain unverified; production/device gates disabled and publisheddev16 unchanged.

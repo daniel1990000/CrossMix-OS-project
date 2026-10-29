@@ -245,7 +245,7 @@ class InformationAndStatusTests(unittest.TestCase):
         model = NavigationModel()
         status = {"game_id": "psp:one", "generation": 4, "writable": True, "options": [
             {"id": "resolution", "label": "Rendering resolution", "value": None, "description": "Lower resolution reduces image detail.",
-             "choices": [{"value": None, "label": "Use global setting"}, {"value": 1, "label": "1×", "description": "Lower image detail."}]}]}
+             "choices": [{"value": None, "label": "Use current global setting"}, {"value": 1, "label": "1×", "description": "Lower image detail."}]}]}
         receive(model, "performance_status", status)
         choose(model, "Rendering resolution")
         self.assertIn("untested", model.snapshot().dialog.message)
@@ -260,6 +260,70 @@ class InformationAndStatusTests(unittest.TestCase):
         self.assertIn("Undo last performance change", [c.title for c in model.snapshot().dialog.choices])
         receive(model, "performance_status", {**status, "game_id": "psp:other"})
         self.assertNotIn("Undo last performance change", [c.title for c in model.snapshot().dialog.choices])
+
+
+    def test_performance_display_distinguishes_local_inherited_and_unavailable(self):
+        model = NavigationModel()
+        status = {"game_id": "psp:one", "generation": 2, "writable": True, "options": [
+            {"id": "resolution", "label": "Rendering resolution", "value": 2, "inherited": False, "value_available": True,
+             "choices": [{"value": 2, "label": "2x PSP"}]},
+            {"id": "frameskip", "label": "Manual frameskip", "value": None, "inherited": True,
+             "value_available": True, "effective_value": 0, "choices": [{"value": 0, "label": "Off"}]},
+            {"id": "auto_frameskip", "label": "Automatic frameskip", "value": None, "inherited": True,
+             "value_available": False, "effective_value": None}]}
+        receive(model, "performance_status", status)
+        message = model.snapshot().dialog.message
+        self.assertIn("Rendering resolution: Local: 2x PSP", message)
+        self.assertIn("Manual frameskip: Inherited: Off (current global)", message)
+        self.assertIn("Automatic frameskip: Unavailable", message)
+        receive(model, "performance_status", {**status, "writable": False,
+            "options": [{**option, "value_available": False, "inherited": None} for option in status["options"]]})
+        self.assertIn("Rendering resolution: Unavailable", model.snapshot().dialog.message)
+        self.assertEqual([choice.title for choice in model.snapshot().dialog.choices], ["Back"])
+
+    def test_native_return_refreshes_authority_without_reopening_stale_dialog_or_losing_undo(self):
+        model = NavigationModel()
+        status = {"game_id": "psp:one", "generation": 4, "writable": True, "options": [
+            {"id": "frameskip", "label": "Manual frameskip", "value": None, "inherited": True,
+             "effective_value": 0, "value_available": True,
+             "choices": [{"value": None, "label": "Use current global setting"}, {"value": 0, "label": "Off"}]}]}
+        receive(model, "performance_status", status)
+        model._performance_transaction = "owned-transaction"
+        model._performance_transaction_game = "psp:one"
+        choose(model, "Manual frameskip")
+        old_preview = choose(model, "Use current global setting")[0]
+        commands = model.refresh_commands()
+        refresh = next(command for command in commands if command.method == "performance.status")
+        self.assertEqual(refresh.params, {"game_id": "psp:one"})
+        self.assertIsNone(model.snapshot().dialog)
+        model.receive(old_preview, {"preview_id": "stale", "diff": []})
+        self.assertIsNone(model.snapshot().dialog)
+        local = {**status, "options": [{**status["options"][0], "value": 0, "inherited": False}]}
+        model.receive(refresh, local)
+        self.assertIsNone(model.snapshot().dialog)
+        self.assertFalse(model._performance_status["options"][0]["inherited"])
+        receive(model, "performance_status", local)
+        self.assertIn("Manual frameskip: Local: Off", model.snapshot().dialog.message)
+        self.assertIn("Undo last performance change", [choice.title for choice in model.snapshot().dialog.choices])
+
+    def test_failed_native_settings_refresh_clears_stale_values_without_opening_a_dialog(self):
+        model = NavigationModel()
+        receive(model, "performance_status", {"game_id": "psp:one", "writable": True,
+            "options": [{"id": "frameskip", "value": None, "effective_value": 0, "inherited": True}]})
+        refresh = next(command for command in model.refresh_commands() if command.method == "performance.status")
+        model.error(refresh, "BUSY_WRITER", "Native settings writer is still active")
+        self.assertEqual(model._performance_status, {})
+        self.assertIsNone(model.snapshot().dialog)
+        self.assertIn("refresh unavailable", model.snapshot().status)
+
+    def test_older_native_refresh_cannot_replace_newer_performance_read(self):
+        model = NavigationModel()
+        receive(model, "performance_status", {"game_id": "psp:one", "writable": False})
+        cached = next(command for command in model.refresh_commands() if command.method == "performance.status")
+        receive(model, "performance_status", {"game_id": "psp:two", "generation": 7, "writable": False})
+        model.receive(cached, {"game_id": "psp:one", "generation": 0, "writable": False})
+        self.assertEqual(model._performance_status["game_id"], "psp:two")
+        self.assertEqual(model._performance_generation, 7)
 
 
 @unittest.skipUnless(importlib.util.find_spec("sdl2") and importlib.util.find_spec("PIL"), "Install host SDL/Pillow dependencies")

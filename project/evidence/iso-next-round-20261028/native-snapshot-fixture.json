@@ -1,0 +1,1727 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-28T23:03:37.020971+00:00",
+  "kind": "optional0006-native-function-host-fixture-interruption",
+  "whole_emulator": false,
+  "production_profile_constructed": false,
+  "filesystem_power_loss_simulated": false,
+  "prior_completion_preservation_acceptance": "PASS_NATIVE_FUNCTION_FIXTURE_SCOPE",
+  "legacy_mutable_receipts_protected": false,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "patch_sha256": "1515146917289839533949b66f15dc401f82570e2a0bed03d40b944b5dfcd179",
+  "lock_sha256": "709c25fe3de024e48e6c1a323d14ce5527a00be9688f84c134a9eae27a0d2992",
+  "compiled_fixture_sha256": "9ee4e646a4a7b434c461968000b98405a5e0213386711e77108ff20d52545541",
+  "compiled_source_sha256": "ab2c398463f200ef7a4274172b6b790df01564fabd358c35aadfd90fab77d374",
+  "harness_inputs": {
+    "test_state_snapshot_patch.py": "da5e2c453c86fd155d1487be078d696aac83916758bc985bdf2a22c9389163a6",
+    "state_snapshot_main.cpp.in": "65083f3345047fcc6fa5eca910c9df7a3d98b0769e68d69689814441bacaf166",
+    "test_state_session_patch.py": "e3fb129a1f42812dc6f56cf512e273e38f7115581deac4e4283cc5deef1d9e0b",
+    "state_evidence_acceptance.cpp.in": "c24dcdc6410f7ee5d7c537003bf680bf492a6b6b31dd38a4632046a47468dcd4",
+    "capture_state_snapshot.py": "ce3c50df49f5637724cf3cce8f7037129ed2db4f9bcfed84decc294dc5676d25"
+  },
+  "elapsed_ns": 3933171170,
+  "observations": [
+    {
+      "scenario": "success",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-siovkrsk",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "2",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "0d11d23c3a328c31274e6dfa17e664adcc85491d72386353047bae3da5188293",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "0d11d23c3a328c31274e6dfa17e664adcc85491d72386353047bae3da5188293",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "8d66920a32b3419b46380cef5eaf8aa72eefe0506b82b3ff2a6705fbf904b16f",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "ad3a85543635cf50ca1376fc70c6f21892982863aa4b607babb9b07588d6f458",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "ad3a85543635cf50ca1376fc70c6f21892982863aa4b607babb9b07588d6f458",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 8441116,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-state-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-0jlpf83m",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "0cc295ac590b52fabd39d5b383b1279123e6d774e80618ed85cc7300aa811744",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "0cc295ac590b52fabd39d5b383b1279123e6d774e80618ed85cc7300aa811744",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "001523fea1f526533d1fb2372437d6416670ba69e5464eb3eaaeac64e4cad6ed",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "0cc295ac590b52fabd39d5b383b1279123e6d774e80618ed85cc7300aa811744",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "0cc295ac590b52fabd39d5b383b1279123e6d774e80618ed85cc7300aa811744",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_2.ppst.tmp": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6757688,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-state-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-thntthey",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "9d01a1be0cb4960a312e3b4c05e97166d158c3751d0636baa7c2fd355fe208f0",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "9d01a1be0cb4960a312e3b4c05e97166d158c3751d0636baa7c2fd355fe208f0",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "d8118b6b75255cb197fae2475e68d81e6ff495df36630fb93047b03750e1d293",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "9d01a1be0cb4960a312e3b4c05e97166d158c3751d0636baa7c2fd355fe208f0",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "9d01a1be0cb4960a312e3b4c05e97166d158c3751d0636baa7c2fd355fe208f0",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst.tmp": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 6335917,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-snapshot-partial-write",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-nx6vun7r",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "2ae3c5c2bc91bde24bcc39e96d53d2bb00c9d501fd70404c597f2d58744a3552",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "2ae3c5c2bc91bde24bcc39e96d53d2bb00c9d501fd70404c597f2d58744a3552",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "39e6ced60352f31e8e8ef25c4d5787d57183c888f75efe6239580617d4d1aa6a",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "2ae3c5c2bc91bde24bcc39e96d53d2bb00c9d501fd70404c597f2d58744a3552",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "2ae3c5c2bc91bde24bcc39e96d53d2bb00c9d501fd70404c597f2d58744a3552",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "9af669bfa0ccf34b89f77446d50fb7e0608f9b471937bd9f0eeb852b9b423c7d",
+          "size": 9
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7368041,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-snapshot-partial-write",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-jffnftrb",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "490e82e003f340da1b833077defb9eaaea18149716e3e6591fa5e20c9a52159a",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "490e82e003f340da1b833077defb9eaaea18149716e3e6591fa5e20c9a52159a",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "195a3df023034db84845aaec005c2438e96ddb1b215891ec5c3d92cd7f7bf59c",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "490e82e003f340da1b833077defb9eaaea18149716e3e6591fa5e20c9a52159a",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "490e82e003f340da1b833077defb9eaaea18149716e3e6591fa5e20c9a52159a",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "9af669bfa0ccf34b89f77446d50fb7e0608f9b471937bd9f0eeb852b9b423c7d",
+          "size": 9
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 7009865,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-snapshot-before-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-n40n4g92",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "350ef1046819d743f3e26f9735627e70a54e80dc9d7bae958b09054173043c2b",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "350ef1046819d743f3e26f9735627e70a54e80dc9d7bae958b09054173043c2b",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "8c34dd04f016544861d7508e2dce59ef6301115ad8137efd961bbed144e5185a",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "350ef1046819d743f3e26f9735627e70a54e80dc9d7bae958b09054173043c2b",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "350ef1046819d743f3e26f9735627e70a54e80dc9d7bae958b09054173043c2b",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7145278,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-snapshot-before-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-ygizak5z",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "dcbabfc11087a94f70d6fc70f0fe7e26c1505bc1447c67d21237e312097c52bf",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "dcbabfc11087a94f70d6fc70f0fe7e26c1505bc1447c67d21237e312097c52bf",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "a4d1da46f9429e01ecc443ef10f3544648e947ffc56b20291b3a130e878f7be5",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "dcbabfc11087a94f70d6fc70f0fe7e26c1505bc1447c67d21237e312097c52bf",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "dcbabfc11087a94f70d6fc70f0fe7e26c1505bc1447c67d21237e312097c52bf",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 7117017,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-snapshot-after-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-_ef9mxjz",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "aa278288785190a985fbf4a9e88a90bce05d9a4061b5d49dabfddfabd6130d41",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "aa278288785190a985fbf4a9e88a90bce05d9a4061b5d49dabfddfabd6130d41",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "bf72bd1eb83498d5402a8125e7bb7815e21d27b626dceea75becc9b626ea413c",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "aa278288785190a985fbf4a9e88a90bce05d9a4061b5d49dabfddfabd6130d41",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "aa278288785190a985fbf4a9e88a90bce05d9a4061b5d49dabfddfabd6130d41",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 10509991,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-snapshot-after-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-b3m9os1b",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "6554b72f8ad0dea0e27ae4a339abd81395a0d445ee3f087efb65d3f32c420ab9",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "6554b72f8ad0dea0e27ae4a339abd81395a0d445ee3f087efb65d3f32c420ab9",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "ed45248dc52582d619f91154814d87613b1e3cf4f5e86d5d6fad2d8e74f4f824",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "6554b72f8ad0dea0e27ae4a339abd81395a0d445ee3f087efb65d3f32c420ab9",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "6554b72f8ad0dea0e27ae4a339abd81395a0d445ee3f087efb65d3f32c420ab9",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 6979581,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-result-partial-write",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-qbvkat7h",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "116cb7f235fe501eb597a1ad0c451d72f8ed309c1d77097e87061deda62738a7",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "116cb7f235fe501eb597a1ad0c451d72f8ed309c1d77097e87061deda62738a7",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "1aa272beed67145fcfdcc16be7d52597eea63f20912595958ef7af979398e352",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "116cb7f235fe501eb597a1ad0c451d72f8ed309c1d77097e87061deda62738a7",
+          "size": 795
+        },
+        "private/result.tmp": {
+          "sha256": "98d814bf713577f5599bea7d481db3131986ab7ae78badbeb99494bcffff18a4",
+          "size": 9
+        },
+        "private/save-completed": {
+          "sha256": "116cb7f235fe501eb597a1ad0c451d72f8ed309c1d77097e87061deda62738a7",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 10525945,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-result-partial-write",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-4e3pcvo8",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "6577b95bef020af1240cb290762ac12ac99fc0312bb90f583b6be1075dc32c69",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "6577b95bef020af1240cb290762ac12ac99fc0312bb90f583b6be1075dc32c69",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "ffecc6b195b4b3f501471385f30a56b2c6939c32ea4c3f0455dff10fa4898a60",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "6577b95bef020af1240cb290762ac12ac99fc0312bb90f583b6be1075dc32c69",
+          "size": 795
+        },
+        "private/result.tmp": {
+          "sha256": "98d814bf713577f5599bea7d481db3131986ab7ae78badbeb99494bcffff18a4",
+          "size": 9
+        },
+        "private/save-completed": {
+          "sha256": "6577b95bef020af1240cb290762ac12ac99fc0312bb90f583b6be1075dc32c69",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 10334258,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-result-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-2_2k04ak",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "7ca62078d29fb0af217abe977578847a1284e64e886997d035ed060af554cc29",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "7ca62078d29fb0af217abe977578847a1284e64e886997d035ed060af554cc29",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "d2b3865016bef98823c730833fca40aa7eee03b439f5db091f1e3fc9a3203f76",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "7ca62078d29fb0af217abe977578847a1284e64e886997d035ed060af554cc29",
+          "size": 795
+        },
+        "private/result.tmp": {
+          "sha256": "ffd3524b6f20fc6f336026606b970db0788a7caa4e5affa08d12c8aaf3dab87c",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "7ca62078d29fb0af217abe977578847a1284e64e886997d035ed060af554cc29",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7104727,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-result-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-ruelu00l",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "6c36c5b9bf3372d9ac201630a0c7809a12c2ee3e3658b844b2ef0e9f3a740444",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "6c36c5b9bf3372d9ac201630a0c7809a12c2ee3e3658b844b2ef0e9f3a740444",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "aef38d3601ad3c0fa664c5ef637c6641480c8548a15faec299e4cf1abfb5471d",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "6c36c5b9bf3372d9ac201630a0c7809a12c2ee3e3658b844b2ef0e9f3a740444",
+          "size": 795
+        },
+        "private/result.tmp": {
+          "sha256": "4765204c5d7e42a967855bf268af8779ce9e4fafe0858ccb38e4c14ed581491c",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "6c36c5b9bf3372d9ac201630a0c7809a12c2ee3e3658b844b2ef0e9f3a740444",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 9342154,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-completion-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-ditk98xf",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "9f99c78c66600ed2aadcdf60b193bf5b87f482a90dbfeb16acd720b65938bf86",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "9f99c78c66600ed2aadcdf60b193bf5b87f482a90dbfeb16acd720b65938bf86",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "4e82da1ed74c53e073cfa997cbf4887f74174fa0c3ccf50916e9ce9e3d96e7d1",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "5a0813bf195076655f39afdffdef10295428a067b2d453dccf8b6887838fb93b",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "9f99c78c66600ed2aadcdf60b193bf5b87f482a90dbfeb16acd720b65938bf86",
+          "size": 795
+        },
+        "private/save-completed.tmp": {
+          "sha256": "5a0813bf195076655f39afdffdef10295428a067b2d453dccf8b6887838fb93b",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7218197,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-completion-before-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-cnaxms77",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "3265bba842428a993ed4c58ec30ab0ef77b457348a2673d2da936973c53f8e3d",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "3265bba842428a993ed4c58ec30ab0ef77b457348a2673d2da936973c53f8e3d",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "fd19cf8f7d2f83b99d95947d4e73cdf1c8aa1e37de7186b103eeb4a3af1f5269",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "327859d6b0a3c0c75f4690f3b65af9beabb028bb91ea83a6276284b2fa8c2604",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "3265bba842428a993ed4c58ec30ab0ef77b457348a2673d2da936973c53f8e3d",
+          "size": 795
+        },
+        "private/save-completed.tmp": {
+          "sha256": "327859d6b0a3c0c75f4690f3b65af9beabb028bb91ea83a6276284b2fa8c2604",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 6818729,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-same-slot-completion-after-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-z9pktdut",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "2",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "908c03b7b0ace5aec49dac4c0e006d29a6305da510ed934ee7ff530623bca702",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "908c03b7b0ace5aec49dac4c0e006d29a6305da510ed934ee7ff530623bca702",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "fdf8e306334044d248fc9d9f36c1d88c3cb9d2c3e21c685afbb9472446cef114",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "6874ca1c293294a011936d85d7c11ab218915433066cda9dd61aa2cc3e65d8dc",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "6874ca1c293294a011936d85d7c11ab218915433066cda9dd61aa2cc3e65d8dc",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 9653590,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "kill-separate-slot-completion-after-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-lb94l8cv",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "2",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "bb4bfcaa2e98d76cd665143ed7957bc68888950c63e98e3e1a7669b42cf8326e",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "bb4bfcaa2e98d76cd665143ed7957bc68888950c63e98e3e1a7669b42cf8326e",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "adad83bb045b1234a68732f7e1674413d51dfa127e68783969540b574f724e3f",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "7e8a1fdd4bdb91323ef7d6df72a113084319f9c1369853d6efb3b73e23c3ae9f",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "7e8a1fdd4bdb91323ef7d6df72a113084319f9c1369853d6efb3b73e23c3ae9f",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        }
+      },
+      "elapsed_ns": 6994382,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-snapshot-write",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-fc_5p6j2",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "8a585861bc04c26dedc58835e5f7757609fee31ecfb8ae1596a1bbd527fa7ee6",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "8a585861bc04c26dedc58835e5f7757609fee31ecfb8ae1596a1bbd527fa7ee6",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "27183b3a7c23125f516bc807fbca693db7c595dc0418b265f9d191e64855c381",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "8a585861bc04c26dedc58835e5f7757609fee31ecfb8ae1596a1bbd527fa7ee6",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6983426,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-snapshot-corrupt",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-yw4m4ku5",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "e70989c0f6e62a91b57b1b4e0abbf4f944650ecc0e622b0369296b9e500c995a",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "e70989c0f6e62a91b57b1b4e0abbf4f944650ecc0e622b0369296b9e500c995a",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "81046add09ed6af146d3dc75b97b1209ca26b0a585ef259c81f80312d41cc4d4",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "e70989c0f6e62a91b57b1b4e0abbf4f944650ecc0e622b0369296b9e500c995a",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "d41356081d42b835ff277e1a97a9995192034cdb0500cdc2a1fc3894672c5149",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6908163,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-source-change",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-dmkp1t0c",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "90ffa95824ab9935a5ede3bd3cafe72170120948085922fd783ffb905a242d93",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "90ffa95824ab9935a5ede3bd3cafe72170120948085922fd783ffb905a242d93",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "58e79f12db4c82ccfffd4e6ac433b2eb79c5fd87aef151622b1552b62e1d2d55",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "90ffa95824ab9935a5ede3bd3cafe72170120948085922fd783ffb905a242d93",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "59f0fdd7255eca1a296ab76d28fafd817a9e3c0e967740cea5f53b927be7585a",
+          "size": 44
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6844719,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-snapshot-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-13d6r42t",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "786dca14d20bfdefc964a26fc16d7b13ce01f5ab1612b95482e6f685cd09a899",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "786dca14d20bfdefc964a26fc16d7b13ce01f5ab1612b95482e6f685cd09a899",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "5eeed7b22e36e2368e7579c13603749b43d8d233b4c331023c8784eb70171fac",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "786dca14d20bfdefc964a26fc16d7b13ce01f5ab1612b95482e6f685cd09a899",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7013241,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-snapshot-directory-fsync",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-34qfqjtp",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "2249fdaf819569c67f28cb6bb710864a72e77ddedf5c52182247a655e10783e3",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "2249fdaf819569c67f28cb6bb710864a72e77ddedf5c52182247a655e10783e3",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "656994ac45926b3776bcb7895f96c9c2266f4d0d3cf015e9f11a741050887829",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "2249fdaf819569c67f28cb6bb710864a72e77ddedf5c52182247a655e10783e3",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6820913,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-result-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-30_vpr2t",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "1",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "d33e1217fc4f66e2a7c103cd817457bd96333c9791be11810af44b2f1ed7d855",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "d33e1217fc4f66e2a7c103cd817457bd96333c9791be11810af44b2f1ed7d855",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "497fc4e2b26337c4d9263ae2f56e5678f11882c69c111ddb1d2ea61f14b69ac3",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "d33e1217fc4f66e2a7c103cd817457bd96333c9791be11810af44b2f1ed7d855",
+          "size": 795
+        },
+        "private/result.tmp": {
+          "sha256": "5789e50ef73b21dc03657b7b7dbfd7b73160c6e97a6a3d38d5839e434e4c2e9b",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "d33e1217fc4f66e2a7c103cd817457bd96333c9791be11810af44b2f1ed7d855",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6925510,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-completion-rename",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-6yr_fmeb",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "5884a8869c8b02f41d2a60780f5c319eceef159bc0b7ed8cc77d5812c4856b59",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "5884a8869c8b02f41d2a60780f5c319eceef159bc0b7ed8cc77d5812c4856b59",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "95c0a773dd685b8e1251022ddfe38d6ea4a648d476c7e81651bac1163c5659fd",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "8c4946be8bb32491acc0d711099a4df66457c93d0ae279f672c6b0ed18e240e2",
+          "size": 795
+        },
+        "private/save-completed": {
+          "sha256": "5884a8869c8b02f41d2a60780f5c319eceef159bc0b7ed8cc77d5812c4856b59",
+          "size": 795
+        },
+        "private/save-completed.tmp": {
+          "sha256": "8c4946be8bb32491acc0d711099a4df66457c93d0ae279f672c6b0ed18e240e2",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-2-0.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6851058,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-count-cap",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-8v0y9_rx",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "929faf38d49b620fa4a4bb42ffe3118a0396d64ce3ff506b8ab602ce89be8501",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "929faf38d49b620fa4a4bb42ffe3118a0396d64ce3ff506b8ab602ce89be8501",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "03375e44845267e3838399e1e2f8f84b2d6ea2f742a6d4f93d825101f74cab83",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "929faf38d49b620fa4a4bb42ffe3118a0396d64ce3ff506b8ab602ce89be8501",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-0": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-1": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-10": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-11": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-12": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-13": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-14": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-15": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-16": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-17": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-18": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-19": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-2": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-20": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-21": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-22": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-23": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-24": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-25": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-26": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-27": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-28": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-29": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-3": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-30": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-4": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-5": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-6": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-7": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-8": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-9": {
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "size": 0
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 8458833,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-byte-cap",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-zpk5h86b",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "6c315ffd4f87575a75a0ededc1037056b596561a4fd096a53b0a96f7a7cc4f0c",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "6c315ffd4f87575a75a0ededc1037056b596561a4fd096a53b0a96f7a7cc4f0c",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "19da94a850f62a6c9fce327258bdf67ae0a6e157410fc73e718c506548408a3a",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "6c315ffd4f87575a75a0ededc1037056b596561a4fd096a53b0a96f7a7cc4f0c",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/retained-incomplete-large": {
+          "sha256": "ed31dd63ea30f6c28c33f378ece6341e270bc1c2f341e2edd0462c6824f1e37e",
+          "size": 536870892
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 1531297705,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-entry-symlink",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-r_n9nzbn",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "78de27aa3464bec82498f90e7b6589a2e161332022f4e0309ab46e29f3239b03",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "78de27aa3464bec82498f90e7b6589a2e161332022f4e0309ab46e29f3239b03",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "a1bdaade004ec57bca6aedd3231004afeb2ee83695ecfd5e4c946f62713c113a",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "78de27aa3464bec82498f90e7b6589a2e161332022f4e0309ab46e29f3239b03",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 8108379,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-entry-hardlink",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-sbvlwyhx",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "60ea6c4cb2eaf9723e1033553a6dfb7a9139876a801789c87b3dd9595bb07d67",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "60ea6c4cb2eaf9723e1033553a6dfb7a9139876a801789c87b3dd9595bb07d67",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "eb10796741ba3b74edd090b5a233c3cbbfba9cd29dd8a774b6c35c730a44bf92",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "60ea6c4cb2eaf9723e1033553a6dfb7a9139876a801789c87b3dd9595bb07d67",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/.trimui-state-snapshots/foreign-hardlink": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 8002400,
+      "retained_raw_verified": true
+    },
+    {
+      "scenario": "fail-directory-mode",
+      "original_root": "/tmp/ppsspp-immutable-snapshot-0k_h1mxv",
+      "prior_snapshot_valid": true,
+      "prior_snapshot_sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+      "final_sequence": "2",
+      "completion_sequence": "1",
+      "completion_bounded_by_final": true,
+      "qualified_capability_created": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "75cb97945e21d97d4fc2ebbc7d216f428da634f4a233fed58bcb92632103a9b6",
+          "size": 795
+        },
+        "previous-save-completed": {
+          "sha256": "75cb97945e21d97d4fc2ebbc7d216f428da634f4a233fed58bcb92632103a9b6",
+          "size": 795
+        },
+        "private/request": {
+          "sha256": "d92ed447f570a8772f897a13ae02841c85231e9e7b040c1f2bf6d7c5aa29093f",
+          "size": 478
+        },
+        "private/result": {
+          "sha256": "3a5bc71d965635c1c6b44d9e0366a18dcea4a35c215acd49c1ce1d1df88b5b30",
+          "size": 269
+        },
+        "private/save-completed": {
+          "sha256": "75cb97945e21d97d4fc2ebbc7d216f428da634f4a233fed58bcb92632103a9b6",
+          "size": 795
+        },
+        "states/.trimui-state-snapshots/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-1-0.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "338dd2cae3185f6c65f3c06d05493667296947ce8f9a45ae73a03eca41828a0f",
+          "size": 37
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7015614,
+      "retained_raw_verified": true
+    }
+  ]
+}

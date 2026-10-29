@@ -1,0 +1,86 @@
+{
+  "kind": "actual-whole-native-interruption",
+  "profile_created": false,
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "shim_sha256": "19aa181e8bf8d5eb51e7aeb5686d1755db9f8203fd6575493cc41fb408490b86",
+  "shim_source_sha256": "dcf6fbe3f73042936381b24207b9c8ab9d02dc7cfaffc114f7eca618ad6313d3",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "iso_size": 1696006144,
+  "point": "result-before-rename",
+  "request_sha256": "65ceb71b8f63c84e039080b3bfa3eebd2759aa2975644a0e9d050b90c3f65ad0",
+  "frozen_initial_config_sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--escape-exit",
+    "--log=/workspace/trimui-audit/native-snapshot-whole/result-before-rename/native.log",
+    "--project-state-session=/workspace/trimui-audit/native-snapshot-whole/result-before-rename/session/request",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "pid": 28447,
+  "start_ticks": 113859,
+  "passed": false,
+  "error": "RuntimeError: native exited early 0",
+  "elapsed_ns": 77259436955,
+  "events": [
+    {
+      "event": "launched",
+      "elapsed_ns": 100541810,
+      "pid": 28447
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 20332657510,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "failure",
+      "elapsed_ns": 77259232269,
+      "error": "RuntimeError: native exited early 0"
+    }
+  ],
+  "runner_sha256": "80a510d4ab5586fe1ae81be522c563c73a45b34511e9341ba0c8f53f8d9cd4f0",
+  "artifacts": {
+    "config/ppsspp/PSP/SYSTEM/controls.ini": {
+      "sha256": "932efef17afed743bfecf5a0ec5d38f380f9c53ccd35a5a5ab6a5469531ff158",
+      "size": 539
+    },
+    "config/ppsspp/PSP/SYSTEM/ppsspp.ini": {
+      "sha256": "c516a8f19e482c0d5f87100ba0f943f0c18edcb2d9b18c1b132dbbe906bac227",
+      "size": 19040
+    },
+    "events.jsonl": {
+      "sha256": "9bb113b9880afb8afc2e861c70f658099a5c88525a713f9a7dcd4b5fd48b4b67",
+      "size": 238
+    },
+    "native.log": {
+      "sha256": "ba98ec577d1dec6007a4819cd0d12686e6fc4f3b0d2f68481d10b46cbe6e302e",
+      "size": 550
+    },
+    "process.json": {
+      "sha256": "88d8ce54fa944979f4041bd1a0fffb2ee4278334715c17539b06a22333cee52a",
+      "size": 37
+    },
+    "session/request": {
+      "sha256": "65ceb71b8f63c84e039080b3bfa3eebd2759aa2975644a0e9d050b90c3f65ad0",
+      "size": 608
+    },
+    "stdout.log": {
+      "sha256": "248380061155e3d5188279cbec769978fdca1e9a186bdbe10cd1a5edebc8bcb3",
+      "size": 2971
+    },
+    "supervise.py": {
+      "sha256": "c800c10dc53d6d1e03d558cf09fcafbc43aece064c91e5ae9790d212ed2fda26",
+      "size": 510
+    },
+    "supervision.json": {
+      "sha256": "35d1068324c0d52ec076649804e8808a902d684cafaaf8fc98bf37f28965d99a",
+      "size": 59
+    }
+  },
+  "excluded_attempt": true,
+  "correction": "Default native controls had no F2 Save State mapping; froze explicit Save State=1-132 and Pause=1-111 for retry. Native was exited normally through its own window.",
+  "runner_was_edited_during_attempt": true,
+  "runner_sha256_is_final_disk_snapshot_not_execution_identity": true
+}

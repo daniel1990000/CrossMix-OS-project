@@ -329,12 +329,22 @@ class EmbeddedTests(unittest.TestCase):
             def refresh(inner):
                 super().refresh()
                 inner.label = live["label"]
+            def game_info(inner, game_id):
+                return {"system_id": "PSP"}
             def games(inner, *args, offset=0, limit=40, **kwargs):
                 rows = [{"game_id": "game:%03d" % i, "display_name": inner.label + " %03d" % i,
                          "system_id": "PSP"} for i in range(85)]
                 return {"items": rows[offset:offset + limit], "total": len(rows), "offset": offset}
         deps = replace(self.dependencies, backend_factory=PagedBackend)
-        runner = EmbeddedRunner(self.context, health=self.health, dependencies=deps)
+        reads = []
+        def performance_status(game_id):
+            reads.append(game_id)
+            local = live["label"] != "Before options"
+            return {"game_id": game_id, "generation": 0, "writable": True, "options": [
+                {"id": "frameskip", "label": "Manual frameskip", "value": 0 if local else None,
+                 "effective_value": 0, "inherited": not local, "value_available": True}]}
+        context = replace(self.context, performance_manager=SimpleNamespace(status=performance_status))
+        runner = EmbeddedRunner(context, health=self.health, dependencies=deps)
         self.main_menu.launch_selection = lambda _: live.update(label="After native options")
         with self.provider_patch():
             runner.setup()
@@ -343,12 +353,17 @@ class EmbeddedTests(unittest.TestCase):
                 runner._commands(runner.model.handle("down"))
             before = runner.model.snapshot()
             self.assertEqual(before.selected_item.id, "game:044")
+            runner._commands([runner.model._request("performance.status", {"game_id": "game:044"}, "performance_status")])
+            self.assertTrue(runner.model._performance_status["options"][0]["inherited"])
             generation = before.artwork_generation
             runner.open_advanced("settings")
             after = runner.model.snapshot()
             self.assertEqual(after.selected_item.id, "game:044")
             self.assertEqual(after.selected_item.title, "After native options 044")
             self.assertGreater(after.artwork_generation, generation)
+            self.assertEqual(reads, ["game:044", "game:044"])
+            self.assertFalse(runner.model._performance_status["options"][0]["inherited"])
+            self.assertIsNone(after.dialog)
             runner.release_for_fallback()
         self.assertIn("refresh-existing-models", self.events)
 

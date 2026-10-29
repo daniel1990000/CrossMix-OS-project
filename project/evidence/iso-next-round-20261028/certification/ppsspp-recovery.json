@@ -1,0 +1,93 @@
+{
+  "name": "ppsspp",
+  "repository": "hrydgard/ppsspp",
+  "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "started_at": "2026-10-28T22:49:46.464115+00:00",
+  "attempts": [
+    {
+      "argv": [
+        "git",
+        "init"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.00220732199997542
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/hrydgard/ppsspp.git"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.001662447000001066
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0010326350000013917
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0012459339999963959
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "origin",
+        "d357e6a32934800d3d80b49f910a603e1b069751"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.5754812389999984
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "init",
+        "--no-cone"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0014250619999813807
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "--stdin"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0011600549999855048
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 8.094506729999978
+    }
+  ],
+  "finished_at": "2026-10-28T22:49:58.145791+00:00",
+  "successful": true
+}

@@ -1,0 +1,93 @@
+{
+  "name": "spruce-ra",
+  "repository": "spruceUI/RA",
+  "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+  "started_at": "2026-10-28T22:49:46.464295+00:00",
+  "attempts": [
+    {
+      "argv": [
+        "git",
+        "init"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0024065899999925477
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/spruceUI/RA.git"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0011073670000030233
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0010051350000139792
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0010739969999917776
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "origin",
+        "71d84da4dc88945177a3eb34268013355c705dbd"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.5234000659999936
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "init",
+        "--no-cone"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0012253929999985758
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "--stdin"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0018856100000164133
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.308539106000012
+    }
+  ],
+  "finished_at": "2026-10-28T22:49:51.307211+00:00",
+  "successful": true
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "kind": "clean-commit-host-check-receipt",
+  "recorded_at": "2026-10-28T23:26:35.027311+00:00",
+  "implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+  "checkout_clean_after_checks_and_packaging": true,
+  "strict_report_sha256": "8d5f60f8d67b52894399baebeffb48bdbaacdef4f7782798020249eb4581826a",
+  "strict_log_sha256": "aef444e6dc6df53e16e9a6fb50160ae943660048e73d0a6ef75367a6883c2897",
+  "strict_totals": {
+    "tests_run": 1263,
+    "passed": 1263,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "source_export_package_built": true,
+  "native_optional0006_tests_included": true,
+  "device_qualified": false
+}

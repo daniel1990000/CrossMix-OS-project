@@ -1,0 +1,173 @@
+--- a/Core/SaveState.cpp
++++ b/Core/SaveState.cpp
+@@ -20,6 +20,9 @@
+ #include <memory>
+ #if defined(SDL) && defined(__linux__)
+ #include <sys/stat.h>
++#include <sys/file.h>
++#include <dirent.h>
++#include <cerrno>
+ #include <fcntl.h>
+ #include <unistd.h>
+ #endif
+@@ -899,6 +902,126 @@
+ 		return projectSession && projectSession->request[10] == "resume";
+ 	}
+ 
++	// Optional immutable completion payloads. Existing native slots and Undo stay
++	// native-owned; a receipt never points at those subsequently mutable bytes.
++	static bool ProjectSnapshotState(const std::shared_ptr<ProjectStateSession> &session,
++		uint64_t sequence, const SlotEvidence &evidence, SlotEvidence *snapshot) {
++#if defined(SDL) && defined(__linux__)
++		constexpr uint64_t maxBytes = 512ULL * 1024 * 1024;
++		constexpr size_t maxFiles = 32;
++		struct OwnedFD {
++			int fd;
++			~OwnedFD() { if (fd >= 0) close(fd); }
++		};
++		// Resolve every root component without symlinks, as for the transport.
++		const std::string &rootName = session->request[9];
++		OwnedFD root{open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC)};
++		if (root.fd < 0) return false;
++		for (size_t at = 1; at < rootName.size();) {
++			size_t end = rootName.find('/', at);
++			if (end == std::string::npos) end = rootName.size();
++			std::string part = rootName.substr(at, end - at);
++			int next = openat(root.fd, part.c_str(), O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW);
++			if (next < 0) return false;
++			close(root.fd); root.fd = next; at = end + 1;
++		}
++		struct stat rootInfo{};
++		if (fstat(root.fd, &rootInfo) != 0 || !S_ISDIR(rootInfo.st_mode) ||
++			rootInfo.st_uid != getuid() || (rootInfo.st_mode & 0022) != 0)
++			return false;
++		const char *folder = ".trimui-state-snapshots";
++		if (mkdirat(root.fd, folder, 0700) != 0 && errno != EEXIST) return false;
++		OwnedFD directory{openat(root.fd, folder, O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW)};
++		struct stat directoryInfo{};
++		if (directory.fd < 0 || fstat(directory.fd, &directoryInfo) != 0 ||
++			!S_ISDIR(directoryInfo.st_mode) || directoryInfo.st_uid != getuid() ||
++			(directoryInfo.st_mode & 0777) != 0700 || flock(directory.fd, LOCK_EX | LOCK_NB) != 0 || fsync(root.fd) != 0)
++			return false;
++		// Count ALL retained regular files, including incomplete copies. Unknown
++		// files are never removed. No snapshot garbage collection is inferred.
++		int scanFD = dup(directory.fd);
++		if (scanFD < 0) return false;
++		DIR *scan = fdopendir(scanFD);
++		if (!scan) { close(scanFD); return false; }
++		size_t files = 0;
++		uint64_t bytes = 0;
++		bool valid = true;
++		errno = 0;
++		while (dirent *entry = readdir(scan)) {
++			std::string name(entry->d_name);
++			if (name == "." || name == "..") continue;
++			struct stat item{};
++			if (fstatat(directory.fd, name.c_str(), &item, AT_SYMLINK_NOFOLLOW) != 0 ||
++				!S_ISREG(item.st_mode) || item.st_uid != getuid() || (item.st_mode & 0777) != 0600 ||
++				item.st_nlink != 1 || item.st_size < 0 || (uint64_t)item.st_size > maxBytes ||
++				++files >= maxFiles || (uint64_t)item.st_size > maxBytes - bytes) { valid = false; break; }
++			bytes += (uint64_t)item.st_size;
++			errno = 0;
++		}
++		if (errno != 0) valid = false;
++		if (closedir(scan) != 0) valid = false;
++		if (!valid || evidence.stateSize == 0 || evidence.stateSize > maxBytes - bytes) return false;
++		OwnedFD input{open(evidence.statePath.c_str(), O_RDONLY | O_CLOEXEC | O_NOFOLLOW | O_NONBLOCK)};
++		struct stat before{};
++		if (input.fd < 0 || fstat(input.fd, &before) != 0 || !S_ISREG(before.st_mode) ||
++			before.st_uid != getuid() || before.st_nlink != 1 || before.st_size <= 0 ||
++			(uint64_t)before.st_size != evidence.stateSize) return false;
++		std::string name;
++		OwnedFD output{-1};
++		for (size_t attempt = 0; attempt < maxFiles; ++attempt) {
++			name = session->request[0] + "-" + std::to_string(sequence) + "-" + std::to_string(attempt) + ".ppst";
++			output.fd = openat(directory.fd, name.c_str(), O_WRONLY | O_CREAT | O_EXCL | O_CLOEXEC | O_NOFOLLOW, 0600);
++			if (output.fd >= 0) break;
++			if (errno != EEXIST) return false;
++		}
++		if (output.fd < 0 || fchmod(output.fd, 0600) != 0) return false;
++		// Partial/failed copies stay counted and are never published as receipts.
++		uint8_t buffer[65536];
++		uint64_t copied = 0;
++		while (copied < evidence.stateSize) {
++			ssize_t got = read(input.fd, buffer, std::min<uint64_t>(sizeof(buffer), evidence.stateSize - copied));
++			if (got < 0 && errno == EINTR) continue;
++			if (got <= 0) return false;
++			size_t at = 0;
++			while (at < (size_t)got) {
++				ssize_t written = write(output.fd, buffer + at, (size_t)got - at);
++				if (written < 0 && errno == EINTR) continue;
++				if (written <= 0) return false;
++				at += (size_t)written;
++			}
++			copied += (size_t)got;
++		}
++		struct stat after{}, sourceNamed{}, outputInfo{}, outputNamed{}, folderNamed{};
++		auto unchanged = [](const struct stat &a, const struct stat &b) {
++			return a.st_dev == b.st_dev && a.st_ino == b.st_ino && a.st_size == b.st_size &&
++				a.st_mtim.tv_sec == b.st_mtim.tv_sec && a.st_mtim.tv_nsec == b.st_mtim.tv_nsec &&
++				a.st_ctim.tv_sec == b.st_ctim.tv_sec && a.st_ctim.tv_nsec == b.st_ctim.tv_nsec;
++		};
++		if (fstat(input.fd, &after) != 0 || lstat(evidence.statePath.c_str(), &sourceNamed) != 0 ||
++			!unchanged(before, after) || !unchanged(after, sourceNamed) ||
++			fstat(output.fd, &outputInfo) != 0 || !S_ISREG(outputInfo.st_mode) ||
++			outputInfo.st_uid != getuid() || (outputInfo.st_mode & 0777) != 0600 || outputInfo.st_nlink != 1 ||
++			(uint64_t)outputInfo.st_size != evidence.stateSize || fsync(output.fd) != 0)
++			return false;
++		int completed = output.fd; output.fd = -1;
++		if (close(completed) != 0 || fsync(directory.fd) != 0 ||
++			fstatat(directory.fd, name.c_str(), &outputNamed, AT_SYMLINK_NOFOLLOW) != 0 || !unchanged(outputInfo, outputNamed) ||
++			fstatat(root.fd, folder, &folderNamed, AT_SYMLINK_NOFOLLOW) != 0 ||
++			folderNamed.st_dev != directoryInfo.st_dev || folderNamed.st_ino != directoryInfo.st_ino)
++			return false;
++		Path path(rootName + "/" + folder + "/" + name);
++		ProjectFileFingerprint fingerprint;
++		if (!ProjectFingerprintFile(path, maxBytes, &fingerprint) || fingerprint.size != evidence.stateSize ||
++			fingerprint.sha256 != evidence.stateSHA256)
++			return false;
++		*snapshot = evidence;
++		snapshot->statePath = path;
++		return true;
++#else
++		return false;
++#endif
++	}
++
+ 	static bool ProjectExportResult(const std::shared_ptr<ProjectStateSession> &session, const char *operation,
+ 		uint64_t sequence, Status status, std::string_view message, const SlotEvidence *evidence) {
+ #if defined(SDL) && defined(__linux__)
+@@ -941,13 +1064,11 @@
+ 				return false;
+ 			return fsync(session->directory) == 0;
+ 		};
+-		// Retain completed save/load identities independently. Later failures
+-		// report their own status without erasing a genuinely completed state.
+-		// The final result bounds eligible completion sequences: a publication
+-		// interrupted before this final record cannot promote a newer receipt.
+-		if (status == Status::SUCCESS && !publish(operationName == "save" ? "save-completed" : "load-completed"))
+-			return false;
+-		return publish("result");
++		// Publish a complete final envelope before replacing its independent
++		// completion receipt. If interrupted, the earlier receipt remains bounded
++		// by this result and still names its immutable, exact snapshot bytes.
++		if (!publish("result")) return false;
++		return status != Status::SUCCESS || publish(operationName == "save" ? "save-completed" : "load-completed");
+ #else
+ 		return false;
+ #endif
+@@ -998,6 +1119,14 @@
+ 			if (evidence && (evidence->engineSHA256 != r[8] || evidence->gameSHA256 != r[7] ||
+ 				evidence->gamePath.ToString() != r[6] || evidence->statePath.ToString().rfind(r[9] + "/", 0) != 0)) {
+ 				status = Status::FAILURE; evidence = nullptr; message = "Project state identity mismatch";
++			}
++			SlotEvidence immutable;
++			if (!load && status == Status::SUCCESS && evidence) {
++				if (!ProjectSnapshotState(session, sequence, *evidence, &immutable)) {
++					status = Status::FAILURE; evidence = nullptr; message = "Project state snapshot unavailable or full";
++				} else {
++					evidence = &immutable;
++				}
+ 			}
+ 			if (!ProjectExportResult(session, load ? "load" : "save", sequence, status, message, evidence)) {
+ 				status = Status::FAILURE; message = "Project state result export failed";

@@ -1,0 +1,241 @@
+{
+  "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
+  "implementation_root": "project",
+  "target": "Original TrimUI Smart Pro TG5040; pinned spruceOS v4.5.4/PyUI",
+  "completed_task_count": 14,
+  "total_task_count": 25,
+  "completed_host_tasks": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "U01",
+    "U02",
+    "U03",
+    "U04",
+    "D01",
+    "D04",
+    "P01",
+    "P02",
+    "P03"
+  ],
+  "completed_owner_attested_tasks": [
+    "R05"
+  ],
+  "pending_tasks": [
+    "R06",
+    "D02",
+    "D03",
+    "D05",
+    "D06",
+    "N01",
+    "N02",
+    "P04",
+    "O01",
+    "O02",
+    "O03"
+  ],
+  "qualification": {
+    "hardware_tested": false,
+    "physical_areas_tested": 0,
+    "physical_areas_total": 13,
+    "runtime_gates_enabled": false,
+    "native_binaries_replaced": false,
+    "owner_data_changed": false,
+    "source_use_verified": false,
+    "distribution_cleared": false,
+    "optional_celeste_patch_selected": false
+  },
+  "physical_acceptance": {
+    "restore": "not_run",
+    "boot": "not_run",
+    "input": "not_run",
+    "library": "not_run",
+    "launch_return": "not_run",
+    "save_resume": "not_run",
+    "native_controls": "not_run",
+    "appearance": "not_run",
+    "settings": "not_run",
+    "power_sleep": "not_run",
+    "usb": "not_run",
+    "storage_updates": "not_run",
+    "ports": "not_run"
+  },
+  "source_use_decision": {
+    "status": "R05 accepted for private noncommercial source candidate based on owner-confirmed delivered notification and author permission.",
+    "evidence": "project/evidence/completion-20261023/owner-permission.json",
+    "author_correspondence_independently_inspected": false,
+    "assistant_sent_messages": false,
+    "further_notification_needed": false,
+    "commercial_sdk_or_public_native_terms_inferred": false
+  },
+  "schema": 2,
+  "date_utc": "2026-10-26",
+  "branch": "build/iso-host-validation-20261026",
+  "base_at_start": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+  "pull_request": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/3",
+    "number": 3,
+    "state": "open",
+    "merged": false,
+    "draft": true
+  },
+  "release_id": "smartpro-psp-0.1.0-dev19",
+  "project_stage": "Dev19 ISO host audit recorded with explicit partial/blocked criteria; 1,213 checks and verified packaging pass. Device qualification remains pending.",
+  "read_order": [
+    "AGENTS.md",
+    "HANDOVER.md",
+    "project/handover/LATEST.json",
+    "project/README.md",
+    "project/docs/iso-continuation-2026-10-26.md",
+    "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
+    "project/docs/master-plan-2026-10-22.md"
+  ],
+  "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
+  "master_plan": "project/docs/master-plan-2026-10-22.md",
+  "current_snapshot": {
+    "clean_implementation_commit": "a962d6c9d213f9d76b6a104ba78a282029cc453a",
+    "strict_tests": {
+      "tests_run": 1213,
+      "passed": 1213,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "test_execution": "Changed-tree test immediately before commit; all ten changed/new input hashes independently matched to clean commit.",
+    "verification": "project/evidence/iso-continuation-20261026/certification/final-receipt.json",
+    "source_inventory_files": 236,
+    "source_inventory_sha256": "8106a5775c74b49872875985c68a339aa7001ca715c3c18b8b579a0835ed5487",
+    "payload_files": 68,
+    "both_zips_byte_identical_without_git": true,
+    "installed_preview_and_fixture_rollback_passed": true,
+    "package_receipt": "project/evidence/iso-continuation-20261026/certification/package-receipt.json",
+    "ci_readback": "project/evidence/iso-continuation-20261026/certification/ci-readback.json",
+    "ci_run_id": 40383733188,
+    "ci_status": "success",
+    "ci_actual_clean_checkout": "d25f46b3d731a4ea623ecfec2da798cc3fe41ebe",
+    "later_metadata_commits_have_separate_identity": true
+  },
+  "published_snapshot": {
+    "release": "smartpro-host-0.1.0-dev16",
+    "tag_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16",
+    "asset_count": 11,
+    "changed_by_dev18": false,
+    "identity_check": "project/evidence/dev18-library-backups-20261026/published-identity-check.json",
+    "byte_readback": "project/evidence/host-publication-20261023/public-readback.json",
+    "changed_by_dev19": false
+  },
+  "selected_upstream_patches": [],
+  "selected_native_binaries": [],
+  "source_roots": [
+    {
+      "variable": "SPRUCE_SOURCE_ROOT",
+      "repository": "https://github.com/spruceUI/spruceOS",
+      "commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tag": "v4.5.4",
+      "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+      "lock": "docs/spruce-source-lock.json"
+    },
+    {
+      "variable": "PPSSPP_SOURCE_ROOT",
+      "repository": "https://github.com/hrydgard/ppsspp",
+      "commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tag": "v1.20.3",
+      "lock": "project/ppsspp/source-lock.json"
+    },
+    {
+      "variable": "SPRUCE_RA_SOURCE_ROOT",
+      "repository": "https://github.com/spruceUI/RA",
+      "commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "lock": "project/retroarch/source-lock.json"
+    },
+    {
+      "variable": "PORTS_SOURCE_ROOT",
+      "repository": "https://github.com/PortsMaster/PortMaster-New",
+      "commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "lock": "project/ports/celeste-fix.lock.json"
+    },
+    {
+      "variable": "PORTMASTER_SOURCE_ROOT",
+      "repository": "https://github.com/PortsMaster/PortMaster-GUI",
+      "commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "lock": "project/profiles/ports-sources.lock.json"
+    }
+  ],
+  "historical_records": {
+    "handover": "HANDOVER-HISTORY-through-dev18.md",
+    "status": "project/handover/LATEST-through-dev18.json",
+    "plan": "project/docs/master-plan-history-through-dev18.md",
+    "warning": "Dated current/latest fields in historical records apply only to their named snapshots."
+  },
+  "owner_device_status": {
+    "device": "Original TrimUI Smart Pro TG5040",
+    "available": false,
+    "physical_areas_run": 0,
+    "physical_areas_total": 13,
+    "game_specific_testing": "Owner authorized ISO continuation; actual desktop/native evidence in dev19 report. No physical tests."
+  },
+  "next_work": [
+    "Review PR #3 and its explicit G01\u2013G08 gaps; no public release created.",
+    "Complete Soldier and normal in-game savedata save/relaunch/Continue; then qualified manager Apply/Undo and composed frontend Resume when genuine prerequisites exist.",
+    "With target hardware, inventory and rehearse recovery, then run the existing 13-area casebook.",
+    "Collect driving/action scenes and matched demanding-profile evidence before any preset recommendation.",
+    "Resolve public native distribution scope, production signing custody and maintenance ownership."
+  ],
+  "historical_native_custody": {
+    "record": "project/evidence/artifact-custody/native-retention.json",
+    "scope": "Historical private replacement builds; no fresh native retrieval or rebuild in dev18."
+  },
+  "limitations": [
+    "Host checks and cross-build receipts do not establish device performance, battery life, recovery or Resume reliability.",
+    "Backup history names existing offline recovery payloads; no live restore, automatic state history or emulator save gallery.",
+    "Catalog labels/check receipts live outside payloads; registration requires the external CLI.",
+    "Continue bulk records require fresh verification on selection; initial evidence-store authentication still performs checks.",
+    "Original master register remains 14/25 and physical areas remain 0/13.",
+    "Actual native game/save/load does not establish authenticated frontend Resume or qualified manager Apply/Undo.",
+    "Stationary software-rendered host samples do not qualify device presets, audio/frame pacing, demanding scenes, sleep or power.",
+    "Private game/state/audio/build paths are session-local; GitHub retains sanitized evidence, not recoverable private payload bytes."
+  ],
+  "planned_iso_continuation": {
+    "prepared_at_utc": "2026-10-26",
+    "status": "executed_with_partial_and_blocked_criteria",
+    "plan": "project/docs/iso-enabled-roadmap-2026-10-26.md",
+    "execution_prompt": "project/handover/ISO_EXECUTION_PROMPT.txt",
+    "input": {
+      "title": "Grand Theft Auto: Vice City Stories",
+      "native_id": "ULUS10160",
+      "size_bytes": 1696006144,
+      "sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+      "download_and_local_metadata_verified": true
+    },
+    "scope": "G01-G08: real-game host validation, native settings/state/launch evidence, scene reporting, reproduced fixes and certification",
+    "runtime_changes_made": true,
+    "gameplay_tests_run": true,
+    "physical_tests_run": false,
+    "completion_counts_unchanged": true,
+    "report": "project/docs/iso-continuation-2026-10-26.md",
+    "runtime_changes_scope": "Host frontend availability fix and separate optional native diagnostic patch; no selected device runtime.",
+    "acceptance": {
+      "G01": "pass_readonly_scope",
+      "G02": "partial_no_ordinary_savedata_relaunch",
+      "G03": "partial_qualified_manager_undo_unverified",
+      "G04": "partial_full_authenticated_consumption_unverified",
+      "G05": "blocked_positive_composed_resume",
+      "G06": "partial_stationary_host_scope_complete",
+      "G07": "pass_host_implementation",
+      "G08": "pass_recorded_scope"
+    },
+    "measurements": {
+      "matched_stationary_pairs": 5,
+      "seconds_per_arm": 30,
+      "standalone_soak_seconds": 1800,
+      "soak_exit_code": 0,
+      "device_qualified": false,
+      "audio_quality_reviewed": false
+    }
+  },
+  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json"
+}

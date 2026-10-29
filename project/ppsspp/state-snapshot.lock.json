@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "prerequisite_locks": [
+    "source-lock.json",
+    "state-evidence.lock.json",
+    "state-session.lock.json"
+  ],
+  "scope": "Optional immutable generation-bound native save completion snapshots and final-result-first publication; no automatic profile activation or migration of older mutable-slot receipts",
+  "patch": {
+    "path": "patches/0006-immutable-state-completion-snapshots.patch",
+    "sha256": "1515146917289839533949b66f15dc401f82570e2a0bed03d40b944b5dfcd179",
+    "license": "GPL-2.0-or-later"
+  },
+  "preimage_files": [
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "beb5ca0f0d44231b418ecff611f9a323a095f4553cd2e7fbcc51d215a2f12cb6"
+    }
+  ],
+  "patched_files": [
+    {
+      "path": "Core/SaveState.cpp",
+      "sha256": "981fac97902086ba9a42a00a760d34e471bc7ab82936a615e8e4369bbc7f717b"
+    }
+  ],
+  "limits": {
+    "snapshot_entries": 32,
+    "snapshot_bytes_total": 536870912,
+    "includes_incomplete_files": true,
+    "automatic_deletion": false
+  },
+  "qualification": {
+    "selected": false,
+    "full_engine_build": false,
+    "device_tested": false,
+    "resume_enabled": false,
+    "packet_format_changed": false
+  }
+}

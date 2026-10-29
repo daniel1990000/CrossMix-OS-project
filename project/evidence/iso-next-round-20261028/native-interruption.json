@@ -1,0 +1,546 @@
+{
+  "schema": 1,
+  "recorded_at_utc": "2026-10-28T22:52:49.055797+00:00",
+  "kind": "native-function-host-fixture-interruption-diagnostic",
+  "upstream_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+  "whole_emulator": false,
+  "production_profile_constructed": false,
+  "filesystem_power_loss_simulated": false,
+  "prior_completion_preservation_acceptance": "UNMET",
+  "finding": "Interrupted publication can lose prior completion receipt; same-slot replacement can invalidate prior state path/hash. Future receipt remains rejected.",
+  "input_files": {
+    "test_state_session_patch.py": "e3fb129a1f42812dc6f56cf512e273e38f7115581deac4e4283cc5deef1d9e0b",
+    "state_session_main.cpp.in": "b550bf79d05811a5bcd79a6c0093c8ded9062defb2fb9b399cdb544c060d0a4a",
+    "state_evidence_acceptance.cpp.in": "c24dcdc6410f7ee5d7c537003bf680bf492a6b6b31dd38a4632046a47468dcd4",
+    "capture_state_interruption.py": "e3da44610b87f3e3e2f4481412ad732a4d85f659be246fc39dd7e2824233a7c9"
+  },
+  "compiled_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+  "compiled_source_sha256": "e266fe9584471b41e3fac00824e31188df4896bef13a568799d8878fad907cb9",
+  "elapsed_ns": 877080242,
+  "observations": [
+    {
+      "point": "state-before-rename",
+      "same_slot": false,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "1",
+      "current_completion_sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+      "prior_state_at_original_path": true,
+      "prior_state_in_native_undo": false,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": true,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "0220f63d67c94ed8c33061877a2ac7604fd9202b7d3365153747fa0d38dca75f",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "b40192f361c23fc5efe803a31d853fc46184ade669f1e59717da20ca198aa0ce",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst.tmp": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        }
+      },
+      "elapsed_ns": 6931099
+    },
+    {
+      "point": "state-before-rename",
+      "same_slot": true,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "1",
+      "current_completion_sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+      "prior_state_at_original_path": false,
+      "prior_state_in_native_undo": true,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "5905d614989ae92572d35063e8035ffd313c56ef1e44a5fc278fbe15ebde8c77",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "d2172d5c7e2b04f1b42185a660e83499d5653028416bb7feb98d6a40a840f69e",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst.tmp": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6037791
+    },
+    {
+      "point": "completion-before-rename",
+      "same_slot": false,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "1",
+      "current_completion_sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+      "prior_state_at_original_path": true,
+      "prior_state_in_native_undo": false,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": true,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "3d2cd3264f0a53f668d4320e2f1b03f6daefeccf9d2b0dd9f2d931e9f774b63d",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "91a8453681716a080a8c5432eb6e9dbbc2df759d19b5fd17e8bc282f786c868b",
+          "size": 738
+        },
+        "private/save-completed.tmp": {
+          "sha256": "f1aaa258cedff98e2f7b2294d9c5f03b0f5eff1890dc40e22a209b7de629d8de",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        }
+      },
+      "elapsed_ns": 6739322
+    },
+    {
+      "point": "completion-before-rename",
+      "same_slot": true,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "1",
+      "current_completion_sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+      "prior_state_at_original_path": false,
+      "prior_state_in_native_undo": true,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "6f9bef712c11873cc242d69ae2326f5695052d422b08edb64caec737ddc3c2d9",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "4438ce3488eecc8fda5c80981117ef961cc7f5e64efb9f995b51284532a7f29a",
+          "size": 738
+        },
+        "private/save-completed.tmp": {
+          "sha256": "b95740b0ae6302bfefff8ed183d6cd90977b51a2e5f7561f2bbd8df14a7fe46f",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6785521
+    },
+    {
+      "point": "completion-after-rename",
+      "same_slot": false,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "111a0d1167b67695f99b6405fcb8b35ebb0eb200a54fdb8de09c1a5b515abe31",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "38a941ce5f18fa7d2b6f5ca23ec72779e871eac8f160305e413a3de9ccd4890c",
+      "prior_state_at_original_path": true,
+      "prior_state_in_native_undo": false,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "111a0d1167b67695f99b6405fcb8b35ebb0eb200a54fdb8de09c1a5b515abe31",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "111a0d1167b67695f99b6405fcb8b35ebb0eb200a54fdb8de09c1a5b515abe31",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "4c12500c09af95777eb3f0e1e75e2b4931f455ae33a702433359b3dc183cda46",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "111a0d1167b67695f99b6405fcb8b35ebb0eb200a54fdb8de09c1a5b515abe31",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "38a941ce5f18fa7d2b6f5ca23ec72779e871eac8f160305e413a3de9ccd4890c",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        }
+      },
+      "elapsed_ns": 7475622
+    },
+    {
+      "point": "completion-after-rename",
+      "same_slot": true,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "fe6714dc09bec214b211e2a0484880b69308e9cd565877d17cf7e748df033448",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "e155751a315f157e82c2b8a35a9a1833583be320d0b4ceb63f09a3279231b439",
+      "prior_state_at_original_path": false,
+      "prior_state_in_native_undo": true,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "fe6714dc09bec214b211e2a0484880b69308e9cd565877d17cf7e748df033448",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "fe6714dc09bec214b211e2a0484880b69308e9cd565877d17cf7e748df033448",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "aabef394dca065eda47b77d9d97a168431a7e139709457aba8a9e05fb52b395a",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "fe6714dc09bec214b211e2a0484880b69308e9cd565877d17cf7e748df033448",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "e155751a315f157e82c2b8a35a9a1833583be320d0b4ceb63f09a3279231b439",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6730228
+    },
+    {
+      "point": "result-partial-write",
+      "same_slot": false,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "e8517ed202fd25a0d5c0a1de4601b763cdb724e39053179b969c52a7465656b2",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "fbd9b795110a5dbf0e797ae5aa1ccbd3edc6ec7196438bc609a52828969b8171",
+      "prior_state_at_original_path": true,
+      "prior_state_in_native_undo": false,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "e8517ed202fd25a0d5c0a1de4601b763cdb724e39053179b969c52a7465656b2",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "e8517ed202fd25a0d5c0a1de4601b763cdb724e39053179b969c52a7465656b2",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "39316fb8b9fd34c33e1e286d8a628189217cf7bfa9de027d639bd7ee942b9edf",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "e8517ed202fd25a0d5c0a1de4601b763cdb724e39053179b969c52a7465656b2",
+          "size": 738
+        },
+        "private/result.tmp": {
+          "sha256": "98d814bf713577f5599bea7d481db3131986ab7ae78badbeb99494bcffff18a4",
+          "size": 9
+        },
+        "private/save-completed": {
+          "sha256": "fbd9b795110a5dbf0e797ae5aa1ccbd3edc6ec7196438bc609a52828969b8171",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        }
+      },
+      "elapsed_ns": 6950688
+    },
+    {
+      "point": "result-partial-write",
+      "same_slot": true,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "0ac27a37760fd28fecdf2bd863c628c9485fea3b759e3143a5395c1143a2c080",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "56a61d42de38b300a5a3fe362b4fbb9adbeca92b403ef168449dc646c66093ce",
+      "prior_state_at_original_path": false,
+      "prior_state_in_native_undo": true,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "0ac27a37760fd28fecdf2bd863c628c9485fea3b759e3143a5395c1143a2c080",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "0ac27a37760fd28fecdf2bd863c628c9485fea3b759e3143a5395c1143a2c080",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "e1ce8cf97c70f142273d4792d91b107afe2510597934747c96ca1181fe86f034",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "0ac27a37760fd28fecdf2bd863c628c9485fea3b759e3143a5395c1143a2c080",
+          "size": 738
+        },
+        "private/result.tmp": {
+          "sha256": "98d814bf713577f5599bea7d481db3131986ab7ae78badbeb99494bcffff18a4",
+          "size": 9
+        },
+        "private/save-completed": {
+          "sha256": "56a61d42de38b300a5a3fe362b4fbb9adbeca92b403ef168449dc646c66093ce",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 6788064
+    },
+    {
+      "point": "result-before-rename",
+      "same_slot": false,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "42cd09c3cc2930df65b325ee3ed07f51daf13e760f6e22a3cc0c1b01bb1d965f",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "3d2ccbbdb01c3accb7f43daa88900632bd80f0c7b2b7e566fe65bdfa9d72b0d0",
+      "prior_state_at_original_path": true,
+      "prior_state_in_native_undo": false,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "42cd09c3cc2930df65b325ee3ed07f51daf13e760f6e22a3cc0c1b01bb1d965f",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "42cd09c3cc2930df65b325ee3ed07f51daf13e760f6e22a3cc0c1b01bb1d965f",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "bbd97717504135b3076a6ee6f90c3df403ad9546ae5a9c9d72f306348bb86a44",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "42cd09c3cc2930df65b325ee3ed07f51daf13e760f6e22a3cc0c1b01bb1d965f",
+          "size": 738
+        },
+        "private/result.tmp": {
+          "sha256": "3d2ccbbdb01c3accb7f43daa88900632bd80f0c7b2b7e566fe65bdfa9d72b0d0",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "3d2ccbbdb01c3accb7f43daa88900632bd80f0c7b2b7e566fe65bdfa9d72b0d0",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        },
+        "states/ULUS12345_1.00_3.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        }
+      },
+      "elapsed_ns": 6663418
+    },
+    {
+      "point": "result-before-rename",
+      "same_slot": true,
+      "exit_signal": "SIGKILL",
+      "native_fixture_sha256": "306b92196253004afda0b8be3817c932be35706b887648d21b071c72fbead9fd",
+      "previous_final_result_sha256": "df56d15911c046b5879a7b01651f649b4c2ce32f7293936ce55f58fd6e48c442",
+      "final_result_unchanged": true,
+      "final_result_sequence": "1",
+      "current_completion_sequence": "2",
+      "current_completion_sha256": "682428c2f91125cdb5df12371472ba49db4fdd7d041eac0d9ec95d28211cd685",
+      "prior_state_at_original_path": false,
+      "prior_state_in_native_undo": true,
+      "incomplete_new_receipt_promoted": false,
+      "preserves_prior_usable_completion": false,
+      "artifacts": {
+        "game \u00fc.iso": {
+          "sha256": "dbc1b2a222dd1928fcb926d49b6083f695317eb9139ba2ba94246340cf352409",
+          "size": 18
+        },
+        "previous-result": {
+          "sha256": "df56d15911c046b5879a7b01651f649b4c2ce32f7293936ce55f58fd6e48c442",
+          "size": 738
+        },
+        "previous-save-completed": {
+          "sha256": "df56d15911c046b5879a7b01651f649b4c2ce32f7293936ce55f58fd6e48c442",
+          "size": 738
+        },
+        "private/request": {
+          "sha256": "e94bee3cff94410f5c3ac53ae252fdc9504a43256d0c8ea27c0d07434dde0566",
+          "size": 466
+        },
+        "private/result": {
+          "sha256": "df56d15911c046b5879a7b01651f649b4c2ce32f7293936ce55f58fd6e48c442",
+          "size": 738
+        },
+        "private/result.tmp": {
+          "sha256": "682428c2f91125cdb5df12371472ba49db4fdd7d041eac0d9ec95d28211cd685",
+          "size": 738
+        },
+        "private/save-completed": {
+          "sha256": "682428c2f91125cdb5df12371472ba49db4fdd7d041eac0d9ec95d28211cd685",
+          "size": 738
+        },
+        "states/ULUS12345_1.00_2.ppst": {
+          "sha256": "9bbaf434c8e164fda3626746663379307a7835db3c0e3b82c78d06a86add99e5",
+          "size": 36
+        },
+        "states/ULUS12345_1.00_2.undo.ppst": {
+          "sha256": "282573ed0c68e98ec91dd382f69e77cf8075ae92264eab4d2fc3a99871e93ed8",
+          "size": 20
+        }
+      },
+      "elapsed_ns": 7126110
+    }
+  ]
+}

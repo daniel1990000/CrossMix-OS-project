@@ -157,6 +157,41 @@ class PerformanceTransactions(unittest.TestCase):
         self.undo(result)
         self.assertEqual(self.game.read_bytes(), GAME)
 
+    def test_global_fallback_becomes_native_local_and_blocks_stale_preview_and_undo(self):
+        self.game.write_bytes(GAME.replace(b'[Graphics]\r\n', b'[Graphics]\r\nFrameSkip = 2\r\n'))
+        preview = self.preview({"frameskip": None})
+        self.assertTrue(any("PPSSPP may save the inherited value" in value for value in preview["warnings"]))
+        result = self.apply(preview)
+        inherited = self.manager.status("game:one")["options"][1]
+        self.assertTrue(inherited["inherited"])
+        self.assertEqual(inherited["effective_value"], 0)
+        self.assertEqual(inherited["choices"][0]["label"], "Use current global setting")
+        stale = self.preview({"resolution": 1})
+        # Model the native exit observed in dev19: it writes the inherited
+        # FrameSkip back as an explicit game option without our generation.
+        self.game.write_bytes(self.game.read_bytes().replace(b'[Graphics]\r\n', b'[Graphics]\r\nFrameSkip = 0\r\n'))
+        unchanged = self.game.read_bytes()
+        # Only the native per-game write invalidates this preview; global
+        # bytes still equal the captured preview inputs at this point.
+        self.assertEqual(self.config.read_bytes(), GLOBAL)
+        self.assert_code("STALE_SNAPSHOT", lambda: self.apply(stale, request="stale"))
+        self.config.write_bytes(GLOBAL.replace(b'FrameSkip = 0', b'FrameSkip = 1'))
+        local = self.manager.status("game:one")["options"][1]
+        self.assertFalse(local["inherited"])
+        self.assertEqual(local["value"], 0)
+        self.assertEqual(local["effective_value"], 0)
+        self.assert_code("UNDO_CONFLICT", lambda: self.undo(result))
+        self.assertEqual(self.game.read_bytes(), unchanged)
+
+    def test_missing_local_and_global_values_are_unavailable_not_native_defaults(self):
+        self.config.write_bytes(GLOBAL.replace(b'FrameSkip = 0\r\n', b''))
+        status = self.manager.status("game:one")
+        self.assertTrue(status["writable"])
+        option = status["options"][1]
+        self.assertIsNone(option["value"])
+        self.assertIsNone(option["effective_value"])
+        self.assertFalse(option["value_available"])
+
     def test_undo_inherit_keeps_original_comment_and_later_unrelated_edits(self):
         result = self.apply(self.preview({"resolution": None}))
         self.game.write_bytes(self.game.read_bytes() + b'; later owner annotation\r\n')

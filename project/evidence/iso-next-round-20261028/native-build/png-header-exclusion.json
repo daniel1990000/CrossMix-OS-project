@@ -1,0 +1,20 @@
+{
+  "reason": "CMake private include prefix preceded bundled libpng17; system libpng16 header aliases conflicted with bundled libpng17 build. Exclude only top-level aliases from private build prefix; unchanged actual libpng16 headers retained under include/libpng16. Native source and compiler flags unchanged.",
+  "headers": [
+    {
+      "name": "png.h",
+      "symlink_target": null,
+      "sha256": "1e4637b4e4a91ed2a3f61e89940fda71ca414fe81bea96c1c1cc15a9b01e53a4"
+    },
+    {
+      "name": "pngconf.h",
+      "symlink_target": null,
+      "sha256": "8f62c57b72f65b35b5b6051dd8d8379173bb20e0a040a6d2837ef92ccdea19d8"
+    },
+    {
+      "name": "pnglibconf.h",
+      "symlink_target": null,
+      "sha256": "516e7bc557335af393616fc5dc1e4a8af4c9cf1cbb6a0a90c34898f80f976841"
+    }
+  ]
+}

@@ -22,18 +22,18 @@ class DemoBackend:
         ]
         samples = {
             "PSP": [("skyline", "Skyline Circuit", "An open road. One more lap."),
-                    ("harbor", "Wind Harbor", "A quiet adventure by the sea."),
-                    ("orbit", "Orbit Runner", "Find your line through the stars."),
-                    ("paper", "Paper Kingdom", "A small world with room to explore.")],
-            "PS": [("rally", "Alpine Rally", "Take the long way home."),
-                   ("echo", "Echo Valley", "Return to where your story began."),
-                   ("night", "Neon Evening", "The city is still awake.")],
-            "PORTS": [("summit", "Summit", "A little further, a little higher."),
-                      ("garden", "Pocket Garden", "Make something grow."),
-                      ("vector", "Vector Sprint", "Keep your momentum.")],
-            "GBA": [("moon", "Moonlit Post", "There is always another letter."),
-                    ("wild", "Wildwood Trail", "A path worth following."),
-                    ("island", "Small Island", "Stay for the sunset.")],
+                    ("harbor", "Patapon", "A quiet adventure by the sea."),
+                    ("orbit", "Wipeout Pure", "Find your line through the stars."),
+                    ("paper", "Lumines", "A small world with room to explore.")],
+            "PS": [("rally", "Gran Turismo 2", "Take the long way home."),
+                   ("echo", "Final Fantasy IX", "Return to where your story began."),
+                   ("night", "Ridge Racer Type 4", "The city is still awake.")],
+            "PORTS": [("summit", "Celeste", "A little further, a little higher."),
+                      ("garden", "Stardew Valley", "Make something grow."),
+                      ("vector", "Shovel Knight", "Keep your momentum.")],
+            "GBA": [("moon", "Golden Sun", "There is always another letter."),
+                    ("wild", "Metroid Fusion", "A path worth following."),
+                    ("island", "Advance Wars", "Stay for the sunset.")],
         }
         self._games = []
         for system, records in samples.items():
@@ -41,7 +41,7 @@ class DemoBackend:
                 self._games.append({
                     "id": f"sample:{system}:{slug}", "game_id": f"sample:{system}:{slug}",
                     "system_id": system, "label": title, "display_name": title,
-                    "subtitle": subtitle, "availability": "available", "artwork": "",
+                    "subtitle": "Sample title · not installed", "availability": "available", "artwork": "",
                     "relative_path": f"{slug}.sample", "resume_available": slug in ("skyline", "echo"),
                     "resume_reason": "Synthetic fixture, not a real emulator state",
                     "selected_preset": "PPSSPP-SA" if system == "PSP" else "Existing emulator (sample)",

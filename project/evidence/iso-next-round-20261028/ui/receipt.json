@@ -1,0 +1,23 @@
+{
+  "scope": "Actual host software renders from explicit synthetic settings status; no qualified manager or device execution.",
+  "text_scale": 1.75,
+  "visually_inspected": [
+    "status-1.75-values.png",
+    "choice-1.75-page2.png"
+  ],
+  "checks": [
+    "Actual inherited values fit the second text page.",
+    "Use current global setting label and native-persistence warning fit at175percent with existing text paging."
+  ],
+  "sha256": {
+    "status-1.75-values.png": "9ca4cf46d189ba19faa6be9a7de34c75ef70211a7529f70d8d436d8e6dac63fa",
+    "choice-1.75-page2.png": "11457e3a142e9ec67d46459069688b8bbcc26bc24210940a980a889dfb9b5d51"
+  },
+  "failed_attempts": [
+    {
+      "attempt": "initial standalone capture",
+      "result": "ModuleNotFoundError without project PYTHONPATH",
+      "correction": "explicit PYTHONPATH=project; rendered outputs verified"
+    }
+  ]
+}

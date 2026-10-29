@@ -1,0 +1,162 @@
+{
+  "kind": "actual-whole-native-interruption",
+  "profile_created": false,
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "shim_sha256": "19aa181e8bf8d5eb51e7aeb5686d1755db9f8203fd6575493cc41fb408490b86",
+  "shim_source_sha256": "dcf6fbe3f73042936381b24207b9c8ab9d02dc7cfaffc114f7eca618ad6313d3",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "iso_size": 1696006144,
+  "point": "result-before-rename",
+  "request_sha256": "413b2cb11c0f60659c5ea429fbb4229f907a676be1c8f969e4e9e37136e4cb76",
+  "frozen_initial_config_sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+  "frozen_controls_sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--escape-exit",
+    "--log=/workspace/trimui-audit/native-snapshot-whole/result-before-rename3/native.log",
+    "--project-state-session=/workspace/trimui-audit/native-snapshot-whole/result-before-rename3/session/request",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "pid": 29007,
+  "start_ticks": 126644,
+  "previous_state_path": "/workspace/trimui-audit/native-snapshot-whole/result-before-rename3/config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/23bc13bf8c45638db6d031f79ecf18e9-1-0.ppst",
+  "previous_state_sha256": "f2557e7f16bf549f566751e4a2c976d76618d16206be7a45847e8e34b374ef58",
+  "prior_snapshot_preserved": true,
+  "final_sequence": "2",
+  "completion_sequence": "1",
+  "bounded_valid_completion": true,
+  "qualification_gate": "STATE_PROFILE_UNQUALIFIED",
+  "supervision": {
+    "root_pid": 29007,
+    "exit_status": -9,
+    "children_reaped": 1
+  },
+  "passed": true,
+  "elapsed_ns": 33944388316,
+  "events": [
+    {
+      "event": "launched",
+      "elapsed_ns": 100604805,
+      "pid": 29007
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 20334451127,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "first_completed",
+      "elapsed_ns": 26955035124,
+      "operation": "save",
+      "sequence": "1",
+      "state_sha256": "f2557e7f16bf549f566751e4a2c976d76618d16206be7a45847e8e34b374ef58"
+    },
+    {
+      "event": "armed",
+      "elapsed_ns": 26959166674,
+      "point": "result-before-rename"
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 27192124057,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "killed_owned_stopped_native",
+      "elapsed_ns": 33905163733,
+      "marker": {
+        "point": "result-before-rename",
+        "pid": 29007,
+        "monotonic_ns": 1300303829717
+      }
+    }
+  ],
+  "runner_sha256": "e538d7e4966e216afe3f35394571d2af4ea35362c7f3d5b6169ef7a4b63cfd2b",
+  "artifacts": {
+    "command": {
+      "sha256": "c971a5e4331ed92b953717ac4969b2f4c9a80eaf6ef7b0dadf18564d5dc5ca99",
+      "size": 21
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/23bc13bf8c45638db6d031f79ecf18e9-1-0.ppst": {
+      "sha256": "f2557e7f16bf549f566751e4a2c976d76618d16206be7a45847e8e34b374ef58",
+      "size": 5543034
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/23bc13bf8c45638db6d031f79ecf18e9-2-0.ppst": {
+      "sha256": "3f05cd5aeb3444b80261f3b19ed9f2aaba147d073dacae099ca1f34db8858fda",
+      "size": 5546975
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.ppst": {
+      "sha256": "3f05cd5aeb3444b80261f3b19ed9f2aaba147d073dacae099ca1f34db8858fda",
+      "size": 5546975
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.jpg": {
+      "sha256": "722e1396e133fa82dd7f7be6ac1a270e385f233520f4175b61b8953f5fcdb5ab",
+      "size": 4723
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.ppst": {
+      "sha256": "f2557e7f16bf549f566751e4a2c976d76618d16206be7a45847e8e34b374ef58",
+      "size": 5543034
+    },
+    "config/ppsspp/PSP/SYSTEM/controls.ini": {
+      "sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+      "size": 50
+    },
+    "config/ppsspp/PSP/SYSTEM/ppsspp.ini": {
+      "sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+      "size": 198
+    },
+    "events.jsonl": {
+      "sha256": "cf17dc93dafc4ade7ccd6805ff583654360f66cca606051e8b63e9ac4c165986",
+      "size": 638
+    },
+    "marker.json": {
+      "sha256": "b55220fa29e991fa6d96014f6f6c4ff634059f5c7e353c832bee1b185a357770",
+      "size": 74
+    },
+    "native.log": {
+      "sha256": "ea56ff14524f96c1fa83dd1e2f6472e27b730f8b090defa4d2aec77818cbeb15",
+      "size": 347
+    },
+    "previous-result": {
+      "sha256": "01bfcfeac2f1f090ed02b445d10c798108ce1304eda99b59e37be46db45a53ed",
+      "size": 933
+    },
+    "previous-save-completed": {
+      "sha256": "01bfcfeac2f1f090ed02b445d10c798108ce1304eda99b59e37be46db45a53ed",
+      "size": 933
+    },
+    "process.json": {
+      "sha256": "ea77251155eca2656199b593c168a03f131b357029c3250f1f3d663096dc2dd5",
+      "size": 37
+    },
+    "session/request": {
+      "sha256": "413b2cb11c0f60659c5ea429fbb4229f907a676be1c8f969e4e9e37136e4cb76",
+      "size": 609
+    },
+    "session/result": {
+      "sha256": "bd8bce13249ca3d70368647a93953c89047af6f5cfad65249270de2afb569755",
+      "size": 933
+    },
+    "session/save-completed": {
+      "sha256": "01bfcfeac2f1f090ed02b445d10c798108ce1304eda99b59e37be46db45a53ed",
+      "size": 933
+    },
+    "stdout.log": {
+      "sha256": "633c2e0cad384f675c9fa5a6b398feec8c4d6393fe6171c8a1a94466e48e753d",
+      "size": 2810
+    },
+    "supervise.py": {
+      "sha256": "21e4804c41e0b6b891bb3df4554fad54e12ab6601e25dcaee34084d9d6e9bb51",
+      "size": 512
+    },
+    "supervision.json": {
+      "sha256": "3ee60a74c9f3089020950e64f8726173755b3e49de53c993ab75c0138a51c23a",
+      "size": 60
+    }
+  },
+  "excluded_attempt": true,
+  "correction": "Thread-targeted tgkill(SIGSTOP) replaces process-directed kill(SIGSTOP); publication point assertions added. Original process-directed stop allowed emitting thread to progress to final rename before group stop."
+}

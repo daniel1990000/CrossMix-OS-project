@@ -1,0 +1,276 @@
+{
+  "schema": 1,
+  "kind": "independent-dev20-implementation-review",
+  "reviewer": "review independent agent",
+  "recorded_at_utc": "2026-10-28T23:39:12.241481+00:00",
+  "base_commit": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
+  "status": "source_freeze_approved_live_collector_gameplay_and_final_snapshot_evidence_pending",
+  "reviewed_input_sha256": {
+    "project/psp_shell/performance.py": "70fdcbb574865e0a9384fbb1791b40a43b47ba72c53b3f19bac14a7ac10c9bb7",
+    "project/psp_shell/ui/model.py": "76f69fc0d69d639f9de2e004b138c984c8829c522b2009e3ce2adabd44aa6835",
+    "project/tests/test_performance_controls.py": "809c4f5a625e98ef1e0ccb36ad26542eec1f542bda00327572f74f481ee72056",
+    "project/tests/test_ui_continuation.py": "b55805ccc2447f2f7f6d6b77321112b92e379e7c60fa1a3540a518b51dc5c711",
+    "project/tests/test_embedded.py": "1dfa329ae854f96b9bf8e0ae4f3dceed9a282db51d74a79faa1fafc4616d381b",
+    "project/docs/per-game-performance.md": "2ad73e6bb5ab3b56db713323a6ca9a9a3e00ddfbd88815e5f81418561f14e81e",
+    "project/tools/host_gameplay_audit.py": "f90b68d50bc136c02e39202dafa4bc5e80d8be0dd0ac00598c5ceb2d8b245bea",
+    "project/tests/test_host_gameplay_audit.py": "15b94e0f2d87ff3eab41cd82f8a522fec5e1b006fb75397c3468a4b9b14c0947",
+    "project/docs/host-gameplay-audit.md": "5f81eb2e81d7a7139d0656333ada62dba0f62b609c644e22e19190d3b05e0ff0",
+    "project/dev/host_virtual_controller.c": "5cf8c0fce48ce201492028d99fec7ebc4297ed2b9e34baa94187099dcb900d8a",
+    "project/dev/host_virtual_controller.py": "11eb92b9ef1744a81bc92a631dba48fcd2e8c2a81c7676c9e1b846b00f272a3c",
+    "project/dev/host_virtual_controller.md": "514268d2fe81353e07e7084488a5324e1850d384464825f617da57373270b40f",
+    "project/tests/test_host_virtual_controller.py": "9b0c9dbdfc4219147d91a031a82c32f2b0f85160e240a92bfd5e6abd641b349a",
+    "project/packaging/release_descriptor.py": "78373171e37bafd09ae2ea7a88c8abcae32d73223d70c14e16ead8fc7c724826",
+    "project/tests/test_release_descriptor.py": "e8da70a620015b7960feab72f6f8ebb1a1f2d60909a27e5f90dea9c92ffb0f4f",
+    "project/ppsspp/tests/test_state_session_patch.py": "e3fb129a1f42812dc6f56cf512e273e38f7115581deac4e4283cc5deef1d9e0b",
+    "project/ppsspp/tests/state_session_main.cpp.in": "b550bf79d05811a5bcd79a6c0093c8ded9062defb2fb9b399cdb544c060d0a4a",
+    "project/ppsspp/tests/state_evidence_acceptance.cpp.in": "c24dcdc6410f7ee5d7c537003bf680bf492a6b6b31dd38a4632046a47468dcd4",
+    "project/ppsspp/tests/capture_state_interruption.py": "e3da44610b87f3e3e2f4481412ad732a4d85f659be246fc39dd7e2824233a7c9",
+    "project/ppsspp/state-session.md": "f4696878c16f4b3cfdc33ccc0f381e74437c06b58f8cdb7bfbf9b175fb66ffec",
+    "project/evidence/iso-next-round-20261028/native-interruption.json": "af7e8dbb55ed258f0442678fab4c6d6527401c3b4b7825db0683922df2b08a61",
+    "project/evidence/iso-next-round-20261028/native-interruption-first-attempt.json": "a997cd9a221dfcb10a77f18cf51938af3389ca26070109118c134fd24879cc14",
+    "project/evidence/iso-next-round-20261028/startup.json": "8a2d3a6a3c45538847a6570f291e3d4f15a83e8a26cb8455ae07b4d1f6a30582",
+    "project/ppsspp/patches/0006-immutable-state-completion-snapshots.patch": "1515146917289839533949b66f15dc401f82570e2a0bed03d40b944b5dfcd179",
+    "project/ppsspp/state-snapshot.lock.json": "709c25fe3de024e48e6c1a323d14ce5527a00be9688f84c134a9eae27a0d2992",
+    "project/ppsspp/state-snapshots.md": "a428f5985bcf3d5d3c565f3cfc8a7bb55ce66a18d9d7e3e07b5e74c79dfcd0ce",
+    "project/ppsspp/tests/test_state_snapshot_patch.py": "da5e2c453c86fd155d1487be078d696aac83916758bc985bdf2a22c9389163a6",
+    "project/ppsspp/tests/state_snapshot_main.cpp.in": "65083f3345047fcc6fa5eca910c9df7a3d98b0769e68d69689814441bacaf166",
+    "project/ppsspp/tests/capture_state_snapshot.py": "ce3c50df49f5637724cf3cce8f7037129ed2db4f9bcfed84decc294dc5676d25",
+    "project/ppsspp/NOTICE.md": "c2d2db52795a064706577ecce1c35b9282712b69e44192b595e3039c7b3f645d",
+    "project/tools/host_audit_native.py": "ac9872041dc6c092fef8973778652ac779e87a31826f0235f431e8c5e7d296a3"
+  },
+  "findings": [
+    {
+      "id": "R1",
+      "status": "resolved",
+      "finding": "Native-materialization stale-preview regression initially changed both global and game INIs.",
+      "resolution": "Test now rejects stale preview with only native per-game materialization; later global change and owned-option Undo conflict are checked separately."
+    },
+    {
+      "id": "R2",
+      "status": "resolved",
+      "finding": "Initial collector settings labels were not derived from actual frozen native INIs.",
+      "resolution": "Collector derives exact global/local effective settings and configuration inventory; only1x/2x with manual/automatic frameskip disabled can compare."
+    },
+    {
+      "id": "R3",
+      "status": "resolved",
+      "finding": "Raw report declarations could diverge from actual window/status/counters or retained starting/provenance inputs.",
+      "resolution": "Collected-run validation rechecks retained config/state/scene/statistics source/build review, exact game/unpaused statuses, finite monotonic windows, metric means/window/analysis/summary and raw digests."
+    },
+    {
+      "id": "R4",
+      "status": "resolved",
+      "finding": "Publisher could retarget a reused PID and alias command/request paths.",
+      "resolution": "Retained launch start ticks are required and checked twice; resolved/hardlink output aliases reject; actual SDL tests cover axes/buttons, expiry, foreign/late input and identity failures."
+    },
+    {
+      "id": "R5",
+      "status": "resolved",
+      "finding": "Replay timing needed binding to frozen axis values and observed hold completion.",
+      "resolution": "Requested/published/applied values, issue/deadline times and native neutral/next-command end are validated within frozen tolerance."
+    },
+    {
+      "id": "R6",
+      "status": "resolved",
+      "finding": "Original-source export omitted the new original MIT controller C source.",
+      "resolution": "An exact source-only path allowlist includes dev/host_virtual_controller.c while unrelated C/native/binaries stay excluded."
+    },
+    {
+      "id": "R7",
+      "status": "resolved_for_optional0006_native_function_host_scope",
+      "finding": "Original0003 interrupted publication preserves prior usable completion in only2/10 deterministic windows.",
+      "resolution": "Original0003 failure retained. Independently reviewed optional0006 creates exact private O_EXCL generation snapshots under existing approved root, counts all partial/retained entries under32files/512MiB, never deletes/overwrites retained files, synchronizes verified bytes before final-result-first publication. Six targeted methods pass16killwindows/12faultcases/normal generation behavior. Whole-native preservation and legacy mutable-load receipts remain separately limited."
+    },
+    {
+      "id": "R8",
+      "status": "resolved",
+      "finding": "Controller SDL_Quit appends neutralization after observation, so hashing its log before native exit made valid replay receipts stale.",
+      "resolution": "Collector now validates and hashes final timing evidence after normal owned-tree closure; lifecycle regression drives full collection finalization with mocked native owner appending quit neutralization. Shared pre-frozen scene definition also binds explicit30s and sustained durations/sequences, and both sustained arms use full raw/config/input validation before existing comparator."
+    },
+    {
+      "id": "R9",
+      "status": "resolved",
+      "finding": "Initial full-emulator before-result-rename probe used process-directed SIGSTOP and observed a newer final result already published, contradicting requested pre-rename attribution.",
+      "resolution": "Original process-directed-stop attempt retained and excluded. Thread-directed tgkill plus nonreturning stop hook and exact expected final/completion sequence/tmp/partial-size assertions verified across8whole-engine points. Every175retained artifact hash/size independently checked; immutable previous state retained; fresh native process loads exact prior snapshot and exits normally."
+    },
+    {
+      "id": "R10",
+      "status": "resolved_in_source_live_collection_pending",
+      "finding": "Listener/game.status alone did not prove actual starting-state load or readiness before frozen warmup input.",
+      "resolution": "DEV-only helper creates fresh private raw native load request and retains context; exact correlated native27-field result+load completion seq1/game/disc/version/architecture/statepath/hash/slot are checked before warmup and unchanged after normalexit. Observer records game-ready polling and raw warmup/measured monotonic origins. Canonical packet codec only; no production profile/session/capability is constructed."
+    }
+  ],
+  "independent_checks": [
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_performance_controls test_ui_continuation test_embedded -q",
+      "tests": 73,
+      "passed": 73,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_host_gameplay_audit -q",
+      "tests": 31,
+      "passed": 31,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project $PYTHON -m unittest discover -s project/tests -p test_host_virtual_controller.py -q",
+      "tests": 3,
+      "passed": 3,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/tests $PYTHON -m unittest test_release_descriptor -q",
+      "tests": 18,
+      "passed": 18,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/ppsspp/tests $PYTHON -m unittest test_state_session_patch -q",
+      "tests": 14,
+      "passed": 14,
+      "skipped": 0
+    },
+    {
+      "command": "PYTHONPATH=project:project/ppsspp/tests $PYTHON -m unittest test_state_snapshot_patch -q",
+      "tests": 6,
+      "passed": 6,
+      "skipped": 0,
+      "scope": "Exact patched native functions with explicit serializer/platform fixtures;16SIGKILL windows and12faultcases."
+    }
+  ],
+  "retained_evidence_readback": {
+    "recovered_iso_size_bytes": 1696006144,
+    "recovered_iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+    "full_digest_independently_recomputed": true,
+    "native_interruption_observations": 10,
+    "all_retained_raw_artifact_hashes_and_sizes_match": true,
+    "native_source_input_hashes_match": true
+  },
+  "accepted_boundaries": [
+    "Existing settings authority, native process supervision, transaction ownership and qualification gates are retained.",
+    "Collector build receipts and review documents are provenance declarations, not cryptographic source-to-binary proof.",
+    "No frontend runtime API, device activation path, selected native binary or selected upstream patch is added.",
+    "Original0003 interruption diagnostics use real extracted native functions with explicit serializer/platform fixtures; they are not whole-emulator or power-loss tests.",
+    "Ordinary savedata/Continue and broader gameplay measurement evidence remain pending until independently reviewed fresh native evidence exists.",
+    "Historical dev19 package/CI receipts do not certify this changed tree; published dev16 remains unchanged.",
+    "Optional0006 source preservation applies new immutable save snapshots and loads of those inputs; older/arbitrary mutable-slot receipts are not migrated or repaired. Native function harnesses use exact transport/envelope/sequence checks with refused capability construction, not a qualified positive frontend consumer.",
+    "Latest collector warmup/native-load additions postdate7896474 and are not certified by that historical clean package/check receipt. A new final exact source snapshot requires fresh certification and packaging."
+  ],
+  "qualification": {
+    "production_profile_constructed_by_review": false,
+    "device_qualified": false,
+    "physical_areas_tested": 0,
+    "original_completed_count": 14
+  },
+  "reviewed_private_native_counter_build": {
+    "review_sha256": "3260d2024221b08d0877e373a9f2b1bf239d69d5b96546ad0bd77c5f8c8bca1f",
+    "executable_sha256": "23a624f001fc41228566bd72e87f47036bfb075f8ea04c4079575b4ea6a75b8d",
+    "decision": "accepted_for_host_counter_collection",
+    "optional0006_included": false,
+    "complete_ffmpeg_source_correspondence": false
+  },
+  "reviewed_private_optional_native_build": {
+    "review_sha256": "5cdff9c03b5e790fb11d286f9adb3316b00ad98b227363bd6347ce71a8cf5776",
+    "executable_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "optional0006_included": true,
+    "whole_native_preservation_behavior_pending": false,
+    "hardware_qualified": false
+  },
+  "implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+  "independent_whole_native_0006_readback": {
+    "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "summary_sha256": "7d2537844f59d09baee7c59a4b540c7e285c3ff5b2523118b90fb64c6753fd1d",
+    "interruption_hook_source_sha256": "7d680b63fbc30198a05ebebb9ef7ced52889d4217c645eeb825a5d2f278205fc",
+    "interruption_hook_binary_sha256": "9a8723d8ab69c518a6c53555b6d194752c05bf8b8970afc050c026d63768e2fd",
+    "frozen_runner_sha256": "f8b6a4bf777166a9f720097b2cd3acb6b7a9ae77de5c620b21b68c77550add6b",
+    "exact_interruption_windows_verified": 8,
+    "raw_artifact_hashes_sizes_verified": 175,
+    "prior_snapshot_preserved_all_windows": true,
+    "fresh_process_exact_native_load_and_normal_exit": true,
+    "consumer_scope": "Real private transport/envelope/sequence with explicit refusal stub, no full qualified profile validation",
+    "ordinary_savedata_or_continue_test": false,
+    "filesystem_power_loss_test": false,
+    "legacy_mutable_receipts_protected": false,
+    "hardware_qualified": false,
+    "report_sha256": {
+      "completion-after-rename": "fa97fb2980afc98e3db71d9bbd260c10d9f259e58a69a1c65d73061190275b69",
+      "completion-before-rename": "fb4693a872ba17d81344c5e431471fa68176e1292cba41684ef50125f9f7a811",
+      "fresh-load": "3e65a5f1620cc93176fcc8ae8ef26ae62453b0e851f7bc1e8d10dd4613c899c9",
+      "result-before-rename": "f7ff49215b9373833f6dea083860b0a93980f1e4a928d3898fec2e5625735e41",
+      "result-partial-write": "b431e182f1d35a4d8ad665af7899e56be52ee7f035d6f0302ed33e92a936b22c",
+      "snapshot-after-fsync": "1d83fba0cc02acde8b8955ef6e0f76d5cf6c625a41de262d418497fe00bb164c",
+      "snapshot-before-fsync": "2d7ddeb8618e5d0dce74679a820f28636e5ff912b3da9fea0bf007388d67b02f",
+      "snapshot-partial-write": "e32577ae64b132a14b6dfe14656dc9996a44d2aaa2e7dc5a1ddb32c332791fff",
+      "state-before-rename": "b6a64ffab5516f5251b5c9b67b5ea18209259cca42e2d5a35d8536cb631d2c2c"
+    }
+  },
+  "source_freeze_review": {
+    "collector_native_helper_and_six_script_provenance_delta_accepted": true,
+    "focused_tests": 31,
+    "skips_failures_errors": 0,
+    "live_collector_attempt_accepted": false,
+    "current_progress_handover_keeps_savedata_and_measurements_pending": true,
+    "final_post7896474_strict_package_identity_required": false,
+    "final_exact_source_certified": "50bbc3595c29238085d737cfe088971b0b514012"
+  },
+  "prior_independent_certification_readback": [
+    {
+      "implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
+      "strict_tests_passed": 1256,
+      "unexpected_skips_failures_errors": 0,
+      "strict_report_sha256": "642925ba523e61836be5061e2a9d00d92de30a0b1b9c8bdd721d84afd96e82f3",
+      "five_exact_clean_source_identities_verified": true,
+      "clean_checkout_identity_verified": true,
+      "all_nine_package_artifact_hashes_and_sizes_recomputed": true,
+      "overlay_signature_and_payload_inventory_verified": true,
+      "all_246_source_zip_entries_match_inventory_and_exact_commit": true,
+      "source_inventory_sha256": "45955655b4d5473cf652f6d3696d553024b1bf9fd5a12615ddf7e0d61019c5f3",
+      "host_and_source_zip_no_git_rebuild_bytes_equal": true,
+      "helper_c_source_included_native_patch_binary_scopes_excluded": true,
+      "installed_smoke_stage_activation_rollback_read_from_bound_builder_report": true,
+      "later_metadata_commits_separate": true
+    }
+  ],
+  "independent_certification_readback": {
+    "implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+    "strict_tests_passed": 1263,
+    "unexpected_skips_failures_errors": 0,
+    "five_exact_clean_source_identities_verified": true,
+    "all_nine_package_artifact_hashes_and_sizes_recomputed": true,
+    "overlay_signature_and_68_file_payload_inventory_verified": true,
+    "all_247_source_zip_entries_match_inventory_and_exact_commit": true,
+    "source_inventory_sha256": "9dcc83c62517768f4154679611ab1bb210cf610e0d0e64c2ac7198b74fab67a0",
+    "host_and_source_zip_no_git_rebuild_bytes_equal": true,
+    "native_load_helper_and_original_controller_c_included_native_patch_binary_scopes_excluded": true,
+    "installed_smoke_stage_activation_rollback_read_from_bound_builder_report": true,
+    "later_metadata_commits_separate": true
+  },
+  "private_fixture_review": {
+    "onfoot_state_sha256": "6dfbc85a87999fcd23fb331f85a4e8d8002c89f37bb06c2d4b6025f9ebec89a2",
+    "mounted_bike_state_sha256": "25d269d06aef2e15f0a5adb4a92b8f8591ce19f2ae84512c7a6262de97616b3b",
+    "source_engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "decision": "accepted_legitimate_private_fixture_provenance_only",
+    "onfoot_review_sha256": "08ce1c59390ad055a0e0d854e63b27a41e762e9a3ec9c747a8b2ba41ae175711",
+    "mounted_bike_review_sha256": "ea6a7d5152d2e3996948c27e9d569782bfdd04896798c6ab2867c1801fb42e47",
+    "measurement_ready": false,
+    "ordinary_savedata_or_continue_verified": false,
+    "selection_note": "Parent selected final optional0006engine consistently for both future resolution arms; earlier base-engine plan superseded. No mixed engine comparison permitted."
+  },
+  "independent_ci_readback": {
+    "run_id": 40787227636,
+    "head_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+    "actual_clean_merge_checkout": "df2a17b2be18466ec08559007e9335df60433ea1",
+    "artifact_id": 12859623115,
+    "artifact_archive_sha256": "8b9390d95f3cad91f24b8ce755d4541e9e0af1929fb218dfafafee3418bc5212",
+    "review_sha256": "b82cabdb93af24cd066c40b4ce88ed6cf3426d2812e7c02e30ad1690eaec0872",
+    "strict_passed": 1263,
+    "skips_errors_failures": 0,
+    "all_eight_inner_checksums_verified": true,
+    "all_247_source_inventory_entries_match_exact_head_source_bytes": true,
+    "signed_68_file_payload_verified": true,
+    "installed_smoke_rollback_verified_from_bound_report": true,
+    "merge_checkout_package_identity_distinct_from_local_clean_head_package": true,
+    "later_heads_need_separate_status_readback": true
+  }
+}

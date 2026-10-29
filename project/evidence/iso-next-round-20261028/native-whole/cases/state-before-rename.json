@@ -1,0 +1,157 @@
+{
+  "kind": "actual-whole-native-interruption",
+  "profile_created": false,
+  "consumer_scope": "real transport/envelope/sequence with explicit refusal stub; no qualified profile validation",
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "shim_sha256": "9a8723d8ab69c518a6c53555b6d194752c05bf8b8970afc050c026d63768e2fd",
+  "shim_source_sha256": "7d680b63fbc30198a05ebebb9ef7ced52889d4217c645eeb825a5d2f278205fc",
+  "iso_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+  "iso_size": 1696006144,
+  "point": "state-before-rename",
+  "request_sha256": "0ee8914da2dc339b7eb42743670fcd087691d3d8ecfe4d67513dacf28d804ac6",
+  "frozen_initial_config_sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+  "frozen_controls_sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--escape-exit",
+    "--log=/workspace/trimui-audit/native-snapshot-whole/matrix/state-before-rename/native.log",
+    "--project-state-session=/workspace/trimui-audit/native-snapshot-whole/matrix/state-before-rename/session/request",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "pid": 34702,
+  "start_ticks": 143202,
+  "previous_state_path": "/workspace/trimui-audit/native-snapshot-whole/matrix/state-before-rename/config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/8cf4aa59f04719ccf200ad29b0d242c7-1-0.ppst",
+  "previous_state_sha256": "4dcaa496ff21c6cb6d8aa99dcab560b030d12fb470e7bec125240dc460271337",
+  "prior_snapshot_preserved": true,
+  "final_sequence": "1",
+  "completion_sequence": "1",
+  "bounded_valid_completion": true,
+  "qualification_gate": "STATE_PROFILE_UNQUALIFIED",
+  "supervision": {
+    "root_pid": 34702,
+    "exit_status": -9,
+    "children_reaped": 1
+  },
+  "passed": true,
+  "elapsed_ns": 30126925472,
+  "events": [
+    {
+      "event": "launched",
+      "elapsed_ns": 100503354,
+      "pid": 34702
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 20339180201,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "first_completed",
+      "elapsed_ns": 26653386712,
+      "operation": "save",
+      "sequence": "1",
+      "state_sha256": "4dcaa496ff21c6cb6d8aa99dcab560b030d12fb470e7bec125240dc460271337"
+    },
+    {
+      "event": "armed",
+      "elapsed_ns": 26657329479,
+      "point": "state-before-rename"
+    },
+    {
+      "event": "key",
+      "elapsed_ns": 26894779665,
+      "key": "F2",
+      "window_id": "2097164"
+    },
+    {
+      "event": "killed_owned_stopped_native",
+      "elapsed_ns": 30086820998,
+      "marker": {
+        "point": "state-before-rename",
+        "pid": 34702,
+        "monotonic_ns": 1462056421043
+      }
+    }
+  ],
+  "runner_sha256": "f8b6a4bf777166a9f720097b2cd3acb6b7a9ae77de5c620b21b68c77550add6b",
+  "artifacts": {
+    "command": {
+      "sha256": "29fe3cf572836f8f81ae91b04e4ba3c83ecddfcc6223c26afdef4592820d9074",
+      "size": 20
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/.trimui-state-snapshots/8cf4aa59f04719ccf200ad29b0d242c7-1-0.ppst": {
+      "sha256": "4dcaa496ff21c6cb6d8aa99dcab560b030d12fb470e7bec125240dc460271337",
+      "size": 5542852
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.ppst.tmp": {
+      "sha256": "4cd23be3fbcf174f03794e8a3ede4cec9d37a69f3fa5dceb916a93360b302a9b",
+      "size": 5546463
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.jpg": {
+      "sha256": "722e1396e133fa82dd7f7be6ac1a270e385f233520f4175b61b8953f5fcdb5ab",
+      "size": 4723
+    },
+    "config/ppsspp/PSP/PPSSPP_STATE/ULUS10160_1.03_0.undo.ppst": {
+      "sha256": "4dcaa496ff21c6cb6d8aa99dcab560b030d12fb470e7bec125240dc460271337",
+      "size": 5542852
+    },
+    "config/ppsspp/PSP/SYSTEM/controls.ini": {
+      "sha256": "a2c44afb8f0aa248de138ff8484223dffc7f11933d363b6b67f81a9f7c9d1203",
+      "size": 50
+    },
+    "config/ppsspp/PSP/SYSTEM/ppsspp.ini": {
+      "sha256": "79321f95a03fea1ac96af9f05cfc570b1cff2e77f2c297ced767481dd63a7aad",
+      "size": 198
+    },
+    "events.jsonl": {
+      "sha256": "72a5777ced4fcf2569f642e5c921a374496386c53db93176fdadfab9efdb587f",
+      "size": 636
+    },
+    "marker.json": {
+      "sha256": "ecb7de3b5d0daa5a5db38aa5e49e28f7a0cea4e35d567a50f7bf6d923833aed7",
+      "size": 73
+    },
+    "native.log": {
+      "sha256": "1176464adf8e88097645c1bafed1f657e88bb3abd93b0e9a11915d88d959692b",
+      "size": 347
+    },
+    "previous-result": {
+      "sha256": "d826d118a7f51be60292ce6142fd36e02cc571b08fc315d917166dd111268222",
+      "size": 938
+    },
+    "previous-save-completed": {
+      "sha256": "d826d118a7f51be60292ce6142fd36e02cc571b08fc315d917166dd111268222",
+      "size": 938
+    },
+    "process.json": {
+      "sha256": "7da82beb0a853b66cf31e587c8c112308b0925a5d0ec0a16870851687de627ca",
+      "size": 37
+    },
+    "session/request": {
+      "sha256": "0ee8914da2dc339b7eb42743670fcd087691d3d8ecfe4d67513dacf28d804ac6",
+      "size": 615
+    },
+    "session/result": {
+      "sha256": "d826d118a7f51be60292ce6142fd36e02cc571b08fc315d917166dd111268222",
+      "size": 938
+    },
+    "session/save-completed": {
+      "sha256": "d826d118a7f51be60292ce6142fd36e02cc571b08fc315d917166dd111268222",
+      "size": 938
+    },
+    "stdout.log": {
+      "sha256": "e4e3c07d2f95c540436e866e41ea68abe327cdb214e226b0dadd01f6caad2be4",
+      "size": 2810
+    },
+    "supervise.py": {
+      "sha256": "2c85fdaf0250151591ed3123fa8b29371ea465ee29a9c02bfffd78630e1a3d6c",
+      "size": 522
+    },
+    "supervision.json": {
+      "sha256": "242f327376f6679975099fac8d933d9ffba3e8c52d4c9bce6ab4b400285387e6",
+      "size": 60
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "name": "portmaster",
+  "repository": "PortsMaster/PortMaster-GUI",
+  "expected_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+  "started_at": "2026-10-28T22:49:46.464701+00:00",
+  "attempts": [
+    {
+      "argv": [
+        "git",
+        "init"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0024770960000068953
+    },
+    {
+      "argv": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/PortsMaster/PortMaster-GUI.git"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0016047100000093906
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.promisor",
+        "true"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0019724059999930432
+    },
+    {
+      "argv": [
+        "git",
+        "config",
+        "remote.origin.partialclonefilter",
+        "blob:none"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0013215070000001106
+    },
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "origin",
+        "ccea6b746827d0ae3a1cad744f6e8ccc5a032041"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 3.27107810199999
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "init",
+        "--no-cone"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0012701400000025842
+    },
+    {
+      "argv": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "--stdin"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 0.0014531639999972867
+    },
+    {
+      "argv": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "duration_seconds": 1.2895956800000192
+    }
+  ],
+  "finished_at": "2026-10-28T22:49:51.036914+00:00",
+  "successful": true
+}

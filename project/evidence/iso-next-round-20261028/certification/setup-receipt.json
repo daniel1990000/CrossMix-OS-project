@@ -1,0 +1,20 @@
+{
+  "source_preflight": "source-preflight.json",
+  "sources_ready": 5,
+  "python": "Python 3.12.14",
+  "virtual_environment": "/workspace/trimui-audit/certification/venv",
+  "dependencies": [
+    "PySDL2==0.9.17",
+    "Pillow==11.1.0"
+  ],
+  "private_dynamic_library_prefix": "/workspace/trimui-audit/host-libs/usr/lib/x86_64-linux-gnu",
+  "sdl_image_ttf_imports": true,
+  "source_recovery_records": [
+    "spruce-ra-recovery.json",
+    "ppsspp-recovery.json",
+    "portmaster-recovery.json",
+    "spruce-recovery.json",
+    "ports-recovery.json"
+  ],
+  "full_test_run": false
+}

@@ -19,6 +19,7 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	assert(configured);
+	bool interruption = scenario.rfind("interrupt-", 0) == 0;
 	bool saveThenFailure = scenario == "save-then-write-failure";
 	bool resumeSaveThenFailure = scenario == "resume-save-then-write-failure";
 	assert(ProjectStateSessionHandlesLoad() == resume);
@@ -47,9 +48,25 @@ int main(int argc, char **argv) {
 	assert(g_pendingOperations.empty());
 	if (!resume) {
 		assert(callbacks == 1);
-		assert((last == Status::SUCCESS) == (scenario == "save" || saveThenFailure));
+		assert((last == Status::SUCCESS) == (scenario == "save" || saveThenFailure || interruption));
 	}
 	assert(projectSession->sequence == 1);
+	if (interruption) {
+		// Keep a real successful first publication, then stop a second save.
+		// Separate-slot cases retain the prior state; same-slot cases deliberately
+		// expose native state replacement before receipt/result publication.
+		for (const char *name : {"result", "save-completed"}) {
+			std::filesystem::path path = std::filesystem::path(argv[3]).parent_path() / name;
+			std::filesystem::copy_file(path, work / (std::string("previous-") + name));
+		}
+		serializedStateBytes = "interrupted new fixture state bytes\n";
+		std::string point = scenario.substr(std::string("interrupt-").size());
+		bool sameSlot = point.rfind("same-slot-", 0) == 0;
+		interruptionPoint = sameSlot ? point.substr(std::string("same-slot-").size()) : point;
+		SaveSlot(GetGamePrefix(g_paramSFO), sameSlot ? 2 : 3, callback);
+		Process();
+		assert(false);  // Every interruption scenario must stop before returning.
+	}
 	if (resumeSaveThenFailure) {
 		serializedStateBytes = "new resumed state fixture\n";
 		SaveSlot(GetGamePrefix(g_paramSFO), 2, callback);

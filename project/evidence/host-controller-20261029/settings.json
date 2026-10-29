@@ -1,0 +1,74 @@
+{
+  "scenario": "settings",
+  "steps": [
+    {
+      "step": "home",
+      "title": "Your games",
+      "selection": "All games",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "continue",
+      "title": "Pick up where you left off",
+      "selection": "Skyline Circuit",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "tools",
+      "title": "Your tools, together",
+      "selection": "PortMaster",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "settings",
+      "title": "Make it yours",
+      "selection": "Confirm button",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "settings preview",
+      "title": "Make it yours",
+      "selection": "Confirm button",
+      "dialog": "Change confirm button",
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "settings applied",
+      "title": "Make it yours",
+      "selection": "Confirm button",
+      "dialog": null,
+      "confirm": "east",
+      "status": "Preference updated. Undo is available in Settings."
+    },
+    {
+      "step": "east confirm opens preview",
+      "title": "Make it yours",
+      "selection": "Confirm button",
+      "dialog": "Change confirm button",
+      "confirm": "east",
+      "status": ""
+    },
+    {
+      "step": "south cancel returns",
+      "title": "Make it yours",
+      "selection": "Confirm button",
+      "dialog": null,
+      "confirm": "east",
+      "status": ""
+    }
+  ],
+  "result": "pass",
+  "input": "synthetic SDL_CONTROLLERBUTTONDOWN/UP through SDL queue",
+  "backend": "DemoBackend",
+  "real_game_launches": 0,
+  "device_test": false
+}

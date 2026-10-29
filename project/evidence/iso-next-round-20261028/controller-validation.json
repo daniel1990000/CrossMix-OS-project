@@ -1,0 +1,33 @@
+{
+  "date_utc": "2026-10-28T22:58:43.533993+00:00",
+  "checks": {
+    "tests_run": 3,
+    "passed": 3,
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0
+  },
+  "inputs": {
+    "project/dev/host_virtual_controller.c": "5cf8c0fce48ce201492028d99fec7ebc4297ed2b9e34baa94187099dcb900d8a",
+    "project/dev/host_virtual_controller.py": "11eb92b9ef1744a81bc92a631dba48fcd2e8c2a81c7676c9e1b846b00f272a3c",
+    "project/dev/host_virtual_controller.md": "514268d2fe81353e07e7084488a5324e1850d384464825f617da57373270b40f",
+    "project/tests/test_host_virtual_controller.py": "9b0c9dbdfc4219147d91a031a82c32f2b0f85160e240a92bfd5e6abd641b349a"
+  },
+  "failed_attempts": [
+    {
+      "stage": "private prototype compile",
+      "result": "-Werror=misleading-indentation",
+      "correction": "split return from one-line for loop"
+    },
+    {
+      "stage": "private actual SDL readback prototype",
+      "result": "axis readback remained zero",
+      "correction": "SDL_JoystickUpdate after virtual axis/button changes; actual readback then passed"
+    }
+  ],
+  "independent_review_fixes": [
+    "Required caller-retained launch start ticks and recheck before publication",
+    "Resolved path and samefile alias rejection for command/request log"
+  ],
+  "scope": "Native SDL synthetic input readback, not physical input or mission/save acceptance"
+}

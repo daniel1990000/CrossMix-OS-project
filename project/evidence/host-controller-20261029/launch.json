@@ -1,0 +1,58 @@
+{
+  "scenario": "launch",
+  "steps": [
+    {
+      "step": "home",
+      "title": "Your games",
+      "selection": "All games",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "library",
+      "title": "All games",
+      "selection": "Alpine Rally",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "game card",
+      "title": "All games",
+      "selection": "Alpine Rally",
+      "dialog": "Alpine Rally",
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "preview refusal",
+      "title": "All games",
+      "selection": "Alpine Rally",
+      "dialog": "Sample collection",
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "return to library",
+      "title": "All games",
+      "selection": "Alpine Rally",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    },
+    {
+      "step": "return home",
+      "title": "Your games",
+      "selection": "All games",
+      "dialog": null,
+      "confirm": "south",
+      "status": ""
+    }
+  ],
+  "result": "pass",
+  "input": "synthetic SDL_CONTROLLERBUTTONDOWN/UP through SDL queue",
+  "backend": "DemoBackend",
+  "real_game_launches": 0,
+  "device_test": false
+}

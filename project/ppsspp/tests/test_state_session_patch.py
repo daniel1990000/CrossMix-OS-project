@@ -7,10 +7,15 @@ import json
 import os
 from pathlib import Path
 import shutil
+import select
+import signal
 import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
+
+from psp_shell.state_evidence import PrivateStateSession, StateEvidenceError
 
 from test_native_menu_patch import block, checked
 
@@ -131,6 +136,10 @@ class StateSessionSourceTests(unittest.TestCase):
             if mutate:
                 mutate(request, private)
             checked([str(self.binary), name, str(root), str(request)], cwd=self.work)
+            if name == "resume-replay":
+                before = request.read_bytes(), (private / "result").read_bytes()
+                checked([str(self.binary), name, str(root), str(request)], cwd=self.work)
+                self.assertEqual((request.read_bytes(), (private / "result").read_bytes()), before)
             if name in {"reject-config", "wrong-state"}:
                 self.assertFalse((private / "result").exists())
                 return None
@@ -155,6 +164,134 @@ class StateSessionSourceTests(unittest.TestCase):
                     self.assertEqual(loaded[16], fields[12])
                     self.assertNotEqual(loaded[16], sha(state))
             return result
+
+    def interrupt(self, point, *, same_slot=False, retain=None):
+        """Kill only our stopped child at a real native publication boundary.
+
+        The complete serializer is a fixture and syscall wrappers only create
+        deterministic stop points. This is not a full-emulator/power-loss test.
+        """
+        with tempfile.TemporaryDirectory(prefix="ppsspp-interruption-") as directory:
+            root = Path(directory)
+            states = root / "states"
+            states.mkdir()
+            game = root / "game ü.iso"
+            game.write_bytes(b"fixture ROM bytes\n")
+            private = root / "private"
+            private.mkdir(mode=0o700)
+            fields = ["a" * 32, "b" * 32, "c" * 32, "fixture-boot", "4", "game:fixture", str(game), sha(game),
+                      sha(self.binary), str(states), "save", "", "",
+                      "ppsspp:d357e6a32934800d3d80b49f910a603e1b069751:chunk5-savestart3", "2"]
+            request = private / "request"
+            request.write_bytes(packet(b"TPSE1Q\n", fields))
+            request.chmod(0o600)
+            scenario = "interrupt-" + ("same-slot-" if same_slot else "") + point
+            child = subprocess.Popen([str(self.binary), scenario, str(root), str(request)], cwd=self.work,
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            try:
+                ready, _, _ = select.select([child.stdout], [], [], 10)
+                self.assertTrue(ready, "Native fixture did not reach interruption point")
+                self.assertEqual(child.stdout.readline().strip(), "interruption=" + point)
+                # SIGSTOP is raised immediately after that line. SIGKILL also
+                # handles the small notification/stop race without resuming.
+                child.kill()
+                output, errors = child.communicate(timeout=5)
+                self.assertEqual(child.returncode, -signal.SIGKILL, output + errors)
+            finally:
+                if child.poll() is None:
+                    child.kill()
+                    child.communicate(timeout=5)
+            previous = (root / "previous-result").read_bytes()
+            self.assertEqual((private / "result").read_bytes(), previous)
+            latest = parse(previous)
+            self.assertEqual(latest[6:9], ["save", "1", "success"])
+            completion = parse((private / "save-completed").read_bytes())
+            old_state = states / "ULUS12345_1.00_2.ppst"
+            if not same_slot:
+                self.assertEqual(old_state.read_bytes(), b"fixture state bytes\n")
+            else:
+                if point == "state-before-rename":
+                    self.assertFalse(old_state.exists())
+                else:
+                    self.assertNotEqual(sha(old_state), latest[16])
+                # Existing native Undo retains old bytes, but no consumer is
+                # allowed to infer/adopt that different path as a capability.
+                self.assertEqual((states / "ULUS12345_1.00_2.undo.ppst").read_bytes(), b"fixture state bytes\n")
+            if point in {"completion-after-rename", "result-partial-write", "result-before-rename"}:
+                self.assertEqual(completion[7], "2")
+                transport = SimpleNamespace(_directory=os.open(private, os.O_RDONLY | os.O_DIRECTORY),
+                                            _fields=tuple(fields))
+                def consume_forbidden(*args):
+                    self.fail("A future receipt reached capability construction")
+                transport._read_result = lambda name="result": PrivateStateSession._read_result(transport, name)
+                transport._validate_result_envelope = lambda result, minimum_sequence=1: PrivateStateSession._validate_result_envelope(transport, result, minimum_sequence)
+                transport._consume_result = consume_forbidden
+                try:
+                    values, error = PrivateStateSession.consume_completed(transport, None, None)
+                    self.assertEqual(values, ())
+                    self.assertEqual(error, "STATE_SESSION_MISMATCH")
+                finally:
+                    os.close(transport._directory)
+            else:
+                self.assertEqual((private / "save-completed").read_bytes(), (root / "previous-save-completed").read_bytes())
+            if point == "result-partial-write":
+                partial = (private / "result.tmp").read_bytes()
+                self.assertEqual(len(partial), 9)
+                self.assertNotEqual(partial, packet(b"TPSE1R\n", completion))
+            observation = {"point": point, "same_slot": same_slot, "exit_signal": "SIGKILL",
+                    "native_fixture_sha256": sha(self.binary),
+                    "previous_final_result_sha256": hashlib.sha256(previous).hexdigest(),
+                    "final_result_unchanged": True, "final_result_sequence": latest[7],
+                    "current_completion_sequence": completion[7],
+                    "current_completion_sha256": sha(private / "save-completed"),
+                    "prior_state_at_original_path": old_state.exists() and sha(old_state) == latest[16],
+                    "prior_state_in_native_undo": (states / "ULUS12345_1.00_2.undo.ppst").exists(),
+                    "incomplete_new_receipt_promoted": False,
+                    "preserves_prior_usable_completion": not same_slot and completion[7] == latest[7],
+                    "artifacts": {str(path.relative_to(root)): {"sha256": sha(path), "size": path.stat().st_size}
+                                  for path in sorted(root.rglob("*")) if path.is_file()}}
+            if retain is not None:
+                shutil.copytree(root, Path(retain) / scenario)
+            return observation
+
+    def test_real_process_interruption_preserves_prior_final_result_and_rejects_future_receipt(self):
+        for point in ("state-before-rename", "completion-before-rename", "completion-after-rename",
+                      "result-partial-write", "result-before-rename"):
+            with self.subTest(point=point):
+                self.interrupt(point)
+
+    def test_same_slot_interruption_exposes_native_bytes_replacement_before_publication(self):
+        # Native Undo keeps prior bytes, but the old completion path/hash is no
+        # longer current after state finalization. Fail-closed is demonstrated;
+        # old same-slot Resume availability is explicitly NOT established.
+        for point in ("state-before-rename", "completion-before-rename", "completion-after-rename",
+                      "result-partial-write", "result-before-rename"):
+            with self.subTest(point=point):
+                self.interrupt(point, same_slot=True)
+
+    def test_native_trusted_slot_and_replay_do_not_grant_helper_session_or_freshness(self):
+        def different_slot(request, private):
+            fields = parse(request.read_bytes(), b"TPSE1Q\n")
+            fields[14] = "3"
+            request.write_bytes(packet(b"TPSE1Q\n", fields))
+        replay = self.scenario("resume-replay")
+        self.assertEqual(replay[6:9], ["load", "1", "success"])
+        result = self.scenario("resume", mutate=different_slot)
+        self.assertEqual(result[21], "3")  # Native trusts caller metadata.
+        fields = result[:6] + [result[13], result[15], result[14], str(Path(result[20]).parent),
+                              "resume", result[20], result[16], result[26], "3"]
+        envelope = SimpleNamespace(_fields=tuple(fields))
+        # This isolated real predicate creates no profile or capability.
+        PrivateStateSession._validate_result_envelope(envelope, tuple(result))
+        with self.assertRaises(StateEvidenceError) as stale:
+            PrivateStateSession._validate_result_envelope(envelope, tuple(result), 2)
+        self.assertEqual(stale.exception.code, "STATE_OPERATION_FAILED")
+        for index in range(6):
+            fresh = list(fields)
+            fresh[index] += "-fresh"
+            with self.subTest(index=index), self.assertRaises(StateEvidenceError) as mismatch:
+                PrivateStateSession._validate_result_envelope(SimpleNamespace(_fields=tuple(fresh)), tuple(result))
+            self.assertEqual(mismatch.exception.code, "STATE_SESSION_MISMATCH")
 
     def test_actual_save_caller_defers_to_process_and_exports_completed_identity(self):
         result = self.scenario("save")
