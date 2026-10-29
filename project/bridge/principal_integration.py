@@ -65,6 +65,7 @@ REQUIRED_PROJECT_MODULES = [
     'app/retropass/layout.py',
     'app/retropass/library.py',
     'app/retropass/renderer.py',
+    'app/retropass/psp.py',
     'app/bridge/__init__.py',
     'app/bridge/bootstrap.py',
     'app/bridge/experimental.py',

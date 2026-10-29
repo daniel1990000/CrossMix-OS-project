@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "smartpro-psp-experience"
 dynamic = ["version"]
-description = "RetroPass for TrimUI with pinned spruce integrations"
+description = "PSP-style TrimUI interface using adapted RetroPass source and pinned spruce integrations"
 requires-python = ">=3.9"
 dependencies = ["PySDL2==0.9.17"]
 

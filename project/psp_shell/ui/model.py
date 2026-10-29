@@ -226,6 +226,7 @@ class UISnapshot:
     exit_request: str | None
     display_clock: str = ""
     artwork_generation: int = 0
+    landing_items: tuple[UIItem, ...] = ()
 
     @property
     def selected_item(self) -> UIItem | None:
@@ -295,6 +296,13 @@ class NavigationModel:
         self._details_return: Dialog | None = None
         self._history_records: dict[str, tuple[UIItem, ...]] = {}
         self._history_serial: dict[str, int] = {}
+        # Native-order metadata for presentation-only landing suggestions.
+        # Browse sorts and letter jumps must not reorder this source history.
+        self._landing_records: dict[str, tuple[UIItem, ...]] = {}
+        self._landing_generations: dict[str, int] = {}
+        self._landing_revision = 0
+        self._landing_result_key: tuple[Any, ...] | None = None
+        self._landing_result: tuple[UIItem, ...] = ()
         self._game_information: Mapping[str, Any] = {}
         self._performance_status: Mapping[str, Any] = {}
         self._performance_generation = 0
@@ -890,6 +898,9 @@ class NavigationModel:
                 last_page = ((total - 1) // self.PAGE_SIZE) * self.PAGE_SIZE
                 return [self._query(last_page, keep_focus=True)]
             self._pages[0].replace(items, offset=offset, total=total, keep_focus=self._query_keep_focus)
+            self._landing_records["games"] = tuple(items)
+            self._landing_generations["games"] = self._artwork_generation
+            self._landing_revision += 1
             if self._query_last_focus and items:
                 self._pages[0].selected = len(items) - 1
             self._query_last_focus = False
@@ -903,6 +914,9 @@ class NavigationModel:
             if context != "favorites_cache" and command.serial != self._history_serial.get(context, command.serial):
                 return []
             items = tuple(UIItem.from_record(value) for value in result if isinstance(value, Mapping))
+            self._landing_records[context] = items
+            self._landing_generations[context] = self._artwork_generation
+            self._landing_revision += 1
             if context == "favorites_cache" or (context == "favorites" and not self._history_filters["favorites"] and not self._history_search["favorites"]):
                 self._favorites = {item.id for item in items}
                 self._favorites_loaded = True
@@ -935,6 +949,7 @@ class NavigationModel:
                 self._dialog = replace(self._dialog, choices=self._dialog.choices[:-1] +
                     (DialogChoice("Pick another", "pick_another"), self._dialog.choices[-1]))
         elif context == "favorite_set":
+            self._landing_revision += 1
             identifier = command.params.get("game_id", "")
             self._favorite_overrides[identifier] = command.params.get("enabled") is True
             self._favorite_override_serial[identifier] = command.serial
@@ -1888,6 +1903,70 @@ class NavigationModel:
             return self._page_commands(-1 if action == "page_previous" else 1)
         return []
 
+    def _landing_items(self) -> tuple[UIItem, ...]:
+        """Apply RetroPass's recent-first selection to fresh loaded native data.
+
+        Suggestions belong to root All/Favorites/system rows only. They never
+        replace navigable items, query the backend, or create launch identities.
+        A refresh immediately invalidates every old source generation, before
+        the asynchronous replacement metadata has arrived.
+        """
+        if (self.category != 0 or self._games_view != "systems" or
+                self._dialog is not None or self._keyboard is not None):
+            return ()
+        page = self._systems
+        selected = page.items[page.selected] if 0 <= page.selected < len(page.items) else None
+        if selected is None or not (selected.kind == "system" or selected.id in ("all", "favorites")):
+            return ()
+        key = (self._artwork_generation, self._landing_revision,
+               selected.id, selected.kind, selected.system_id)
+        if key == self._landing_result_key:
+            return self._landing_result
+        from retropass.library import landing_items
+        from retropass.layout import LANDING_LIMIT
+
+        def source(name: str) -> tuple[UIItem, ...]:
+            return (self._landing_records.get(name, ())
+                    if self._landing_generations.get(name) == self._artwork_generation else ())
+
+        if selected.id == "favorites" and not any(
+                self._landing_generations.get(name) == self._artwork_generation
+                for name in ("favorites", "favorites_cache")):
+            self._landing_result, self._landing_result_key = (), key
+            return ()
+        favorite_ids = self._favorites
+        if (selected.id == "favorites" and
+                self._landing_generations.get("favorites_cache") != self._artwork_generation):
+            # A filtered fresh response proves only its own members. The old
+            # global set can still contain entries removed since the refresh.
+            favorite_ids = {item.id for item in source("favorites")}
+
+        def filtered(items: tuple[UIItem, ...]) -> tuple[UIItem, ...]:
+            output: dict[str, UIItem] = {}
+            for item in items:
+                if item.kind != "game" or not item.id or not item.available:
+                    continue
+                favorite = self._favorite_overrides.get(item.id,
+                    item.id in favorite_ids if self._favorites_loaded or selected.id == "favorites"
+                    else item.favorite or item.id in favorite_ids)
+                if selected.kind == "system" and item.system_id != selected.system_id:
+                    continue
+                if selected.id == "favorites" and not favorite:
+                    continue
+                output.setdefault(item.id, replace(item, favorite=favorite))
+                if len(output) == LANDING_LIMIT:
+                    break
+            return tuple(output.values())
+
+        recent = filtered(source("recent"))
+        # Include already-loaded page/favorite metadata as fallback, retaining
+        # original native IDs. At most five from each source enter the port.
+        candidates = (filtered(source("games")) + filtered(source("favorites_cache")) +
+                      filtered(source("favorites")) + recent)
+        self._landing_result = landing_items(candidates, (item.id for item in recent))
+        self._landing_result_key = key
+        return self._landing_result
+
     def snapshot(self, now: float = 0.0, *, display_clock: str = "") -> UISnapshot:
         """Accept the coordinator's clock text without reading wall time here."""
         del now  # Presentation alone owns animation time.
@@ -1936,4 +2015,4 @@ class NavigationModel:
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
                           self._status, "Loading your collection…" if loading and not items else empty,
                           loading, self.demo, self.exit_request, _text(display_clock, 32),
-                          self._artwork_generation)
+                          self._artwork_generation, self._landing_items())

@@ -83,6 +83,8 @@ class Renderer:
         self._art_generation = 0
         self._art_dirty = False
         self._last_selected_art = ""
+        self._preferred_art: tuple[str, ...] = ()
+        self._active_art_refs: set[str] | None = None
         self._fingerprint = None
         self._last_change = 0.0
         self._last_now = 0.0
@@ -91,6 +93,7 @@ class Renderer:
         self._category_target = 0.0
         self._closed = False
         self._retropass = None
+        self._psp_retropass = None
         self._audio_device = 0
         self._click_buffer = None
         self._last_target = None
@@ -373,6 +376,12 @@ class Renderer:
             self._retropass = RetroPassView(self)
         return self._retropass
 
+    def _psp_retropass_view(self):
+        if getattr(self, "_psp_retropass", None) is None:
+            from retropass.psp import PSPRetroPassView
+            self._psp_retropass = PSPRetroPassView(self)
+        return self._psp_retropass
+
     def _background(self, now: float, preferences: Preferences) -> None:
         if preferences.theme == "retropass":
             self._retropass_view().background(preferences.high_contrast)
@@ -438,15 +447,33 @@ class Renderer:
                 changed = True
             selected = snapshot.selected_item
             self._last_selected_art = selected.artwork if selected is not None and selected.kind == "game" else ""
-            path = self._last_selected_art
-            if path and path not in self._art and path not in self._art_failed:
-                self._art_retry[path] = None
-                while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
-                    self._art_retry.popitem(last=False)
+            landing = getattr(snapshot, "landing_items", ())
+            self._active_art_refs = {item.artwork for item in (*snapshot.items, *landing) if item.artwork}
+            if snapshot.dialog and snapshot.dialog.artwork:
+                self._active_art_refs.add(snapshot.dialog.artwork)
+            preferred = [self._last_selected_art] if self._last_selected_art else []
+            if (snapshot.preferences.theme == "psp" and snapshot.preferences.text_scale <= 1.2
+                    and not snapshot.dialog and not snapshot.keyboard
+                    and (selected is None or selected.kind != "game")):
+                preferred.extend(item.artwork for item in landing[:5] if item.artwork)
+            self._preferred_art = tuple(dict.fromkeys(preferred))
+            for path in self._preferred_art:
+                if path not in self._art and path not in self._art_failed:
+                    self._art_retry[path] = None
+            for path in tuple(self._art_retry):
+                if path not in self._active_art_refs:
+                    self._art_retry.pop(path, None)
+            while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
+                self._art_retry.popitem(last=False)
         for image in self._decoder.poll():
             if image.generation != self._art_generation:
                 continue
             self._art_requested.pop(image.path, None)
+            if self._active_art_refs is not None and image.path not in self._active_art_refs:
+                # A finished old view must not displace the current landing
+                # covers. Refresh generations remain an additional boundary.
+                self._art_retry.pop(image.path, None)
+                continue
             if image.error or not image.pixels:
                 self._art_retry.pop(image.path, None)
                 self._art_failed[image.path] = None
@@ -467,10 +494,8 @@ class Renderer:
                 sdl2.SDL_DestroyTexture(removed[0])
         # The focused row is drawn last, so submit it here before neighbors.
         # Rejected admissions remain bounded and are retried without file I/O.
-        paths = list(self._art_retry)
-        if self._last_selected_art in self._art_retry:
-            paths.remove(self._last_selected_art)
-            paths.insert(0, self._last_selected_art)
+        paths = [path for path in self._preferred_art if path in self._art_retry]
+        paths.extend(path for path in self._art_retry if path not in self._preferred_art)
         for path in paths:
             if path in self._art or path in self._art_failed or path in self._art_requested:
                 self._art_retry.pop(path, None)
@@ -575,6 +600,7 @@ class Renderer:
     def _items(self, snapshot: UISnapshot, now: float, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
         prefs = snapshot.preferences
         scale = prefs.text_scale
+        panel = prefs.theme == "psp" and self._psp_retropass_view().visible(snapshot)
         # A replaced page/column is new geometry. Carrying the prior row index
         # through pagination or a reordered result set makes it glide backward.
         identity = (snapshot.category, snapshot.title, snapshot.breadcrumb,
@@ -588,7 +614,11 @@ class Renderer:
         try:
             # Farther rows first; the selected row is drawn last and stays clear
             # throughout short transitions and fast held-button repeats.
-            indices = sorted(range(len(snapshot.items)), key=lambda i: -abs(i - position))
+            # Only nearby rows can intersect the clipped XMB column. Keep
+            # artwork admission bounded even with a large injected page.
+            first = max(0, math.floor(position) - 3)
+            last = min(len(snapshot.items), math.ceil(position) + 5)
+            indices = sorted(range(first, last), key=lambda i: -abs(i - position))
             for index in indices:
                 item = snapshot.items[index]
                 distance = index - position
@@ -609,7 +639,7 @@ class Renderer:
                 title_size = 31 if selected else 22
                 title_scale = scale if selected else min(scale, 1.35)
                 title_y = y - (24 if selected else 10)
-                title_width = 740 if item.favorite else 780
+                title_width = (460 if item.favorite else 500) if panel else (740 if item.favorite else 780)
                 pixels = round(title_size * title_scale)
                 lines = self.text.wrap(item.title, pixels, title_width, 2) if selected else (item.title,)
                 last_width = 0
@@ -622,7 +652,7 @@ class Renderer:
                         subtitle = (item.system_id + "   /   " + subtitle).strip(" / ")
                     if subtitle:
                         subtitle_y = max(y + 23, title_y + len(lines) * (pixels + 7) + 8)
-                        self._text(subtitle, 393, subtitle_y, 17, muted, 763, scale)
+                        self._text(subtitle, 393, subtitle_y, 17, muted, 496 if panel else 763, scale)
                     if item.favorite:
                         self._icon("favorites", 405 + last_width,
                                    title_y + max(0, len(lines) - 1) * (pixels + 7) + 2,
@@ -714,6 +744,7 @@ class Renderer:
                     self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 460, 253, 14, muted, 744, prefs.text_scale)
                 if snapshot.items:
                     self._items(snapshot, now, primary, muted)
+                    self._psp_retropass_view().draw(snapshot, now, primary, muted)
                 else:
                     self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
                     self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))

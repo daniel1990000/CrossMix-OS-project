@@ -158,6 +158,21 @@ class ApplicationTests(unittest.TestCase):
             self.assertEqual(result.returncode, 0, result.stderr)
             self.assertEqual(json.loads((state / "navigation.json").read_text())["category"], 3)
 
+    def test_fresh_preview_uses_psp_directions_with_temporary_dashboard_override(self):
+        state = self.root / "psp-preview-state"
+        command = [sys.executable, "-m", "psp_shell", "--demo", "--headless", "--frames", "1",
+                   "--state-dir", str(state)]
+        environment = {**os.environ, "SDL_VIDEODRIVER": "dummy", "SDL_AUDIODRIVER": "dummy"}
+        result = subprocess.run(command + ["--actions", "right"], env=environment,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads((state / "preferences.json").read_text())["preferences"]["theme"], "psp")
+        self.assertEqual(json.loads((state / "navigation.json").read_text())["category"], 1)
+        result = subprocess.run(command + ["--theme", "retropass"], env=environment,
+                                capture_output=True, text=True, timeout=15)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(json.loads((state / "preferences.json").read_text())["preferences"]["theme"], "psp")
+
 
 if __name__ == "__main__":
     unittest.main()

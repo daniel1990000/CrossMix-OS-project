@@ -1,7 +1,7 @@
 # TrimUI project working instructions
 
-Latest development: RetroPass for TrimUI dev19, `project/docs/retropass-trimui.md` and `project/evidence/retropass-dev19/`. The preceding dev18 verification remains historical.
-Dev19 is the current development descriptor on `feat/retropass-trimui`; published dev16 retains its exact packet. Follow the current handover for exact tested/build commits and PR status.
+Latest development: RetroPass adapted into the PSP UI, dev20. Read `project/docs/retropass-trimui.md` and `project/evidence/retropass-psp-dev20/`. Dev19 dashboard and dev18 verification are historical.
+Dev20 is the current development descriptor on `feat/retropass-trimui`; published dev16 retains its exact packet. Follow the current handover for exact tested/build commits and PR status.
 
 Read `HANDOVER.md`, `project/handover/LATEST.json` and `project/README.md` first. `NEXT_CHAT_PROMPT.txt` is the current continuation prompt; the master-plan register is `project/docs/master-plan-2026-10-22.md`. Active source lives under `project/`; dev18 is based on main `9dfa857`, after the earlier PR #1 merge. The retained `build/spruce-psp-experience` branch identifies published dev16; inherited CrossMix runtime is historical reference. Earlier host publication authorization and receipts apply to their recorded release. Dev18 does not replace those published bytes. Device/profile gates remain disabled pending their actual qualification evidence.
 

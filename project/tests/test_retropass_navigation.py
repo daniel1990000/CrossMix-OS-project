@@ -79,7 +79,7 @@ class RetroPassNavigationTests(unittest.TestCase):
                                     "request_id": "style-undo", "expected_generation": 8})
             self.assertEqual(undone["preferences"]["theme"], "psp")
 
-    def test_fresh_preview_selects_retropass_and_reopen_preserves_choice(self):
+    def test_explicit_dashboard_default_is_preserved_on_reopen(self):
         with tempfile.TemporaryDirectory() as directory:
             store = SettingsStore(Path(directory), default_theme="retropass")
             self.assertEqual(store.get()["preferences"]["theme"], "retropass")

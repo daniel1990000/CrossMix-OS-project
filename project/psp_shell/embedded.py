@@ -319,7 +319,7 @@ class EmbeddedRunner:
             self.settings = ReadOnlyViewSettings(self.context.preferences)
         else:
             self.settings = (deps.settings_factory(str(self.context.state_dir)) if deps.settings_factory else
-                             SettingsStore(str(self.context.state_dir), default_theme="retropass"))
+                             SettingsStore(str(self.context.state_dir), default_theme="psp"))
             self.settings.recover()
         self.model = (deps.model_factory or NavigationModel)(demo=False, restored_state=_restore_navigation(self.context.state_dir))
         self.coordinator = LaunchCoordinator(self.registry, LaunchHooks(self._snapshot,

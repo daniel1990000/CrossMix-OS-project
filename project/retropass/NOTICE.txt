@@ -12,6 +12,10 @@ this notice does not relicense the upstream source or adapted code as MIT.
 
 Changes: Linux/Python metadata and playlist adaptation, stable game identity,
 SDL presentation for TrimUI, and integration with existing input and launch owners.
+The default PSP presentation adapts RetroPass cover proportions, cover treatment,
+focus treatment and recent-first five-item landing selection into the existing
+horizontal-category/vertical-list interface. The Xbox-style dashboard remains optional.
+retropass/psp.py contains the GPL-2.0-only presentation adaptation.
 The Windows UWP project is retained as source and is not executed on Linux.
 Xbox and TrimUI are used descriptively; no vendor endorsement is claimed.
 

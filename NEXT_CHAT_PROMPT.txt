@@ -1,14 +1,12 @@
 Continue daniel1990000/CrossMix-OS-project, active source project/.
-Current branch feat/retropass-trimui implements RetroPass for TrimUI dev19.
+Current branch feat/retropass-trimui, draft PR #5.
+User asked to adapt actual RetroPass source into the PSP UI; dev20 does so.
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
-project/docs/retropass-trimui.md and project/evidence/retropass-dev19/ first.
-All 177 upstream RetroPass tracked files are imported unchanged at
-65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83 with authors/licence/source hashes.
-The running Python/SDL dashboard translates actual XAML/theme/focus code,
-and the existing snapshot provider calls the translated EmulationStation parser.
-Fresh preview/embedded settings choose RetroPass; old saved appearance stays PSP.
-Style preference is separate from classic/project native ownership.
-Host tests/package receipts apply only to their captured source bytes.
+project/docs/retropass-trimui.md and project/evidence/retropass-psp-dev20/ first.
+Fresh sessions use PSP waves/crossbar/vertical lists, GPL-scoped RetroPass cover
+presentation and source-backed recent-first five-item previews on eligible home rows.
+All 177 pinned upstream files remain unchanged; actual ES metadata parser is live.
+Keep source/receipt identities exact. Dev19 evidence is historical, not dev20 verification.
 No device/profile gate enabled, native binary replaced or save location changed.
 Published dev16 assets remain unchanged; physical acceptance stays 0/13.
 Vice City/game-image execution remains in the separate chat.

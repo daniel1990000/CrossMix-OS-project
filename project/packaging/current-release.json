@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "release_id": "smartpro-retropass-0.1.0-dev19",
+  "release_id": "smartpro-retropass-0.1.0-dev20",
   "delivery": "retropass-host-preview",
   "source_date_epoch": 1793232000,
   "frontend": {
@@ -97,7 +97,7 @@
     "ci_run": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380",
     "covers_current_release": false
   },
-  "current_host_certification": "Generated host certification applies only to its captured bytes. Prior dev18 results do not certify the RetroPass port.",
+  "current_host_certification": "Generated host certification applies only to its captured bytes. Earlier dev19 checks do not certify the PSP presentation adaptation.",
   "qualification": {
     "hardware_qualified": false,
     "runtime_verified": false,

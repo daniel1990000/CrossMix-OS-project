@@ -452,7 +452,7 @@ def _run_preview(args, backend=None, backup_adapter=None):
         else:
             from .adapters.spruce import SpruceBackend
             backend = SpruceBackend(args.sd_root, read_only=True)
-    settings = SettingsStore(str(state_dir), default_theme="retropass")
+    settings = SettingsStore(str(state_dir), default_theme="psp")
     settings.recover()
     dispatcher = Dispatcher(backend, settings, state_dir, backup_adapter=backup_adapter)
     model = NavigationModel(demo=bool(getattr(backend, "demo", False)),

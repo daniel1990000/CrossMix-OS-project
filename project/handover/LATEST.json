@@ -72,9 +72,9 @@
   "schema": 2,
   "date_utc": "2026-10-29",
   "branch": "feat/retropass-trimui",
-  "base_at_start": "05d1088f35ff76231144ef44c393deb95900bc28",
-  "release_id": "smartpro-retropass-0.1.0-dev19",
-  "project_stage": "RetroPass source import and working Linux SDL port; host evidence retained separately from unrun device qualification.",
+  "base_at_start": "39e838c92b284f4c445e69e0669f0646cfa42363",
+  "release_id": "smartpro-retropass-0.1.0-dev20",
+  "project_stage": "RetroPass source adapted into the default PSP crossbar UI; host certification and artifact evidence recorded for this continuation.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -136,7 +136,9 @@
     "plan": "project/docs/master-plan-history-through-dev17.md",
     "warning": "Dated current/latest fields in historical records apply only to their named snapshots.",
     "dev18_handover": "HANDOVER-HISTORY-through-dev18.md",
-    "dev18_status": "project/handover/LATEST-through-dev18.json"
+    "dev18_status": "project/handover/LATEST-through-dev18.json",
+    "dev19_handover": "HANDOVER-HISTORY-through-dev19.md",
+    "dev19_status": "project/handover/LATEST-through-dev19.json"
   },
   "owner_device_status": {
     "device": "Original TrimUI Smart Pro TG5040",
@@ -146,8 +148,8 @@
     "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
   },
   "next_work": [
-    "Review RetroPass host preview and pull request.",
-    "Qualify exact installed TG5040 input/display/launch-return and recovery behavior using the existing casebook."
+    "Review the updated PSP presentation in PR #5 and its exact host preview.",
+    "Qualify exact installed TG5040 ownership, launch-return and recovery behavior using the existing casebook."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -225,7 +227,14 @@
     "merge_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
     "merged_head": "2d182edf0cf868a4a8e5214ee552dd42ccba894a"
   },
-  "current_snapshot": {
+  "pull_request": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/5",
+    "number": 5,
+    "state": "open",
+    "draft": true,
+    "merged": false
+  },
+  "previous_dev19_snapshot": {
     "evidence": "project/evidence/retropass-dev19/verification.json",
     "upstream": "retropassdev/RetroPass",
     "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
@@ -247,11 +256,12 @@
     "payload_files": 254,
     "both_zips_byte_identical_without_git": true
   },
-  "pull_request": {
-    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/5",
-    "number": 5,
-    "state": "open",
-    "draft": true,
-    "merged": false
+  "current_snapshot": {
+    "evidence": "project/evidence/retropass-psp-dev20/verification.json",
+    "upstream": "retropassdev/RetroPass",
+    "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
+    "imported_files": 177,
+    "native_engine_rebuilt": false,
+    "physical_device_tested": false
   }
 }
