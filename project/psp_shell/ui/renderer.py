@@ -493,6 +493,46 @@ class Renderer:
                 self._art_retry.move_to_end(item.artwork)
                 while len(self._art_retry) > self.ART_CACHE_ENTRIES * 2:
                     self._art_retry.popitem(last=False)
+        if item.id.startswith("sample:"):
+            # Original abstract title cards, generated on the renderer: no game
+            # artwork or unbounded textures are shipped with the preview.
+            palettes = ((22, 92, 137), (137, 69, 79), (98, 84, 143),
+                        (41, 120, 111), (151, 100, 49), (65, 98, 155))
+            seed = sum((i + 1) * ord(c) for i, c in enumerate(item.id))
+            base = palettes[seed % len(palettes)]
+            self._rect(x, y, width, height, (*base, 255))
+            # Distinct original abstract motifs; no third-party artwork.
+            ink = (255, 255, 255, 230) if preferences.high_contrast else (240, 244, 231, 170)
+            if preferences.high_contrast:
+                self._rect(x, y, width, height, (0, 0, 0, 255))
+            motif = seed % 4
+            if motif == 0:  # skyline
+                for n in range(5):
+                    bx = x + n * width // 5
+                    roof = y + height * (30 + (seed // (n + 1)) % 35) // 100
+                    self._rect(bx + 2, roof, max(2, width // 7), y + height - roof - 42, ink)
+            elif motif == 1:  # road
+                self._line(x + width // 2, y + height // 4, x + width // 8, y + height - 42, ink)
+                self._line(x + width // 2, y + height // 4, x + width * 7 // 8, y + height - 42, ink)
+                for n in range(4):
+                    yy = y + height * (35 + n * 12) // 100
+                    self._line(x + width // 2, yy, x + width // 2, yy + 5 + n * 2, ink)
+            elif motif == 2:  # orbit
+                self._circle(x + width // 2, y + height // 3, max(6, width // 5), ink)
+                for n in range(7):
+                    px = x + (seed // (n + 1) + n * 37) % max(width, 1)
+                    py = y + (seed // (n + 2) + n * 29) % max(height - 45, 1)
+                    self._circle(px, py, 2, ink)
+            else:  # peaks
+                for n in range(3):
+                    peak_x = x + width * (2 * n + 1) // 6
+                    peak_y = y + height * (32 + (seed // (n + 1)) % 20) // 100
+                    horizon = y + height * 2 // 3
+                    self._line(x + width * n // 3, horizon, peak_x, peak_y, ink)
+                    self._line(peak_x, peak_y, x + width * (n + 1) // 3, horizon, ink)
+            self._rect(x + 8, y + height - 42, width - 16, 32, (4, 18, 40, 205))
+            self._label(item.title, x + 14, y + height - 35, 15, (255, 255, 255), width - 28)
+            return
         # A quiet original placeholder is visibly a missing cover, not invented
         # game artwork. Text stays alongside the icon in the normal list.
         color = (255, 255, 255, 34) if not preferences.high_contrast else (255, 255, 255, 46)
@@ -617,6 +657,36 @@ class Renderer:
         finally:
             sdl2.SDL_RenderSetClipRect(self.renderer, None)
 
+    def _game_shelf(self, snapshot: UISnapshot, primary: tuple[int, ...], muted: tuple[int, ...]) -> None:
+        """A bounded, controller-driven cover shelf; the model owns selection."""
+        selected = snapshot.selected_item
+        if selected is None:
+            return
+        self._rect(170, 301, 1038, 324, (4, 19, 45, 190))
+        self._text("GAME LIBRARY  ·  UP / DOWN TO BROWSE", 195, 316, 14, muted, 500)
+        # Feature cover and a four-cover browsing strip. Selection is still
+        # driven by the existing vertical game-list navigation.
+        self._artwork(selected, 202, 345, 150, 232, snapshot.preferences)
+        self._line(202, 583, 352, 583, (255, 255, 255, 255))
+        start = max(0, min(snapshot.selected - 1, len(snapshot.items) - 4))
+        for index in range(start, min(start + 4, len(snapshot.items))):
+            item = snapshot.items[index]
+            x = 395 + (index - start) * 197
+            self._artwork(item, x, 345, 120, 186, snapshot.preferences)
+            if index == snapshot.selected:
+                self._line(x, 537, x + 120, 537, (255, 255, 255, 255))
+            self._label(item.title, x, 544, 14, primary if index == snapshot.selected else muted, 175)
+        self._text(selected.title, 395, 571, 23, primary, 770, snapshot.preferences.text_scale)
+        description = (selected.system_id + "   /   " + selected.subtitle).strip(" / ")
+        if description:
+            self._text(description, 397, 603, 14, muted, 770, snapshot.preferences.text_scale)
+        if selected.favorite:
+            self._icon("favorites", 1120, 574, 22, primary)
+        if not selected.available:
+            self._text("Unavailable", 970, 603, 14, muted, 160)
+        if snapshot.demo:
+            self._text("SAMPLE TITLES · PREVIEW ONLY", 830, 317, 14, muted, 340)
+
     def _button(self, position: str, x: float, y: float, color: tuple[int, ...],
                 scale: float = 1.0) -> None:
         # Physical positions remain independent of device lettering. A larger
@@ -692,7 +762,11 @@ class Renderer:
             if snapshot.title not in root_titles and snapshot.breadcrumb != snapshot.categories[snapshot.category]:
                 self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 460, 253, 14, muted, 744, prefs.text_scale)
             if snapshot.items:
-                self._items(snapshot, now, primary, muted)
+                if (snapshot.category == 0 and all(item.kind == "game" for item in snapshot.items) and prefs.text_scale <= 1.2
+                        and snapshot.selected_item and len(snapshot.selected_item.title) <= 48):
+                    self._game_shelf(snapshot, primary, muted)
+                else:
+                    self._items(snapshot, now, primary, muted)
             else:
                 self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
                 self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))
