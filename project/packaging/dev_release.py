@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Build a verified, original-only development deliverable, never a device release.
+"""Build a verified host development deliverable with explicit licence scopes, never a device release.
 
 The default signer is generated in scratch and deleted. Its public key is
 labelled development-only. Signed reproducibility is checked with that same
@@ -29,7 +29,7 @@ import overlay
 from build_payload import build_payload
 from fixture_card import create_fixture
 from release_descriptor import (resolve as resolve_descriptor, original_source_scope, original_source_file,
-                                source_inventory, SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS)
+                                source_inventory, SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS, validate_retropass_vendor)
 
 
 def put_json(path, value):
@@ -65,6 +65,8 @@ def original_source_entries(project):
         overlay.require(path.stat().st_size <= overlay.MAX_FILE, "source artifact file too large")
         entries.append(("smartpro-original-source/" + relative.as_posix(), path.read_bytes()))
     overlay.require(any(name.endswith("/LICENSE") for name, _ in entries), "original source license missing")
+    if any(name.startswith("smartpro-original-source/retropass/") for name, _ in entries):
+        validate_retropass_vendor(project, dict(entries))
     return entries
 
 
@@ -320,7 +322,12 @@ def build(project, output, release=None, epoch=None, *, source_lock=None, includ
                 "The .tar file beside this ZIP is signed by a development key, for explicit host fixture testing only.\n"
                 "The included public key demonstrates signature integrity; it is not a production trust anchor.\n"
                 "No firmware, emulators, upstream spruce/PyUI source, private signing keys or commercial game data are included.\n"
-            ).encode("utf-8")
+            )
+            if (captured_project / "retropass/source-lock.json").is_file():
+                preview_instructions += (
+                    "RetroPass adaptations are GPL-2.0-only; notices/RetroPass-source retains the complete pinned upstream source.\n"
+                    "The legacy original-source archive filename includes third-party source with its own preserved licence.\n")
+            preview_instructions = preview_instructions.encode("utf-8")
             entries = [("smartpro-host-preview/" + path.relative_to(payload).as_posix(), path.read_bytes())
                        for path in sorted(payload.rglob("*")) if path.is_file()]
             entries.append(("smartpro-host-preview/RUN.txt", preview_instructions))

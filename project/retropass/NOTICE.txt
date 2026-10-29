@@ -1,0 +1,23 @@
+RetroPass for TrimUI
+
+Based on RetroPass by retropassdev, SirMangler and contributors.
+Upstream: https://github.com/retropassdev/RetroPass
+Pinned revision: 65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83
+
+The complete unmodified tracked upstream tree is included in vendor/retropass.
+Its AUTHORS.md and GNU General Public License version 2 are preserved there.
+Python translations and adaptations in retropass/ retain GPL-2.0-only scope.
+The surrounding original project helpers retain their existing MIT notices;
+this notice does not relicense the upstream source or adapted code as MIT.
+
+Changes: Linux/Python metadata and playlist adaptation, stable game identity,
+SDL presentation for TrimUI, and integration with existing input and launch owners.
+The Windows UWP project is retained as source and is not executed on Linux.
+Xbox and TrimUI are used descriptively; no vendor endorsement is claimed.
+
+The installed preview carries the corresponding adapted Python source in app/retropass,
+the full upstream source under notices/RetroPass-source, and this notice.
+The source archive carries project source plus the same complete upstream tree.
+Python wheels retain the upstream tree under share/psp_shell/source/vendor/retropass
+and the port licence, notice and source lock alongside the retropass package.
+Legacy archive names containing original-source are filenames, not licence claims.

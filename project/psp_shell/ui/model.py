@@ -71,6 +71,7 @@ class Preferences:
     text_scale: float = 1.0
     high_contrast: bool = False
     interface: str = "classic"
+    theme: str = "psp"
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any] | None) -> "Preferences":
@@ -85,6 +86,7 @@ class Preferences:
             text_scale=max(0.75, min(1.75, float(scale))),
             high_contrast=values.get("high_contrast", False) is True,
             interface=values.get("interface") if values.get("interface") in ("classic", "project") else "classic",
+            theme=values.get("theme") if values.get("theme") in ("psp", "retropass") else "psp",
         )
 
 
@@ -1083,7 +1085,7 @@ class NavigationModel:
     @staticmethod
     def _preference_label(key: str) -> str:
         return {"confirm": "Confirm button", "motion": "Background motion", "sound": "Interface sounds",
-                "text_scale": "Text size", "high_contrast": "High contrast"}.get(key, key)
+                "text_scale": "Text size", "high_contrast": "High contrast", "theme": "Dashboard style"}.get(key, key)
 
     @staticmethod
     def _format_preference(value: Any) -> str:
@@ -1091,11 +1093,11 @@ class NavigationModel:
             return "On" if value else "Off"
         if isinstance(value, (float, int)):
             return f"{value * 100:.0f}%"
-        return {"south": "South button", "east": "East button"}.get(str(value), str(value))
+        return {"south": "South button", "east": "East button", "retropass": "RetroPass for TrimUI", "psp": "PSP crossbar"}.get(str(value), str(value))
 
     def _rebuild_settings(self) -> None:
         items = [UIItem(key, self._preference_label(key), self._format_preference(getattr(self.preferences, key)), "setting")
-                 for key in ("confirm", "motion", "sound", "text_scale", "high_contrast")]
+                 for key in ("confirm", "motion", "sound", "text_scale", "high_contrast", "theme")]
         items.extend((_menu("controls", "Emulator menu controls", "Keep gameplay mappings separate"),
                       _menu("appearance", "PPSSPP appearance", "Match the theme, contrast and background motion"),
                       _menu("experience", "Match PPSSPP menus", "Review controls and appearance together"),
@@ -1256,7 +1258,8 @@ class NavigationModel:
         mode = ("This sample preview cannot launch games. Sample artwork and checkpoints are demonstrations." if self.demo else
                 "Mounted-card inspection is read-only. Your original games and saves stay with spruce." if not self._capabilities.get("game_launch") else
                 "Games and advanced screens use the existing spruce and emulator controls.")
-        self._dialog = Dialog("Controls & help", f"{confirm}: choose · {back}: back\nLeft/right: categories · Up/down: games\n"
+        directions = ("Left/right: games · Up/down: categories\nL/R: categories · Q/E on desktop\n" if self.preferences.theme == "retropass" else "Left/right: categories · Up/down: games\n")
+        self._dialog = Dialog("Controls & help", f"{confirm}: choose · {back}: back\n" + directions +
             "West: search this view · North: toggle Favorite\nStart: Library tools (desktop Tab)\n"
             "Desktop Enter: choose · Escape: back · X: search · Y: Favorite\n"
             "Use Library tools to filter, sort, change pages or choose a random game.\n"
@@ -1549,6 +1552,8 @@ class NavigationModel:
                 value = not value
             elif item.id == "confirm":
                 value = "east" if value == "south" else "south"
+            elif item.id == "theme":
+                value = "psp" if value == "retropass" else "retropass"
             elif item.id == "text_scale":
                 choices = tuple(DialogChoice(f"{round(scale * 100)}%", "request", "settings.preview",
                     {"changes": {"text_scale": scale}, "expected_generation": self.generation}, "preview")
@@ -1624,7 +1629,10 @@ class NavigationModel:
             return [self._request("support.export", context="support")]
         elif item.id == "about":
             from .. import __version__
-            self._dialog = Dialog("About & credits", f"Version {__version__}\nOriginal interface for spruce.\n"
+            self._dialog = Dialog("About & credits", f"Version {__version__}\nRetroPass for TrimUI / spruce.\n"
+                                  "RetroPass — retropassdev, SirMangler, 𝔇𝔞𝔫𝔭142.\n"
+                                  "Dashboard and library port: GPL-2.0-only.\n"
+                                  "Source: github.com/retropassdev/RetroPass\n"
                                   "PyUI — Copyright (c) 2025 Christopher Jacobs.\nUsed under its non-commercial license.\n"
                                   "Optional PPSSPP changes retain separate GPL notices.\n"
                                   "Original Smart Pro hardware qualification is pending.", (DialogChoice("Done"),))
@@ -1775,7 +1783,7 @@ class NavigationModel:
         if (action in ("back", "submit_text") or
                 action == "confirm" and self._keyboard is None or
                 action in ("search", "menu") and self._dialog is None and self._keyboard is None or
-                action in ("left", "right", "up", "down") and self._dialog is None and self._keyboard is None):
+                action in ("left", "right", "up", "down", "category_previous", "category_next") and self._dialog is None and self._keyboard is None):
             self._leave_view()
         if self._keyboard:
             keyboard = self._keyboard
@@ -1824,6 +1832,12 @@ class NavigationModel:
         if action == "menu" and self.category in (0, 1):
             self._filter_dialog()
             return []
+        # Adapt presentation directions only after modal input has been handled.
+        # Native routes and their classic/project selection keep their owners.
+        if action in ("category_previous", "category_next"):
+            action = "left" if action == "category_previous" else "right"
+        elif self.preferences.theme == "retropass":
+            action = {"left": "up", "right": "down", "up": "left", "down": "right"}.get(action, action)
         if action in ("left", "right"):
             self.category = (self.category + (-1 if action == "left" else 1)) % 4
             if self.category == 3 and self._settings_view == "root":

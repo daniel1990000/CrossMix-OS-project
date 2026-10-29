@@ -28,6 +28,7 @@ MAX_FILE = 1_048_576
 MAX_GENERATION = 9_007_199_254_740_991
 DEFAULT_PREFERENCES = {
     "interface": "classic",
+    "theme": "psp",
     "motion": True,
     "sound": True,
     "text_scale": 1.0,
@@ -391,6 +392,8 @@ def _preference(key: str, value) -> None:
         valid = value in ("south", "east")
     elif key == "interface":
         valid = value in ("classic", "project")
+    elif key == "theme":
+        valid = value in ("psp", "retropass")
     else:
         raise SettingsError("UNSUPPORTED_SETTING", "Unknown shell preference")
     _require(valid, "INVALID_SETTING", f"Invalid {key} preference")
@@ -399,7 +402,8 @@ def _preference(key: str, value) -> None:
 class SettingsStore:
     """Owns only the original project's preference file, not spruce settings."""
 
-    def __init__(self, state_dir, *, fault_hook=None):
+    def __init__(self, state_dir, *, fault_hook=None, default_theme="psp"):
+        _preference("theme", default_theme)
         self.state_dir = _directory(Path(state_dir))
         self.target = self.state_dir / "preferences.json"
         self.lock = self.state_dir / "preferences.lock"
@@ -409,7 +413,7 @@ class SettingsStore:
             self._transactions().recover()
             if _read(self.target, optional=True) is None:
                 _atomic_write(self.target, _encoded({"schema": 1, "generation": 0,
-                                                    "preferences": DEFAULT_PREFERENCES}))
+                                                    "preferences": {**DEFAULT_PREFERENCES, "theme": default_theme}}))
             self._state()
 
     def _state(self) -> dict:
@@ -417,8 +421,12 @@ class SettingsStore:
         _schema(state)
         _generation(state.get("generation"))
         preferences = state.get("preferences")
-        _require(isinstance(preferences, dict) and set(preferences) == set(DEFAULT_PREFERENCES),
+        _require(isinstance(preferences, dict) and
+                 set(preferences) in (set(DEFAULT_PREFERENCES), set(DEFAULT_PREFERENCES) - {"theme"}),
                  "INVALID_CONFIG", "Unknown or missing preference keys")
+        # Older installations predate dashboard styles. Preserve their PSP
+        # appearance and generation without rewriting their settings on read.
+        preferences.setdefault("theme", "psp")
         for key, value in preferences.items():
             _preference(key, value)
         return state

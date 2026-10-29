@@ -1,0 +1,904 @@
+{
+  "authors_file": "vendor/retropass/AUTHORS.md",
+  "commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
+  "file_count": 177,
+  "files": [
+    {
+      "path": ".gitattributes",
+      "sha256": "45a7cbb7d9942ba7ffce0b20bc8dbe2d1196533bc6e4bd245871d77fb1eedfdc",
+      "size": 2518
+    },
+    {
+      "path": ".github/workflows/main.yml",
+      "sha256": "44d5c65960c7a8ce27d9da0f10af325d52de7515070f61b3bdb64c5b592bb4cd",
+      "size": 5257
+    },
+    {
+      "path": ".gitignore",
+      "sha256": "9842f442b12e86b03acd67cd83923f4ffa95fb72f546b6c13ef2269d770f57e7",
+      "size": 6002
+    },
+    {
+      "path": "AUTHORS.md",
+      "sha256": "bb8e72d9f1ae26ea450707b8c9f6071d34a28d336710d0c6f6d76340105b76fd",
+      "size": 126
+    },
+    {
+      "path": "Docs/SettingsDataSources.md",
+      "sha256": "c4182a14860bc9caea71de988848b9c5b5a7c037324da2fbc9920c304541af0b",
+      "size": 1661
+    },
+    {
+      "path": "Docs/SettingsLogging.md",
+      "sha256": "56e9d82265429b1d1aecb0c5f04783f0a98301c3b4823ee438f56ac9593fcc14",
+      "size": 496
+    },
+    {
+      "path": "Docs/SettingsPersonalization.md",
+      "sha256": "c94ea13f0edc4953e623f3041212aa21881b122424384e373986374a81a4caf7",
+      "size": 2214
+    },
+    {
+      "path": "Docs/SetupDolphin.md",
+      "sha256": "80ff17f70aa0dab5724769425a9a695922f5822431a35ae606f5a72e5344fed4",
+      "size": 628
+    },
+    {
+      "path": "Docs/SetupDuckStation.md",
+      "sha256": "b097f394b3799c8ff86cf2b0a40a33168d5382e2dcfc4eb0150fd6c1dab81eee",
+      "size": 580
+    },
+    {
+      "path": "Docs/SetupEmulationStation.md",
+      "sha256": "50341c9aee7c02ae95151b38b50d38b06bfefed1f091c0b1989eed6ab83a7334",
+      "size": 3293
+    },
+    {
+      "path": "Docs/SetupLaunchBox.md",
+      "sha256": "e7b966ba04602d0d608e7a57e0bf09488b4d24a18f98dd072769b400fde45d14",
+      "size": 1028
+    },
+    {
+      "path": "Docs/SetupLaunchBoxImport.md",
+      "sha256": "9fbdcbe8de7ad6154d50f8424668cab1f5a0e2cb17909ad6c3b34fea0b1b01db",
+      "size": 1261
+    },
+    {
+      "path": "Docs/SetupLaunchBoxSorting.md",
+      "sha256": "6e20cf092b672de33e1278ae47de8746b51d3c4801b99bc1752a0bf241e59311",
+      "size": 1266
+    },
+    {
+      "path": "Docs/SetupMultipleDataSources.md",
+      "sha256": "428dc5563f52c30ad3a6e7aca30aeb64fd4eb97709d5e4082c8072464c5bac68",
+      "size": 4879
+    },
+    {
+      "path": "Docs/SetupPPSSPP.md",
+      "sha256": "24bbec8edd3dbfeb0f682a9b02a4a1c258adb4422603996adbbf2fb64bbfc2ed",
+      "size": 554
+    },
+    {
+      "path": "Docs/SetupRetriXGold.md",
+      "sha256": "3d5b74351ec3b6b660c28025b5c4dfbbd8ac88ced0293b9d7f1805e00f5f7a4b",
+      "size": 570
+    },
+    {
+      "path": "Docs/SetupRetroArch.md",
+      "sha256": "4aec664178ce182d025f818338749f4e4404d748e7d5b207dff13f243f9f874f",
+      "size": 1048
+    },
+    {
+      "path": "Docs/SetupXBSX2.md",
+      "sha256": "521d58cd3e50e93d619cd90d107b829f802f4f60e6a6e8f0599101fb75de5790",
+      "size": 663
+    },
+    {
+      "path": "Docs/SetupXeniaCanary.md",
+      "sha256": "8d51ab72b148a1ebf3a58ae38fb686c64d4d3cb0badbd699ba3c7be3bda4026b",
+      "size": 702
+    },
+    {
+      "path": "Docs/core_per_game.png",
+      "sha256": "887d9b478330ed0602d1bc2ccfc414babdd8332b853a7c6d9cd58b2540c66a0c",
+      "size": 33424
+    },
+    {
+      "path": "Docs/layout_collection_fixed.png",
+      "sha256": "d53da3a58f623f12cb55fe0a31cf2590f9b385c33e12c4a3eb31c575897274bb",
+      "size": 131241
+    },
+    {
+      "path": "Docs/layout_collection_group.png",
+      "sha256": "0b10a2448b191b602594cae1a102e1ef66f2ef8980acce080217b99f304da544",
+      "size": 202559
+    },
+    {
+      "path": "Docs/layout_collection_original.png",
+      "sha256": "8f55e249ba4bcff855afcbac7fd277f91b918e132a515feb4c5807c1120c4c9d",
+      "size": 204012
+    },
+    {
+      "path": "Docs/layout_collection_stretch_fill.png",
+      "sha256": "f58768a29f670c5188365fd65534d85b303c8f23fb6f9d30e0d4d4c8004505bf",
+      "size": 158751
+    },
+    {
+      "path": "Docs/layout_collection_stretch_uniform.png",
+      "sha256": "f8e7bb42850e93bc7684a310ccc8d271fb85a9d70cf2347f202fa2b0c1cd52fd",
+      "size": 146759
+    },
+    {
+      "path": "Docs/layout_collection_stretch_uniform_to_fill.png",
+      "sha256": "3da28d10a8798d5da7233656e0c6febd894c13b9550aec10afb36e514b4f1d0b",
+      "size": 155640
+    },
+    {
+      "path": "Docs/layout_menu_fixed.png",
+      "sha256": "219f76a22339b8e4e654b0a757dc0f7aa0fe7900ce39008e0e958fba2fcbed0a",
+      "size": 127347
+    },
+    {
+      "path": "Docs/layout_menu_original.png",
+      "sha256": "65358ea8b198ce3915bbe6cdc88f25cb7aec8ed5b5d6cfe80b5babc21e966186",
+      "size": 210395
+    },
+    {
+      "path": "Docs/media_types.png",
+      "sha256": "377c5cf4edb6f474e15cd85c0c87da719ae6580af7d0f40b278c9b50b551d2d2",
+      "size": 33853
+    },
+    {
+      "path": "Docs/menu.gif",
+      "sha256": "5b5ea909c82bc55adadfa12fcba1d5d64ad4330f39b56495a64f9b41d29d7684",
+      "size": 5705150
+    },
+    {
+      "path": "Docs/settings_data_source_activate.png",
+      "sha256": "952e38610eea63d7f6ec3852732268be295d313172db49f0a5b85333922abeb0",
+      "size": 30293
+    },
+    {
+      "path": "Docs/settings_data_source_add.png",
+      "sha256": "d954fdd730b0aedf0a98348cb8968cb9ece28c518329b9bbebdd5487b8863914",
+      "size": 52450
+    },
+    {
+      "path": "Docs/settings_data_source_choose.png",
+      "sha256": "fe9de5612e100cc452062d38c684e9597751a0a234ea72585a45ff0279f539c8",
+      "size": 43524
+    },
+    {
+      "path": "Docs/settings_first_run.png",
+      "sha256": "e5e563c1529582101d5b3fce54bf3974cf6ce7e6cdfe60caa326b4b8850f1050",
+      "size": 43167
+    },
+    {
+      "path": "Docs/settings_log.png",
+      "sha256": "82b576c9a10079f5b16175aba555ca1e632d22003f4dca2dda30bee047e4c485",
+      "size": 112630
+    },
+    {
+      "path": "Docs/settings_personalization.png",
+      "sha256": "adf3da724728af76d5159f23a8459ac0ffb366aba0997f3a7131674ea9c32215",
+      "size": 49012
+    },
+    {
+      "path": "Docs/setup_dolphin_associated_platforms.png",
+      "sha256": "3720c057e429e6edbb01dfd11834800e3057da91818cd3630bc469299d106ee9",
+      "size": 25253
+    },
+    {
+      "path": "Docs/setup_dolphin_edit_emulator.png",
+      "sha256": "aae4ace8973a25b8826a1c4988e39791154d02285642b72363aac83674671416",
+      "size": 30734
+    },
+    {
+      "path": "Docs/setup_duckstation_associated_platforms.png",
+      "sha256": "ce7260e96baf95ba9520313a6d8124ab9b54e49793252ed9f0c3e4b70c01c6a8",
+      "size": 25353
+    },
+    {
+      "path": "Docs/setup_duckstation_edit_emulator.png",
+      "sha256": "66163125e38b2673a2774e2d3b345a971288aa10fe47038252cc47fe6b0bd6ff",
+      "size": 28810
+    },
+    {
+      "path": "Docs/setup_launchbox_import_add.png",
+      "sha256": "1402ca41669e7f3646f01c2a4098f31c7896004fe6f5d3f0b18bc14d23fe4fee",
+      "size": 21126
+    },
+    {
+      "path": "Docs/setup_launchbox_import_copy.png",
+      "sha256": "397c7d00f2607c13c3fdeaa3ddaf00bfee01c774d3e3810e78ea34f8599bb480",
+      "size": 30591
+    },
+    {
+      "path": "Docs/setup_launchbox_import_emulator.png",
+      "sha256": "3a9ad40136636ab21a2437b9a23cbc12c10035bf6ddc8b6a1e0889154aa3fe26",
+      "size": 14662
+    },
+    {
+      "path": "Docs/setup_launchbox_import_platform.png",
+      "sha256": "70d5f9ad0128096712ee93309f2a95b04e1eecba3fd2199b2e18330d20f908e8",
+      "size": 14748
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_flash_content.png",
+      "sha256": "faced5778b8c653373d5fb6c9914ce9f499981cded45de991a0b45f2f32636dc",
+      "size": 4130
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_flash_content_2.png",
+      "sha256": "19539f8d827936ead189ba890bb5f5499f9485fffa22181dc581d87a7eca5c9e",
+      "size": 46231
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_flash_content_4.png",
+      "sha256": "55108128a74d0738d8f3c424a068ab0f42e42272a75e1f2e5141b76faa1b90ba",
+      "size": 56031
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_flash_content_5.png",
+      "sha256": "62e6338da20cb977c7adefa6bf34d79508879a28d1fd5fa18e6ed87c63ef8fe2",
+      "size": 45999
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_settings_activate.png",
+      "sha256": "e91398132f29e39f9e541a035b8d47b5204dee7f6145be8c82aa35f93fc473c3",
+      "size": 36132
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_settings_activated.png",
+      "sha256": "09864b32df69cd390705c64f8ac4fe504e87e8674f495d0bb141cc00c2e82d11",
+      "size": 36810
+    },
+    {
+      "path": "Docs/setup_multiple_data_sources_settings_unavailable.png",
+      "sha256": "de6c7b1ec6d05b65f00263d0f9a1af718e62beed17cc567a0934d5adec762c85",
+      "size": 33621
+    },
+    {
+      "path": "Docs/setup_ppsspp_associated_platforms.png",
+      "sha256": "e13f2f6818e7f4a34523e16f14a6a793648d3111e597268f8b92714ef3c10eeb",
+      "size": 24088
+    },
+    {
+      "path": "Docs/setup_ppsspp_edit_emulator.png",
+      "sha256": "b7760b9aa4064c101ed0b05b22ac869aa2672f58aca9a7de6a9f22600431ad1b",
+      "size": 29053
+    },
+    {
+      "path": "Docs/setup_retrixgold_associated_platforms.png",
+      "sha256": "94773491d8e9b2d954f27c97aab1790608046cafebb3c8fa8f20f81c0777ac7f",
+      "size": 27313
+    },
+    {
+      "path": "Docs/setup_retrixgold_edit_emulator.png",
+      "sha256": "8abaf4a75add6ab39036affc7e7d12bc55aef7819dbd364af8557867ed62e0f6",
+      "size": 29708
+    },
+    {
+      "path": "Docs/setup_retroarch_associated_platforms.png",
+      "sha256": "ec29f6a45fc2eea55df6ac13c6ce5c9469a68301dd0911b7cc0ff71a4d770970",
+      "size": 41318
+    },
+    {
+      "path": "Docs/setup_retroarch_edit_emulator.png",
+      "sha256": "64f53faa52d992fd7c5db8eca71eeb5cdcb21c9ac7e16a0b8bbe025a1118ceb1",
+      "size": 26865
+    },
+    {
+      "path": "Docs/setup_retroarch_quit_hotkey.png",
+      "sha256": "7dfed36c199a9c240bb73cc53ebdf42f36dc7cd1a8747106e0da88590af3fb60",
+      "size": 64851
+    },
+    {
+      "path": "Docs/setup_sort_games.png",
+      "sha256": "ce1116f312737fcafca33409aa920d70bbb0588543b1989dd5624df731af7254",
+      "size": 33211
+    },
+    {
+      "path": "Docs/setup_sort_platform.png",
+      "sha256": "9e4bad6156e01b8947eb94a16bf67d134268048d3b495a3e7b5fe4a0b7a34ab3",
+      "size": 40486
+    },
+    {
+      "path": "Docs/setup_sort_playlist.png",
+      "sha256": "e317a55a85d5e8f1eb47e245154cd3bc7571d48e0a25c698fbf4eae86c2cae4b",
+      "size": 20469
+    },
+    {
+      "path": "Docs/setup_xbsx2_associated_platforms.png",
+      "sha256": "a4a8b68c796a61d64fde5b7113a460f2d6c0ae72203944e7d3d714a41db549e1",
+      "size": 24846
+    },
+    {
+      "path": "Docs/setup_xbsx2_edit_emulator.png",
+      "sha256": "ca590ef7ffbc69784a1865bf3ee240fd8a41bfcf8287d57c0936eb86900b35e4",
+      "size": 28691
+    },
+    {
+      "path": "Docs/setup_xeniacanary_associated_platforms.png",
+      "sha256": "554f4195387a0d4c5727ff78b0d92e6be01229946c2470a04f0bf84e971ea9ed",
+      "size": 24880
+    },
+    {
+      "path": "Docs/setup_xeniacanary_edit_emulator.png",
+      "sha256": "8a09f3e4e625d94138bfea76f07d19db844a8629962b7774582484f0166d9e43",
+      "size": 30714
+    },
+    {
+      "path": "Docs/v1.5/RetroPass.xml",
+      "sha256": "31a7f0da1766ab80185819f2792636808c2042834dbbbad5389373688f60f4c9",
+      "size": 214
+    },
+    {
+      "path": "Docs/v1.6/RetroPass.xml",
+      "sha256": "e13c5b1b27247abca5c0db6b7225f6936c43550a3c8ae972893efbae6d8f7e48",
+      "size": 246
+    },
+    {
+      "path": "LICENSE.txt",
+      "sha256": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+      "size": 18092
+    },
+    {
+      "path": "README.md",
+      "sha256": "bb10d5a17b29b72c42a39c9afced9f52b2241371b1381aec48d61f884daba132",
+      "size": 5512
+    },
+    {
+      "path": "RetroPass.sln",
+      "sha256": "232d8c179f82589bf96f40e2f7a54f69c41b3a1c39c4e14160bb65a6f6f859b2",
+      "size": 2721
+    },
+    {
+      "path": "RetroPass/App.xaml",
+      "sha256": "f68c4ec3b1081e7c48b8a3a1ec1315b0dd51145e0e2536c59694aa5a290fdac4",
+      "size": 664
+    },
+    {
+      "path": "RetroPass/App.xaml.cs",
+      "sha256": "16c503f16f73ee043534a5933104458af94557cb5f7d80e6de129b825df61088",
+      "size": 7277
+    },
+    {
+      "path": "RetroPass/Assets/LargeTile.scale-100.png",
+      "sha256": "49d72d1cdc0ac96f9824affa8bb4be8775bdd3d5d7808251f28219e536df4021",
+      "size": 14669
+    },
+    {
+      "path": "RetroPass/Assets/LargeTile.scale-125.png",
+      "sha256": "bfc4e840da953ea1b03abf9429ff7f0e275cfb0d51943711631eb75f34440218",
+      "size": 20935
+    },
+    {
+      "path": "RetroPass/Assets/LargeTile.scale-150.png",
+      "sha256": "44148c9e3cb064a7ab2be8a5591f9792bb0ced74caeaf319fbc19d63a161fd65",
+      "size": 26481
+    },
+    {
+      "path": "RetroPass/Assets/LargeTile.scale-200.png",
+      "sha256": "b444e813ba2e684ee748b7fb19ce5747d9348a9ddc206b6ebebcce38fa1004c9",
+      "size": 44799
+    },
+    {
+      "path": "RetroPass/Assets/LargeTile.scale-400.png",
+      "sha256": "ff21aac5edcdcc1c9227ca67512fb72703f3c497ff492db43c7e3572e4153b4b",
+      "size": 154483
+    },
+    {
+      "path": "RetroPass/Assets/LockScreenLogo.scale-200.png",
+      "sha256": "a41a053b3fc3b0c109720ccd437a19725ae9163ea75990222a12b596b9c7ca76",
+      "size": 1430
+    },
+    {
+      "path": "RetroPass/Assets/SmallTile.scale-100.png",
+      "sha256": "a546a318f71650e81d1df3f1bf676f89e66449199fb9cda66c3da37f48554a54",
+      "size": 3233
+    },
+    {
+      "path": "RetroPass/Assets/SmallTile.scale-125.png",
+      "sha256": "5338c5f00d6a73cbe35c69215dadc8470795f2bee1ad19ebf8de2cc17d225db9",
+      "size": 3945
+    },
+    {
+      "path": "RetroPass/Assets/SmallTile.scale-150.png",
+      "sha256": "4ff07a4a03c6ef107e79f8e53d6667111bf22169c07fd253b7317c39042bed17",
+      "size": 4618
+    },
+    {
+      "path": "RetroPass/Assets/SmallTile.scale-200.png",
+      "sha256": "de11459851a3531b4f0efade55a989dfeb485f58f406dd9fe5778f111415cfe8",
+      "size": 6030
+    },
+    {
+      "path": "RetroPass/Assets/SmallTile.scale-400.png",
+      "sha256": "6ccce5438b6a8ab98102aba815738e25a2a06fa60cd3f47dd2238b4f47ef800b",
+      "size": 12963
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreen.scale-100.png",
+      "sha256": "9928f615ba2cc9950524f7c7f6ff36d6d62662c9061e2f2a0c7cee827d049724",
+      "size": 130
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreen.scale-125.png",
+      "sha256": "51693caa0a6d7d93cd37b6d4ed8a25a1ccb66d87a8266f5c894a67d632b88e23",
+      "size": 143
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreen.scale-150.png",
+      "sha256": "5eb52dac91838b3f8f84dba987169a0c219ec358643743df5f853594415289ce",
+      "size": 159
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreen.scale-200.png",
+      "sha256": "1b73b7bb10d5f04fe172aa81b64903d56602eda9ecd0717bb763a0e08ca6db7d",
+      "size": 211
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreen.scale-400.png",
+      "sha256": "250823cfcad283b33b39d5e57560fc894ec9e49a276a76b14ff7ac358fe2ab64",
+      "size": 544
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreenDefault-100.png",
+      "sha256": "9928f615ba2cc9950524f7c7f6ff36d6d62662c9061e2f2a0c7cee827d049724",
+      "size": 130
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreenDefault-125.png",
+      "sha256": "51693caa0a6d7d93cd37b6d4ed8a25a1ccb66d87a8266f5c894a67d632b88e23",
+      "size": 143
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreenDefault-150.png",
+      "sha256": "5eb52dac91838b3f8f84dba987169a0c219ec358643743df5f853594415289ce",
+      "size": 159
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreenDefault-200.png",
+      "sha256": "1b73b7bb10d5f04fe172aa81b64903d56602eda9ecd0717bb763a0e08ca6db7d",
+      "size": 211
+    },
+    {
+      "path": "RetroPass/Assets/SplashScreenDefault-400.png",
+      "sha256": "250823cfcad283b33b39d5e57560fc894ec9e49a276a76b14ff7ac358fe2ab64",
+      "size": 544
+    },
+    {
+      "path": "RetroPass/Assets/Square150x150Logo.scale-100.png",
+      "sha256": "28705cd1585ea1b00500b2495fd9d2868cc086c1fdddbc8029d5db702daf8d60",
+      "size": 6302
+    },
+    {
+      "path": "RetroPass/Assets/Square150x150Logo.scale-125.png",
+      "sha256": "3881430aae8bd34552cf94d23b27f996154ac602d44f44fa644df6bfdc8d2423",
+      "size": 7746
+    },
+    {
+      "path": "RetroPass/Assets/Square150x150Logo.scale-150.png",
+      "sha256": "adf52333a6b52360115c60ee36fe506687f441fd1d4a1891e87fa74bb5c946bf",
+      "size": 9508
+    },
+    {
+      "path": "RetroPass/Assets/Square150x150Logo.scale-200.png",
+      "sha256": "2c3935fcc03f2f5a092595fbf68b9e5b25091347af83309822f66cc32a07d998",
+      "size": 13852
+    },
+    {
+      "path": "RetroPass/Assets/Square150x150Logo.scale-400.png",
+      "sha256": "4190082e4a5f35e8adc481501a181035799782247ae2c24cebea179bfeb8eed8",
+      "size": 41178
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-16.png",
+      "sha256": "0f30b893da1f7902e9a9efe928e8119600028769c483fcd10ddba736b1896d82",
+      "size": 693
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-24.png",
+      "sha256": "7214cabf98f5820675d984cec94d8e687083a1a03c1f81fd84c44f5caf38091d",
+      "size": 1315
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png",
+      "sha256": "cc124922356ef03eec7f557838c56725b086b356cb82da9869dfdb49c1392edd",
+      "size": 41552
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-32.png",
+      "sha256": "d1bd7b1cc861d28266dcbb8560d66a366e05f3639687a569450d4ad12deebdfe",
+      "size": 2138
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-48.png",
+      "sha256": "2a6587e4eed51c3d2d69a07830cf4a32d6dfb8fddb1b6e5a11cb26a78d29dd6d",
+      "size": 3941
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-16.png",
+      "sha256": "0f30b893da1f7902e9a9efe928e8119600028769c483fcd10ddba736b1896d82",
+      "size": 693
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-256.png",
+      "sha256": "cc124922356ef03eec7f557838c56725b086b356cb82da9869dfdb49c1392edd",
+      "size": 41552
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-32.png",
+      "sha256": "d1bd7b1cc861d28266dcbb8560d66a366e05f3639687a569450d4ad12deebdfe",
+      "size": 2138
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-48.png",
+      "sha256": "2a6587e4eed51c3d2d69a07830cf4a32d6dfb8fddb1b6e5a11cb26a78d29dd6d",
+      "size": 3941
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.scale-100.png",
+      "sha256": "88ee398287b4fda8eb53bf5431edadbf52668ebd29d423a8be29a0aaf9fe738e",
+      "size": 3435
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.scale-125.png",
+      "sha256": "f3e9adb53fa8115a3425a133739e695cf13b81d5999bef406dc5ca751572c724",
+      "size": 4880
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.scale-150.png",
+      "sha256": "935f0c2bbdb4b6a609c3ace15e58d034c3f13f1590d87b0a3840c69e4877e97f",
+      "size": 6419
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.scale-200.png",
+      "sha256": "31cc2abe09be595a1b930c330b17d3e767fce7a187f6a2086322867839a0977c",
+      "size": 9749
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.scale-400.png",
+      "sha256": "abb03dc941771ccce2e227a42d35bef79965ae93694c57020b12624f0ae0df45",
+      "size": 25301
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-16.png",
+      "sha256": "0f30b893da1f7902e9a9efe928e8119600028769c483fcd10ddba736b1896d82",
+      "size": 693
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-24.png",
+      "sha256": "7214cabf98f5820675d984cec94d8e687083a1a03c1f81fd84c44f5caf38091d",
+      "size": 1315
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-24_altform-unplated.png",
+      "sha256": "7214cabf98f5820675d984cec94d8e687083a1a03c1f81fd84c44f5caf38091d",
+      "size": 1315
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-256.png",
+      "sha256": "cc124922356ef03eec7f557838c56725b086b356cb82da9869dfdb49c1392edd",
+      "size": 41552
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-32.png",
+      "sha256": "d1bd7b1cc861d28266dcbb8560d66a366e05f3639687a569450d4ad12deebdfe",
+      "size": 2138
+    },
+    {
+      "path": "RetroPass/Assets/Square44x44Logo.targetsize-48.png",
+      "sha256": "2a6587e4eed51c3d2d69a07830cf4a32d6dfb8fddb1b6e5a11cb26a78d29dd6d",
+      "size": 3941
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.backup.png",
+      "sha256": "ae95e99a96251abaf8de15c9cdaddb8cefb1b8b320b10a4f1f4e1dc3c25c1b1a",
+      "size": 1451
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.scale-100.png",
+      "sha256": "9e3830088efb16c0f0e337383ceb5638a6b815ad37fbe8d8d04259bb235fdc5f",
+      "size": 2452
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.scale-125.png",
+      "sha256": "7b8e66cbf7e64e701c2fbed1ecdeff95e2c8a0808f959a364e05e1a7411b0135",
+      "size": 2960
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.scale-150.png",
+      "sha256": "0b39082d6977cf081a1132bff128de09b9395ff8509fb4fe6c46402927a6af86",
+      "size": 3503
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.scale-200.png",
+      "sha256": "a4cb0dbb92784585cc94cf6f6ca50599f293d37ce90aae9a8f2f6d5536aaaa80",
+      "size": 4413
+    },
+    {
+      "path": "RetroPass/Assets/StoreLogo.scale-400.png",
+      "sha256": "5285d5b2975b48911dffdafc24e2522ae67982a0018d534623a57d9f64d1e080",
+      "size": 8384
+    },
+    {
+      "path": "RetroPass/Assets/Wide310x150Logo.scale-100.png",
+      "sha256": "fcbdfad8bc69e77180ac205cc3b29f4de42e7c4236087d52e1b6b47ece5e2a6a",
+      "size": 6860
+    },
+    {
+      "path": "RetroPass/Assets/Wide310x150Logo.scale-125.png",
+      "sha256": "7ac3cab1535aed41f75a34302310a80114afa714f681d9e5b66d953f79d93165",
+      "size": 8682
+    },
+    {
+      "path": "RetroPass/Assets/Wide310x150Logo.scale-150.png",
+      "sha256": "d58a4aebf0154afdbb180c9c06d88baf0a49f4bef86b8e19b5ef5e97e206a491",
+      "size": 10331
+    },
+    {
+      "path": "RetroPass/Assets/Wide310x150Logo.scale-200.png",
+      "sha256": "aa20476f27687ff3b68edd0eaeb97eceaa66335d84d97c829cbe6463e0b32268",
+      "size": 14786
+    },
+    {
+      "path": "RetroPass/Assets/Wide310x150Logo.scale-400.png",
+      "sha256": "20addb540d7809b28d2e7fe8cac4a8429f13722992a1c352f87cb00fd6ed0fef",
+      "size": 41451
+    },
+    {
+      "path": "RetroPass/Assets/empty.png",
+      "sha256": "f65fa09e1267365430524efe0c4f44d51730dc72231ccb4d4ff2939e4daff319",
+      "size": 62495
+    },
+    {
+      "path": "RetroPass/DataSource.cs",
+      "sha256": "1b688ce81893534d6651c622816aa891511c8b760abcc561418f9b22f05cf8ff",
+      "size": 3465
+    },
+    {
+      "path": "RetroPass/DataSourceEmulationStation.cs",
+      "sha256": "820c6b1e854f1177a22b7e33383a03a20bf9b0e1bf447d71f8bb5870c2a9e2e4",
+      "size": 10771
+    },
+    {
+      "path": "RetroPass/DataSourceLaunchBox.cs",
+      "sha256": "f7177d6d5d75c69d2c954b4fe235c94f69da98b14a4a13752566c59a1ecb456c",
+      "size": 20193
+    },
+    {
+      "path": "RetroPass/DataSourceManager.cs",
+      "sha256": "8b40843a326b15e713a9ba223faa1c2776b1be90f6e74f3227863394b26c5b90",
+      "size": 16632
+    },
+    {
+      "path": "RetroPass/FocusControl.xaml",
+      "sha256": "d2612230a1ae481b308b626387a1d493dd7cfbf87304b133886b7cbed414d964",
+      "size": 3677
+    },
+    {
+      "path": "RetroPass/FocusControl.xaml.cs",
+      "sha256": "813cab099886026ce15437b478de8c9df6713edc6775d0e867508d8487bbde73",
+      "size": 5804
+    },
+    {
+      "path": "RetroPass/Game.cs",
+      "sha256": "3d69d5998a51ec1368636c9fd12c808ae3514f166bd313db8b1bfb0cb7df0501",
+      "size": 9446
+    },
+    {
+      "path": "RetroPass/GameCollectionPage.xaml",
+      "sha256": "eb80f3f5f0d92901e667282756087d536467fb4064718b15d1df137635a81c04",
+      "size": 9302
+    },
+    {
+      "path": "RetroPass/GameCollectionPage.xaml.cs",
+      "sha256": "6308e8dd7f0b1c13bbe452af454df58f4da890d7b4cb992ce650e7fe20fcb8d3",
+      "size": 14828
+    },
+    {
+      "path": "RetroPass/GameDetailsPage.xaml",
+      "sha256": "587103dedd3490a0c7ea95dd13020f128cc142e8a798a4d73e8e17d6a0c5af1a",
+      "size": 10952
+    },
+    {
+      "path": "RetroPass/GameDetailsPage.xaml.cs",
+      "sha256": "ae0b5e6ccb028d0d371ba66c6247385d73d30a7b0561199cb56ea2f5324229ff",
+      "size": 15422
+    },
+    {
+      "path": "RetroPass/LogPage.xaml",
+      "sha256": "4db51c13fe41bf7afa3ee384fa3b308f2bb52691d4a40797fc50e017ef1b5d63",
+      "size": 2210
+    },
+    {
+      "path": "RetroPass/LogPage.xaml.cs",
+      "sha256": "b4abf55e77911d239ce5c84ef88b089e6fe6a4c6fbfdb3fe895676b68188cf37",
+      "size": 3768
+    },
+    {
+      "path": "RetroPass/MainPage.xaml",
+      "sha256": "84a5fe75a02e16177b02cc55ed70aeed0e2bad778a35a252eb551ffee4ddaca7",
+      "size": 14482
+    },
+    {
+      "path": "RetroPass/MainPage.xaml.cs",
+      "sha256": "01b84b6314c374901fa3d17bbff26c5e21617994631787319519f630fbcbae5d",
+      "size": 16256
+    },
+    {
+      "path": "RetroPass/Package.appxmanifest",
+      "sha256": "2e79841af45b041f2378c86e554d7f10f52044be53955115b738c10a0af5614c",
+      "size": 2325
+    },
+    {
+      "path": "RetroPass/Platform.cs",
+      "sha256": "a5833dac1bcafc814da56a4bfedddabc0cf5b52a0beb7541d6b995f2fa88592f",
+      "size": 4238
+    },
+    {
+      "path": "RetroPass/PlayLaterControl.xaml",
+      "sha256": "f2999194d039d334a45bb4c1c7f5fce23ae2594219ef90465026785f0bf1dc10",
+      "size": 1721
+    },
+    {
+      "path": "RetroPass/PlayLaterControl.xaml.cs",
+      "sha256": "871c13f542d3872c39ef77947e4607ddb69470b06c8926f96861a49a3f62ba72",
+      "size": 800
+    },
+    {
+      "path": "RetroPass/Playlist.cs",
+      "sha256": "cde5e7a865ae03df25034697af03ff9db2d0dc1b5b1c1ede6a74a65eaec81f9b",
+      "size": 2801
+    },
+    {
+      "path": "RetroPass/PlaylistItem.cs",
+      "sha256": "c0c992d6c1dc3e91d8e0660bc2ac1a25a7d4c4a23fe36b3bdb9d4b080b37d4c0",
+      "size": 121
+    },
+    {
+      "path": "RetroPass/PlaylistPlayLater.cs",
+      "sha256": "adc546f46e3220952c1c3fcd2462321dce5857576dce5665d284db090474cd4b",
+      "size": 8057
+    },
+    {
+      "path": "RetroPass/Properties/AssemblyInfo.cs",
+      "sha256": "61749add0b806ac9cea793c3d02244ca75633cdcbfe59dcc656c86ecdb3f2a23",
+      "size": 999
+    },
+    {
+      "path": "RetroPass/Properties/Default.rd.xml",
+      "sha256": "55f3a7334f63f736f217e76629065b10fc987c6112f0948557b84f67f8b1581e",
+      "size": 1243
+    },
+    {
+      "path": "RetroPass/Resources/SearchBackgroundDark_128.png",
+      "sha256": "2153c88594c883cfc02a01924754ac6b4bc50626e08d098b031727b511bf50c0",
+      "size": 3782
+    },
+    {
+      "path": "RetroPass/Resources/SearchBackgroundLight_128.png",
+      "sha256": "e43bec20439bf72d33808728dabd2ff60a30fdb8760131bc3dbaf4070bae69c5",
+      "size": 3771
+    },
+    {
+      "path": "RetroPass/Resources/Themes/ThemeDefault/CommonDefault.xaml",
+      "sha256": "e4188ddf772ea71c7f02a00f6d5a855de3f17f3ade5680c0e3fbc344ad544af6",
+      "size": 125020
+    },
+    {
+      "path": "RetroPass/Resources/Themes/ThemeDefault/CommonDefault.xaml.cs",
+      "sha256": "2354ddc4d5fbeb44b967a071ebd417ec23af508d375cc4f02712e48721114cf1",
+      "size": 797
+    },
+    {
+      "path": "RetroPass/RetroPass.csproj",
+      "sha256": "b7b93ffc0faf82f5ad11c271d9f41d4efaa1319f08a7118819d43d3c3a431fb8",
+      "size": 16117
+    },
+    {
+      "path": "RetroPass/SearchPage.xaml",
+      "sha256": "efb71939aa9f74ef00895335a1ef5289ee3d7da5a57d41fa5c13b9765920cf9a",
+      "size": 9994
+    },
+    {
+      "path": "RetroPass/SearchPage.xaml.cs",
+      "sha256": "4e8671acfb04c726170c12f21cb8d1150a7e3b57f0b58de8af4bdeb9d15c5292",
+      "size": 12163
+    },
+    {
+      "path": "RetroPass/SettingsPage.xaml.cs",
+      "sha256": "8ee22646ff03a4bef53ae361d3a3be60a35d4e30857a531a0f88e692a1d8bfd9",
+      "size": 5912
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsAddDataSourcePage.xaml",
+      "sha256": "7488f1d9a658a70f8311f7a2a439c72f7725520a4f47d1651ecd1d49c052faee",
+      "size": 6111
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsAddDataSourcePage.xaml.cs",
+      "sha256": "247444f16f76728afd795dfc011204fbfe9208cfb9ff22b5598884a793ab80b9",
+      "size": 3401
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsDataSourcePage.xaml",
+      "sha256": "3daca6ca9d6ad1f2bc16f930fe3a78bbe1494905f1703d32b6801264a672c0dc",
+      "size": 3936
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsDataSourcePage.xaml.cs",
+      "sha256": "4caa9ab1bea7021c882075aabb3326c19c02bac4700f5dd5adba7169ead3f3db",
+      "size": 4244
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsLogPage.xaml",
+      "sha256": "5a1bc299500992d9a369fd3e41ca463536cbfcbaf83390dcf4b11e99c80bcd95",
+      "size": 1179
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsLogPage.xaml.cs",
+      "sha256": "3ae0aa6e2a4c6ba4db87b8db6afefb68442aabd267e600f79990c1e7ce08ff44",
+      "size": 1000
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsPage.xaml",
+      "sha256": "5bbf5ce727e39274765eb64b3f2c283d013dd7c35b74d7b3d910267b5bb14bed",
+      "size": 3808
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsPage.xaml.cs",
+      "sha256": "234cd066762e6b9ff9d065258c3c6eb9545a9cfb1fabf67f728dd9c752dbaeb9",
+      "size": 2258
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsPersonalizationPage.xaml",
+      "sha256": "126deb5cee1c4dc8ea5f96a732b84bee4fc5294c8559642032748390504ec8e3",
+      "size": 6546
+    },
+    {
+      "path": "RetroPass/SettingsPages/SettingsPersonalizationPage.xaml.cs",
+      "sha256": "205bf7df339a7d6b3a91fb9a513d18224d66d3c780c1f1591f31fbab2ae4819f",
+      "size": 5111
+    },
+    {
+      "path": "RetroPass/StorageUtils.cs",
+      "sha256": "38a66c784b2c8d5910501ea5149ac4313f55794f7fdf2399c68729ca7dcbcbb1",
+      "size": 1714
+    },
+    {
+      "path": "RetroPass/ThemeManager.cs",
+      "sha256": "b4d4b40fe179e3ed61e2a458ae7665e7473024e151e75d4e4baf3802dbecdfc9",
+      "size": 1517
+    },
+    {
+      "path": "RetroPass/ThumbnailCache.cs",
+      "sha256": "b697d3f301ac790ee0fb593a94a5f84ec4b6c0b86e36cebe4de29be5a58d42c2",
+      "size": 7126
+    },
+    {
+      "path": "RetroPass/UrlSchemeGenerator.cs",
+      "sha256": "346d576d49e539d919419a1e9855a9b48d6734157b8b35ccbd6dd262d0fede9c",
+      "size": 7495
+    },
+    {
+      "path": "RetroPass/Utils.cs",
+      "sha256": "f6707b0ca51205c2a2538a97e573ef4bfdcccc5a7d7fa035cd2fd4130ab918df",
+      "size": 1019
+    }
+  ],
+  "inventory_sha256": "6b6940d09c4f1589d84c2a8d9079fd0c40c3a048b241026686218f8bf68173ae",
+  "license": "GPL-2.0-only",
+  "license_file": "vendor/retropass/LICENSE.txt",
+  "permission_record": {
+    "additional_approval_required": false,
+    "author_correspondence_independently_inspected": false,
+    "source": "Owner instruction in this conversation",
+    "statement": "Owner reports author gave full permission to use and import RetroPass into this OS."
+  },
+  "repository": "https://github.com/retropassdev/RetroPass",
+  "schema": 1,
+  "upstream_tree": "38d1c74119bb941a062285c63d93f721ab6ea38e"
+}

@@ -444,6 +444,8 @@ def assemble_private_candidate(source_root, output, *, source_review=None, bridg
             for module in modules:
                 overlay.relative_path(module)
                 require(module.startswith("app/bridge/") or module.startswith("app/psp_shell/") or
+                        module in {"app/retropass/__init__.py", "app/retropass/layout.py",
+                                   "app/retropass/library.py", "app/retropass/renderer.py"} or
                         module in SIGNED_TOOL_MODULES,
                         "bridge module requirement is outside the signed original app scope")
                 require((staging / "tree" / PAYLOAD_ROOT / module).is_file(),

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Prepare only this project's original host-preview files for signed packaging."""
+"""Prepare host-preview files with explicit original and RetroPass source scopes."""
 import argparse
 import hashlib
 import json
@@ -10,7 +10,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).absolute().parents[1] / "packaging"))
 from overlay import ensure_no_links, OverlayError, SPRUCE_COMMIT, PYUI_TREE, relative_path
-from release_descriptor import original_source_scope, original_source_file, PAYLOAD_TOOLS
+from release_descriptor import original_source_scope, original_source_file, PAYLOAD_TOOLS, validate_retropass_vendor
 
 
 def build_payload(project, output, source_lock=None, *, source_inventory=None):
@@ -24,6 +24,7 @@ def build_payload(project, output, source_lock=None, *, source_inventory=None):
         raise OverlayError("original psp_shell source entrypoint missing")
     sources = []
     for folder, destination, extensions in (("psp_shell", "app/psp_shell", {".py"}),
+                                            ("retropass", "app/retropass", {".py", ".txt", ".json"}),
                                             ("bridge", "app/bridge", {".py"}),
                                             ("profiles", "app/profiles", {".json"}),
                                             ("ppsspp/theme", "app/ppsspp/theme", {".ini", ".json", ".md", ".svg", ""}),
@@ -51,6 +52,15 @@ def build_payload(project, output, source_lock=None, *, source_inventory=None):
         if path.is_symlink() or not path.is_file():
             raise OverlayError("existing recovery verifier source missing")
         sources.append((path, "app/tools/" + name))
+    has_retropass = (project / "retropass/source-lock.json").is_file()
+    if has_retropass:
+        validate_retropass_vendor(project)
+        for path in sorted((project / "vendor/retropass").rglob("*")):
+            if path.is_symlink():
+                raise OverlayError("RetroPass source symlinks are excluded")
+            if path.is_file():
+                sources.append((path, "notices/RetroPass-source/" +
+                                path.relative_to(project / "vendor/retropass").as_posix()))
     output.mkdir(parents=True)
     try:
         consumed, copies = {}, []
@@ -80,8 +90,8 @@ def build_payload(project, output, source_lock=None, *, source_inventory=None):
         metadata.mkdir(exist_ok=True)
         notices.mkdir(exist_ok=True)
         lock = {"schema": 1, "base_commit": SPRUCE_COMMIT, "pyui_git_tree": PYUI_TREE,
-                "kind": "original-host-preview", "hardware_qualified": False,
-                "upstream_source_bundled": False, "firmware_emulators_roms_bundled": False}
+                "kind": "retropass-host-preview" if has_retropass else "original-host-preview", "hardware_qualified": False,
+                "upstream_source_bundled": has_retropass, "firmware_emulators_roms_bundled": False}
         if source_lock:
             lock_path = Path(source_lock)
             provenance = json.loads(captured_bytes(lock_path) if source_inventory is not None else lock_path.read_bytes())
@@ -97,8 +107,17 @@ def build_payload(project, output, source_lock=None, *, source_inventory=None):
         if not font_notice.is_file():
             raise OverlayError("font license notice missing")
         copy_source(font_notice, notices / "NotoSans-OFL.txt")
+        if has_retropass:
+            copy_source(project / "retropass/NOTICE.txt", notices / "RetroPass-NOTICE.txt")
+            copy_source(project / "vendor/retropass/LICENSE.txt", notices / "RetroPass-GPL-2.0.txt")
+            lock["retropass"] = json.loads(captured_bytes(project / "retropass/source-lock.json"))
+            lock["licence_scopes"] = {"retropass": "GPL-2.0-only", "original_helpers": "MIT", "NotoSans": "OFL-1.1"}
+            (metadata / "source-provenance.json").write_text(json.dumps(lock, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         (notices / "DEPENDENCIES.txt").write_text(
-            "This package contains original project Python code and original assets, plus the licensed Noto Sans font.\n"
+            ("This package contains original project helpers, Noto Sans, and GPL-2.0-only RetroPass adaptations.\n"
+             "Complete pinned RetroPass source is retained in notices/RetroPass-source; translated runtime source is in app/retropass.\n"
+             "The project MIT notice does not relicense the RetroPass source or adaptations.\n" if has_retropass else
+             "This package contains original project Python code and original assets, plus the licensed Noto Sans font.\n") +
             "It does not contain spruceOS/PyUI source, SDL, Python, PySDL2, Pillow, firmware, emulators, ROMs, saves or signing keys.\n"
             "The desktop preview requires installed Python >=3.9, PySDL2 0.9.17, Pillow 11.1.0 and system SDL2.\n"
             "Reusing a device's spruce/PyUI runtime requires the separate source-use/runtime/hardware gates.\n"

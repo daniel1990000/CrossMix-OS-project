@@ -243,8 +243,9 @@ def validate_manifest(manifest):
     require(isinstance(manifest, dict), "manifest must be an object")
     require(manifest.get("schema") == SCHEMA, "unsupported package schema")
     identifier(manifest.get("release_id"), "release id")
-    require(manifest.get("kind") == "python-extension", "only original Python extensions are accepted")
-    require(manifest.get("license") == "MIT-project-code-only", "explicit project license scope required")
+    require(manifest.get("kind") == "python-extension", "only scoped Python extensions are accepted")
+    require(manifest.get("license") in {"MIT-project-code-only", "GPL-2.0-only AND MIT AND OFL-1.1"},
+            "explicit supported project licence scope required")
     require(isinstance(manifest.get("key_id"), str) and SHA256.fullmatch(manifest["key_id"]), "invalid key id")
     for key in ("security_epoch", "data_schema_epoch", "source_date_epoch"):
         require(type(manifest.get(key)) is int and 0 <= manifest[key] <= 2**53, "invalid " + key)
@@ -264,6 +265,14 @@ def validate_manifest(manifest):
         seen.add(path)
         seen_case.add(path.casefold())
         total += item["size"]
+    retropass = any(path.startswith(("app/retropass/", "notices/RetroPass-source/")) for path in seen)
+    require(manifest.get("license") == ("GPL-2.0-only AND MIT AND OFL-1.1" if retropass else "MIT-project-code-only"),
+            "manifest licence scope differs from payload")
+    if retropass:
+        require({"notices/RetroPass-GPL-2.0.txt", "notices/RetroPass-NOTICE.txt",
+                 "app/retropass/source-lock.json", "notices/RetroPass-source/LICENSE.txt",
+                 "notices/RetroPass-source/AUTHORS.md"}.issubset(seen),
+                "RetroPass corresponding source and licence notices missing")
     require(total <= MAX_TOTAL, "package expands beyond size limit")
     for path in seen:
         require(not any(str(parent) in seen_case for parent in PurePosixPath(path.casefold()).parents
@@ -551,7 +560,7 @@ def create_archive(source, output, secret_path, public_path, profile, release_id
     require(not any((parent / ".git").exists() for parent in secret_file.parents), "private key must stay outside repositories")
     public, secret = load_key(public_path, 32), load_key(secret_path, 64)
     records = []
-    for path in sorted(source.rglob("*")):
+    for path in sorted(source.rglob("*"), key=lambda candidate: candidate.relative_to(source).as_posix()):
         info = path.lstat()
         require(stat.S_ISDIR(info.st_mode) or stat.S_ISREG(info.st_mode), "payload links/special files forbidden")
         if stat.S_ISDIR(info.st_mode):
@@ -563,7 +572,10 @@ def create_archive(source, output, secret_path, public_path, profile, release_id
     manifest = validate_manifest({"schema": 1, "release_id": release_id, "kind": kind,
                                   "source_date_epoch": source_date_epoch, "security_epoch": security_epoch,
                                   "data_schema_epoch": data_schema_epoch, "key_id": digest(public),
-                                  "license": "MIT-project-code-only", "profile": validate_profile(profile),
+                                  "license": ("GPL-2.0-only AND MIT AND OFL-1.1" if any(
+                                      row["path"].startswith(("app/retropass/", "notices/RetroPass-source/"))
+                                      for row in records) else "MIT-project-code-only"),
+                                  "profile": validate_profile(profile),
                                   "files": records})
     raw = canonical(manifest) + b"\n"
     signature = Sodium().sign(raw, secret)

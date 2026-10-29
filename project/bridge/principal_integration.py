@@ -58,9 +58,13 @@ SOURCE_BLOBS = {**LIFECYCLE_BLOBS,
     'spruce/scripts/bin/spruce_bluetooth': 'bae56f4f8b1330bf2b6edc71df0904b4b9b0740a',
     'spruce/scripts/bin/spruce_wifi': '2b388ad9e29a05486ec15d836620e255e8a1cbf5',
 }
-# Every original Python module in the fixed payload participates in the
+# Every Python runtime module in the fixed payload participates in the
 # independent device expected-hash inventory, including transitive imports.
 REQUIRED_PROJECT_MODULES = [
+    'app/retropass/__init__.py',
+    'app/retropass/layout.py',
+    'app/retropass/library.py',
+    'app/retropass/renderer.py',
     'app/bridge/__init__.py',
     'app/bridge/bootstrap.py',
     'app/bridge/experimental.py',

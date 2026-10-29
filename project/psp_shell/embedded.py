@@ -135,6 +135,8 @@ def logical_action(value: Any, preferences: Any, device: Any, *, text_mode: bool
                   "LEFT_STICK_LEFT": "left", "LEFT_STICK_RIGHT": "right", "LEFT_STICK_UP": "up", "LEFT_STICK_DOWN": "down"}
     if name in directions:
         return directions[name]
+    if not text_mode and name in {"L1", "R1"}:
+        return "category_previous" if name == "L1" else "category_next"
     if name in {"A", "B"}:
         confirm = "B" if getattr(preferences, "confirm", "south") == "south" else "A"
         return "confirm" if name == confirm else "back"
@@ -316,7 +318,8 @@ class EmbeddedRunner:
             from bridge.experimental_runtime import ReadOnlyViewSettings
             self.settings = ReadOnlyViewSettings(self.context.preferences)
         else:
-            self.settings = (deps.settings_factory or SettingsStore)(str(self.context.state_dir))
+            self.settings = (deps.settings_factory(str(self.context.state_dir)) if deps.settings_factory else
+                             SettingsStore(str(self.context.state_dir), default_theme="retropass"))
             self.settings.recover()
         self.model = (deps.model_factory or NavigationModel)(demo=False, restored_state=_restore_navigation(self.context.state_dir))
         self.coordinator = LaunchCoordinator(self.registry, LaunchHooks(self._snapshot,

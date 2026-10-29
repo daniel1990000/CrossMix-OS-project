@@ -90,6 +90,7 @@ class Renderer:
         self._item_glide = StepGlide()
         self._category_target = 0.0
         self._closed = False
+        self._retropass = None
         self._audio_device = 0
         self._click_buffer = None
         self._last_target = None
@@ -366,7 +367,16 @@ class Renderer:
         points = (sdl2.SDL_Point * len(coordinates))(*(sdl2.SDL_Point(round(x), round(y)) for x, y in coordinates))
         sdl2.SDL_RenderDrawLines(self.renderer, points, len(points))
 
+    def _retropass_view(self):
+        if self._retropass is None:
+            from retropass.renderer import RetroPassView
+            self._retropass = RetroPassView(self)
+        return self._retropass
+
     def _background(self, now: float, preferences: Preferences) -> None:
+        if preferences.theme == "retropass":
+            self._retropass_view().background(preferences.high_contrast)
+            return
         if preferences.high_contrast:
             self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 0, 0))
             return
@@ -509,7 +519,14 @@ class Renderer:
     def needs_frame(self, snapshot: UISnapshot, now: float) -> bool:
         self._poll_artwork(snapshot)
         key = self._frame_key(snapshot)
-        return self._art_dirty or key != self._fingerprint or bool(snapshot.preferences.motion and now - self._last_change < 8)
+        if snapshot.preferences.theme == "retropass":
+            # This theme has no continuously moving background. Draw the last
+            # settled glide frame, then let the existing event loop idle.
+            animated = bool(snapshot.preferences.motion and self._retropass and
+                            self._retropass.scroll.sample(self._last_now) != self._retropass.scroll.target)
+        else:
+            animated = bool(snapshot.preferences.motion and now - self._last_change < 8)
+        return self._art_dirty or key != self._fingerprint or animated
 
     def _crossbar(self, snapshot: UISnapshot, now: float) -> None:
         # Fixed filmstrip arithmetic and the .58 inactive treatment follow
@@ -636,7 +653,8 @@ class Renderer:
         # Contrast does not depend on which moving wave happens to be behind
         # these essential controls. Large text gets a second row, never shrinks.
         self._rect(0, top, LOGICAL_WIDTH, LOGICAL_HEIGHT - top,
-                   (0, 0, 0, 255) if prefs.high_contrast else (3, 22, 53, 255))
+                   (0, 0, 0, 255) if prefs.high_contrast else
+                   (24, 24, 24, 255) if prefs.theme == "retropass" else (3, 22, 53, 255))
         font = max(14, round(17 * scale))
         hints = [(prefs.confirm, "Enter"),
                  ("east" if prefs.confirm == "south" else "south", "Back"),
@@ -671,7 +689,7 @@ class Renderer:
         self._last_now = now
         prefs = snapshot.preferences
         primary = (255, 255, 255)
-        muted = (222, 238, 251) if not prefs.high_contrast else (235, 235, 235)
+        muted = ((205, 205, 205) if prefs.theme == "retropass" else (222, 238, 251)) if not prefs.high_contrast else (235, 235, 235)
         accent = (255, 255, 255)
         self._poll_artwork(snapshot)
         self._art_dirty = False
@@ -682,27 +700,31 @@ class Renderer:
             sdl2.SDL_RenderSetLogicalSize(self.renderer, LOGICAL_WIDTH, LOGICAL_HEIGHT)
             sdl2.SDL_RenderSetClipRect(self.renderer, None)
             sdl2.SDL_SetRenderDrawBlendMode(self.renderer, sdl2.SDL_BLENDMODE_BLEND)
-            self._background(wave_time, prefs)
-            if snapshot.display_clock:
-                width = self.text.measure(snapshot.display_clock, 19)
-                self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
-            self._crossbar(snapshot, now)
-            # A small location cue for drilled-in lists, absent on root pages.
-            root_titles = ("Your games", "Pick up where you left off", "Tools", "Settings")
-            if snapshot.title not in root_titles and snapshot.breadcrumb != snapshot.categories[snapshot.category]:
-                self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 460, 253, 14, muted, 744, prefs.text_scale)
-            if snapshot.items:
-                self._items(snapshot, now, primary, muted)
+            if prefs.theme == "retropass":
+                self._retropass_view().draw(snapshot, now)
             else:
-                self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
-                self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))
+                self._background(wave_time, prefs)
+                if snapshot.display_clock:
+                    width = self.text.measure(snapshot.display_clock, 19)
+                    self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)
+                self._crossbar(snapshot, now)
+                # A small location cue for drilled-in lists, absent on root pages.
+                root_titles = ("Your games", "Pick up where you left off", "Tools", "Settings")
+                if snapshot.title not in root_titles and snapshot.breadcrumb != snapshot.categories[snapshot.category]:
+                    self._text(snapshot.breadcrumb.replace(" / ", "  ›  "), 460, 253, 14, muted, 744, prefs.text_scale)
+                if snapshot.items:
+                    self._items(snapshot, now, primary, muted)
+                else:
+                    self._icon(snapshot.categories[snapshot.category], 257, 333, 70, primary)
+                    self._paragraph(snapshot.empty_message, 391, 345, 23, primary, 680, 5, min(prefs.text_scale, 1.35))
             if snapshot.status or snapshot.loading:
                 footer_top = 620 if prefs.text_scale > 1.2 else 660
                 font = max(14, round(18 * prefs.text_scale))
                 status_y = footer_top - font - 14
-                self._rect(380, status_y - 5, 840, font + 12, (3, 22, 53, 245))
+                self._rect(380, status_y - 5, 840, font + 12,
+                           (24, 24, 24, 245) if prefs.theme == "retropass" else (3, 22, 53, 245))
                 self._label(snapshot.status or "Loading…", 391, status_y, font, primary, 818)
-            if snapshot.demo and not snapshot.keyboard:
+            if snapshot.demo and not snapshot.keyboard and prefs.theme != "retropass":
                 self._text("Desktop preview", 54, 45, 14, primary, 320, prefs.text_scale)
             if not snapshot.dialog and not snapshot.keyboard:
                 self._footer(snapshot, primary, muted)
@@ -718,18 +740,21 @@ class Renderer:
         left = 288 if expanded else 610
         content_x = left + 58
         width = LOGICAL_WIDTH - content_x - 66
+        panel = (31, 31, 31) if preferences.theme == "retropass" else (3, 26, 65)
+        edge = (31, 31, 31) if preferences.theme == "retropass" else (3, 23, 63)
         # Console-style options sheet. The underlying selection stays visible;
         # flat translucent layers replace the old rounded modal/card stack.
-        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (0, 6, 27, 62))
+        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT,
+                   (0, 0, 0, 100) if preferences.theme == "retropass" else (0, 6, 27, 62))
         for index in range(20):
-            self._rect(left - 60 + index * 3, 0, 3, LOGICAL_HEIGHT, (3, 23, 63, round(index * 9.5)))
+            self._rect(left - 60 + index * 3, 0, 3, LOGICAL_HEIGHT, (*edge, round(index * 9.5)))
         self._rect(left, 0, LOGICAL_WIDTH - left, LOGICAL_HEIGHT,
-                   (0, 0, 0, 255) if preferences.high_contrast else (3, 26, 65, 255))
+                   (0, 0, 0, 255) if preferences.high_contrast else (*panel, 255))
         self._line(left, 0, left, LOGICAL_HEIGHT, (230, 245, 255, 40))
         if dialog.system_id or dialog.artwork:
             art_width = 180 if expanded else 270
             art_x = max(24, (left - art_width) // 2)
-            self._rect(0, 0, left, LOGICAL_HEIGHT, (3, 26, 65, 255))
+            self._rect(0, 0, left, LOGICAL_HEIGHT, (*panel, 255))
             self._artwork(UIItem("dialog-art", "", system_id=dialog.system_id, artwork=dialog.artwork),
                           art_x, 250, art_width, round(art_width * 0.67), preferences)
             self._text("PS1" if dialog.system_id in ("PS", "PS1", "PSX") else dialog.system_id,
@@ -806,7 +831,8 @@ class Renderer:
         # Give text entry its own clean workspace. Translucent keys should show
         # only the wave field, never a second title or icon behind their labels.
         self._background(min(self._last_now, self._last_change + 8), snapshot.preferences)
-        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT, (1, 14, 48, 105))
+        self._rect(0, 0, LOGICAL_WIDTH, LOGICAL_HEIGHT,
+                   (0, 0, 0, 105) if snapshot.preferences.theme == "retropass" else (1, 14, 48, 105))
         if snapshot.display_clock:
             width = self.text.measure(snapshot.display_clock, 19)
             self._text(snapshot.display_clock, 1212 - width, 41, 19, primary, 300)

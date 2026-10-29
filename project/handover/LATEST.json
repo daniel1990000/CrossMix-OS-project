@@ -70,68 +70,20 @@
     "commercial_sdk_or_public_native_terms_inferred": false
   },
   "schema": 2,
-  "date_utc": "2026-10-26",
-  "branch": "main",
-  "base_at_start": "9dfa857fec43c165b2b8836406012f1b38cfed87",
-  "pull_request": {
-    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/2",
-    "number": 2,
-    "state": "closed",
-    "merged": true,
-    "draft": false,
-    "merge_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
-    "merged_head": "2d182edf0cf868a4a8e5214ee552dd42ccba894a"
-  },
-  "release_id": "smartpro-psp-0.1.0-dev18",
-  "project_stage": "Dev18 host feature batch implemented and independently reviewed; 1,209 strict checks pass. Device qualification remains pending.",
+  "date_utc": "2026-10-29",
+  "branch": "feat/retropass-trimui",
+  "base_at_start": "05d1088f35ff76231144ef44c393deb95900bc28",
+  "release_id": "smartpro-retropass-0.1.0-dev19",
+  "project_stage": "RetroPass source import and working Linux SDL port; host evidence retained separately from unrun device qualification.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
     "project/handover/LATEST.json",
     "project/README.md",
-    "project/docs/dev18-library-backups-2026-10-26.md",
-    "project/evidence/dev18-library-backups-20261026/verification.json",
-    "project/docs/master-plan-2026-10-22.md"
+    "project/docs/retropass-trimui.md"
   ],
   "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
   "master_plan": "project/docs/master-plan-2026-10-22.md",
-  "current_snapshot": {
-    "clean_implementation_commit": "399a528542da1139903c93cef3041d23acad2fca",
-    "strict_tests": {
-      "tests_run": 1209,
-      "passed": 1209,
-      "failures": 0,
-      "errors": 0,
-      "skipped": 0,
-      "expected_failures": 0,
-      "unexpected_successes": 0
-    },
-    "verification": "project/evidence/dev18-library-backups-20261026/verification.json",
-    "source_inventory_files": 234,
-    "source_inventory_sha256": "bed2e770420510d3cae0cdf86f13714e65a8c27c7cc65c3d4f03d4fd9cb2082a",
-    "payload_files": 68,
-    "both_zips_byte_identical_without_git": true,
-    "installed_preview_and_fixture_rollback_passed": true,
-    "ci_readback": "project/evidence/dev18-library-backups-20261026/ci-readback.json",
-    "later_metadata_commits_have_separate_identity": true,
-    "ci": {
-      "status": "success",
-      "run_id": 40370508776,
-      "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40370508776",
-      "branch_source_commit": "399a528542da1139903c93cef3041d23acad2fca",
-      "actual_clean_checkout": "89da2a33bb853bca10aca1d983d84bb02702b216",
-      "base_commit": "4a97d8a253e9d572e51f17876711597d38181633",
-      "artifact_id": 12673380140,
-      "artifact_sha256": "3ce9dd25838227189f7a106270e37ad2e64a6944d53a337e33b95fe3406bdf80",
-      "artifact_size_bytes": 5363997,
-      "artifact_expires_at_utc": "2027-01-24T17:38:26Z",
-      "source_inventory_sha256": "7e910473d1c4bbb0c8b00d929b8c809212439c0e6be8e3f5d47978af11809ec9",
-      "source_inventory_files": 235,
-      "signature_and_payload_inventory_verified": true,
-      "source_export_bytes_verified": true,
-      "readback": "ci-readback.json"
-    }
-  },
   "published_snapshot": {
     "release": "smartpro-host-0.1.0-dev16",
     "tag_commit": "99336f6525efbd1b790a15c7de54acca3eacd1ec",
@@ -182,7 +134,9 @@
     "handover": "HANDOVER-HISTORY-through-dev17.md",
     "status": "project/handover/LATEST-through-dev17.json",
     "plan": "project/docs/master-plan-history-through-dev17.md",
-    "warning": "Dated current/latest fields in historical records apply only to their named snapshots."
+    "warning": "Dated current/latest fields in historical records apply only to their named snapshots.",
+    "dev18_handover": "HANDOVER-HISTORY-through-dev18.md",
+    "dev18_status": "project/handover/LATEST-through-dev18.json"
   },
   "owner_device_status": {
     "device": "Original TrimUI Smart Pro TG5040",
@@ -192,11 +146,8 @@
     "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
   },
   "next_work": [
-    "Continue from merged dev18 on main; no new public release was created.",
-    "When hardware returns, begin with inventory and actual recovery rehearsal using the existing 13-area casebook.",
-    "Qualify native menu return, input/display ownership, I/O latency, sleep/power, interrupted saves and actual Resume on exact installed profiles.",
-    "Collect five matched runs per scene and 30-minute demanding-profile observations before recommending presets.",
-    "Resolve precise public native distribution scope, production signing custody and maintenance ownership."
+    "Review RetroPass host preview and pull request.",
+    "Qualify exact installed TG5040 input/display/launch-return and recovery behavior using the existing casebook."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -227,5 +178,59 @@
     "physical_tests_run": false,
     "completion_counts_unchanged": true
   },
-  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json"
+  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json",
+  "previous_dev18_snapshot": {
+    "clean_implementation_commit": "399a528542da1139903c93cef3041d23acad2fca",
+    "strict_tests": {
+      "tests_run": 1209,
+      "passed": 1209,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "verification": "project/evidence/dev18-library-backups-20261026/verification.json",
+    "source_inventory_files": 234,
+    "source_inventory_sha256": "bed2e770420510d3cae0cdf86f13714e65a8c27c7cc65c3d4f03d4fd9cb2082a",
+    "payload_files": 68,
+    "both_zips_byte_identical_without_git": true,
+    "installed_preview_and_fixture_rollback_passed": true,
+    "ci_readback": "project/evidence/dev18-library-backups-20261026/ci-readback.json",
+    "later_metadata_commits_have_separate_identity": true,
+    "ci": {
+      "status": "success",
+      "run_id": 40370508776,
+      "run_url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40370508776",
+      "branch_source_commit": "399a528542da1139903c93cef3041d23acad2fca",
+      "actual_clean_checkout": "89da2a33bb853bca10aca1d983d84bb02702b216",
+      "base_commit": "4a97d8a253e9d572e51f17876711597d38181633",
+      "artifact_id": 12673380140,
+      "artifact_sha256": "3ce9dd25838227189f7a106270e37ad2e64a6944d53a337e33b95fe3406bdf80",
+      "artifact_size_bytes": 5363997,
+      "artifact_expires_at_utc": "2027-01-24T17:38:26Z",
+      "source_inventory_sha256": "7e910473d1c4bbb0c8b00d929b8c809212439c0e6be8e3f5d47978af11809ec9",
+      "source_inventory_files": 235,
+      "signature_and_payload_inventory_verified": true,
+      "source_export_bytes_verified": true,
+      "readback": "ci-readback.json"
+    }
+  },
+  "previous_dev18_pull_request": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/2",
+    "number": 2,
+    "state": "closed",
+    "merged": true,
+    "draft": false,
+    "merge_commit": "30aa59ffa35195bcad2b2553f91c43fc32301556",
+    "merged_head": "2d182edf0cf868a4a8e5214ee552dd42ccba894a"
+  },
+  "current_snapshot": {
+    "evidence": "project/evidence/retropass-dev19/verification.json",
+    "upstream": "retropassdev/RetroPass",
+    "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
+    "imported_files": 177,
+    "native_engine_rebuilt": false,
+    "physical_device_tested": false
+  }
 }
