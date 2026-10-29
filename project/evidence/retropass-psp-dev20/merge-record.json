@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "pull_request": "https://github.com/daniel1990000/CrossMix-OS-project/pull/5",
+  "merged": true,
+  "merge_commit": "da4b54b522cdeb94fa06909654475c7f8c5b3e14",
+  "merged_head": "78db8cac8a957bf8e752d5f3764332cda5a9ea65",
+  "merge_tree_equals_pr_head": true,
+  "tree": "d15dd4435f95d8942e8dae52488e34e623d270e0",
+  "premerge_ci": {
+    "run_id": 40817261850,
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/40817261850",
+    "head": "78db8cac8a957bf8e752d5f3764332cda5a9ea65",
+    "host_check": "success",
+    "package_build": "success",
+    "artifact_upload": "success"
+  },
+  "tested_implementation": "25d594c5ca26b9d1b927d32d44f04cef0697c420",
+  "runtime_changes_after_checked_implementation": false,
+  "public_release_created": false,
+  "device_qualification_changed": false,
+  "metadata_followup_has_separate_identity": true
+}

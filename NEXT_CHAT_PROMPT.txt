@@ -1,5 +1,7 @@
 Continue daniel1990000/CrossMix-OS-project, active source project/.
-Current branch feat/retropass-trimui, draft PR #5.
+Current branch main; PR #5 merged at da4b54b522cdeb94fa06909654475c7f8c5b3e14.
+GitHub host checks/package build passed; exact merge receipt is in
+project/evidence/retropass-psp-dev20/merge-record.json.
 User asked to adapt actual RetroPass source into the PSP UI; dev20 does so.
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
 project/docs/retropass-trimui.md and project/evidence/retropass-psp-dev20/ first.

@@ -71,10 +71,10 @@
   },
   "schema": 2,
   "date_utc": "2026-10-29",
-  "branch": "feat/retropass-trimui",
+  "branch": "main",
   "base_at_start": "39e838c92b284f4c445e69e0669f0646cfa42363",
   "release_id": "smartpro-retropass-0.1.0-dev20",
-  "project_stage": "RetroPass source adapted into the default PSP crossbar UI; host certification and artifact evidence recorded for this continuation.",
+  "project_stage": "Dev20 RetroPass PSP UI merged into main through PR #5; host checks and package build passed. Device qualification remains pending.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -148,8 +148,8 @@
     "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
   },
   "next_work": [
-    "Review the updated PSP presentation in PR #5 and its exact host preview.",
-    "Qualify exact installed TG5040 ownership, launch-return and recovery behavior using the existing casebook."
+    "Qualify exact installed TG5040 input/display ownership, launch-return and recovery using the existing casebook.",
+    "Keep published dev16 assets and existing device/profile gates unchanged until their recorded requirements are satisfied."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -180,7 +180,7 @@
     "physical_tests_run": false,
     "completion_counts_unchanged": true
   },
-  "merge_record": "project/evidence/dev18-library-backups-20261026/merge-record.json",
+  "merge_record": "project/evidence/retropass-psp-dev20/merge-record.json",
   "previous_dev18_snapshot": {
     "clean_implementation_commit": "399a528542da1139903c93cef3041d23acad2fca",
     "strict_tests": {
@@ -230,9 +230,11 @@
   "pull_request": {
     "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/5",
     "number": 5,
-    "state": "open",
-    "draft": true,
-    "merged": false
+    "state": "closed",
+    "draft": false,
+    "merged": true,
+    "merge_commit": "da4b54b522cdeb94fa06909654475c7f8c5b3e14",
+    "merged_head": "78db8cac8a957bf8e752d5f3764332cda5a9ea65"
   },
   "previous_dev19_snapshot": {
     "evidence": "project/evidence/retropass-dev19/verification.json",
