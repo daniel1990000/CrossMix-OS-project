@@ -246,5 +246,12 @@
     "source_inventory_files": 426,
     "payload_files": 254,
     "both_zips_byte_identical_without_git": true
+  },
+  "pull_request": {
+    "url": "https://github.com/daniel1990000/CrossMix-OS-project/pull/5",
+    "number": 5,
+    "state": "open",
+    "draft": true,
+    "merged": false
   }
 }

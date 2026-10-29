@@ -1,6 +1,6 @@
 # TrimUI handover — RetroPass dev19
 
-29 October 2026. Active work: `feat/retropass-trimui`, based on main `05d1088f35ff76231144ef44c393deb95900bc28`. The current descriptor is `smartpro-retropass-0.1.0-dev19`. Read [the port report](project/docs/retropass-trimui.md), [current status](project/handover/LATEST.json), and [retained evidence](project/evidence/retropass-dev19/). [Dev18 handover](HANDOVER-HISTORY-through-dev18.md) retains its earlier exact implementation and verification.
+29 October 2026. [Draft PR #5](https://github.com/daniel1990000/CrossMix-OS-project/pull/5) contains this work. Active work: `feat/retropass-trimui`, based on main `05d1088f35ff76231144ef44c393deb95900bc28`. The current descriptor is `smartpro-retropass-0.1.0-dev19`. Read [the port report](project/docs/retropass-trimui.md), [current status](project/handover/LATEST.json), and [retained evidence](project/evidence/retropass-dev19/). [Dev18 handover](HANDOVER-HISTORY-through-dev18.md) retains its earlier exact implementation and verification.
 
 The complete tracked RetroPass tree (177 files) is retained at upstream `65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83`. Actual translated EmulationStation metadata parsing is called by the existing snapshot reader. GPL-scoped SDL code translates the XAML geometry, dark theme and focus treatment into a working horizontal cover shelf. Recent-first playlist selection is ported as a reusable helper; the native history source remains authoritative. This does not execute the Windows UWP binary on Linux.
 
