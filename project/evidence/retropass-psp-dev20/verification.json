@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "implementation_commit": "25d594c5ca26b9d1b927d32d44f04cef0697c420",
+  "host_certification": {
+    "tests_run": 1254,
+    "passed": 1254,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "pinned_sources_verified_before_and_after": 5,
+  "preview_passed": true,
+  "artifact_source_inventory_sha256": "0e4c3caf91d745f1fd2767ebacf07d5eb621fb75a938981ee71097cb2d5922a1",
+  "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
+  "upstream_files_imported": 177,
+  "payload_files": 255,
+  "source_files": 429,
+  "both_zips_rebuild_identically_without_git": true,
+  "installed_psp_default_and_port_calls_verified": true,
+  "native_engine_rebuilt": false,
+  "physical_device_tested": false,
+  "device_gates_enabled": false,
+  "public_release_changed": false,
+  "later_evidence_commits_have_separate_identity": true
+}

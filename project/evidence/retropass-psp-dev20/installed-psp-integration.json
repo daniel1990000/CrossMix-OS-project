@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "evidence": "installed-host-preview",
+  "no_theme_override": true,
+  "build": {
+    "version": "0.1.0-dev20",
+    "release_id": "smartpro-retropass-0.1.0-dev20",
+    "source_kind": "installed-package",
+    "frontend_commit": "25d594c5ca26b9d1b927d32d44f04cef0697c420",
+    "working_tree_modified": false,
+    "source_inventory_sha256": "0e4c3caf91d745f1fd2767ebacf07d5eb621fb75a938981ee71097cb2d5922a1",
+    "delivery": "retropass-host-preview"
+  },
+  "psp_draw_calls": 6,
+  "model_landing_calls": 1,
+  "presentation_landing_calls": 3,
+  "seen_themes": [
+    "psp"
+  ],
+  "landing_preview_ids": [
+    "sample:PSP:skyline",
+    "sample:PS:echo",
+    "sample:PORTS:summit",
+    "sample:GBA:wild"
+  ],
+  "fixture_note": "The packaged demo has four available games; the landing preview cap is five.",
+  "physical_device_verified": false,
+  "real_game_launches": 0
+}

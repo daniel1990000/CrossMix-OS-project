@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "scope": "Host review of actual RetroPass source adapted into PSP UI; no hardware qualification",
+  "reviewers": [
+    "retropass_core",
+    "retropass_renderer",
+    "retropass_import",
+    "validation"
+  ],
+  "verified": [
+    "PSP waves, category crossbar and vertical navigation are the fresh-session default.",
+    "Actual translated Playlist.cs recent-first selector runs in snapshots, with stable native IDs and existing raw recent history.",
+    "Quick-pick metadata is scoped, freshness-checked and cached; repeated snapshots do not scan a 50,000-entry history.",
+    "Five actual artwork files decode and settle without retries keeping the UI awake; texture pool remains bounded.",
+    "Large text and long selected titles regain full-width rows; dialogs and keyboard keep existing controls.",
+    "New fifth GPL runtime participates in signed module requirements; complete 177-file upstream source is preserved."
+  ],
+  "reproduced_and_fixed": [
+    "Filtered fresh Favorites response could reuse stale global membership during refresh; now only fresh known membership contributes until global cache arrives.",
+    "New active-artwork reference tracking copied the whole injected page per tick; now bounded to focused neighborhood plus five preview covers."
+  ],
+  "limits": [
+    "Actual TG5040 input/display, performance and launch-return qualification have not run."
+  ]
+}
