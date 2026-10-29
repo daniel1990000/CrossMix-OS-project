@@ -448,7 +448,10 @@ class Renderer:
             selected = snapshot.selected_item
             self._last_selected_art = selected.artwork if selected is not None and selected.kind == "game" else ""
             landing = getattr(snapshot, "landing_items", ())
-            self._active_art_refs = {item.artwork for item in (*snapshot.items, *landing) if item.artwork}
+            # Both presentations draw only a short neighborhood around focus.
+            # Do not walk or copy an injected whole-library tuple per tick.
+            nearby = snapshot.items[max(0, snapshot.selected - 8):snapshot.selected + 9]
+            self._active_art_refs = {item.artwork for item in (*nearby, *landing[:5]) if item.artwork}
             if snapshot.dialog and snapshot.dialog.artwork:
                 self._active_art_refs.add(snapshot.dialog.artwork)
             preferred = [self._last_selected_art] if self._last_selected_art else []
