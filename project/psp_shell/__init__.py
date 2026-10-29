@@ -57,12 +57,12 @@ def build_info():
         if candidate is None:
             return info
         release, source_kind = candidate.get("release_id"), "installed-package"
-    if (candidate.get("schema") != 1 or candidate.get("delivery") != "original-only-host-preview" or
+    if (candidate.get("schema") != 1 or candidate.get("delivery") not in {"original-only-host-preview", "retropass-host-preview"} or
             not isinstance(release, str) or
-            re.fullmatch(r"smartpro-psp-[A-Za-z0-9][A-Za-z0-9._-]{0,95}", release) is None):
+            re.fullmatch(r"smartpro-(?:psp|retropass)-[A-Za-z0-9][A-Za-z0-9._-]{0,95}", release) is None):
         return {**info, "frontend_commit": None, "working_tree_modified": None,
                 "source_inventory_sha256": None}
-    info.update(version=release.removeprefix("smartpro-psp-"), release_id=release,
+    info.update(version=re.sub(r"^smartpro-(?:psp|retropass)-", "", release), release_id=release,
                 source_kind=source_kind, delivery=candidate["delivery"])
     return info
 

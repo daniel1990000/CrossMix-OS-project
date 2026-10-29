@@ -144,7 +144,8 @@ class InputMapper:
                        sdl2.SDLK_DELETE: "delete_text" if text_mode else None,
                        sdl2.SDLK_F5: "refresh", sdl2.SDLK_TAB: None if text_mode else "menu"}
             if not text_mode:
-                mapping.update({sdl2.SDLK_f: "search", sdl2.SDLK_SLASH: "search", sdl2.SDLK_x: "search", sdl2.SDLK_y: "favorite"})
+                mapping.update({sdl2.SDLK_f: "search", sdl2.SDLK_SLASH: "search", sdl2.SDLK_x: "search", sdl2.SDLK_y: "favorite",
+                                sdl2.SDLK_q: "category_previous", sdl2.SDLK_e: "category_next"})
             return self._press(key, mapping.get(symbol), now)
         if event_type in (sdl2.SDL_CONTROLLERBUTTONDOWN, sdl2.SDL_CONTROLLERBUTTONUP):
             identifier, button = int(event.cbutton.which), int(event.cbutton.button)
@@ -158,6 +159,9 @@ class InputMapper:
                        sdl2.SDL_CONTROLLER_BUTTON_Y: "submit_text" if text_mode else "favorite",
                        sdl2.SDL_CONTROLLER_BUTTON_DPAD_LEFT: "left", sdl2.SDL_CONTROLLER_BUTTON_DPAD_RIGHT: "right",
                        sdl2.SDL_CONTROLLER_BUTTON_DPAD_UP: "up", sdl2.SDL_CONTROLLER_BUTTON_DPAD_DOWN: "down"}
+            if not text_mode:
+                mapping.update({sdl2.SDL_CONTROLLER_BUTTON_LEFTSHOULDER: "category_previous",
+                                sdl2.SDL_CONTROLLER_BUTTON_RIGHTSHOULDER: "category_next"})
             return self._press(key, mapping.get(button), now)
         if event_type == sdl2.SDL_CONTROLLERAXISMOTION:
             identifier, axis, value = int(event.caxis.which), int(event.caxis.axis), int(event.caxis.value)

@@ -1,42 +1,12 @@
 Continue daniel1990000/CrossMix-OS-project, active source project/.
-Dev18 is on main after PR #2 merged at 30aa59ffa35195bcad2b2553f91c43fc32301556.
-No new public release was created.
+Current branch feat/retropass-trimui, draft PR #5.
+User asked to adapt actual RetroPass source into the PSP UI; dev20 does so.
 Read AGENTS.md, HANDOVER.md, project/handover/LATEST.json, project/README.md,
-project/docs/dev18-library-backups-2026-10-26.md and its exact evidence first.
-
-Clean implementation 399a528542da1139903c93cef3041d23acad2fca passes all 1,209
-strict host checks with zero skips/errors/failures against five pinned sources.
-Installed preview, signature/source/payload checks, fixture rollback and both
-byte-identical no-Git ZIP rebuilds pass. CI readback records its separate exact
-merge checkout and artifact identity. Later metadata commits do not inherit
-older package identities. PR #2 describes latest CI status.
-
-Dev18 includes scoped library discovery and native Collections, page/identity
-restoration, stale-response/mutation handling, 175% accessible help, structured
-game information and named offline backup history, plus Undo/capture/Resume
-identity and captured-source packaging fixes. Preserve native ownership and
-immutable payloads. Independent review and real SDL renders are retained.
-
-Dev16 remains published at tag/source 99336f6525efbd1b790a15c7de54acca3eacd1ec:
-https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16
-Do not replace its assets. No native engine/SDK/game/save/private key is included
-in original-only development downloads. Historical records through dev17 are
-explicitly archived; read current status before their dated completion claims.
-
-Keep device/profile gates disabled: original register 14/25; physical areas 0/13.
-No hardware performance, battery, recovery or Resume reliability is established.
-When the device returns use the existing recovery/inventory/qualification
-casebook, matched game-scene protocol and exact installed identities.
-Production signing, public native distribution and maintenance ownership remain
-open. Preserve existing PPSSPP and PS1 routes; no save/memory-card relocation.
-
-The owner moved Vice City emulation/testing to a separate chat. It does not
-block this development track. Main received an independent audit/game-image
-document at 4a97d8a; preserve it without treating it as dev18 gameplay evidence.
-No additional game download/testing is requested in this chat.
-
-The separate chat's planned ISO-enabled batch is retained in
-project/docs/iso-enabled-roadmap-2026-10-26.md and
-project/handover/ISO_EXECUTION_PROMPT.txt. It awaits its execution instruction;
-its historical dev17 baseline is superseded by the current dev18 handover.
-Preserve that plan without starting its game work in this development track.
+project/docs/retropass-trimui.md and project/evidence/retropass-psp-dev20/ first.
+Fresh sessions use PSP waves/crossbar/vertical lists, GPL-scoped RetroPass cover
+presentation and source-backed recent-first five-item previews on eligible home rows.
+All 177 pinned upstream files remain unchanged; actual ES metadata parser is live.
+Keep source/receipt identities exact. Dev19 evidence is historical, not dev20 verification.
+No device/profile gate enabled, native binary replaced or save location changed.
+Published dev16 assets remain unchanged; physical acceptance stays 0/13.
+Vice City/game-image execution remains in the separate chat.

@@ -71,6 +71,7 @@ class Preferences:
     text_scale: float = 1.0
     high_contrast: bool = False
     interface: str = "classic"
+    theme: str = "psp"
 
     @classmethod
     def from_mapping(cls, values: Mapping[str, Any] | None) -> "Preferences":
@@ -85,6 +86,7 @@ class Preferences:
             text_scale=max(0.75, min(1.75, float(scale))),
             high_contrast=values.get("high_contrast", False) is True,
             interface=values.get("interface") if values.get("interface") in ("classic", "project") else "classic",
+            theme=values.get("theme") if values.get("theme") in ("psp", "retropass") else "psp",
         )
 
 
@@ -224,6 +226,7 @@ class UISnapshot:
     exit_request: str | None
     display_clock: str = ""
     artwork_generation: int = 0
+    landing_items: tuple[UIItem, ...] = ()
 
     @property
     def selected_item(self) -> UIItem | None:
@@ -293,6 +296,13 @@ class NavigationModel:
         self._details_return: Dialog | None = None
         self._history_records: dict[str, tuple[UIItem, ...]] = {}
         self._history_serial: dict[str, int] = {}
+        # Native-order metadata for presentation-only landing suggestions.
+        # Browse sorts and letter jumps must not reorder this source history.
+        self._landing_records: dict[str, tuple[UIItem, ...]] = {}
+        self._landing_generations: dict[str, int] = {}
+        self._landing_revision = 0
+        self._landing_result_key: tuple[Any, ...] | None = None
+        self._landing_result: tuple[UIItem, ...] = ()
         self._game_information: Mapping[str, Any] = {}
         self._performance_status: Mapping[str, Any] = {}
         self._performance_generation = 0
@@ -888,6 +898,9 @@ class NavigationModel:
                 last_page = ((total - 1) // self.PAGE_SIZE) * self.PAGE_SIZE
                 return [self._query(last_page, keep_focus=True)]
             self._pages[0].replace(items, offset=offset, total=total, keep_focus=self._query_keep_focus)
+            self._landing_records["games"] = tuple(items)
+            self._landing_generations["games"] = self._artwork_generation
+            self._landing_revision += 1
             if self._query_last_focus and items:
                 self._pages[0].selected = len(items) - 1
             self._query_last_focus = False
@@ -901,6 +914,9 @@ class NavigationModel:
             if context != "favorites_cache" and command.serial != self._history_serial.get(context, command.serial):
                 return []
             items = tuple(UIItem.from_record(value) for value in result if isinstance(value, Mapping))
+            self._landing_records[context] = items
+            self._landing_generations[context] = self._artwork_generation
+            self._landing_revision += 1
             if context == "favorites_cache" or (context == "favorites" and not self._history_filters["favorites"] and not self._history_search["favorites"]):
                 self._favorites = {item.id for item in items}
                 self._favorites_loaded = True
@@ -933,6 +949,7 @@ class NavigationModel:
                 self._dialog = replace(self._dialog, choices=self._dialog.choices[:-1] +
                     (DialogChoice("Pick another", "pick_another"), self._dialog.choices[-1]))
         elif context == "favorite_set":
+            self._landing_revision += 1
             identifier = command.params.get("game_id", "")
             self._favorite_overrides[identifier] = command.params.get("enabled") is True
             self._favorite_override_serial[identifier] = command.serial
@@ -1083,7 +1100,7 @@ class NavigationModel:
     @staticmethod
     def _preference_label(key: str) -> str:
         return {"confirm": "Confirm button", "motion": "Background motion", "sound": "Interface sounds",
-                "text_scale": "Text size", "high_contrast": "High contrast"}.get(key, key)
+                "text_scale": "Text size", "high_contrast": "High contrast", "theme": "Dashboard style"}.get(key, key)
 
     @staticmethod
     def _format_preference(value: Any) -> str:
@@ -1091,11 +1108,11 @@ class NavigationModel:
             return "On" if value else "Off"
         if isinstance(value, (float, int)):
             return f"{value * 100:.0f}%"
-        return {"south": "South button", "east": "East button"}.get(str(value), str(value))
+        return {"south": "South button", "east": "East button", "retropass": "RetroPass for TrimUI", "psp": "PSP crossbar"}.get(str(value), str(value))
 
     def _rebuild_settings(self) -> None:
         items = [UIItem(key, self._preference_label(key), self._format_preference(getattr(self.preferences, key)), "setting")
-                 for key in ("confirm", "motion", "sound", "text_scale", "high_contrast")]
+                 for key in ("confirm", "motion", "sound", "text_scale", "high_contrast", "theme")]
         items.extend((_menu("controls", "Emulator menu controls", "Keep gameplay mappings separate"),
                       _menu("appearance", "PPSSPP appearance", "Match the theme, contrast and background motion"),
                       _menu("experience", "Match PPSSPP menus", "Review controls and appearance together"),
@@ -1256,7 +1273,8 @@ class NavigationModel:
         mode = ("This sample preview cannot launch games. Sample artwork and checkpoints are demonstrations." if self.demo else
                 "Mounted-card inspection is read-only. Your original games and saves stay with spruce." if not self._capabilities.get("game_launch") else
                 "Games and advanced screens use the existing spruce and emulator controls.")
-        self._dialog = Dialog("Controls & help", f"{confirm}: choose · {back}: back\nLeft/right: categories · Up/down: games\n"
+        directions = ("Left/right: games · Up/down: categories\nL/R: categories · Q/E on desktop\n" if self.preferences.theme == "retropass" else "Left/right: categories · Up/down: games\n")
+        self._dialog = Dialog("Controls & help", f"{confirm}: choose · {back}: back\n" + directions +
             "West: search this view · North: toggle Favorite\nStart: Library tools (desktop Tab)\n"
             "Desktop Enter: choose · Escape: back · X: search · Y: Favorite\n"
             "Use Library tools to filter, sort, change pages or choose a random game.\n"
@@ -1549,6 +1567,8 @@ class NavigationModel:
                 value = not value
             elif item.id == "confirm":
                 value = "east" if value == "south" else "south"
+            elif item.id == "theme":
+                value = "psp" if value == "retropass" else "retropass"
             elif item.id == "text_scale":
                 choices = tuple(DialogChoice(f"{round(scale * 100)}%", "request", "settings.preview",
                     {"changes": {"text_scale": scale}, "expected_generation": self.generation}, "preview")
@@ -1624,7 +1644,10 @@ class NavigationModel:
             return [self._request("support.export", context="support")]
         elif item.id == "about":
             from .. import __version__
-            self._dialog = Dialog("About & credits", f"Version {__version__}\nOriginal interface for spruce.\n"
+            self._dialog = Dialog("About & credits", f"Version {__version__}\nRetroPass for TrimUI / spruce.\n"
+                                  "RetroPass — retropassdev, SirMangler, 𝔇𝔞𝔫𝔭142.\n"
+                                  "Dashboard and library port: GPL-2.0-only.\n"
+                                  "Source: github.com/retropassdev/RetroPass\n"
                                   "PyUI — Copyright (c) 2025 Christopher Jacobs.\nUsed under its non-commercial license.\n"
                                   "Optional PPSSPP changes retain separate GPL notices.\n"
                                   "Original Smart Pro hardware qualification is pending.", (DialogChoice("Done"),))
@@ -1775,7 +1798,7 @@ class NavigationModel:
         if (action in ("back", "submit_text") or
                 action == "confirm" and self._keyboard is None or
                 action in ("search", "menu") and self._dialog is None and self._keyboard is None or
-                action in ("left", "right", "up", "down") and self._dialog is None and self._keyboard is None):
+                action in ("left", "right", "up", "down", "category_previous", "category_next") and self._dialog is None and self._keyboard is None):
             self._leave_view()
         if self._keyboard:
             keyboard = self._keyboard
@@ -1824,6 +1847,12 @@ class NavigationModel:
         if action == "menu" and self.category in (0, 1):
             self._filter_dialog()
             return []
+        # Adapt presentation directions only after modal input has been handled.
+        # Native routes and their classic/project selection keep their owners.
+        if action in ("category_previous", "category_next"):
+            action = "left" if action == "category_previous" else "right"
+        elif self.preferences.theme == "retropass":
+            action = {"left": "up", "right": "down", "up": "left", "down": "right"}.get(action, action)
         if action in ("left", "right"):
             self.category = (self.category + (-1 if action == "left" else 1)) % 4
             if self.category == 3 and self._settings_view == "root":
@@ -1874,6 +1903,70 @@ class NavigationModel:
             return self._page_commands(-1 if action == "page_previous" else 1)
         return []
 
+    def _landing_items(self) -> tuple[UIItem, ...]:
+        """Apply RetroPass's recent-first selection to fresh loaded native data.
+
+        Suggestions belong to root All/Favorites/system rows only. They never
+        replace navigable items, query the backend, or create launch identities.
+        A refresh immediately invalidates every old source generation, before
+        the asynchronous replacement metadata has arrived.
+        """
+        if (self.category != 0 or self._games_view != "systems" or
+                self._dialog is not None or self._keyboard is not None):
+            return ()
+        page = self._systems
+        selected = page.items[page.selected] if 0 <= page.selected < len(page.items) else None
+        if selected is None or not (selected.kind == "system" or selected.id in ("all", "favorites")):
+            return ()
+        key = (self._artwork_generation, self._landing_revision,
+               selected.id, selected.kind, selected.system_id)
+        if key == self._landing_result_key:
+            return self._landing_result
+        from retropass.library import landing_items
+        from retropass.layout import LANDING_LIMIT
+
+        def source(name: str) -> tuple[UIItem, ...]:
+            return (self._landing_records.get(name, ())
+                    if self._landing_generations.get(name) == self._artwork_generation else ())
+
+        if selected.id == "favorites" and not any(
+                self._landing_generations.get(name) == self._artwork_generation
+                for name in ("favorites", "favorites_cache")):
+            self._landing_result, self._landing_result_key = (), key
+            return ()
+        favorite_ids = self._favorites
+        if (selected.id == "favorites" and
+                self._landing_generations.get("favorites_cache") != self._artwork_generation):
+            # A filtered fresh response proves only its own members. The old
+            # global set can still contain entries removed since the refresh.
+            favorite_ids = {item.id for item in source("favorites")}
+
+        def filtered(items: tuple[UIItem, ...]) -> tuple[UIItem, ...]:
+            output: dict[str, UIItem] = {}
+            for item in items:
+                if item.kind != "game" or not item.id or not item.available:
+                    continue
+                favorite = self._favorite_overrides.get(item.id,
+                    item.id in favorite_ids if self._favorites_loaded or selected.id == "favorites"
+                    else item.favorite or item.id in favorite_ids)
+                if selected.kind == "system" and item.system_id != selected.system_id:
+                    continue
+                if selected.id == "favorites" and not favorite:
+                    continue
+                output.setdefault(item.id, replace(item, favorite=favorite))
+                if len(output) == LANDING_LIMIT:
+                    break
+            return tuple(output.values())
+
+        recent = filtered(source("recent"))
+        # Include already-loaded page/favorite metadata as fallback, retaining
+        # original native IDs. At most five from each source enter the port.
+        candidates = (filtered(source("games")) + filtered(source("favorites_cache")) +
+                      filtered(source("favorites")) + recent)
+        self._landing_result = landing_items(candidates, (item.id for item in recent))
+        self._landing_result_key = key
+        return self._landing_result
+
     def snapshot(self, now: float = 0.0, *, display_clock: str = "") -> UISnapshot:
         """Accept the coordinator's clock text without reading wall time here."""
         del now  # Presentation alone owns animation time.
@@ -1922,4 +2015,4 @@ class NavigationModel:
                           page.total, page.offset, self.preferences, self._dialog, self._keyboard,
                           self._status, "Loading your collection…" if loading and not items else empty,
                           loading, self.demo, self.exit_request, _text(display_clock, 32),
-                          self._artwork_generation)
+                          self._artwork_generation, self._landing_items())

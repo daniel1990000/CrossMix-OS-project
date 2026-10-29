@@ -83,6 +83,38 @@ class PackageTest(unittest.TestCase):
             ov.stage_archive(bad, self.public, self.card, self.profile, self.inventory, fixture=True)
         self.assertFalse(ov.managed_root(self.card).exists())
 
+    def test_nested_notice_paths_use_full_lexical_order_and_rebuild_identically(self):
+        for name in ("notices/Collection-source/a.txt", "notices/Collection-NOTICE.txt",
+                     "notices/Collection-source/z/deep.txt", "notices/Collection-source-z.txt"):
+            path = self.source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(name + "\n")
+        first, manifest = self.package()
+        names = [row["path"] for row in manifest["files"]]
+        self.assertEqual(names, sorted(names))
+        second = self.root / "nested-rebuild.tar"
+        ov.create_archive(self.source, second, self.secret_path, self.public_path, self.profile,
+                          "demo-1", "python-extension")
+        self.assertEqual(first.read_bytes(), second.read_bytes())
+        with ov.VerifiedArchive(first, self.public) as archive:
+            self.assertEqual(archive.manifest["files"], manifest["files"])
+
+    def test_retropass_payload_retains_explicit_mixed_licence_scope(self):
+        for name in ("app/retropass/library.py", "app/retropass/source-lock.json",
+                     "notices/RetroPass-GPL-2.0.txt", "notices/RetroPass-NOTICE.txt",
+                     "notices/RetroPass-source/LICENSE.txt", "notices/RetroPass-source/AUTHORS.md"):
+            path = self.source / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("fixture source/notice: " + name + "\n")
+        archive, manifest = self.package()
+        self.assertEqual(manifest["license"], "GPL-2.0-only AND MIT AND OFL-1.1")
+        invalid = {**manifest, "license": "MIT-project-code-only"}
+        with self.assertRaisesRegex(ov.OverlayError, "licence scope differs"):
+            ov.validate_manifest(invalid)
+        (self.source / "notices/RetroPass-GPL-2.0.txt").unlink()
+        with self.assertRaisesRegex(ov.OverlayError, "licence notices missing"):
+            self.package("missing-gpl")
+
     def test_payload_hash_rejected_before_extraction(self):
         first, _ = self.package()
         bad = self.rewrite(first, lambda entries: entries.__setitem__(2, (entries[2][0], b"different contents")))

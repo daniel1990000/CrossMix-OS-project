@@ -241,7 +241,8 @@ def _artifact_inventory(root):
             name = path.relative_to(root).as_posix()
             if name == "candidate.json":
                 continue
-            require(len(result) < 256, "private artifact contains too many files")
+            # Includes the complete pinned RetroPass corresponding source.
+            require(len(result) < 512, "private artifact contains too many files")
             raw = tree.read(name, overlay.MAX_ARCHIVE if name == "original-overlay.tar" else overlay.MAX_FILE,
                             allow_empty=True)
             result.append({"path": name, "sha256": digest(raw), "size": len(raw)})
@@ -444,6 +445,9 @@ def assemble_private_candidate(source_root, output, *, source_review=None, bridg
             for module in modules:
                 overlay.relative_path(module)
                 require(module.startswith("app/bridge/") or module.startswith("app/psp_shell/") or
+                        module in {"app/retropass/__init__.py", "app/retropass/layout.py",
+                                   "app/retropass/library.py", "app/retropass/renderer.py",
+                                   "app/retropass/psp.py"} or
                         module in SIGNED_TOOL_MODULES,
                         "bridge module requirement is outside the signed original app scope")
                 require((staging / "tree" / PAYLOAD_ROOT / module).is_file(),

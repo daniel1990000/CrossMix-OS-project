@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "smartpro-psp-experience"
 dynamic = ["version"]
-description = "Original Smart Pro interface extensions around pinned spruce integrations"
+description = "PSP-style TrimUI interface using adapted RetroPass source and pinned spruce integrations"
 requires-python = ">=3.9"
 dependencies = ["PySDL2==0.9.17"]
 
@@ -17,7 +17,10 @@ smartpro-preview = "psp_shell.app:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["psp_shell*"]
+include = ["psp_shell*", "retropass*"]
+
+[tool.setuptools.package-data]
+retropass = ["NOTICE.txt", "LICENSE.txt", "source-lock.json"]
 
 [tool.setuptools.dynamic]
 version = {attr = "psp_shell.__version__"}
@@ -25,3 +28,213 @@ version = {attr = "psp_shell.__version__"}
 [tool.setuptools.data-files]
 "share/psp_shell/assets/fonts" = ["assets/fonts/NotoSans.ttf", "assets/fonts/OFL.txt"]
 "share/psp_shell/metadata" = ["packaging/current-release.json"]
+
+"share/psp_shell/source/vendor/retropass" = [
+  "vendor/retropass/.gitattributes",
+  "vendor/retropass/.gitignore",
+  "vendor/retropass/AUTHORS.md",
+  "vendor/retropass/LICENSE.txt",
+  "vendor/retropass/README.md",
+  "vendor/retropass/RetroPass.sln",
+]
+
+"share/psp_shell/source/vendor/retropass/.github/workflows" = [
+  "vendor/retropass/.github/workflows/main.yml",
+]
+
+"share/psp_shell/source/vendor/retropass/Docs" = [
+  "vendor/retropass/Docs/SettingsDataSources.md",
+  "vendor/retropass/Docs/SettingsLogging.md",
+  "vendor/retropass/Docs/SettingsPersonalization.md",
+  "vendor/retropass/Docs/SetupDolphin.md",
+  "vendor/retropass/Docs/SetupDuckStation.md",
+  "vendor/retropass/Docs/SetupEmulationStation.md",
+  "vendor/retropass/Docs/SetupLaunchBox.md",
+  "vendor/retropass/Docs/SetupLaunchBoxImport.md",
+  "vendor/retropass/Docs/SetupLaunchBoxSorting.md",
+  "vendor/retropass/Docs/SetupMultipleDataSources.md",
+  "vendor/retropass/Docs/SetupPPSSPP.md",
+  "vendor/retropass/Docs/SetupRetriXGold.md",
+  "vendor/retropass/Docs/SetupRetroArch.md",
+  "vendor/retropass/Docs/SetupXBSX2.md",
+  "vendor/retropass/Docs/SetupXeniaCanary.md",
+  "vendor/retropass/Docs/core_per_game.png",
+  "vendor/retropass/Docs/layout_collection_fixed.png",
+  "vendor/retropass/Docs/layout_collection_group.png",
+  "vendor/retropass/Docs/layout_collection_original.png",
+  "vendor/retropass/Docs/layout_collection_stretch_fill.png",
+  "vendor/retropass/Docs/layout_collection_stretch_uniform.png",
+  "vendor/retropass/Docs/layout_collection_stretch_uniform_to_fill.png",
+  "vendor/retropass/Docs/layout_menu_fixed.png",
+  "vendor/retropass/Docs/layout_menu_original.png",
+  "vendor/retropass/Docs/media_types.png",
+  "vendor/retropass/Docs/menu.gif",
+  "vendor/retropass/Docs/settings_data_source_activate.png",
+  "vendor/retropass/Docs/settings_data_source_add.png",
+  "vendor/retropass/Docs/settings_data_source_choose.png",
+  "vendor/retropass/Docs/settings_first_run.png",
+  "vendor/retropass/Docs/settings_log.png",
+  "vendor/retropass/Docs/settings_personalization.png",
+  "vendor/retropass/Docs/setup_dolphin_associated_platforms.png",
+  "vendor/retropass/Docs/setup_dolphin_edit_emulator.png",
+  "vendor/retropass/Docs/setup_duckstation_associated_platforms.png",
+  "vendor/retropass/Docs/setup_duckstation_edit_emulator.png",
+  "vendor/retropass/Docs/setup_launchbox_import_add.png",
+  "vendor/retropass/Docs/setup_launchbox_import_copy.png",
+  "vendor/retropass/Docs/setup_launchbox_import_emulator.png",
+  "vendor/retropass/Docs/setup_launchbox_import_platform.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_flash_content.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_flash_content_2.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_flash_content_4.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_flash_content_5.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_settings_activate.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_settings_activated.png",
+  "vendor/retropass/Docs/setup_multiple_data_sources_settings_unavailable.png",
+  "vendor/retropass/Docs/setup_ppsspp_associated_platforms.png",
+  "vendor/retropass/Docs/setup_ppsspp_edit_emulator.png",
+  "vendor/retropass/Docs/setup_retrixgold_associated_platforms.png",
+  "vendor/retropass/Docs/setup_retrixgold_edit_emulator.png",
+  "vendor/retropass/Docs/setup_retroarch_associated_platforms.png",
+  "vendor/retropass/Docs/setup_retroarch_edit_emulator.png",
+  "vendor/retropass/Docs/setup_retroarch_quit_hotkey.png",
+  "vendor/retropass/Docs/setup_sort_games.png",
+  "vendor/retropass/Docs/setup_sort_platform.png",
+  "vendor/retropass/Docs/setup_sort_playlist.png",
+  "vendor/retropass/Docs/setup_xbsx2_associated_platforms.png",
+  "vendor/retropass/Docs/setup_xbsx2_edit_emulator.png",
+  "vendor/retropass/Docs/setup_xeniacanary_associated_platforms.png",
+  "vendor/retropass/Docs/setup_xeniacanary_edit_emulator.png",
+]
+
+"share/psp_shell/source/vendor/retropass/Docs/v1.5" = [
+  "vendor/retropass/Docs/v1.5/RetroPass.xml",
+]
+
+"share/psp_shell/source/vendor/retropass/Docs/v1.6" = [
+  "vendor/retropass/Docs/v1.6/RetroPass.xml",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass" = [
+  "vendor/retropass/RetroPass/App.xaml",
+  "vendor/retropass/RetroPass/App.xaml.cs",
+  "vendor/retropass/RetroPass/DataSource.cs",
+  "vendor/retropass/RetroPass/DataSourceEmulationStation.cs",
+  "vendor/retropass/RetroPass/DataSourceLaunchBox.cs",
+  "vendor/retropass/RetroPass/DataSourceManager.cs",
+  "vendor/retropass/RetroPass/FocusControl.xaml",
+  "vendor/retropass/RetroPass/FocusControl.xaml.cs",
+  "vendor/retropass/RetroPass/Game.cs",
+  "vendor/retropass/RetroPass/GameCollectionPage.xaml",
+  "vendor/retropass/RetroPass/GameCollectionPage.xaml.cs",
+  "vendor/retropass/RetroPass/GameDetailsPage.xaml",
+  "vendor/retropass/RetroPass/GameDetailsPage.xaml.cs",
+  "vendor/retropass/RetroPass/LogPage.xaml",
+  "vendor/retropass/RetroPass/LogPage.xaml.cs",
+  "vendor/retropass/RetroPass/MainPage.xaml",
+  "vendor/retropass/RetroPass/MainPage.xaml.cs",
+  "vendor/retropass/RetroPass/Package.appxmanifest",
+  "vendor/retropass/RetroPass/Platform.cs",
+  "vendor/retropass/RetroPass/PlayLaterControl.xaml",
+  "vendor/retropass/RetroPass/PlayLaterControl.xaml.cs",
+  "vendor/retropass/RetroPass/Playlist.cs",
+  "vendor/retropass/RetroPass/PlaylistItem.cs",
+  "vendor/retropass/RetroPass/PlaylistPlayLater.cs",
+  "vendor/retropass/RetroPass/RetroPass.csproj",
+  "vendor/retropass/RetroPass/SearchPage.xaml",
+  "vendor/retropass/RetroPass/SearchPage.xaml.cs",
+  "vendor/retropass/RetroPass/SettingsPage.xaml.cs",
+  "vendor/retropass/RetroPass/StorageUtils.cs",
+  "vendor/retropass/RetroPass/ThemeManager.cs",
+  "vendor/retropass/RetroPass/ThumbnailCache.cs",
+  "vendor/retropass/RetroPass/UrlSchemeGenerator.cs",
+  "vendor/retropass/RetroPass/Utils.cs",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass/Assets" = [
+  "vendor/retropass/RetroPass/Assets/LargeTile.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/LargeTile.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/LargeTile.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/LargeTile.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/LargeTile.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/LockScreenLogo.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/SmallTile.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/SmallTile.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/SmallTile.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/SmallTile.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/SmallTile.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreen.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreen.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreen.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreen.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreen.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreenDefault-100.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreenDefault-125.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreenDefault-150.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreenDefault-200.png",
+  "vendor/retropass/RetroPass/Assets/SplashScreenDefault-400.png",
+  "vendor/retropass/RetroPass/Assets/Square150x150Logo.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/Square150x150Logo.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/Square150x150Logo.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/Square150x150Logo.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/Square150x150Logo.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-16.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-24.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-256.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-32.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-lightunplated_targetsize-48.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-16.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-256.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-32.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.altform-unplated_targetsize-48.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-16.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-24.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-24_altform-unplated.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-256.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-32.png",
+  "vendor/retropass/RetroPass/Assets/Square44x44Logo.targetsize-48.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.backup.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/StoreLogo.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/Wide310x150Logo.scale-100.png",
+  "vendor/retropass/RetroPass/Assets/Wide310x150Logo.scale-125.png",
+  "vendor/retropass/RetroPass/Assets/Wide310x150Logo.scale-150.png",
+  "vendor/retropass/RetroPass/Assets/Wide310x150Logo.scale-200.png",
+  "vendor/retropass/RetroPass/Assets/Wide310x150Logo.scale-400.png",
+  "vendor/retropass/RetroPass/Assets/empty.png",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass/Properties" = [
+  "vendor/retropass/RetroPass/Properties/AssemblyInfo.cs",
+  "vendor/retropass/RetroPass/Properties/Default.rd.xml",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass/Resources" = [
+  "vendor/retropass/RetroPass/Resources/SearchBackgroundDark_128.png",
+  "vendor/retropass/RetroPass/Resources/SearchBackgroundLight_128.png",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass/Resources/Themes/ThemeDefault" = [
+  "vendor/retropass/RetroPass/Resources/Themes/ThemeDefault/CommonDefault.xaml",
+  "vendor/retropass/RetroPass/Resources/Themes/ThemeDefault/CommonDefault.xaml.cs",
+]
+
+"share/psp_shell/source/vendor/retropass/RetroPass/SettingsPages" = [
+  "vendor/retropass/RetroPass/SettingsPages/SettingsAddDataSourcePage.xaml",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsAddDataSourcePage.xaml.cs",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsDataSourcePage.xaml",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsDataSourcePage.xaml.cs",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsLogPage.xaml",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsLogPage.xaml.cs",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsPage.xaml",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsPage.xaml.cs",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsPersonalizationPage.xaml",
+  "vendor/retropass/RetroPass/SettingsPages/SettingsPersonalizationPage.xaml.cs",
+]

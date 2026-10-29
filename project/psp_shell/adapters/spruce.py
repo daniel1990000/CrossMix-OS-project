@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: MIT
 """Original, bounded model facade for spruceOS 4.5.4 on the original Smart Pro.
 
-No upstream code is imported or copied here. Snapshot reads never instantiate
-PyUI's list managers: their constructors can rewrite/prune user lists. Live use
+EmulationStation metadata uses the separately licensed RetroPass parser port.
+Snapshot reads never instantiate PyUI's list managers: their constructors can
+rewrite/prune user lists. Live use
 requires explicitly injected, existing PyUI managers and device callbacks.
 """
 from __future__ import annotations
@@ -16,7 +17,6 @@ import secrets
 import stat
 from typing import Any, Callable, Iterable, Mapping
 import unicodedata
-import xml.etree.ElementTree as ElementTree
 
 
 BASELINE = "d45ff8dfe5756147522b04ae5863d17a90e88b54"
@@ -363,47 +363,43 @@ class SourceSnapshotProvider:
         return ""
 
     def _load_metadata(self, folder: Path) -> None:
-        """Bounded read-only counterpart for snapshot labels/art, not a writer."""
+        """Read-only RetroPass metadata port; native game/launch identity stays here."""
+        from retropass.library import XMLLimitError, parse_gamelist
+
         for name in ("miyoogamelist.xml", "gamelist.xml"):
             path = folder / name
             if not path.exists():
                 continue
             try:
                 path = self.path(path)
-                if path.stat().st_size > 2 * MAX_JSON:
-                    raise SpruceError("INPUT_TOO_LARGE", "Gamelist exceeds the snapshot budget")
-                with path.open("rb") as stream:
-                    raw = stream.read(2 * MAX_JSON + 1)
-                if len(raw) > 2 * MAX_JSON or b"<!DOCTYPE" in raw or b"<!ENTITY" in raw:
-                    raise SpruceError("INVALID_GAMELIST", "Gamelist entities or oversize input are not supported")
-                tree = ElementTree.fromstring(raw.decode("utf-8"))
-                if sum(1 for _ in tree.iter()) > 50000:
-                    raise SpruceError("INPUT_TOO_LARGE", "Gamelist contains too many elements")
-                for game in tree.findall("game"):
-                    source_path = game.findtext("path")
-                    if not source_path:
-                        continue
+                games = parse_gamelist(path, root=self.root, max_bytes=2 * MAX_JSON,
+                                       skip_invalid_entries=True,
+                                       path_resolver=lambda value: self.path(value, folder))
+                for game in games:
                     try:
-                        rom = self.path(source_path, folder)
+                        rom = self.path(game.path)
                         # XML may name only a file in this approved ROM tree.
                         if not rom.is_relative_to(folder):
                             continue
                         metadata = {}
-                        label = game.findtext("name")
-                        if label:
-                            metadata["label"] = _text(label, "gamelist name", 1024)
-                        image = game.findtext("image")
-                        if image:
+                        if game.title_supplied:
+                            metadata["label"] = _text(game.title, "gamelist name", 1024)
+                        for image in (game.thumbnail, game.screenshot):
+                            if not image:
+                                continue
                             try:
                                 artwork = self.path(image, folder)
                                 if artwork.is_file():
                                     metadata["artwork"] = str(artwork)
+                                    break
                             except SpruceError:
                                 pass
                         self._metadata[str(rom)] = metadata
                     except SpruceError:
                         continue
-            except (SpruceError, ElementTree.ParseError, OSError, UnicodeError) as error:
+            except XMLLimitError:
+                self._warn("INPUT_TOO_LARGE", folder.name)
+            except (SpruceError, ValueError, OSError, UnicodeError) as error:
                 self._warn(getattr(error, "code", "INVALID_GAMELIST"), folder.name)
             return # Same precedence as the existing manager: first present list.
 

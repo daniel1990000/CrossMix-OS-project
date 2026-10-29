@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: MIT
-"""Prepare and read back an original-only host release handoff; never publish it.
+"""Prepare and read back a scoped host release handoff; never publish it.
 
 The caller supplies an independent trust key/fingerprint. Bundled development
 keys, checksums, operator statements and custody receipts never grant production
@@ -29,6 +29,7 @@ PROJECT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT / "packaging"))
 import overlay as ov
 from dev_release import SOURCE_FOLDERS, SOURCE_ROOT_FILES, SOURCE_EXTENSIONS
+from release_descriptor import original_source_file, validate_retropass_vendor, ORIGINAL_PAYLOAD
 
 if __package__:
     from .recovery_preflight import directory_fd, fingerprint, write_report
@@ -247,10 +248,13 @@ def inspect_artifacts(blobs, trust):
             report.get("device_activation_qualified") is False and report.get("device_gates") == GATES and
             report.get("private_key_packaged") is False and report.get("production_authenticity_claim") is False,
             "handoff accepts only an unqualified original host preview")
-    require(descriptor.get("release_id") == release and descriptor.get("delivery") == "original-only-host-preview" and
+    retropass = descriptor.get("delivery") == "retropass-host-preview"
+    require(descriptor.get("selected_third_party_payload", []) == (["retropass"] if retropass else []),
+            "unreviewed third-party payload scope")
+    require(descriptor.get("release_id") == release and descriptor.get("delivery") in {"original-only-host-preview", "retropass-host-preview"} and
             descriptor.get("qualification") == GATES and descriptor.get("selected_native_binaries") == [] and
-            descriptor.get("selected_upstream_patches") == [] and descriptor.get("selected_original_payload") == [
-                "psp_shell", "bridge", "profiles", "ppsspp/theme", "assets"],
+            descriptor.get("selected_upstream_patches") == [] and descriptor.get("selected_original_payload") in ([
+                "psp_shell", "bridge", "profiles", "ppsspp/theme", "assets"], ORIGINAL_PAYLOAD),
             "native/device/derivative release requires separately implemented review")
     references = descriptor.get("optional_native_references", [])
     require(isinstance(references, list) and len(references) <= 32 and all(
@@ -303,16 +307,19 @@ def inspect_artifacts(blobs, trust):
         name = ov.relative_path(row.get("path"))
         parts = PurePosixPath(name).parts
         require(name.casefold() not in folded and
-                (parts[0] in SOURCE_FOLDERS or name in SOURCE_ROOT_FILES or name == "metadata/spruce-source-lock.json") and
-                (parts[0] != "ppsspp" or len(parts) > 1 and parts[1] == "theme") and
-                (Path(name).suffix.lower() in SOURCE_EXTENSIONS or name in SOURCE_ROOT_FILES or Path(name).name == "LICENSE") and
-                Path(name).name != "author-notification-draft.txt", "source archive contains an unreviewed source/asset scope")
+                (original_source_file(name) or name == "metadata/spruce-source-lock.json"), "source archive contains an unreviewed source/asset scope")
         key = "smartpro-original-source/" + name
         data = sources.get(key)
         require(data is not None and len(data) == row.get("size") and ov.digest(data) == row.get("sha256"),
                 "source archive differs from exact signed source inventory")
         expected_source[key] = data
         folded.add(name.casefold())
+    if retropass:
+        validate_retropass_vendor(PROJECT, sources)
+    else:
+        require(not any(name.startswith(("smartpro-original-source/retropass/",
+                                         "smartpro-original-source/vendor/retropass/")) for name in sources),
+                "legacy original-only descriptor cannot include RetroPass source")
     embedded = "smartpro-original-source/metadata/release-source.json"
     require(decode(sources.get(embedded, b"{}")) == snapshot and set(sources) == set(expected_source) | {embedded},
             "source export contains missing/extra entries or changed provenance")
@@ -329,10 +336,25 @@ def inspect_artifacts(blobs, trust):
             original = name.removeprefix("app/") if name.startswith("app/") else name
             require(sources.get("smartpro-original-source/" + original) == data,
                     "signed runtime code/asset differs from corresponding source inventory")
+        elif retropass and name.startswith("notices/RetroPass-source/"):
+            original = "vendor/retropass/" + name.removeprefix("notices/RetroPass-source/")
+            require(sources.get("smartpro-original-source/" + original) == data,
+                    "bundled RetroPass source differs from inventory")
+        elif retropass and name in {"notices/RetroPass-NOTICE.txt", "notices/RetroPass-GPL-2.0.txt"}:
+            original = ("retropass/NOTICE.txt" if name.endswith("NOTICE.txt") else "vendor/retropass/LICENSE.txt")
+            require(sources.get("smartpro-original-source/" + original) == data, "RetroPass notice differs")
         else:
             require(name in {"metadata/development-release.json", "metadata/source-provenance.json", "metadata/original-payload.json",
                              "notices/ORIGINAL-PROJECT-LICENSE.txt", "notices/NotoSans-OFL.txt", "notices/DEPENDENCIES.txt"},
-                    "unreviewed metadata or notice in signed original-only payload")
+                    "unreviewed metadata or notice in signed payload")
+    if retropass:
+        for name, data in sources.items():
+            prefix = "smartpro-original-source/vendor/retropass/"
+            if name.startswith(prefix):
+                require(payload.get("notices/RetroPass-source/" + name.removeprefix(prefix)) == data,
+                        "corresponding complete RetroPass source missing")
+        require(payload.get("notices/RetroPass-NOTICE.txt") and payload.get("notices/RetroPass-GPL-2.0.txt"),
+                "RetroPass licence notices missing")
     require(report.get("payload_files") == len(payload), "payload file count differs from build evidence")
     return {"release_id": release, "frontend": snapshot["frontend"],
             "source_inventory_sha256": snapshot["source_inventory_sha256"],
@@ -341,11 +363,12 @@ def inspect_artifacts(blobs, trust):
             "base_commit": ov.SPRUCE_COMMIT, "pyui_git_tree": ov.PYUI_TREE,
             "selected_native_binaries": [], "selected_upstream_patches": [],
             "device_gates": GATES.copy(), "distribution_cleared": False,
-            "device_ready": False, "original_only": True}
+            "device_ready": False, "original_only": not retropass,
+            **({"third_party_source": {"retropass": "GPL-2.0-only"}} if retropass else {})}
 
 
-def instructions(release):
-    return ("# Original-only host review handoff\n\n"
+def instructions(release, retropass=False):
+    text = ("# Host review handoff\n\n"
             "This bundle is a computer preview and source-review deliverable. It is not an SD image or a device install.\n"
             "No installed emulator, firmware, commercial game data, owner saves or private keys are supplied.\n\n"
             "Install/update: extract artifacts/" + release + "-host-preview.zip into a NEW host directory.\n"
@@ -364,16 +387,22 @@ def instructions(release):
             "Support: support-export.json is a minimal redacted package summary, not device diagnostics.\n"
             "For operator-selected observations use tools/support_bundle.py; review its local output before sharing. No upload is automatic.\n\n"
             "Custody: use custody-receipt for immutable readback, external-custody/recovery references and registry rotation/revocation observations.\n"
-            "Receipts are checksummed operator records, not signatures or proof that a private key can be recovered.\n").encode()
+            "Receipts are checksummed operator records, not signatures or proof that a private key can be recovered.\n")
+    if retropass:
+        text = text.replace("only the explicitly inventoried original source and notices",
+                            "the inventoried original helpers and complete GPL-2.0-only RetroPass source and adaptations")
+        text += "\nRetroPass retains its GPL-2.0-only licence and authors; see notices/RetroPass-NOTICE.txt.\n"
+    return text.encode()
 
 
-def support_matrix():
-    return {"schema": 1, "delivery": "original-only-host-review", "tested_runtime": "host preview only",
+def support_matrix(retropass=False):
+    return {"schema": 1, "delivery": "retropass-host-review" if retropass else "original-only-host-review", "tested_runtime": "host preview only",
             "intended_hardware": "original TrimUI Smart Pro TG5040", "supported_device_firmware": [],
             "supported_device_filesystems": [], "physical_areas_run": 0,
             "included_engines": [], "included_ports": [], "device_install_supported": False,
             "device_gates": GATES.copy(), "distribution_cleared": False,
-            "source_use_review": "original project/font notices only; upstream derivative and native rights remain separate"}
+            "source_use_review": ("original project/font and pinned GPL-2.0-only RetroPass notices and complete corresponding source"
+                                  if retropass else "original project/font notices only; upstream derivative and native rights remain separate")}
 
 
 def _new_private_directory(parent, name):
@@ -458,8 +487,8 @@ def prepare(artifacts, output, *, public_key, expected_fingerprint, trust_refere
     candidate = inspect_artifacts(blobs, trust)
     trust_summary["package_signer_fingerprint"] = candidate["package_signer_fingerprint"]
     files = {"artifacts/" + name: raw for name, raw in blobs.items()}
-    files["README.md"] = instructions(candidate["release_id"])
-    files["support-matrix.json"] = ov.canonical(support_matrix()) + b"\n"
+    files["README.md"] = instructions(candidate["release_id"], not candidate["original_only"])
+    files["support-matrix.json"] = ov.canonical(support_matrix(not candidate["original_only"])) + b"\n"
     files["trust-review.json"] = ov.canonical(trust_summary) + b"\n"
     files["custody-checklist.json"] = ov.canonical({
         "schema": 1, "steps": [{"step": step, "status": "pending"} for step in STEPS],
@@ -467,7 +496,7 @@ def prepare(artifacts, output, *, public_key, expected_fingerprint, trust_refere
     files["support-export.json"] = ov.canonical({"schema": 1, "kind": "local-redacted-support",
         "automatic_upload": False, "review_before_sharing": True,
         "entries": [{"role": "release-handoff", "data": sanitize(candidate)}]}) + b"\n"
-    index = {"schema": 1, "kind": "original-only-release-review-handoff", "candidate": candidate,
+    index = {"schema": 1, "kind": "retropass-release-review-handoff" if not candidate["original_only"] else "original-only-release-review-handoff", "candidate": candidate,
              "reviewed_artifact_checksum_index_sha256": expected_checksums_sha256,
              "proposed_download_url": url, "download_availability_verified": False, "published": False,
              "external_index_digest_required": True, "independent_trust_required": True,
@@ -481,7 +510,7 @@ def prepare(artifacts, output, *, public_key, expected_fingerprint, trust_refere
     # receive a successful handoff receipt.
     verify(output, expected_index=ov.digest(files["index.json"]), public_key=public_key,
            expected_fingerprint=expected_fingerprint, trust_reference=trust_reference, registry=registry)
-    return {"status": "prepared-original-only-review", "index_sha256": ov.digest(files["index.json"]),
+    return {"status": "prepared-retropass-review" if not candidate["original_only"] else "prepared-original-only-review", "index_sha256": ov.digest(files["index.json"]),
             "release_id": candidate["release_id"], "files": len(files), "published": False, "device_ready": False}
 
 
@@ -491,7 +520,7 @@ def load_bundle(bundle, expected_index):
     raw = read_file(Path(bundle) / "index.json")
     require(ov.digest(raw) == expected_index, "handoff index differs from independent expected digest")
     index = decode(raw)
-    require(index.get("schema") == 1 and index.get("kind") == "original-only-release-review-handoff" and
+    require(index.get("schema") == 1 and index.get("kind") in {"original-only-release-review-handoff", "retropass-release-review-handoff"} and
             index.get("device_ready") is False and index.get("production_trust_established") is False and
             index.get("published") is False and index.get("download_availability_verified") is False,
             "handoff cannot grant device, publication or operational trust")
@@ -539,9 +568,9 @@ def verify(bundle, *, expected_index, public_key, expected_fingerprint, trust_re
     blobs = {name.removeprefix("artifacts/"): data for name, data in files.items() if name.startswith("artifacts/")}
     candidate = inspect_artifacts(blobs, trust)
     require(candidate == index.get("candidate") and
-            decode(files.get("support-matrix.json", b"{}")) == support_matrix() and
-            files.get("README.md") == instructions(candidate["release_id"]), "handoff scope/instructions or candidate changed")
-    return {"status": "verified-original-only-review", "index_sha256": expected_index,
+            decode(files.get("support-matrix.json", b"{}")) == support_matrix(not candidate["original_only"]) and
+            files.get("README.md") == instructions(candidate["release_id"], not candidate["original_only"]), "handoff scope/instructions or candidate changed")
+    return {"status": "verified-retropass-review" if not candidate["original_only"] else "verified-original-only-review", "index_sha256": expected_index,
             "candidate": candidate, "production_trust_established": False, "published": False}
 
 
@@ -563,8 +592,8 @@ def custody_receipt(bundle, output, *, step, evidence_reference, expected_index,
         # be credited as an observation of this exact signer's revocation.
         candidate = inspect_artifacts(blobs, public)
         require(candidate == index["candidate"] and
-                decode(files["support-matrix.json"]) == support_matrix() and
-                files["README.md"] == instructions(candidate["release_id"]),
+                decode(files["support-matrix.json"]) == support_matrix(not candidate["original_only"]) and
+                files["README.md"] == instructions(candidate["release_id"], not candidate["original_only"]),
                 "revocation handoff scope/instructions or candidate changed")
         release = index["candidate"]["release_id"]
         with tempfile.TemporaryDirectory(prefix="smartpro-revocation-check-") as name:

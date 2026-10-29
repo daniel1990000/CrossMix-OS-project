@@ -28,6 +28,9 @@ class ReleaseDescriptorTest(unittest.TestCase):
         (self.project / "psp_shell/__main__.py").write_text("print('fixture')\n")
         (self.project / "LICENSE").write_text("original fixture\n")
         self.descriptor = json.loads((PROJECT / "packaging/current-release.json").read_bytes())
+        # These small identity fixtures exercise the retained legacy source scope.
+        self.descriptor["delivery"] = "original-only-host-preview"
+        self.descriptor.pop("selected_third_party_payload", None)
         self.path = self.project / "packaging/current-release.json"
         self.save()
         self.lock = self.root / "spruce-source-lock.json"

@@ -33,6 +33,16 @@ class BuildInfoTests(unittest.TestCase):
         self.assertIsNone(info["frontend_commit"])
         self.assertIsNone(info["working_tree_modified"])
 
+    def test_retropass_source_version_uses_its_mixed_source_descriptor(self):
+        descriptor = {**self.descriptor, "release_id": "smartpro-retropass-0.1.0-dev19",
+                      "delivery": "retropass-host-preview"}
+        self.write(self.root / "project/packaging/current-release.json", descriptor)
+        info = self.info(self.root / "project/psp_shell/__init__.py")
+        self.assertEqual(info["version"], "0.1.0-dev19")
+        self.assertEqual(info["release_id"], descriptor["release_id"])
+        self.assertEqual(info["delivery"], "retropass-host-preview")
+        self.assertEqual(info["source_kind"], "source-checkout")
+
     def test_installed_build_uses_its_retained_identity(self):
         package = self.root / "release"
         self.write(package / "metadata/development-release.json", {

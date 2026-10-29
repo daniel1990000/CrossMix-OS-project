@@ -452,7 +452,7 @@ def _run_preview(args, backend=None, backup_adapter=None):
         else:
             from .adapters.spruce import SpruceBackend
             backend = SpruceBackend(args.sd_root, read_only=True)
-    settings = SettingsStore(str(state_dir))
+    settings = SettingsStore(str(state_dir), default_theme="psp")
     settings.recover()
     dispatcher = Dispatcher(backend, settings, state_dir, backup_adapter=backup_adapter)
     model = NavigationModel(demo=bool(getattr(backend, "demo", False)),
@@ -478,9 +478,14 @@ def _run_preview(args, backend=None, backup_adapter=None):
                 receive(command, error=exc)
 
     synchronous(model.initial_commands())
+    if getattr(args, "theme", None):
+        from dataclasses import replace
+        model.preferences = replace(model.preferences, theme=args.theme)
+    def move_item():
+        synchronous(model.handle("right" if model.preferences.theme == "retropass" else "down"))
     def select_category(index):
         for _ in range((index - model.category) % 4):
-            synchronous(model.handle("right"))
+            synchronous(model.handle("category_next"))
     if args.screen == "continue":
         select_category(1)
     elif args.screen == "tools":
@@ -494,7 +499,7 @@ def _run_preview(args, backend=None, backup_adapter=None):
             for _ in range(len(model.snapshot().items)):
                 if model.snapshot().selected_item.id == target:
                     break
-                synchronous(model.handle("down"))
+                move_item()
             else:
                 raise AppError("SCREEN_UNAVAILABLE", "This preview screen is unavailable.")
             synchronous(model.handle("confirm"))
@@ -509,13 +514,13 @@ def _run_preview(args, backend=None, backup_adapter=None):
         for _ in range(len(model.snapshot().items)):
             if model.snapshot().selected_item.id == "collections":
                 break
-            synchronous(model.handle("down"))
+            move_item()
         else:
             raise AppError("SCREEN_UNAVAILABLE", "This library does not expose Collections.")
         synchronous(model.handle("confirm"))
     elif args.screen == "search":
         for _ in range(2):
-            synchronous(model.handle("down"))
+            move_item()
         synchronous(model.handle("confirm"))
     elif args.screen == "error":
         model.error(None, "SAMPLE_FAILURE", "The launcher was unavailable. Your saves remain in place.")
@@ -523,7 +528,7 @@ def _run_preview(args, backend=None, backup_adapter=None):
         select_category(0)
         synchronous(model.handle("confirm"))
     for action in filter(None, (args.actions or "").split(",")):
-        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search", "menu", "refresh"):
+        if action not in ("left", "right", "up", "down", "confirm", "back", "favorite", "search", "menu", "refresh", "category_previous", "category_next"):
             raise AppError("INVALID_ACTION", "The scripted preview contains an unknown navigation action.")
         synchronous(model.handle(action))
 
@@ -630,6 +635,7 @@ def main(argv=None):
     source.add_argument("--sd-root", help="Read a spruce card/source snapshot without modifying it")
     parser.add_argument("--headless", action="store_true")
     parser.add_argument("--software", action="store_true")
+    parser.add_argument("--theme", choices=("retropass", "psp"), help="Preview a dashboard style without changing the saved preference")
     parser.add_argument("--width", type=int, default=1280)
     parser.add_argument("--height", type=int, default=720)
     parser.add_argument("--frames", type=int, default=0, help="Exit after N rendered frames; zero runs interactively")

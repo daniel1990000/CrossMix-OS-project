@@ -339,6 +339,7 @@ class EmbeddedTests(unittest.TestCase):
         with self.provider_patch():
             runner.setup()
             runner._commands(runner.model.handle("confirm"))
+            self.assertEqual(runner.model.preferences.theme, "psp")
             for _ in range(44):
                 runner._commands(runner.model.handle("down"))
             before = runner.model.snapshot()

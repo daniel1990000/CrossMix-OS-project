@@ -10,7 +10,7 @@ import subprocess
 
 import overlay
 
-SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp"}
+SOURCE_FOLDERS = {"psp_shell", "bridge", "integration", "profiles", "assets", "packaging", "tools", "tests", "docs", "dev", "ppsspp", "retropass", "vendor"}
 SOURCE_ROOT_FILES = {"LICENSE", "README.md", "pyproject.toml", "requirements-dev.txt"}
 SOURCE_EXTENSIONS = {".py", ".md", ".txt", ".json", ".toml", ".sh", ".ttf", ".png", ".svg", ".wav", ".ini"}
 PAYLOAD_TOOLS = ("__init__.py", "recovery_payload.py", "recovery_preflight.py", "backup_catalog.py")
@@ -24,6 +24,9 @@ def original_source_scope(relative):
         return False
     if relative.parts[0] not in SOURCE_FOLDERS and relative.as_posix() not in SOURCE_ROOT_FILES:
         return False
+    if relative.parts[0] == "vendor":
+        return len(relative.parts) > 2 and relative.parts[1] == "retropass" and not any(
+            part in {"..", ".git", "__pycache__"} for part in relative.parts)
     if (relative.parts[0] == "ppsspp" and relative.as_posix() != "ppsspp/performance-source-lock.json"
             and (len(relative.parts) < 2 or relative.parts[1] != "theme")):
         return False
@@ -33,7 +36,7 @@ def original_source_scope(relative):
 
 def original_source_file(relative):
     relative = Path(relative)
-    return original_source_scope(relative) and (relative.suffix.lower() in SOURCE_EXTENSIONS or
+    return original_source_scope(relative) and (relative.parts[0] == "vendor" or relative.suffix.lower() in SOURCE_EXTENSIONS or
            relative.as_posix() in SOURCE_ROOT_FILES or relative.name == "LICENSE")
 
 
@@ -87,8 +90,17 @@ def resolve(project, descriptor_path, entries, source_lock):
     overlay.require(isinstance(descriptor, dict), "release descriptor must be an object")
     overlay.require(descriptor.get("schema") == 1, "unsupported release descriptor")
     overlay.identifier(descriptor.get("release_id"), "descriptor release id")
-    overlay.require(descriptor.get("delivery") == "original-only-host-preview",
-                    "development builder requires original-only host delivery")
+    overlay.require(descriptor.get("delivery") in {"original-only-host-preview", "retropass-host-preview"},
+                    "development builder requires a supported host delivery")
+    selected_third_party = descriptor.get("selected_third_party_payload", [])
+    overlay.require(selected_third_party == (["retropass"] if descriptor["delivery"] == "retropass-host-preview" else []),
+                    "descriptor third-party scope differs from supported RetroPass port")
+    if selected_third_party:
+        validate_retropass_vendor(project, captured)
+    else:
+        overlay.require(not any(name.startswith(("smartpro-original-source/retropass/",
+                                                  "smartpro-original-source/vendor/retropass/")) for name in captured),
+                        "legacy original-only descriptor cannot include RetroPass source")
     overlay.require(descriptor.get("frontend", {}).get("selection") == "repository-head-or-source-export",
                     "unsupported frontend revision selection")
     overlay.require(descriptor.get("base", {}).get("source_commit") == overlay.SPRUCE_COMMIT and
@@ -98,7 +110,7 @@ def resolve(project, descriptor_path, entries, source_lock):
                     "descriptor timestamp missing")
     overlay.require(descriptor.get("selected_upstream_patches") == [] and
                     descriptor.get("selected_native_binaries") == [],
-                    "original-only preview cannot select upstream patches or native binaries")
+                    "host preview cannot select upstream patches or native binaries")
     overlay.require(descriptor.get("selected_original_payload") == ORIGINAL_PAYLOAD,
         "release descriptor differs from the original payload builder scope")
     overlay.require(descriptor.get("qualification") == {
@@ -155,3 +167,38 @@ def resolve(project, descriptor_path, entries, source_lock):
     metadata = {"descriptor": descriptor, "descriptor_sha256": descriptor_sha,
                 "frontend": frontend, "source_inventory_sha256": digest}
     return metadata, snapshot
+
+
+def validate_retropass_vendor(project, captured=None):
+    """Require the whole pinned, unmodified tree; reject omitted or extra blobs."""
+    if captured is None:
+        prefix = "smartpro-original-source/"
+        captured = {}
+        for path in (project / "vendor/retropass").rglob("*"):
+            overlay.require(not path.is_symlink(), "RetroPass source symlinks are excluded")
+            if path.is_file():
+                captured[prefix + path.relative_to(project).as_posix()] = path.read_bytes()
+        lock_raw = (project / "retropass/source-lock.json").read_bytes()
+    else:
+        lock_raw = captured.get("smartpro-original-source/retropass/source-lock.json")
+    overlay.require(lock_raw is not None, "RetroPass source lock missing")
+    lock = json.loads(lock_raw)
+    overlay.require(lock.get("schema") == 1 and lock.get("commit") == "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83" and
+                    lock.get("repository") == "https://github.com/retropassdev/RetroPass" and
+                    lock.get("license") == "GPL-2.0-only", "RetroPass source identity differs")
+    rows = lock.get("files")
+    overlay.require(isinstance(rows, list) and len(rows) == lock.get("file_count") == 177 and
+                    hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode()).hexdigest() ==
+                    lock.get("inventory_sha256") == "6b6940d09c4f1589d84c2a8d9079fd0c40c3a048b241026686218f8bf68173ae", "RetroPass inventory differs")
+    expected = {}
+    for row in rows:
+        path = overlay.relative_path(row.get("path"))
+        key = "smartpro-original-source/vendor/retropass/" + path
+        overlay.require(key not in expected, "duplicate RetroPass source path")
+        data = captured.get(key)
+        overlay.require(data is not None and len(data) == row.get("size") and
+                        overlay.digest(data) == row.get("sha256"), "RetroPass source bytes differ: " + path)
+        expected[key] = data
+    actual = {name for name in captured if name.startswith("smartpro-original-source/vendor/retropass/")}
+    overlay.require(actual == set(expected), "RetroPass tree has missing or extra files")
+    return lock

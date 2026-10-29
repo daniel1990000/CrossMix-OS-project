@@ -1,8 +1,10 @@
-# Smart Pro PSP experience
+# RetroPass for TrimUI
 
-Original PSP-style interface extensions for the original TrimUI Smart Pro **TG5040**, built around pinned spruceOS v4.5.4/PyUI and its existing native owners.
+RetroPass-powered PSP interface and source port for the original TrimUI Smart Pro **TG5040**, built around pinned spruceOS v4.5.4/PyUI and its existing native owners.
 
-**Current development: dev18.** This batch adds native Collections browsing, scoped discovery, accessible help and named offline backup history. It fixes save-Undo conflicts, optional state/normal-launch boundaries, stale views, focus restoration and package/source identity. Read the [dev18 report](docs/dev18-library-backups-2026-10-26.md) and its linked exact verification before relying on a test or build claim.
+**Current development: dev20, RetroPass adapted into the PSP UI.** Fresh sessions use the PSP wave background, horizontal category crossbar and vertical game list. The running RetroPass port adds aspect-preserving covers, a larger focused-game preview and up to five recent-first library previews on eligible home rows. Its actual EmulationStation reader remains wired into the library. All 177 upstream files remain pinned and unchanged. [Port details and source mapping](docs/retropass-trimui.md) describe the running Linux implementation.
+
+Run `PYTHONPATH=project python3 -m psp_shell --demo`. Left/right change categories; up/down browse games. L/R (desktop Q/E) also change categories. Confirm opens the existing game dialog. The right-hand preview is omitted above 120% text size so the game list keeps its full readable width. Preview cards do not alter selection or launch a game; Confirm opens the selected native list or game. Existing saved theme choices are respected. Settings → Dashboard style offers both appearances with preview/apply/Undo, and CLI `--theme psp` or `--theme retropass` is temporary.
 
 [Dev16 remains the published computer preview](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16), with its original tag, assets and matching source. Dev18 does not change that publication. This is host software: all device/profile gates remain disabled and 0/13 physical acceptance areas have run. Read [the current handover](../HANDOVER.md), [status record](handover/LATEST.json) and [master register](docs/master-plan-2026-10-22.md) for the exact development branch and remaining qualification.
 
@@ -41,7 +43,7 @@ python3 -m venv /tmp/smartpro-venv
 PYTHONPATH=project /tmp/smartpro-venv/bin/python -m psp_shell --demo
 ```
 
-Use arrow keys or a controller to navigate. Enter confirms, Escape returns, and the on-screen hints follow the selected physical Confirm button. The sample titles and state cards are fixtures; no games are included or launched.
+Use arrow keys or a controller to navigate. RetroPass uses horizontal item navigation; the PSP crossbar retains vertical item navigation. Enter confirms, Escape returns, and the on-screen hints follow the selected physical Confirm button. The sample titles and state cards are fixtures; no games are included or launched.
 
 The controller keyboard and essential footer help scale with text size through 175%, with physical Confirm/Cancel/Delete/Find hints. Use Games → Refresh library (or F5) after changing covers; refresh preserves page/focus and clears stale artwork. See [interface accessibility](docs/interface-accessibility.md) and the [dev18 host captures](evidence/dev18-library-backups-20261026/).
 
@@ -86,4 +88,4 @@ See [full-system coverage](docs/feature-coverage.md), [qualified binding](bridge
 
 ## Licences
 
-New original Python helpers use [MIT](LICENSE). Spruce/PyUI source patches retain their upstream terms and notices. PPSSPP patches/fixtures retain [GPL-2.0-or-later](ppsspp/NOTICE.md), and RetroArch patches/fixtures retain [GPL-3.0-or-later](retroarch/NOTICE.md). The bundled Noto Sans font uses [OFL](assets/fonts/OFL.txt). The [owner-confirmed permission record](evidence/completion-20261023/owner-permission.json) covers private noncommercial source work. The [rights register](docs/release-rights.md) retains unresolved public recipe/SDK distribution questions. No Sony graphics, commercial game data, firmware or emulator binaries are included in the new payload.
+The RetroPass Python adaptation in `retropass/` retains GPL-2.0-only, with the complete upstream source and licence in `vendor/retropass/`. [The port notice](retropass/NOTICE.txt) records its origin and changes. Signed previews and source archives include the corresponding source and GPL notices. Existing original Python helpers retain [MIT](LICENSE). Spruce/PyUI source patches retain their upstream terms and notices. PPSSPP patches/fixtures retain [GPL-2.0-or-later](ppsspp/NOTICE.md), and RetroArch patches/fixtures retain [GPL-3.0-or-later](retroarch/NOTICE.md). The bundled Noto Sans font uses [OFL](assets/fonts/OFL.txt). The [owner-confirmed permission record](evidence/completion-20261023/owner-permission.json) covers private noncommercial source work. The [rights register](docs/release-rights.md) retains unresolved public recipe/SDK distribution questions. No Sony graphics, commercial game data, firmware or emulator binaries are included in the new payload.

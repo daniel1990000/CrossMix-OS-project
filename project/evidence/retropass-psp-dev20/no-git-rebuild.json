@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "implementation_commit": "25d594c5ca26b9d1b927d32d44f04cef0697c420",
+  "working_tree_modified": false,
+  "exported_source_has_git": false,
+  "comparisons": [
+    {
+      "file": "smartpro-retropass-0.1.0-dev20-host-preview.zip",
+      "sha256": "dbf946230705297f69071f0a2a3e0e1334e93ade48d9df6794379b02f4bde330",
+      "bytes": 10518445,
+      "byte_identical": true
+    },
+    {
+      "file": "smartpro-retropass-0.1.0-dev20-original-source.zip",
+      "sha256": "5ae67541843fae7f5bf94ac84f36f2353893bde7e7d80a6ab4f964d9f30084ca",
+      "bytes": 11141542,
+      "byte_identical": true
+    }
+  ],
+  "signed_manifest_license": "GPL-2.0-only AND MIT AND OFL-1.1",
+  "signed_payload_files": 255,
+  "source_inventory_files": 429,
+  "source_inventory_sha256": "0e4c3caf91d745f1fd2767ebacf07d5eb621fb75a938981ee71097cb2d5922a1",
+  "new_psp_runtime_module_packaged": true,
+  "source_payload_bytes_verified": true,
+  "mixed_source_handoff_readback_passed": true,
+  "signer_integrity_only_not_independent_production_trust": true,
+  "generated_private_keys_deleted": true,
+  "installed_smoke": {
+    "backup_cancel_dispatch": true,
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "discovery_scope": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "full_result_random": true,
+    "game_information": true,
+    "help_backups_collections_rendered": true,
+    "installed_build_identity": true,
+    "named_backup_history": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 9,
+    "settings_dispatch": true
+  },
+  "physical_device_verified": false,
+  "real_game_launches": 0
+}

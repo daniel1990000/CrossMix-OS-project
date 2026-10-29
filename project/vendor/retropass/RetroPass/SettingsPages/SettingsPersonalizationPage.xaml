@@ -1,0 +1,94 @@
+﻿<Page
+    x:Class="RetroPass.SettingsPages.SettingsPersonalizationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style TargetType="RadioButton" BasedOn="{StaticResource DefaultToggleButtonStyle}">
+            <Setter Property="Template" Value="{StaticResource ToggleButtonControlTemplate}" />
+        </Style>
+
+        <Style TargetType="CheckBox" BasedOn="{StaticResource DefaultCheckBoxStyle}">
+            <Setter Property="Template" Value="{StaticResource CheckBoxControlTemplate}" />
+        </Style>
+    </Page.Resources>
+
+    <Grid RowSpacing="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mode:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMode" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="System" Tag="Default" Checked="RadioButtonMode_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Dark" Tag="Dark" Checked="RadioButtonMode_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Light" Tag="Light" Checked="RadioButtonMode_Checked"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Main Page Layout:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMainPageLayout" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fixed" Tag="Fixed" Checked="RadioButtonMainPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Original Aspect" Tag="OriginalAspect" Checked="RadioButtonMainPageLayout_Checked"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Page Layout:</TextBlock>
+            <StackPanel x:Name="RadioButtonsCollectionPageLayout" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fixed" Tag="Fixed" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Original Aspect" Tag="OriginalAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Group Aspect" Tag="ApproximateAspect" Checked="RadioButtonCollectionPageLayout_Checked"/>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Collection Image Stretch:</TextBlock>
+            <StackPanel x:Name="RadioButtonsImageStretch" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Uniform" Tag="Uniform" Checked="RadioButtonImageStretch_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Fill" Tag="Fill" Checked="RadioButtonImageStretch_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Uniform To Fill" Tag="UniformToFill" Checked="RadioButtonImageStretch_Checked"/>
+            </StackPanel>
+        </Grid>
+        <CheckBox Grid.Row="6" x:Name="AutoPlayVideoCheckBox" FlowDirection="RightToLeft" Content="Auto Play Video:" Checked="AutoPlayVideoCheckBox_Checked" Unchecked="AutoPlayVideoCheckBox_Unchecked"/>
+        <CheckBox Grid.Row="7" x:Name="PlayFullScreenVideoCheckBox" FlowDirection="RightToLeft" Content="Play Full Screen Video:" Checked="PlayFullScreenVideoCheckBox_Checked" Unchecked="PlayFullScreenVideoCheckBox_Unchecked"/>
+        <Grid Grid.Row="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="165"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center" >Mute Video:</TextBlock>
+            <StackPanel x:Name="RadioButtonsMuteVideo" Grid.Column="1" Orientation="Horizontal" Spacing="10">
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="None" Tag="None" Checked="RadioButtonMuteVideo_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="On Auto Play" Tag="OnAutoPlay" Checked="RadioButtonMuteVideo_Checked"/>
+                <RadioButton XYFocusUpNavigationStrategy="RectilinearDistance" Content="Always" Tag="Always" Checked="RadioButtonMuteVideo_Checked"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Page>

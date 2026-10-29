@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "scope": "Host review of RetroPass source port; no hardware qualification",
+  "reviewers": [
+    "retropass_core",
+    "retropass_renderer",
+    "retropass_import",
+    "validation"
+  ],
+  "reproduced_and_fixed": [
+    "Native PyUI shoulder mappings missing from first SDL-only implementation; exact L1/R1 enums now mapped and tested.",
+    "Signed archive iteration sorted pathlib components differently from required POSIX path strings; lexical ordering and mixed licence notice checks added.",
+    "Signed native inventory omitted four adapted modules; exact required modules and signed-byte assertions added.",
+    "Complete upstream source exceeded prior 256-file private candidate budget; bounded budget512 passes full composition/restore checks.",
+    "Legacy native-return fixture used vertical directions after new default dashboard; test now asserts RetroPass and verifies44 horizontal steps retain native-return selection."
+  ],
+  "native_ownership": "Existing input, display, launch, return and save owners retained.",
+  "remaining": "Actual TG5040 qualification and native performance measurements have not run."
+}

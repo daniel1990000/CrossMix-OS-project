@@ -1,0 +1,35 @@
+{
+  "artifacts": [
+    "SHA256SUMS",
+    "START-HERE.txt",
+    "build-report.json",
+    "development-verification.pub",
+    "host-preview.png",
+    "release-source.json",
+    "smartpro-retropass-0.1.0-dev20-host-preview.zip",
+    "smartpro-retropass-0.1.0-dev20-original-source.zip",
+    "smartpro-retropass-0.1.0-dev20.tar"
+  ],
+  "device_activation_qualified": false,
+  "output": "/workspace/retropass-psp-dev20",
+  "overlay_sha256": "d69be2c69471040aa77a79d7e518a9bbcf0132d7cdaa3b3b6694fdc109aff669",
+  "smoke": {
+    "backup_cancel_dispatch": true,
+    "classic_delegation_contract": true,
+    "clean_process_exit": true,
+    "combined_filters": true,
+    "discovery_scope": true,
+    "executed": true,
+    "fresh_backup_readback": true,
+    "full_result_random": true,
+    "game_information": true,
+    "help_backups_collections_rendered": true,
+    "installed_build_identity": true,
+    "named_backup_history": true,
+    "navigation_actions_exercised": true,
+    "physical_device_verified": false,
+    "real_game_launches": 0,
+    "rendered_frames": 9,
+    "settings_dispatch": true
+  }
+}

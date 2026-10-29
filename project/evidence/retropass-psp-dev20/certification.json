@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "kind": "pinned-source-host-certification",
+  "started_at": "2026-10-29T04:18:12.403943+00:00",
+  "successful": true,
+  "sources": [
+    {
+      "environment_variable": "SPRUCE_SOURCE_ROOT",
+      "lock": "docs/spruce-source-lock.json",
+      "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+      "root": "/workspace/retropass-validation-sources/spruce",
+      "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 905,
+      "subtree": {
+        "path": "App/PyUI/main-ui",
+        "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+        "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+      }
+    },
+    {
+      "environment_variable": "PPSSPP_SOURCE_ROOT",
+      "lock": "project/ppsspp/source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "root": "/workspace/retropass-validation-sources/ppsspp",
+      "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tracked_content_clean": true,
+      "required_files_checked": 21,
+      "materialized_files_checked": 1102
+    },
+    {
+      "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+      "lock": "project/retroarch/source-lock.json",
+      "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+      "root": "/workspace/retropass-validation-sources/ra",
+      "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "tracked_content_clean": true,
+      "required_files_checked": 4,
+      "materialized_files_checked": 49
+    },
+    {
+      "environment_variable": "PORTS_SOURCE_ROOT",
+      "lock": "project/ports/celeste-fix.lock.json",
+      "lock_sha256": "637ec89506e98b52a36409f9223be6b0ef840f1786385ea77bca6de7e0363b59",
+      "root": "/workspace/retropass-validation-sources/ports",
+      "expected_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "observed_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "tracked_content_clean": true,
+      "required_files_checked": 2,
+      "materialized_files_checked": 58
+    },
+    {
+      "environment_variable": "PORTMASTER_SOURCE_ROOT",
+      "lock": "project/profiles/ports-sources.lock.json",
+      "lock_sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+      "root": "/workspace/retropass-validation-sources/portmaster",
+      "expected_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "observed_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 201
+    }
+  ],
+  "suites": [
+    {
+      "directory": "/workspace/CrossMix-OS-project/project/tests",
+      "successful": true,
+      "tests_run": 1193,
+      "passed": 1193,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "skip_details": [],
+      "process_exit_code": 0
+    },
+    {
+      "directory": "/workspace/CrossMix-OS-project/project/ppsspp/tests",
+      "successful": true,
+      "tests_run": 61,
+      "passed": 61,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0,
+      "skip_details": [],
+      "process_exit_code": 0
+    }
+  ],
+  "preview_passed": true,
+  "device_qualified": false,
+  "phase": "complete",
+  "totals": {
+    "tests_run": 1254,
+    "passed": 1254,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "sources_after_tests": [
+    {
+      "environment_variable": "SPRUCE_SOURCE_ROOT",
+      "lock": "docs/spruce-source-lock.json",
+      "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+      "root": "/workspace/retropass-validation-sources/spruce",
+      "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 905,
+      "subtree": {
+        "path": "App/PyUI/main-ui",
+        "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+        "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+      }
+    },
+    {
+      "environment_variable": "PPSSPP_SOURCE_ROOT",
+      "lock": "project/ppsspp/source-lock.json",
+      "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+      "root": "/workspace/retropass-validation-sources/ppsspp",
+      "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+      "tracked_content_clean": true,
+      "required_files_checked": 21,
+      "materialized_files_checked": 1102
+    },
+    {
+      "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+      "lock": "project/retroarch/source-lock.json",
+      "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+      "root": "/workspace/retropass-validation-sources/ra",
+      "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+      "tracked_content_clean": true,
+      "required_files_checked": 4,
+      "materialized_files_checked": 49
+    },
+    {
+      "environment_variable": "PORTS_SOURCE_ROOT",
+      "lock": "project/ports/celeste-fix.lock.json",
+      "lock_sha256": "637ec89506e98b52a36409f9223be6b0ef840f1786385ea77bca6de7e0363b59",
+      "root": "/workspace/retropass-validation-sources/ports",
+      "expected_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "observed_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+      "tracked_content_clean": true,
+      "required_files_checked": 2,
+      "materialized_files_checked": 58
+    },
+    {
+      "environment_variable": "PORTMASTER_SOURCE_ROOT",
+      "lock": "project/profiles/ports-sources.lock.json",
+      "lock_sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+      "root": "/workspace/retropass-validation-sources/portmaster",
+      "expected_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "observed_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+      "tracked_content_clean": true,
+      "required_files_checked": 6,
+      "materialized_files_checked": 201
+    }
+  ],
+  "finished_at": "2026-10-29T04:20:09.695314+00:00"
+}

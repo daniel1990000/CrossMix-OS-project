@@ -266,13 +266,15 @@ class ReleaseIntegrationTests(unittest.TestCase):
         ui_modules = {"app/psp_shell/ui/" + path.name for path in (PROJECT / "psp_shell/ui").glob("*.py")}
         required = set(record["bridge_review"]["required_project_modules"])
         self.assertTrue(ui_modules <= required, ui_modules - required)
+        port_modules = {"app/retropass/" + path.name for path in (PROJECT / "retropass").glob("*.py")}
+        self.assertTrue(port_modules <= required, port_modules - required)
         from build_payload import PAYLOAD_TOOLS
         self.assertEqual(integration.SIGNED_TOOL_MODULES, {"app/tools/" + name for name in PAYLOAD_TOOLS})
         self.assertTrue(integration.SIGNED_TOOL_MODULES <= required)
         with integration.overlay.VerifiedArchive(archive, integration.overlay.load_key(key, 32)) as verified:
             signed = {item["path"]: item["sha256"] for item in verified.manifest["files"]}
         retained = {item["path"]: item["sha256"] for item in record["artifact_files"]}
-        for relative in ("app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py",
+        for relative in ("app/psp_shell/ui/motion.py", "app/psp_shell/ui/pictograms.py", *sorted(port_modules),
                          *sorted(integration.SIGNED_TOOL_MODULES)):
             expected = hashlib.sha256((PROJECT / relative.removeprefix("app/")).read_bytes()).hexdigest()
             self.assertEqual(signed[relative], expected)
