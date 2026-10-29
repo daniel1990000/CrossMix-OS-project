@@ -339,8 +339,9 @@ class EmbeddedTests(unittest.TestCase):
         with self.provider_patch():
             runner.setup()
             runner._commands(runner.model.handle("confirm"))
+            self.assertEqual(runner.model.preferences.theme, "retropass")
             for _ in range(44):
-                runner._commands(runner.model.handle("down"))
+                runner._commands(runner.model.handle("right"))
             before = runner.model.snapshot()
             self.assertEqual(before.selected_item.id, "game:044")
             generation = before.artwork_generation
