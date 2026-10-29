@@ -35,6 +35,8 @@ Ordinary Soldier/save/fresh-process Continue and moving-scene measurements are
 checkpoints are separate. Qualified frontend Apply/Undo, composed authenticated
 Resume and actual device qualification remain open.
 
+A bounded [synthetic SDL controller queue simulation](project/evidence/host-controller-20261029/README.md) passed through the standalone preview loop: category navigation, a confirm-button preference change and swapped-button use, and the demo launch notice followed by return to library and home. These are synthetic events and fixture data; they do not test a physical controller, production launch handoff or return from a running application. No product source or profile gate changed.
+
 Original completion remains **14/25; physical acceptance 0/13**. Device/profile
 gates stay disabled, with no selected upstream patch or emulator distribution.
 [Published dev16](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16)
