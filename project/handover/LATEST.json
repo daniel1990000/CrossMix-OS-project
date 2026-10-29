@@ -304,6 +304,6 @@
     "package_smoke": "passed; synthetic host, no game launches",
     "strict_check": "passed 1263 tests, zero skips/failures/errors, five pinned sources; d27799f",
     "device_qualified": false,
-    "source_export_rebuild": "not run"
+    "source_export_rebuild": "passed without Git; host and source ZIPs byte-identical, signatures and inventories verified; fixture rollback and installed synthetic smoke passed"
   }
 }

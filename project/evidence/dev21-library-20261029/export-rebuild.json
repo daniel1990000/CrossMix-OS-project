@@ -1,0 +1,13 @@
+{
+  "source_commit": "d27799fc5eeab79119e0f59597fde9fe156fadaa",
+  "source_inventory_sha256": "18b1e59023360b544443e52049d01300cc03b3058fa5e556f1b9d5cb5a37cfb6",
+  "no_git_export": true,
+  "both_sha256sums_verified": true,
+  "both_signatures_and_inventories_verified": true,
+  "host_and_source_zip_byte_identical": true,
+  "fixture_stage_activate_rollback": true,
+  "installed_synthetic_smoke": true,
+  "game_launches": 0,
+  "signing_note": "Independent ephemeral keys; signed overlays are not expected to match across builds.",
+  "device_qualified": false
+}
