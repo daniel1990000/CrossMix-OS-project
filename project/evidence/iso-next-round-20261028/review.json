@@ -2,7 +2,7 @@
   "schema": 1,
   "kind": "independent-dev20-implementation-review",
   "reviewer": "review independent agent",
-  "recorded_at_utc": "2026-10-28T23:24:54.735783+00:00",
+  "recorded_at_utc": "2026-10-28T23:39:12.241481+00:00",
   "base_commit": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
   "status": "source_freeze_approved_live_collector_gameplay_and_final_snapshot_evidence_pending",
   "reviewed_input_sha256": {
@@ -177,23 +177,7 @@
     "whole_native_preservation_behavior_pending": false,
     "hardware_qualified": false
   },
-  "implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
-  "independent_certification_readback": {
-    "implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
-    "strict_tests_passed": 1256,
-    "unexpected_skips_failures_errors": 0,
-    "strict_report_sha256": "642925ba523e61836be5061e2a9d00d92de30a0b1b9c8bdd721d84afd96e82f3",
-    "five_exact_clean_source_identities_verified": true,
-    "clean_checkout_identity_verified": true,
-    "all_nine_package_artifact_hashes_and_sizes_recomputed": true,
-    "overlay_signature_and_payload_inventory_verified": true,
-    "all_246_source_zip_entries_match_inventory_and_exact_commit": true,
-    "source_inventory_sha256": "45955655b4d5473cf652f6d3696d553024b1bf9fd5a12615ddf7e0d61019c5f3",
-    "host_and_source_zip_no_git_rebuild_bytes_equal": true,
-    "helper_c_source_included_native_patch_binary_scopes_excluded": true,
-    "installed_smoke_stage_activation_rollback_read_from_bound_builder_report": true,
-    "later_metadata_commits_separate": true
-  },
+  "implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
   "independent_whole_native_0006_readback": {
     "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
     "summary_sha256": "7d2537844f59d09baee7c59a4b540c7e285c3ff5b2523118b90fb64c6753fd1d",
@@ -227,6 +211,66 @@
     "skips_failures_errors": 0,
     "live_collector_attempt_accepted": false,
     "current_progress_handover_keeps_savedata_and_measurements_pending": true,
-    "final_post7896474_strict_package_identity_required": true
+    "final_post7896474_strict_package_identity_required": false,
+    "final_exact_source_certified": "50bbc3595c29238085d737cfe088971b0b514012"
+  },
+  "prior_independent_certification_readback": [
+    {
+      "implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
+      "strict_tests_passed": 1256,
+      "unexpected_skips_failures_errors": 0,
+      "strict_report_sha256": "642925ba523e61836be5061e2a9d00d92de30a0b1b9c8bdd721d84afd96e82f3",
+      "five_exact_clean_source_identities_verified": true,
+      "clean_checkout_identity_verified": true,
+      "all_nine_package_artifact_hashes_and_sizes_recomputed": true,
+      "overlay_signature_and_payload_inventory_verified": true,
+      "all_246_source_zip_entries_match_inventory_and_exact_commit": true,
+      "source_inventory_sha256": "45955655b4d5473cf652f6d3696d553024b1bf9fd5a12615ddf7e0d61019c5f3",
+      "host_and_source_zip_no_git_rebuild_bytes_equal": true,
+      "helper_c_source_included_native_patch_binary_scopes_excluded": true,
+      "installed_smoke_stage_activation_rollback_read_from_bound_builder_report": true,
+      "later_metadata_commits_separate": true
+    }
+  ],
+  "independent_certification_readback": {
+    "implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+    "strict_tests_passed": 1263,
+    "unexpected_skips_failures_errors": 0,
+    "five_exact_clean_source_identities_verified": true,
+    "all_nine_package_artifact_hashes_and_sizes_recomputed": true,
+    "overlay_signature_and_68_file_payload_inventory_verified": true,
+    "all_247_source_zip_entries_match_inventory_and_exact_commit": true,
+    "source_inventory_sha256": "9dcc83c62517768f4154679611ab1bb210cf610e0d0e64c2ac7198b74fab67a0",
+    "host_and_source_zip_no_git_rebuild_bytes_equal": true,
+    "native_load_helper_and_original_controller_c_included_native_patch_binary_scopes_excluded": true,
+    "installed_smoke_stage_activation_rollback_read_from_bound_builder_report": true,
+    "later_metadata_commits_separate": true
+  },
+  "private_fixture_review": {
+    "onfoot_state_sha256": "6dfbc85a87999fcd23fb331f85a4e8d8002c89f37bb06c2d4b6025f9ebec89a2",
+    "mounted_bike_state_sha256": "25d269d06aef2e15f0a5adb4a92b8f8591ce19f2ae84512c7a6262de97616b3b",
+    "source_engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+    "decision": "accepted_legitimate_private_fixture_provenance_only",
+    "onfoot_review_sha256": "08ce1c59390ad055a0e0d854e63b27a41e762e9a3ec9c747a8b2ba41ae175711",
+    "mounted_bike_review_sha256": "ea6a7d5152d2e3996948c27e9d569782bfdd04896798c6ab2867c1801fb42e47",
+    "measurement_ready": false,
+    "ordinary_savedata_or_continue_verified": false,
+    "selection_note": "Parent selected final optional0006engine consistently for both future resolution arms; earlier base-engine plan superseded. No mixed engine comparison permitted."
+  },
+  "independent_ci_readback": {
+    "run_id": 40787227636,
+    "head_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+    "actual_clean_merge_checkout": "df2a17b2be18466ec08559007e9335df60433ea1",
+    "artifact_id": 12859623115,
+    "artifact_archive_sha256": "8b9390d95f3cad91f24b8ce755d4541e9e0af1929fb218dfafafee3418bc5212",
+    "review_sha256": "b82cabdb93af24cd066c40b4ce88ed6cf3426d2812e7c02e30ad1690eaec0872",
+    "strict_passed": 1263,
+    "skips_errors_failures": 0,
+    "all_eight_inner_checksums_verified": true,
+    "all_247_source_inventory_entries_match_exact_head_source_bytes": true,
+    "signed_68_file_payload_verified": true,
+    "installed_smoke_rollback_verified_from_bound_report": true,
+    "merge_checkout_package_identity_distinct_from_local_clean_head_package": true,
+    "later_heads_need_separate_status_readback": true
   }
 }

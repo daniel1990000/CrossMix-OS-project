@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-29",
+  "exact_implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+  "strict_checks": {
+    "passed": 1263,
+    "skipped": 0,
+    "errors": 0,
+    "failures": 0,
+    "exact_pinned_sources": 5
+  },
+  "clean_package_install_rollback_signatures_inventory_source_export_rebuild": "passed_for_exact_implementation",
+  "package_receipt": "project/evidence/iso-next-round-20261028/certification/package-50bbc35-receipt.json",
+  "ci_readback": "project/evidence/iso-next-round-20261028/certification/ci-readback-50bbc35.json",
+  "later_documentation_has_separate_identity": true,
+  "whole_native_interruption_windows_passed": 8,
+  "fresh_native_reload_passed": true,
+  "ordinary_game_savedata_continue": "unverified_stopped_by_owner",
+  "broader_measurements": {
+    "accepted_runs": 0,
+    "matched_pairs": 0,
+    "soaks": 0
+  },
+  "collector_live_end_to_end": "not_run",
+  "owner_stop": {
+    "reason": "Usage cost; stop further game testing",
+    "automatic_resumption": false,
+    "owned_emulator_exit_code": 0,
+    "normal_owned_tree_completion": true,
+    "receipt": "project/evidence/iso-next-round-20261028/ordinary-gameplay-normal-exit.json"
+  },
+  "performance_improvement_demonstrated": false,
+  "physical_acceptance": "0/13",
+  "original_completion": "14/25",
+  "device_gates_enabled": false,
+  "release_published": false
+}

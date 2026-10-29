@@ -88,3 +88,23 @@ FPS differences are not improvement claims. Host evidence cannot qualify TrimUI
 presets, authenticated frontend Resume or physical acceptance. The original
 register stays **14/25**, physical acceptance **0/13**, with production/device
 gates disabled and published dev16 preserved.
+
+## Final scope and owner stop — 29 October
+
+The owner explicitly stopped game testing because of usage cost. No further
+GTA gameplay, comparisons or soaks are authorized by this handover. The owned
+emulator exited through native UI normally with exit code 0. Soldier was not
+completed, game SAVEDATA remained empty, and ordinary fresh-process Continue is
+unverified. Convenience checkpoints do not change that result. Broader scene
+collection produced zero accepted runs, pairs or soaks; the collector has not
+completed a live end-to-end acquisition. No performance improvement is claimed.
+
+Exact implementation `50bbc3595c29238085d737cfe088971b0b514012` passes
+1,263 strict checks, zero skips/errors/failures, against all five exact pinned
+sources. Its clean development package passed installed smoke, fixture rollback,
+signatures/inventories and byte-identical no-Git source-export rebuilding (68
+payload files, 247 source entries). Independently read-back CI run 40787227636
+passed for that head using separate merge checkout
+`df2a17b2be18466ec08559007e9335df60433ea1`. Later documentation commits have
+separate identities. [Final verification](../evidence/iso-next-round-20261028/verification.json)
+links exact package/CI receipts. Published dev16 and all device gates are unchanged.

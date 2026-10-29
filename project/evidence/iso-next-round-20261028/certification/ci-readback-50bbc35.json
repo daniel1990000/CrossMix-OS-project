@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "kind": "independent-current-pr-ci-artifact-readback",
+  "reviewer": "review independent agent",
+  "recorded_at_utc": "2026-10-28T23:39:01.508443+00:00",
+  "pr_number": 4,
+  "run_id": 40787227636,
+  "run_number": 69,
+  "head_commit": "50bbc3595c29238085d737cfe088971b0b514012",
+  "actual_clean_merge_checkout": "df2a17b2be18466ec08559007e9335df60433ea1",
+  "conclusion": "success",
+  "artifact_id": 12859623115,
+  "artifact_archive_sha256": "8b9390d95f3cad91f24b8ce755d4541e9e0af1929fb218dfafafee3418bc5212",
+  "artifact_archive_size": 5427158,
+  "github_declared_digest_matches_download": true,
+  "strict_totals": {
+    "tests_run": 1263,
+    "passed": 1263,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "five_exact_clean_sources_verified": true,
+  "all_inner_checksums_verified": 8,
+  "original_source_inventory_entries_verified": 247,
+  "source_inventory_sha256": "9dcc83c62517768f4154679611ab1bb210cf610e0d0e64c2ac7198b74fab67a0",
+  "every_source_inventory_entry_matches_head_source_bytes": true,
+  "signed_payload_files_verified": 68,
+  "installed_smoke_executed": true,
+  "fixture_stage_activate_rollback": true,
+  "generated_private_key_deleted": true,
+  "native_binaries_or_patches_selected": false,
+  "release_publication_jobs_intentionally_skipped": true,
+  "device_qualified": false,
+  "artifacts": {
+    "extracted/certification.json": {
+      "size": 7108,
+      "sha256": "9ebd937b7a33d3a0672cbb7aad14411b9ad35f87bfd704d9f101110a0775553c"
+    },
+    "extracted/development/SHA256SUMS": {
+      "size": 743,
+      "sha256": "0670842ab7b3bc3e3ec97a3e02e91e4b500531b250038af5cc0d52054b542fa0"
+    },
+    "extracted/development/START-HERE.txt": {
+      "size": 859,
+      "sha256": "a8376a3dda95be2363a97ba585a33bc3d176d767753a6c2a92795fdc0a7b7402"
+    },
+    "extracted/development/build-report.json": {
+      "size": 5722,
+      "sha256": "808c4f7350d57fc4207329e9ba7f4bb3dedb3cb6daf558c70c0ce73f7c71e0bf"
+    },
+    "extracted/development/development-verification.pub": {
+      "size": 32,
+      "sha256": "7ad02a8c2cbf3498843d3f90574c14d77243e97f8f78899e0b50456023cb5e51"
+    },
+    "extracted/development/host-preview.png": {
+      "size": 147785,
+      "sha256": "70d4d73c5fe571d5ecc54c521ba49c875cd45e44c985f9e9762db75cbc6e667b"
+    },
+    "extracted/development/release-source.json": {
+      "size": 31998,
+      "sha256": "5f0537e54d465640784d58d9f98670c68d4a7b8244a82b4bcb6da26f4cdf7081"
+    },
+    "extracted/development/smartpro-psp-0.1.0-dev20-host-preview.zip": {
+      "size": 1488285,
+      "sha256": "91230c5726397bbc15ffda3c67c2ca90c61fc9e62bcdb631ca63c172b7ee8b49"
+    },
+    "extracted/development/smartpro-psp-0.1.0-dev20-original-source.zip": {
+      "size": 2187443,
+      "sha256": "59a669a64fc9bc13bea5daa4b768b80193dbb3708fe4dcc7ec6ec514f5356ecb"
+    },
+    "extracted/development/smartpro-psp-0.1.0-dev20.tar": {
+      "size": 3225600,
+      "sha256": "327f407b602cb0cb6fe71cde48e6922d515c60f1630ffd5f772c4cc957076965"
+    },
+    "extracted/host-preview.json": {
+      "size": 543,
+      "sha256": "dd7c5f25261ef5b8270e306ec2828f624b87208074168f37e0d3874850292506"
+    },
+    "extracted/library.png": {
+      "size": 150396,
+      "sha256": "80eb22bbe084703db52b412895a71998045400486c17ea8af88c376159ba013d"
+    }
+  },
+  "limits": [
+    "CI package and checks identify separate clean merge checkoutdf2a17b..., not the local clean50bbc35 package.",
+    "Matching original-source inventory establishes those source bytes; CI signing key/metadata and package ZIP hashes retain their own identities.",
+    "Later metadata or implementation heads need current-head CI status verification; this artifact does not certify them.",
+    "No ordinary savedata/Continue, gameplay comparison, qualified Resume or device readiness is inferred from host CI."
+  ]
+}

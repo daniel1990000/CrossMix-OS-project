@@ -70,7 +70,7 @@
     "commercial_sdk_or_public_native_terms_inferred": false
   },
   "schema": 2,
-  "date_utc": "2026-10-28",
+  "date_utc": "2026-10-29",
   "branch": "build/iso-next-round-20261028",
   "base_at_start": "1ef6aa1e7856a93ed2328b60cbf04eff88dc914a",
   "pull_request": {
@@ -82,7 +82,7 @@
     "depends_on": 3
   },
   "release_id": "smartpro-psp-0.1.0-dev20",
-  "project_stage": "Dev20 continuation executing: settings/audit/controller and optional immutable native snapshot source implemented/reviewed; exact clean strict1256 pass; live acceptance and packaging underway.",
+  "project_stage": "Dev20 implementation and exact-source host/package verification complete; owner stopped game testing due to usage cost; ordinary savedata and broader measurements unverified.",
   "read_order": [
     "AGENTS.md",
     "HANDOVER.md",
@@ -95,19 +95,29 @@
   "continuation_prompt": "NEXT_CHAT_PROMPT.txt",
   "master_plan": "project/docs/master-plan-2026-10-22.md",
   "current_snapshot": {
-    "clean_implementation_commit": "789647449bd5a8ddb47fad4630e234703689c4f8",
+    "clean_implementation_commit": "50bbc3595c29238085d737cfe088971b0b514012",
     "strict_tests": {
-      "tests_run": 1256,
-      "passed": 1256,
+      "tests_run": 1263,
+      "passed": 1263,
       "failures": 0,
       "errors": 0,
       "skipped": 0,
       "expected_failures": 0,
       "unexpected_successes": 0
     },
-    "test_execution": "Clean detached exact implementation checkout; separate five pinned source verification. Final receipt copied after packaging.",
-    "package_status": "in_progress_separate_exact_source_receipt_required",
-    "later_metadata_commits_have_separate_identity": true
+    "test_execution": "Clean detached exact source; five exact pinned sources; independently reviewed receipts.",
+    "package_status": "passed_exact_source",
+    "later_metadata_commits_have_separate_identity": true,
+    "verification": "project/evidence/iso-next-round-20261028/verification.json",
+    "package_receipt": "project/evidence/iso-next-round-20261028/certification/package-50bbc35-receipt.json",
+    "ci_readback": "project/evidence/iso-next-round-20261028/certification/ci-readback-50bbc35.json",
+    "ci_run_id": 40787227636,
+    "ci_actual_clean_checkout": "df2a17b2be18466ec08559007e9335df60433ea1",
+    "ci_status": "success_for_50bbc35_only",
+    "source_inventory_files": 247,
+    "payload_files": 68,
+    "package_host_zip_sha256": "5c2fcfcefac5634d52fb8ef3aa21bf415b0e926840a0308b0e703df27836ba44",
+    "package_source_zip_sha256": "a179c903ee8d5a337f49945149037047d30054b296fe2308383c3bd6a677954e"
   },
   "published_snapshot": {
     "release": "smartpro-host-0.1.0-dev16",
@@ -173,14 +183,13 @@
     "available": false,
     "physical_areas_run": 0,
     "physical_areas_total": 13,
-    "game_specific_testing": "Owner authorized ISO continuation; actual desktop/native evidence in dev19 report. No physical tests."
+    "game_specific_testing": "Desktop evidence only. Owner stopped further game testing due to usage cost; no automatic resumption. No physical tests."
   },
   "next_work": [
-    "Validate the final direct-native-load/warmup collector in a clean exact-source check/package and actual scene acquisition.",
-    "Complete ordinary Soldier/save/fresh-process Continue; retain explicit unmet criterion until observed.",
-    "Freeze legitimate on-foot/driving/action fixtures; collect five matched30second pairs and both isolated30minute settings runs with final exact engine.",
-    "Finish exact clean packaging and CI artifact readback; update final acceptance without device promotion.",
-    "With real target hardware perform inventory/recovery and existing13area casebook."
+    "Review saved application changes in draft PR4; do not merge or release automatically.",
+    "Do not automatically resume game testing, scene collection, comparisons or soaks; owner stopped them due to usage cost.",
+    "Treat ordinary savedata, qualified frontend Apply/Undo, composed Resume and physical acceptance as unverified.",
+    "Continue future application work only within the owner's current request and preserve disabled device/profile gates."
   ],
   "historical_native_custody": {
     "record": "project/evidence/artifact-custody/native-retention.json",
@@ -261,15 +270,15 @@
     "later_metadata_commits_have_separate_identity": true
   },
   "next_round": {
-    "status": "executing",
+    "status": "saved_game_testing_stopped_by_owner",
     "report": "project/docs/iso-next-round-2026-10-28.md",
     "evidence": "project/evidence/iso-next-round-20261028",
     "settings_clarity": "implemented_reviewed",
-    "reusable_host_audit": "reviewed_post789_direct_native_load_ack_and_warmup; final_strict_and_live_acquisition_pending",
+    "reusable_host_audit": "implemented_reviewed_strict_pass; live_end_to_end_collector_not_run",
     "analogue_helper": "actual_native_menu_and_onfoot_movement_verified; first_axis_priming_frozen_in_audit_warmup",
     "optional_snapshot_patch": "0006_source_reviewed_private_full_engine_built_host_whole_native8windows_and_fresh_load_passed",
-    "ordinary_savedata_continue": "in_progress_unverified",
-    "broader_measurements": "preparation_only_no_accepted_samples",
+    "ordinary_savedata_continue": "stopped_by_owner_unverified",
+    "broader_measurements": "stopped_by_owner_zero_accepted_runs_pairs_or_soaks",
     "base_interruption_preservation": "UNMET_reproduced10windows_only2preserved_usable_prior",
     "optional_snapshot_fixture": "PASS16kill12faultcases_no_positive_qualified_profile",
     "runtime_gates_enabled": false,
@@ -283,6 +292,9 @@
       "profile_created": false,
       "physical_power_loss_test": false,
       "legacy_mutable_receipts_repaired": false
-    }
+    },
+    "automatic_game_testing_resumption_authorized": false,
+    "stop_reason": "Owner explicitly stopped game testing because of usage cost.",
+    "owned_emulator_normal_exit": true
   }
 }

@@ -1,6 +1,6 @@
 # TrimUI handover — dev20 continuation
 
-Updated 28 October 2026. Execution continues on
+Updated 29 October 2026. Work is saved on
 `build/iso-next-round-20261028` in [draft PR #4](https://github.com/daniel1990000/CrossMix-OS-project/pull/4),
 stacked on unmerged PR #3. No merge or release is authorized by this batch.
 
@@ -10,8 +10,8 @@ Read [the current report](project/docs/iso-next-round-2026-10-28.md),
 Dev19 records are preserved in `HANDOVER-HISTORY-through-dev19.md`,
 `project/handover/LATEST-through-dev19.json` and its unchanged dated audit.
 
-Reviewed source commit **`789647449bd5a8ddb47fad4630e234703689c4f8`** passes
-**1,256 strict checks**, zero skips/errors/failures, from a clean detached checkout
+Reviewed source commit **`50bbc3595c29238085d737cfe088971b0b514012`** passes
+**1,263 strict checks**, zero skips/errors/failures, from a clean detached checkout
 against all five exact pinned sources. Its packaging and later evidence have
 separate identities; older dev19 package hashes do not certify this source.
 
@@ -31,12 +31,14 @@ Private inputs, states, game images/audio, full native builds and keys stay out 
 Git. Paths under `/workspace/trimui-audit/` remain temporary custody.
 
 Ordinary Soldier/save/fresh-process Continue and moving-scene measurements are
-**in progress, unverified** until their acceptance records are complete. Emulator
+**stopped by owner, unverified**. The owner explicitly stopped further game testing due to usage cost. Do not automatically resume gameplay, comparisons or soaks. The owned emulator exited normally (exit 0); no broader measurement runs were started. Emulator
 checkpoints are separate. Qualified frontend Apply/Undo, composed authenticated
 Resume and actual device qualification remain open.
 
 Original completion remains **14/25; physical acceptance 0/13**. Device/profile
 gates stay disabled, with no selected upstream patch or emulator distribution.
 [Published dev16](https://github.com/daniel1990000/CrossMix-OS-project/releases/tag/smartpro-host-0.1.0-dev16)
-is unchanged. Continue useful independent work; do not infer device or production
+is unchanged. Do not restart game testing without a new owner request. Do not infer device or production
 readiness from host source/build checks.
+
+Exact source `50bbc35` also passed clean packaging, installed smoke, signed inventories, fixture rollback and byte-identical source-export rebuilding. CI run 40787227636 independently passed for that head using merge checkout `df2a17b2be18466ec08559007e9335df60433ea1`. Final documentation commits have separate identities. See the final verification and certification receipts in `project/evidence/iso-next-round-20261028/`.

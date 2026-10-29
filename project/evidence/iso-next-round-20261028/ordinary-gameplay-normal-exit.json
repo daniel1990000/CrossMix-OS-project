@@ -1,0 +1,21 @@
+{
+  "kind": "ordinary-gameplay-private-host",
+  "argv": [
+    "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+    "--graphics=opengl",
+    "--log=/workspace/trimui-audit/gameplay-next/patched-fresh/native.log",
+    "/workspace/trimui-audit/private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso"
+  ],
+  "executable": "/workspace/trimui-audit/native/candidate-0006/PPSSPPSDL",
+  "engine_sha256": "a9ab92b11c0ae64654fc884d125caa435d6a3f5805a52def07e7de2db883b9c2",
+  "started_utc": "2026-10-28T23:07:12.398010+00:00",
+  "started_monotonic_ns": 1217953162531,
+  "uses_convenience_emulator_state": false,
+  "physical_qualification": false,
+  "cheats_or_game_modifications": false,
+  "exit_code": 0,
+  "root_pid": 28734,
+  "reaped_processes": 1,
+  "normal_owned_tree_completion": true,
+  "finished_monotonic_ns": 4400028260732
+}

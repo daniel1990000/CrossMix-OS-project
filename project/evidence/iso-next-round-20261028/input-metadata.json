@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "kind": "recovered-input-native-metadata",
+  "recorded_at_utc": "2026-10-28T23:49:27.236719+00:00",
+  "recovery": {
+    "source_url": "https://gofile.io/d/x8y4jAzg",
+    "started_utc": "2026-10-28T22:50:01.140619+00:00",
+    "acquisition_seconds": 32.119912591,
+    "http_status": 200,
+    "full_size_bytes": 1696006144,
+    "full_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+    "expected_size_bytes": 1696006144,
+    "expected_sha256": "e7d26d0efb2fb7a37bb73c51bddae9baffa39feab7d76e30299b4c9e5d6fc80a",
+    "verified": true,
+    "retained_original_found": false
+  },
+  "native_metadata": {
+    "method": "Read ISO9660 primary volume descriptor, traverse PSP_GAME/PARAM.SFO, decode PSF entries; read-only. No game bytes exported.",
+    "param_sfo_sha256": "2bb27a13cc037f4c640516b82ff9ce1d2fe5fbe12204339a5d230ca9545ae835",
+    "observed": {
+      "DISC_ID": "ULUS10160",
+      "DISC_VERSION": "1.03",
+      "PSP_SYSTEM_VER": "2.81",
+      "TITLE": "Grand Theft Auto: Vice City Stories"
+    },
+    "private_extractor_sha256": "9a59d101b8daaaec2846242cc27da6e08c10302f289afbedc3c54c9b9072f92a"
+  },
+  "retention": {
+    "private_iso_relative_path": "private-inputs/Grand Theft Auto - Vice City Stories (USA) (PSP) (PSN).iso",
+    "game_payload_exported": false,
+    "game_states_exported": false,
+    "private_browser_session_or_download_url_exported": false,
+    "temporary_paths_are_not_durable_storage": true
+  },
+  "limits": [
+    "Input identity is not ordinary savedata/Continue evidence.",
+    "Input availability does not qualify device performance, authenticated frontend Resume, source/foreground/writer authority or a production profile."
+  ]
+}
