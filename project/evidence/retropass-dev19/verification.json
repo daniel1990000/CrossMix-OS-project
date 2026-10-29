@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "implementation_commit": "2858f3155c03d2efca3fd1cf364151e4d516fd5e",
+  "host_certification": {
+    "tests_run": 1240,
+    "passed": 1240,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "pinned_sources_verified_before_and_after": 5,
+  "preview_passed": true,
+  "artifact_source_inventory_sha256": "7a6c7290dbde355b737b232ad406c64cb622114fde24b832e7ff2c50ae04c24e",
+  "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
+  "upstream_files_imported": 177,
+  "payload_files": 254,
+  "source_files": 426,
+  "both_zips_rebuild_identically_without_git": true,
+  "native_engine_rebuilt": false,
+  "physical_device_tested": false,
+  "device_gates_enabled": false,
+  "public_release_changed": false,
+  "later_evidence_commits_have_separate_identity": true
+}

@@ -231,6 +231,20 @@
     "upstream_commit": "65fa22fadc3c88bf8353d093c6fa9b3fa3d92f83",
     "imported_files": 177,
     "native_engine_rebuilt": false,
-    "physical_device_tested": false
+    "physical_device_tested": false,
+    "clean_implementation_commit": "2858f3155c03d2efca3fd1cf364151e4d516fd5e",
+    "strict_tests": {
+      "tests_run": 1240,
+      "passed": 1240,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "source_inventory_sha256": "7a6c7290dbde355b737b232ad406c64cb622114fde24b832e7ff2c50ae04c24e",
+    "source_inventory_files": 426,
+    "payload_files": 254,
+    "both_zips_byte_identical_without_git": true
   }
 }
