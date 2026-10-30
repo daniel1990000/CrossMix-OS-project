@@ -296,7 +296,7 @@
     "device_collector_run": false,
     "custom_os_installed": false,
     "core_host_checks_passed": 1254,
-    "powershell_fixture_checks_passed": 32,
+    "powershell_fixture_checks_passed": 33,
     "collector_fixture_checks_passed": 6,
     "actual_windows_tested": false,
     "actual_device_tested": false,
@@ -317,5 +317,16 @@
     "device_activation": false,
     "boot_tested": false,
     "owner_data_migrated": false
+  },
+  "pre_reader_audit": {
+    "date_utc": "2026-10-30",
+    "base_merge": "128dc235f406583733f95452d3584b21fe94d297",
+    "fix": "Explicit UTF8 decoding of backup status/manifest for Windows PowerShell 5.1",
+    "unicode_backup_to_staging_regression_passed": true,
+    "candidate_files_rechecked": 12535,
+    "actual_windows_tested": false,
+    "actual_device_tested": false,
+    "kit": "SmartPro-Windows-Setup-audited.zip",
+    "kit_sha256": "54ab9280354eaa3cf250f70b016a22adec5794edf762c41bf1244b6a4c923b78"
   }
 }
