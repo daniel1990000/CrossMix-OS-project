@@ -1,0 +1,103 @@
+{
+  "date_utc": "2026-10-30",
+  "base_commit": "8055c63f2bbfe6c6fbb5ea3b7b92a13bed935d4e",
+  "working_tree_modified": true,
+  "strict_host_totals": {
+    "tests_run": 1273,
+    "passed": 1273,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "expected_failures": 0,
+    "unexpected_successes": 0
+  },
+  "powershell_tests": {
+    "backup": 10,
+    "recovery": 9,
+    "install_preparation": 13,
+    "runtime": "PowerShell7.4.6 on Linux",
+    "actual_windows_tested": false
+  },
+  "full_base_composition": "project/install/validation-20261030.json",
+  "kit": {
+    "name": "SmartPro-Windows-Setup.zip",
+    "sha256": "384ae54a62f933d504242a46ebee8a898f0b168b151a215e9be23660183df754",
+    "bytes": 46089,
+    "manifest_readback_verified": true
+  },
+  "device_tested": false,
+  "device_activated": false,
+  "owner_data_changed": false,
+  "review_fixes": [
+    "shared PowerShell parameter clobbering interactive launcher",
+    "disc companion preservation/refusal",
+    "accurate extraction evidence",
+    "full-base public certificate path scope separate from original overlay"
+  ],
+  "source_files": {
+    "project/install/build_candidate.py": {
+      "bytes": 17606,
+      "sha256": "f4b8bd9a5dece7023427cce08bc3dda099249598be358fc98e6401ebff69c85b"
+    },
+    "project/install/__init__.py": {
+      "bytes": 75,
+      "sha256": "4e3eefd4c8404cc62808aa897e1a767239b4ff6d7d0df20a5566038d998e395e"
+    },
+    "project/install/validation-20261030.json": {
+      "bytes": 1706,
+      "sha256": "85596613ec57d2af4588a80eb790219f0bb1cbda3cd8ed35f11b59841916cbec"
+    },
+    "project/windows/Prepare-Install.ps1": {
+      "bytes": 18042,
+      "sha256": "6f5d8dca9c6e3b530f5d334436ee8e9bcd5e5824179db8e8f6f88a48b1667e97"
+    },
+    "project/windows/INSPECT-RECOVERY.cmd": {
+      "bytes": 137,
+      "sha256": "020b6bc439205a0e80eabcb303c5289831bebbd4db12d1427ac2ce1ce6fb9000"
+    },
+    "project/windows/INSTALL-PREPARATION.txt": {
+      "bytes": 3791,
+      "sha256": "739bdd8195d13e400205fdb7f6d27a243986a7acfe5a2f08562caf5adceea654"
+    },
+    "project/windows/GAMES-AND-SAVES.txt": {
+      "bytes": 3498,
+      "sha256": "1a18ba49dcba63b61cf2c888cde298175dcc645e885753cbcef0a48e2ab3d555"
+    },
+    "project/windows/SETUP.cmd": {
+      "bytes": 692,
+      "sha256": "47af22fc7cd1d8b222bc56fcf093ddbf75d0a9063c71a43906aba9c4d87b69c3"
+    },
+    "project/windows/TrimUI-Card-Helper.ps1": {
+      "bytes": 14494,
+      "sha256": "defb5d3d9e4246947f49a8195c4171f160a23b259b7bcf4fa19da5c8fa4a3818"
+    },
+    "project/windows/START-HERE.cmd": {
+      "bytes": 145,
+      "sha256": "fd9f3bf383a48623db955cde515cfaa003c400bc974cbf26879f9fe9eafef477"
+    },
+    "project/windows/README.txt": {
+      "bytes": 3077,
+      "sha256": "15112331105b93cda17e7b6c0c86f9ae925833e7dee55061db2dd415f59436f2"
+    },
+    "project/windows/PREPARE-INSTALL.cmd": {
+      "bytes": 136,
+      "sha256": "ced69e2efc2ca2da6c0cad724433ad7de197ecf9ab91ec5e3b6a0a1d0fcf91cf"
+    },
+    "project/windows/Inspect-Recovery.ps1": {
+      "bytes": 8953,
+      "sha256": "b6619effe93e78ec63754430dc2451c655156b190c6a041f93a0f794ca06d304"
+    },
+    "project/windows/tests/Test-Recovery-Inspection.ps1": {
+      "bytes": 4744,
+      "sha256": "eccd039fd9c3dc276d70414ce1dc2433b70c5722920c6fc59c1343cdd857dd29"
+    },
+    "project/windows/tests/Test-Install-Preparation.ps1": {
+      "bytes": 6846,
+      "sha256": "4272c6e006ae6f1b794dee8dea40ed3c8040d52a40a8aee5d80d645449332221"
+    },
+    "project/windows/tests/Test-Card-Helper.ps1": {
+      "bytes": 6466,
+      "sha256": "bc9633ff05bee80829c83657ff8a9270782ff69c09c01ae90646a4fb4e8defde"
+    }
+  }
+}

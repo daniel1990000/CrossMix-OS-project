@@ -1,3 +1,12 @@
+Latest: offline install composition and PPSSPP recovery inspection are prepared.
+Read new top section of HANDOVER.md. User has no reader yet; PPSSPP autostarts,
+X/O unusable, power2sec sleeps. Do not assume USB or card access. SETUP.cmd is
+the new entry point (backup/recovery scan/pinned-base and ROM staging).
+Actual 12535-file base+custom source tree prepared privately; selectors None.
+1273 strict tests plus32 PowerShell checks passed; actual device still0/13.
+Private candidate and Windows kit retained in TrimUI Page with links in notes.
+No firmware/card/game/save change. Next reader+backup+recovery-inspection.json.
+
 Windows/USB preparation added 30 October 2026. Read HANDOVER.md first.
 Owner has original Smart Pro, Windows, games on only microSD, no reader/spare.
 Device/cable/USB mount not yet observed. New helper: project/windows/START-HERE.cmd.

@@ -1,0 +1,42 @@
+{
+  "date_utc": "2026-10-30",
+  "kind": "private-offline-install-preparation",
+  "builder_sha256": "f4b8bd9a5dece7023427cce08bc3dda099249598be358fc98e6401ebff69c85b",
+  "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+  "base": {
+    "archive_payload_executed": false,
+    "bytes": 1652634074,
+    "bytes_verified": true,
+    "extracted": true,
+    "name": "spruceV4.5.4.7z",
+    "sha256": "4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd",
+    "url": "https://github.com/spruceUI/spruceOS/releases/download/v4.5.4/spruceV4.5.4.7z"
+  },
+  "composition": {
+    "activated": false,
+    "base_files": 12278,
+    "base_inventory_sha256": "b3f5eb29781e72a04c8fa9c0fda87842cd3346ec50db1e59d232adeb8093dbcb",
+    "boot_tested": false,
+    "directory": "prepared-card",
+    "extractor_sha256": "a1860fdf0d6ec395e0e277e5222e9aa488747db4aa5c87d1ec879a0916ba0b2f",
+    "native_engines_unchanged": true,
+    "prepared_inventory_sha256": "4bc79e61522c2fffa673cdcbb814fbc95fe1d33591e531ea0db55b4358e4fa6e",
+    "result_files": 12535,
+    "unselected_base_files_unchanged": true
+  },
+  "prepared_tree_bytes": 3597857623,
+  "final_structural_inventory_matches": true,
+  "candidate_and_rollback_readback_verified": true,
+  "new_fixture_tests_passed": 13,
+  "private_archive": {
+    "name": "SmartPro-private-source-candidate.7z",
+    "bytes": 9922617,
+    "sha256": "29aa372dab33d190235126da45b8a0d1bd0c2225c8deae489904235e154aab94",
+    "extracted_readback_verified": true
+  },
+  "device_activation": false,
+  "physical_device_tested": false,
+  "native_binaries_replaced": false,
+  "public_derivative_published": false,
+  "core_tests": "Parent records full current strict suite separately."
+}

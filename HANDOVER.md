@@ -1,5 +1,44 @@
 # TrimUI handover — RetroPass in the PSP UI, dev20
 
+## Offline install composition and recovery inspection — 30 October 2026
+
+The user asked to prepare the install while obtaining a card reader. Their only
+card currently auto-starts PPSSPP, X/O controls do not work, and a short power
+hold only sleeps the screen. No working USB Storage or mounted card is observed.
+The current Windows setup entry is `project/windows/SETUP.cmd`: backup,
+read-only PPSSPP/startup inspection, and pinned-base/selected-ROM preparation.
+Option 3 works before the card arrives. It keeps outputs on the laptop.
+
+`project/install/build_candidate.py` assembled and verified the actual private
+source integration against the complete pinned spruce v4.5.4 release. The base
+contains 12,278 files; the prepared tree contains 12,535 files (3,597,857,623
+bytes). All unselected base files, including native engines, remain unchanged.
+Candidate and exact source rollback passed verification. Both runtime selectors
+remain unavailable. This is **not a device-ready installer** and does not repair
+the owner's card. Private derivative/base files are not in this public repo.
+
+The original/private source archive is retained in the owner's TrimUI project
+Page as `SmartPro-private-source-candidate.7z` (9,922,617 bytes), SHA256
+`29aa372dab33d190235126da45b8a0d1bd0c2225c8deae489904235e154aab94`.
+The Windows kit is `SmartPro-Windows-Setup.zip`, SHA256
+`384ae54a62f933d504242a46ebee8a898f0b168b151a215e9be23660183df754`.
+Project notes: https://chatgpt.com/space/page_45bef6d344508191ad5533d3c1b02fbb
+
+Final strict host certification: **1,273 passed, zero failures/errors/skips**
+against the five exact pinned sources. Separate PowerShell tests: 10 backup,
+9 recovery inspection and 13 install preparation checks pass under Linux
+PowerShell 7.4.6. Actual Windows 5.1/USB and handheld execution remain untested.
+See `project/install/validation-20261030.json` and
+`project/evidence/install-preparation-20261030/`.
+
+When the reader arrives: preserve the whole card, inspect the actual startup
+and control settings, then choose a reversible repair from that evidence.
+Do not blindly delete controls.ini: spruce can overwrite it from a platform
+file at each launch. Once the normal menu works, collect baseline/internal
+preservation evidence and prepare the narrowly reviewed view-only session.
+Physical areas remain 0/13; no runtime gates, firmware, live card, games or saves
+have been changed. Previous preparation and dev20 history follow.
+
 ## Windows/USB preparation — 30 October 2026
 
 The owner is ready with an original Smart Pro and Windows laptop; their games
