@@ -1,0 +1,59 @@
+PREPARE OUR SMART PRO INSTALL FILES ON WINDOWS
+
+You can do the download/preparation now, before the card reader arrives.
+This is for the custom RetroPass PSP project on pinned spruceOS v4.5.4.
+It does not activate the interface, repair your current card or flash firmware.
+
+1. Extract the setup kit on your laptop. Open SETUP.cmd and choose prepare,
+   or double-click PREPARE-INSTALL.cmd.
+2. Press Enter to use Documents. Keep at least 15 GiB free on the Windows
+   system drive for the base; copying your games later needs additional space.
+3. Press Enter to download the official pinned spruce base (about 1.65 GB),
+   or enter the path to an already-downloaded spruceV4.5.4.7z. The helper checks
+   its exact size and SHA256 before using it. A different version is refused.
+4. If 7-Zip is already installed in its usual Program Files folder, the helper
+   extracts the verified archive into a new pinned-base folder. Otherwise it
+   leaves the verified archive ready. Install 7-Zip from https://www.7-zip.org/
+   and rerun preparation with that cached archive when you want extraction.
+   No 7-Zip executable is downloaded or installed automatically.
+5. When the reader arrives, first use START-HERE.cmd to make the complete
+   verified card backup. For optional game staging, supply its TrimUI-date
+   folder here (the folder containing backup-status.json and card-files).
+   If you have no backup yet, press Enter to skip this step.
+6. The helper lists supported systems. Type PSP,PS for those two, or ALL for
+   all listed systems. It copies only the selected supported game files to a
+   NEW laptop rom-staging folder, checks source hashes against the backup
+   manifest and reads back every copied file. Enter alone creates only a plan.
+
+The output stays on your laptop. Do not copy the whole preparation folder onto
+an SD card. Pinned-base is the upstream base, not the activated custom OS.
+The separately prepared custom candidate still needs your actual device and
+recovery review. Production activation stays disabled.
+
+PSP from an old PPSSPP folder maps to PSP; PlayStation remains PS. Paths inside
+console folders are preserved, including CUE/BIN tracks and M3U disc lists.
+Missing, outside-console, unsupported or unselected CUE/M3U companion files
+stop copying. PS audio companions may be preserved without claiming that the
+selected emulator can play every format. Nested M3U lists require review. CCD requires its same-name IMG companion.
+MDF/TOC/CBN layouts are review-only rather than assuming their dependencies.
+If both PSP and PPSSPP folders map to PSP, the helper stops instead of silently
+merging them. Unknown systems/extensions are recorded for review, not deleted.
+
+Saves, memory cards, states, BIOS, settings and cover art remain in the complete
+backup. They are not automatically mixed into the new base. Their actual paths
+and emulator compatibility must be checked before import. The manifest and
+local reports may identify your game files; nothing is uploaded automatically.
+
+This helper never selects or writes the microSD and refuses an interactive
+workspace outside the Windows system drive or resembling an existing card root.
+It creates new output trees; errors retain incomplete output for inspection.
+A file-copy check is not a boot or gameplay test. Windows PowerShell 5.1 and
+physical device operation remain untested; host fixtures use PowerShell 7.4.6.
+
+Pinned base:
+https://github.com/spruceUI/spruceOS/releases/download/v4.5.4/spruceV4.5.4.7z
+Size: 1652634074 bytes
+SHA256: 4623f1cd824ac1d01e7663d11ca40a8d3ad874c5f071e692f4392957d2159cfd
+Source: d45ff8dfe5756147522b04ae5863d17a90e88b54
+Game formats: Emu/<system>/config.json at that pinned source. These are common
+supported formats for preparation, not a promise of device game performance.

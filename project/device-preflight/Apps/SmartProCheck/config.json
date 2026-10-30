@@ -1,0 +1,7 @@
+{
+  "label": "Smart Pro Check",
+  "icon": "icon.png",
+  "iconsel": "icon.png",
+  "launch": "launch.sh",
+  "description": "Collect setup information and private internal recovery files; does not install the custom OS"
+}

@@ -1,3 +1,21 @@
+Latest: offline install composition and PPSSPP recovery inspection are prepared.
+Read new top section of HANDOVER.md. User has no reader yet; PPSSPP autostarts,
+X/O unusable, power2sec sleeps. Do not assume USB or card access. SETUP.cmd is
+the new entry point (backup/recovery scan/pinned-base and ROM staging).
+Actual 12535-file base+custom source tree prepared privately; selectors None.
+1273 strict tests plus32 PowerShell checks passed; actual device still0/13.
+Private candidate and Windows kit retained in TrimUI Page with links in notes.
+No firmware/card/game/save change. Next reader+backup+recovery-inspection.json.
+
+Windows/USB preparation added 30 October 2026. Read HANDOVER.md first.
+Owner has original Smart Pro, Windows, games on only microSD, no reader/spare.
+Device/cable/USB mount not yet observed. New helper: project/windows/START-HERE.cmd.
+New optional stock App: project/device-preflight/Apps/SmartProCheck.
+Guide: project/docs/windows-device-pilot.md. Request only baseline.txt, not private backups.
+Fresh dev20 core 1254 passed; 10 PowerShell + 6 collector host fixtures passed.
+No device tests, install, gates, native replacement or game/save migration occurred.
+Reader needed before changing boot setup; spare preferred.
+
 Continue daniel1990000/CrossMix-OS-project, active source project/.
 Current branch main; PR #5 merged at da4b54b522cdeb94fa06909654475c7f8c5b3e14.
 GitHub host checks/package build passed; exact merge receipt is in

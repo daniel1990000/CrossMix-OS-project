@@ -1,0 +1,62 @@
+YOUR GAMES AND SAVES - OUR SMART PRO PROJECT
+
+First make the complete verified backup with START-HERE.cmd, option 2.
+That preserves the existing layout, including PSP saves, PS1 memory cards,
+states, BIOS files, covers, configuration and other accessible card files.
+Do not move, delete or convert anything on the original card.
+
+The custom RetroPass PSP interface uses pinned spruceOS v4.5.4/PyUI.
+It does not use the historical CrossMix installation instructions.
+The current dev20 download is a computer preview, not a bootable SD installer.
+These are destination references for the later reviewed card setup, not an
+instruction to change your only card now.
+
+Console             spruce game folder     Common existing game files
+PSP                 Roms/PSP               .iso .cso .pbp
+PS1 / PlayStation   Roms/PS                .chd .cue with all .bin tracks .pbp
+NES                 Roms/FC                .nes
+SNES                Roms/SFC               .sfc .smc
+Game Boy            Roms/GB                .gb
+Game Boy Color      Roms/GBC               .gbc
+Game Boy Advance    Roms/GBA               .gba
+Mega Drive/Genesis  Roms/MD                .md .smd .bin
+Nintendo 64         Roms/N64               .z64 .n64 .v64
+Nintendo DS         Roms/NDS               .nds
+
+This is a short list, not the complete supported extension list. File support
+is not a guarantee that every title runs well. ZIP/7z support varies by system.
+
+Old stock PSP folders may be named PPSSPP; spruce uses PSP. Copy contents to
+the matching destination when the replacement card setup is ready. Do not
+replace the new system's emulator or settings directories with the old ones.
+
+PS1: keep each CUE and all its referenced BIN tracks together. Preserve disc
+names and M3U relative paths. One game can consist of many files. No conversion
+is necessary just to preserve an existing ISO/CSO, CHD or BIN/CUE collection.
+
+SAVES ARE SEPARATE FROM GAME FILES
+
+PSP: keep every SAVEDATA and PPSSPP_STATE folder, plus the old PPSSPP settings.
+The pinned spruce launcher uses Saves/.config/ppsspp/PSP as its PSP data tree.
+That destination is source-verified; your old paths and cross-version save-state
+compatibility are not yet verified. Do not merge whole configuration trees.
+
+PS1: keep all memory-card/battery-save files, states and configuration. Exact
+destinations depend on the actual engine and settings; use an in-game save,
+quit normally, and confirm the new test copy can load it before migrating all.
+Save states can be version-specific. The helper does not convert or overwrite
+saves. APKs are Android application installers and are not installable here.
+
+BIOS: preserve the whole existing BIOS/system tree. Final paths and case must
+follow the selected spruce engine. Do not download a random BIOS pack or assume
+an old configuration's paths match the replacement system.
+
+After the backup, the next useful information is the actual card layout and
+device firmware. The helper's local card-summary-private.json provides folder
+and extension counts. Review it before sharing: it can identify your games.
+Never upload card-files, files-private.json or the full private backup.
+
+Pinned sources inspected on 30 October 2026:
+https://github.com/spruceUI/spruceOS/tree/d45ff8dfe5756147522b04ae5863d17a90e88b54/Emu
+https://github.com/spruceUI/spruceOS/blob/d45ff8dfe5756147522b04ae5863d17a90e88b54/spruce/scripts/emu/lib/ppsspp_functions.sh
+https://github.com/daniel1990000/CrossMix-OS-project/blob/main/HANDOVER.md

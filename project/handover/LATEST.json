@@ -142,10 +142,16 @@
   },
   "owner_device_status": {
     "device": "Original TrimUI Smart Pro TG5040",
-    "available": false,
+    "available": true,
     "physical_areas_run": 0,
     "physical_areas_total": 13,
-    "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
+    "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image.",
+    "connection_observed": false,
+    "host_os": "Windows",
+    "spare_card_available": false,
+    "card_reader_available": false,
+    "current_games_location": "only microSD card",
+    "reported_problem": "Auto-starts PPSSPP; X/O unusable; short power hold sleeps; no observed USB/card access"
   },
   "next_work": [
     "Qualify exact installed TG5040 input/display ownership, launch-return and recovery using the existing casebook.",
@@ -280,5 +286,36 @@
     "payload_files": 255,
     "both_zips_byte_identical_without_git": true,
     "installed_psp_default_and_port_calls_verified": true
+  },
+  "windows_preparation": {
+    "date_utc": "2026-10-30",
+    "helper": "project/windows/SETUP.cmd",
+    "guide": "project/docs/windows-device-pilot.md",
+    "collector": "project/device-preflight/Apps/SmartProCheck",
+    "backup_performed_on_owner_card": false,
+    "device_collector_run": false,
+    "custom_os_installed": false,
+    "core_host_checks_passed": 1254,
+    "powershell_fixture_checks_passed": 32,
+    "collector_fixture_checks_passed": 6,
+    "actual_windows_tested": false,
+    "actual_device_tested": false,
+    "next_input": "Reader-mounted card backup and recovery-inspection.json, then baseline once main menu works",
+    "recovery_inspector": "project/windows/Inspect-Recovery.ps1",
+    "base_and_rom_stager": "project/windows/Prepare-Install.ps1",
+    "full_host_checks_passed": 1273
+  },
+  "install_preparation": {
+    "date_utc": "2026-10-30",
+    "builder": "project/install/build_candidate.py",
+    "evidence": "project/install/validation-20261030.json",
+    "base_bytes_verified": true,
+    "full_base_composed": true,
+    "prepared_files": 12535,
+    "private_candidate_retained": true,
+    "runtime_configuration_available": false,
+    "device_activation": false,
+    "boot_tested": false,
+    "owner_data_migrated": false
   }
 }

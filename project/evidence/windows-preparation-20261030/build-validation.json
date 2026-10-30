@@ -1,0 +1,383 @@
+{
+  "schema": 1,
+  "date_utc": "2026-10-30",
+  "scope": "Fresh certification and computer preview rebuild of existing dev20, before Windows preparation changes",
+  "frontend_commit": "c4550eec4e784dd67a620336fcee40599593b726",
+  "build_checkout_clean": true,
+  "source_inventory_sha256": "0e4c3caf91d745f1fd2767ebacf07d5eb621fb75a938981ee71097cb2d5922a1",
+  "host_certification": {
+    "schema": 1,
+    "kind": "pinned-source-host-certification",
+    "started_at": "2026-10-30T02:15:22.878536+00:00",
+    "successful": true,
+    "sources": [
+      {
+        "environment_variable": "SPRUCE_SOURCE_ROOT",
+        "lock": "docs/spruce-source-lock.json",
+        "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+        "root": "/workspace/trimui-sources/spruce",
+        "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "tracked_content_clean": true,
+        "required_files_checked": 6,
+        "materialized_files_checked": 465,
+        "subtree": {
+          "path": "App/PyUI/main-ui",
+          "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+        }
+      },
+      {
+        "environment_variable": "PPSSPP_SOURCE_ROOT",
+        "lock": "project/ppsspp/source-lock.json",
+        "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+        "root": "/workspace/trimui-sources/ppsspp",
+        "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "tracked_content_clean": true,
+        "required_files_checked": 21,
+        "materialized_files_checked": 1106
+      },
+      {
+        "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+        "lock": "project/retroarch/source-lock.json",
+        "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+        "root": "/workspace/trimui-sources/ra",
+        "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "tracked_content_clean": true,
+        "required_files_checked": 4,
+        "materialized_files_checked": 4
+      },
+      {
+        "environment_variable": "PORTS_SOURCE_ROOT",
+        "lock": "project/ports/celeste-fix.lock.json",
+        "lock_sha256": "637ec89506e98b52a36409f9223be6b0ef840f1786385ea77bca6de7e0363b59",
+        "root": "/workspace/trimui-sources/ports",
+        "expected_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+        "observed_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+        "tracked_content_clean": true,
+        "required_files_checked": 2,
+        "materialized_files_checked": 2
+      },
+      {
+        "environment_variable": "PORTMASTER_SOURCE_ROOT",
+        "lock": "project/profiles/ports-sources.lock.json",
+        "lock_sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+        "root": "/workspace/trimui-sources/portmaster",
+        "expected_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+        "observed_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+        "tracked_content_clean": true,
+        "required_files_checked": 6,
+        "materialized_files_checked": 6
+      }
+    ],
+    "suites": [
+      {
+        "directory": "/workspace/trimui/project/tests",
+        "successful": true,
+        "tests_run": 1193,
+        "passed": 1193,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "skip_details": [],
+        "process_exit_code": 0
+      },
+      {
+        "directory": "/workspace/trimui/project/ppsspp/tests",
+        "successful": true,
+        "tests_run": 61,
+        "passed": 61,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expected_failures": 0,
+        "unexpected_successes": 0,
+        "skip_details": [],
+        "process_exit_code": 0
+      }
+    ],
+    "preview_passed": true,
+    "device_qualified": false,
+    "phase": "complete",
+    "totals": {
+      "tests_run": 1254,
+      "passed": 1254,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "expected_failures": 0,
+      "unexpected_successes": 0
+    },
+    "sources_after_tests": [
+      {
+        "environment_variable": "SPRUCE_SOURCE_ROOT",
+        "lock": "docs/spruce-source-lock.json",
+        "lock_sha256": "677586f5aa7f96b8028a419c932a0b1bde8dced81a43808466a121587b54e713",
+        "root": "/workspace/trimui-sources/spruce",
+        "expected_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "observed_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+        "tracked_content_clean": true,
+        "required_files_checked": 6,
+        "materialized_files_checked": 465,
+        "subtree": {
+          "path": "App/PyUI/main-ui",
+          "expected": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "observed": "4d0bdb3111d9226fbacbea6c89d65e540620e21e"
+        }
+      },
+      {
+        "environment_variable": "PPSSPP_SOURCE_ROOT",
+        "lock": "project/ppsspp/source-lock.json",
+        "lock_sha256": "2601a984e553d88ec9fdb449223a0c46a13059594076eb3748f04bcfd27bd981",
+        "root": "/workspace/trimui-sources/ppsspp",
+        "expected_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "observed_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+        "tracked_content_clean": true,
+        "required_files_checked": 21,
+        "materialized_files_checked": 1106
+      },
+      {
+        "environment_variable": "SPRUCE_RA_SOURCE_ROOT",
+        "lock": "project/retroarch/source-lock.json",
+        "lock_sha256": "23e76dd82ef4125d54f7aadbe468c4665945fec7c796deec4d65a987e9c80f21",
+        "root": "/workspace/trimui-sources/ra",
+        "expected_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "observed_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+        "tracked_content_clean": true,
+        "required_files_checked": 4,
+        "materialized_files_checked": 4
+      },
+      {
+        "environment_variable": "PORTS_SOURCE_ROOT",
+        "lock": "project/ports/celeste-fix.lock.json",
+        "lock_sha256": "637ec89506e98b52a36409f9223be6b0ef840f1786385ea77bca6de7e0363b59",
+        "root": "/workspace/trimui-sources/ports",
+        "expected_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+        "observed_commit": "444778f3ae29facbd97b823dc3ca7270b3ebe499",
+        "tracked_content_clean": true,
+        "required_files_checked": 2,
+        "materialized_files_checked": 2
+      },
+      {
+        "environment_variable": "PORTMASTER_SOURCE_ROOT",
+        "lock": "project/profiles/ports-sources.lock.json",
+        "lock_sha256": "49695e2abf9524989f1d95dd25d424ab3bd422edb4b6a9f61364eef3d8f3a590",
+        "root": "/workspace/trimui-sources/portmaster",
+        "expected_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+        "observed_commit": "ccea6b746827d0ae3a1cad744f6e8ccc5a032041",
+        "tracked_content_clean": true,
+        "required_files_checked": 6,
+        "materialized_files_checked": 6
+      }
+    ],
+    "finished_at": "2026-10-30T02:16:33.921665+00:00"
+  },
+  "package": {
+    "base_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54",
+    "byte_identical_overlay_rebuild_with_same_key": true,
+    "byte_identical_unsigned_zip_rebuild": true,
+    "development_key_id": "8f73632addc6b95b391aa9f0fd763d9171b73ad5834786f0f39356cc270ebe93",
+    "device_activation_qualified": false,
+    "device_gates": {
+      "hardware_qualified": false,
+      "runtime_verified": false,
+      "source_use_verified": false
+    },
+    "fixture_stage_activate_rollback": true,
+    "generated_private_key_deleted": true,
+    "payload_files": 255,
+    "payload_source_inventory_verified": true,
+    "private_key_packaged": false,
+    "production_authenticity_claim": false,
+    "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+    "release_id": "smartpro-retropass-0.1.0-dev20",
+    "release_selection": {
+      "descriptor": {
+        "base": {
+          "pyui_git_tree": "4d0bdb3111d9226fbacbea6c89d65e540620e21e",
+          "release_tag": "v4.5.4",
+          "repository": "https://github.com/spruceUI/spruceOS",
+          "source_commit": "d45ff8dfe5756147522b04ae5863d17a90e88b54"
+        },
+        "current_host_certification": "Generated host certification applies only to its captured bytes. Earlier dev19 checks do not certify the PSP presentation adaptation.",
+        "delivery": "retropass-host-preview",
+        "frontend": {
+          "identity": "Resolve exact commit and source inventory at build time; modified trees are explicitly labelled.",
+          "repository": "https://github.com/daniel1990000/CrossMix-OS-project",
+          "selection": "repository-head-or-source-export"
+        },
+        "historical_host_evidence": {
+          "ci_run": "https://github.com/daniel1990000/CrossMix-OS-project/actions/runs/39822730380",
+          "commit": "8768ab042da2c89c0087d068453bfd58f68445f5",
+          "covers_current_release": false,
+          "path": "project/evidence/source-study/verification.json"
+        },
+        "optional_native_references": [
+          {
+            "custody": "Historical build reference; current retrieval not verified.",
+            "device_qualified": false,
+            "evidence": "project/evidence/ppsspp-complete-state-build.json",
+            "extension_set": [
+              "ppsspp/patches/0001-independent-native-menu-controls.patch",
+              "ppsspp/patches/0002-save-slot-completion-evidence.patch",
+              "ppsspp/patches/0003-project-state-session.patch",
+              "ppsspp/patches/0004-checked-spruce-save-and-quit.patch"
+            ],
+            "id": "ppsspp-complete-state-candidate",
+            "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+            "selected": false,
+            "sha256": "a93f7db82692c4b95dcb15282d8d73080d51a8912fc8e435adb3b6dfe30c165d",
+            "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751"
+          },
+          {
+            "custody": "Historical build reference; current retrieval not verified.",
+            "device_qualified": false,
+            "evidence": "project/evidence/retroarch-igm-build.json",
+            "extension_set": [
+              "retroarch/patches/0001-independent-igm-menu-controls.patch"
+            ],
+            "id": "retroarch-igm-candidate",
+            "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+            "selected": false,
+            "sha256": "118146e2aed90c5ccbc416e4c7e01acc8ec7abb7462e1d43f97e8734f113df1d",
+            "source_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576"
+          },
+          {
+            "custody": "New private replacement: matching source/build archives and compiler image freshly retrieved; historical binary not recovered.",
+            "custody_evidence": "project/evidence/artifact-custody/native-retention.json",
+            "device_qualified": false,
+            "evidence": "project/evidence/artifact-custody/native-rebuild.json",
+            "extension_set": [
+              "ppsspp/patches/0001-independent-native-menu-controls.patch",
+              "ppsspp/patches/0002-save-slot-completion-evidence.patch",
+              "ppsspp/patches/0003-project-state-session.patch",
+              "ppsspp/patches/0004-checked-spruce-save-and-quit.patch"
+            ],
+            "id": "ppsspp-state-r04-rebuild",
+            "recipe_commit": "9f770cb984fd8ffcc8f91d24fcbca859439c2e9b",
+            "selected": false,
+            "sha256": "f65f88f15ea415399f16f7b53fcfc254efbb822c52379760ba77e39cf3d05773",
+            "source_commit": "d357e6a32934800d3d80b49f910a603e1b069751",
+            "toolchain_image": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b"
+          },
+          {
+            "custody": "New private replacement: matching source/build archives and compiler image freshly retrieved; historical binary not recovered.",
+            "custody_evidence": "project/evidence/artifact-custody/native-retention.json",
+            "device_qualified": false,
+            "evidence": "project/evidence/artifact-custody/native-rebuild.json",
+            "extension_set": [
+              "retroarch/patches/0001-independent-igm-menu-controls.patch"
+            ],
+            "id": "retroarch-igm-r04-rebuild",
+            "recipe_commit": "71d84da4dc88945177a3eb34268013355c705dbd",
+            "selected": false,
+            "sha256": "26324b64ec0adb9bde359291f1c2fb396a629a53259a5afdc00bf46650cab349",
+            "source_commit": "69a4f0ea1e8aaf442ae4858f2e7f2b31a1776576",
+            "toolchain_image": "sha256:15ef8c75094bd51d1116ad4218846b6949821f545c053ddda89b8bfbba85f51b"
+          }
+        ],
+        "qualification": {
+          "hardware_qualified": false,
+          "runtime_verified": false,
+          "source_use_verified": false
+        },
+        "release_id": "smartpro-retropass-0.1.0-dev20",
+        "schema": 1,
+        "selected_native_binaries": [],
+        "selected_original_payload": [
+          "psp_shell",
+          "bridge",
+          "profiles",
+          "ppsspp/theme",
+          "assets",
+          "tools/__init__.py",
+          "tools/recovery_payload.py",
+          "tools/recovery_preflight.py",
+          "tools/backup_catalog.py"
+        ],
+        "selected_third_party_payload": [
+          "retropass"
+        ],
+        "selected_upstream_patches": [],
+        "source_date_epoch": 1793232000
+      },
+      "descriptor_sha256": "eb784209e9a14d87ed8321da6bbde7ddd8aebfdd58cce696e4c738c01161e849",
+      "frontend": {
+        "commit": "c4550eec4e784dd67a620336fcee40599593b726",
+        "working_tree_modified": false
+      },
+      "source_inventory_sha256": "0e4c3caf91d745f1fd2767ebacf07d5eb621fb75a938981ee71097cb2d5922a1"
+    },
+    "schema": 1,
+    "signature_hash_inventory_verified": true,
+    "signer": "ephemeral development",
+    "smoke": {
+      "backup_cancel_dispatch": true,
+      "classic_delegation_contract": true,
+      "clean_process_exit": true,
+      "combined_filters": true,
+      "discovery_scope": true,
+      "executed": true,
+      "fresh_backup_readback": true,
+      "full_result_random": true,
+      "game_information": true,
+      "help_backups_collections_rendered": true,
+      "installed_build_identity": true,
+      "named_backup_history": true,
+      "navigation_actions_exercised": true,
+      "physical_device_verified": false,
+      "real_game_launches": 0,
+      "rendered_frames": 9,
+      "settings_dispatch": true
+    },
+    "source_date_epoch": 1793232000,
+    "status": "host-development-preview"
+  },
+  "artifacts": {
+    "SHA256SUMS": {
+      "bytes": 761,
+      "sha256": "36ffea45aaeda76c73cc76bf527e2b3d1bea45e46c9aca7f708edcd5635b04fe"
+    },
+    "START-HERE.txt": {
+      "bytes": 1073,
+      "sha256": "ffc804e920fcf635d8edff59ae6617495a30f988ce750c3a9d093bc3114eea2d"
+    },
+    "build-report.json": {
+      "bytes": 5786,
+      "sha256": "160c8c728dcbed81acf0308b4cf00f539be4840a7f7119a241df2530f2139c1d"
+    },
+    "development-verification.pub": {
+      "bytes": 32,
+      "sha256": "8f73632addc6b95b391aa9f0fd763d9171b73ad5834786f0f39356cc270ebe93"
+    },
+    "host-preview.png": {
+      "bytes": 147362,
+      "sha256": "3f1dfd0bcaa0ad4a292a0db39b7dbe3ee4ca8cbf05848a6d3fea4a267a6f4d6a"
+    },
+    "release-source.json": {
+      "bytes": 60077,
+      "sha256": "f65dc74abf8fa39382273141b189797dd2d693e8005c9e4771018c5e2c3804c8"
+    },
+    "smartpro-retropass-0.1.0-dev20-host-preview.zip": {
+      "bytes": 10518444,
+      "sha256": "420c371ef9cbcdd2424631f116ad98ebcb09723911e4d366e6adf6e7a14c1c4d"
+    },
+    "smartpro-retropass-0.1.0-dev20-original-source.zip": {
+      "bytes": 11141540,
+      "sha256": "78241cb3f640835d5a586ed23ea0e06ce7035875f55f27d5826f518d3083849e"
+    },
+    "smartpro-retropass-0.1.0-dev20.tar": {
+      "bytes": 13209600,
+      "sha256": "fbe7ac29c0fc09cf3cbfc5b61edd45a6b3290d61f42863d8a43f4a14a6c0cd0b"
+    }
+  },
+  "physical_device_tested": false,
+  "windows_execution_tested": false,
+  "device_gates_enabled": false,
+  "native_binaries_replaced": false,
+  "public_release_changed": false
+}
