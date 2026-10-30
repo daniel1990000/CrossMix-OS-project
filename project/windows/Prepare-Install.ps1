@@ -110,9 +110,9 @@ function Get-InstallRomPlan([string]$Backup) {
     $payload=Join-Path $Backup 'card-files'
     Assert-NoLinks $statusPath; Assert-NoLinks $manifestPath; Assert-NoLinks $payload
     if ((Get-Item -LiteralPath $manifestPath).Length -gt 67108864) { throw 'Backup manifest too large.' }
-    $status=Get-Content -LiteralPath $statusPath -Raw | ConvertFrom-Json
+    $status=Get-Content -LiteralPath $statusPath -Raw -Encoding UTF8 | ConvertFrom-Json
     if ($status.state -ne 'verified-file-copy') { throw 'This backup is not marked as a verified file copy.' }
-    $raw=Get-Content -LiteralPath $manifestPath -Raw
+    $raw=Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8
     if (-not $raw.TrimStart().StartsWith('[')) { throw 'Backup manifest must be an array.' }
     $entries=@(ConvertFrom-Json -InputObject $raw)
     if ($entries.Count -ne $status.source_files -or $entries.Count -ne $status.verified_files -or $entries.Count -gt 250000) { throw 'Backup counts differ from its manifest.' }

@@ -87,5 +87,28 @@ try {
     $cardLike=Join-Path $root 'card-like';[void][IO.Directory]::CreateDirectory((Join-Path $cardLike 'Roms'))
     Expect-Failure { Assert-InstallWorkspace $cardLike } 'Card-like workspace refused'
     $passed++
+    # Windows PowerShell 5.1 defaults BOM-less text to the system code page.
+    # Build Unicode names without non-ASCII script bytes (5.1 also reads scripts
+    # using that default). Require explicit UTF-8 when reading our JSON files.
+    $unicodeName='Pok'+[char]0x00e9+'mon-'+[char]0x65e5+[char]0x672c+'.iso'
+    $unicodeSource=Join-Path $root 'unicode-source'
+    $unicodeRoms=Join-Path $unicodeSource 'Roms/PSP'
+    [void][IO.Directory]::CreateDirectory($unicodeRoms)
+    [IO.File]::WriteAllText((Join-Path $unicodeRoms $unicodeName),'unicode game fixture')
+    $unicodeBackup=Invoke-CardBackup $unicodeSource $backupParent
+    function Get-Content {
+        param([string]$LiteralPath,[switch]$Raw,[string]$Encoding)
+        if ($Encoding -ne 'UTF8') { throw 'Backup JSON must use explicit UTF8 on Windows PowerShell 5.1.' }
+        Microsoft.PowerShell.Management\Get-Content -LiteralPath $LiteralPath -Raw:$Raw -Encoding UTF8
+    }
+    try { $unicodePlan=Get-InstallRomPlan $unicodeBackup }
+    finally { Remove-Item Function:\Get-Content }
+    Assert ($unicodePlan.files.Count -eq 1) 'Unicode game planned'
+    Assert ($unicodePlan.files[0].destination -ceq ('Roms/PSP/'+$unicodeName)) 'Unicode name preserved'
+    $unicodeWorkspace=Join-Path $root 'unicode-preparation'
+    [void][IO.Directory]::CreateDirectory($unicodeWorkspace)
+    $unicodeStaged=Copy-InstallRoms $unicodePlan @('PSP') $unicodeWorkspace
+    Assert ((Get-FileHash -LiteralPath (Join-Path $unicodeStaged ('Roms/PSP/'+$unicodeName))).Hash.ToLowerInvariant() -ceq $unicodePlan.files[0].sha256) 'Unicode staged file verified'
+    $passed++
     Write-Host "PASS: $passed install-preparation fixture checks. No Windows/device execution established."
 } finally { Remove-Item -LiteralPath $root -Recurse -Force }

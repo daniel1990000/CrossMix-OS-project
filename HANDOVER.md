@@ -1,5 +1,18 @@
 # TrimUI handover — RetroPass in the PSP UI, dev20
 
+## Pre-reader audit — 30 October 2026
+
+PR #6 is merged at `128dc235f406583733f95452d3584b21fe94d297`.
+An additional audit found Windows PowerShell 5.1 could decode UTF-8 backup
+manifests using its default code page. Transfer planning now explicitly reads
+UTF-8; a new accented/Japanese filename backup-to-staging regression passes.
+The refreshed kit is `SmartPro-Windows-Setup-audited.zip`, SHA256
+`54ab9280354eaa3cf250f70b016a22adec5794edf762c41bf1244b6a4c923b78`.
+All 12,535 prepared candidate file hashes, sizes, modes and membership were
+rechecked. Actual Windows/CMD execution can still be checked on the laptop
+before the reader arrives. Card inspection, save mapping and all physical
+qualification remain pending. This audit does not establish overall completion.
+
 ## Offline install composition and recovery inspection — 30 October 2026
 
 The user asked to prepare the install while obtaining a card reader. Their only
