@@ -1,0 +1,7 @@
+
+BACKUP VERIFIED: /tmp/trimui-install-test-f084dd56d9a04667816eb476c6009210/backups/TrimUI-20261030-031014-8af4c5b6
+Keep the original card intact. A verified file copy does not include internal firmware or prove a spare-card boot/restore.
+
+BACKUP VERIFIED: /tmp/trimui-install-test-f084dd56d9a04667816eb476c6009210/backups/TrimUI-20261030-031014-cfd3dac5
+Keep the original card intact. A verified file copy does not include internal firmware or prove a spare-card boot/restore.
+PASS: 14 install-preparation fixture checks. No Windows/device execution established.
