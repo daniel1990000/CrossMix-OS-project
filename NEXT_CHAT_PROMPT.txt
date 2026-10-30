@@ -1,3 +1,12 @@
+Windows/USB preparation added 30 October 2026. Read HANDOVER.md first.
+Owner has original Smart Pro, Windows, games on only microSD, no reader/spare.
+Device/cable/USB mount not yet observed. New helper: project/windows/START-HERE.cmd.
+New optional stock App: project/device-preflight/Apps/SmartProCheck.
+Guide: project/docs/windows-device-pilot.md. Request only baseline.txt, not private backups.
+Fresh dev20 core 1254 passed; 10 PowerShell + 6 collector host fixtures passed.
+No device tests, install, gates, native replacement or game/save migration occurred.
+Reader needed before changing boot setup; spare preferred.
+
 Continue daniel1990000/CrossMix-OS-project, active source project/.
 Current branch main; PR #5 merged at da4b54b522cdeb94fa06909654475c7f8c5b3e14.
 GitHub host checks/package build passed; exact merge receipt is in

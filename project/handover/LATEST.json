@@ -142,10 +142,15 @@
   },
   "owner_device_status": {
     "device": "Original TrimUI Smart Pro TG5040",
-    "available": false,
+    "available": true,
     "physical_areas_run": 0,
     "physical_areas_total": 13,
-    "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image."
+    "game_specific_testing": "Vice City emulation/testing is in a separate chat; this batch does not depend on or test the game image.",
+    "connection_observed": false,
+    "host_os": "Windows",
+    "spare_card_available": false,
+    "card_reader_available": false,
+    "current_games_location": "only microSD card"
   },
   "next_work": [
     "Qualify exact installed TG5040 input/display ownership, launch-return and recovery using the existing casebook.",
@@ -280,5 +285,20 @@
     "payload_files": 255,
     "both_zips_byte_identical_without_git": true,
     "installed_psp_default_and_port_calls_verified": true
+  },
+  "windows_preparation": {
+    "date_utc": "2026-10-30",
+    "helper": "project/windows/START-HERE.cmd",
+    "guide": "project/docs/windows-device-pilot.md",
+    "collector": "project/device-preflight/Apps/SmartProCheck",
+    "backup_performed_on_owner_card": false,
+    "device_collector_run": false,
+    "custom_os_installed": false,
+    "core_host_checks_passed": 1254,
+    "powershell_fixture_checks_passed": 10,
+    "collector_fixture_checks_passed": 6,
+    "actual_windows_tested": false,
+    "actual_device_tested": false,
+    "next_input": "USB-mounted card backup result and baseline.txt; reader needed before changing boot setup"
   }
 }
